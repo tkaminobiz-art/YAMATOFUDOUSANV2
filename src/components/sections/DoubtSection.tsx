@@ -1,53 +1,51 @@
 export default function DoubtSection() {
   return (
     <section
-      className="bg-[#3D3229] px-5 py-16 text-white md:px-8 md:py-24 lg:py-28"
+      className="bg-[#3D3229] px-5 py-32 text-white md:px-8 md:py-40 lg:py-56"
       aria-labelledby="doubt-heading"
     >
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-[48rem] text-center">
         <h2
           id="doubt-heading"
-          className="mb-8 text-xl leading-snug tracking-wide text-white md:mb-10 md:text-2xl"
+          className="mb-10 font-mincho text-xl leading-snug tracking-wide text-white md:mb-12 md:text-2xl lg:text-[28px]"
         >
-          世の中には「追加なくて家が建つなんて、うさんくさい」と思う方もいらっしゃいます。
+          2,480万円で？──そう思われた方へ。
         </h2>
-        <div className="space-y-6 text-[15px] leading-[1.85] text-white/95 md:text-base md:leading-[1.9]">
-          <p>
-            正直、すごくよくわかります。ニュースでも報じられる不透明な請求の話を聞いているといやでも不安になりますよね。
-          </p>
-          <p>
-            だからこそ、最初に
-            <span className="mx-0.5 text-[color:var(--color-accent)]">【本当に？】</span>
-            と疑ってください。
-          </p>
-          <div className="space-y-5 border-l-2 border-[color:var(--color-accent)] pl-4">
-            <blockquote className="text-white/95">
-              ただ見積もり額が安いだけの会社は、案の定、建て方が進むにつれてこまめにオプションを追加してきます。
-            </blockquote>
-            <blockquote className="text-white/95">
-              「標準仕様はこれだけ」といって、住まいに不可欠な設備や仕様がオプションだらけになることも珍しくありません。
-            </blockquote>
-            <blockquote className="text-white/95">
-              さらに言えば、まだ土地も決まっていない段階から「いま契約しないともう土地がない！」と急かされて契約に追い込まれるケースも…。
-            </blockquote>
+        <div className="space-y-6">
+          <blockquote className="font-mincho text-base leading-relaxed text-[#FBF8F3]/80 md:text-lg">
+            「この金額で、本当に建つんですか？」
+          </blockquote>
+          <div className="text-xs tracking-[0.35em] text-[#FBF8F3]/35" aria-hidden>
+            ─
           </div>
-          <p>
-            こんな不安を感じている方こそ、一度だけでいいので
-            <span className="mx-0.5 text-[color:var(--color-accent)]">【本当に？】</span>
-            とよくよく見ていただきたいのです。
-          </p>
-          <p>
-            当社の真価は、単なる価格の安さではなく、最初にご提示した金額の妥当性と、その金額を貫き通せる日本的な施工力にあります。
-            <span className="mx-0.5 text-[color:var(--color-accent)]">【本当に？】</span>
-            と思われたその疑問に、はっきりお答えします。
-          </p>
+          <blockquote className="font-mincho text-base leading-relaxed text-[#FBF8F3]/80 md:text-lg">
+            「どこかで削っているんじゃないですか？」
+          </blockquote>
+          <div className="text-xs tracking-[0.35em] text-[#FBF8F3]/35" aria-hidden>
+            ─
+          </div>
+          <blockquote className="font-mincho text-base leading-relaxed text-[#FBF8F3]/80 md:text-lg">
+            「あとから追加で請求されるんじゃないですか？」
+          </blockquote>
         </div>
-        <div className="mt-12 rounded-lg bg-[color:var(--color-accent)] px-6 py-8 text-center text-[color:var(--color-bg-primary)] md:mt-14 md:px-8 md:py-10">
-          <p className="font-mincho text-[56px] font-medium leading-none tracking-wide sm:text-[72px] md:text-[120px] lg:text-[160px]">
-            税込 1,980万円〜
+        <div className="mx-auto mt-12 max-w-xl space-y-4 text-[15px] leading-[1.9] text-white/95 md:mt-14 md:text-base">
+          <p>よく聞かれる質問です。私たちは、その疑いを歓迎します。</p>
+          <p>答えはすべて、仕組みの中にあります。</p>
+        </div>
+        <div className="mt-14 md:mt-16">
+          <p className="font-mincho text-[56px] font-medium leading-none tracking-wide text-[color:var(--color-accent)] sm:text-[64px] md:text-[120px] lg:text-[160px]">
+            <span className="whitespace-nowrap">
+              2,480
+              <span className="ml-1 text-[0.38em] font-medium md:text-[0.42em]">
+                万円
+              </span>
+            </span>
           </p>
-          <p className="mt-4 text-sm leading-relaxed opacity-95 md:text-base">
-            ※土地代・外構除く、延床面積 33 坪目安、標準仕様にて
+          <p className="mt-4 text-base text-white/90 md:text-lg">
+            花｜33坪｜4LDK｜建物本体価格・税込
+          </p>
+          <p className="mt-2 text-sm text-white/60 md:text-[15px]">
+            2026年4月1日価格改定
           </p>
         </div>
       </div>

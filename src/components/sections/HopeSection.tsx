@@ -1,7 +1,7 @@
 export default function HopeSection() {
   return (
     <section
-      className="bg-[color:var(--color-bg-primary)] px-0 py-16 md:py-24 lg:py-28"
+      className="bg-[color:var(--color-bg-primary)] px-0 py-24 md:py-32 lg:py-40"
       aria-labelledby="hope-heading"
     >
       <div className="mx-auto flex max-w-6xl flex-col md:min-h-[28rem] md:flex-row">
@@ -19,8 +19,8 @@ export default function HopeSection() {
               src="/images/sections/hope-living-sp.webp"
               alt="リビングの様子"
               className="h-full w-full object-cover"
-              width={640}
-              height={480}
+              width={750}
+              height={563}
               loading="lazy"
               decoding="async"
             />
@@ -29,19 +29,23 @@ export default function HopeSection() {
         <div className="flex w-full flex-col justify-center px-5 py-10 md:w-[40%] md:px-8 md:py-12 lg:px-10">
           <h2
             id="hope-heading"
-            className="mb-8 text-xl leading-snug tracking-wide text-[color:var(--color-text-primary)] md:mb-10 md:text-2xl"
+            className="font-mincho text-[28px] leading-snug tracking-wide text-[color:var(--color-text-primary)] md:text-[36px] lg:text-[44px]"
           >
-            やまと不動産が目指していること
+            金額が、動かない家づくり。
           </h2>
-          <div className="space-y-6 text-[15px] leading-[1.85] text-[color:var(--color-text-primary)] md:text-base md:leading-[1.9]">
+          <div
+            className="mt-4 h-px w-12 bg-[color:var(--color-accent)] md:mt-5"
+            aria-hidden
+          />
+          <div className="mt-8 space-y-6 text-[15px] leading-[2] text-[color:var(--color-text-primary)] md:mt-10 md:text-[16px] lg:text-[17px]">
             <p>やまと不動産がずっと目標にしてきたことを、ひとつだけ挙げるなら。</p>
-            <blockquote className="border-l-2 border-[color:var(--color-accent)] pl-4 text-[color:var(--color-text-primary)]">
+            <blockquote className="border-l-2 border-[color:var(--color-accent)] pl-4 text-left text-[color:var(--color-text-primary)]">
               「本当に追加費用なく、家が建った」── お客様にそう言っていただくことです。
             </blockquote>
-            <p>見積もりでの約束を、そのまま守り抜くこと。</p>
-            <p>
-              ムダなコストを省き、「住まいの土台」を最新技術で固め、本当に必要なところには惜しまない。そういう日本の家づくりを、これからも貫くことです。
-            </p>
+            <p>最初の見積もりが、最後の請求書になる。</p>
+            <p>最初に見たモデルハウスが、そのままあなたの家になる。</p>
+            <p>最初の担当者が、引き渡しの日も、そのあとも、ずっと隣にいる。</p>
+            <p>動かないこと。それが、私たちの誠実です。</p>
           </div>
         </div>
       </div>

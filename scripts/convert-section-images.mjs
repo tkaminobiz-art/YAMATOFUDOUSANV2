@@ -30,8 +30,8 @@ async function convertOne(inputPath, baseName) {
   const buf = await fs.readFile(inputPath);
   const variants = [
     { width: 1600, suffix: "" },
-    { width: 1024, suffix: "-tablet" },
-    { width: 640, suffix: "-sp" },
+    { width: 900, suffix: "-tablet" },
+    { width: 750, suffix: "-sp" },
   ];
   for (const { width, suffix } of variants) {
     const outPath = path.join(outDir, `${baseName}${suffix}.webp`);
