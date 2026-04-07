@@ -24,12 +24,16 @@ const COPY = {
       "その大切な一日に、お客様に妥協してほしくない。",
       "それが、やまと不動産の想いです。",
     ],
-    sub: "他社さんでは諦めたこだわり、やまと不動産ではきっと可能です。",
+    sub: [
+      "他社さんでは諦めたこだわり、",
+      "やまと不動産ではきっと可能です。",
+    ],
   },
   B: {
     main: [
       "十年経った軒先の木目が、建てた日とほとんど変わらない。",
-      "やまとの家づくりは、その景色のためにあります。",
+      "やまとの家づくりは、",
+      "その景色のためにあります。",
     ],
     sub: [
       "外壁の下に空気の通り道をつくり、塗料は推奨より二割多く塗る。",
@@ -37,6 +41,11 @@ const COPY = {
     ],
   },
 } as const;
+
+const MAIN_SHADOW =
+  "0 1px 2px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 32px rgba(0, 0, 0, 0.25)";
+const SUB_SHADOW =
+  "0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)";
 
 export default function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -49,6 +58,7 @@ export default function HeroSection() {
   }, []);
 
   const activeCopy = SLIDES[activeIndex].copy;
+  const { main, sub } = COPY[activeCopy];
 
   return (
     <section
@@ -102,50 +112,35 @@ export default function HeroSection() {
           <div
             key={`main-${activeCopy}`}
             className="animate-[fadeInUp_0.8s_ease-out]"
-            style={{ fontFamily: "var(--font-mincho)" }}
+            style={{ fontFamily: "var(--font-mincho)", textShadow: MAIN_SHADOW }}
           >
-            {activeCopy === "A"
-              ? COPY.A.main.map((line, i) => (
-                  <p
-                    key={i}
-                    className="text-[22px] md:text-[30px] lg:text-[38px] leading-[1.8] tracking-wide"
-                  >
-                    {line}
-                  </p>
-                ))
-              : COPY.B.main.map((line, i) => (
-                  <p
-                    key={i}
-                    className="text-[22px] md:text-[30px] lg:text-[38px] leading-[1.8] tracking-wide"
-                  >
-                    {line}
-                  </p>
-                ))}
+            {main.map((line, i) => (
+              <p
+                key={i}
+                className="text-[22px] md:text-[30px] lg:text-[38px] leading-[1.8] tracking-wide"
+              >
+                {line}
+              </p>
+            ))}
           </div>
 
           {/* 区切り線 */}
-          <div className="my-5 md:my-6 w-12 h-px bg-white/60" />
+          <div className="my-6 md:my-8 w-12 h-px bg-white/60" />
 
           {/* サブコピー */}
           <div
             key={`sub-${activeCopy}`}
             className="animate-[fadeInUp_0.8s_ease-out_0.15s_backwards] opacity-80"
-            style={{ fontFamily: "var(--font-sans)" }}
+            style={{ fontFamily: "var(--font-sans)", textShadow: SUB_SHADOW }}
           >
-            {activeCopy === "A" ? (
-              <p className="text-[11px] md:text-[13px] lg:text-[14px] leading-[1.9] font-light">
-                {COPY.A.sub}
+            {sub.map((line, i) => (
+              <p
+                key={i}
+                className="text-[14px] md:text-[15px] lg:text-[17px] leading-[2.0] font-light"
+              >
+                {line}
               </p>
-            ) : (
-              COPY.B.sub.map((line, i) => (
-                <p
-                  key={i}
-                  className="text-[11px] md:text-[13px] lg:text-[14px] leading-[1.9] font-light"
-                >
-                  {line}
-                </p>
-              ))
-            )}
+            ))}
           </div>
         </div>
       </div>
