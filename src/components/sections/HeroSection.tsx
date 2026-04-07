@@ -163,13 +163,13 @@ export default function HeroSection() {
           {/* サブコピー */}
           <div
             key={`sub-${activeCopy}`}
-            className="flex flex-col items-start animate-[fadeInUp_0.8s_ease-out_0.15s_backwards] opacity-80"
+            className="flex flex-col items-start animate-[fadeInUp_0.8s_ease-out_0.15s_backwards] opacity-90"
             style={{ fontFamily: "var(--font-sans)", textShadow: SUB_SHADOW }}
           >
             {copyData.sub.map((line, i) => (
               <p
                 key={i}
-                className="block w-max max-w-none text-[14px] md:text-[15px] lg:text-[17px] leading-[2.0] font-light whitespace-nowrap [overflow-wrap:normal] [word-break:normal]"
+                className="block w-max max-w-none text-[16px] leading-[1.95] font-light tracking-wide whitespace-nowrap [overflow-wrap:normal] [word-break:normal] sm:text-[17px] md:text-[18px] lg:text-[20px] xl:text-[21px]"
                 style={{ whiteSpace: "nowrap" }}
               >
                 {line}
