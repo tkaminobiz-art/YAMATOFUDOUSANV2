@@ -49,7 +49,8 @@ const COPY = {
       "その景色のためにあります。",
     ],
     sub: [
-      "外壁の下に空気の通り道をつくり、塗料は推奨より二割多く塗る。",
+      "外壁の下に空気の通り道をつくり、",
+      "塗料は推奨より二割多く塗る。",
       "小さなこだわりの積み重ねが、十年という時間では大きな差が出ます。",
     ],
   },
@@ -120,33 +121,36 @@ export default function HeroSection() {
         className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-12 md:pb-16 lg:pb-20 text-[#FBF8F3]"
         aria-live="polite"
       >
-        <div className="max-w-none">
-          {/* メインコピー: PC/タブレット用 */}
+        {/* max-w-none: 03b — 親の max-width で nowrap 行が意図せず折り返されないようにする */}
+        <div className="max-w-none flex flex-col items-start">
+          {/* メインコピー: PC/大タブレット（lg+）。md〜lg未満は mainSP で句切りを揃える（03b トラブルシュート） */}
           <div
             key={`main-pc-${activeCopy}`}
-            className="hidden md:block animate-[fadeInUp_0.8s_ease-out]"
+            className="hidden lg:flex lg:flex-col lg:items-start animate-[fadeInUp_0.8s_ease-out]"
             style={{ fontFamily: "var(--font-mincho)", textShadow: MAIN_SHADOW }}
           >
             {copyData.main.map((line, i) => (
               <p
                 key={i}
-                className="text-[30px] lg:text-[38px] leading-[1.8] tracking-wide whitespace-nowrap"
+                className="block w-max max-w-none text-[30px] lg:text-[38px] leading-[1.8] tracking-wide whitespace-nowrap [overflow-wrap:normal] [word-break:normal]"
+                style={{ whiteSpace: "nowrap" }}
               >
                 {line}
               </p>
             ))}
           </div>
 
-          {/* メインコピー: SP用 */}
+          {/* メインコピー: SP / 小〜中タブレット（1024px未満） */}
           <div
             key={`main-sp-${activeCopy}`}
-            className="block md:hidden animate-[fadeInUp_0.8s_ease-out]"
+            className="flex flex-col items-start lg:hidden animate-[fadeInUp_0.8s_ease-out]"
             style={{ fontFamily: "var(--font-mincho)", textShadow: MAIN_SHADOW }}
           >
             {copyData.mainSP.map((line, i) => (
               <p
                 key={i}
-                className="text-[22px] leading-[1.8] tracking-wide whitespace-nowrap"
+                className="block w-max max-w-none text-[22px] leading-[1.8] tracking-wide whitespace-nowrap [overflow-wrap:normal] [word-break:normal]"
+                style={{ whiteSpace: "nowrap" }}
               >
                 {line}
               </p>
@@ -159,13 +163,14 @@ export default function HeroSection() {
           {/* サブコピー */}
           <div
             key={`sub-${activeCopy}`}
-            className="animate-[fadeInUp_0.8s_ease-out_0.15s_backwards] opacity-80"
+            className="flex flex-col items-start animate-[fadeInUp_0.8s_ease-out_0.15s_backwards] opacity-80"
             style={{ fontFamily: "var(--font-sans)", textShadow: SUB_SHADOW }}
           >
             {copyData.sub.map((line, i) => (
               <p
                 key={i}
-                className="text-[14px] md:text-[15px] lg:text-[17px] leading-[2.0] font-light whitespace-nowrap"
+                className="block w-max max-w-none text-[14px] md:text-[15px] lg:text-[17px] leading-[2.0] font-light whitespace-nowrap [overflow-wrap:normal] [word-break:normal]"
+                style={{ whiteSpace: "nowrap" }}
               >
                 {line}
               </p>
