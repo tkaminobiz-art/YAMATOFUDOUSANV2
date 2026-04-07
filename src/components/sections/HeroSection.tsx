@@ -107,7 +107,7 @@ export default function HeroSection() {
         className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-12 md:pb-16 lg:pb-20 text-[#FBF8F3]"
         aria-live="polite"
       >
-        <div className="max-w-[90%] lg:max-w-[52rem]">
+        <div className="max-w-[90%]">
           {/* メインコピー */}
           <div
             key={`main-${activeCopy}`}
