@@ -24,6 +24,13 @@ const COPY = {
       "その大切な一日に、お客様に妥協してほしくない。",
       "それが、やまと不動産の想いです。",
     ],
+    mainSP: [
+      "家を選ぶ日は、",
+      "人生で数えるほどしかありません。",
+      "その大切な一日に、",
+      "お客様に妥協してほしくない。",
+      "それが、やまと不動産の想いです。",
+    ],
     sub: [
       "他社さんでは諦めたこだわり、",
       "やまと不動産ではきっと可能です。",
@@ -32,6 +39,12 @@ const COPY = {
   B: {
     main: [
       "十年経った軒先の木目が、建てた日とほとんど変わらない。",
+      "やまとの家づくりは、",
+      "その景色のためにあります。",
+    ],
+    mainSP: [
+      "十年経った軒先の木目が、",
+      "建てた日とほとんど変わらない。",
       "やまとの家づくりは、",
       "その景色のためにあります。",
     ],
@@ -58,7 +71,7 @@ export default function HeroSection() {
   }, []);
 
   const activeCopy = SLIDES[activeIndex].copy;
-  const { main, sub } = COPY[activeCopy];
+  const copyData = COPY[activeCopy];
 
   return (
     <section
@@ -107,17 +120,33 @@ export default function HeroSection() {
         className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-20 pb-12 md:pb-16 lg:pb-20 text-[#FBF8F3]"
         aria-live="polite"
       >
-        <div className="max-w-[90%]">
-          {/* メインコピー */}
+        <div className="max-w-none">
+          {/* メインコピー: PC/タブレット用 */}
           <div
-            key={`main-${activeCopy}`}
-            className="animate-[fadeInUp_0.8s_ease-out]"
+            key={`main-pc-${activeCopy}`}
+            className="hidden md:block animate-[fadeInUp_0.8s_ease-out]"
             style={{ fontFamily: "var(--font-mincho)", textShadow: MAIN_SHADOW }}
           >
-            {main.map((line, i) => (
+            {copyData.main.map((line, i) => (
               <p
                 key={i}
-                className="text-[22px] md:text-[30px] lg:text-[38px] leading-[1.8] tracking-wide"
+                className="text-[30px] lg:text-[38px] leading-[1.8] tracking-wide whitespace-nowrap"
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+
+          {/* メインコピー: SP用 */}
+          <div
+            key={`main-sp-${activeCopy}`}
+            className="block md:hidden animate-[fadeInUp_0.8s_ease-out]"
+            style={{ fontFamily: "var(--font-mincho)", textShadow: MAIN_SHADOW }}
+          >
+            {copyData.mainSP.map((line, i) => (
+              <p
+                key={i}
+                className="text-[22px] leading-[1.8] tracking-wide whitespace-nowrap"
               >
                 {line}
               </p>
@@ -133,10 +162,10 @@ export default function HeroSection() {
             className="animate-[fadeInUp_0.8s_ease-out_0.15s_backwards] opacity-80"
             style={{ fontFamily: "var(--font-sans)", textShadow: SUB_SHADOW }}
           >
-            {sub.map((line, i) => (
+            {copyData.sub.map((line, i) => (
               <p
                 key={i}
-                className="text-[14px] md:text-[15px] lg:text-[17px] leading-[2.0] font-light"
+                className="text-[14px] md:text-[15px] lg:text-[17px] leading-[2.0] font-light whitespace-nowrap"
               >
                 {line}
               </p>
