@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Shippori_Mincho, Noto_Sans_JP } from "next/font/google";
+import { Noto_Sans_JP, Inter } from "next/font/google";
 import "./globals.css";
-
-const shipporiMincho = Shippori_Mincho({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-shippori-mincho",
-  display: "swap",
-});
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-noto-sans-jp",
+  weight: ["400", "500", "700"],
+  variable: "--font-noto",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter-var",
   display: "swap",
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja" className={`${shipporiMincho.variable} ${notoSansJP.variable}`}>
+    <html lang="ja" className={`${notoSansJP.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

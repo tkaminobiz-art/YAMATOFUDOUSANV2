@@ -1,19 +1,14 @@
-import HeroSection from "@/components/sections/HeroSection";
-import PainEmpathySection from "@/components/sections/PainEmpathySection";
-import HopeSection from "@/components/sections/HopeSection";
-import DoubtSection from "@/components/sections/DoubtSection";
-import ProofSection from "@/components/sections/ProofSection";
-import QualityDetailSection from "@/components/sections/QualityDetailSection";
+import Header from "@/components/Header";
+import HeroCatalog from "@/components/sections/HeroCatalog";
 
 export default function Home() {
   return (
-    <main>
-      <HeroSection />
-      <PainEmpathySection />
-      <HopeSection />
-      <DoubtSection />
-      <ProofSection />
-      <QualityDetailSection />
-    </main>
+    <>
+      <Header />
+      <main>
+        <HeroCatalog />
+        {/* 以降のセクションは後続指示書で追加 */}
+      </main>
+    </>
   );
 }
