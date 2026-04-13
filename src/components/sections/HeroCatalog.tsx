@@ -94,6 +94,25 @@ export default function HeroCatalog() {
               見積もりから、増えない家。
             </p>
 
+            {/* 権威バッジ */}
+            <div className="flex items-center gap-4 mb-6 text-white/80 text-xs md:text-sm">
+              <span
+                className="flex items-center gap-1.5"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                <span className="text-white font-light text-lg md:text-xl">90</span>
+                <span>区画以上の分譲実績</span>
+              </span>
+              <span className="w-px h-4 bg-white/30" />
+              <span
+                className="flex items-center gap-1.5"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                <span className="text-white font-light text-lg md:text-xl">50</span>
+                <span>組のお客様の声</span>
+              </span>
+            </div>
+
             {/* CTA */}
             <div className="flex gap-3">
               <a

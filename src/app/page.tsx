@@ -6,10 +6,12 @@ import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import StandardSection from "@/components/sections/StandardSection";
 import QualitySection from "@/components/sections/QualitySection";
 import MidCta from "@/components/sections/MidCta";
+import VoiceSection from "@/components/sections/VoiceSection";
 import WorksSection from "@/components/sections/WorksSection";
 import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
 import Footer from "@/components/Footer";
+import FloatingCta from "@/components/FloatingCta";
 
 export default function Home() {
   return (
@@ -23,11 +25,13 @@ export default function Home() {
         <StandardSection />
         <QualitySection />
         <MidCta />
+        <VoiceSection />
         <WorksSection />
         <AccessSection />
         <FinalCta />
       </main>
       <Footer />
+      <FloatingCta />
     </>
   );
 }
