@@ -70,48 +70,50 @@ const ZEROS = [
 
 export default function ZeroDeclaration() {
   return (
-    <section className="bg-white py-16 md:py-20 lg:py-24">
-      <div className="max-w-6xl mx-auto px-5 md:px-8">
+    <section className="bg-bg-primary py-[var(--section-py)]">
+      <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
         {/* セクションラベル */}
         <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
           ZERO DECLARATION
         </p>
 
         {/* タイトル */}
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-text-primary mb-4">
+        <h2 className="text-[clamp(20px,2.5vw,32px)] text-text-primary mb-4">
           やまとの家づくり
           <span className="text-main ml-2">8つのゼロ</span>宣言
         </h2>
 
         {/* リード文 */}
-        <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-10 md:mb-14 max-w-2xl">
+        <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
           他社では当たり前にかかる費用が、やまとではゼロ。
           「追加費用なく家が建った」──その約束を、8つの項目でお伝えします。
         </p>
 
         {/* 8カードグリッド */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[var(--card-gap)]">
           {ZEROS.map((item) => (
             <div
               key={item.num}
-              className="bg-bg-secondary rounded-lg p-5 md:p-6 border border-border hover:border-main/40 transition-colors"
+              className="bg-bg-secondary rounded-lg p-[var(--card-p)] card-shadow transition-all hover:-translate-y-1"
             >
               {/* 番号 */}
               <span
-                className="text-main/20 font-bold text-4xl md:text-5xl block mb-3"
+                className="text-main/20 font-light text-4xl md:text-5xl block mb-3"
                 style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
               >
                 {item.num}
               </span>
 
               {/* アイコン */}
-              <item.Icon className="w-7 h-7 text-main mb-3" />
+              <item.Icon className="w-7 h-7 text-main mb-3" strokeWidth={1.5} />
 
               {/* タイトル + ゼロ */}
-              <h3 className="text-text-primary font-bold text-base mb-1">
+              <h3 className="text-text-primary font-medium text-base mb-1" style={{ fontFamily: "var(--font-sans)" }}>
                 {item.title}
               </h3>
-              <p className="text-main font-bold text-lg mb-3">{item.zero}</p>
+              <p className="text-main font-medium text-lg mb-3" style={{ fontFamily: "var(--font-sans)" }}>
+                {item.zero}
+              </p>
 
               {/* 説明文 */}
               <p className="text-text-secondary text-xs leading-relaxed">
@@ -122,11 +124,11 @@ export default function ZeroDeclaration() {
         </div>
 
         {/* 補足 */}
-        <div className="mt-10 md:mt-14 bg-main-light rounded-lg p-5 md:p-6 border border-main/20">
-          <p className="text-text-primary text-sm md:text-base font-medium mb-2">
+        <div className="mt-10 md:mt-14 bg-main-light rounded-lg p-[var(--card-p)] card-shadow">
+          <p className="text-text-primary text-sm md:text-base font-medium mb-2" style={{ fontFamily: "var(--font-sans)" }}>
             なぜ、これだけゼロにできるのか。
           </p>
-          <p className="text-text-secondary text-sm leading-relaxed">
+          <p className="text-text-secondary text-sm leading-relaxed max-w-[640px]">
             設計から施工まで完全自社体制。大量仕入れによるコスト圧縮。中間マージンを徹底的にカットし、卸先まで直接交渉しています。大手ハウスメーカーとの価格差の正体は、ブランド代と中間マージン。原価は変わりません。
           </p>
         </div>

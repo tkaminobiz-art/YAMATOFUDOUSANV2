@@ -15,12 +15,12 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-white">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-bg-primary">
+      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-[var(--page-px)]">
         {/* SP: hamburger (left) */}
         <button
           type="button"
-          className="mr-2 flex h-10 w-10 items-center justify-center rounded md:hidden"
+          className="mr-2 flex h-11 w-11 items-center justify-center rounded md:hidden"
           aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
@@ -57,24 +57,24 @@ export default function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-text-primary transition-colors hover:text-main"
+              className="text-sm font-normal text-text-primary transition-colors hover:text-main"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {/* CTA buttons (always visible) */}
+        {/* CTA buttons — min-h-[44px] for touch target */}
         <div className="flex items-center gap-2">
           <a
             href="#contact"
-            className="rounded bg-main px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-main-dark md:px-5 md:py-2 md:text-sm"
+            className="flex items-center justify-center rounded bg-main min-h-[44px] px-4 py-2.5 text-xs font-medium text-white transition-all hover:bg-main-dark hover:-translate-y-0.5 md:px-5 md:text-sm"
           >
             資料請求
           </a>
           <a
             href="#reservation"
-            className="rounded bg-accent px-3 py-1.5 text-xs font-bold text-white transition-opacity hover:opacity-90 md:px-5 md:py-2 md:text-sm"
+            className="flex items-center justify-center rounded bg-accent min-h-[44px] px-4 py-2.5 text-xs font-medium text-white transition-all hover:opacity-90 hover:-translate-y-0.5 md:px-5 md:text-sm"
           >
             来店予約
           </a>
@@ -84,7 +84,7 @@ export default function Header() {
       {/* SP menu overlay */}
       {menuOpen && (
         <nav
-          className="border-t border-border bg-white md:hidden"
+          className="border-t border-border bg-bg-primary md:hidden"
           aria-label="モバイルナビゲーション"
         >
           <ul className="flex flex-col py-2">
@@ -92,7 +92,7 @@ export default function Header() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="block px-6 py-3 text-sm font-medium text-text-primary transition-colors hover:bg-bg-secondary hover:text-main"
+                  className="block px-6 py-3 text-sm font-normal text-text-primary transition-colors hover:bg-bg-secondary hover:text-main"
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
@@ -102,7 +102,7 @@ export default function Header() {
             <li className="border-t border-border px-6 py-4">
               <a
                 href="tel:0742361123"
-                className="flex items-center gap-2 text-sm font-medium text-text-secondary"
+                className="flex items-center gap-2 text-sm font-normal text-text-secondary"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
