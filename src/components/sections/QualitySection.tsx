@@ -32,7 +32,7 @@ export default function QualitySection() {
         ref={sectionRef}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* 非対称レイアウト: 左テキスト 40% + 右数字カード 60% */}
+        {/* 非対称レイアウト: 左テキスト固定 + 右数字カード */}
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-12 lg:gap-16 items-start">
           {/* 左: テキストブロック（PCではsticky） */}
           <div className="lg:sticky lg:top-[120px]">
@@ -40,10 +40,11 @@ export default function QualitySection() {
               QUALITY
             </p>
             <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-              大手と同じ原価です。
+              旭化成、TOTO、クリナップ。<br />
+              全部、標準です。
             </h2>
             <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px]">
-              価格差の正体は、ブランド代と中間マージン。使っている素材は同じです。
+              大手と同じ素材を使っています。価格が違う理由は、展示場を持たず、広告費をかけず、自社で全てやっているから。
             </p>
           </div>
 

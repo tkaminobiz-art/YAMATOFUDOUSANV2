@@ -13,14 +13,11 @@ export default function FounderQuote2() {
       >
         <blockquote>
           <p
-            className="text-[clamp(18px,2.8vw,32px)] text-text-primary leading-[1.6] tracking-[0.04em] mb-6"
+            className="text-[clamp(18px,2.8vw,32px)] text-text-primary leading-[1.6] tracking-[0.04em]"
             style={{ fontFamily: "var(--font-serif)" }}
           >
             契約した日よりも、<br />
-            引き渡しの日のほうが、仲がいい。<br />
-            <span className="text-text-secondary text-[0.7em]">
-              それが、やまとの家づくりです。
-            </span>
+            引き渡しの日のほうが、仲がいい。
           </p>
         </blockquote>
       </div>

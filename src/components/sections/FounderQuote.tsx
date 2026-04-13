@@ -21,22 +21,12 @@ export default function FounderQuote() {
       >
         <blockquote>
           <p
-            className="text-[clamp(24px,4vw,48px)] text-bg-primary leading-[1.4] tracking-[0.04em] mb-8"
+            className="text-[clamp(24px,4vw,48px)] text-bg-primary leading-[1.4] tracking-[0.04em]"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            坪60万と120万の差は、<br className="hidden md:inline" />
-            家の差じゃない。<br />
-            看板の差だ。
+            大手で4,000万の家が、<br className="hidden md:inline" />
+            なぜ2,480万で建つのか。
           </p>
-          <footer className="flex items-center gap-3">
-            <span className="w-8 h-px bg-bg-primary/30" />
-            <cite
-              className="text-bg-primary/60 text-sm not-italic"
-              style={{ fontFamily: "var(--font-sans)" }}
-            >
-              代表取締役専務　小林 敬昌
-            </cite>
-          </footer>
         </blockquote>
       </div>
     </section>
