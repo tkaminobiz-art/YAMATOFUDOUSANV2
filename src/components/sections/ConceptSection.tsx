@@ -9,14 +9,12 @@ export default function ConceptSection() {
 
         {/* メインコピー */}
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary mb-6 leading-relaxed">
-          追加のない家を、奈良で。
+          展示場の家が、そのまま届く。
         </h2>
 
         {/* 補足テキスト */}
         <p className="text-text-secondary text-sm md:text-base leading-[2.0] max-w-xl mx-auto">
-          見積もりが増えない。モデルハウスと標準仕様が同じ。
-          引き渡しの日に、笑顔で関係が終わるのではなく、深くなる。
-          それが、やまと不動産の家づくりです。
+          花鳥風月は、建物本体＋付帯工事のコミコミ価格。見積もりから金額は変わりません。展示場で見た仕様が、そのまま標準。オプションで別料金、ということもありません。
         </p>
       </div>
     </section>

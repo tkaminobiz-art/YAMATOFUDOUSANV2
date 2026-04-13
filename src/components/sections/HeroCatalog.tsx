@@ -93,7 +93,7 @@ export default function HeroCatalog() {
 
             {/* キャッチ */}
             <p className="text-white text-base md:text-lg lg:text-xl font-medium mb-6">
-              奈良で、追加のない家づくり。
+              見積もりから、増えない家。
             </p>
 
             {/* CTA */}

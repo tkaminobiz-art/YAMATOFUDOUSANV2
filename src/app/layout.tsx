@@ -19,7 +19,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "やまと不動産 | 奈良の注文住宅 花鳥風月",
   description:
-    "奈良で注文住宅をお考えなら、やまと不動産の花鳥風月シリーズ。見せたものと届くものが一致する家。",
+    "奈良の注文住宅やまと不動産。花鳥風月シリーズ2,280万円〜。建物＋付帯工事コミコミ、見積もりから増額なし。",
 };
 
 export default function RootLayout({
