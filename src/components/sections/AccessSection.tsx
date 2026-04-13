@@ -25,7 +25,7 @@ export default function AccessSection() {
           <div>
             <h3
               className="text-text-primary text-lg mb-6"
-              style={{ fontFamily: "var(--font-serif)" }}
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               本社
             </h3>
@@ -83,7 +83,7 @@ export default function AccessSection() {
           <div>
             <h3
               className="text-text-primary text-lg mb-6"
-              style={{ fontFamily: "var(--font-serif)" }}
+              style={{ fontFamily: "var(--font-sans)" }}
             >
               京都支店
             </h3>
@@ -142,7 +142,7 @@ export default function AccessSection() {
         <div className="bg-bg-primary rounded-lg p-[var(--card-p)] card-shadow">
           <h3
             className="text-text-primary text-base mb-4"
-            style={{ fontFamily: "var(--font-serif)" }}
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             会社概要
           </h3>

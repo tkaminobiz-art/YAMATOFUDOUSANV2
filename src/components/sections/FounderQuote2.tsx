@@ -14,7 +14,7 @@ export default function FounderQuote2() {
         <blockquote>
           <p
             className="text-[clamp(18px,2.8vw,32px)] text-text-primary leading-[1.6] tracking-[0.04em]"
-            style={{ fontFamily: "var(--font-serif)" }}
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             契約した日よりも、<br />
             引き渡しの日のほうが、仲がいい。

@@ -46,19 +46,19 @@ export default function PriceSection() {
               <tr className="border-b-2 border-main">
                 <th className="py-3 px-4 text-left text-text-secondary font-normal w-[140px]" />
                 <th className="py-3 px-4 text-center">
-                  <span className="text-main text-lg" style={{ fontFamily: "var(--font-serif)" }}>花</span>
+                  <span className="text-main text-lg" style={{ fontFamily: "var(--font-sans)" }}>花</span>
                   <span className="text-text-secondary text-xs ml-1">hana</span>
                   <span className="block text-[10px] text-white bg-main rounded px-2 py-0.5 mt-1 mx-auto w-fit">
                     最上位モデル
                   </span>
                 </th>
                 <th className="py-3 px-4 text-center">
-                  <span className="text-text-primary text-lg" style={{ fontFamily: "var(--font-serif)" }}>風</span>
+                  <span className="text-text-primary text-lg" style={{ fontFamily: "var(--font-sans)" }}>風</span>
                   <span className="text-text-secondary text-xs ml-1">kaze</span>
                   <span className="block text-[10px] text-text-secondary mt-1">標準モデル</span>
                 </th>
                 <th className="py-3 px-4 text-center">
-                  <span className="text-text-primary text-lg" style={{ fontFamily: "var(--font-serif)" }}>京</span>
+                  <span className="text-text-primary text-lg" style={{ fontFamily: "var(--font-sans)" }}>京</span>
                   <span className="text-text-secondary text-xs ml-1">miyako</span>
                   <span className="block text-[10px] text-text-secondary mt-1">狭小地向け</span>
                 </th>

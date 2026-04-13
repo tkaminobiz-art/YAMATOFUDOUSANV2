@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  /* === Color tokens (web-design-creation F-1 準拠) === */
+  /* === Color tokens (引き継ぎ書準拠 + オフホワイト微調整) === */
   --color-bg-primary: #FAFAF7;
-  --color-bg-secondary: #F0EDE8;
-  --color-text-primary: #1C1C1C;
-  --color-text-secondary: #777777;
-  --color-main: #6B8F71;
-  --color-main-dark: #4A7357;
-  --color-main-light: #E4EDE5;
-  --color-accent: #C4851F;
-  --color-accent-light: #FDF3E8;
-  --color-border: #E0DDD6;
+  --color-bg-secondary: #F5F5F2;
+  --color-text-primary: #2B2B2B;
+  --color-text-secondary: #6B6B6B;
+  --color-main: #5A8A4A;
+  --color-main-dark: #3D6B32;
+  --color-main-light: #E8F0E5;
+  --color-accent: #C4703F;
+  --color-accent-light: #FDF0E8;
+  --color-border: #E5E5E0;
 
-  /* === Fonts === */
+  /* === Fonts (明朝全廃。Sans + Inter のみ) === */
   --font-sans: var(--font-noto), "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
-  --font-serif: var(--font-noto-serif), "Noto Serif JP", "Yu Mincho", serif;
   --font-inter: var(--font-inter-var), "Inter", sans-serif;
 
   /* === Spacing tokens (D-1 clamp 準拠) === */
@@ -34,7 +33,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 400;
   letter-spacing: 0.06em;
 }
@@ -47,9 +46,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* Card shadow token */
+/* Card shadow — 最小。フラット寄り */
 .card-shadow {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
 }
 
 /* Scroll-in animation */

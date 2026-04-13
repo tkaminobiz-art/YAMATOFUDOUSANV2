@@ -80,7 +80,7 @@ export default function VoiceSection() {
                 </span>
                 <span
                   className="text-text-primary text-base"
-                  style={{ fontFamily: "var(--font-serif)" }}
+                  style={{ fontFamily: "var(--font-sans)" }}
                 >
                   {v.name}
                 </span>

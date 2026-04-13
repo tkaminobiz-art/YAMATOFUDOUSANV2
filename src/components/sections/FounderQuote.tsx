@@ -22,7 +22,7 @@ export default function FounderQuote() {
         <blockquote>
           <p
             className="text-[clamp(24px,4vw,48px)] text-bg-primary leading-[1.4] tracking-[0.04em]"
-            style={{ fontFamily: "var(--font-serif)" }}
+            style={{ fontFamily: "var(--font-sans)" }}
           >
             大手で4,000万の家が、<br className="hidden md:inline" />
             なぜ2,480万で建つのか。

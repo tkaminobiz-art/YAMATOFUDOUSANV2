@@ -94,7 +94,7 @@ export default function WorksSection() {
                   </p>
                   <h3
                     className="text-text-primary text-lg md:text-xl mb-1"
-                    style={{ fontFamily: "var(--font-serif)" }}
+                    style={{ fontFamily: "var(--font-sans)" }}
                   >
                     {work.title}
                   </h3>

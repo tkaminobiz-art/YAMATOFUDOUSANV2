@@ -156,7 +156,7 @@ export default function HeroCatalog() {
                 )}
 
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-serif)" }}>
+                  <span className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-sans)" }}>
                     {m.name}
                   </span>
                   <span className="text-text-secondary text-sm">
