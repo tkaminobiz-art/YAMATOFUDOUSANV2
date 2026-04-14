@@ -1,15 +1,21 @@
 import Header from "@/components/Header";
 import HeroCatalog from "@/components/sections/HeroCatalog";
+import TrustBar from "@/components/sections/TrustBar";
 import ConceptSection from "@/components/sections/ConceptSection";
 import FounderQuote from "@/components/sections/FounderQuote";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
+import MechanismSection from "@/components/sections/MechanismSection";
 import StandardSection from "@/components/sections/StandardSection";
 import PriceSection from "@/components/sections/PriceSection";
 import QualitySection from "@/components/sections/QualitySection";
+import GuaranteeSection from "@/components/sections/GuaranteeSection";
 import MidCta from "@/components/sections/MidCta";
 import VoiceSection from "@/components/sections/VoiceSection";
 import WorksSection from "@/components/sections/WorksSection";
+import FlowSection from "@/components/sections/FlowSection";
+import LotsSection from "@/components/sections/LotsSection";
 import StaffStory from "@/components/sections/StaffStory";
+import InstagramSection from "@/components/sections/InstagramSection";
 import FaqSection from "@/components/sections/FaqSection";
 import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
@@ -17,21 +23,27 @@ import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
 /*
-  構成（物語の流れ）:
-  Hero          → 価格の驚き
-  Concept       → 共感
-  FounderQuote  → 問い「なぜ2,480万で？」
-  Zero          → 答え1: 追加費用ゼロ
-  Standard      → 答え2: 設備が標準
-  Price         → 具体的な価格
-  Quality       → 安さの裏付け
-  MidCTA        → 一度行動喚起
-  Voice         → 建てた人の声
-  Works         → 実際の事例
-  StaffStory    → 引き渡し後の関係 + 19人の物語（統合）
-  FAQ           → 残った不安を解消
-  Access        → 会社情報
-  FinalCTA      → 決断
+  20セクション構成:
+  1. Hero          驚き（2,480万）
+  2. TrustBar      信頼の数字（マーキー）
+  3. Concept       共感
+  4. FounderQuote  問い
+  5. Zero          答え1: 追加費用ゼロ
+  6. Mechanism     答え2: 価格の中身
+  7. Standard      答え3: 設備が標準
+  8. Price         具体価格
+  9. Quality       品質の裏付け
+  10. Guarantee    建てた後の安心
+  11. MidCta       行動喚起
+  12. Voice        お客様の声
+  13. Works        施工事例
+  14. Flow         10ステップの流れ
+  15. Lots         分譲地（土地の武器）
+  16. StaffStory   引き渡しの関係 + 19人
+  17. Instagram    日常
+  18. FAQ          残存不安
+  19. Access       会社情報
+  20. FinalCta     決断
 */
 
 export default function Home() {
@@ -40,16 +52,22 @@ export default function Home() {
       <Header />
       <main>
         <HeroCatalog />
+        <TrustBar />
         <ConceptSection />
         <FounderQuote />
         <ZeroDeclaration />
+        <MechanismSection />
         <StandardSection />
         <PriceSection />
         <QualitySection />
+        <GuaranteeSection />
         <MidCta />
         <VoiceSection />
         <WorksSection />
+        <FlowSection />
+        <LotsSection />
         <StaffStory />
+        <InstagramSection />
         <FaqSection />
         <AccessSection />
         <FinalCta />
