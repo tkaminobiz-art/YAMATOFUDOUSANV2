@@ -48,7 +48,7 @@ export default function InstagramSection() {
               INSTAGRAM
             </p>
             <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-              日々の現場から、お届けしています。
+              現場の今日を、載せています。
             </h2>
             <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
               最新の施工現場・完成見学会・スタッフの日常を、Instagramで発信中です。

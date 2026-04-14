@@ -106,7 +106,7 @@ export default function FaqSection() {
           よくあるご質問
         </h2>
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
-          お客様から頻繁にいただくご質問にお答えします。
+          よくいただくご質問を、まとめました。
         </p>
 
         <div>

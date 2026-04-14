@@ -84,7 +84,7 @@ export default function StaffStory() {
             </p>
           </blockquote>
           <p className="text-text-secondary text-sm md:text-base">
-            この関係を作っているのは、19人のスタッフです。
+            19人で、この関係をつくっています。
           </p>
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function StaffStory() {
             STAFF
           </p>
           <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary max-w-[640px] mb-4">
-            お家が建つまでに、出会うすべての人。
+            この19人で、お家をつくります。
           </h2>
         </div>
 
@@ -175,7 +175,7 @@ export default function StaffStory() {
         {/* 締め */}
         <div className="mt-16 md:mt-24 pt-10 border-t border-border text-center">
           <p className="text-text-secondary text-sm md:text-base leading-[1.9] max-w-[640px] mx-auto">
-            契約から引き渡しまで、そしてその後も。この19人と、ずっとお付き合いいただくことになります。
+            契約から引き渡しまで、そしてその後も。建てた後も、この19人が一緒です。
           </p>
         </div>
       </div>

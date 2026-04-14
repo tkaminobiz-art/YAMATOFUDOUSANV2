@@ -21,7 +21,7 @@ export default function FinalCta() {
         </h2>
 
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px] mx-auto mb-10">
-          写真では伝わらないものがあります。モデルハウスで、標準仕様を体感してください。
+          写真では伝わらないものがあります。モデルハウスで、お待ちしています。
         </p>
 
         {/* プライマリCTA群 */}
