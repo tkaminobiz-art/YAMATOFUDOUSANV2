@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 const VOICES = [
@@ -152,6 +154,16 @@ export default function VoiceSection() {
           ))}
         </div>
 
+        {/* 全件ページへのリンク */}
+        <div className="mt-10 md:mt-14 text-center">
+          <Link
+            href="/voice"
+            className="inline-flex items-center gap-2 min-h-[52px] px-8 py-3.5 rounded bg-bg-primary text-text-primary text-base font-medium card-shadow transition-all hover:-translate-y-0.5 hover:text-main"
+          >
+            すべてのお客様の声を見る
+            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+          </Link>
+        </div>
       </div>
     </section>
   );
