@@ -27,8 +27,8 @@ import FloatingCta from "@/components/FloatingCta";
   2. TrustBar      信頼の数字（マーキー）
   3. Concept       共感
   4. FounderQuote  問い
-  5. Zero          答え1: 追加費用ゼロ
-  6. Mechanism     答え2: 価格の中身
+  5. Mechanism     答え1: 価格の構造（大手 vs やまと）
+  6. Zero          答え2: しかも追加費用もゼロ
   7. Standard      答え3: 設備が標準
   8. Price         具体価格
   9. Quality       品質の裏付け
@@ -55,8 +55,8 @@ export default function Home() {
         <TrustBar />
         <ConceptSection />
         <FounderQuote />
-        <ZeroDeclaration />
         <MechanismSection />
+        <ZeroDeclaration />
         <StandardSection />
         <PriceSection />
         <QualitySection />

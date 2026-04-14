@@ -122,7 +122,7 @@ export default function HeroCatalog() {
                 className="text-white text-lg md:text-2xl lg:text-3xl font-normal mt-8 md:mt-10 lg:mt-12 max-w-xl"
                 style={{ fontFamily: "var(--font-sans)" }}
               >
-                見積もりから、増えない家。
+                見積もりが、最終価格です。
               </p>
             </div>
           </div>
