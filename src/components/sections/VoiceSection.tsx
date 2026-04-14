@@ -152,9 +152,6 @@ export default function VoiceSection() {
           ))}
         </div>
 
-        <p className="text-text-secondary text-xs mt-8 text-center">
-          ※ 旧サイトに掲載の50組のお客様の声より抜粋
-        </p>
       </div>
     </section>
   );

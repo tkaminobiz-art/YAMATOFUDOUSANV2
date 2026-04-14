@@ -11,10 +11,9 @@ export default function MidCta() {
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] text-center scroll-in"
       >
-        <p className="text-text-secondary text-sm mb-3">写真では伝わらないものがあります。</p>
         <h2 className="text-[clamp(20px,2.5vw,32px)] text-text-primary mb-8">
-          モデルハウスで、<br className="sm:hidden" />
-          実物を確かめてください。
+          ここまで読んでいただいたあなたへ。<br className="sm:hidden" />
+          モデルハウスでお会いしませんか。
         </h2>
 
         <div className="flex justify-center gap-4">

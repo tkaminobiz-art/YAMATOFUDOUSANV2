@@ -86,7 +86,7 @@ export default function ZeroDeclaration() {
         {/* リード文 */}
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
           他社では当たり前にかかる費用が、やまとではゼロ。
-          「追加費用なく家が建った」──その約束を、8つの項目でお伝えします。
+          「追加費用なく家が建った」——8つの項目に整理しました。
         </p>
 
         {/* 8カードグリッド */}

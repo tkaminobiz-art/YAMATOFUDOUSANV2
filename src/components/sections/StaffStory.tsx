@@ -85,7 +85,7 @@ export default function StaffStory() {
             </p>
           </blockquote>
           <p className="text-text-secondary text-sm md:text-base">
-            その関係を作っているのは、この19人です。
+            この関係を作っているのは、19人のスタッフです。
           </p>
         </div>
       </div>
