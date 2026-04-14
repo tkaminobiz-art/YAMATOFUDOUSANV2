@@ -57,10 +57,9 @@ p, blockquote, dd, li {
   text-wrap: pretty;           /* 本文: orphan回避 */
 }
 
-/* 数字+単位の分離を防ぐ */
+/* 数字+単位 / 短い句の分離を防ぐ */
 .nowrap {
   white-space: nowrap;
-  display: inline-block;
 }
 
 /* Section label */

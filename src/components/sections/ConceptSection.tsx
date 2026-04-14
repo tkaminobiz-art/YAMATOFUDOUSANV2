@@ -22,7 +22,7 @@ export default function ConceptSection() {
               「うちの年収じゃ無理」と思っていませんか。
             </h2>
             <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px]">
-              大手で4,000万円と言われた家が、2,480万円で建ちます。使っている素材は同じ。違うのは、ブランド名と広告費だけです。
+              大手で<span className="nowrap">4,000万円</span>と言われた家が、<span className="nowrap">2,480万円</span>で建ちます。使っている素材は同じ。違うのは、ブランド名と広告費だけです。
             </p>
           </div>
 
