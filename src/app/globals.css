@@ -105,6 +105,19 @@ p, blockquote, dd, li {
   animation: marquee 40s linear infinite;
   width: max-content;
 }
+.animate-marquee-slow {
+  animation: marquee 80s linear infinite;
+  width: max-content;
+}
+.animate-marquee-extra-slow {
+  animation: marquee 100s linear infinite;
+  width: max-content;
+}
+.animate-marquee:hover,
+.animate-marquee-slow:hover,
+.animate-marquee-extra-slow:hover {
+  animation-play-state: paused;
+}
 
 /* 装飾アクセント: 引用符・縦罫線用 */
 .accent-quote::before {
