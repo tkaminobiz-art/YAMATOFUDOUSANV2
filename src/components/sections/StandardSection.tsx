@@ -3,90 +3,108 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
-// Bento: 大(2x2) 1枚 + 中(2x1) 2枚 + 小(1x1) 9枚
+/*
+  実在する写真と一致させた12項目。
+  画像ファイルの実物:
+  - facility_img_01: キッチン
+  - facility_img_02: 浴室
+  - facility_img_03: 洗面台
+  - facility_img_04: 外壁（石調）
+  - facility_img_05: 玄関ドア
+  - facility_img_06: 窓/リビング
+  - facility_img_07: 屋根
+  - facility_img_08: 室内ドア
+  - facility_img_09: 床材
+  - facility_img_10: 外構（石畳）
+  - facility_img_12: 制震装置 MIRAIE
+  - facility_img_13: 照明
+  （facility_img_11 は施工現場のため除外）
+
+  [要確認] ブランド・型番は旧サイトのカタログ情報。専務確認が必要。
+*/
 const STANDARDS = [
   {
     category: "キッチン",
     brand: "クリナップ",
     detail: "システムキッチン＋食洗機＋IH3口",
     image: "/images/standard/facility_img_01.webp",
-    size: "large", // 2x2
+    size: "large",
   },
   {
     category: "浴室",
     brand: "TOTO",
     detail: "ユニットバス 1616 / 保温浴槽",
-    image: "/images/standard/facility_img_03.webp",
-    size: "wide", // 2x1
+    image: "/images/standard/facility_img_02.webp",
+    size: "wide",
   },
   {
     category: "玄関ドア",
     brand: "YKK AP",
     detail: "親子ドア＋顔認証（花モデル）",
-    image: "/images/standard/facility_img_06.webp",
+    image: "/images/standard/facility_img_05.webp",
     size: "wide",
-  },
-  {
-    category: "食洗機",
-    brand: "Miele / Panasonic",
-    detail: "ビルトイン食洗機",
-    image: "/images/standard/facility_img_02.webp",
-    size: "small",
   },
   {
     category: "洗面台",
     brand: "TOTO",
-    detail: "750サイズ",
-    image: "/images/standard/facility_img_04.webp",
-    size: "small",
-  },
-  {
-    category: "トイレ",
-    brand: "TOTO",
-    detail: "ウォシュレット標準",
-    image: "/images/standard/facility_img_05.webp",
+    detail: "750サイズ洗面化粧台",
+    image: "/images/standard/facility_img_03.webp",
     size: "small",
   },
   {
     category: "窓サッシ",
     brand: "YKK AP",
-    detail: "APW330 Low-E樹脂サッシ",
-    image: "/images/standard/facility_img_07.webp",
+    detail: "Low-E複層ガラス 樹脂サッシ",
+    image: "/images/standard/facility_img_06.webp",
     size: "small",
   },
   {
     category: "外壁",
     brand: "ニチハ",
     detail: "窯業系サイディング16mm",
+    image: "/images/standard/facility_img_04.webp",
+    size: "small",
+  },
+  {
+    category: "屋根",
+    brand: "ガルバリウム",
+    detail: "高耐久 金属屋根",
+    image: "/images/standard/facility_img_07.webp",
+    size: "small",
+  },
+  {
+    category: "室内ドア",
+    brand: "ハイドア",
+    detail: "天井まで届くフラット扉が標準",
     image: "/images/standard/facility_img_08.webp",
     size: "small",
   },
   {
-    category: "断熱",
-    brand: "ウレタン吹付",
-    detail: "外断熱85mm＋屋根95mm",
+    category: "床材",
+    brand: "無垢調フローリング",
+    detail: "踏み心地にこだわる標準仕様",
     image: "/images/standard/facility_img_09.webp",
     size: "small",
   },
   {
-    category: "給湯",
-    brand: "エコキュート",
-    detail: "460L オール電化",
+    category: "外構",
+    brand: "石畳アプローチ",
+    detail: "門柱・ポスト・表札・外構一式込み",
     image: "/images/standard/facility_img_10.webp",
     size: "small",
   },
   {
-    category: "エアコン",
-    brand: "リビング1台標準",
-    detail: "エアコン＋LED＋カーテン",
-    image: "/images/standard/facility_img_11.webp",
+    category: "制震装置",
+    brand: "住友ゴム MIRAIE",
+    detail: "揺れ最大70%低減",
+    image: "/images/standard/facility_img_12.webp",
     size: "small",
   },
   {
-    category: "外構",
-    brand: "門柱・ポスト・表札",
-    detail: "外構一式＋網戸",
-    image: "/images/standard/facility_img_12.webp",
+    category: "照明",
+    brand: "LED ダウンライト",
+    detail: "主要室すべて標準装備",
+    image: "/images/standard/facility_img_13.webp",
     size: "small",
   },
 ] as const;
@@ -128,7 +146,12 @@ export default function StandardSection() {
                 key={item.category}
                 className={`scroll-in relative group overflow-hidden rounded ${spanClass}`}
                 style={{
-                  aspectRatio: item.size === "large" ? "1 / 1" : item.size === "wide" ? "2 / 1" : "1 / 1",
+                  aspectRatio:
+                    item.size === "large"
+                      ? "1 / 1"
+                      : item.size === "wide"
+                      ? "2 / 1"
+                      : "1 / 1",
                 }}
               >
                 {/* 写真（フルブリード） */}
