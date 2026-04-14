@@ -137,9 +137,9 @@ export default function HeroCatalog() {
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 >
                   <span className="text-white font-light text-xl md:text-2xl">
-                    90+
+                    90
                   </span>
-                  <span className="text-white/70">区画の分譲実績</span>
+                  <span className="text-white/70">区画以上の分譲実績</span>
                 </span>
                 <span className="w-px h-4 bg-white/30 inline-block" />
                 <span
@@ -149,7 +149,7 @@ export default function HeroCatalog() {
                   <span className="text-white font-light text-xl md:text-2xl">
                     50
                   </span>
-                  <span className="text-white/70">組のお客様の声</span>
+                  <span className="text-white/70">組以上のお客様の声</span>
                 </span>
                 <span className="w-px h-4 bg-white/30 inline-block" />
                 <span

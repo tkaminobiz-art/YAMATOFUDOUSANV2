@@ -117,9 +117,9 @@ export default function VoiceSection() {
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             <span className="text-accent font-light text-6xl md:text-7xl block leading-none">
-              50+
+              50
             </span>
-            <span className="text-text-secondary text-xs md:text-sm">組のご家族</span>
+            <span className="text-text-secondary text-xs md:text-sm">組以上のご家族</span>
           </div>
         </div>
 

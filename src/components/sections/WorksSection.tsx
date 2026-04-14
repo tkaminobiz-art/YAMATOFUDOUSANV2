@@ -74,9 +74,9 @@ export default function WorksSection() {
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             <span className="text-main font-light text-6xl md:text-7xl block leading-none">
-              90+
+              90
             </span>
-            <span className="text-text-secondary text-xs md:text-sm">区画の分譲実績</span>
+            <span className="text-text-secondary text-xs md:text-sm">区画以上の分譲実績</span>
           </div>
         </div>
 

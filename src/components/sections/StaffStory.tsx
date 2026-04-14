@@ -80,11 +80,11 @@ export default function StaffStory() {
               className="text-[clamp(20px,3vw,36px)] text-text-primary leading-[1.6] tracking-[0.04em] mb-6"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              契約した日よりも、引き渡しの日のほうが、仲がいい。
+              お引き渡しの日が、お付き合いの始まりです。
             </p>
           </blockquote>
           <p className="text-text-secondary text-sm md:text-base">
-            19人で、この関係をつくっています。
+            ご家族のお家を、この19人でずっと見守ります。
           </p>
         </div>
       </div>
