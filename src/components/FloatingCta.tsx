@@ -35,7 +35,7 @@ export default function FloatingCta() {
           <span className="text-[10px]">LINE</span>
         </a>
         <a
-          href="#reservation"
+          href="/reserve"
           className="flex flex-col items-center justify-center gap-0.5 min-h-[44px] flex-1 rounded bg-accent py-2 text-white transition-colors"
         >
           <Calendar className="w-4 h-4" strokeWidth={1.5} />

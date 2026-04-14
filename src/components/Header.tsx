@@ -67,13 +67,13 @@ export default function Header() {
         {/* CTA buttons — min-h-[44px] for touch target */}
         <div className="flex items-center gap-2">
           <a
-            href="#contact"
+            href="/contact"
             className="flex items-center justify-center rounded bg-main min-h-[44px] px-4 py-2.5 text-xs font-medium text-white transition-all hover:bg-main-dark hover:-translate-y-0.5 md:px-5 md:text-sm"
           >
             資料請求
           </a>
           <a
-            href="#reservation"
+            href="/reserve"
             className="flex items-center justify-center rounded bg-accent min-h-[44px] px-4 py-2.5 text-xs font-medium text-white transition-all hover:opacity-90 hover:-translate-y-0.5 md:px-5 md:text-sm"
           >
             来店予約

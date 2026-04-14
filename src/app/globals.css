@@ -51,16 +51,25 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* Scroll-in animation */
+/* Scroll-in animation — 強化: 距離+遅延 */
 .scroll-in {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(24px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .scroll-in.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Hero で使う、ゆっくり浮き上がるアニメーション */
+@keyframes subtle-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+.hero-zoom {
+  animation: subtle-zoom 18s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
 }
 
 @media (prefers-reduced-motion: reduce) {

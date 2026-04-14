@@ -19,13 +19,13 @@ export default function MidCta() {
 
         <div className="flex justify-center gap-4">
           <a
-            href="#reservation"
+            href="/reserve"
             className="flex items-center justify-center min-h-[44px] px-8 py-3 rounded bg-accent text-white text-sm font-medium transition-all hover:opacity-90 hover:-translate-y-0.5"
           >
             来店予約
           </a>
           <a
-            href="#contact"
+            href="/contact"
             className="flex items-center justify-center min-h-[44px] px-8 py-3 rounded bg-bg-primary text-text-primary text-sm font-medium card-shadow transition-all hover:-translate-y-0.5"
           >
             資料請求
