@@ -32,38 +32,48 @@ const MODELS = [
   },
 ] as const;
 
+// Heroスライドショー5枚（30秒周期・6秒表示+1秒フェード）
+const HERO_SLIDES = [
+  { src: "/images/fv/hero-01-exterior-miyamaki.webp", alt: "三山木モデル外観" },
+  { src: "/images/fv/hero-02-exterior-sakyo.webp", alt: "左京モデル外観" },
+  { src: "/images/fv/hero-03-living.webp", alt: "花鳥風月 リビング" },
+  { src: "/images/fv/hero-04-kitchen.webp", alt: "花鳥風月 キッチン" },
+  { src: "/images/fv/hero-05-washitsu.webp", alt: "花鳥風月 和室" },
+] as const;
+
 export default function HeroCatalog() {
   return (
     <section>
-      {/* ===== メインヒーロー — フルブリード写真 + オーバーサイズ数字 ===== */}
+      {/* ===== メインヒーロー ===== */}
       <div className="relative w-full min-h-[100svh] overflow-hidden">
-        {/* 背景画像 — ゆっくりズームで「生きた」感じ */}
-        <div className="absolute inset-0 hero-zoom">
-          <picture>
-            <source
-              srcSet="/images/fv/hero-pc.webp"
-              media="(min-width: 1024px)"
-              type="image/webp"
-            />
-            <source
-              srcSet="/images/fv/hero-tablet.webp"
-              media="(min-width: 640px)"
-              type="image/webp"
-            />
-            <source srcSet="/images/fv/hero-sp.webp" type="image/webp" />
-            <Image
-              src="/images/fv/hero-pc.jpg"
-              alt="花鳥風月やまとの家「花」モデル外観"
-              fill
-              priority
-              className="object-cover"
-            />
-          </picture>
+        {/* スライドショー5枚 — 各 5s表示 + 1s クロスフェード、計 25s ループ */}
+        {/* delay: i*5 - 1 でslide 0が即表示（fade-in状態を飛ばして始まる） */}
+        <div className="absolute inset-0">
+          {HERO_SLIDES.map((slide, i) => (
+            <div
+              key={slide.src}
+              className="hero-slide absolute inset-0"
+              style={{
+                animationDelay: `${i * 5 - 1}s`,
+              }}
+            >
+              <div className="hero-ken-burns absolute inset-0">
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={i === 0}
+                  className="object-cover"
+                  sizes="100vw"
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* グラデーション — 下と左に深いフェード */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent lg:from-black/30" />
+        {/* グラデーション */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent lg:from-black/30 z-[1]" />
 
         {/* ===== コンテンツレイヤー ===== */}
         <div className="relative z-10 min-h-[100svh] flex flex-col">
@@ -73,7 +83,10 @@ export default function HeroCatalog() {
               <p className="font-section-label text-white/80 text-xs md:text-sm tracking-[0.2em] mb-2">
                 KACHOUFUUGETSU — YAMATO NO IE
               </p>
-              <p className="text-white/90 text-sm md:text-base" style={{ fontFamily: "var(--font-sans)" }}>
+              <p
+                className="text-white/90 text-sm md:text-base"
+                style={{ fontFamily: "var(--font-sans)" }}
+              >
                 奈良の注文住宅 花鳥風月 やまとの家
               </p>
             </div>
@@ -122,7 +135,9 @@ export default function HeroCatalog() {
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 >
-                  <span className="text-white font-light text-xl md:text-2xl">90+</span>
+                  <span className="text-white font-light text-xl md:text-2xl">
+                    90+
+                  </span>
                   <span className="text-white/70">区画の分譲実績</span>
                 </span>
                 <span className="w-px h-4 bg-white/30 hidden sm:inline-block" />
@@ -130,7 +145,9 @@ export default function HeroCatalog() {
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 >
-                  <span className="text-white font-light text-xl md:text-2xl">50</span>
+                  <span className="text-white font-light text-xl md:text-2xl">
+                    50
+                  </span>
                   <span className="text-white/70">組のお客様の声</span>
                 </span>
                 <span className="w-px h-4 bg-white/30 hidden sm:inline-block" />
@@ -138,7 +155,9 @@ export default function HeroCatalog() {
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 >
-                  <span className="text-white font-light text-xl md:text-2xl">14</span>
+                  <span className="text-white font-light text-xl md:text-2xl">
+                    14
+                  </span>
                   <span className="text-white/70">年の実績（2011年創立）</span>
                 </span>
               </div>
@@ -186,7 +205,10 @@ export default function HeroCatalog() {
                 )}
 
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-2xl md:text-3xl text-text-primary" style={{ fontFamily: "var(--font-sans)" }}>
+                  <span
+                    className="text-2xl md:text-3xl text-text-primary"
+                    style={{ fontFamily: "var(--font-sans)" }}
+                  >
                     {m.name}
                   </span>
                   <span className="text-text-secondary text-sm">
@@ -199,7 +221,9 @@ export default function HeroCatalog() {
                 <div className="flex items-baseline gap-3 mb-2">
                   <span
                     className="text-text-primary font-light text-xl md:text-2xl"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                    style={{
+                      fontFamily: "var(--font-inter), Inter, sans-serif",
+                    }}
                   >
                     {m.price}
                   </span>
