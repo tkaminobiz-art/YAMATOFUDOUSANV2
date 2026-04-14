@@ -4,11 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 
 const NAV_ITEMS = [
-  { label: "やまとの家づくり", href: "#concept" },
-  { label: "商品紹介", href: "#product" },
-  { label: "施工事例", href: "#works" },
-  { label: "店舗情報", href: "#access" },
-  { label: "会社情報", href: "/about" },
+  { label: "やまとの家づくり", href: "/#concept" },
+  { label: "商品紹介", href: "/#product" },
+  { label: "物件情報", href: "/lots" },
+  { label: "施工事例", href: "/#works" },
+  { label: "お客様の声", href: "/voice" },
+  { label: "店舗情報", href: "/#access" },
 ] as const;
 
 export default function Header() {
@@ -20,7 +21,7 @@ export default function Header() {
         {/* SP: hamburger (left) */}
         <button
           type="button"
-          className="mr-2 flex h-11 w-11 items-center justify-center rounded md:hidden"
+          className="mr-2 flex h-11 w-11 items-center justify-center rounded lg:hidden"
           aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
@@ -52,12 +53,15 @@ export default function Header() {
         </a>
 
         {/* Desktop nav (center) */}
-        <nav className="hidden flex-1 items-center justify-center gap-8 md:flex" aria-label="メインナビゲーション">
+        <nav
+          className="hidden flex-1 items-center justify-center gap-4 lg:gap-6 xl:gap-8 lg:flex"
+          aria-label="メインナビゲーション"
+        >
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-sm font-normal text-text-primary transition-colors hover:text-main"
+              className="whitespace-nowrap text-xs lg:text-sm font-normal text-text-primary transition-colors hover:text-main"
             >
               {item.label}
             </a>
@@ -84,7 +88,7 @@ export default function Header() {
       {/* SP menu overlay */}
       {menuOpen && (
         <nav
-          className="border-t border-border bg-bg-primary md:hidden"
+          className="border-t border-border bg-bg-primary lg:hidden"
           aria-label="モバイルナビゲーション"
         >
           <ul className="flex flex-col py-2">
