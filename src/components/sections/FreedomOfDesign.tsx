@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
@@ -8,37 +9,53 @@ const STEPS = [
   {
     num: "01",
     title: "初回から、設計士が一緒です。",
-    body: "営業担当だけじゃなく、プロの設計士がはじめの打ち合わせから同席します。あなたの話を、その場で図面に落とせます。",
+    body: "プロの設計士が、最初の打ち合わせから同席します。",
+    image: "/images/design/step-01-meeting.webp",
+    alt: "設計士と夫婦が打ち合わせしている様子",
   },
   {
     num: "02",
-    title: "3ヶ月かけて、間取りを組みます。",
-    body: "1回じゃ決まりません。平日の動線や子どもの成長を織り込みながら、何度でも描き直します。",
+    title: "3ヶ月かけて、何度でも描き直します。",
+    body: "平日の動線も、子どもの成長も織り込んで。",
+    image: "/images/design/step-02-drawing.webp",
+    alt: "手描きの間取り図",
   },
   {
     num: "03",
-    title: "ショールームで、1日かけて選びます。",
-    body: "LIXIL・TOTO・クリナップ。外壁、床、キッチン、浴室、クロスの色まで。ご家族で、実物に触れながら決めます。",
+    title: "モデルハウスで、実物を見て選びます。",
+    body: "外壁、床、キッチン、浴室。ご家族で、触れて、座って、決めます。",
+    image: "/images/design/step-03-modelhouse.webp",
+    alt: "モデルハウスのキッチンとリビング",
   },
   {
     num: "04",
     title: "コンセントの位置まで、あなたが決める。",
-    body: "外壁・床・キッチン・浴室。コンセントの数、窓の形まで、全部あなたが選びます。",
+    body: "外壁、床、キッチン、窓の形まで。",
+    image: "/images/design/step-04-finished.webp",
+    alt: "完成したキッチンとダイニング",
   },
 ] as const;
 
-const PLUS_ONE = [
+const EXAMPLES = [
   {
-    name: "折下天井＋間接照明",
-    desc: "リビングに1段落ちた天井と、柔らかな光。",
+    name: "カフェのような、リビング。",
+    detail: "折下天井＋間接照明",
+    image: "/images/design/example-coveceiling.webp",
   },
   {
-    name: "大空間収納",
-    desc: "ファミリークローゼットより大きく、全部入る。",
+    name: "帰ってきたら、床が温かい。",
+    detail: "床暖房",
+    image: "/images/design/example-floorheating.webp",
   },
   {
-    name: "浄水・還元水素水",
-    desc: "キッチンで、いつでも飲める水。",
+    name: "2階に、もうひとつの部屋を。",
+    detail: "バルコニー",
+    image: "/images/design/example-balcony.webp",
+  },
+  {
+    name: "街並みのアクセントに。",
+    detail: "屋根材",
+    image: "/images/design/example-roof.webp",
   },
 ] as const;
 
@@ -75,80 +92,98 @@ export default function FreedomOfDesign() {
           </p>
         </div>
 
-        {/* ===== 4ステップ（非対称2x2） ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 md:gap-x-16 gap-y-10 md:gap-y-14 mb-20 md:mb-28">
-          {STEPS.map((step, i) => (
-            <div
-              key={step.num}
-              className={`scroll-in flex gap-5 md:gap-6 ${
-                // 偶数インデックス（02,04）を少し下げて非対称リズム
-                i % 2 === 1 ? "md:mt-10" : ""
-              }`}
-            >
-              <span
-                className="text-main/25 font-light text-5xl md:text-6xl leading-none shrink-0 pt-1"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+        {/* ===== 4ステップ（ストーリーテリング型 — 画像＋テキスト非対称） ===== */}
+        <div className="space-y-20 md:space-y-28 mb-20 md:mb-28">
+          {STEPS.map((step, i) => {
+            const isReversed = i % 2 === 1;
+            return (
+              <div
+                key={step.num}
+                className={`scroll-in grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center ${
+                  isReversed ? "md:[&>*:first-child]:order-2" : ""
+                }`}
               >
-                {step.num}
-              </span>
-              <div>
-                <h3
-                  className="text-text-primary text-lg md:text-xl mb-2 leading-[1.5]"
-                  style={{ fontFamily: "var(--font-sans)" }}
-                >
-                  {step.title}
-                </h3>
-                <p className="text-text-secondary text-sm md:text-base leading-[1.9]">
-                  {step.body}
-                </p>
+                {/* 画像 */}
+                <div className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group">
+                  <Image
+                    src={step.image}
+                    alt={step.alt}
+                    fill
+                    className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+
+                {/* テキスト */}
+                <div>
+                  <span
+                    className="text-main/25 font-light text-6xl md:text-7xl lg:text-8xl leading-none block mb-4"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
+                    {step.num}
+                  </span>
+                  <h3
+                    className="text-text-primary text-xl md:text-2xl lg:text-[28px] mb-3 leading-[1.5]"
+                    style={{ fontFamily: "var(--font-sans)" }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-text-secondary text-sm md:text-base leading-[1.9]">
+                    {step.body}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* ===== Plus+1 SELECT ===== */}
-        <div className="bg-bg-warm rounded-lg p-[clamp(24px,4vw,48px)] mb-16 md:mb-20">
-          <p className="font-section-label text-accent text-xs mb-3 tracking-[0.15em]">
-            PLUS +1 SELECT
-          </p>
-          <h3
-            className="text-text-primary text-xl md:text-2xl mb-3 leading-[1.5]"
-            style={{ fontFamily: "var(--font-sans)" }}
-          >
-            標準にプラスして、&ldquo;うちらしさ&rdquo;をつくる。
-          </h3>
-          <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-8">
-            お客様がよく選ばれるオプションを、3つ紹介します。
-          </p>
+        {/* ===== 自由設計の実例 ===== */}
+        <div className="mb-16 md:mb-20">
+          <div className="mb-10 md:mb-12 max-w-[640px]">
+            <p className="font-section-label text-accent text-xs md:text-sm mb-3 tracking-[0.15em]">
+              EXAMPLES
+            </p>
+            <h3
+              className="text-[clamp(20px,2.5vw,30px)] text-text-primary mb-3 leading-[1.5]"
+              style={{ fontFamily: "var(--font-sans)" }}
+            >
+              ある家族の、こだわり。
+            </h3>
+            <p className="text-text-secondary text-sm md:text-base leading-relaxed">
+              自由設計で、実際に選ばれた仕様の一部です。
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--card-gap)]">
-            {PLUS_ONE.map((opt) => (
-              <div
-                key={opt.name}
-                className="bg-bg-primary rounded p-5 md:p-6 border-l-2 border-accent/50"
-              >
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--card-gap)]">
+            {EXAMPLES.map((ex) => (
+              <div key={ex.name} className="scroll-in">
+                <div className="relative aspect-[4/3] rounded overflow-hidden mb-3 card-shadow group">
+                  <Image
+                    src={ex.image}
+                    alt={ex.name}
+                    fill
+                    className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
                 <p
-                  className="text-text-primary text-base md:text-lg mb-2 leading-[1.5]"
+                  className="text-text-primary text-sm md:text-base mb-1 leading-[1.5]"
                   style={{ fontFamily: "var(--font-sans)" }}
                 >
-                  {opt.name}
+                  {ex.name}
                 </p>
-                <p className="text-text-secondary text-xs md:text-sm leading-relaxed">
-                  {opt.desc}
+                <p className="text-accent text-xs tracking-wider">
+                  {ex.detail}
                 </p>
               </div>
             ))}
           </div>
-
-          <p className="text-text-secondary text-xs mt-6">
-            ※ 他にも数十種類から選べます。
-          </p>
         </div>
 
         {/* ===== CTA ===== */}
-        <div className="text-center">
+        <div className="text-center pt-6 md:pt-10 border-t border-border">
           <p
-            className="text-text-primary text-lg md:text-xl mb-2 leading-[1.6]"
+            className="text-text-primary text-lg md:text-xl mb-2 leading-[1.6] mt-10 md:mt-14"
             style={{ fontFamily: "var(--font-sans)" }}
           >
             まずは、設計士に会ってみませんか。
