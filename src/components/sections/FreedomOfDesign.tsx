@@ -43,19 +43,14 @@ const EXAMPLES = [
     image: "/images/design/example-coveceiling.webp",
   },
   {
-    name: "帰ってきたら、床が温かい。",
-    detail: "床暖房",
-    image: "/images/design/example-floorheating.webp",
+    name: "家族の服、全部入る収納。",
+    detail: "大空間収納",
+    image: "/images/design/example-storage.webp",
   },
   {
     name: "2階に、もうひとつの部屋を。",
     detail: "バルコニー",
     image: "/images/design/example-balcony.webp",
-  },
-  {
-    name: "街並みのアクセントに。",
-    detail: "屋根材",
-    image: "/images/design/example-roof.webp",
   },
 ] as const;
 
@@ -154,16 +149,16 @@ export default function FreedomOfDesign() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-[var(--card-gap)]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--card-gap)]">
             {EXAMPLES.map((ex) => (
               <div key={ex.name} className="scroll-in">
-                <div className="relative aspect-[4/3] rounded overflow-hidden mb-3 card-shadow group">
+                <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-4 card-shadow group">
                   <Image
                     src={ex.image}
                     alt={ex.name}
                     fill
                     className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
-                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <p

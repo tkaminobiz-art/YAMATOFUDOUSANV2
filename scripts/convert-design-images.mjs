@@ -42,11 +42,11 @@ const sources = [
     name: "step-04-finished",
     aspect: "3/2",
   },
-  // --- 自由設計の実例 4点 ---
+  // --- 自由設計の実例 3点（左京モデルハウス高画質に差し替え） ---
   {
     input: path.join(
       PROJECT_ROOT,
-      "写真素材/旧サイト整理/07_strength_強み/plusOne_list_img_2.png"
+      "写真素材/05_モデルハウス高画質/左京モデルハウス（高画質） 2/リビング・ダイニング/20230327-001.jpg"
     ),
     name: "example-coveceiling",
     aspect: "4/3",
@@ -54,25 +54,17 @@ const sources = [
   {
     input: path.join(
       PROJECT_ROOT,
-      "写真素材/旧サイト整理/07_strength_強み/plusOne_list_img_4.png"
+      "写真素材/05_モデルハウス高画質/左京モデルハウス（高画質） 2/大空間収納/20230327-170.jpg"
+    ),
+    name: "example-storage",
+    aspect: "4/3",
+  },
+  {
+    input: path.join(
+      PROJECT_ROOT,
+      "写真素材/05_モデルハウス高画質/左京モデルハウス（高画質） 2/外観・外部/バルコニー/20230327-177.jpg"
     ),
     name: "example-balcony",
-    aspect: "4/3",
-  },
-  {
-    input: path.join(
-      PROJECT_ROOT,
-      "写真素材/旧サイト整理/07_strength_強み/plusOne_list_img_5.png"
-    ),
-    name: "example-floorheating",
-    aspect: "4/3",
-  },
-  {
-    input: path.join(
-      PROJECT_ROOT,
-      "写真素材/旧サイト整理/07_strength_強み/plusOne_list_img_1.png"
-    ),
-    name: "example-roof",
     aspect: "4/3",
   },
 ];
