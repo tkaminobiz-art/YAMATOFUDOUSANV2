@@ -175,7 +175,7 @@ export default function StaffStory() {
         {/* 締め */}
         <div className="mt-16 md:mt-24 pt-10 border-t border-border text-center">
           <p className="text-text-secondary text-sm md:text-base leading-[1.9] max-w-[640px] mx-auto">
-            契約から引き渡しまで、そしてその後も。建てた後も、この19人が一緒です。
+            契約から引き渡しまで、そして建てた後も。この19人が、一緒です。
           </p>
         </div>
       </div>

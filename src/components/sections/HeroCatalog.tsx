@@ -84,10 +84,10 @@ export default function HeroCatalog() {
             <div className="max-w-[1400px] mx-auto w-full">
               <div className="flex items-start gap-2 md:gap-4 leading-none">
                 <span
-                  className="text-white font-light"
+                  className="text-white font-light whitespace-nowrap"
                   style={{
                     fontFamily: "var(--font-inter), Inter, sans-serif",
-                    fontSize: "clamp(120px, 22vw, 320px)",
+                    fontSize: "clamp(72px, 22vw, 320px)",
                     letterSpacing: "-0.04em",
                     lineHeight: 0.85,
                   }}

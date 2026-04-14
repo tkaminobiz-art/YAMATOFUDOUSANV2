@@ -15,7 +15,6 @@ import WorksSection from "@/components/sections/WorksSection";
 import FlowSection from "@/components/sections/FlowSection";
 import LotsSection from "@/components/sections/LotsSection";
 import StaffStory from "@/components/sections/StaffStory";
-import InstagramSection from "@/components/sections/InstagramSection";
 import FaqSection from "@/components/sections/FaqSection";
 import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
@@ -23,7 +22,7 @@ import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
 /*
-  20セクション構成:
+  19セクション構成:
   1. Hero          驚き（2,480万）
   2. TrustBar      信頼の数字（マーキー）
   3. Concept       共感
@@ -40,10 +39,11 @@ import FloatingCta from "@/components/FloatingCta";
   14. Flow         10ステップの流れ
   15. Lots         分譲地（土地の武器）
   16. StaffStory   引き渡しの関係 + 19人
-  17. Instagram    日常
-  18. FAQ          残存不安
-  19. Access       会社情報
-  20. FinalCta     決断
+  17. FAQ          残存不安
+  18. Access       会社情報
+  19. FinalCta     決断
+
+  ※ Instagramセクションは削除（Footerのリンクに集約）
 */
 
 export default function Home() {
@@ -67,7 +67,6 @@ export default function Home() {
         <FlowSection />
         <LotsSection />
         <StaffStory />
-        <InstagramSection />
         <FaqSection />
         <AccessSection />
         <FinalCta />
