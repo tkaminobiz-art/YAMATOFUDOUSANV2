@@ -6,7 +6,7 @@ const MODELS = [
   {
     name: "花",
     reading: "hana",
-    label: "最上位モデル",
+    label: "ゆとりのある4LDK",
     size: "33坪",
     plan: "4LDK",
     price: "2,480",
@@ -15,7 +15,7 @@ const MODELS = [
   {
     name: "風",
     reading: "kaze",
-    label: "標準モデル",
+    label: "暮らしやすい4LDK",
     size: "30坪",
     plan: "4LDK",
     price: "2,480",
@@ -24,7 +24,7 @@ const MODELS = [
   {
     name: "京",
     reading: "miyako",
-    label: "狭小地向け",
+    label: "コンパクトな3LDK",
     size: "28坪",
     plan: "3LDK",
     price: "2,280",
@@ -186,9 +186,14 @@ export default function HeroCatalog() {
       {/* ===== 3モデル補足カード ===== */}
       <div className="bg-bg-secondary border-t border-border">
         <div className="max-w-[1200px] mx-auto px-[var(--page-px)] py-8 md:py-10">
-          <p className="font-section-label text-text-secondary text-xs mb-5 tracking-[0.12em]">
-            PRODUCT LINEUP
-          </p>
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-5">
+            <p className="font-section-label text-text-secondary text-xs tracking-[0.12em]">
+              REFERENCE PLANS — 参考プラン
+            </p>
+            <p className="text-text-secondary text-[11px] md:text-xs">
+              ※ 出発点の3プラン。あなた仕様に組み直します。
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--card-gap)]">
             {MODELS.map((m) => (
               <div
@@ -239,7 +244,7 @@ export default function HeroCatalog() {
           </div>
 
           <p className="text-text-secondary text-[11px] mt-4">
-            ※ すべて建物本体価格（税込）。付帯工事・諸費用を含むコミコミ価格です。
+            ※ 建物本体価格（税込）。付帯工事・諸費用を含みます。各プランを出発点に、設計士と一緒にあなた仕様へ組み直します。
           </p>
         </div>
       </div>

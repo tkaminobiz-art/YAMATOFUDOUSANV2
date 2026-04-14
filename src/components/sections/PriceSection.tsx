@@ -1,12 +1,7 @@
 const ROWS = [
-  { label: "価格", hana: "2,480万円", kaze: "2,480万円", miyako: "2,280万円" },
+  { label: "価格（税込・コミコミ）", hana: "2,480万円", kaze: "2,480万円", miyako: "2,280万円" },
   { label: "延床面積", hana: "33坪（109㎡）", kaze: "30坪", miyako: "28坪" },
-  { label: "間取り", hana: "4LDK", kaze: "4LDK", miyako: "3LDK" },
-  { label: "1F天井高", hana: "2,500mm", kaze: "2,400mm", miyako: "2,400mm" },
-  { label: "玄関ドア", hana: "親子ドア＋顔認証", kaze: "片開ドア", miyako: "片開ドア" },
-  { label: "建材", hana: "LIXIL統一", kaze: "EIDAI", miyako: "EIDAI" },
-  { label: "軒天", hana: "ニチハ木目調12mm", kaze: "ケイカル板", miyako: "ケイカル板" },
-  { label: "サッシ", hana: "17箇所", kaze: "15箇所", miyako: "15箇所" },
+  { label: "間取りの目安", hana: "4LDK", kaze: "4LDK", miyako: "3LDK" },
 ] as const;
 
 export default function PriceSection() {
@@ -15,15 +10,28 @@ export default function PriceSection() {
       <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
         {/* セクションラベル */}
         <p className="font-section-label text-main text-xs md:text-sm mb-4 tracking-[0.15em]">
-          PRICE
+          REFERENCE PLANS
         </p>
-        <p className="text-text-secondary text-sm mb-10" style={{ fontFamily: "var(--font-sans)" }}>
-          花鳥風月　やまとの家
+        <h2
+          className="text-[clamp(22px,3vw,36px)] text-text-primary mb-4 leading-[1.5]"
+          style={{ fontFamily: "var(--font-sans)" }}
+        >
+          参考プランと、価格帯。
+        </h2>
+        <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed max-w-[640px] mb-10">
+          花・風・京は、家づくりの出発点です。ここから土地・ご家族に合わせて、あなた仕様に組み直します。
         </p>
 
         {/* 大判価格表示 */}
         <div className="text-center mb-12 md:mb-16">
           <div className="flex items-baseline justify-center gap-2">
+            <span
+              className="text-text-secondary text-base md:text-lg font-normal"
+            >
+              2,280万円から
+            </span>
+          </div>
+          <div className="flex items-baseline justify-center gap-2 mt-2">
             <span
               className="text-text-primary font-light text-[clamp(48px,6vw,80px)] tracking-tight"
               style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -35,32 +43,30 @@ export default function PriceSection() {
             </span>
           </div>
           <p className="text-text-secondary text-xs md:text-sm mt-3">
-            税込・建物本体・付帯工事込み
+            税込・建物本体・付帯工事込み（コミコミ価格）
           </p>
         </div>
 
-        {/* 3モデル比較表 */}
+        {/* 3プラン比較表（簡略版：価格・広さ・間取りの目安のみ） */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr className="border-b-2 border-main">
-                <th className="py-3 px-4 text-left text-text-secondary font-normal w-[140px]" />
+                <th className="py-3 px-4 text-left text-text-secondary font-normal w-[180px]" />
                 <th className="py-3 px-4 text-center">
                   <span className="text-main text-lg" style={{ fontFamily: "var(--font-sans)" }}>花</span>
                   <span className="text-text-secondary text-xs ml-1">hana</span>
-                  <span className="block text-[10px] text-white bg-main rounded px-2 py-0.5 mt-1 mx-auto w-fit">
-                    最上位モデル
-                  </span>
+                  <span className="block text-[10px] text-text-secondary mt-1">ゆとりのある4LDK</span>
                 </th>
                 <th className="py-3 px-4 text-center">
                   <span className="text-text-primary text-lg" style={{ fontFamily: "var(--font-sans)" }}>風</span>
                   <span className="text-text-secondary text-xs ml-1">kaze</span>
-                  <span className="block text-[10px] text-text-secondary mt-1">標準モデル</span>
+                  <span className="block text-[10px] text-text-secondary mt-1">暮らしやすい4LDK</span>
                 </th>
                 <th className="py-3 px-4 text-center">
                   <span className="text-text-primary text-lg" style={{ fontFamily: "var(--font-sans)" }}>京</span>
                   <span className="text-text-secondary text-xs ml-1">miyako</span>
-                  <span className="block text-[10px] text-text-secondary mt-1">狭小地向け</span>
+                  <span className="block text-[10px] text-text-secondary mt-1">コンパクトな3LDK</span>
                 </th>
               </tr>
             </thead>
@@ -88,8 +94,9 @@ export default function PriceSection() {
           </table>
         </div>
 
-        <p className="text-text-secondary text-[11px] mt-6">
-          ※ すべて建物本体価格（税込）。土地は別途。
+        <p className="text-text-secondary text-[11px] mt-6 leading-[1.8]">
+          ※ 建物本体価格（税込）、付帯工事込みのコミコミ価格。土地は別途。<br />
+          ※ 間取り・坪数は参考値です。詳細な仕様差と、あなた仕様へのアレンジはショールームでご説明します。
         </p>
       </div>
     </section>

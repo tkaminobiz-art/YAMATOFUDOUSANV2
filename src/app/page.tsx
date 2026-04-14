@@ -6,6 +6,7 @@ import FounderQuote from "@/components/sections/FounderQuote";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismSection from "@/components/sections/MechanismSection";
 import StandardSection from "@/components/sections/StandardSection";
+import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
 import QualitySection from "@/components/sections/QualitySection";
 import GuaranteeSection from "@/components/sections/GuaranteeSection";
@@ -30,7 +31,8 @@ import FloatingCta from "@/components/FloatingCta";
   5. Mechanism     答え1: 価格の構造（大手 vs やまと）
   6. Zero          答え2: しかも追加費用もゼロ
   7. Standard      答え3: 設備が標準
-  8. Price         具体価格
+  8. FreedomOfDesign 完全自由設計（花・風・京は出発点）
+  9. Price         具体価格
   9. Quality       品質の裏付け
   10. Guarantee    建てた後の安心
   11. MidCta       行動喚起
@@ -58,6 +60,7 @@ export default function Home() {
         <MechanismSection />
         <ZeroDeclaration />
         <StandardSection />
+        <FreedomOfDesign />
         <PriceSection />
         <QualitySection />
         <GuaranteeSection />
