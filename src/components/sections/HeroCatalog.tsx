@@ -80,11 +80,11 @@ export default function HeroCatalog() {
           {/* 上部: シリーズ名 */}
           <div className="pt-24 md:pt-28 lg:pt-32 px-[var(--page-px)]">
             <div className="max-w-[1400px] mx-auto">
-              <p className="font-section-label text-white/80 text-xs md:text-sm tracking-[0.2em] mb-2">
+              <p className="font-section-label text-white/80 text-xs md:text-sm tracking-[0.2em] mb-3">
                 KACHOUFUUGETSU — YAMATO NO IE
               </p>
               <p
-                className="text-white/90 text-sm md:text-base"
+                className="text-white/90 text-sm md:text-base mt-1"
                 style={{ fontFamily: "var(--font-sans)" }}
               >
                 奈良の注文住宅 花鳥風月 やまとの家
@@ -95,7 +95,8 @@ export default function HeroCatalog() {
           {/* 中央: オーバーサイズ価格 */}
           <div className="flex-1 flex items-center px-[var(--page-px)] py-12">
             <div className="max-w-[1400px] mx-auto w-full">
-              <div className="flex items-start gap-2 md:gap-4 leading-none">
+              {/* items-end で「万円〜」と補足を数字のベースラインに揃える */}
+              <div className="flex items-end gap-2 md:gap-4 leading-none">
                 <span
                   className="text-white font-light whitespace-nowrap"
                   style={{
@@ -107,18 +108,18 @@ export default function HeroCatalog() {
                 >
                   2,480
                 </span>
-                <div className="flex flex-col justify-end pb-2 md:pb-4 lg:pb-8">
-                  <span className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal">
+                <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4">
+                  <span className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none">
                     万円〜
                   </span>
-                  <span className="text-white/60 text-[10px] md:text-xs mt-1">
+                  <span className="text-white/60 text-[10px] md:text-xs leading-tight">
                     税込・建物本体・付帯工事込み
                   </span>
                 </div>
               </div>
 
               <p
-                className="text-white text-lg md:text-2xl lg:text-3xl font-normal mt-4 md:mt-6 max-w-xl"
+                className="text-white text-lg md:text-2xl lg:text-3xl font-normal mt-8 md:mt-10 lg:mt-12 max-w-xl"
                 style={{ fontFamily: "var(--font-sans)" }}
               >
                 見積もりから、増えない家。
@@ -129,8 +130,8 @@ export default function HeroCatalog() {
           {/* 下部: 権威バッジ + CTA */}
           <div className="pb-10 md:pb-16 px-[var(--page-px)]">
             <div className="max-w-[1400px] mx-auto">
-              {/* 権威バッジ */}
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-6 text-white/85 text-xs md:text-sm">
+              {/* 権威バッジ — 縦棒セパレータを常時表示 */}
+              <div className="flex flex-wrap items-center gap-x-5 md:gap-x-6 gap-y-3 mb-6 text-white/85 text-xs md:text-sm">
                 <span
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -140,7 +141,7 @@ export default function HeroCatalog() {
                   </span>
                   <span className="text-white/70">区画の分譲実績</span>
                 </span>
-                <span className="w-px h-4 bg-white/30 hidden sm:inline-block" />
+                <span className="w-px h-4 bg-white/30 inline-block" />
                 <span
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -150,7 +151,7 @@ export default function HeroCatalog() {
                   </span>
                   <span className="text-white/70">組のお客様の声</span>
                 </span>
-                <span className="w-px h-4 bg-white/30 hidden sm:inline-block" />
+                <span className="w-px h-4 bg-white/30 inline-block" />
                 <span
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -162,17 +163,17 @@ export default function HeroCatalog() {
                 </span>
               </div>
 
-              {/* CTA */}
-              <div className="flex flex-wrap gap-3">
+              {/* CTA — SP で縦積み、sm以上で横並び */}
+              <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href="/reserve"
-                  className="flex items-center justify-center min-h-[52px] px-8 py-3.5 rounded bg-accent text-white text-base font-medium transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(196,112,63,0.4)]"
+                  className="flex items-center justify-center min-h-[52px] px-6 md:px-8 py-3.5 rounded bg-accent text-white text-base font-medium transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(196,112,63,0.4)]"
                 >
                   来店予約（無料）
                 </a>
                 <a
                   href="/contact"
-                  className="flex items-center justify-center min-h-[52px] px-8 py-3.5 rounded bg-main text-white text-base font-medium transition-all hover:bg-main-dark hover:-translate-y-0.5"
+                  className="flex items-center justify-center min-h-[52px] px-6 md:px-8 py-3.5 rounded bg-main text-white text-base font-medium transition-all hover:bg-main-dark hover:-translate-y-0.5"
                 >
                   資料請求（無料）
                 </a>
