@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* === Color tokens (引き継ぎ書準拠 + オフホワイト微調整) === */
+  /* === Color tokens === */
   --color-bg-primary: #FAFAF7;
   --color-bg-secondary: #F5F5F2;
+  --color-bg-warm: #F5EEE2;        /* クリームベージュ: 感情セクション用 */
+  --color-bg-sand: #EDE4D2;        /* 少し濃いサンド: 重めの区切り */
   --color-text-primary: #2B2B2B;
   --color-text-secondary: #6B6B6B;
   --color-main: #5A8A4A;
@@ -11,13 +13,14 @@
   --color-main-light: #E8F0E5;
   --color-accent: #C4703F;
   --color-accent-light: #FDF0E8;
+  --color-accent-soft: #E9C9AE;    /* 柔らかい橙: 装飾用（罫線・引用符等） */
   --color-border: #E5E5E0;
 
-  /* === Fonts (明朝全廃。Sans + Inter のみ) === */
+  /* === Fonts === */
   --font-sans: var(--font-noto), "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
   --font-inter: var(--font-inter-var), "Inter", sans-serif;
 
-  /* === Spacing tokens (D-1 clamp 準拠) === */
+  /* === Spacing tokens === */
   --section-py: clamp(64px, calc(32px + 5vw), 200px);
   --page-px: clamp(16px, 5vw, 80px);
   --card-p: clamp(20px, calc(14px + 1.5vw), 48px);
@@ -38,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.06em;
 }
 
-/* Section label (English uppercase) */
+/* Section label */
 .font-section-label {
   font-family: var(--font-inter), "Inter", sans-serif;
   text-transform: uppercase;
@@ -46,12 +49,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* Card shadow — 最小。フラット寄り */
+/* Card shadow — 最小 */
 .card-shadow {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* Scroll-in animation — 強化: 距離+遅延 */
+/* Scroll-in animation */
 .scroll-in {
   opacity: 0;
   transform: translateY(24px);
@@ -63,13 +66,25 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(0);
 }
 
-/* Hero で使う、ゆっくり浮き上がるアニメーション */
+/* Hero のゆっくりズーム */
 @keyframes subtle-zoom {
   from { transform: scale(1); }
   to { transform: scale(1.06); }
 }
 .hero-zoom {
   animation: subtle-zoom 18s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+
+/* 装飾アクセント: 引用符・縦罫線用 */
+.accent-quote::before {
+  content: "\201C";
+  color: var(--color-accent);
+  font-family: Georgia, serif;
+  font-size: 3em;
+  line-height: 0;
+  vertical-align: -0.4em;
+  margin-right: 0.1em;
+  opacity: 0.5;
 }
 
 @media (prefers-reduced-motion: reduce) {

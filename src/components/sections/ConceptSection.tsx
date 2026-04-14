@@ -6,7 +6,7 @@ export default function ConceptSection() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section id="concept" className="bg-bg-primary py-[var(--section-py)]">
+    <section id="concept" className="bg-bg-warm py-[var(--section-py)]">
       <div
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
@@ -29,17 +29,17 @@ export default function ConceptSection() {
 
           {/* 右: 3つの約束 */}
           <div className="flex flex-col gap-6 lg:mt-16">
-            <div className="border-l-2 border-main/30 pl-5">
+            <div className="border-l-2 border-accent/60 pl-5">
               <p className="text-text-primary text-sm leading-[1.8]">
                 見積もりから金額は変わりません。
               </p>
             </div>
-            <div className="border-l-2 border-main/30 pl-5">
+            <div className="border-l-2 border-accent/60 pl-5">
               <p className="text-text-primary text-sm leading-[1.8]">
                 展示場で見た仕様が、全邸標準です。
               </p>
             </div>
-            <div className="border-l-2 border-main/30 pl-5">
+            <div className="border-l-2 border-accent/60 pl-5">
               <p className="text-text-primary text-sm leading-[1.8]">
                 建てた後も、電話一本で駆けつけます。
               </p>

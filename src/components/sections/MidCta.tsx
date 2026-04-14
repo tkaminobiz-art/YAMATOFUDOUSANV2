@@ -6,7 +6,7 @@ export default function MidCta() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section className="bg-bg-secondary py-[var(--section-py)]">
+    <section className="bg-bg-warm py-[var(--section-py)]">
       <div
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] text-center scroll-in"

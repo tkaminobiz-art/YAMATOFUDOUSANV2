@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
-const WORKS = [
+// 詳細付き3件 + グリッド表示5件 = 計8件
+const FEATURED = [
   {
     id: "case1",
     title: "奈良市 T様邸",
@@ -39,6 +40,14 @@ const WORKS = [
   },
 ] as const;
 
+const GRID_WORKS = [
+  { area: "奈良市", image: "/images/works/works-01.webp" },
+  { area: "京田辺市", image: "/images/works/works-02.webp" },
+  { area: "橿原市", image: "/images/works/works-03.webp" },
+  { area: "天理市", image: "/images/works/works-04.webp" },
+  { area: "斑鳩町", image: "/images/works/works-05.webp" },
+] as const;
+
 export default function WorksSection() {
   const sectionRef = useScrollIn<HTMLDivElement>(true);
 
@@ -46,33 +55,41 @@ export default function WorksSection() {
     <section id="works" className="bg-bg-primary py-[var(--section-py)]">
       <div
         ref={sectionRef}
-        className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
+        className="max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-          WORKS
-        </p>
-        <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-          実際に建てた家を、ご覧ください。
-        </h2>
-        <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
-          すべてコミコミ価格で建てた、やまと不動産の施工事例です。
-        </p>
+        <div className="flex items-end justify-between flex-wrap gap-4 mb-10 md:mb-14">
+          <div className="max-w-[640px]">
+            <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+              WORKS
+            </p>
+            <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
+              実際に建てた家を、ご覧ください。
+            </h2>
+            <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
+              すべてコミコミ価格で建てた、やまと不動産の施工事例です。
+            </p>
+          </div>
+          <div
+            className="text-right"
+            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+          >
+            <span className="text-main font-light text-6xl md:text-7xl block leading-none">
+              90+
+            </span>
+            <span className="text-text-secondary text-xs md:text-sm">区画の分譲実績</span>
+          </div>
+        </div>
 
-        {/* 施工事例カード — 非対称レイアウト（大1 + 小2） */}
-        <div className="flex flex-col gap-16 lg:gap-20">
-          {WORKS.map((work, index) => (
+        {/* Featured 3件 — 非対称レイアウト */}
+        <div className="flex flex-col gap-16 lg:gap-20 mb-16 md:mb-20">
+          {FEATURED.map((work, index) => (
             <div
               key={work.id}
               className={`scroll-in grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-[var(--card-gap)] items-start ${
-                index % 2 === 1 ? "lg:grid-cols-[2fr_3fr] lg:direction-rtl" : ""
+                index % 2 === 1 ? "" : ""
               }`}
-              style={
-                index % 2 === 1
-                  ? { direction: "rtl" }
-                  : undefined
-              }
+              style={index % 2 === 1 ? { direction: "rtl" } : undefined}
             >
-              {/* メイン画像（大） */}
               <div
                 className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
                 style={{ direction: "ltr" }}
@@ -86,10 +103,12 @@ export default function WorksSection() {
                 />
               </div>
 
-              {/* 右カラム: テキスト + サブ写真2枚 */}
-              <div className="flex flex-col gap-[var(--card-gap)]" style={{ direction: "ltr" }}>
+              <div
+                className="flex flex-col gap-[var(--card-gap)]"
+                style={{ direction: "ltr" }}
+              >
                 <div>
-                  <p className="text-main text-xs font-medium tracking-wider mb-1">
+                  <p className="text-accent text-xs font-medium tracking-wider mb-1">
                     {work.model}
                   </p>
                   <h3
@@ -117,6 +136,33 @@ export default function WorksSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* 追加の5件 — コンパクトグリッド */}
+        <div>
+          <p className="text-text-secondary text-sm mb-6">
+            その他の施工事例
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+            {GRID_WORKS.map((w, i) => (
+              <div
+                key={i}
+                className="scroll-in relative aspect-square rounded overflow-hidden group"
+              >
+                <Image
+                  src={w.image}
+                  alt={`${w.area} 施工事例`}
+                  fill
+                  className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <p className="absolute bottom-2 left-3 text-white text-xs font-medium">
+                  {w.area}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
