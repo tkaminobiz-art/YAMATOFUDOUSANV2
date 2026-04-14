@@ -40,8 +40,7 @@ export default function QualitySection() {
               QUALITY
             </p>
             <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-              旭化成、TOTO、クリナップ。<br />
-              全部、標準です。
+              旭化成、TOTO、クリナップ。全部、標準です。
             </h2>
             <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px]">
               大手と同じ素材を使っています。価格が違う理由は、展示場を持たず、広告費をかけず、自社で全てやっているから。

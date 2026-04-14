@@ -80,8 +80,7 @@ export default function StaffStory() {
               className="text-[clamp(20px,3vw,36px)] text-text-primary leading-[1.6] tracking-[0.04em] mb-6"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              契約した日よりも、<br />
-              引き渡しの日のほうが、仲がいい。
+              契約した日よりも、引き渡しの日のほうが、仲がいい。
             </p>
           </blockquote>
           <p className="text-text-secondary text-sm md:text-base">
@@ -100,8 +99,7 @@ export default function StaffStory() {
             STAFF
           </p>
           <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary max-w-[640px] mb-4">
-            お家が建つまでに、<br className="hidden md:inline" />
-            出会うすべての人。
+            お家が建つまでに、出会うすべての人。
           </h2>
         </div>
 
@@ -177,8 +175,7 @@ export default function StaffStory() {
         {/* 締め */}
         <div className="mt-16 md:mt-24 pt-10 border-t border-border text-center">
           <p className="text-text-secondary text-sm md:text-base leading-[1.9] max-w-[640px] mx-auto">
-            契約から引き渡しまで、そしてその後も。<br />
-            この19人と、ずっとお付き合いいただくことになります。
+            契約から引き渡しまで、そしてその後も。この19人と、ずっとお付き合いいただくことになります。
           </p>
         </div>
       </div>

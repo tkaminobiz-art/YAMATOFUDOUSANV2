@@ -33,12 +33,34 @@ html, body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* 日本語折り返しのベース設定 */
+  word-break: auto-phrase;  /* Chrome: 日本語の句単位で改行 */
+  line-break: strict;        /* 句読点の前で改行しない */
+  overflow-wrap: anywhere;   /* 必要な時だけ折り返す */
+}
+
+/* フォールバック: auto-phrase 未対応ブラウザ */
+@supports not (word-break: auto-phrase) {
+  html, body { word-break: normal; }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-sans);
   font-weight: 400;
   letter-spacing: 0.06em;
+  text-wrap: balance;          /* 見出しを綺麗にバランス */
+  line-height: 1.5;
+}
+
+p, blockquote, dd, li {
+  text-wrap: pretty;           /* 本文: orphan回避 */
+}
+
+/* 数字+単位の分離を防ぐ */
+.nowrap {
+  white-space: nowrap;
+  display: inline-block;
 }
 
 /* Section label */

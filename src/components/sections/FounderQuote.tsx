@@ -24,8 +24,7 @@ export default function FounderQuote() {
             className="text-[clamp(24px,4vw,48px)] text-bg-primary leading-[1.4] tracking-[0.04em]"
             style={{ fontFamily: "var(--font-sans)" }}
           >
-            大手で4,000万の家が、<br className="hidden md:inline" />
-            なぜ2,480万で建つのか。
+            大手で<span className="nowrap">4,000万</span>の家が、なぜ<span className="nowrap">2,480万</span>で建つのか。
           </p>
         </blockquote>
       </div>
