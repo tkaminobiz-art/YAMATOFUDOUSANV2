@@ -125,6 +125,9 @@ export default function HeroCatalog() {
               >
                 見積もりが、最終価格です。
               </p>
+              <p className="text-white/65 text-xs md:text-sm mt-3 max-w-xl leading-relaxed">
+                ※ 土地代・登記費用・引越し代を除く、建物本体と標準設備のすべてを含んだ価格です。
+              </p>
             </div>
           </div>
 

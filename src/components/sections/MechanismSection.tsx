@@ -32,7 +32,7 @@ export default function MechanismSection() {
             価格の中身が、違います。
           </h2>
           <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-            大手とやまとで、同じ素材・同じ品質でもなぜ金額に差が出るのか。そのカラクリです。
+            大手とやまとで、同じ素材・同じ品質でもなぜ金額に差が出るのか。その安さの仕組みです。
           </p>
         </div>
 

@@ -14,7 +14,7 @@ const STEPS = [
   },
   {
     num: "02",
-    title: "3ヶ月かけて、何度でも描き直します。",
+    title: "3ヶ月かけて、何度でもプランを磨き上げます。",
     body: "平日の動線も、子どもの成長も織り込んで。",
     image: "/images/design/step-02-drawing.webp",
     alt: "手描きの間取り図",
@@ -28,7 +28,7 @@ const STEPS = [
   },
   {
     num: "04",
-    title: "コンセントの位置まで、あなたが決める。",
+    title: "コンセントの位置ひとつまで、ご自由にお選びいただけます。",
     body: "外壁、床、キッチン、窓の形まで。",
     image: "/images/design/step-04-finished.webp",
     alt: "完成したキッチンとダイニング",

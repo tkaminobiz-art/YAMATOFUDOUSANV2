@@ -13,6 +13,8 @@ const NAV_ITEMS = [
   { label: "店舗情報", href: "/#access" },
 ] as const;
 
+const SELL_NAV = { label: "家・土地を売りたい方", href: "/sell" };
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -67,6 +69,13 @@ export default function Header() {
               {item.label}
             </a>
           ))}
+          {/* 売り手向け副導線（控えめに） */}
+          <a
+            href={SELL_NAV.href}
+            className="whitespace-nowrap text-xs lg:text-sm font-normal text-text-secondary transition-colors hover:text-main border-l border-border pl-4 lg:pl-6"
+          >
+            {SELL_NAV.label}
+          </a>
         </nav>
 
         {/* CTA buttons — header版（小サイズ） */}
@@ -106,6 +115,16 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            {/* 売り手向け副導線 */}
+            <li className="border-t border-border">
+              <a
+                href={SELL_NAV.href}
+                className="block px-6 py-3 text-sm font-normal text-text-secondary transition-colors hover:bg-bg-secondary hover:text-main"
+                onClick={() => setMenuOpen(false)}
+              >
+                {SELL_NAV.label}
+              </a>
+            </li>
             <li className="border-t border-border px-6 py-4">
               <a
                 href="tel:0742361123"
