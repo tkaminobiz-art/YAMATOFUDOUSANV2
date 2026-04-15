@@ -4,9 +4,11 @@ import ConceptSection from "@/components/sections/ConceptSection";
 import FounderQuote from "@/components/sections/FounderQuote";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismSection from "@/components/sections/MechanismSection";
+import ComparisonTable from "@/components/sections/ComparisonTable";
 import StandardSection from "@/components/sections/StandardSection";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
+import MoneyTalkSection from "@/components/sections/MoneyTalkSection";
 import QualitySection from "@/components/sections/QualitySection";
 import GuaranteeSection from "@/components/sections/GuaranteeSection";
 import MidCta from "@/components/sections/MidCta";
@@ -22,44 +24,53 @@ import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
 /*
-  19セクション構成（感情導線 / 2026-04-15 TrustBar削除）:
+  21セクション構成（Phase 1リファクタ / 2026-04-15）
 
-  【① フック — 3秒で興味】
-  1. Hero           驚き（2,480万〜・権威バッジ込み）
+  家を買う人の思考順に寄り添う構造：
+  土地 → お金 → 比較 → やまとならなんとかなるかも。
 
-  【② 共感 — 自分の話だと感じさせる】
-  2. Concept        共感（諦めていた家が）
-  3. FounderQuote   代表の問いかけ
+  【① フック】
+  1. Hero              驚き（2,480万〜・権威バッジ込み）
 
-  【③ 解決の仕組み — なぜ可能なのか】
-  4. Mechanism      価格の構造（大手 vs やまと）
-  5. Zero           追加費用もゼロ（9つの¥0）
-  6. FreedomOfDesign 完全自由設計（花・風・京は出発点）
-  7. Standard       設備が標準（Bento — 自由設計の中の標準仕様として）
-  8. Price          参考プランと価格帯
+  【② 共感 — 諦めかけたあなたへ】
+  2. Concept          諦めていた家が
+  3. FounderQuote     代表の思い
 
-  【④ 信頼の裏付け — ちゃんとした会社】
-  9. Quality        品質の裏付け
-  10. Guarantee     建てた後の安心
-  11. StaffStory    19人の職人（以降の実例に温度を宿す）
+  【③ 比較と納得 — 大手と何が違うか】
+  4. Mechanism        価格のカラクリ（理屈）
+  5. Comparison(新)   大手 vs やまと（証拠）
+  6. Zero             追加費用ゼロ
 
-  【⑤ 実例 — 共感×視覚のピーク】
-  12. Voice         お客様の声
-  13. Works         施工事例
+  【④ 実現可能性 — 払えるのか】
+  7. Price            料金目安（2,480万〜バーン）
+  8. MoneyTalk(新)    お金の話、まず気軽に（FP・つなぎ融資なし）
 
-  【⑥ 行動喚起①】
-  14. MidCta        「ここまで読んでいただいたあなたへ」（感情ピーク直後）
+  【⑤ 土地の安心 — 最初の悩み】
+  9. Lots(前倒し)     まず、土地の話から（土地＋建物セット提案）
 
-  【⑦ 選択肢の提示】
-  15. Lots          分譲地（土地の武器）
+  【⑥ 商品の魅力】
+  10. FreedomOfDesign 完全自由設計
+  11. Standard        標準仕様
 
-  【⑧ 行動直前の導線】
-  16. Flow          家づくりの流れ（行動直前のイメージ可能化）
-  17. FAQ           残存不安
+  【⑦ 信頼の裏付け】
+  12. Quality         品質
+  13. Guarantee       保証
+  14. StaffStory      19人の職人
 
-  【⑨ クロージング】
-  18. Access        会社情報
-  19. FinalCta      決断
+  【⑧ 実例】
+  15. Voice           お客様の声
+  16. Works           施工事例
+
+  【⑨ 行動喚起①】
+  17. MidCta          ここまで読んで
+
+  【⑩ 行動直前】
+  18. Flow            家づくりの流れ
+  19. FAQ             残存不安
+
+  【⑪ クロージング】
+  20. Access          会社概要
+  21. FinalCta        決断
 */
 
 export default function Home() {
@@ -71,17 +82,19 @@ export default function Home() {
         <ConceptSection />
         <FounderQuote />
         <MechanismSection />
+        <ComparisonTable />
         <ZeroDeclaration />
+        <PriceSection />
+        <MoneyTalkSection />
+        <LotsSection />
         <FreedomOfDesign />
         <StandardSection />
-        <PriceSection />
         <QualitySection />
         <GuaranteeSection />
         <StaffStory />
         <VoiceSection />
         <WorksSection />
         <MidCta />
-        <LotsSection />
         <FlowSection />
         <FaqSection />
         <AccessSection />
