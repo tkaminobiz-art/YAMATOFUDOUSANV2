@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import CtaButton from "@/components/ui/CtaButton";
 
 const NAV_ITEMS = [
   { label: "やまとの家づくり", href: "/#concept" },
@@ -68,20 +69,22 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA buttons — min-h-[44px] for touch target */}
+        {/* CTA buttons — header版（小サイズ） */}
         <div className="flex items-center gap-2">
-          <a
+          <CtaButton
             href="/contact"
-            className="flex items-center justify-center rounded bg-main min-h-[44px] px-4 py-2.5 text-xs font-medium text-white transition-all hover:bg-main-dark hover:-translate-y-0.5 md:px-5 md:text-sm"
-          >
-            資料請求
-          </a>
-          <a
+            variant="secondary"
+            size="sm"
+            label="資料請求"
+            icon="none"
+          />
+          <CtaButton
             href="/reserve"
-            className="flex items-center justify-center rounded bg-accent min-h-[44px] px-4 py-2.5 text-xs font-medium text-white transition-all hover:opacity-90 hover:-translate-y-0.5 md:px-5 md:text-sm"
-          >
-            来店予約
-          </a>
+            variant="primary"
+            size="sm"
+            label="来店予約"
+            icon="none"
+          />
         </div>
       </div>
 

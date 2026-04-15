@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import CtaButton from "@/components/ui/CtaButton";
 
 const MODELS = [
   {
@@ -165,18 +166,20 @@ export default function HeroCatalog() {
 
               {/* CTA — SP で縦積み、sm以上で横並び */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <a
+                <CtaButton
                   href="/reserve"
-                  className="flex items-center justify-center min-h-[52px] px-6 md:px-8 py-3.5 rounded bg-accent text-white text-base font-medium transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(196,112,63,0.4)]"
-                >
-                  来店予約（無料）
-                </a>
-                <a
+                  variant="dark-bg-primary"
+                  size="md"
+                  label="来場予約"
+                  sublabel="ご予約不要・無料"
+                />
+                <CtaButton
                   href="/contact"
-                  className="flex items-center justify-center min-h-[52px] px-6 md:px-8 py-3.5 rounded bg-main text-white text-base font-medium transition-all hover:bg-main-dark hover:-translate-y-0.5"
-                >
-                  資料請求（無料）
-                </a>
+                  variant="dark-bg-secondary"
+                  size="md"
+                  label="資料請求"
+                  sublabel="無料・1分で完了"
+                />
               </div>
             </div>
           </div>

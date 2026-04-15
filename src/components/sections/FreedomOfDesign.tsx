@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import CtaButton from "@/components/ui/CtaButton";
 
 const STEPS = [
   {
@@ -186,13 +185,14 @@ export default function FreedomOfDesign() {
           <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-8">
             あなたの土地と家族の話を、その場で間取りに落としてみます。
           </p>
-          <Link
-            href="/reserve"
-            className="inline-flex items-center gap-2 min-h-[52px] px-8 py-3.5 rounded bg-accent text-white text-base font-medium transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(196,112,63,0.35)]"
-          >
-            設計士との打ち合わせを予約する
-            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </Link>
+          <div className="inline-flex">
+            <CtaButton
+              href="/reserve"
+              variant="primary"
+              size="md"
+              label="設計士との打ち合わせを予約する"
+            />
+          </div>
         </div>
       </div>
     </section>

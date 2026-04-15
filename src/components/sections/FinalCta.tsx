@@ -1,7 +1,7 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
-import { MessageCircle } from "lucide-react";
+import CtaButton from "@/components/ui/CtaButton";
 
 export default function FinalCta() {
   const ref = useScrollIn<HTMLDivElement>();
@@ -26,31 +26,31 @@ export default function FinalCta() {
 
         {/* プライマリCTA群 */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
-          <a
+          <CtaButton
             href="/reserve"
-            className="flex items-center justify-center min-h-[52px] px-10 py-3.5 rounded bg-accent text-white text-base font-medium transition-all hover:opacity-90 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(196,112,63,0.3)]"
-          >
-            来店予約（無料）
-          </a>
-          <a
+            variant="primary"
+            size="lg"
+            label="来場予約"
+            sublabel="ご予約不要・無料"
+          />
+          <CtaButton
             href="/contact"
-            className="flex items-center justify-center min-h-[52px] px-10 py-3.5 rounded bg-main text-white text-base font-medium transition-all hover:bg-main-dark hover:-translate-y-0.5"
-          >
-            資料請求（無料）
-          </a>
+            variant="secondary"
+            size="lg"
+            label="資料請求"
+            sublabel="無料・1分で完了"
+          />
         </div>
 
         {/* LINE CTA — ハードル最低の選択肢 */}
-        <a
-          href="https://line.me/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-8 py-3 rounded text-white text-sm font-medium transition-all hover:opacity-90 hover:-translate-y-0.5 mb-8"
-          style={{ backgroundColor: "#06C755" }}
-        >
-          <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
-          LINEでまず質問する
-        </a>
+        <div className="flex justify-center mb-8 mt-2">
+          <CtaButton
+            href="https://line.me/"
+            variant="tertiary-line"
+            label="LINEでまず質問する"
+            external
+          />
+        </div>
 
         <p className="text-text-secondary text-xs mb-10">
           強引な勧誘は一切いたしません。見学・お問い合わせすべて無料です。

@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
+import CtaButton from "@/components/ui/CtaButton";
 
 export default function MidCta() {
   const ref = useScrollIn<HTMLDivElement>();
@@ -15,22 +16,24 @@ export default function MidCta() {
           ここまで読んでいただいたあなたへ。モデルハウスでお会いしませんか。
         </h2>
 
-        <div className="flex justify-center gap-4">
-          <a
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <CtaButton
             href="/reserve"
-            className="flex items-center justify-center min-h-[44px] px-8 py-3 rounded bg-accent text-white text-sm font-medium transition-all hover:opacity-90 hover:-translate-y-0.5"
-          >
-            来店予約
-          </a>
-          <a
+            variant="primary"
+            size="md"
+            label="来場予約"
+            sublabel="ご予約不要・無料"
+          />
+          <CtaButton
             href="/contact"
-            className="flex items-center justify-center min-h-[44px] px-8 py-3 rounded bg-bg-primary text-text-primary text-sm font-medium card-shadow transition-all hover:-translate-y-0.5"
-          >
-            資料請求
-          </a>
+            variant="secondary"
+            size="md"
+            label="資料請求"
+            sublabel="無料・1分で完了"
+          />
         </div>
 
-        <p className="text-text-secondary text-xs mt-4">
+        <p className="text-text-secondary text-xs mt-6">
           ご予約不要・見学無料です
         </p>
       </div>

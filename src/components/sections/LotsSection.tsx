@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import CtaButton from "@/components/ui/CtaButton";
 import { LOTS, getCities } from "@/data/lots";
 
 export default function LotsSection() {
@@ -99,13 +100,14 @@ export default function LotsSection() {
         </div>
 
         <div className="text-center">
-          <Link
-            href="/lots"
-            className="inline-flex items-center gap-2 min-h-[52px] px-8 py-3.5 rounded bg-bg-primary text-text-primary text-base font-medium card-shadow transition-all hover:-translate-y-0.5 hover:text-main"
-          >
-            分譲地一覧を見る（{LOTS.length}件）
-            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </Link>
+          <div className="inline-flex">
+            <CtaButton
+              href="/lots"
+              variant="secondary"
+              size="md"
+              label={`分譲地一覧を見る（${LOTS.length}件）`}
+            />
+          </div>
         </div>
       </div>
     </section>
