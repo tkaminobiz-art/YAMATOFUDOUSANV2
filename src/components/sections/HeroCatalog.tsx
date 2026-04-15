@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import CtaButton from "@/components/ui/CtaButton";
 
 const MODELS = [
   {
@@ -168,30 +168,24 @@ export default function HeroCatalog() {
                 </span>
               </div>
 
-              {/* CTA — 案B：メイン緑ソリッド / サブ黒線（暗い背景上は白文字＋黒縁で視認） */}
+              {/* CTA — 案B統一版（CtaButton 経由） */}
               <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch">
-                <Link
+                <CtaButton
                   href="/reserve"
-                  className="group relative inline-flex min-h-[56px] flex-1 flex-col items-center justify-center overflow-hidden rounded bg-main px-8 py-4 text-center text-base font-medium text-white shadow-[0_12px_40px_-12px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_16px_48px_-8px_rgba(90,138,74,0.5)] sm:min-w-[200px]"
-                >
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-                  />
-                  <span className="relative leading-tight">来場予約</span>
-                  <span className="relative mt-0.5 text-[11px] font-normal text-white/75">
-                    ご予約不要・無料
-                  </span>
-                </Link>
-                <Link
+                  variant="dark-bg-primary"
+                  size="md"
+                  label="来場予約"
+                  sublabel="ご予約不要・無料"
+                  className="flex-1 sm:min-w-[200px] px-8 py-4"
+                />
+                <CtaButton
                   href="/contact"
-                  className="group relative inline-flex min-h-[56px] flex-1 flex-col items-center justify-center overflow-hidden rounded border-2 border-zinc-950 bg-black/25 px-8 py-4 text-center text-base font-medium text-white backdrop-blur-[2px] transition-colors duration-300 hover:bg-zinc-950/90 sm:min-w-[200px]"
-                >
-                  <span className="relative leading-tight">資料請求</span>
-                  <span className="relative mt-0.5 text-[11px] font-normal text-white/70">
-                    無料・1分で完了
-                  </span>
-                </Link>
+                  variant="dark-bg-secondary"
+                  size="md"
+                  label="資料請求"
+                  sublabel="無料・1分で完了"
+                  className="flex-1 sm:min-w-[200px] px-8 py-4"
+                />
               </div>
             </div>
           </div>

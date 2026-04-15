@@ -206,64 +206,42 @@ export default function CtaButton({
     );
   }
 
-  // ─── Dark background - Primary（茶系を許容）─── ※基本は使わない、必要時のみ
+  // ─── Dark background - Primary（緑ソリッド + シマー、中央揃え縦積み） ───
+  // 2026-04-15 神野さん版に統一: Hero / MidCta / /sell Hero 共通
   if (variant === "dark-bg-primary") {
     return (
-      <Anchor href={href} external={external}
-        className={`group relative inline-flex items-center justify-center overflow-hidden bg-white text-text-primary rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg ${sizeClass} ${className}`}
+      <Anchor
+        href={href}
+        external={external}
+        className={`group relative inline-flex ${sizeClass} ${sublabel ? "flex-col" : ""} items-center justify-center overflow-hidden rounded bg-main text-white text-center font-medium shadow-[0_12px_40px_-12px_rgba(0,0,0,0.45)] transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_16px_48px_-8px_rgba(90,138,74,0.5)] ${className}`}
       >
         <span
           aria-hidden
-          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-text-primary/10 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
         />
-        {sublabel ? (
-          <>
-            <span className="relative flex flex-col items-start mr-3">
-              <span className="font-medium leading-tight">{label}</span>
-              <span className={`${sublabelSize} text-text-secondary leading-tight mt-0.5`}>
-                {sublabel}
-              </span>
-            </span>
-            {IconComponent && (
-              <IconComponent className={`relative ${iconSize} transition-transform duration-[400ms] group-hover:translate-x-1`} strokeWidth={1.5} />
-            )}
-          </>
-        ) : (
-          <span className="relative flex items-center gap-2 font-medium">
-            {label}
-            {IconComponent && <IconComponent className={`${iconSize} transition-transform duration-[400ms] group-hover:translate-x-1`} strokeWidth={1.5} />}
+        <span className="relative leading-tight">{label}</span>
+        {sublabel && (
+          <span className="relative mt-0.5 text-[11px] font-normal text-white/75">
+            {sublabel}
           </span>
         )}
       </Anchor>
     );
   }
 
-  // ─── Dark background - Secondary（白線→白フィル） ───
+  // ─── Dark background - Secondary（黒縁 + 半透明 + 白文字、ホバーで黒solid） ───
+  // 2026-04-15 神野さん版に統一: 落ち着いた重厚感、ダーク写真背景で溶け込む
   if (variant === "dark-bg-secondary") {
     return (
-      <Anchor href={href} external={external}
-        className={`group relative inline-flex items-center justify-center overflow-hidden border border-white text-white rounded transition-colors duration-[400ms] hover:text-text-primary ${sizeClass} ${className}`}
+      <Anchor
+        href={href}
+        external={external}
+        className={`group relative inline-flex ${sizeClass} ${sublabel ? "flex-col" : ""} items-center justify-center overflow-hidden rounded border-2 border-zinc-950 bg-black/25 backdrop-blur-[2px] text-white text-center font-medium transition-colors duration-[400ms] hover:bg-zinc-950/90 ${className}`}
       >
-        <span
-          aria-hidden
-          className="absolute inset-0 -translate-x-full bg-white transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
-        />
-        {sublabel ? (
-          <>
-            <span className="relative flex flex-col items-start mr-3">
-              <span className="font-medium leading-tight">{label}</span>
-              <span className={`${sublabelSize} text-white/65 leading-tight mt-0.5 group-hover:text-text-secondary transition-colors duration-[400ms]`}>
-                {sublabel}
-              </span>
-            </span>
-            {IconComponent && (
-              <IconComponent className={`relative ${iconSize} transition-transform duration-[400ms] group-hover:translate-x-1`} strokeWidth={1.5} />
-            )}
-          </>
-        ) : (
-          <span className="relative flex items-center gap-2 font-medium">
-            {label}
-            {IconComponent && <IconComponent className={`${iconSize} transition-transform duration-[400ms] group-hover:translate-x-1`} strokeWidth={1.5} />}
+        <span className="relative leading-tight">{label}</span>
+        {sublabel && (
+          <span className="relative mt-0.5 text-[11px] font-normal text-white/70">
+            {sublabel}
           </span>
         )}
       </Anchor>
