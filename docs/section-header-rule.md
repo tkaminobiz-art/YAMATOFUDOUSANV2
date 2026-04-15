@@ -13,6 +13,7 @@
 
 ## 実装
 - 共通コンポーネント: `src/components/SectionHeaderCentered.tsx`
+- 暗背景セクションでは `theme="dark"` を指定（CONCEPT 等）
 
 ## 使用例
 
