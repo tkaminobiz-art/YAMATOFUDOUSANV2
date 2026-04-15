@@ -2,6 +2,7 @@
 
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { Check, Equal } from "lucide-react";
+import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
 /*
   大手 vs やまと 比較表
@@ -77,18 +78,12 @@ export default function ComparisonTable() {
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* ヘッダー */}
-        <div className="mb-10 md:mb-14 max-w-[720px]">
-          <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-            COMPARISON
-          </p>
-          <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-            大手と、やまとで。
-          </h2>
-          <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-            同じ素材、同じ品質。違うのは、看板代と中間マージンだけ。
-          </p>
-        </div>
+        <SectionHeaderCentered
+          label="COMPARISON"
+          title="大手と、やまとで。"
+          ghostText="COMPARISON"
+          lead="同じ素材、同じ品質。違うのは、看板代と中間マージンだけ。"
+        />
 
         {/* 比較表 — Desktop */}
         <div className="hidden md:block overflow-hidden rounded-lg border border-border">

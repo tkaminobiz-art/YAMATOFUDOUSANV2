@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
+import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
 // 大手とやまとのコスト構造比較（イメージ図）
 const OTHERS = [
@@ -24,24 +25,11 @@ export default function MechanismSection() {
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* 見出し（資料1枚のように中央揃え） */}
-        <div className="relative mb-10 md:mb-14 text-center">
-          {/* 埋もるテキスト */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 -top-6 md:-top-10 select-none text-[clamp(56px,9vw,120px)] font-semibold tracking-[0.22em] text-text-primary/5"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-          >
-            MECHANISM
-          </div>
-
-          <span className="inline-flex items-center justify-center rounded-full bg-main/15 px-4 py-2 text-[11px] font-semibold tracking-[0.18em] text-main">
-            MECHANISM
-          </span>
-          <h2 className="mt-6 text-[clamp(28px,4.2vw,56px)] font-semibold tracking-[0.06em] text-text-primary">
-            価格の中身が、違います。
-          </h2>
-        </div>
+        <SectionHeaderCentered
+          label="MECHANISM"
+          title="価格の中身が、違います。"
+          ghostText="MECHANISM"
+        />
 
         {/* 比較図（左右カード＋中央矢印） */}
         <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-8">
