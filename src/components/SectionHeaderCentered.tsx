@@ -13,6 +13,8 @@ type Props = {
    */
   lead?: string;
   className?: string;
+  /** h2 に追加するクラス（明朝・行間の調整など） */
+  titleClassName?: string;
 };
 
 export default function SectionHeaderCentered({
@@ -21,6 +23,7 @@ export default function SectionHeaderCentered({
   ghostText,
   lead,
   className = "",
+  titleClassName = "",
 }: Props) {
   return (
     <div className={`relative mb-10 md:mb-14 text-center ${className}`}>
@@ -37,7 +40,9 @@ export default function SectionHeaderCentered({
       <span className="inline-flex items-center justify-center rounded-full bg-main/15 px-4 py-2 text-[11px] font-semibold tracking-[0.18em] text-main">
         {label}
       </span>
-      <h2 className="mt-6 text-[clamp(28px,4.2vw,56px)] font-semibold tracking-[0.06em] text-text-primary">
+      <h2
+        className={`mt-6 text-[clamp(28px,4.2vw,56px)] font-semibold tracking-[0.06em] text-text-primary ${titleClassName}`}
+      >
         {title}
       </h2>
 
