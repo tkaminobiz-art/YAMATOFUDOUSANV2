@@ -80,7 +80,7 @@ export default function StaffStory() {
               className="text-[clamp(20px,3vw,36px)] text-text-primary leading-[1.6] tracking-[0.04em] mb-6"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              お引き渡しの日が、お付き合いの始まりです。
+              お引き渡しの日からが、本当のお付き合いの始まりです。
             </p>
           </blockquote>
           <p className="text-text-secondary text-sm md:text-base">
