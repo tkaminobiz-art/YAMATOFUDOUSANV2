@@ -10,8 +10,8 @@ import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
   構成:
   1. 章扉（SectionHeaderCentered）
-  2. 価格の一撃（左右カード＋中央矢印）— MECHANISM と同系統の視線誘導
-  3. 決定的差（big-diff）— 大きな行カード（PC）/ 縦のヒーローカード（SP）
+  2. ブリッジ文のみ（MECHANISM と同じ「価格の左右図」は出さない）
+  3. 決定的差（big-diff）— カードグリッド（建物本体価格を含む全項目）
   4. 同等仕様（same）— 編集テーブル風の一枚パネル
   5. 締めコピー＋出典
 
@@ -61,16 +61,8 @@ const COMPARISONS: Row[] = [
 const BIG_DIFF = COMPARISONS.filter((r) => r.diff === "big-diff");
 const SAME_ONLY = COMPARISONS.filter((r) => r.diff === "same");
 
-function extractPriceNumber(s: string): string {
-  const m = s.replace(/,/g, "").match(/(\d+)/);
-  return m ? m[1] : s;
-}
-
 export default function ComparisonTable() {
   const ref = useScrollIn<HTMLDivElement>(true);
-  const priceRow = COMPARISONS.find((r) => r.category === "建物本体価格");
-  const majorPrice = priceRow ? extractPriceNumber(priceRow.major) : "4000";
-  const yamatoPrice = priceRow ? extractPriceNumber(priceRow.yamato) : "2480";
 
   return (
     <section className="bg-bg-warm py-[var(--section-py)]">
@@ -86,65 +78,17 @@ export default function ComparisonTable() {
           className="scroll-in"
         />
 
-        {/* ── ① 価格：一枚絵（MECHANISM と同系統） ── */}
-        <div className="scroll-in mb-12 grid grid-cols-1 items-stretch gap-6 md:mb-16 md:grid-cols-[1fr_auto_1fr] md:gap-8">
-          <article className="card-shadow rounded-xl bg-bg-secondary p-7 md:p-8">
-            <p className="text-center text-sm font-semibold text-text-secondary">
-              大手ハウスメーカー（参考帯）
-            </p>
-            <div className="mt-4 text-center">
-              <div className="inline-flex items-baseline gap-1">
-                <span
-                  className="text-5xl font-semibold tracking-tight text-text-primary md:text-6xl"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  {majorPrice}
-                </span>
-                <span className="text-base text-text-secondary">万円〜</span>
-              </div>
-              <p className="mx-auto mt-3 max-w-[280px] text-[11px] leading-relaxed text-text-secondary">
-                5社平均・33坪4LDK試算
-              </p>
-              <div className="mx-auto mt-4 h-px w-[78%] bg-border" />
-            </div>
-          </article>
-
-          <div className="flex items-center justify-center">
-            <div className="relative flex w-full max-w-[420px] items-center justify-center md:w-[220px] md:max-w-none">
-              <div className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 bg-main/55" />
-              <div className="absolute right-0 top-1/2 h-0 w-0 -translate-y-1/2 border-y-[12px] border-y-transparent border-l-[18px] border-l-main/70" />
-              <span
-                className="relative inline-flex items-center justify-center rounded-md bg-main px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_28px_-14px_rgba(0,0,0,0.35)]"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                同条件で比較
-              </span>
-            </div>
-          </div>
-
-          <article className="card-shadow rounded-xl bg-main/55 p-7 md:p-8">
-            <p className="text-center text-sm font-semibold text-text-primary">
-              やまと不動産 花鳥風月
-            </p>
-            <div className="mt-4 text-center">
-              <div className="inline-flex items-baseline gap-1">
-                <span
-                  className="text-5xl font-semibold tracking-tight text-text-primary md:text-6xl"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  {yamatoPrice}
-                </span>
-                <span className="text-base text-text-primary/90">万円〜</span>
-              </div>
-              <p className="mx-auto mt-3 max-w-[280px] text-[11px] font-medium leading-relaxed text-text-primary/85">
-                税込・建物本体・付帯工事込みの目安
-              </p>
-              <div className="mx-auto mt-4 h-px w-[78%] bg-black/15" />
-            </div>
-          </article>
+        {/* ── ① ブリッジ（価格の“同じ図”は使わない） ── */}
+        <div className="scroll-in mx-auto mb-10 max-w-[720px] text-center md:mb-14">
+          <p className="text-sm leading-relaxed text-text-secondary md:text-base">
+            ひとつ上の <span className="font-semibold text-text-primary">MECHANISM</span>{" "}
+            で「なぜ差が出るか」を示したうえで、ここでは{" "}
+            <span className="font-semibold text-text-primary">項目ごとの事実</span>
+            を並べます。価格の図解の繰り返しはしません。
+          </p>
         </div>
 
-        {/* ── ② 決定的差（big-diff）※建物本体は上で見せたので除外して重複を避ける ── */}
+        {/* ── ② 決定的差（big-diff）全件 ── */}
         <div className="scroll-in mb-4 md:mb-6">
           <p className="text-center font-section-label text-xs tracking-[0.2em] text-main md:text-sm">
             DECISIVE DIFFERENCES
@@ -154,8 +98,8 @@ export default function ComparisonTable() {
           </p>
         </div>
 
-        <div className="scroll-in grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
-          {BIG_DIFF.filter((r) => r.category !== "建物本体価格").map((row) => (
+        <div className="scroll-in grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+          {BIG_DIFF.map((row) => (
             <article
               key={row.category}
               className="relative overflow-hidden rounded-xl border border-main/25 bg-bg-primary card-shadow"
@@ -173,9 +117,20 @@ export default function ComparisonTable() {
                     <p className="text-[10px] font-medium tracking-wider text-text-secondary">
                       大手側
                     </p>
-                    <p className="mt-1 text-sm text-text-secondary line-through decoration-text-secondary/35 md:text-base">
+                    <p
+                      className={`mt-1 text-sm md:text-base ${
+                        row.category === "建物本体価格"
+                          ? "font-medium text-text-secondary"
+                          : "text-text-secondary line-through decoration-text-secondary/35"
+                      }`}
+                    >
                       {row.major}
                     </p>
+                    {row.category === "建物本体価格" ? (
+                      <p className="mt-2 text-[10px] leading-relaxed text-text-secondary">
+                        5社平均・33坪4LDK試算（参考）
+                      </p>
+                    ) : null}
                   </div>
                 </div>
                 <div className="flex flex-col justify-between gap-4 rounded-lg bg-main px-5 py-5 text-white md:min-h-[200px]">
@@ -191,7 +146,9 @@ export default function ComparisonTable() {
                     </div>
                   </div>
                   <p className="text-[11px] leading-relaxed text-white/70">
-                    見積もりの透明性と、土地〜建物までの一貫体制が効いてくる部分です。
+                    {row.category === "建物本体価格"
+                      ? "内訳の差が、そのまま体感できる最重要項目です。"
+                      : "見積もりの透明性と、土地〜建物までの一貫体制が効いてくる部分です。"}
                   </p>
                 </div>
               </div>
