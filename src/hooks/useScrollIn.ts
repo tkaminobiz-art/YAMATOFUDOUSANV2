@@ -41,7 +41,8 @@ export function useScrollIn<T extends HTMLElement = HTMLDivElement>(
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      /* 背の高いセクション（Voice 等）で 0.15 だと交差率が足りず .is-visible が付かないことがある */
+      { threshold: 0, rootMargin: "0px 0px 10% 0px" }
     );
 
     observer.observe(el);
