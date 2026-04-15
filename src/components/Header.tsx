@@ -2,9 +2,29 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import CtaButton from "@/components/ui/CtaButton";
+import Link from "next/link";
 
+/*
+  Header — 2026-04-15 修正版
+  ナビ肥大化でCTAが潰れた問題を解消。
+
+  対応:
+  - Desktop ナビを 4項目に絞る（やまとの家づくり・店舗情報 は削除）
+  - Desktop で売り手副導線は右端に控えめ配置
+  - CTAを Header 専用の小型スタイルに書き直し（CtaButton を使わずにインラインで最適化）
+  - SP メニューには全項目保持（スペースに余裕があるため）
+*/
+
+// Desktop 用に絞ったメインナビ（4項目）
 const NAV_ITEMS = [
+  { label: "商品紹介", href: "/#product" },
+  { label: "物件情報", href: "/lots" },
+  { label: "施工事例", href: "/#works" },
+  { label: "お客様の声", href: "/voice" },
+] as const;
+
+// SP メニューには全項目を残す
+const SP_NAV_ITEMS = [
   { label: "やまとの家づくり", href: "/#concept" },
   { label: "商品紹介", href: "/#product" },
   { label: "物件情報", href: "/lots" },
@@ -20,11 +40,11 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-bg-primary">
-      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-[var(--page-px)]">
+      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-[var(--page-px)] gap-4">
         {/* SP: hamburger (left) */}
         <button
           type="button"
-          className="mr-2 flex h-11 w-11 items-center justify-center rounded lg:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded lg:hidden shrink-0"
           aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
@@ -44,56 +64,76 @@ export default function Header() {
         </button>
 
         {/* Logo */}
-        <a href="/" className="shrink-0">
+        <Link href="/" className="shrink-0">
           <Image
             src="/images/logo.png"
             alt="やまと不動産"
             width={160}
             height={40}
-            className="h-9 w-auto"
+            className="h-8 md:h-9 w-auto"
             priority
           />
-        </a>
+        </Link>
 
         {/* Desktop nav (center) */}
         <nav
-          className="hidden flex-1 items-center justify-center gap-4 lg:gap-6 xl:gap-8 lg:flex"
+          className="hidden flex-1 items-center justify-center gap-5 xl:gap-7 lg:flex"
           aria-label="メインナビゲーション"
         >
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap text-xs lg:text-sm font-normal text-text-primary transition-colors hover:text-main"
+              className="whitespace-nowrap text-sm font-normal text-text-primary transition-colors hover:text-main"
             >
               {item.label}
             </a>
           ))}
-          {/* 売り手向け副導線（控えめに） */}
+        </nav>
+
+        {/* Desktop 右端: 売り手副導線 + CTA */}
+        <div className="hidden lg:flex items-center gap-3 xl:gap-4 shrink-0">
+          {/* 売り手副導線（控えめ） */}
           <a
             href={SELL_NAV.href}
-            className="whitespace-nowrap text-xs lg:text-sm font-normal text-text-secondary transition-colors hover:text-main border-l border-border pl-4 lg:pl-6"
+            className="whitespace-nowrap text-xs xl:text-sm font-normal text-text-secondary transition-colors hover:text-main"
           >
             {SELL_NAV.label}
           </a>
-        </nav>
 
-        {/* CTA buttons — header版（小サイズ） */}
-        <div className="flex items-center gap-2">
-          <CtaButton
+          {/* CTA: Secondary（資料請求）— ヘッダー専用小型 */}
+          <Link
             href="/contact"
-            variant="secondary"
-            size="sm"
-            label="資料請求"
-            icon="none"
-          />
-          <CtaButton
+            className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium border border-text-primary text-text-primary rounded transition-colors duration-[400ms] hover:text-white whitespace-nowrap"
+          >
+            <span
+              aria-hidden
+              className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
+            />
+            <span className="relative">資料請求</span>
+          </Link>
+
+          {/* CTA: Primary（来店予約）— ヘッダー専用小型 */}
+          <Link
             href="/reserve"
-            variant="primary"
-            size="sm"
-            label="来店予約"
-            icon="none"
-          />
+            className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium bg-text-primary text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg whitespace-nowrap"
+          >
+            <span
+              aria-hidden
+              className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+            />
+            <span className="relative">来店予約</span>
+          </Link>
+        </div>
+
+        {/* SP 右端: CTA 小型（ハンバーガー開いたメニューでより大きく出す） */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <Link
+            href="/reserve"
+            className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-medium bg-text-primary text-white rounded whitespace-nowrap"
+          >
+            来店予約
+          </Link>
         </div>
       </div>
 
@@ -104,7 +144,7 @@ export default function Header() {
           aria-label="モバイルナビゲーション"
         >
           <ul className="flex flex-col py-2">
-            {NAV_ITEMS.map((item) => (
+            {SP_NAV_ITEMS.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
@@ -124,6 +164,23 @@ export default function Header() {
               >
                 {SELL_NAV.label}
               </a>
+            </li>
+            {/* SP メニュー内のCTA */}
+            <li className="border-t border-border px-6 py-4 space-y-2">
+              <Link
+                href="/contact"
+                className="block text-center min-h-[48px] px-6 py-3 text-sm font-medium border border-text-primary text-text-primary rounded"
+                onClick={() => setMenuOpen(false)}
+              >
+                資料請求
+              </Link>
+              <Link
+                href="/reserve"
+                className="block text-center min-h-[48px] px-6 py-3 text-sm font-medium bg-text-primary text-white rounded"
+                onClick={() => setMenuOpen(false)}
+              >
+                来店予約
+              </Link>
             </li>
             <li className="border-t border-border px-6 py-4">
               <a
