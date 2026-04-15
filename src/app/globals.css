@@ -122,6 +122,24 @@ p, blockquote, dd, li {
 
 /* （TrustBar削除に伴い marquee 関連を削除 — 2026-04-15） */
 
+/* 竣工ギャラリー帯（EditorialPhotoGallery）— GPU レイヤー */
+@keyframes gallery-marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes gallery-marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.gallery-marquee-left {
+  animation: gallery-marquee-left 88s linear infinite;
+  will-change: transform;
+}
+.gallery-marquee-right {
+  animation: gallery-marquee-right 102s linear infinite;
+  will-change: transform;
+}
+
 /* 装飾アクセント: 引用符・縦罫線用 */
 .accent-quote::before {
   content: "\201C";
@@ -146,5 +164,10 @@ p, blockquote, dd, li {
   }
   .grain-overlay {
     display: none;
+  }
+  .gallery-marquee-left,
+  .gallery-marquee-right {
+    animation: none !important;
+    transform: none !important;
   }
 }
