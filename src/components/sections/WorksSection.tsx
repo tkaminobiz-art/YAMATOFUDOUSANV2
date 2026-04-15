@@ -3,6 +3,13 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
+/*
+  WorksSection — 2026-04-15 Phase 2C 改修
+  SPカルーセル化でスクロール疲労を解消。
+  - Featured 3件: SPは横スワイプ、PCは非対称レイアウト維持
+  - Grid 5件: SPは横スワイプ、PCは5列グリッド維持
+*/
+
 // 詳細付き3件 + グリッド表示5件 = 計8件
 const FEATURED = [
   {
@@ -55,95 +62,187 @@ export default function WorksSection() {
     <section id="works" className="bg-bg-primary py-[var(--section-py)]">
       <div
         ref={sectionRef}
-        className="max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in"
+        className="max-w-[1400px] mx-auto scroll-in"
       >
-        <div className="flex items-end justify-between flex-wrap gap-4 mb-10 md:mb-14">
-          <div className="max-w-[640px]">
-            <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-              WORKS
-            </p>
-            <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-              実際に建てた家を、ご覧ください。
-            </h2>
-            <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-              すべてコミコミ価格で建てた、やまと不動産の施工事例です。
-            </p>
-          </div>
-          <div
-            className="text-right"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-          >
-            <span className="text-main font-light text-6xl md:text-7xl block leading-none">
-              90
-            </span>
-            <span className="text-text-secondary text-xs md:text-sm">区画以上の分譲実績</span>
+        {/* ヘッダー */}
+        <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+          <div className="flex items-end justify-between flex-wrap gap-4 mb-10 md:mb-14">
+            <div className="max-w-[640px]">
+              <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+                WORKS
+              </p>
+              <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
+                実際に建てた家を、ご覧ください。
+              </h2>
+              <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
+                すべてコミコミ価格で建てた、やまと不動産の施工事例です。
+              </p>
+            </div>
+            <div
+              className="text-right"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              <span className="text-main font-light text-6xl md:text-7xl block leading-none">
+                90
+              </span>
+              <span className="text-text-secondary text-xs md:text-sm">区画以上の分譲実績</span>
+            </div>
           </div>
         </div>
 
-        {/* Featured 3件 — 非対称レイアウト */}
-        <div className="flex flex-col gap-16 lg:gap-20 mb-16 md:mb-20">
-          {FEATURED.map((work, index) => (
-            <div
-              key={work.id}
-              className={`scroll-in grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-[var(--card-gap)] items-start ${
-                index % 2 === 1 ? "" : ""
-              }`}
-              style={index % 2 === 1 ? { direction: "rtl" } : undefined}
-            >
-              <div
-                className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
-                style={{ direction: "ltr" }}
-              >
-                <Image
-                  src={work.main}
-                  alt={`${work.title} 外観`}
-                  fill
-                  className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                />
-              </div>
+        {/* ===== Featured 3件 — SPカルーセル / PC非対称レイアウト ===== */}
 
-              <div
-                className="flex flex-col gap-[var(--card-gap)]"
-                style={{ direction: "ltr" }}
+        {/* SP: 横スワイプ */}
+        <div className="md:hidden">
+          <div
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-[var(--page-px)] pb-4 scrollbar-hide"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {FEATURED.map((work) => (
+              <article
+                key={work.id}
+                className="shrink-0 w-[85%] snap-center flex flex-col gap-3"
               >
+                <div className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow">
+                  <Image
+                    src={work.main}
+                    alt={`${work.title} 外観`}
+                    fill
+                    className="object-cover"
+                    sizes="85vw"
+                  />
+                </div>
                 <div>
                   <p className="text-accent text-xs font-medium tracking-wider mb-1">
                     {work.model}
                   </p>
                   <h3
-                    className="text-text-primary text-lg md:text-xl mb-1"
+                    className="text-text-primary text-lg mb-1"
                     style={{ fontFamily: "var(--font-sans)" }}
                   >
                     {work.title}
                   </h3>
                   <p className="text-text-secondary text-sm">{work.spec}</p>
                 </div>
-                {work.subs.map((src, i) => (
-                  <div
-                    key={i}
-                    className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
-                  >
-                    <Image
-                      src={src}
-                      alt={`${work.title} 内観 ${i + 1}`}
-                      fill
-                      className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-                      sizes="(max-width: 1024px) 50vw, 30vw"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                <div className="grid grid-cols-2 gap-3">
+                  {work.subs.map((src, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow"
+                    >
+                      <Image
+                        src={src}
+                        alt={`${work.title} 内観 ${i + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="40vw"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="text-center text-text-secondary text-xs mt-2 tracking-wider">
+            ← 横にスワイプできます →
+          </p>
         </div>
 
-        {/* 追加の5件 — コンパクトグリッド */}
-        <div>
+        {/* PC: 非対称レイアウト */}
+        <div className="hidden md:block max-w-[1400px] mx-auto px-[var(--page-px)]">
+          <div className="flex flex-col gap-16 lg:gap-20 mb-16 md:mb-20">
+            {FEATURED.map((work, index) => (
+              <div
+                key={work.id}
+                className={`scroll-in grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-[var(--card-gap)] items-start ${
+                  index % 2 === 1 ? "" : ""
+                }`}
+                style={index % 2 === 1 ? { direction: "rtl" } : undefined}
+              >
+                <div
+                  className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
+                  style={{ direction: "ltr" }}
+                >
+                  <Image
+                    src={work.main}
+                    alt={`${work.title} 外観`}
+                    fill
+                    className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                  />
+                </div>
+
+                <div
+                  className="flex flex-col gap-[var(--card-gap)]"
+                  style={{ direction: "ltr" }}
+                >
+                  <div>
+                    <p className="text-accent text-xs font-medium tracking-wider mb-1">
+                      {work.model}
+                    </p>
+                    <h3
+                      className="text-text-primary text-lg md:text-xl mb-1"
+                      style={{ fontFamily: "var(--font-sans)" }}
+                    >
+                      {work.title}
+                    </h3>
+                    <p className="text-text-secondary text-sm">{work.spec}</p>
+                  </div>
+                  {work.subs.map((src, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
+                    >
+                      <Image
+                        src={src}
+                        alt={`${work.title} 内観 ${i + 1}`}
+                        fill
+                        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                        sizes="(max-width: 1024px) 50vw, 30vw"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== 追加の5件 — SPカルーセル / PCコンパクトグリッド ===== */}
+        <div className="max-w-[1400px] mx-auto px-[var(--page-px)] mt-8 md:mt-0">
           <p className="text-text-secondary text-sm mb-6">
             その他の施工事例
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+
+          {/* SP: 横スワイプ */}
+          <div className="md:hidden">
+            <div
+              className="flex overflow-x-auto snap-x snap-mandatory gap-3 -mx-[var(--page-px)] px-[var(--page-px)] pb-4 scrollbar-hide"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {GRID_WORKS.map((w, i) => (
+                <div
+                  key={i}
+                  className="shrink-0 w-[55%] snap-center relative aspect-square rounded overflow-hidden"
+                >
+                  <Image
+                    src={w.image}
+                    alt={`${w.area} 施工事例`}
+                    fill
+                    className="object-cover"
+                    sizes="55vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <p className="absolute bottom-2 left-3 text-white text-xs font-medium">
+                    {w.area}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* PC: 5列グリッド */}
+          <div className="hidden md:grid grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
             {GRID_WORKS.map((w, i) => (
               <div
                 key={i}
