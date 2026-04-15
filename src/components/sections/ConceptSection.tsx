@@ -4,12 +4,9 @@ import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
-  CONCEPT — 編集の見開き（第2稿）
-  - 右：既存 FV 写真で「光と素材の温度」を主役に（雑誌の片ページ）
-  - 価格はカードではなく罫と右揃え数字の「表」に近い秩序
-  - 左：見出し → 橋渡しリード → 本文 → 小さな編集注で物語の厚み
-  - 背景：微い対角シーム＋既存の放射・ヴィネット・ノイズ
-  - 入場：子要素 stagger（useScrollIn(true)）
+  CONCEPT — 編集の見開き
+  - PC は 6/6 グリッドで左右の重みを揃え、扉絵は横長（16:9〜11）＋ max-h で縦段差を抑える
+  - 価格は罫＋右揃え tabular-nums、内部の縦余白は詰めて「段」の少ないリズム
 */
 
 const CONCEPT_PHOTO = {
@@ -65,7 +62,7 @@ export default function ConceptSection() {
         className="relative mx-auto max-w-[1280px] px-[var(--page-px)]"
       >
         {/* マストヘッド */}
-        <header className="group scroll-in mb-12 md:mb-14 lg:mb-16">
+        <header className="group scroll-in mb-10 md:mb-12 lg:mb-14">
           <p
             className="text-[11px] font-semibold tracking-[0.38em] text-white/42 md:text-xs"
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -84,10 +81,10 @@ export default function ConceptSection() {
           </h2>
         </header>
 
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0 xl:gap-x-16">
-          {/* 左：リード・本文・編集注（SPは「主張→数字→締め」で後段） */}
-          <div className="order-2 space-y-8 lg:order-1 lg:col-span-7 lg:pr-2">
-            <div className="scroll-in space-y-8">
+        <div className="grid grid-cols-1 items-start gap-9 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-0 xl:gap-x-12">
+          {/* 左：リード・本文・編集注（SPは「主張→数字→締め」で後段） — PCは 6/6 で段差を抑える */}
+          <div className="order-2 space-y-6 lg:order-1 lg:col-span-6 lg:pr-1">
+            <div className="scroll-in space-y-6">
               <p
                 className="max-w-[40rem] text-[clamp(15px,1.2vw,17px)] font-normal leading-[1.95] tracking-[0.02em] text-white/78 md:leading-[2]"
                 style={{ fontFamily: "var(--font-serif)" }}
@@ -120,16 +117,16 @@ export default function ConceptSection() {
             </div>
           </div>
 
-          {/* 右：写真（上）＋価格表（下）（SPでは見出し直後に配置） */}
-          <div className="order-1 flex flex-col gap-8 lg:order-2 lg:col-span-5">
-            <figure className="scroll-in group/fig relative w-full overflow-hidden rounded-tr-[2.25rem] rounded-bl-md bg-black/50 shadow-[0_28px_70px_-32px_rgba(0,0,0,0.75)] ring-1 ring-white/[0.07]">
-              <div className="relative aspect-[4/5] w-full min-h-[220px] md:aspect-[4/5] md:min-h-[280px]">
+          {/* 右：写真（上）＋価格表（下）— 扉絵は横長にして左列との縦段差を縮小 */}
+          <div className="order-1 flex flex-col gap-5 lg:order-2 lg:col-span-6">
+            <figure className="scroll-in group/fig relative w-full overflow-hidden rounded-xl bg-black/50 shadow-[0_20px_56px_-28px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.07]">
+              <div className="relative aspect-[16/11] w-full min-h-[200px] sm:aspect-[16/10] lg:aspect-[16/9] lg:max-h-[320px] lg:min-h-0">
                 <Image
                   src={CONCEPT_PHOTO.src}
                   alt={CONCEPT_PHOTO.alt}
                   fill
                   className="object-cover transition duration-[1.35s] ease-out group-[.is-visible]/fig:scale-[1.02] motion-reduce:transition-none motion-reduce:group-[.is-visible]/fig:scale-100"
-                  sizes="(max-width: 1024px) 100vw, 38vw"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div
                   className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/25"
@@ -139,7 +136,7 @@ export default function ConceptSection() {
                   className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent"
                   aria-hidden
                 />
-                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 px-5 pb-5 pt-16 md:px-6 md:pb-6">
+                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pb-4 pt-12 md:px-5 md:pb-5">
                   <p
                     className="text-[10px] font-semibold tracking-[0.22em] text-white/48"
                     style={{ fontFamily: "var(--font-serif)" }}
@@ -157,7 +154,7 @@ export default function ConceptSection() {
             </figure>
 
             {/* 価格：表に近い秩序（英語ラベル廃止） */}
-            <div className="scroll-in border border-white/[0.1] bg-black/40 px-5 py-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:px-6 md:py-7">
+            <div className="scroll-in border border-white/[0.1] bg-black/40 px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:px-6 md:py-6">
               <p
                 className="text-[10px] font-semibold tracking-[0.26em] text-white/38"
                 style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -166,13 +163,13 @@ export default function ConceptSection() {
               </p>
 
               <div
-                className="mt-6 space-y-0 border-t border-white/[0.09]"
+                className="mt-4 space-y-0 border-t border-white/[0.09]"
                 role="table"
                 aria-label="参考価格の比較"
               >
                 <div
                   role="row"
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 border-b border-white/[0.07] py-4 md:py-[1.125rem]"
+                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 border-b border-white/[0.07] py-3 md:py-3.5"
                 >
                   <span
                     role="cell"
@@ -198,7 +195,7 @@ export default function ConceptSection() {
 
                 <div
                   role="row"
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-4 py-4 md:py-[1.125rem]"
+                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 py-3 md:py-3.5"
                 >
                   <span
                     role="cell"
@@ -226,7 +223,7 @@ export default function ConceptSection() {
               </div>
 
               <p
-                className="mt-5 border-t border-dashed border-white/[0.1] pt-5 text-[13px] leading-[1.88] text-white/68 md:text-[14px] md:leading-[1.92]"
+                className="mt-4 border-t border-dashed border-white/[0.1] pt-4 text-[13px] leading-[1.88] text-white/68 md:text-[14px] md:leading-[1.92]"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
                 大手で4,000万円と言われた家が、2,480万円で建ちます。
