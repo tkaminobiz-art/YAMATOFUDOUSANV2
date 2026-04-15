@@ -100,8 +100,8 @@ export default function ComparisonTable() {
                 大手ハウスメーカー
               </p>
             </div>
-            <div className="px-5 py-4 text-center bg-main/10 border-l-2 border-main">
-              <p className="text-main text-xs font-medium tracking-wider mb-1">
+            <div className="px-5 py-4 text-center bg-main/15 border-l-2 border-main">
+              <p className="text-main-dark text-xs font-semibold tracking-wider mb-1">
                 やまと不動産
               </p>
             </div>
@@ -128,23 +128,23 @@ export default function ComparisonTable() {
                 </span>
               </div>
 
-              {/* やまと（強調） */}
+              {/* やまと（強調）— big-diffは緑solid反転で圧倒的優位を視覚化 */}
               <div
                 className={`px-5 py-4 flex items-center justify-center gap-2 border-l-2 ${
                   row.diff === "big-diff"
-                    ? "bg-main/10 border-main"
-                    : "bg-bg-primary/50 border-main/30"
+                    ? "bg-main border-main-dark"
+                    : "bg-main-light/50 border-main/30"
                 }`}
               >
                 {row.diff === "same" ? (
-                  <Equal className="w-3.5 h-3.5 text-main/60 shrink-0" strokeWidth={2} />
+                  <Equal className="w-3.5 h-3.5 text-main/70 shrink-0" strokeWidth={2} />
                 ) : (
-                  <Check className="w-4 h-4 text-main shrink-0" strokeWidth={2.5} />
+                  <Check className="w-4 h-4 text-white shrink-0" strokeWidth={2.5} />
                 )}
                 <span
                   className={`text-sm ${
                     row.diff === "big-diff"
-                      ? "text-text-primary font-medium"
+                      ? "text-white font-semibold"
                       : "text-text-primary"
                   }`}
                 >
@@ -173,21 +173,25 @@ export default function ComparisonTable() {
                   </p>
                 </div>
                 <div
-                  className={`pl-3 border-l-2 ${
-                    row.diff === "big-diff" ? "border-main" : "border-main/30"
+                  className={`pl-3 border-l-2 rounded-r ${
+                    row.diff === "big-diff"
+                      ? "border-main-dark bg-main py-2 pr-2 -mr-1"
+                      : "border-main/30"
                   }`}
                 >
-                  <p className="text-[10px] text-main mb-1 font-medium">やまと</p>
+                  <p className={`text-[10px] mb-1 font-medium ${row.diff === "big-diff" ? "text-white/90" : "text-main"}`}>
+                    やまと
+                  </p>
                   <div className="flex items-start gap-1.5">
                     {row.diff === "same" ? (
                       <Equal className="w-3 h-3 text-main/60 shrink-0 mt-1" strokeWidth={2} />
                     ) : (
-                      <Check className="w-3.5 h-3.5 text-main shrink-0 mt-0.5" strokeWidth={2.5} />
+                      <Check className="w-3.5 h-3.5 text-white shrink-0 mt-0.5" strokeWidth={2.5} />
                     )}
                     <p
                       className={`text-sm ${
                         row.diff === "big-diff"
-                          ? "text-text-primary font-medium"
+                          ? "text-white font-semibold"
                           : "text-text-primary"
                       }`}
                     >

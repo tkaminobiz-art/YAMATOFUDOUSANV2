@@ -19,10 +19,10 @@ export default function ConceptSection() {
               CONCEPT
             </p>
             <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-6 leading-[1.3]">
-              「うちの年収じゃ無理」と思っていませんか。
+              「予算オーバーで理想を諦める」そんな必要はありません。
             </h2>
             <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px]">
-              大手で<span className="nowrap">4,000万円</span>と言われた家が、<span className="nowrap">2,480万円</span>で建ちます。使っている素材は同じ。違うのは、ブランド名と広告費だけです。
+              大手で<span className="nowrap">4,000万円</span>と言われた家が、<span className="nowrap">2,480万円</span>で建ちます。使っている素材は同じ。違うのは、無駄な広告費や中間マージンがかかっていないことだけです。
             </p>
           </div>
 

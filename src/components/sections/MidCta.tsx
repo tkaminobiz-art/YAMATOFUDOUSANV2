@@ -3,38 +3,69 @@
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
 
+/*
+  MidCta — ダーク化版（2026-04-15 Phase 2B）
+  淡色連続の中にダーク背景の「山」を作り、視覚的起伏を生む。
+  Voice → Works の感情ピーク直後で、「ここまで読んで」の重みを強調。
+*/
+
 export default function MidCta() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section className="bg-bg-warm py-[var(--section-py)]">
+    <section className="relative bg-text-primary text-white overflow-hidden py-[var(--section-py)]">
+      {/* ノイズテクスチャ（AIっぽさ回避） */}
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E\")",
+        }}
+      />
+      {/* ダークラジアル（ブランドカラーをほのかに） */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(at 18% 50%, rgba(90,138,74,0.16) 0%, transparent 55%), radial-gradient(at 82% 50%, rgba(196,112,63,0.10) 0%, transparent 55%)",
+        }}
+      />
+
       <div
         ref={ref}
-        className="max-w-[1200px] mx-auto px-[var(--page-px)] text-center scroll-in"
+        className="relative max-w-[1200px] mx-auto px-[var(--page-px)] text-center scroll-in"
       >
-        <h2 className="text-[clamp(20px,2.5vw,32px)] text-text-primary mb-8">
-          ここまで読んでいただいたあなたへ。モデルハウスでお会いしませんか。
+        <h2
+          className="text-[clamp(22px,3vw,36px)] text-white mb-5 leading-[1.5]"
+          style={{ fontFamily: "var(--font-sans)" }}
+        >
+          ここまで読んでいただいたあなたへ。
+          <br className="hidden sm:inline" />
+          モデルハウスで、お会いしませんか。
         </h2>
+        <p className="text-white/70 text-sm md:text-base leading-[1.9] max-w-[560px] mx-auto mb-10">
+          写真ではお伝えしきれないものが、きっとあります。ご相談だけでも歓迎です。
+        </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <CtaButton
             href="/reserve"
-            variant="primary"
+            variant="dark-bg-primary"
             size="md"
             label="来場予約"
             sublabel="ご予約不要・無料"
           />
           <CtaButton
             href="/contact"
-            variant="secondary"
+            variant="dark-bg-secondary"
             size="md"
             label="資料請求"
             sublabel="無料・1分で完了"
           />
         </div>
 
-        <p className="text-text-secondary text-xs mt-6">
-          ご予約不要・見学無料です
+        <p className="text-white/50 text-xs mt-6">
+          強引な勧誘は一切いたしません。
         </p>
       </div>
     </section>

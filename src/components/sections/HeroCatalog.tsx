@@ -249,8 +249,8 @@ export default function HeroCatalog() {
             ))}
           </div>
 
-          <p className="text-text-secondary text-[11px] mt-4">
-            ※ 建物本体価格（税込）。付帯工事・諸費用を含みます。各プランを出発点に、設計士と一緒にあなた仕様へ組み直します。
+          <p className="text-text-secondary text-[11px] mt-4 leading-[1.8]">
+            ※ ベースとなる3つの基本プラン。ここから、あなただけの理想の住まいを形にします。建物本体価格（税込）・付帯工事・諸費用を含みます。
           </p>
         </div>
       </div>

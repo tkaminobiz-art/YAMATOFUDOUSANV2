@@ -1,14 +1,18 @@
 "use client";
 
 /*
-  共通CTAボタン（黒系統一・Apple/Stripe風）
-  神野さん選定の本命：シマー × アウトライン → フィル
+  共通CTAボタン（折衷案B：視認性と品格の両立）
+  2026-04-15 更新：神野さんの方針転換
+  - Primary : 緑ソリッド + シマー（CVR最優先・ブランドアクセント）
+  - Secondary : 黒線 → 黒フィル（品格保持）
+  住宅サイトのゴール＝問い合わせCV のため、Primary は視認性を優先。
+  落ち着いたトーンは Secondary・セクション背景・フォントで守る。
 
   variant:
-    - primary   : 黒ソリッド + シマー（来場予約など最重要CTA）
+    - primary   : 緑ソリッド + シマー（来場予約など最重要CTA）
     - secondary : 黒線 → 黒フィル（資料請求・サブCTA）
     - tertiary  : ピル型 + ブランド色（LINE/電話/メール等）
-    - dark-bg   : ダーク背景上で使うprimary（白線アウトライン版）
+    - dark-bg   : ダーク背景上で使うprimary（白ボタン版）
 
   size:
     - sm : 44px / 本文リンク
@@ -79,11 +83,11 @@ export default function CtaButton({
       ? Calendar
       : null;
 
-  // ─── Primary（黒ソリッド + シマー） ───
+  // ─── Primary（緑ソリッド + シマー）— CVR最優先 ───
   if (variant === "primary") {
     return (
       <Anchor href={href} external={external}
-        className={`group relative inline-flex items-center justify-center overflow-hidden bg-text-primary text-white rounded transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_-8px_rgba(0,0,0,0.35)] ${sizeClass} ${className}`}
+        className={`group relative inline-flex items-center justify-center overflow-hidden bg-main text-white rounded transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_16px_40px_-8px_rgba(90,138,74,0.45)] ${sizeClass} ${className}`}
       >
         {/* シマー層 */}
         <span

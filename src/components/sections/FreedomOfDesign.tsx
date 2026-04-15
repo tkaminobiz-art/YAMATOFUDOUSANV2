@@ -15,7 +15,7 @@ const STEPS = [
   {
     num: "02",
     title: "3ヶ月かけて、何度でもプランを磨き上げます。",
-    body: "平日の動線も、子どもの成長も織り込んで。",
+    body: "日々の家事のしやすさも、お子様の将来も、しっかりと考え抜いて。",
     image: "/images/design/step-02-drawing.webp",
     alt: "手描きの間取り図",
   },
