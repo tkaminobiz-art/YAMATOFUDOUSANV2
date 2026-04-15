@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
+import { getVoice, getVoiceLegacyCoverUrl } from "@/data/voices";
 
 /*
   VoiceSection — Phase 2 改（エディトリアル）
@@ -11,23 +12,10 @@ import CtaButton from "@/components/ui/CtaButton";
   - スクロール時は子要素に stagger の fade-up
 */
 
-const VOICE_IMAGES = [
-  "/images/works/case1-living.webp",
-  "/images/works/case2-kitchen.webp",
-  "/images/works/case3-entrance.webp",
-  "/images/fv/hero-03-living.webp",
-  "/images/fv/hero-04-kitchen.webp",
-  "/images/fv/hero-05-washitsu.webp",
-  "/images/works/case1-kitchen.webp",
-  "/images/works/case2-living.webp",
-  "/images/works/case3-kitchen.webp",
-  "/images/works/case1-ext.webp",
-  "/images/works/case2-ext.webp",
-  "/images/works/case3-ext.webp",
-] as const;
-
-const VOICES = [
+/** トップ掲載コピーと voices.json の顧客レコードを対応付け（旧サイトと同じ写真＝JSON 1枚目） */
+const HOME_VOICE_SNIPPETS = [
   {
+    voiceId: "242157",
     area: "奈良市",
     name: "O様邸",
     highlight: "打ち合わせが、家族の楽しみになった。",
@@ -36,6 +24,7 @@ const VOICES = [
       "玄関カギのタッチレスキーやタッチレス水栓、自動開閉機能付きトイレ、ソフトクローズの扉など、標準仕様で色々付いていたところ。打ち合わせに行くたびに「今日は誰に合いに行くの？」と家族全員が楽しみにしていました。",
   },
   {
+    voiceId: "240061",
     area: "奈良市",
     name: "H様邸",
     highlight: "大空間収納と浄水器が、大活躍。",
@@ -44,6 +33,7 @@ const VOICES = [
       "大空間収納と、浄水・還元水素水の出る整水器をつけたところ。水派な子どもたちなので大活躍で最高です。何度でも変更できるからと、プランを立てたりアドバイスをしていただき、念願のマイホームにたどり着けました。",
   },
   {
+    voiceId: "216803",
     area: "生駒市",
     name: "I様邸",
     highlight: "「代わりにこんな感じで」と代案を出してくれた。",
@@ -52,6 +42,7 @@ const VOICES = [
       "要望やこだわりが多かったと思いますが、親身になって聞いてくださって、楽しく打ち合わせできたのが印象に残っています。設計上無理なことも「代わりにこんな感じでどうですか？」と代案を出してくださり、納得のできる家が建てられました。",
   },
   {
+    voiceId: "225610",
     area: "奈良市",
     name: "A様邸",
     highlight: "追加を、無理に勧められなかった。",
@@ -60,6 +51,7 @@ const VOICES = [
       "オプションの価格は一覧表になっており、予算と相談しながら決めることができました。追加を無理に勧められることはなく、とてもありがたかったです。家づくりをとても楽しめました。",
   },
   {
+    voiceId: "265580",
     area: "橿原市",
     name: "S様邸",
     highlight: "売却から新築まで、一社で完結。",
@@ -68,6 +60,7 @@ const VOICES = [
       "マンションの売却から新築の竣工まで、ワンストップでお任せできました。保育園の都合等も考慮いただき、全体行程の調整も柔軟に対応。納得のいく住まいづくりを実現することができました。",
   },
   {
+    voiceId: "276846",
     area: "京田辺市",
     name: "T様邸",
     highlight: "設計・工務・営業、全員が優しかった。",
@@ -76,6 +69,7 @@ const VOICES = [
       "最高の場所に最高の家を建てることができて大満足。やまと不動産という会社はアットホームで風通しの良い会社。設計・工務・営業すべての方が優しく、この方に出会えていなかったら性格上悩みすぎて途方に暮れていたでしょう。",
   },
   {
+    voiceId: "225612",
     area: "奈良市",
     name: "M様邸",
     highlight: "カフェのようなリビングで、毎日を。",
@@ -84,6 +78,7 @@ const VOICES = [
       "広いリビングと落ち着いた内装の配色、そして陽当たり。カフェのようなリビングで毎日を楽しく過ごしています。約半年間の打ち合わせをしましたが、本当に誠実に対応していただきました。",
   },
   {
+    voiceId: "279076",
     area: "京田辺市",
     name: "K様邸",
     highlight: "建てたあとも、ずっとフォロー。",
@@ -92,6 +87,7 @@ const VOICES = [
       "やりたいことをすべて叶えていただきありがとうございます。打合せ時間もとても長い時間だったのに嫌な顔一つせず対応していただきました。建てておわりじゃなく、その後もしっかりフォローがあり安心しています。",
   },
   {
+    voiceId: "237069",
     area: "生駒市",
     name: "N様邸",
     highlight: "青い外壁が見えると、気持ちが上がる。",
@@ -100,6 +96,7 @@ const VOICES = [
       "外壁の青色とベランダの茶色の2色展開が周りからも評判良く、とても気に入ってます。家に帰ってくる時に青色が見えると気持ちが上がり、見るたびに「良い家だなぁ」と浸っています。担当さんが迅速に対応してくださるので安心。",
   },
   {
+    voiceId: "225603",
     area: "天理市",
     name: "O様邸",
     highlight: "理想を、ちゃんと形にしてくれた。",
@@ -108,6 +105,7 @@ const VOICES = [
       "設計の先生や担当者が出来る限りの理想をかなえてくれたので、満足のいくマイホームができました。イメージのつかないことや優柔不断になるところに対しても、私達の好みやイメージを理解してくださり、提案してくれました。",
   },
   {
+    voiceId: "239226",
     area: "斑鳩町",
     name: "K様邸",
     highlight: "打ち合わせが、楽しみになっていた。",
@@ -116,6 +114,7 @@ const VOICES = [
       "心から信頼して家づくりをお願いして良かった。お会いした時から親身になって現状の悩みを聞いてくださり、今思い返しても感謝することばかりです。気付けば打ち合わせを楽しみに過ごしていたのが懐かしいです。",
   },
   {
+    voiceId: "256807",
     area: "奈良市",
     name: "F様邸",
     highlight: "金額が明確で、不安が消えた。",
@@ -125,8 +124,14 @@ const VOICES = [
   },
 ] as const;
 
-function voiceImage(i: number) {
-  return VOICE_IMAGES[i % VOICE_IMAGES.length];
+const VOICE_IMAGE_FALLBACK = "/images/fv/hero-03-living.webp";
+
+function coverImageForVoice(voiceId: string): string {
+  return (
+    getVoiceLegacyCoverUrl(voiceId) ??
+    getVoice(voiceId)?.photos[0] ??
+    VOICE_IMAGE_FALLBACK
+  );
 }
 
 export default function VoiceSection() {
@@ -171,8 +176,8 @@ export default function VoiceSection() {
               msOverflowStyle: "none",
             }}
           >
-            {VOICES.map((v, i) => {
-              const img = voiceImage(i);
+            {HOME_VOICE_SNIPPETS.map((v, i) => {
+              const img = coverImageForVoice(v.voiceId);
               const widePhoto = i % 3 !== 1; /* 3件に1回は「文字多め」レイアウト */
               return (
                 <article
