@@ -20,8 +20,9 @@
   --font-sans: var(--font-noto), "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
   --font-inter: var(--font-inter-var), "Inter", sans-serif;
 
-  /* === Spacing tokens === */
-  --section-py: clamp(64px, calc(32px + 5vw), 200px);
+  /* === Spacing tokens ===（Phase 2: 余白 1.5〜2倍 — ラグジュアリーな呼吸） */
+  --section-py: clamp(96px, calc(48px + 7.5vw), 320px);
+  --font-serif: var(--font-noto-serif), "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --page-px: clamp(16px, 5vw, 80px);
   --card-p: clamp(20px, calc(14px + 1.5vw), 48px);
   --card-gap: clamp(16px, calc(10px + 1.5vw), 32px);
@@ -142,5 +143,8 @@ p, blockquote, dd, li {
   .scroll-in {
     opacity: 1;
     transform: none;
+  }
+  .grain-overlay {
+    display: none;
   }
 }

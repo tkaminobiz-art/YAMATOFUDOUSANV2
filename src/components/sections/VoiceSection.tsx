@@ -1,21 +1,30 @@
 "use client";
 
+import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  VoiceSection — 2026-04-15 改修
-  神野さん/レビューの指摘：
-  - 「文字の壁」でスマホではほぼ読み飛ばされる
-  - キャッチコピーを抽出して見出し化、メリハリをつける
-  - SPは横スワイプカルーセルで縦の長さを圧縮
-
-  対応：
-  - 各声に `highlight`（キャッチ）を追加
-  - カードレイアウト：大きなキャッチ → 小さな決め手 → 引用
-  - SP: overflow-x + scroll-snap で横スワイプ
-  - PC: 3列グリッド（現状維持）
+  VoiceSection — Phase 2 改（エディトリアル）
+  - PC: 写真の大小・左右交互で非対称（雑誌風）
+  - SP: 大きな写真＋キャッチのカルーセル（scroll-snap）
+  - スクロール時は子要素に stagger の fade-up
 */
+
+const VOICE_IMAGES = [
+  "/images/works/case1-living.webp",
+  "/images/works/case2-kitchen.webp",
+  "/images/works/case3-entrance.webp",
+  "/images/fv/hero-03-living.webp",
+  "/images/fv/hero-04-kitchen.webp",
+  "/images/fv/hero-05-washitsu.webp",
+  "/images/works/case1-kitchen.webp",
+  "/images/works/case2-living.webp",
+  "/images/works/case3-kitchen.webp",
+  "/images/works/case1-ext.webp",
+  "/images/works/case2-ext.webp",
+  "/images/works/case3-ext.webp",
+] as const;
 
 const VOICES = [
   {
@@ -116,25 +125,26 @@ const VOICES = [
   },
 ] as const;
 
+function voiceImage(i: number) {
+  return VOICE_IMAGES[i % VOICE_IMAGES.length];
+}
+
 export default function VoiceSection() {
   const sectionRef = useScrollIn<HTMLDivElement>(true);
 
   return (
     <section className="bg-bg-warm py-[var(--section-py)]">
-      <div
-        ref={sectionRef}
-        className="max-w-[1400px] mx-auto scroll-in"
-      >
+      <div ref={sectionRef} className="max-w-[1400px] mx-auto">
         <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-          <div className="flex items-end justify-between flex-wrap gap-4 mb-10 md:mb-14">
+          <div className="scroll-in mb-12 flex flex-wrap items-end justify-between gap-4 md:mb-20">
             <div className="max-w-[640px]">
-              <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+              <p className="font-section-label mb-3 text-xs tracking-[0.15em] text-main md:text-sm">
                 VOICE
               </p>
-              <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
+              <h2 className="mb-4 text-[clamp(24px,3.5vw,40px)] text-text-primary">
                 お客様の声
               </h2>
-              <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
+              <p className="text-[clamp(15px,1.1vw,17px)] leading-relaxed text-text-secondary">
                 花鳥風月で家を建てた方の、率直な感想です。
               </p>
             </div>
@@ -142,72 +152,97 @@ export default function VoiceSection() {
               className="text-right"
               style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
             >
-              <span className="text-accent font-light text-6xl md:text-7xl block leading-none">
+              <span className="block text-6xl font-light leading-none text-accent md:text-7xl">
                 50
               </span>
-              <span className="text-text-secondary text-xs md:text-sm">組以上のご家族</span>
+              <span className="text-xs text-text-secondary md:text-sm">
+                組以上のご家族
+              </span>
             </div>
           </div>
         </div>
 
-        {/* SPはカルーセル、PCは3列グリッド */}
+        {/* SP: 横スワイプ / PC: エディトリアル（非対称） */}
         <div className="md:px-[var(--page-px)]">
           <div
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-[var(--card-gap)] overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none px-[var(--page-px)] md:px-0 pb-4 md:pb-0 scrollbar-hide"
+            className="flex flex-row gap-5 overflow-x-auto px-[var(--page-px)] pb-6 scrollbar-hide md:mx-0 md:flex-col md:gap-16 md:overflow-visible md:px-0 md:pb-0 lg:gap-24"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
             }}
           >
-            {VOICES.map((v, i) => (
-              <article
-                key={v.area + v.name + i}
-                className="scroll-in shrink-0 md:shrink w-[85%] sm:w-[60%] md:w-auto snap-center bg-bg-primary rounded-lg p-6 md:p-[var(--card-p)] card-shadow flex flex-col"
-              >
-                {/* エリア + お客様名 */}
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-main text-xs font-medium tracking-wider">
-                    {v.area}
-                  </span>
-                  <span
-                    className="text-text-primary text-base"
-                    style={{ fontFamily: "var(--font-sans)" }}
-                  >
-                    {v.name}
-                  </span>
-                </div>
-
-                {/* キャッチコピー（大きく） */}
-                <h3
-                  className="text-text-primary text-lg md:text-xl leading-[1.5] mb-5 font-medium"
-                  style={{ fontFamily: "var(--font-sans)" }}
+            {VOICES.map((v, i) => {
+              const img = voiceImage(i);
+              const widePhoto = i % 3 !== 1; /* 3件に1回は「文字多め」レイアウト */
+              return (
+                <article
+                  key={v.area + v.name + i}
+                  className={`
+                    scroll-in shrink-0 snap-center
+                    w-[min(88vw,380px)] max-w-[100%]
+                    flex flex-col overflow-hidden rounded-xl bg-bg-primary card-shadow
+                    md:w-full md:flex-row md:items-stretch md:gap-10 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none lg:gap-14
+                    ${i % 2 === 1 ? "md:flex-row-reverse" : ""}
+                  `}
                 >
-                  「{v.highlight}」
-                </h3>
+                  <div
+                    className={`
+                      relative aspect-[16/11] w-full shrink-0 overflow-hidden bg-bg-secondary
+                      md:aspect-auto md:rounded-sm
+                      ${widePhoto ? "md:w-[min(58%,640px)] md:min-h-[min(52vw,420px)] lg:min-h-[440px]" : "md:w-[min(48%,520px)] md:min-h-[min(44vw,360px)] lg:min-h-[380px]"}
+                    `}
+                  >
+                    <Image
+                      src={img}
+                      alt={`${v.area} ${v.name}の住まいのイメージ`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 88vw, (max-width: 1200px) 55vw, 640px"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent md:from-black/20" />
+                  </div>
 
-                {/* 決め手（小さく） */}
-                <p className="text-text-secondary text-xs leading-relaxed mb-4">
-                  <span className="text-accent font-medium">決め手：</span>
-                  {v.deciding}
-                </p>
+                  <div className="flex flex-col p-6 md:flex-1 md:justify-center md:px-0 md:py-4 md:pl-2 md:pr-4">
+                    <div className="mb-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <span className="text-xs font-medium tracking-wider text-main">
+                        {v.area}
+                      </span>
+                      <span
+                        className="text-base text-text-primary"
+                        style={{ fontFamily: "var(--font-sans)" }}
+                      >
+                        {v.name}
+                      </span>
+                    </div>
 
-                {/* 引用レビュー */}
-                <blockquote className="relative text-text-secondary text-sm leading-[1.9] border-l-2 border-accent/40 pl-4 mt-auto">
-                  {v.review}
-                </blockquote>
-              </article>
-            ))}
+                    <h3
+                      className="mb-5 text-lg font-medium leading-[1.55] text-text-primary md:text-2xl lg:text-[1.65rem] lg:leading-snug"
+                      style={{ fontFamily: "var(--font-serif)" }}
+                    >
+                      「{v.highlight}」
+                    </h3>
+
+                    <p className="mb-4 text-xs leading-relaxed text-text-secondary">
+                      <span className="font-medium text-accent">決め手：</span>
+                      {v.deciding}
+                    </p>
+
+                    <blockquote className="relative mt-auto border-l-2 border-accent/35 pl-4 text-sm leading-[1.9] text-text-secondary md:text-[15px]">
+                      {v.review}
+                    </blockquote>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
 
-        {/* SPスワイプヒント */}
-        <p className="md:hidden text-center text-text-secondary text-xs mt-3 tracking-wider">
+        <p className="px-[var(--page-px)] text-center text-xs tracking-wider text-text-secondary md:hidden">
           ← 横にスワイプできます →
         </p>
 
-        {/* 全件ページへのリンク */}
         <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-          <div className="mt-10 md:mt-14 text-center">
+          <div className="scroll-in mt-12 text-center md:mt-20">
             <div className="inline-flex">
               <CtaButton
                 href="/voice"

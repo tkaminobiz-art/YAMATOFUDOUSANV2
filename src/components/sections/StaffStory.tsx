@@ -19,6 +19,30 @@ type Phase = {
   note?: string; // 補足メッセージ
 };
 
+/** キーマンは上部で大きく見せ、フェーズグリッドからは除外 */
+const KEY_STAFF_IDS = new Set(["92289", "126646", "92140"]);
+
+const KEY_STAFF = [
+  {
+    id: "92289",
+    name: "古谷 泰彦",
+    role: "代表取締役社長",
+    quote: "お引き渡しの日からが、本当のお付き合いの始まりです。",
+  },
+  {
+    id: "126646",
+    name: "栗野 佑也",
+    role: "住宅設計部 責任者",
+    quote: "図面の一枚一枚に、家族の暮らしを重ねていきます。",
+  },
+  {
+    id: "92140",
+    name: "入江 将大",
+    role: "本社工務部 部長",
+    quote: "現場で体感する、木の温度と精度を大切にしています。",
+  },
+] as const;
+
 const PHASES: Phase[] = [
   {
     num: "01",
@@ -93,16 +117,93 @@ export default function StaffStory() {
         </div>
       </div>
 
-      {/* === Story: 4つのフェーズ === */}
-      <div
-        ref={sectionRef}
-        className="max-w-[1400px] mx-auto px-[var(--page-px)] py-[var(--section-py)] scroll-in"
-      >
-        <div className="mb-10 md:mb-14">
-          <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+      {/* === キーマン + フェーズ（同一 viewport で stagger） === */}
+      <div ref={sectionRef}>
+      <div className="border-b border-border bg-bg-primary">
+        <div className="mx-auto max-w-[1400px] px-[var(--page-px)] py-[clamp(48px,calc(32px+4vw),120px)]">
+          <div className="scroll-in mb-10 md:mb-12">
+            <p className="font-section-label mb-3 text-xs tracking-[0.15em] text-main md:text-sm">
+              KEY PEOPLE
+            </p>
+            <h3
+              className="max-w-[720px] text-[clamp(20px,2.4vw,28px)] leading-snug text-text-primary"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              設計・現場・経営。家づくりの核になる人たちです。
+            </h3>
+          </div>
+
+          <div className="scroll-in mb-12 grid items-center gap-8 md:mb-16 md:grid-cols-2 md:gap-12 lg:gap-16">
+            <div className="relative aspect-[4/5] max-h-[min(72vh,560px)] w-full overflow-hidden rounded-sm bg-bg-secondary md:max-h-none">
+              <Image
+                src={`/images/staff/${KEY_STAFF[0].id}.webp`}
+                alt={KEY_STAFF[0].name}
+                fill
+                className="object-cover grayscale-[15%]"
+                sizes="(max-width: 768px) 100vw, 45vw"
+                priority
+              />
+            </div>
+            <div>
+              <p className="mb-1 text-xs font-medium tracking-wider text-main md:text-sm">
+                {KEY_STAFF[0].role}
+              </p>
+              <p
+                className="mb-6 text-2xl text-text-primary md:text-3xl lg:text-4xl"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {KEY_STAFF[0].name}
+              </p>
+              <blockquote
+                className="text-lg leading-[1.75] text-text-primary md:text-xl lg:text-2xl"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {KEY_STAFF[0].quote}
+              </blockquote>
+            </div>
+          </div>
+
+          <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+            {KEY_STAFF.slice(1).map((k) => (
+              <div key={k.id} className="scroll-in flex flex-col gap-5 sm:flex-row sm:items-stretch md:gap-6">
+                <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden rounded-sm bg-bg-secondary sm:aspect-auto sm:h-auto sm:w-[38%] sm:max-w-[220px]">
+                  <Image
+                    src={`/images/staff/${k.id}.webp`}
+                    alt={k.name}
+                    fill
+                    className="object-cover grayscale-[15%]"
+                    sizes="(max-width: 640px) 100vw, 220px"
+                  />
+                </div>
+                <div className="flex min-w-0 flex-1 flex-col justify-center">
+                  <p className="mb-1 text-[11px] font-medium tracking-wider text-main md:text-xs">
+                    {k.role}
+                  </p>
+                  <p
+                    className="mb-3 text-lg text-text-primary md:text-xl"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
+                    {k.name}
+                  </p>
+                  <blockquote
+                    className="text-sm leading-relaxed text-text-secondary md:text-base md:leading-relaxed"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
+                    {k.quote}
+                  </blockquote>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-[1400px] bg-bg-primary px-[var(--page-px)] py-[var(--section-py)]">
+        <div className="scroll-in mb-10 md:mb-14">
+          <p className="font-section-label mb-3 text-xs tracking-[0.15em] text-main md:text-sm">
             STAFF
           </p>
-          <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary max-w-[640px] mb-4">
+          <h2 className="mb-4 max-w-[640px] text-[clamp(24px,3.5vw,40px)] text-text-primary">
             この19人で、お家をつくります。
           </h2>
         </div>
@@ -155,8 +256,10 @@ export default function StaffStory() {
                   <div className="absolute left-0 top-0 bottom-[-4rem] md:bottom-[-6rem] w-px bg-accent/30" />
                 )}
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[var(--card-gap)]">
-                  {phase.staff.map((s) => (
+                <div className="grid grid-cols-2 gap-[var(--card-gap)] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                  {phase.staff
+                    .filter((s) => !KEY_STAFF_IDS.has(s.id))
+                    .map((s) => (
                     <div key={s.id}>
                       <div className="relative aspect-[4/5] rounded overflow-hidden mb-3 bg-bg-secondary">
                         <Image
@@ -198,6 +301,7 @@ export default function StaffStory() {
             契約から引き渡しまで、そして建てた後も。この19人が、一緒です。
           </p>
         </div>
+      </div>
       </div>
     </section>
   );

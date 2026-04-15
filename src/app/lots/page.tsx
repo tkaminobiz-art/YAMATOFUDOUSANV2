@@ -4,7 +4,9 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
-import { LOTS, getCities } from "@/data/lots";
+import CtaButton from "@/components/ui/CtaButton";
+import LotsMapWrapper from "@/components/LotsMapWrapper";
+import { LOTS, getCities, getMappableLots } from "@/data/lots";
 import { MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -15,6 +17,7 @@ export const metadata: Metadata = {
 
 export default function LotsIndexPage() {
   const cities = getCities();
+  const mappableLots = getMappableLots();
 
   return (
     <>
@@ -46,6 +49,31 @@ export default function LotsIndexPage() {
                 </span>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* インタラクティブマップ */}
+        <section className="py-[clamp(32px,4vw,64px)] bg-bg-primary border-b border-border">
+          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+            <div className="mb-6 flex items-end justify-between flex-wrap gap-3">
+              <div>
+                <p className="font-section-label text-main text-xs md:text-sm mb-2 tracking-[0.15em]">
+                  MAP
+                </p>
+                <h2 className="text-text-primary text-lg md:text-xl leading-[1.5]">
+                  地図で見る、分譲地の場所。
+                </h2>
+              </div>
+              <p className="text-text-secondary text-xs">
+                ピンをタップすると物件情報が表示されます
+              </p>
+            </div>
+            <LotsMapWrapper lots={mappableLots} />
+            {mappableLots.length < LOTS.length && (
+              <p className="text-text-secondary text-[11px] mt-3">
+                ※ 地図上に表示されるのは座標取得できた {mappableLots.length} 区画です。全 {LOTS.length} 区画は下の一覧をご覧ください。
+              </p>
+            )}
           </div>
         </section>
 
@@ -144,19 +172,21 @@ export default function LotsIndexPage() {
             <p className="text-text-secondary text-sm md:text-base leading-[1.9] mb-8">
               現在販売中の分譲地については、お問い合わせください。非公開物件のご案内もあります。
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Link
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <CtaButton
                 href="/reserve"
-                className="flex items-center justify-center min-h-[52px] px-8 py-3.5 rounded bg-accent text-white text-base font-medium transition-all hover:opacity-90 hover:-translate-y-0.5"
-              >
-                来店予約（無料）
-              </Link>
-              <Link
+                variant="primary"
+                size="md"
+                label="来店予約"
+                sublabel="ご予約不要・無料"
+              />
+              <CtaButton
                 href="/contact"
-                className="flex items-center justify-center min-h-[52px] px-8 py-3.5 rounded bg-main text-white text-base font-medium transition-all hover:bg-main-dark hover:-translate-y-0.5"
-              >
-                資料請求（無料）
-              </Link>
+                variant="secondary"
+                size="md"
+                label="資料請求"
+                sublabel="無料・1分で完了"
+              />
             </div>
           </div>
         </section>

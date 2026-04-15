@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import CtaButton from "@/components/ui/CtaButton";
+import Link from "next/link";
 
 const MODELS = [
   {
@@ -72,21 +72,22 @@ export default function HeroCatalog() {
           ))}
         </div>
 
-        {/* グラデーション */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent lg:from-black/30 z-[1]" />
+        {/* シネマティック用ヴィネット（上下・左右で奥行き） */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/35 to-black/20 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-black/25 z-[1]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_45%,transparent_30%,rgba(0,0,0,0.45)_100%)] z-[1]" />
 
         {/* ===== コンテンツレイヤー ===== */}
         <div className="relative z-10 min-h-[100svh] flex flex-col">
           {/* 上部: シリーズ名 */}
           <div className="pt-24 md:pt-28 lg:pt-32 px-[var(--page-px)]">
             <div className="max-w-[1400px] mx-auto">
-              <p className="font-section-label text-white/80 text-xs md:text-sm tracking-[0.2em] mb-3">
+              <p className="font-section-label text-white/75 text-xs md:text-sm tracking-[0.2em] mb-3 drop-shadow-md">
                 KACHOUFUUGETSU — YAMATO NO IE
               </p>
               <p
-                className="text-white/90 text-sm md:text-base mt-1"
-                style={{ fontFamily: "var(--font-sans)" }}
+                className="text-white/92 text-base md:text-lg mt-1 tracking-[0.12em] drop-shadow-md font-medium"
+                style={{ fontFamily: "var(--font-serif)" }}
               >
                 奈良の注文住宅 花鳥風月 やまとの家
               </p>
@@ -120,8 +121,8 @@ export default function HeroCatalog() {
               </div>
 
               <p
-                className="text-white text-lg md:text-2xl lg:text-3xl font-normal mt-8 md:mt-10 lg:mt-12 max-w-xl"
-                style={{ fontFamily: "var(--font-sans)" }}
+                className="text-white text-xl md:text-3xl lg:text-[2.125rem] font-medium mt-8 md:mt-10 lg:mt-12 max-w-2xl leading-[1.65] tracking-[0.08em] drop-shadow-lg"
+                style={{ fontFamily: "var(--font-serif)" }}
               >
                 見積もりが、最終価格です。
               </p>
@@ -167,22 +168,30 @@ export default function HeroCatalog() {
                 </span>
               </div>
 
-              {/* CTA — SP で縦積み、sm以上で横並び */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <CtaButton
+              {/* CTA — 案B：メイン緑ソリッド / サブ黒線（暗い背景上は白文字＋黒縁で視認） */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch">
+                <Link
                   href="/reserve"
-                  variant="dark-bg-primary"
-                  size="md"
-                  label="来場予約"
-                  sublabel="ご予約不要・無料"
-                />
-                <CtaButton
+                  className="group relative inline-flex min-h-[56px] flex-1 flex-col items-center justify-center overflow-hidden rounded bg-main px-8 py-4 text-center text-base font-medium text-white shadow-[0_12px_40px_-12px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_16px_48px_-8px_rgba(90,138,74,0.5)] sm:min-w-[200px]"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                  />
+                  <span className="relative leading-tight">来場予約</span>
+                  <span className="relative mt-0.5 text-[11px] font-normal text-white/75">
+                    ご予約不要・無料
+                  </span>
+                </Link>
+                <Link
                   href="/contact"
-                  variant="dark-bg-secondary"
-                  size="md"
-                  label="資料請求"
-                  sublabel="無料・1分で完了"
-                />
+                  className="group relative inline-flex min-h-[56px] flex-1 flex-col items-center justify-center overflow-hidden rounded border-2 border-zinc-950 bg-black/25 px-8 py-4 text-center text-base font-medium text-white backdrop-blur-[2px] transition-colors duration-300 hover:bg-zinc-950/90 sm:min-w-[200px]"
+                >
+                  <span className="relative leading-tight">資料請求</span>
+                  <span className="relative mt-0.5 text-[11px] font-normal text-white/70">
+                    無料・1分で完了
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
