@@ -1,22 +1,34 @@
 "use client";
 
 import Image from "next/image";
+import { Users } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
-  WorksSection — 2026-04-15 Phase 2C 改修
-  SPカルーセル化でスクロール疲労を解消。
+  WorksSection — 2026-04-15 Phase 2D 強化
+  神野さん/レビュー指摘：
+  - 単なる画像ではなく「家族構成」「課題と解決」「お客様コメント」を添えることで
+    将来のお客様が「自分ごと」として捉えやすくなる
+  - 家族構成・課題・コメントは [要確認] 仮データで実装（後日実データに差し替え）
+
   - Featured 3件: SPは横スワイプ、PCは非対称レイアウト維持
   - Grid 5件: SPは横スワイプ、PCは5列グリッド維持
 */
 
-// 詳細付き3件 + グリッド表示5件 = 計8件
+// [要確認] 家族構成・課題・解決・コメント・担当スタッフは仮データ。
+// 実データに差し替える必要あり。
 const FEATURED = [
   {
     id: "case1",
     title: "奈良市 T様邸",
     model: "花モデル",
     spec: "33坪 / 4LDK",
+    family: "ご夫婦 + お子様2人",
+    challenge: "広めの家族空間と、収納の両立",
+    solution: "20帖LDK + 大空間収納4帖",
+    comment: "打ち合わせに行くたびに「今日は誰に会うの？」と子どもが楽しみにしていました。",
+    staffSales: "西口・クロフォード・丈",
+    staffDesign: "栗野 佑也",
     main: "/images/works/case1-ext.webp",
     subs: [
       "/images/works/case1-living.webp",
@@ -28,6 +40,12 @@ const FEATURED = [
     title: "大和郡山市 S様邸",
     model: "風モデル",
     spec: "30坪 / 4LDK",
+    family: "ご夫婦 + お子様1人",
+    challenge: "共働きでも、効率的に家事をこなしたい",
+    solution: "家事ラク動線 + 広めのパントリー",
+    comment: "帰宅後の家事動線が劇的に楽になりました。共働きにはありがたいです。",
+    staffSales: "山岡 洋一",
+    staffDesign: "河野 英宣",
     main: "/images/works/case2-ext.webp",
     subs: [
       "/images/works/case2-living.webp",
@@ -39,6 +57,12 @@ const FEATURED = [
     title: "生駒市 M様邸",
     model: "京モデル",
     spec: "28坪 / 3LDK",
+    family: "ご夫婦",
+    challenge: "コンパクトな土地でも、ゆとりある空間に",
+    solution: "吹き抜け + 開放的なLDK",
+    comment: "狭い土地だったけど、吹き抜けで広々暮らせています。",
+    staffSales: "田中 信次",
+    staffDesign: "岩佐 篤志",
     main: "/images/works/case3-ext.webp",
     subs: [
       "/images/works/case3-living.webp",
@@ -122,7 +146,11 @@ export default function WorksSection() {
                   >
                     {work.title}
                   </h3>
-                  <p className="text-text-secondary text-sm">{work.spec}</p>
+                  <p className="text-text-secondary text-sm mb-3">{work.spec}</p>
+                  <div className="inline-flex items-center gap-1.5 text-text-secondary text-xs">
+                    <Users className="w-3.5 h-3.5" strokeWidth={1.5} />
+                    <span>{work.family}</span>
+                  </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   {work.subs.map((src, i) => (
@@ -140,6 +168,31 @@ export default function WorksSection() {
                     </div>
                   ))}
                 </div>
+                {/* 課題と解決 */}
+                <div className="bg-bg-secondary rounded p-4">
+                  <p className="text-text-secondary text-[11px] mb-1 tracking-wider">
+                    お悩み
+                  </p>
+                  <p className="text-text-primary text-sm mb-3 leading-relaxed">
+                    {work.challenge}
+                  </p>
+                  <p className="text-main text-[11px] mb-1 tracking-wider">
+                    設計での工夫
+                  </p>
+                  <p className="text-text-primary text-sm leading-relaxed">
+                    {work.solution}
+                  </p>
+                </div>
+                {/* お客様コメント */}
+                <blockquote className="border-l-2 border-accent/40 pl-4 py-1">
+                  <p className="text-text-primary text-sm leading-[1.9]">
+                    「{work.comment}」
+                  </p>
+                </blockquote>
+                {/* 担当スタッフ */}
+                <p className="text-text-secondary text-[11px]">
+                  担当 : {work.staffSales}（営業） / {work.staffDesign}（設計）
+                </p>
               </article>
             ))}
           </div>
@@ -173,7 +226,7 @@ export default function WorksSection() {
                 </div>
 
                 <div
-                  className="flex flex-col gap-[var(--card-gap)]"
+                  className="flex flex-col gap-5"
                   style={{ direction: "ltr" }}
                 >
                   <div>
@@ -186,22 +239,58 @@ export default function WorksSection() {
                     >
                       {work.title}
                     </h3>
-                    <p className="text-text-secondary text-sm">{work.spec}</p>
-                  </div>
-                  {work.subs.map((src, i) => (
-                    <div
-                      key={i}
-                      className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
-                    >
-                      <Image
-                        src={src}
-                        alt={`${work.title} 内観 ${i + 1}`}
-                        fill
-                        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-                        sizes="(max-width: 1024px) 50vw, 30vw"
-                      />
+                    <p className="text-text-secondary text-sm mb-3">{work.spec}</p>
+                    <div className="inline-flex items-center gap-1.5 text-text-secondary text-xs">
+                      <Users className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      <span>{work.family}</span>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* 課題と解決 */}
+                  <div className="bg-bg-secondary rounded-lg p-4 md:p-5">
+                    <p className="text-text-secondary text-[11px] mb-1 tracking-wider">
+                      お悩み
+                    </p>
+                    <p className="text-text-primary text-sm mb-3 leading-relaxed">
+                      {work.challenge}
+                    </p>
+                    <p className="text-main text-[11px] mb-1 tracking-wider">
+                      設計での工夫
+                    </p>
+                    <p className="text-text-primary text-sm leading-relaxed">
+                      {work.solution}
+                    </p>
+                  </div>
+
+                  {/* 内観写真 */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {work.subs.map((src, i) => (
+                      <div
+                        key={i}
+                        className="relative aspect-[3/2] rounded-lg overflow-hidden card-shadow group"
+                      >
+                        <Image
+                          src={src}
+                          alt={`${work.title} 内観 ${i + 1}`}
+                          fill
+                          className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                          sizes="(max-width: 1024px) 25vw, 15vw"
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* お客様コメント */}
+                  <blockquote className="border-l-2 border-accent/40 pl-4 py-1">
+                    <p className="text-text-primary text-sm leading-[1.9]">
+                      「{work.comment}」
+                    </p>
+                  </blockquote>
+
+                  {/* 担当スタッフ */}
+                  <p className="text-text-secondary text-[11px]">
+                    担当 : {work.staffSales}（営業） / {work.staffDesign}（設計）
+                  </p>
                 </div>
               </div>
             ))}

@@ -1,7 +1,19 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
-import { Shield, Bug, Wrench, Phone } from "lucide-react";
+import { Shield, Bug, Wrench, Phone, ShieldCheck } from "lucide-react";
+
+/*
+  GuaranteeSection — 2026-04-15 Phase 2D 強化
+  瑕疵担保責任保険（国交省指定の第三者機関による10年保証）を最上位に追加。
+  法律で義務付けられた保険だが、明記することで安心感が増す。
+
+  構成：
+  - メイン：瑕疵担保責任保険（幅広）
+  - サブ：地盤20年 / しろあり10年 / 定期点検5回 / 電話一本
+
+  [要確認] 第三者機関の具体名（ハウスジーメン or 建築テクノ等）は専務確認
+*/
 
 const GUARANTEES = [
   {
@@ -55,6 +67,47 @@ export default function GuaranteeSection() {
           </p>
         </div>
 
+        {/* ===== メイン：瑕疵担保責任保険（幅広カード） ===== */}
+        <div className="scroll-in bg-bg-primary rounded-lg p-[clamp(28px,3.5vw,48px)] card-shadow mb-[var(--card-gap)] border-l-4 border-main">
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
+            {/* 左：アイコン + 数字 */}
+            <div className="flex items-baseline gap-2">
+              <ShieldCheck
+                className="w-8 h-8 text-main shrink-0"
+                strokeWidth={1.5}
+              />
+              <div className="flex items-baseline gap-1">
+                <span
+                  className="text-main font-light text-6xl md:text-7xl leading-none"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  10
+                </span>
+                <span className="text-text-primary text-lg md:text-xl">年</span>
+              </div>
+            </div>
+
+            {/* 右：タイトル + 説明 */}
+            <div>
+              <div className="flex items-baseline gap-2 flex-wrap mb-2">
+                <h3
+                  className="text-text-primary text-lg md:text-xl font-medium"
+                  style={{ fontFamily: "var(--font-sans)" }}
+                >
+                  建物瑕疵担保責任保険
+                </h3>
+                <span className="text-accent text-[11px] font-medium tracking-wider">
+                  国交省指定・第三者機関
+                </span>
+              </div>
+              <p className="text-text-secondary text-sm md:text-base leading-[1.9]">
+                万が一の構造不具合や雨水の浸入に対して、10年間の保証が付きます。国土交通大臣指定の第三者機関が、当社に代わって責任を引き継ぐ法定保険です。当社が万一廃業しても、保証は継続されます。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== サブ：4つの保証 ===== */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[var(--card-gap)]">
           {GUARANTEES.map((g) => (
             <div

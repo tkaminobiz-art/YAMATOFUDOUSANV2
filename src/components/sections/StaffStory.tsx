@@ -15,6 +15,8 @@ type Phase = {
   title: string;
   subtitle: string;
   staff: Staff[];
+  highlight?: boolean; // 特別扱いするフェーズ
+  note?: string; // 補足メッセージ
 };
 
 const PHASES: Phase[] = [
@@ -33,7 +35,9 @@ const PHASES: Phase[] = [
   {
     num: "02",
     title: "理想を、図面にする。",
-    subtitle: "設計 — 間取り・仕様の打合せ",
+    subtitle: "設計 — 初回の打ち合わせから同席する、自社設計士",
+    highlight: true,
+    note: "営業担当だけじゃなく、プロの設計士がはじめの打ち合わせから同席します。間取りを1から組み、3ヶ月かけて何度でもプランを磨き上げます。",
     staff: [
       { id: "126651", name: "河野 英宣", dept: "開発設計部 部長", career: "30年" },
       { id: "126646", name: "栗野 佑也", dept: "住宅設計部 責任者", career: "12年" },
@@ -106,9 +110,16 @@ export default function StaffStory() {
         {/* フェーズ連続表示 */}
         <div className="space-y-16 md:space-y-24">
           {PHASES.map((phase, phaseIndex) => (
-            <div key={phase.num} className="scroll-in">
+            <div
+              key={phase.num}
+              className={`scroll-in ${
+                phase.highlight
+                  ? "bg-main-light rounded-lg p-[clamp(24px,3vw,40px)] -mx-[clamp(24px,3vw,40px)]"
+                  : ""
+              }`}
+            >
               {/* フェーズヘッダー */}
-              <div className="flex items-baseline gap-4 mb-6 md:mb-8">
+              <div className="flex items-baseline gap-4 mb-4 md:mb-6">
                 <span
                   className="text-main/30 font-light text-5xl md:text-7xl leading-none shrink-0"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -128,10 +139,19 @@ export default function StaffStory() {
                 </div>
               </div>
 
+              {/* 特別扱いフェーズの補足メッセージ（設計士など） */}
+              {phase.note && (
+                <div className="mb-6 md:mb-8 pl-[calc(1rem+1.5em)] md:pl-[calc(1rem+2em)] ml-2">
+                  <p className="text-text-primary text-sm md:text-base leading-[1.9] max-w-[720px]">
+                    {phase.note}
+                  </p>
+                </div>
+              )}
+
               {/* 繋がりライン + スタッフカード */}
               <div className="relative pl-[calc(1rem+1.5em)] md:pl-[calc(1rem+2em)] ml-2">
                 {/* 縦の繋がりライン（次のフェーズへ繋ぐ） */}
-                {phaseIndex < PHASES.length - 1 && (
+                {phaseIndex < PHASES.length - 1 && !phase.highlight && (
                   <div className="absolute left-0 top-0 bottom-[-4rem] md:bottom-[-6rem] w-px bg-accent/30" />
                 )}
 
