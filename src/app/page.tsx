@@ -34,8 +34,8 @@ import FloatingCta from "@/components/FloatingCta";
   【③ 解決の仕組み — なぜ可能なのか】
   4. Mechanism      価格の構造（大手 vs やまと）
   5. Zero           追加費用もゼロ（9つの¥0）
-  6. Standard       設備が標準（Bento）
-  7. FreedomOfDesign 完全自由設計（花・風・京は出発点）
+  6. FreedomOfDesign 完全自由設計（花・風・京は出発点）
+  7. Standard       設備が標準（Bento — 自由設計の中の標準仕様として）
   8. Price          参考プランと価格帯
 
   【④ 信頼の裏付け — ちゃんとした会社】
@@ -72,8 +72,8 @@ export default function Home() {
         <FounderQuote />
         <MechanismSection />
         <ZeroDeclaration />
-        <StandardSection />
         <FreedomOfDesign />
+        <StandardSection />
         <PriceSection />
         <QualitySection />
         <GuaranteeSection />
