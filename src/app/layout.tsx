@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP, Noto_Serif_JP, Inter } from "next/font/google";
 import "./globals.css";
+// Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
+import "leaflet/dist/leaflet.css";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
