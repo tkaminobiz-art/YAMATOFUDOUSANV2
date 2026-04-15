@@ -48,6 +48,9 @@ public/images/**/_original/
 # エディタ設定
 .vscode/
 .idea/
+
+# ローカル検証用スクショ（誤コミット防止）
+screenshots/comparison-*.png
 *.swp
 
 # OS
