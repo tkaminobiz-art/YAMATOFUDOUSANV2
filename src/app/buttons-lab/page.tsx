@@ -578,6 +578,170 @@ export default function ButtonsLab() {
           </Cell>
         </LabSection>
 
+        {/* ===== ⑧ カラー組み合わせ比較（A案ベース） ===== */}
+        <LabSection
+          num="08 — COLOR COMBINATIONS"
+          title="A案ベースの色違い4パターン"
+          desc="A案（シマー × アウトライン）のレイアウトを保ったまま、カラーだけ変えた比較。神野さんが感じた色の違和感を解消する候補。"
+        >
+          <Cell label="① 現状: Primary 茶 × Secondary 黒線（暖色とニュートラルが混在）">
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden bg-accent text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+              />
+              <span className="relative flex flex-col items-start mr-3">
+                <span className="text-base font-medium leading-tight">来場予約</span>
+                <span className="text-[11px] text-white/75 leading-tight mt-0.5">ご予約不要・無料</span>
+              </span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden border border-text-primary text-text-primary rounded transition-colors duration-[400ms] hover:text-white"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+              <span className="relative text-base font-medium mr-3">資料請求（無料）</span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+          </Cell>
+
+          <div className="h-4" />
+
+          <Cell label="② 黒系統一: Primary 黒ソリッド × Secondary 黒線（Apple・Stripe風 / 最高に品格）">
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden bg-text-primary text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+              />
+              <span className="relative flex flex-col items-start mr-3">
+                <span className="text-base font-medium leading-tight">来場予約</span>
+                <span className="text-[11px] text-white/65 leading-tight mt-0.5">ご予約不要・無料</span>
+              </span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden border border-text-primary text-text-primary rounded transition-colors duration-[400ms] hover:text-white"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+              <span className="relative text-base font-medium mr-3">資料請求（無料）</span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+          </Cell>
+
+          <div className="h-4" />
+
+          <Cell label="③ 緑系統一: Primary 緑ソリッド × Secondary 緑線（やまとブランドの主色）">
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden bg-main text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+              />
+              <span className="relative flex flex-col items-start mr-3">
+                <span className="text-base font-medium leading-tight">来場予約</span>
+                <span className="text-[11px] text-white/75 leading-tight mt-0.5">ご予約不要・無料</span>
+              </span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden border border-main text-main rounded transition-colors duration-[400ms] hover:text-white"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-main transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+              <span className="relative text-base font-medium mr-3">資料請求（無料）</span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+          </Cell>
+
+          <div className="h-4" />
+
+          <Cell label="④ 茶系統一: Primary 茶ソリッド × Secondary 茶線（暖色トーン揃え）">
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden bg-accent text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+              />
+              <span className="relative flex flex-col items-start mr-3">
+                <span className="text-base font-medium leading-tight">来場予約</span>
+                <span className="text-[11px] text-white/75 leading-tight mt-0.5">ご予約不要・無料</span>
+              </span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden border border-accent text-accent rounded transition-colors duration-[400ms] hover:text-white"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-accent transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+              <span className="relative text-base font-medium mr-3">資料請求（無料）</span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+          </Cell>
+
+          <div className="h-4" />
+
+          <Cell label="⑤ 黒×茶のハイブリッド: Primary 黒 × Secondary 茶線（黒の品格＋茶のブランド痕跡）">
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden bg-text-primary text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+              />
+              <span className="relative flex flex-col items-start mr-3">
+                <span className="text-base font-medium leading-tight">来場予約</span>
+                <span className="text-[11px] text-white/65 leading-tight mt-0.5">ご予約不要・無料</span>
+              </span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden border border-accent text-accent rounded transition-colors duration-[400ms] hover:text-white"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-accent transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+              <span className="relative text-base font-medium mr-3">資料請求（無料）</span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+          </Cell>
+
+          <div className="h-4" />
+
+          <Cell label="⑥ ダーク背景での見栄え（実サイトでHero下に置く想定）" bg="bg-text-primary">
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden bg-accent text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full" />
+              <span className="relative flex flex-col items-start mr-3">
+                <span className="text-base font-medium leading-tight">来場予約</span>
+                <span className="text-[11px] text-white/75 leading-tight mt-0.5">ご予約不要・無料</span>
+              </span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+            <a
+              href="#"
+              className="group relative inline-flex items-center justify-center min-h-[56px] px-8 py-4 overflow-hidden border border-white text-white rounded transition-colors duration-[400ms] hover:text-text-primary"
+            >
+              <span aria-hidden className="absolute inset-0 -translate-x-full bg-white transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0" />
+              <span className="relative text-base font-medium mr-3">資料請求（無料）</span>
+              <ArrowRight className="relative w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
+            </a>
+          </Cell>
+        </LabSection>
+
         {/* ===== 凡例 ===== */}
         <div className="bg-bg-secondary rounded-lg p-6 md:p-8 mt-16">
           <p className="font-section-label text-text-secondary text-xs mb-3 tracking-[0.15em]">
