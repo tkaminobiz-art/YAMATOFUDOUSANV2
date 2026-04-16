@@ -150,7 +150,7 @@ export default function StandardAndQualitySection() {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           {/* 左：標準仕様（写真） */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-8 lg:sticky lg:top-[120px] self-start">
             <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary mb-3">
               外壁・屋根も、標準から（写真は一部）
             </p>
