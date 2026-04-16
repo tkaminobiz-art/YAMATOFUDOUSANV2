@@ -76,7 +76,7 @@ export default function LotsSection() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <p className="text-xs font-semibold tracking-[0.14em] text-main">
-                FEATURE
+                土地探しの要点
               </p>
               <p
                 className="mt-4 text-[clamp(22px,2.8vw,34px)] font-semibold leading-[1.45] tracking-[0.05em] text-text-primary"
@@ -85,7 +85,7 @@ export default function LotsSection() {
                 土地から、暮らしまで。
               </p>
               <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary md:text-[14px]">
-                「このあたりで建てたい」を、現地の感触から一緒に詰めていきます。気に入った土地が見つかったら、建物の段取りまで一気に繋げます。
+                「このあたりで建てたい」を、現地の感触から一緒に詰めていきます。気に入った土地が見つかったら、建物の段取りまで繋げていきます。
               </p>
 
               <div className="mt-7 border-y border-border py-6">
@@ -178,19 +178,32 @@ export default function LotsSection() {
         </div>
 
         {/* ===== CTA ===== */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <CtaButton
-            href="/lots"
-            variant="secondary"
-            size="md"
-            label={`分譲地一覧を見る（${LOTS.length}件）`}
-          />
-          <CtaButton
-            href="/reserve"
-            variant="primary"
-            size="md"
-            label="土地の相談を予約する"
-          />
+        <div className="flex flex-col items-center gap-5">
+          <p className="text-[12px] leading-relaxed text-text-secondary text-center">
+            土地が決まったら、次は「この土地で、どこまで自由にできるか」。
+            <br className="hidden sm:inline" />
+            設計の自由度は、土地条件とセットで考えるほど、迷いが減ります。
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <CtaButton
+              href="/lots"
+              variant="secondary"
+              size="md"
+              label={`分譲地一覧を見る（${LOTS.length}件）`}
+            />
+            <CtaButton
+              href="/reserve"
+              variant="primary"
+              size="md"
+              label="土地の相談を予約する"
+            />
+            <CtaButton
+              href="#design"
+              variant="secondary"
+              size="md"
+              label="設計の自由度を見る"
+            />
+          </div>
         </div>
       </div>
     </section>

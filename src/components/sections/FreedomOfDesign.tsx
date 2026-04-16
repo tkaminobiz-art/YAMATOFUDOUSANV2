@@ -82,7 +82,8 @@ export default function FreedomOfDesign() {
             花・風・京、どのプランからでも、あなた専用にお仕立て直しいたします。
           </p>
           <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed mt-6">
-            設計士が初回から同席し、あなたの土地と暮らし方に合わせて、ゼロからご一緒に設計してまいります。
+            土地が決まっている方は、その条件に合わせて。これから探す方は、候補地と一緒に。
+            設計士が初回から同席し、「この土地でどこまでできるか」を、ひとつずつ形にしてまいります。
           </p>
         </div>
 
