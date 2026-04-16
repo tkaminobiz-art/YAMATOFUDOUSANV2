@@ -8,6 +8,7 @@ import EditorialPhotoGallery from "@/components/sections/EditorialPhotoGallery";
 import StandardSection from "@/components/sections/StandardSection";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
+import PostPricingEditorialGallery from "@/components/sections/PostPricingEditorialGallery";
 import MoneyTalkSection from "@/components/sections/MoneyTalkSection";
 import QualitySection from "@/components/sections/QualitySection";
 import GuaranteeSection from "@/components/sections/GuaranteeSection";
@@ -24,7 +25,7 @@ import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
 /*
-  21セクション構成（Phase 1リファクタ / 2026-04-16・FounderQuote統合 + ギャラリー帯）
+  22セクション構成（PRICING〜MoneyTalk間に編集ギャラリー帯を追加）
 
   家を買う人の思考順に寄り添う構造：
   土地 → お金 → 比較 → やまとならなんとかなるかも。
@@ -43,6 +44,7 @@ import FloatingCta from "@/components/FloatingCta";
 
   【④ 実現可能性 — 払えるのか】
   7. Price            料金目安（2,480万〜バーン）
+  （ギャラリー帯）    PRICING直後・編集写真（紙が語るトーン／ダーク帯）
   8. MoneyTalk(新)    お金の話、まず気軽に（FP・つなぎ融資なし）
 
   【⑤ 土地の安心 — 最初の悩み】
@@ -85,6 +87,7 @@ export default function Home() {
         <EditorialPhotoGallery />
         <ZeroDeclaration />
         <PriceSection />
+        <PostPricingEditorialGallery />
         <MoneyTalkSection />
         <LotsSection />
         <FreedomOfDesign />
