@@ -3,36 +3,6 @@
 import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 
-const MODELS = [
-  {
-    name: "花",
-    reading: "hana",
-    label: "ゆとりのある4LDK",
-    size: "33坪",
-    plan: "4LDK",
-    price: "2,480",
-    highlight: true,
-  },
-  {
-    name: "風",
-    reading: "kaze",
-    label: "暮らしやすい4LDK",
-    size: "30坪",
-    plan: "4LDK",
-    price: "2,480",
-    highlight: false,
-  },
-  {
-    name: "京",
-    reading: "miyako",
-    label: "コンパクトな3LDK",
-    size: "28坪",
-    plan: "3LDK",
-    price: "2,280",
-    highlight: false,
-  },
-] as const;
-
 // Heroスライドショー5枚（30秒周期・6秒表示+1秒フェード）
 const HERO_SLIDES = [
   { src: "/images/fv/hero-01-exterior-miyamaki.webp", alt: "三山木モデル外観" },
@@ -192,120 +162,37 @@ export default function HeroCatalog() {
         </div>
       </div>
 
-      {/* ===== 参考プラン（FV直下・編集スペック帯） ===== */}
+      {/* FV → 商品：詳細は #product に集約（プラン表の重複を避ける） */}
       <div className="relative border-t border-border/80 bg-bg-secondary">
-        {/* ヒーローからの視線を落とす極薄グラデーション */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/[0.04] to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/[0.04] to-transparent"
         />
-        <section
-          aria-labelledby="reference-plans-heading"
-          className="relative max-w-[1200px] mx-auto px-[var(--page-px)] py-12 md:py-16 lg:py-[4.5rem]"
-        >
-          <header className="mb-10 md:mb-12 lg:mb-14 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p
-                className="text-[11px] font-semibold tracking-[0.38em] text-text-secondary md:text-xs"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                REFERENCE PLANS
-              </p>
-              <div
-                className="mt-4 h-px w-16 bg-gradient-to-r from-main/55 to-transparent md:w-20"
-                aria-hidden
-              />
-              <h2
-                id="reference-plans-heading"
-                className="mt-6 text-[clamp(22px,3.2vw,34px)] font-medium leading-snug tracking-[0.04em] text-text-primary md:mt-7"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                参考プラン
-              </h2>
-            </div>
-            <p className="max-w-[26rem] text-sm leading-[1.75] text-text-secondary md:text-right">
-              出発点の3プランです。間取り・坪数・仕様は、ご家族に合わせて組み直します。
+        <div className="relative mx-auto flex max-w-[1200px] flex-col gap-5 px-[var(--page-px)] py-7 md:flex-row md:items-center md:justify-between md:py-9">
+          <div>
+            <p
+              className="text-[10px] font-semibold tracking-[0.28em] text-text-secondary md:text-[11px]"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              LINEUP
             </p>
-          </header>
-
-          <ul className="border-y border-border">
-            {MODELS.map((m, i) => (
-              <li
-                key={m.reading}
-                className={[
-                  "grid gap-6 border-b border-border py-8 last:border-b-0 md:grid-cols-12 md:items-baseline md:gap-x-8 md:py-9 lg:gap-x-10",
-                  m.highlight
-                    ? "relative bg-gradient-to-r from-main-light/70 via-bg-primary/80 to-bg-primary md:rounded-sm md:px-6 md:py-9 md:before:absolute md:before:inset-y-3 md:before:left-0 md:before:z-0 md:before:w-1 md:before:rounded-full md:before:bg-main"
-                    : "md:px-2",
-                ].join(" ")}
-              >
-                {m.highlight && (
-                  <span className="font-section-label mb-1 inline-flex w-fit items-center bg-main px-2 py-0.5 text-[10px] tracking-[0.14em] text-white md:absolute md:left-6 md:top-6 md:mb-0">
-                    Recommend
-                  </span>
-                )}
-
-                <div
-                  className={`md:col-span-4 ${m.highlight ? "md:mt-5 md:pl-2" : ""}`}
-                >
-                  <p
-                    className="text-[11px] tabular-nums text-text-secondary/80"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span
-                      className="text-[clamp(26px,3.6vw,36px)] font-medium text-text-primary"
-                      style={{ fontFamily: "var(--font-sans)" }}
-                    >
-                      {m.name}
-                    </span>
-                    <span className="text-sm text-text-secondary">{m.reading}</span>
-                  </div>
-                </div>
-
-                <div
-                  className={`md:col-span-5 ${m.highlight ? "md:mt-5" : ""}`}
-                >
-                  <p className="text-[15px] leading-relaxed text-text-primary md:text-base">
-                    {m.label}
-                  </p>
-                  <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-text-secondary">
-                    <span className="inline-flex items-center gap-1.5">
-                      <span
-                        className="h-px w-4 bg-accent-soft/90"
-                        aria-hidden
-                      />
-                      {m.size}
-                    </span>
-                    <span className="text-border" aria-hidden>
-                      |
-                    </span>
-                    <span>{m.plan}</span>
-                  </p>
-                </div>
-
-                <div
-                  className={`flex items-baseline gap-2 border-t border-border/70 pt-5 md:col-span-3 md:border-t-0 md:pt-0 md:text-right ${m.highlight ? "md:mt-5" : ""}`}
-                >
-                  <span
-                    className="text-[clamp(28px,4vw,40px)] font-light tabular-nums tracking-tight text-text-primary"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                  >
-                    {m.price}
-                  </span>
-                  <span className="text-sm text-text-secondary">万円〜</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <p className="mt-8 max-w-[52rem] text-[11px] leading-[1.85] text-text-secondary md:text-xs">
-            ※
-            ベースとなる3つの基本プランです。ここから、ご家族の理想に合わせて設計します。表示は建物本体価格（税込）に、付帯工事・諸費用を含んだ目安です。
-          </p>
-        </section>
+            <p className="mt-2 max-w-[40rem] text-[15px] leading-[1.7] text-text-primary md:text-base">
+              <span className="font-medium">花・風・京</span>
+              は、暮らしに合わせて組み替える
+              <span className="whitespace-nowrap">「出発の3プラン」</span>
+              です。料金の目安と比較は、下のセクションにまとめています。
+            </p>
+          </div>
+          <a
+            href="#product"
+            className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-sm border border-main px-5 py-2.5 text-sm font-medium text-main transition-colors hover:bg-main hover:text-white md:self-auto"
+          >
+            プランと価格を見る
+            <span aria-hidden className="text-xs opacity-80">
+              ↓
+            </span>
+          </a>
+        </div>
       </div>
     </section>
   );

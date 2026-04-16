@@ -6,9 +6,11 @@ const ROWS = [
 
 export default function PriceSection() {
   return (
-    <section id="product" className="bg-bg-secondary py-[var(--section-py)]">
+    <section
+      id="product"
+      className="scroll-mt-20 bg-bg-secondary py-[var(--section-py)] md:scroll-mt-24"
+    >
       <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
-        {/* セクションラベル */}
         <p className="font-section-label text-main text-xs md:text-sm mb-4 tracking-[0.15em]">
           PRICING
         </p>
@@ -16,10 +18,10 @@ export default function PriceSection() {
           className="text-[clamp(22px,3vw,36px)] text-text-primary mb-4 leading-[1.5]"
           style={{ fontFamily: "var(--font-sans)" }}
         >
-          参考プランと、価格帯。
+          花・風・京｜参考プランと価格帯
         </h2>
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed max-w-[640px] mb-10">
-          花・風・京は、家づくりの出発点です。ここから土地・ご家族に合わせて、あなた仕様に組み直します。
+          税込・建物本体・付帯工事込みのコミコミ価格として、3モデルを並べて比較できます。土地代・登記等は含みません。間取りや坪数の目安は、ご家族に合わせて調整します。
         </p>
 
         {/* 大判価格表示 */}
