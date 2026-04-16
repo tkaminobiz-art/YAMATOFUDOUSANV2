@@ -16,7 +16,7 @@ import CtaButton from "@/components/ui/CtaButton";
 /*
   お金の相談セクション
   2026-04-15 神野さんの方針：
-  - 不安をあおらない（必要な数字だけ、分かる順に）
+  - 畳みかけない（結論を急がず、要点から）
   - 提携FPと一緒に「払える範囲」を先に整える
   - 土地と建物をセットで進められることによる、つなぎ融資コストの抑制余地（断定しない）
   - 「気軽に相談して」のハードル下げが決定打
@@ -130,16 +130,16 @@ export default function MoneyTalkSection() {
               </div>
               <figcaption className="px-6 py-5 md:px-7 md:py-6">
                 <p className="text-xs font-semibold tracking-[0.14em] text-text-secondary">
-                  相談は無料です
+                  初回のご相談は無料です
                 </p>
                 <p
                   className="mt-2 text-[clamp(16px,1.8vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  不安をあおる話はしません。
+                  専門用語だけで畳みかけることはありません。
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-                  必要な数字だけ、分かる順に整理します。まずは「いくらなら安心か」を一緒に決めて、そこからプランを組み立てます。
+                  いま気になっているところから始めて、月々の支払いの感触と、土地・建物・諸費用の全体像が見えるところまで、順を追って一緒に整えます。
                 </p>
               </figcaption>
             </figure>
@@ -207,26 +207,27 @@ export default function MoneyTalkSection() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <p className="text-xs font-semibold tracking-[0.14em] text-main">
-                FIRST MEETING
+                はじめての方へ
               </p>
               <p
                 className="mt-4 text-[clamp(22px,2.6vw,34px)] font-semibold leading-[1.45] tracking-[0.05em] text-text-primary"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                はじめてでも大丈夫です。
+                資料がそろっていなくて大丈夫です。
               </p>
               <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary md:text-[14px]">
-                相談は「正解を当てに行く場」ではなく、迷いを減らす場です。必要な資料は少なくて大丈夫です。
+                初回は、不安の輪郭を一緒に確かめる時間にしてください。図面や金融の細部は、必要になった段階で少しずつご案内します。
               </p>
 
               <div className="mt-6 rounded-2xl border border-border bg-bg-primary p-5 shadow-sm">
                 <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
-                  つなぎ融資について（要点）
+                  つなぎ融資について
                 </p>
                 <p className="mt-3 text-[13px] leading-[1.95] text-text-secondary">
-                  土地を先行で購入する流れでは、つなぎ融資（金利・手数料など）が発生しやすいことがあります。当社は土地と建物をセットで進められるため、
-                  <span className="font-semibold text-text-primary">条件次第でその負担を抑えられるケース</span>
-                  があります。
+                  土地だけを先に購入し、あとから建物資金につなぐ場合、工事までのあいだに「つなぎ融資」が入ることがあり、利息や手数料が上乗せされることがあります。
+                </p>
+                <p className="mt-3 text-[13px] leading-[1.95] text-text-secondary">
+                  土地と建物をまとめて進められると、段取りによってはそのコストをかけずに済むこともあります。内容は金融機関の条件や案件ごとに異なります。
                 </p>
               </div>
             </div>
