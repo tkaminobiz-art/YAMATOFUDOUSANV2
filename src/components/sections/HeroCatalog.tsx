@@ -162,33 +162,39 @@ export default function HeroCatalog() {
         </div>
       </div>
 
-      {/* FV → 商品：詳細は #product に集約（プラン表の重複を避ける） */}
+      {/* FV直下：PRICING の導入（#product と同一ラベル・続きの話として認知させる） */}
       <div className="relative border-t border-border/80 bg-bg-secondary">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/[0.04] to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/[0.04] to-transparent"
         />
-        <div className="relative mx-auto flex max-w-[1200px] flex-col gap-5 px-[var(--page-px)] py-7 md:flex-row md:items-center md:justify-between md:py-9">
-          <div>
-            <p
-              className="text-[10px] font-semibold tracking-[0.28em] text-text-secondary md:text-[11px]"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              LINEUP
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-main/20 to-transparent"
+        />
+        <div className="relative mx-auto max-w-[1240px] px-[var(--page-px)] py-8 md:flex md:items-end md:justify-between md:gap-10 md:py-10">
+          <div className="max-w-[40rem]">
+            <p className="font-section-label text-main text-xs tracking-[0.22em] md:text-sm">
+              PRICING
             </p>
-            <p className="mt-2 max-w-[40rem] text-[15px] leading-[1.7] text-text-primary md:text-base">
+            <div
+              className="mt-4 h-[2px] w-16 bg-gradient-to-r from-main via-main/60 to-transparent md:w-20"
+              aria-hidden
+            />
+            <p className="mt-5 text-[15px] leading-[1.8] text-text-primary md:mt-6 md:text-base">
               <span className="font-medium">花・風・京</span>
-              は、暮らしに合わせて組み替える
-              <span className="whitespace-nowrap">「出発の3プラン」</span>
-              です。料金の目安と比較は、下のセクションにまとめています。
+              の3プランと、コミコミ価格の目安。
+              <span className="text-text-secondary">
+                すぐ下から同じ章の続きとしてご覧いただけます。
+              </span>
             </p>
           </div>
           <a
             href="#product"
-            className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-sm border border-main px-5 py-2.5 text-sm font-medium text-main transition-colors hover:bg-main hover:text-white md:self-auto"
+            className="mt-6 inline-flex shrink-0 items-center gap-2 self-start text-sm font-medium text-main underline decoration-main/35 underline-offset-4 transition-colors hover:text-main-dark hover:decoration-main md:mt-0 md:self-auto"
           >
-            プランと価格を見る
-            <span aria-hidden className="text-xs opacity-80">
+            価格・比較表へ
+            <span aria-hidden className="text-base leading-none">
               ↓
             </span>
           </a>
