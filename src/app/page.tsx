@@ -3,7 +3,6 @@ import HeroCatalog from "@/components/sections/HeroCatalog";
 import ConceptSection from "@/components/sections/ConceptSection";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismSection from "@/components/sections/MechanismSection";
-import ComparisonTable from "@/components/sections/ComparisonTable";
 import EditorialPhotoGallery from "@/components/sections/EditorialPhotoGallery";
 import StandardSection from "@/components/sections/StandardSection";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
@@ -83,7 +82,6 @@ export default function Home() {
         <HeroCatalog />
         <ConceptSection />
         <MechanismSection />
-        <ComparisonTable />
         <EditorialPhotoGallery />
         <ZeroDeclaration />
         <PriceSection />
