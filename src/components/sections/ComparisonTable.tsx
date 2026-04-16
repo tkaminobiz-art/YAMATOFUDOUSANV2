@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { Check, Equal } from "lucide-react";
 import SectionHeaderCentered from "@/components/SectionHeaderCentered";
@@ -178,6 +179,37 @@ export default function ComparisonTable() {
                 </div>
               ))}
             </div>
+
+            {/* 差し込み写真（“同等仕様”へ繋ぐ証拠としての間） */}
+            <figure className="mt-10 overflow-hidden rounded-2xl border border-border bg-white/60 md:mt-12">
+              <div className="relative aspect-[16/9] w-full">
+                <Image
+                  src="/images/newsozai/exterior-texture-detail-01.webp"
+                  alt="外壁の質感ディテール — 同等仕様の証拠"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 1200px"
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/85 via-white/10 to-transparent"
+                />
+              </div>
+              <figcaption className="px-6 py-5 md:px-8 md:py-6">
+                <p className="text-xs font-semibold tracking-[0.18em] text-text-secondary">
+                  PHOTO EVIDENCE
+                </p>
+                <p
+                  className="mt-2 text-[15px] font-semibold leading-relaxed tracking-[0.04em] text-text-primary md:text-base"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  素材のグレードは、下げていません。
+                </p>
+                <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
+                  この後は「大手と同等の仕様」を、項目ごとに静かに確認します。
+                </p>
+              </figcaption>
+            </figure>
 
             {/* 同等仕様（same）— ひとまとめで“静かに強い” */}
             <div className="mt-10 md:mt-12">
