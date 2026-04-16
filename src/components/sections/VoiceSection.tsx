@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
-import { getVoice, getVoiceLegacyCoverUrl } from "@/data/voices";
+import { getVoice } from "@/data/voices";
 
 /*
   VoiceSection — Phase 2 改（エディトリアル）
@@ -127,11 +127,7 @@ const HOME_VOICE_SNIPPETS = [
 const VOICE_IMAGE_FALLBACK = "/images/fv/hero-03-living.webp";
 
 function coverImageForVoice(voiceId: string): string {
-  return (
-    getVoiceLegacyCoverUrl(voiceId) ??
-    getVoice(voiceId)?.photos[0] ??
-    VOICE_IMAGE_FALLBACK
-  );
+  return getVoice(voiceId)?.photos[0] ?? VOICE_IMAGE_FALLBACK;
 }
 
 export default function VoiceSection() {
