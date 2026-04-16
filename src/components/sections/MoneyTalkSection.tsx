@@ -81,8 +81,8 @@ export default function MoneyTalkSection() {
         <SectionHeaderCentered
           label="MONEY TALK"
           ghostText="MONEY"
-          title="お金の話は、先に整える。"
-          lead="「払っていけるかな」「ローン通るかな」。その不安は、家づくりの最初に一度だけ整理すれば大丈夫です。"
+          title="お金の不安、先に解消しませんか。"
+          lead="「払っていけるかな」「ローンは通るかな」。その不安は、最初に一度整理しておくと安心です。"
           align="left"
           className="mb-10 md:mb-12"
         />
