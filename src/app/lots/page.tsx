@@ -34,7 +34,7 @@ export default function LotsIndexPage() {
                   自社分譲地
                 </h1>
                 <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-                  奈良・京都エリアで、当社が開発・分譲した土地の実績です。土地と建物をセットでご提案しているので、つなぎ融資の負担もかかりません。
+                  奈良・京都エリアで、当社が開発・分譲した土地の実績です。土地と建物をセットでご提案できるため、条件次第でつなぎ融資のコストを抑えられるケースがあります。
                 </p>
               </div>
               <div

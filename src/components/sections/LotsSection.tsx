@@ -24,7 +24,17 @@ export default function LotsSection() {
   const featured = LOTS.filter((l) => l.photos.length > 0).slice(0, 6);
 
   return (
-    <section className="bg-bg-secondary py-[var(--section-py)]">
+    <section className="relative overflow-hidden bg-bg-secondary py-[var(--section-py)]">
+      {/* 紙面のような極薄グリッド（A案：装飾より編集） */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.33]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(43,43,43,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(43,43,43,0.04) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
+        }}
+      />
       <div
         ref={ref}
         className="max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in"
@@ -61,112 +71,110 @@ export default function LotsSection() {
           </div>
         </div>
 
-        {/* ===== 3つの訴求 ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--card-gap)] mb-12 md:mb-16">
-          <div className="scroll-in bg-bg-primary rounded-lg p-[clamp(20px,2.5vw,32px)] card-shadow">
-            <p className="font-section-label text-main text-[10px] mb-3 tracking-[0.15em]">
-              01
-            </p>
-            <h3
-              className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
-              style={{ fontFamily: "var(--font-sans)" }}
-            >
-              奈良・京都で、いつでもご案内できる土地。
-            </h3>
-            <p className="text-text-secondary text-sm leading-[1.9]">
-              自社分譲90区画以上の実績。時期により、広告に出していない土地もあります。
-            </p>
-          </div>
-
-          <div className="scroll-in bg-bg-primary rounded-lg p-[clamp(20px,2.5vw,32px)] card-shadow">
-            <p className="font-section-label text-main text-[10px] mb-3 tracking-[0.15em]">
-              02
-            </p>
-            <h3
-              className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
-              style={{ fontFamily: "var(--font-sans)" }}
-            >
-              ご希望のエリアから、お探しいたします。
-            </h3>
-            <p className="text-text-secondary text-sm leading-[1.9]">
-              「この小学校の近くで」「駅徒歩◯分以内で」。具体的なご希望を、お聞かせください。
-            </p>
-          </div>
-
-          <div className="scroll-in bg-bg-primary rounded-lg p-[clamp(20px,2.5vw,32px)] card-shadow border-l-2 border-main">
-            <p className="font-section-label text-main text-[10px] mb-3 tracking-[0.15em]">
-              03
-            </p>
-            <h3
-              className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
-              style={{ fontFamily: "var(--font-sans)" }}
-            >
-              土地と建物、まとめてお任せください。
-            </h3>
-            <p className="text-text-secondary text-sm leading-[1.9]">
-              つなぎ融資のご負担は、ございません。お手続きもお打ち合わせも、当社がまとめて承ります。
-            </p>
-          </div>
-        </div>
-
-        {/* ===== 対応エリアピル ===== */}
-        <div className="mb-8">
-          <p className="text-text-secondary text-xs mb-3 tracking-wider">
-            主な対応エリア
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {cities.map((c) => (
-              <span
-                key={c.city}
-                className="inline-flex items-baseline gap-1.5 bg-bg-primary rounded-full px-4 py-2 text-sm"
+        {/* ===== A案：編集の見開き（同型3カードを捨てる） ===== */}
+        <div className="mb-12 md:mb-16">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-5">
+              <p className="text-xs font-semibold tracking-[0.14em] text-main">
+                FEATURE
+              </p>
+              <p
+                className="mt-4 text-[clamp(22px,2.8vw,34px)] font-semibold leading-[1.45] tracking-[0.05em] text-text-primary"
+                style={{ fontFamily: "var(--font-serif)" }}
               >
-                <span className="text-text-primary">{c.city}</span>
-                <span
-                  className="text-main text-[10px]"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  {c.count}
-                </span>
-              </span>
-            ))}
-            <span className="inline-flex items-center px-4 py-2 text-text-secondary text-sm">
-              ほか
-            </span>
-          </div>
-        </div>
+                土地から、暮らしまで。
+              </p>
+              <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary md:text-[14px]">
+                「このあたりで建てたい」を、現地の感触から一緒に詰めていきます。気に入った土地が見つかったら、建物の段取りまで一気に繋げます。
+              </p>
 
-        {/* ===== 代表6件グリッド ===== */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-8 md:mb-10">
-          {featured.map((lot) => (
-            <Link
-              key={lot.id}
-              href={`/lots/${lot.id}`}
-              className="group relative aspect-[4/3] rounded-lg overflow-hidden card-shadow block"
-            >
-              <Image
-                src={lot.photos[0]}
-                alt={lot.title}
-                fill
-                className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
-                sizes="(max-width: 640px) 50vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
-                <div className="flex items-center gap-1 mb-1">
-                  <MapPin
-                    className="w-3 h-3 text-white/80 shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <span className="text-white/80 text-[10px] md:text-xs font-medium">
-                    {lot.city}
-                  </span>
-                </div>
-                <p className="text-white text-xs md:text-sm font-medium line-clamp-2">
-                  {lot.title.replace(/[〜～].*$/, "")}
+              <div className="mt-7 border-y border-border py-6">
+                <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
+                  このセクションで分かること
+                </p>
+                <ul className="mt-4 space-y-4 text-sm leading-relaxed text-text-secondary md:text-[15px]">
+                  {[
+                    "奈良・京都の分譲地を、写真付きでざっと見渡せます。",
+                    "ご希望のエリア条件（学校・駅・実家距離など）を前提に探せます。",
+                    "土地と建物をまとめて進められるため、条件次第で余計な金融コストを抑えられることがあります。",
+                  ].map((t, i) => (
+                    <li key={t} className="flex gap-4">
+                      <span
+                        className="mt-0.5 shrink-0 font-medium tabular-nums text-main/80"
+                        style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-[11px] leading-relaxed text-text-secondary">
+                  ※ 時期により、広告に出していない物件もあります。
                 </p>
               </div>
-            </Link>
-          ))}
+            </div>
+
+            <div className="lg:col-span-7">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+                {featured.map((lot) => (
+                  <Link
+                    key={lot.id}
+                    href={`/lots/${lot.id}`}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-bg-primary card-shadow"
+                  >
+                    <Image
+                      src={lot.photos[0]}
+                      alt={lot.title}
+                      fill
+                      className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                      sizes="(max-width: 640px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                      <div className="flex items-center gap-1 mb-1">
+                        <MapPin
+                          className="w-3 h-3 text-white/80 shrink-0"
+                          strokeWidth={1.5}
+                        />
+                        <span className="text-white/80 text-[10px] md:text-xs font-medium">
+                          {lot.city}
+                        </span>
+                      </div>
+                      <p className="text-white text-xs md:text-sm font-medium line-clamp-2">
+                        {lot.title.replace(/[〜～].*$/, "")}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-border bg-bg-primary p-5 md:p-6">
+                <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
+                  主な対応エリア
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {cities.map((c) => (
+                    <span
+                      key={c.city}
+                      className="inline-flex items-baseline gap-1.5 rounded-full border border-border bg-bg-secondary/60 px-4 py-2 text-sm"
+                    >
+                      <span className="text-text-primary">{c.city}</span>
+                      <span
+                        className="text-main text-[10px]"
+                        style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                      >
+                        {c.count}
+                      </span>
+                    </span>
+                  ))}
+                  <span className="inline-flex items-center px-2 py-2 text-text-secondary text-sm">
+                    ほか
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* ===== CTA ===== */}
