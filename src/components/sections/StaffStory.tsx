@@ -81,19 +81,6 @@ const PHASES: Phase[] = [
         signature: "policy",
       },
       {
-        id: "147195",
-        name: "西口・クロフォード・丈",
-        nameEn: "Joe N. Crawford",
-        role: "営業課長",
-        career: "12年",
-        thoughts: {
-          house: "家族の空気が、一番濃くなる場所。",
-          customer: "最初の打ち合わせから、全力で考えます。",
-          policy: "提案は、お客様の数だけ変える。",
-        },
-        signature: "house",
-      },
-      {
         id: "157200",
         name: "山岡 洋一",
         nameEn: "Yoichi Yamaoka",
@@ -105,6 +92,19 @@ const PHASES: Phase[] = [
           policy: "いい土地は、お客様と見に行く。",
         },
         signature: "customer",
+      },
+      {
+        id: "147195",
+        name: "西口・クロフォード・丈",
+        nameEn: "Joe N. Crawford",
+        role: "営業課長",
+        career: "12年",
+        thoughts: {
+          house: "家族の空気が、一番濃くなる場所。",
+          customer: "最初の打ち合わせから、全力で考えます。",
+          policy: "提案は、お客様の数だけ変える。",
+        },
+        signature: "house",
       },
       {
         id: "218450",
