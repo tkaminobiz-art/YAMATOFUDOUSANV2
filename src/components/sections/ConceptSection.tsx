@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
 /*
   CONCEPT — 編集の見開き
@@ -10,8 +11,8 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 */
 
 const CONCEPT_PHOTO = {
-  src: "/images/fv/hero-03-living.webp",
-  alt: "花鳥風月 リビング — 同じ仕様の住まいの質感",
+  src: "/images/newsozai/interior-ldk-01.webp",
+  alt: "内観 LDK — 住まいの空気感",
 } as const;
 
 export default function ConceptSection() {
@@ -20,17 +21,17 @@ export default function ConceptSection() {
   return (
     <section
       id="concept"
-      className="relative overflow-hidden border-y border-white/[0.06] bg-[#1f1f1f] py-[var(--section-py)]"
+      className="relative overflow-hidden border-y border-white/[0.08] bg-[#171717] py-[var(--section-py)]"
     >
-      {/* 奥行き：放射 */}
+      {/* 奥行き：放射（1要素に絞る） */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_88%_52%_at_22%_-8%,rgba(255,255,255,0.085)_0%,transparent_56%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_88%_52%_at_18%_-8%,rgba(255,255,255,0.095)_0%,transparent_58%)]"
       />
       {/* 紙の筋：極弱い対角シーム（他ダーク帯との差別化） */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.055]"
+        className="pointer-events-none absolute inset-0 opacity-[0.042]"
         style={{
           backgroundImage:
             "repeating-linear-gradient(115deg, transparent, transparent 1px, rgba(255,255,255,0.04) 1px, rgba(255,255,255,0.04) 2px)",
@@ -40,193 +41,129 @@ export default function ConceptSection() {
       {/* ヴィネット */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/[0.38] via-transparent to-black/[0.58]"
-      />
-      {/* 下辺の薄い台座帯 */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[32%] bg-gradient-to-t from-black/45 to-transparent"
-      />
-      {/* 微ノイズ */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.038]"
-        aria-hidden
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundSize: "180px 180px",
-        }}
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/[0.34] via-transparent to-black/[0.62]"
       />
 
       <div
         ref={ref}
-        className="relative mx-auto max-w-[1280px] px-[var(--page-px)]"
+        className="relative mx-auto max-w-[1320px] px-[var(--page-px)]"
       >
-        {/* マストヘッド */}
-        <header className="group scroll-in mb-10 md:mb-12 lg:mb-14">
-          <p
-            className="text-[11px] font-semibold tracking-[0.38em] text-white/42 md:text-xs"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-          >
-            CONCEPT
-          </p>
-          <div
-            className="mt-4 h-px w-20 origin-left scale-x-0 bg-gradient-to-r from-white/50 to-transparent transition-transform duration-[950ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-[.is-visible]:scale-x-100 md:w-24"
-            aria-hidden
+        <div className="scroll-in">
+          <SectionHeaderCentered
+            label="CONCEPT"
+            ghostText="CONCEPT"
+            title="「予算オーバーで理想を諦める」そんな必要はありません。"
+            lead="素材も性能も同等。それでも金額が変わるのは、家づくりの“構造”が違うからです。"
+            theme="dark"
+            align="left"
+            className="mb-10 md:mb-12 lg:mb-14"
           />
-          <h2
-            className="mt-8 max-w-[46rem] text-[clamp(26px,3.8vw,48px)] font-medium leading-[1.38] tracking-[0.03em] text-white md:mt-10 md:leading-[1.4]"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
-            「予算オーバーで理想を諦める」そんな必要はありません。
-          </h2>
-        </header>
+        </div>
 
-        <div className="grid grid-cols-1 items-start gap-9 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-0 xl:gap-x-12">
-          {/* 左：リード・本文・編集注（SPは「主張→数字→締め」で後段） — PCは 6/6 で段差を抑える */}
-          <div className="order-2 space-y-6 lg:order-1 lg:col-span-6 lg:pr-1">
-            <div className="scroll-in space-y-6">
-              <p
-                className="max-w-[40rem] text-[clamp(15px,1.2vw,17px)] font-normal leading-[1.95] tracking-[0.02em] text-white/78 md:leading-[2]"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                図面に落ちた理想は、見積の一行で姿を変えます。
-                <span className="text-white/55"> ここで示すのは、</span>
-                <span className="font-medium text-white/88">
-                  同じ仕様を前提にしたときの、構造の差
-                </span>
-                <span className="text-white/55">だけです。</span>
-              </p>
-
-              <p
-                className="max-w-[40rem] border-l border-white/[0.14] pl-6 text-[clamp(15px,1.25vw,18px)] leading-[2.05] text-white/70 md:pl-7 md:leading-[2.1]"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                使っている素材は同じ。違うのは、
-                <span className="font-semibold text-white/92">
-                  無駄な広告費や中間マージンがかかっていないことだけ
-                </span>
-                です。
-              </p>
-
-              <p
-                className="max-w-[34rem] pt-1 text-[12px] leading-[1.85] text-white/48 md:text-[13px] md:leading-[1.9]"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                ※金額・条件は一例です。プラン・仕様・敷地条件により変動します。
-              </p>
-            </div>
-          </div>
-
-          {/* 右：写真（上）＋価格表（下）— 扉絵は横長にして左列との縦段差を縮小 */}
-          <div className="order-1 flex flex-col gap-5 lg:order-2 lg:col-span-6">
-            <figure className="scroll-in group/fig relative w-full overflow-hidden rounded-xl bg-black/50 shadow-[0_20px_56px_-28px_rgba(0,0,0,0.65)] ring-1 ring-white/[0.07]">
-              <div className="relative aspect-[16/11] w-full min-h-[200px] sm:aspect-[16/10] lg:aspect-[16/9] lg:max-h-[320px] lg:min-h-0">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-x-12 xl:gap-x-14">
+          {/* 左：写真（主役） */}
+          <div className="order-1 lg:order-1 lg:col-span-7">
+            <figure className="scroll-in group/fig relative overflow-hidden rounded-2xl bg-black/50 shadow-[0_24px_72px_-34px_rgba(0,0,0,0.72)] ring-1 ring-white/[0.08]">
+              <div className="relative aspect-[16/11] w-full sm:aspect-[16/10] lg:aspect-[16/9]">
                 <Image
                   src={CONCEPT_PHOTO.src}
                   alt={CONCEPT_PHOTO.alt}
                   fill
-                  className="object-cover transition duration-[1.35s] ease-out group-[.is-visible]/fig:scale-[1.02] motion-reduce:transition-none motion-reduce:group-[.is-visible]/fig:scale-100"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover opacity-[0.94] transition duration-[1.35s] ease-out group-hover/fig:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover/fig:scale-100"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
                 />
                 <div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/25"
                   aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/18 to-black/20"
                 />
                 <div
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent"
                   aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_78%_58%_at_24%_8%,rgba(255,255,255,0.15)_0%,transparent_58%)]"
                 />
-                <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pb-4 pt-12 md:px-5 md:pb-5">
-                  <p
-                    className="text-[10px] font-semibold tracking-[0.22em] text-white/48"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    扉絵
-                  </p>
-                  <p
-                    className="mt-2 text-sm font-medium leading-snug text-white/90 md:text-[15px]"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    紙のカタログでは足りない、光と素材の温度。
-                  </p>
-                </figcaption>
               </div>
+              <figcaption className="border-t border-white/[0.08] px-6 py-5 md:px-7 md:py-6">
+                <p
+                  className="text-[11px] font-semibold tracking-[0.22em] text-white/45"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  EDITORIAL CUT
+                </p>
+                <p
+                  className="mt-2 text-[15px] font-medium leading-relaxed text-white/88 md:text-base"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  まずは空気感を、写真で。次に、仕組みで納得してください。
+                </p>
+              </figcaption>
             </figure>
+          </div>
 
-            {/* 価格：表に近い秩序（英語ラベル廃止） */}
-            <div className="scroll-in border border-white/[0.1] bg-black/40 px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] md:px-6 md:py-6">
+          {/* 右：本文（短く）＋3ポイント */}
+          <div className="order-2 lg:order-2 lg:col-span-5">
+            <div className="scroll-in">
               <p
-                className="text-[10px] font-semibold tracking-[0.26em] text-white/38"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                参考・お見積りの帯
-              </p>
-
-              <div
-                className="mt-4 space-y-0 border-t border-white/[0.09]"
-                role="table"
-                aria-label="参考価格の比較"
-              >
-                <div
-                  role="row"
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 border-b border-white/[0.07] py-3 md:py-3.5"
-                >
-                  <span
-                    role="cell"
-                    className="text-[12px] font-medium leading-snug text-white/48 md:text-[13px]"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    大手ハウスメーカー
-                    <span className="mt-0.5 block text-[11px] font-normal text-white/38 md:text-xs">
-                      （参考帯）
-                    </span>
-                  </span>
-                  <span
-                    role="cell"
-                    className="text-right tabular-nums text-[clamp(1.75rem,4.2vw,2.5rem)] font-semibold tracking-tight text-white/38"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                  >
-                    4,000
-                    <span className="ml-1 text-base font-medium text-white/42 md:text-lg">
-                      万円〜
-                    </span>
-                  </span>
-                </div>
-
-                <div
-                  role="row"
-                  className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 py-3 md:py-3.5"
-                >
-                  <span
-                    role="cell"
-                    className="text-[12px] font-medium leading-snug text-main/95 md:text-[13px]"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    やまと不動産
-                    <span className="mt-0.5 block text-[11px] font-normal text-main/75 md:text-xs">
-                      花鳥風月
-                    </span>
-                  </span>
-                  <span
-                    role="cell"
-                    className="text-right tabular-nums text-[clamp(1.9rem,4.6vw,2.85rem)] font-semibold tracking-tight text-main [text-shadow:0_0_38px_rgba(90,138,74,0.26)]"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                  >
-                    <span className="underline decoration-main/30 decoration-[0.5px] underline-offset-[0.2em]">
-                      2,480
-                    </span>
-                    <span className="ml-1 text-base font-semibold text-main md:text-lg">
-                      万円〜
-                    </span>
-                  </span>
-                </div>
-              </div>
-
-              <p
-                className="mt-4 border-t border-dashed border-white/[0.1] pt-4 text-[13px] leading-[1.88] text-white/68 md:text-[14px] md:leading-[1.92]"
+                className="text-[clamp(15px,1.1vw,17px)] leading-[1.95] text-white/78"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                大手で4,000万円と言われた家が、2,480万円で建ちます。
+                図面に落ちた理想は、見積の一行で姿を変えます。
+                <span className="text-white/55"> ここで示すのは、</span>
+                <span className="font-medium text-white/90">
+                  同じ仕様を前提にしたときの“構造の差”
+                </span>
+                <span className="text-white/55">だけです。</span>
+              </p>
+
+              <blockquote className="mt-7 rounded-2xl border border-white/12 bg-white/[0.04] px-6 py-6">
+                <p
+                  className="text-[clamp(16px,1.35vw,18px)] leading-[2.05] text-white/80"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  使っている素材は同じ。違うのは、
+                  <span className="font-semibold text-white">
+                    無駄な広告費や中間マージンが乗っていないこと
+                  </span>
+                  だけ。
+                </p>
+              </blockquote>
+
+              <div className="mt-8 rounded-2xl border border-white/12 bg-black/25 px-6 py-6">
+                <p
+                  className="text-[11px] font-semibold tracking-[0.22em] text-white/55"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  THREE PROOFS
+                </p>
+                <ul className="mt-4 space-y-4">
+                  {[
+                    { k: "01", t: "価格は、契約後に上がらない", d: "見積もりが最終価格。後出しの追加請求はしません。" },
+                    { k: "02", t: "地盤改良費は当社負担（最大150万円）", d: "不安になりやすい費用を、先にゼロにします。" },
+                    { k: "03", t: "モデルハウスと同等が標準仕様", d: "「気に入った設備」がオプションで増額しません。" },
+                  ].map((p) => (
+                    <li key={p.k} className="grid grid-cols-[auto_1fr] gap-x-4">
+                      <span
+                        className="mt-0.5 inline-flex h-7 w-10 items-center justify-center rounded-full border border-white/14 bg-white/[0.04] text-[11px] font-semibold tracking-[0.12em] text-white/80"
+                        style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                      >
+                        {p.k}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium leading-snug text-white">
+                          {p.t}
+                        </p>
+                        <p className="mt-1 text-[13px] leading-[1.85] text-white/62">
+                          {p.d}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <p
+                className="mt-6 text-[12px] leading-[1.85] text-white/42 md:text-[13px]"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                ※金額・条件は一例です。プラン・仕様・敷地条件により変動します。
               </p>
             </div>
           </div>
