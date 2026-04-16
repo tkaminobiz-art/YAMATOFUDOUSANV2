@@ -7,7 +7,7 @@ import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 // Heroスライドショー4枚（28秒周期・7秒表示+1秒フェード）
 // 色温度リズム: cool → warm → cool → warm でビジュアルの緩急をつける
 const HERO_SLIDES = [
-  { src: "/images/newsozai/hero-night-shijoji.webp", alt: "外観 夜景ライトアップ" },
+  { src: "/images/newsozai/hero-miyamaki-mountain.webp", alt: "三山木モデルハウス 山並みと青空" },
   { src: "/images/newsozai/interior-kitchen-01.webp", alt: "内観 キッチン" },
   { src: "/images/newsozai/hero-day-green-exterior.webp", alt: "外観 緑と青空" },
   { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
@@ -43,21 +43,20 @@ export default function HeroCatalog() {
           ))}
         </div>
 
-        {/* シネマティック用ヴィネット（上下・左右で奥行き） */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/35 to-black/20 z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-black/25 z-[1]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_60%_at_50%_45%,transparent_30%,rgba(0,0,0,0.45)_100%)] z-[1]" />
+        {/* 写真を活かす薄手オーバーレイ（テキスト可読性の最低限のみ） */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent z-[1]" />
 
         {/* ===== コンテンツレイヤー ===== */}
         <div className="relative z-10 min-h-[100svh] flex flex-col">
           {/* 上部: シリーズ名 */}
           <div className="pt-24 md:pt-28 lg:pt-32 px-[var(--page-px)]">
             <div className="max-w-[1400px] mx-auto">
-              <p className="font-section-label text-white/75 text-xs md:text-sm tracking-[0.2em] mb-3 drop-shadow-md">
+              <p className="font-section-label text-white/80 text-xs md:text-sm tracking-[0.2em] mb-3 [text-shadow:_0_1px_8px_rgba(0,0,0,0.7)]">
                 KACHOUFUUGETSU — YAMATO NO IE
               </p>
               <p
-                className="text-white/92 text-base md:text-lg mt-1 tracking-[0.12em] drop-shadow-md font-medium"
+                className="text-white text-base md:text-lg mt-1 tracking-[0.12em] [text-shadow:_0_1px_8px_rgba(0,0,0,0.7)] font-medium"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
                 奈良の注文住宅 花鳥風月 やまとの家
@@ -77,27 +76,28 @@ export default function HeroCatalog() {
                     fontSize: "clamp(72px, 22vw, 320px)",
                     letterSpacing: "-0.04em",
                     lineHeight: 0.85,
+                    textShadow: "0 2px 20px rgba(0,0,0,0.5)",
                   }}
                 >
                   2,480
                 </span>
                 <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4">
-                  <span className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none">
+                  <span className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]">
                     万円〜
                   </span>
-                  <span className="text-white/60 text-[10px] md:text-xs leading-tight">
+                  <span className="text-white/65 text-[10px] md:text-xs leading-tight [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
                     税込・建物本体・付帯工事込み
                   </span>
                 </div>
               </div>
 
               <p
-                className="text-white text-xl md:text-3xl lg:text-[2.125rem] font-medium mt-8 md:mt-10 lg:mt-12 max-w-2xl leading-[1.65] tracking-[0.08em] drop-shadow-lg"
+                className="text-white text-xl md:text-3xl lg:text-[2.125rem] font-medium mt-8 md:mt-10 lg:mt-12 max-w-2xl leading-[1.65] tracking-[0.08em] [text-shadow:_0_2px_16px_rgba(0,0,0,0.6)]"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
                 見積もりが、最終価格です。
               </p>
-              <p className="text-white/65 text-xs md:text-sm mt-3 max-w-xl leading-relaxed">
+              <p className="text-white/75 text-xs md:text-sm mt-3 max-w-xl leading-relaxed [text-shadow:_0_1px_8px_rgba(0,0,0,0.5)]">
                 ※ 土地代・登記費用・引越し代を除く、建物本体と標準設備のすべてを含んだ価格です。
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function HeroCatalog() {
           <div className="pb-10 md:pb-16 px-[var(--page-px)]">
             <div className="max-w-[1400px] mx-auto">
               {/* 権威バッジ — 縦棒セパレータを常時表示 */}
-              <div className="flex flex-wrap items-center gap-x-5 md:gap-x-6 gap-y-3 mb-6 text-white/85 text-xs md:text-sm">
+              <div className="flex flex-wrap items-center gap-x-5 md:gap-x-6 gap-y-3 mb-6 text-white/90 text-xs md:text-sm [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
                 <span
                   className="flex items-baseline gap-1.5"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
@@ -115,7 +115,7 @@ export default function HeroCatalog() {
                   <span className="text-white font-light text-xl md:text-2xl">
                     90
                   </span>
-                  <span className="text-white/70">区画以上の分譲実績</span>
+                  <span className="text-white/80">区画以上の分譲実績</span>
                 </span>
                 <span className="w-px h-4 bg-white/30 inline-block" />
                 <span
@@ -125,7 +125,7 @@ export default function HeroCatalog() {
                   <span className="text-white font-light text-xl md:text-2xl">
                     50
                   </span>
-                  <span className="text-white/70">組以上のお客様の声</span>
+                  <span className="text-white/80">組以上のお客様の声</span>
                 </span>
                 <span className="w-px h-4 bg-white/30 inline-block" />
                 <span
@@ -135,7 +135,7 @@ export default function HeroCatalog() {
                   <span className="text-white font-light text-xl md:text-2xl">
                     14
                   </span>
-                  <span className="text-white/70">年の実績（2011年創立）</span>
+                  <span className="text-white/80">年の実績（2011年創立）</span>
                 </span>
               </div>
 
