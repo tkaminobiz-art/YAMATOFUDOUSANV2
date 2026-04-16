@@ -4,8 +4,8 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 import Image from "next/image";
 import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 import {
-  Calculator,
-  Link2Off,
+  BookOpen,
+  ClipboardList,
   HeartHandshake,
   Check,
   ShieldCheck,
@@ -41,24 +41,25 @@ const MONEY_DETAIL = {
   alt: "内観 ディテール — 素材の質感",
 } as const;
 
+/** 上の「3つで確認する内容」と被らないよう、会の進み方として書く */
 const FLOW_STEPS = [
   {
     k: "01",
-    title: "家計の枠を決める",
-    body: "収入・支出・将来の大きな出費を整理して、「無理のない月々」を先に決めます。",
+    title: "いまの暮らしと、時期のめど",
+    body: "ご家族の人数や通勤・通学、引っ越しをいつ頃に考えているか。金額の前に、生活の前提をそろえます。",
     Icon: HeartHandshake,
   },
   {
     k: "02",
-    title: "土地と建物の全体像をつなぐ",
-    body: "土地代・諸費用・建物の目安を一枚に並べて、抜け漏れがないか確認します。",
-    Icon: Link2Off,
+    title: "費用のかたちを、資料でたどる",
+    body: "図や資料を見ながら、どこにいくらかかりやすいかをざっくり追います。細かい確定は、このあとの段階で進められます。",
+    Icon: BookOpen,
   },
   {
     k: "03",
-    title: "返済が続く計画にする",
-    body: "審査の可否より先に、「暮らしが続くか」を基準に返済の形を一緒に考えます。",
-    Icon: Calculator,
+    title: "帰るまでに、次の一手を決める",
+    body: "持ち帰り資料、家で話し合っておきたいこと、次の面談や現地のご案内など、次に何をするかをはっきりさせます。",
+    Icon: ClipboardList,
   },
 ] as const;
 
@@ -238,7 +239,10 @@ export default function MoneyTalkSection() {
 
                 <div className="p-6 pl-7 md:p-8 md:pl-9">
                   <p className="text-xs font-semibold tracking-[0.14em] text-text-secondary">
-                    進め方（60分の目安）
+                    初回面談のながれ
+                  </p>
+                  <p className="mt-2 text-[12px] leading-relaxed text-text-secondary">
+                    所要時間は内容により前後します。
                   </p>
 
                   <div className="mt-6 space-y-6">
