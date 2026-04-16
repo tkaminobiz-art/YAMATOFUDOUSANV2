@@ -16,8 +16,9 @@ import CtaButton from "@/components/ui/CtaButton";
 /*
   お金の相談セクション
   2026-04-15 神野さんの方針：
-  - 数字で脅かさない（月々◯万円の硬いシミュレーションは前面に出さない）
-  - FP相談・つなぎ融資なし・「きっと建てられる」の3本柱
+  - 不安をあおらない（必要な数字だけ、分かる順に）
+  - 提携FPと一緒に「払える範囲」を先に整える
+  - 土地と建物をセットで進められることによる、つなぎ融資コストの抑制余地（断定しない）
   - 「気軽に相談して」のハードル下げが決定打
 
   配置：Price（料金目安）の直後。
@@ -25,34 +26,41 @@ import CtaButton from "@/components/ui/CtaButton";
 
   ファクトチェック（2026-04-15 神野さん確認済み）:
   - ファイナンシャルプランナー → 提携している（外部FPと連携）
-  - 「つなぎ融資がない」→ 通常は土地購入資金を先行で借りるため、建物完成までの
-    「つなぎ融資」（金利高め・手数料10万円〜・印紙代）が必要。
-    やまとは土地も建物も自社で扱うため、そのコストが発生しない。
+  - つなぎ融資 → 土地を先行で購入する流れでは発生しやすい。
+    やまとは土地と建物をまとめて進められるため、条件次第で負担を抑えられるケースがある。
   - 「きっと建てられます」→ 宣伝文句として使用（具体事例での裏付けはなし）
 */
-
-const PILLARS = [
-  {
-    icon: HeartHandshake,
-    title: "提携FPと一緒に、無理のない予算を整理",
-    body: "家計と将来設計を踏まえて、「払える範囲」を先に決めます。",
-  },
-  {
-    icon: Link2Off,
-    title: "つなぎ融資の負担が出にくい仕組み",
-    body: "土地と建物をまとめて進められるので、余計な金融コストを避けられるケースがあります。",
-  },
-  {
-    icon: Calculator,
-    title: "月々の支払いがきつくならない計画に",
-    body: "「通るか」より先に「続くか」。生活を圧迫しない設計にします。",
-  },
-] as const;
 
 const MONEY_HERO = {
   src: "/images/newsozai/interior-ldk-01.webp",
   alt: "内観 LDK — 暮らしの安心感",
 } as const;
+
+const MONEY_DETAIL = {
+  src: "/images/newsozai/interior-window-detail-01.webp",
+  alt: "内観 ディテール — 素材の質感",
+} as const;
+
+const FLOW_STEPS = [
+  {
+    k: "01",
+    title: "家計の枠を決める",
+    body: "収入・支出・将来の大きな出費を整理して、「無理のない月々」を先に決めます。",
+    Icon: HeartHandshake,
+  },
+  {
+    k: "02",
+    title: "土地と建物の全体像をつなぐ",
+    body: "土地代・諸費用・建物の目安を一枚に並べて、抜け漏れがないか確認します。",
+    Icon: Link2Off,
+  },
+  {
+    k: "03",
+    title: "返済が続く計画にする",
+    body: "審査の可否より先に、「暮らしが続くか」を基準に返済の形を一緒に考えます。",
+    Icon: Calculator,
+  },
+] as const;
 
 function Pill({
   Icon,
@@ -73,10 +81,26 @@ export default function MoneyTalkSection() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section id="money-talk" className="bg-bg-warm py-[var(--section-py)]">
+    <section id="money-talk" className="relative overflow-hidden bg-bg-warm py-[var(--section-py)]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_55%_at_18%_-10%,rgba(196,112,63,0.12),transparent_62%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(43,43,43,0.015), rgba(43,43,43,0.015) 1px, transparent 1px, transparent 28px)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+      />
       <div
         ref={ref}
-        className="mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in"
+        className="relative mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in"
       >
         <SectionHeaderCentered
           label="MONEY TALK"
@@ -112,10 +136,10 @@ export default function MoneyTalkSection() {
                   className="mt-2 text-[clamp(16px,1.8vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  数字で脅かす相談はしません。
+                  不安をあおる話はしません。
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-                  まずは「いくらなら安心か」を一緒に決めて、そこからプランを組み立てます。
+                  必要な数字だけ、分かる順に整理します。まずは「いくらなら安心か」を一緒に決めて、そこからプランを組み立てます。
                 </p>
               </figcaption>
             </figure>
@@ -178,33 +202,95 @@ export default function MoneyTalkSection() {
           </div>
         </div>
 
-        {/* 3つの柱（補足）：縦リズムで読みやすく */}
+        {/* 編集の見開き：上の「3つ」と重複しない“進行”の提示 */}
         <div className="mt-12 md:mt-16">
-          <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-8">
-            <p className="text-xs font-semibold tracking-[0.14em] text-main">
-              相談の中身（要点）
-            </p>
-            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-              {PILLARS.map((p, i) => {
-                const Icon = p.icon;
-                return (
-                  <div key={i} className="rounded-xl border border-border/80 bg-bg-secondary/60 p-5">
-                    <div className="flex items-start gap-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-main/10 text-main">
-                        <Icon className="h-5 w-5" strokeWidth={1.6} />
-                      </span>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold leading-snug text-text-primary">
-                          {p.title}
-                        </p>
-                        <p className="mt-2 text-[13px] leading-[1.85] text-text-secondary">
-                          {p.body}
-                        </p>
-                      </div>
-                    </div>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-5">
+              <p className="text-xs font-semibold tracking-[0.14em] text-main">
+                FIRST MEETING
+              </p>
+              <p
+                className="mt-4 text-[clamp(22px,2.6vw,34px)] font-semibold leading-[1.45] tracking-[0.05em] text-text-primary"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                はじめてでも大丈夫です。
+              </p>
+              <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary md:text-[14px]">
+                相談は「正解を当てに行く場」ではなく、迷いを減らす場です。必要な資料は少なくて大丈夫です。
+              </p>
+
+              <div className="mt-6 rounded-2xl border border-border bg-bg-primary p-5 shadow-sm">
+                <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
+                  つなぎ融資について（要点）
+                </p>
+                <p className="mt-3 text-[13px] leading-[1.95] text-text-secondary">
+                  土地を先行で購入する流れでは、つなぎ融資（金利・手数料など）が発生しやすいことがあります。当社は土地と建物をセットで進められるため、
+                  <span className="font-semibold text-text-primary">条件次第でその負担を抑えられるケース</span>
+                  があります。
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7">
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-bg-primary shadow-[0_18px_52px_-28px_rgba(43,43,43,0.14)]">
+                <div className="absolute left-0 top-0 h-full w-[3px] bg-gradient-to-b from-main via-main/70 to-main/25" aria-hidden />
+
+                <div className="p-6 pl-7 md:p-8 md:pl-9">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-text-secondary">
+                    進め方（60分の目安）
+                  </p>
+
+                  <div className="mt-6 space-y-6">
+                    {FLOW_STEPS.map((s) => {
+                      const Icon = s.Icon;
+                      return (
+                        <div key={s.k} className="grid grid-cols-[auto_1fr] gap-x-4">
+                          <div className="flex flex-col items-center">
+                            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-bg-secondary/70 text-[11px] font-semibold tracking-[0.12em] text-text-primary">
+                              {s.k}
+                            </span>
+                            <span className="mt-2 h-full w-px flex-1 bg-border/80" aria-hidden />
+                          </div>
+                          <div className="min-w-0 pb-2">
+                            <div className="flex items-start gap-3">
+                              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-main/10 text-main">
+                                <Icon className="h-5 w-5" strokeWidth={1.6} />
+                              </span>
+                              <div className="min-w-0">
+                                <p className="text-sm font-semibold leading-snug text-text-primary">
+                                  {s.title}
+                                </p>
+                                <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary">
+                                  {s.body}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
+                </div>
+              </div>
+
+              <figure className="mt-6 overflow-hidden rounded-2xl border border-border bg-bg-primary shadow-sm">
+                <div className="relative aspect-[16/9] w-full">
+                  <Image
+                    src={MONEY_DETAIL.src}
+                    alt={MONEY_DETAIL.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"
+                  />
+                </div>
+                <figcaption className="px-5 py-4 text-[12px] leading-relaxed text-text-secondary md:px-6 md:py-5">
+                  数字の前に、暮らしの質感。ここからは「続くかどうか」を一緒に見ていきます。
+                </figcaption>
+              </figure>
             </div>
           </div>
         </div>
