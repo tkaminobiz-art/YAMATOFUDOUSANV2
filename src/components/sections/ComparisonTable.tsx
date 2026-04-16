@@ -33,11 +33,36 @@ const COMPARISONS: Row[] = [
     yamato: "2,480万円〜",
     diff: "big-diff",
   },
-  { category: "外壁", major: "旭化成パワーボード", yamato: "旭化成パワーボード", diff: "same" },
-  { category: "断熱材", major: "ウレタン吹付", yamato: "ウレタン吹付", diff: "same" },
-  { category: "制震装置", major: "制震ダンパー", yamato: "住友ゴムMIRAIE", diff: "same" },
-  { category: "キッチン", major: "国内大手メーカー", yamato: "クリナップ", diff: "same" },
-  { category: "浴室", major: "国内大手メーカー", yamato: "TOTO", diff: "same" },
+  {
+    category: "外壁",
+    major: "各社独自の高耐久外壁（ALC/タイル/セラミック等）",
+    yamato: "旭化成建材 パワーボード（外壁）",
+    diff: "same",
+  },
+  {
+    category: "断熱材",
+    major: "高性能グラスウール・ロックウール等（各社仕様）",
+    yamato: "ウレタン吹付（断熱）",
+    diff: "same",
+  },
+  {
+    category: "制震装置",
+    major: "各社独自開発の制震装置（各社仕様）",
+    yamato: "住友ゴム MIRAIE（制震）",
+    diff: "same",
+  },
+  {
+    category: "キッチン",
+    major: "国内主要メーカー（シリーズは各社仕様）",
+    yamato: "クリナップ（シリーズはプランで確定）",
+    diff: "same",
+  },
+  {
+    category: "浴室",
+    major: "国内主要メーカー（シリーズは各社仕様）",
+    yamato: "TOTO（シリーズはプランで確定）",
+    diff: "same",
+  },
   {
     category: "地盤改良費",
     major: "別途 100〜200万円",
@@ -93,9 +118,9 @@ export default function ComparisonTable() {
       >
         <SectionHeaderCentered
           label="COMPARISON"
-          title="同じ素材、同じ品質。違うのは、価格の構造。"
+          title="違うのは価格の構造。でも、家そのものの品質は落としません。"
           ghostText="COMPARISON"
-          lead="“どこが同じで、どこが決定的に違うか”。項目ごとの事実だけを、1枚の証拠として並べます。"
+          lead="価格が安くなる理由をご説明したあとは、事実を項目ごとにご確認ください。"
           className="scroll-in"
           align="left"
         />
@@ -103,12 +128,7 @@ export default function ComparisonTable() {
         {/* ブリッジ（短く・左揃え） */}
         <div className="scroll-in mb-10 max-w-[840px] md:mb-12">
           <p className="text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-            ひとつ上の <span className="font-semibold text-text-primary">MECHANISM</span>{" "}
-            で“理由”を見せたあと、ここでは“事実”だけを並べます。読み方はシンプルです。
-            <span className="font-semibold text-text-primary">
-              まず「決定的に違う行」だけ
-            </span>
-            を見てください。
+            まずは緑色のチェックが付いた項目だけ、ご覧ください。
           </p>
         </div>
 
@@ -127,7 +147,7 @@ export default function ComparisonTable() {
               </p>
             </div>
             <p className="text-[12px] leading-relaxed text-text-secondary">
-              まずは緑の行だけ読めばOK
+              まずは緑の項目だけご確認ください
             </p>
           </div>
 
@@ -203,10 +223,10 @@ export default function ComparisonTable() {
                   className="mt-2 text-[15px] font-semibold leading-relaxed tracking-[0.04em] text-text-primary md:text-base"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  素材のグレードは、下げていません。
+                  素材は、業界で実績のある国内メーカーの標準仕様。
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-                  この後は「大手と同等の仕様」を、項目ごとに静かに確認します。
+                  この後は「価格の内訳」を、項目ごとに静かに確認します。
                 </p>
               </figcaption>
             </figure>
@@ -222,7 +242,7 @@ export default function ComparisonTable() {
                     className="mt-2 text-lg font-semibold tracking-[0.05em] text-text-primary md:text-xl"
                     style={{ fontFamily: "var(--font-serif)" }}
                   >
-                    素材・メーカーは、肩を並べます。
+                    設備は、国内主要メーカーを採用しています。
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 text-[11px] text-text-secondary md:justify-end">
@@ -284,8 +304,8 @@ export default function ComparisonTable() {
             素材は同じ。違うのは、看板代と中間マージンだけ。
           </p>
           <p className="mt-4 max-w-[820px] text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-            旭化成・住友ゴム・クリナップ・TOTO。大手と同じメーカーの素材を、当社でも標準でお使いいただけます。
-            展示場も広告も、中間業者も挟まない。だから“家そのもの”にお金が戻ります。
+            旭化成建材・住友ゴム・クリナップ・TOTO。いずれも業界で広く信頼される国内メーカーです。
+            同じ部材・設備を、やまと不動産でもお使いいただけます。看板代や中間マージンを差し引いた分、“家そのもの”にお金が戻ります。
           </p>
         </div>
 
