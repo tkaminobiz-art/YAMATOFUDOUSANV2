@@ -1,5 +1,6 @@
 import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 import CtaButton from "@/components/ui/CtaButton";
+import { Check, Minus } from "lucide-react";
 
 const PLANS = [
   {
@@ -43,6 +44,17 @@ const MATRIX_ROWS = [
   { label: "間取り（目安）", key: "layout" as const },
 ];
 
+function PriceStamp({ children }: { children: string }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center rounded-full border border-main/25 bg-main/10 px-3 py-1 text-[10px] font-semibold tracking-[0.22em] text-main"
+      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+    >
+      {children}
+    </span>
+  );
+}
+
 export default function PriceSection() {
   return (
     <section
@@ -53,6 +65,15 @@ export default function PriceSection() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_55%_at_50%_-15%,rgba(90,138,74,0.09),transparent_58%)]"
+      />
+      {/* 紙の罫（極薄）：単調さを崩す */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(43,43,43,0.015), rgba(43,43,43,0.015) 1px, transparent 1px, transparent 28px)",
+        }}
       />
       <div
         aria-hidden
@@ -72,15 +93,24 @@ export default function PriceSection() {
 
         {/* 価格レンジ — ヒーローブロック */}
         <div className="relative mb-14 md:mb-20">
+          {/* 値札モチーフ（控えめなアクセント） */}
+          <div className="absolute -top-3 left-6 z-10 md:left-10">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-bg-primary px-4 py-2 text-[11px] font-semibold tracking-[0.14em] text-text-primary shadow-sm">
+              <span
+                aria-hidden
+                className="h-2 w-2 rounded-full bg-main shadow-[0_0_0_3px_rgba(90,138,74,0.14)]"
+              />
+              コミコミ（建物）
+            </span>
+          </div>
+
           <div className="rounded-2xl border border-border/80 bg-bg-primary p-8 shadow-[0_20px_60px_-24px_rgba(43,43,43,0.14)] md:p-10 lg:p-12 lg:px-14">
             <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
               <div className="max-w-md">
-                <p
-                  className="text-[11px] font-semibold tracking-[0.18em] text-main/90 md:text-xs"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  価格帯
-                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <PriceStamp>PRICE</PriceStamp>
+                  <PriceStamp>RANGE</PriceStamp>
+                </div>
                 <p
                   className="mt-3 text-lg font-medium leading-snug text-text-primary md:text-xl"
                   style={{ fontFamily: "var(--font-sans)" }}
@@ -137,9 +167,15 @@ export default function PriceSection() {
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
             <div className="lg:col-span-7">
               <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-7">
-                <p className="text-xs font-semibold tracking-[0.14em] text-main">
-                  コミコミに含まれるもの（例）
-                </p>
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-main">
+                    コミコミに含まれるもの（例）
+                  </p>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-main/10 px-3 py-1 text-[11px] font-semibold text-main">
+                    <Check className="h-4 w-4" strokeWidth={2.25} />
+                    含む
+                  </span>
+                </div>
                 <ul className="mt-5 grid grid-cols-1 gap-3 text-sm text-text-secondary md:grid-cols-2">
                   {[
                     "建物本体",
@@ -148,7 +184,9 @@ export default function PriceSection() {
                     "設計・申請に関わる費用",
                   ].map((t) => (
                     <li key={t} className="flex items-start gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
+                      <span className="mt-[0.3rem] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-main/10 text-main">
+                        <Check className="h-3.5 w-3.5" strokeWidth={2.25} />
+                      </span>
                       <span className="leading-relaxed">{t}</span>
                     </li>
                   ))}
@@ -160,9 +198,15 @@ export default function PriceSection() {
             </div>
             <div className="lg:col-span-5">
               <div className="rounded-2xl border border-border bg-bg-secondary/70 p-6 md:p-7">
-                <p className="text-xs font-semibold tracking-[0.14em] text-text-primary">
-                  別途になりやすいもの（例）
-                </p>
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-xs font-semibold tracking-[0.14em] text-text-primary">
+                    別途になりやすいもの（例）
+                  </p>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-text-secondary/10 px-3 py-1 text-[11px] font-semibold text-text-secondary">
+                    <Minus className="h-4 w-4" strokeWidth={2.25} />
+                    別途
+                  </span>
+                </div>
                 <ul className="mt-5 space-y-3 text-sm text-text-secondary">
                   {[
                     "土地代",
@@ -171,7 +215,9 @@ export default function PriceSection() {
                     "外構工事（内容により）",
                   ].map((t) => (
                     <li key={t} className="flex items-start gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-text-secondary/60" />
+                      <span className="mt-[0.3rem] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-text-secondary/10 text-text-secondary">
+                        <Minus className="h-3.5 w-3.5" strokeWidth={2.25} />
+                      </span>
                       <span className="leading-relaxed">{t}</span>
                     </li>
                   ))}
