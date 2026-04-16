@@ -41,13 +41,13 @@ const INCLUDED = [
   "建物本体",
   "標準設備（キッチン・浴室など、ひととおり）",
   "付帯工事",
-  "設計料と、お申請のお手続き費用",
+  "設計・申請に関わる費用",
 ] as const;
 
 const EXCLUDED = [
-  "土地のお代",
-  "登記のお手続き費用",
-  "お引越し費用",
+  "土地代",
+  "登記費用",
+  "引越し費用",
   "外構工事（ご要望の内容により）",
 ] as const;
 
@@ -85,8 +85,8 @@ export default function PriceSection() {
           noMargin
           label="PRICING"
           ghostText="PRICE"
-          title="お値段は、はじめにすべて、お伝えいたします。"
-          lead="建物本体・標準設備・付帯工事まで含めた、税込の目安でございます。土地や登記は別途となりますので、そのご前提も、こちらでそろえておきます。"
+          title="価格の前提は、最初にそろえておきます。"
+          lead="建物本体・標準設備・付帯工事まで含めた税込の目安です。土地や登記は別途になるので、その前提もここでそろえます。"
           className="mb-12 md:mb-16 lg:mb-20"
         />
 
@@ -140,10 +140,10 @@ export default function PriceSection() {
                 >
                   花・風は{" "}
                   <span className="font-medium text-white/80">2,480万円〜</span>
-                  が目安でございます。坪数・間取り・設備は、ご家族に合わせて変わります。
+                  が目安です。坪数・間取り・設備はご家族に合わせて変わります。
                 </p>
                 <p className="mt-4 text-[11px] leading-relaxed text-white/40">
-                  ※ 土地のお代・登記等は、別途となります
+                  ※ 土地代・登記等は別途です
                 </p>
               </div>
               <div
@@ -164,10 +164,10 @@ export default function PriceSection() {
                   className="mt-4 text-base font-medium leading-relaxed text-text-primary md:text-lg"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  いま、ご覧いただいておりますのは、建物側の総額の目安でございます。
+                  いま見ているのは、建物側の総額の目安です。
                 </p>
                 <p className="mt-4 text-sm leading-[1.9] text-text-secondary">
-                  敷地や仕様によって前後いたしますが、まずはこの枠で、家計の見通しを立てていただけます。細部の積み上げは、ご来場のおりに一覧でご説明いたします。
+                  敷地や仕様で前後しますが、まずはこの枠で家計の見通しを立てます。細部は来場時に一覧でご説明します。
                 </p>
               </div>
               <dl className="mt-10 grid gap-3 border-t border-border/80 pt-8 text-sm">
@@ -214,7 +214,7 @@ export default function PriceSection() {
                 ))}
               </ul>
               <p className="mt-8 text-[12px] leading-relaxed text-text-secondary">
-                含む範囲は、プランと敷地の条件でお決めいたします。
+                含む範囲は、プランと敷地条件で決まります。
               </p>
             </div>
             <div className="px-0 py-10 md:border-l md:py-12 md:pl-10 lg:pl-14">
@@ -244,7 +244,7 @@ export default function PriceSection() {
                 ))}
               </ul>
               <p className="mt-8 text-[12px] leading-relaxed text-text-secondary">
-                別途の目安は、土地のご条件とご要望によって変わります。お金のご相談の場で、ご一緒に整理いたしましょう。
+                別途の目安は、土地条件とご要望で変わります。お金の相談で一緒に整理します。
               </p>
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function PriceSection() {
               PLANS
             </p>
             <p className="text-xs text-text-secondary md:text-sm">
-              広さ・間取り・価格帯の目安でございます。実際のプランは、設計でお仕立て直しいたします。
+              広さ・間取り・価格帯の目安です。実際のプランは、設計でお仕立て直しできます。
             </p>
           </div>
 
@@ -356,15 +356,15 @@ export default function PriceSection() {
           </div>
 
           <p className="mt-8 max-w-[62rem] text-[12px] leading-[1.9] text-text-secondary md:text-[13px]">
-            ※ こちらは、広さ・間取り・価格帯の目安でございます。間取り・坪数・設備は、ご家族に合わせて設計いたします。お値段は、条件により変わります。
+            ※ こちらは広さ・間取り・価格帯の目安です。間取り・坪数・設備はご家族に合わせて設計します。価格は条件により変わります。
           </p>
         </div>
 
         <div className="mt-14 flex flex-col gap-8 border-t border-border pt-10 md:mt-16 md:flex-row md:items-end md:justify-between md:pt-12">
           <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
-            ※ 表示価格は、建物本体（税込）に付帯工事まで含む目安でございます。土地・登記等は別途となります。
+            ※ 表示価格は建物本体（税込）に付帯工事まで含む目安です。土地・登記等は別途です。
             <br />
-            ※ 仕様の違いや、あなた専用へのお仕立て直しにつきましては、ご来場のおりに一覧でご説明いたします。
+            ※ 仕様の違いや、あなた専用へのお仕立て直しは来場時に一覧でご説明します。
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <CtaButton
@@ -379,7 +379,7 @@ export default function PriceSection() {
               variant="primary"
               size="md"
               label="来場予約"
-              sublabel="ご相談は、無料でございます"
+              sublabel="ご相談は無料です"
             />
           </div>
         </div>

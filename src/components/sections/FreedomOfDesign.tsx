@@ -7,15 +7,15 @@ import CtaButton from "@/components/ui/CtaButton";
 const STEPS = [
   {
     num: "01",
-    title: "初回から、設計士が同席いたします。",
-    body: "プロの設計士が、最初のお打ち合わせから、ご一緒します。",
+    title: "初回から、設計士が同席します。",
+    body: "最初の打ち合わせから、設計士が一緒に考えます。",
     image: "/images/design/step-01-meeting.webp",
     alt: "設計士と夫婦が打ち合わせしている様子",
   },
   {
     num: "02",
     title: "三ヶ月かけて、何度でもプランを磨き上げます。",
-    body: "日々の家事のしやすさも、お子様の将来も、じっくり考えてまいります。",
+    body: "日々の家事のしやすさも、これからの暮らしも。じっくり一緒に考えます。",
     image: "/images/design/step-02-drawing.webp",
     alt: "手描きの間取り図",
   },
@@ -73,17 +73,17 @@ export default function FreedomOfDesign() {
           >
             「これいいな」と思ったプランに、
             <br className="hidden md:inline" />
-            「でも、うちには合わないかも」と、諦めておられませんか。
+            「でも、うちには合わないかも」と、諦めていませんか。
           </h2>
           <p
             className="text-text-primary text-[clamp(16px,1.3vw,20px)] leading-relaxed"
             style={{ fontFamily: "var(--font-sans)" }}
           >
-            花・風・京、どのプランからでも、あなた専用にお仕立て直しいたします。
+            花・風・京。どのプランからでも、ご家族に合わせて仕立て直せます。
           </p>
           <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed mt-6">
             土地が決まっている方は、その条件に合わせて。これから探す方は、候補地と一緒に。
-            設計士が初回から同席し、「この土地でどこまでできるか」を、ひとつずつ形にしてまいります。
+            設計士が初回から同席し、「この土地でどこまでできるか」を一つずつ形にします。
           </p>
         </div>
 
@@ -145,7 +145,7 @@ export default function FreedomOfDesign() {
               あるご家族の、こだわり。
             </h3>
             <p className="text-text-secondary text-sm md:text-base leading-relaxed">
-              自由設計で、実際にお選びいただいた仕様の一部でございます。
+              自由設計で、実際にお選びいただいた仕様の一部です。
             </p>
           </div>
 
@@ -184,7 +184,7 @@ export default function FreedomOfDesign() {
             まずは、設計士に会いに、いらしてください。
           </p>
           <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-8">
-            あなたの土地とご家族のお話を、その場で間取りにしてまいります。
+            土地条件とご家族の暮らし方を、その場で間取りに落とし込みます。
           </p>
           <div className="inline-flex">
             <CtaButton

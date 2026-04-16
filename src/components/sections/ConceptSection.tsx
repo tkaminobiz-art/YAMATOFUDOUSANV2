@@ -52,8 +52,8 @@ export default function ConceptSection() {
           <SectionHeaderCentered
             label="CONCEPT"
             ghostText="CONCEPT"
-            title="予算で、理想を諦めていただく必要は、ございません。"
-            lead="素材も性能も、大手と同じ。それでもお値段が違うのは、家づくりの“構造”そのものが異なるからでございます。"
+            title="予算で、理想を諦めなくていい。"
+            lead="素材も性能も、大手と同じ。価格が違って見えるのは、家づくりの“構造”が違うからです。"
             theme="dark"
             align="left"
             className="mb-10 md:mb-12 lg:mb-14"
@@ -110,7 +110,7 @@ export default function ConceptSection() {
                 <span className="font-medium text-white/90">
                   同じ仕様を前提にしたときの“構造の差”
                 </span>
-                <span className="text-white/55">だけでございます。</span>
+                <span className="text-white/55">だけです。</span>
               </p>
 
               <blockquote className="mt-7 rounded-2xl border border-white/12 bg-white/[0.04] px-6 py-6">
@@ -122,7 +122,7 @@ export default function ConceptSection() {
                   <span className="font-semibold text-white">
                     余分な広告費や中間マージンが乗っていないこと
                   </span>
-                  、それだけでございます。
+                  、それだけです。
                 </p>
               </blockquote>
 
@@ -163,7 +163,7 @@ export default function ConceptSection() {
                 className="mt-6 text-[12px] leading-[1.85] text-white/42 md:text-[13px]"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                ※お値段・ご条件は一例でございます。プラン・仕様・敷地条件により変動いたします。
+                ※ 価格・条件は一例です。プラン・仕様・敷地条件により変わります。
               </p>
             </div>
           </div>

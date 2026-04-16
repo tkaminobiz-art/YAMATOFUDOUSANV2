@@ -46,8 +46,8 @@ export default function MechanismSection() {
         <SectionHeaderCentered
           label="MECHANISM"
           ghostText="MECHANISM"
-          title="安いのではございません。無駄がないだけでございます。"
-          lead="同じ仕様、同じ品質で、なぜお値段が変わるのか。結論から、お見せいたします。"
+          title="安いのではなく、無駄がない。"
+          lead="同じ仕様・同じ品質でも、価格が違って見える理由があります。結論からお見せします。"
           align="left"
           className="mb-10 md:mb-12"
         />
@@ -127,7 +127,7 @@ export default function MechanismSection() {
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
-                  次章で、証拠（比較表）をご覧に入れます
+                  次の章で、比較表（証拠）をお見せします
                 </li>
               </ul>
             </div>

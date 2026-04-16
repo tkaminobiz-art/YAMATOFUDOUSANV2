@@ -107,8 +107,8 @@ export default function MoneyTalkSection() {
         <SectionHeaderCentered
           label="MONEY TALK"
           ghostText="MONEY"
-          title="お金の不安は、先にお解きしておきませんか。"
-          lead="「払っていけるかな」「ローンは通るかな」。その不安を、はじめに一度、整理しておきましょう。"
+          title="お金の不安は、先にほどいておきませんか。"
+          lead="「払っていけるかな」「ローンは通るかな」。その不安は、はじめに一度整理しておくと安心です。"
           align="left"
           className="mb-10 md:mb-12"
         />
@@ -141,7 +141,7 @@ export default function MoneyTalkSection() {
                   むずかしい言葉で、急がせることはいたしません。
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-                  いま気がかりなところから、お伺いいたします。月々のお支払いの目安、土地・建物・諸費用の全体像まで、順を追って、ひとつずつ整えてまいります。
+                  いま気がかりなところから、お聞きします。月々の支払いの目安、土地・建物・諸費用の全体像まで、順を追って一つずつ整えます。
                 </p>
               </figcaption>
             </figure>
@@ -158,14 +158,14 @@ export default function MoneyTalkSection() {
                 className="mt-5 text-[clamp(18px,2vw,24px)] font-semibold leading-[1.55] tracking-[0.05em] text-text-primary"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                ご相談で伺うのは、三つだけでございます。
+                ご相談で確認するのは、3つだけです。
               </p>
 
               <ol className="mt-6 space-y-4">
                 {[
-                  { k: "01", t: "月々、無理のないお支払い", d: "生活費・教育費を削らないご予算を、ご一緒に定めます。" },
-                  { k: "02", t: "土地と建物の全体像", d: "「追加の費用がどれくらい出るか」を整理いたします。" },
-                  { k: "03", t: "今のご条件で進められる段取り", d: "気がかりなところから、先に手当ていたします。" },
+                  { k: "01", t: "月々、無理のない支払い", d: "生活費・教育費を削らない範囲を一緒に決めます。" },
+                  { k: "02", t: "土地と建物の全体像", d: "「追加でどれくらい費用が出そうか」を整理します。" },
+                  { k: "03", t: "今の条件で進められる段取り", d: "気になる点から、先に整理します。" },
                 ].map((x) => (
                   <li key={x.k} className="grid grid-cols-[auto_1fr] gap-x-4">
                     <span className="mt-0.5 inline-flex h-7 w-10 items-center justify-center rounded-full border border-border bg-bg-secondary/70 text-[11px] font-semibold tracking-[0.12em] text-text-primary">
@@ -218,7 +218,7 @@ export default function MoneyTalkSection() {
                 資料は、お揃いでなくて構いません。
               </p>
               <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary md:text-[14px]">
-                初回は、気がかりなことを一つずつ整理する時間でございます。図面や金融の細部は、必要になった段階で、少しずつお話しいたします。
+                初回は、気がかりなことを一つずつ整理する時間です。図面や金融の細部は、必要になった段階で少しずつお話しします。
               </p>
 
               <div className="mt-6 rounded-2xl border border-border bg-bg-primary p-5 shadow-sm">
@@ -229,7 +229,7 @@ export default function MoneyTalkSection() {
                   土地だけを先に購入し、あとから建物資金につなぐ場合、工事までのあいだに「つなぎ融資」が入ることがあり、利息や手数料が上乗せされることがあります。
                 </p>
                 <p className="mt-3 text-[13px] leading-[1.95] text-text-secondary">
-                  土地と建物をまとめて進めることで、段取りによっては、そのご負担を抑えられる場合がございます。詳しくは金融機関のご条件や案件ごとに異なりますので、ご相談のうえでご案内いたします。
+                  土地と建物をまとめて進めると、段取りによってはその負担を抑えられる場合があります。内容は金融機関の条件や案件ごとに異なるため、状況に合わせてご案内します。
                 </p>
               </div>
             </div>

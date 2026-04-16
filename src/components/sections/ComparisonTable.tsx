@@ -139,7 +139,7 @@ export default function ComparisonTable() {
                 className="mt-2 text-[clamp(18px,2.1vw,26px)] font-semibold tracking-[0.05em] text-text-primary"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                決定的に違うのは、この一点でございます。
+                決定的に違うのは、この一点です。
               </p>
             </div>
             <p className="text-[12px] leading-relaxed text-text-secondary">
@@ -294,7 +294,7 @@ export default function ComparisonTable() {
             素材は同じ。違うのは、看板代と中間マージンだけ。
           </p>
           <p className="mt-4 max-w-[820px] text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-            旭化成建材、住友ゴム、クリナップ、TOTO。いずれも、業界で広く信頼される国内メーカーでございます。
+            旭化成建材、住友ゴム、クリナップ、TOTO。いずれも、業界で広く信頼される国内メーカーです。
             同じ部材・設備を、当社でもお使いいただけます。看板代や中間マージンを差し引いた分、“お家そのもの”に、お金が戻ります。
           </p>
         </div>
