@@ -10,7 +10,6 @@ import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
 import PostPricingEditorialGallery from "@/components/sections/PostPricingEditorialGallery";
 import MoneyTalkSection from "@/components/sections/MoneyTalkSection";
-import QualitySection from "@/components/sections/QualitySection";
 import GuaranteeSection from "@/components/sections/GuaranteeSection";
 import MidCta from "@/components/sections/MidCta";
 import VoiceSection from "@/components/sections/VoiceSection";
@@ -21,6 +20,7 @@ import StaffStory from "@/components/sections/StaffStory";
 import FaqSection from "@/components/sections/FaqSection";
 import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
+import StandardAndQualitySection from "@/components/sections/StandardAndQualitySection";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
@@ -91,8 +91,7 @@ export default function Home() {
         <MoneyTalkSection />
         <LotsSection />
         <FreedomOfDesign />
-        <StandardSection />
-        <QualitySection />
+        <StandardAndQualitySection />
         <GuaranteeSection />
         <StaffStory />
         <VoiceSection />
