@@ -264,20 +264,15 @@ export default function PriceSection() {
             </p>
           </div>
 
-          <article className="relative mb-5 overflow-hidden rounded-2xl border border-main/35 bg-gradient-to-br from-main/[0.08] via-bg-primary to-bg-primary md:mb-6">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full bg-main/10 blur-3xl"
-            />
-            <div className="relative grid grid-cols-1 gap-8 p-6 md:grid-cols-12 md:gap-10 md:p-8 lg:p-10">
+          {/* A案：装飾より刷り物。左ルールのみで格を出す */}
+          <article className="relative mb-5 flex overflow-hidden rounded-xl border border-border bg-bg-primary md:mb-6">
+            <div className="w-[3px] shrink-0 bg-main" aria-hidden />
+            <div className="grid flex-1 grid-cols-1 gap-8 p-6 md:grid-cols-12 md:gap-10 md:p-8 lg:p-10">
               <div className="flex flex-col justify-between md:col-span-5">
                 <div>
-                  <span
-                    className="inline-block text-[10px] font-semibold tracking-[0.2em] text-main"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                  >
-                    PICK UP
-                  </span>
+                  <p className="text-[11px] font-medium tracking-[0.12em] text-text-secondary">
+                    軸となるプラン
+                  </p>
                   <div className="mt-4 flex items-end gap-3">
                     <span
                       className="text-[clamp(40px,6vw,64px)] font-semibold leading-none text-text-primary"
@@ -292,7 +287,7 @@ export default function PriceSection() {
                   </p>
                 </div>
                 <dl className="mt-8 grid gap-3 text-sm md:mt-0">
-                  <div className="flex justify-between gap-6 border-b border-border/70 pb-2">
+                  <div className="flex justify-between gap-6 border-b border-border pb-2">
                     <dt className="text-text-secondary">延床（目安）</dt>
                     <dd className="text-right font-medium text-text-primary">{featured.tsubo}</dd>
                   </div>
@@ -302,7 +297,7 @@ export default function PriceSection() {
                   </div>
                 </dl>
               </div>
-              <div className="flex flex-col justify-end border-t border-border/80 pt-8 md:col-span-7 md:border-l md:border-t-0 md:pl-10 md:pt-0 lg:pl-12">
+              <div className="flex flex-col justify-end border-t border-border pt-8 md:col-span-7 md:border-l md:border-t-0 md:pl-10 md:pt-0 lg:pl-12">
                 <p className="text-xs text-text-secondary">税込目安（建物コミコミ）</p>
                 <div className="mt-2 flex flex-wrap items-baseline gap-2">
                   <span
@@ -321,29 +316,21 @@ export default function PriceSection() {
             {rest.map((p) => (
               <article
                 key={p.id}
-                className="group flex flex-col rounded-2xl border border-border bg-bg-primary/90 p-6 transition-[border-color,box-shadow] duration-500 md:p-7"
+                className="flex flex-col rounded-xl border border-border bg-bg-primary p-6 md:p-7"
               >
-                <div className="flex items-baseline justify-between gap-4">
-                  <div className="flex items-baseline gap-2">
-                    <span
-                      className="text-3xl font-semibold text-text-primary md:text-4xl"
-                      style={{ fontFamily: "var(--font-serif)" }}
-                    >
-                      {p.name}
-                    </span>
-                    <span className="text-sm text-text-secondary">{p.reading}</span>
-                  </div>
+                <div className="flex items-baseline gap-2">
                   <span
-                    className="text-[10px] font-semibold tracking-[0.18em] text-text-secondary/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                    className="text-3xl font-semibold text-text-primary md:text-4xl"
+                    style={{ fontFamily: "var(--font-serif)" }}
                   >
-                    PLAN
+                    {p.name}
                   </span>
+                  <span className="text-sm text-text-secondary">{p.reading}</span>
                 </div>
                 <p className="mt-3 min-h-[2.5rem] text-sm leading-relaxed text-text-secondary">
                   {p.tagline}
                 </p>
-                <div className="mt-auto border-t border-border/80 pt-6">
+                <div className="mt-auto border-t border-border pt-6">
                   <div className="flex items-baseline gap-2">
                     <span
                       className="text-3xl font-light tabular-nums text-text-primary md:text-[2rem]"
