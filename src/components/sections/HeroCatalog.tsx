@@ -166,39 +166,6 @@ export default function HeroCatalog() {
         </div>
       </div>
 
-      {/* FV直下：PRICING の導入（#product と同一ラベル・続きの話として認知させる） */}
-      <div className="relative border-t border-border/80 bg-bg-secondary">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/[0.04] to-transparent"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-main/20 to-transparent"
-        />
-        <div className="relative mx-auto flex max-w-[1240px] flex-col gap-6 px-[var(--page-px)] py-8 md:flex-row md:items-end md:justify-between md:gap-10 md:py-10">
-          <div className="min-w-0 flex-1">
-            <SectionHeaderCentered
-              noMargin
-              compact
-              align="left"
-              label="PRICING"
-              ghostText="PRICING"
-              title="3つのプランと価格"
-              lead="各プランの目安と、コミコミに含まれる範囲をこの下でご紹介します。"
-            />
-          </div>
-          <a
-            href="#product"
-            className="inline-flex shrink-0 items-center gap-2 self-start text-sm font-medium text-main underline decoration-main/35 underline-offset-4 transition-colors hover:text-main-dark hover:decoration-main md:self-auto"
-          >
-            価格・比較表へ
-            <span aria-hidden className="text-base leading-none">
-              ↓
-            </span>
-          </a>
-        </div>
-      </div>
     </section>
   );
 }
