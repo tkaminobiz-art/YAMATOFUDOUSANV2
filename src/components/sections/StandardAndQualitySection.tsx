@@ -311,19 +311,8 @@ export default function StandardAndQualitySection() {
           </div>
         </div>
 
-        {/* ブリッジ：品質 → 保証（空白を“間”にする） */}
-        <div className="mt-10 md:mt-12">
-          <div
-            aria-hidden
-            className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent"
-          />
-          <p className="mt-4 text-center text-[12px] leading-relaxed text-text-secondary">
-            そして、保証で“安心”まで整えます。
-          </p>
-        </div>
-
         {/* ここから保証（同じトーンで連結） */}
-        <div id="guarantee" className="mt-8 pt-8 md:mt-10 md:pt-10">
+        <div id="guarantee" className="mt-6 border-t border-border pt-8 md:mt-8 md:pt-10">
           <div className="mb-10 md:mb-12 max-w-[760px]">
             <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
               品質と保証
@@ -397,7 +386,7 @@ export default function StandardAndQualitySection() {
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col gap-4 md:mt-12 md:flex-row md:items-center md:justify-between">
+          <div className="mt-8 flex flex-col gap-4 md:mt-10 md:flex-row md:items-center md:justify-between">
             <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
               ※ 保証の内容は制度・条件により変わる場合があります。詳細は来場時にご案内します。
             </p>
