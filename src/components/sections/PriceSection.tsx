@@ -1,3 +1,5 @@
+import SectionHeaderCentered from "@/components/SectionHeaderCentered";
+
 const PLANS = [
   {
     id: "hana" as const,
@@ -57,27 +59,15 @@ export default function PriceSection() {
       />
 
       <div className="relative mx-auto max-w-[1240px] px-[var(--page-px)]">
-        {/* マストヘッド */}
-        <header className="mb-12 md:mb-16 lg:mb-20">
-          <p className="font-section-label text-main text-xs tracking-[0.22em] md:text-sm">
-            PRICING
-          </p>
-          <div
-            className="mt-5 h-[2px] w-20 bg-gradient-to-r from-main via-main/70 to-transparent md:w-28"
-            aria-hidden
+        <div className="mb-12 md:mb-16 lg:mb-20">
+          <SectionHeaderCentered
+            noMargin
+            label="PRICING"
+            ghostText="PRICING"
+            title="花・風・京｜参考プランと価格帯"
+            lead="税込・建物本体・付帯工事込みのコミコミ価格で、3モデルを並べて比較できます。土地代・登記等は含みません。間取りや坪数は、ご家族に合わせて設計します。"
           />
-          <h2
-            className="mt-8 max-w-[22em] text-[clamp(26px,4vw,42px)] font-medium leading-[1.35] tracking-[0.02em] text-text-primary md:mt-10"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
-            花・風・京
-            <span className="text-text-secondary/90"> — </span>
-            参考プランと価格帯
-          </h2>
-          <p className="mt-6 max-w-[36rem] text-[clamp(15px,1.15vw,17px)] leading-[1.85] text-text-secondary">
-            税込・建物本体・付帯工事込みのコミコミ価格で、3モデルを並べて比較できます。土地代・登記等は含みません。間取りや坪数は、ご家族に合わせて設計します。
-          </p>
-        </header>
+        </div>
 
         {/* 価格レンジ — ヒーローブロック */}
         <div className="relative mb-14 md:mb-20">
@@ -132,10 +122,7 @@ export default function PriceSection() {
 
         {/* 3プラン — カード */}
         <div className="mb-16 md:mb-20">
-          <p
-            className="mb-6 text-xs font-medium tracking-[0.12em] text-text-secondary md:mb-8 md:text-sm"
-            style={{ fontFamily: "var(--font-sans)" }}
-          >
+          <p className="mb-6 text-xs font-semibold tracking-[0.14em] text-main md:mb-8 md:text-sm">
             3つの出発プラン
           </p>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">

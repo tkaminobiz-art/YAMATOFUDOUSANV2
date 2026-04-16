@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
+import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
 // Heroスライドショー5枚（30秒周期・6秒表示+1秒フェード）
 const HERO_SLIDES = [
@@ -172,26 +173,21 @@ export default function HeroCatalog() {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-main/20 to-transparent"
         />
-        <div className="relative mx-auto max-w-[1240px] px-[var(--page-px)] py-8 md:flex md:items-end md:justify-between md:gap-10 md:py-10">
-          <div className="max-w-[40rem]">
-            <p className="font-section-label text-main text-xs tracking-[0.22em] md:text-sm">
-              PRICING
-            </p>
-            <div
-              className="mt-4 h-[2px] w-16 bg-gradient-to-r from-main via-main/60 to-transparent md:w-20"
-              aria-hidden
+        <div className="relative mx-auto flex max-w-[1240px] flex-col gap-6 px-[var(--page-px)] py-8 md:flex-row md:items-end md:justify-between md:gap-10 md:py-10">
+          <div className="min-w-0 flex-1">
+            <SectionHeaderCentered
+              noMargin
+              compact
+              align="left"
+              label="PRICING"
+              ghostText="PRICING"
+              title="花・風・京の価格と、3プラン"
+              lead="すぐ下から同じ章の続きとしてご覧いただけます。"
             />
-            <p className="mt-5 text-[15px] leading-[1.8] text-text-primary md:mt-6 md:text-base">
-              <span className="font-medium">花・風・京</span>
-              の3プランと、コミコミ価格の目安。
-              <span className="text-text-secondary">
-                すぐ下から同じ章の続きとしてご覧いただけます。
-              </span>
-            </p>
           </div>
           <a
             href="#product"
-            className="mt-6 inline-flex shrink-0 items-center gap-2 self-start text-sm font-medium text-main underline decoration-main/35 underline-offset-4 transition-colors hover:text-main-dark hover:decoration-main md:mt-0 md:self-auto"
+            className="inline-flex shrink-0 items-center gap-2 self-start text-sm font-medium text-main underline decoration-main/35 underline-offset-4 transition-colors hover:text-main-dark hover:decoration-main md:self-auto"
           >
             価格・比較表へ
             <span aria-hidden className="text-base leading-none">
