@@ -49,15 +49,19 @@ function MarqueeTrack({
         {doubled.map((img, i) => (
           <figure
             key={`${img.src}-${i}`}
-            className={`group/fig relative ${heightClass} w-[min(72vw,340px)] shrink-0 overflow-hidden rounded-lg bg-bg-secondary shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)] ring-1 ring-black/[0.04] md:w-[min(42vw,440px)]`}
+            className={`group/fig relative ${heightClass} w-[min(72vw,340px)] shrink-0 overflow-hidden rounded-md bg-black/40 shadow-[0_12px_40px_-14px_rgba(0,0,0,0.55)] ring-1 ring-white/[0.08] md:w-[min(42vw,440px)]`}
           >
             <Image
               src={img.src}
               alt={img.alt}
               fill
-              className="object-cover transition duration-[1.4s] ease-out group-hover/fig:scale-[1.03]"
+              className="object-cover opacity-[0.92] transition duration-[1.4s] ease-out group-hover/fig:scale-[1.04] group-hover/fig:opacity-100"
               sizes="(max-width: 768px) 72vw, 440px"
               draggable={false}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10"
             />
           </figure>
         ))}
@@ -69,30 +73,51 @@ function MarqueeTrack({
 export default function EditorialPhotoGallery() {
   return (
     <section
-      className="border-y border-border/70 bg-bg-secondary py-10 md:py-14"
+      className="relative border-y border-white/[0.08] bg-[#171717] py-11 md:py-14"
       aria-label="竣工・内観のフォトギャラリー"
     >
-      <div className="mx-auto mb-6 max-w-[1400px] px-[var(--page-px)] text-center md:mb-8">
+      {/* 紙の筋：極薄い対角シーム */} 
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(115deg, transparent, transparent 1px, rgba(255,255,255,0.06) 1px, rgba(255,255,255,0.06) 2px)",
+          backgroundSize: "100% 100%",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+      />
+
+      <div className="relative mx-auto mb-7 max-w-[1400px] px-[var(--page-px)] text-center md:mb-9">
         <p
-          className="font-section-label text-main text-[11px] tracking-[0.22em] md:text-xs"
+          className="font-section-label text-[11px] tracking-[0.26em] text-white/45 md:text-xs"
         >
           GALLERY
         </p>
         <p
-          className="mx-auto mt-2 max-w-[520px] text-sm leading-relaxed text-text-secondary md:text-base"
+          className="mx-auto mt-3 max-w-[520px] text-base leading-[1.75] text-white/88 md:text-lg"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          紙のカタログでは伝わらない、光と素材の温度。
+          まずは、写真で。空気感だけ受け取ってください。
         </p>
-        <p className="mt-3 text-[11px] text-text-secondary md:text-xs">
-          <Link href="/#works" className="underline decoration-main/40 underline-offset-4 transition-colors hover:text-main">
+        <p className="mx-auto mt-2 max-w-[28rem] text-[13px] leading-relaxed text-white/55 md:text-sm">
+          比較の次は、憧れの解像度を上げる時間です。
+        </p>
+        <p className="mt-4 text-[11px] text-white/45 md:text-xs">
+          <Link
+            href="/#works"
+            className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60"
+          >
             施工事例で詳しく見る
           </Link>
         </p>
       </div>
 
       <div
-        className="relative w-full [mask-image:linear-gradient(90deg,transparent_0%,black_4%,black_96%,transparent_100%)] [-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_4%,black_96%,transparent_100%)]"
+        className="relative w-full [mask-image:linear-gradient(90deg,transparent_0%,black_5%,black_95%,transparent_100%)] [-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_5%,black_95%,transparent_100%)]"
       >
         <MarqueeTrack items={ROW_A} direction="left" heightClass="h-[168px] md:h-[228px]" />
         <MarqueeTrack items={ROW_B} direction="right" heightClass="h-[148px] md:h-[200px]" />
