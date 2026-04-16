@@ -1,6 +1,5 @@
 import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 import CtaButton from "@/components/ui/CtaButton";
-import { Check, Minus } from "lucide-react";
 
 const PLANS = [
   {
@@ -38,237 +37,323 @@ const PLANS = [
   },
 ] as const;
 
-function PriceStamp({ children }: { children: string }) {
-  return (
-    <span
-      className="inline-flex items-center justify-center rounded-full border border-main/25 bg-main/10 px-3 py-1 text-[10px] font-semibold tracking-[0.22em] text-main"
-      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-    >
-      {children}
-    </span>
-  );
-}
+const INCLUDED = [
+  "建物本体",
+  "標準設備（キッチン・浴室など）",
+  "付帯工事",
+  "設計・申請に関わる費用",
+] as const;
+
+const EXCLUDED = [
+  "土地代",
+  "登記費用",
+  "引越し費用",
+  "外構工事（内容により）",
+] as const;
 
 export default function PriceSection() {
+  const featured = PLANS.find((p) => p.featured)!;
+  const rest = PLANS.filter((p) => !p.featured);
+
   return (
     <section
       id="product"
-      className="relative scroll-mt-20 overflow-hidden bg-bg-secondary py-[var(--section-py)] md:scroll-mt-24"
+      className="relative scroll-mt-20 overflow-hidden bg-bg-primary py-[var(--section-py)] md:scroll-mt-24"
     >
-      {/* 奥行き：ごく薄い緑のグラデーション */}
+      {/* 紙面のような極薄グリッド（装飾） */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_55%_at_50%_-15%,rgba(90,138,74,0.09),transparent_58%)]"
-      />
-      {/* 紙の罫（極薄）：単調さを崩す */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute inset-0 opacity-[0.4]"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(43,43,43,0.015), rgba(43,43,43,0.015) 1px, transparent 1px, transparent 28px)",
+            "linear-gradient(to right, rgba(43,43,43,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(43,43,43,0.04) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-main/25 to-transparent"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_100%_0%,rgba(90,138,74,0.07),transparent_55%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
       />
 
       <div className="relative mx-auto max-w-[1240px] px-[var(--page-px)]">
-        <div className="mb-12 md:mb-16 lg:mb-20">
-          <SectionHeaderCentered
-            noMargin
-            label="PRICING"
-            ghostText="PRICING"
-            title="価格の目安と、コミコミに含まれる範囲"
-            lead="まずは「いくらくらい？」の目安を。建物本体・標準設備・付帯工事まで含めた税込の目安を示します。"
-          />
-        </div>
+        <SectionHeaderCentered
+          align="left"
+          noMargin
+          label="PRICING"
+          ghostText="PRICE"
+          title="数字は、最初に置いておく。"
+          lead="建物本体・標準設備・付帯工事まで含めた税込の目安です。土地や登記は別途になるので、その前提もここでそろえます。"
+          className="mb-12 md:mb-16 lg:mb-20"
+        />
 
-        {/* 価格レンジ — ヒーローブロック */}
-        <div className="relative mb-14 md:mb-20">
-          {/* 値札モチーフ（控えめなアクセント） */}
-          <div className="absolute -top-3 left-6 z-10 md:left-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-bg-primary px-4 py-2 text-[11px] font-semibold tracking-[0.14em] text-text-primary shadow-sm">
-              <span
+        {/* 価格ロックアップ：編集誌の見開き＋ダークスラブ */}
+        <div className="mb-14 overflow-hidden rounded-[2rem] border border-border shadow-[0_32px_80px_-40px_rgba(43,43,43,0.25)] md:mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            <div className="relative flex min-h-[280px] flex-col justify-between bg-[#252623] p-8 text-[#F4F3EE] md:p-10 lg:col-span-7 lg:min-h-[320px] lg:p-12">
+              <div
                 aria-hidden
-                className="h-2 w-2 rounded-full bg-main shadow-[0_0_0_3px_rgba(90,138,74,0.14)]"
-              />
-              コミコミ（建物）
-            </span>
-          </div>
-
-          <div className="rounded-2xl border border-border/80 bg-bg-primary p-8 shadow-[0_20px_60px_-24px_rgba(43,43,43,0.14)] md:p-10 lg:p-12 lg:px-14">
-            <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
-              <div className="max-w-md">
-                <div className="flex flex-wrap items-center gap-2">
-                  <PriceStamp>PRICE</PriceStamp>
-                  <PriceStamp>RANGE</PriceStamp>
-                </div>
-                <p
-                  className="mt-3 text-lg font-medium leading-snug text-text-primary md:text-xl"
-                  style={{ fontFamily: "var(--font-sans)" }}
-                >
-                  コミコミ価格の目安（建物）
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  建物本体・標準設備・付帯工事まで含んだ税込表示です。
-                </p>
-                <div className="mt-6 rounded-xl border border-border/80 bg-bg-secondary/60 px-5 py-4">
-                  <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
-                    まずはこの範囲で考えてください
-                  </p>
-                  <p
-                    className="mt-2 text-[clamp(18px,2vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
-                    style={{ fontFamily: "var(--font-serif)" }}
-                  >
-                    目安は <span className="tabular-nums">2,280</span>万円〜
-                  </p>
-                  <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">
-                    花・風は 2,480万円〜（目安）
-                  </p>
-                </div>
+                className="pointer-events-none absolute -right-8 top-1/2 -translate-y-1/2 select-none text-[clamp(120px,28vw,280px)] font-light leading-none tracking-[-0.06em] text-white/[0.04]"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                2280
               </div>
-              <div className="flex flex-col items-start gap-1 lg:items-end lg:text-right">
-                <div className="flex items-end gap-2 md:gap-3">
+              <div className="relative">
+                <p
+                  className="text-[10px] font-semibold tracking-[0.28em] text-white/45"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  BUILDING / TAX IN
+                </p>
+                <p
+                  className="mt-5 max-w-[20ch] text-[clamp(22px,2.4vw,30px)] font-semibold leading-snug tracking-[0.04em]"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  コミコミ（建物）税込の目安
+                </p>
+              </div>
+              <div className="relative mt-10 lg:mt-0">
+                <div className="flex flex-wrap items-end gap-3 md:gap-4">
                   <span
-                    className="font-light tabular-nums tracking-[-0.04em] text-text-primary"
+                    className="tabular-nums tracking-[-0.05em] text-[#FAFAF7]"
                     style={{
                       fontFamily: "var(--font-inter), Inter, sans-serif",
-                      fontSize: "clamp(52px,11vw,112px)",
-                      lineHeight: 0.88,
+                      fontSize: "clamp(56px,12vw,118px)",
+                      lineHeight: 0.9,
                     }}
                   >
                     2,280
                   </span>
                   <span
-                    className="pb-2 text-2xl font-normal text-text-primary md:pb-3 md:text-3xl"
+                    className="pb-2 text-lg font-medium text-white/70 md:pb-3 md:text-xl"
                     style={{ fontFamily: "var(--font-sans)" }}
                   >
                     万円〜
                   </span>
                 </div>
-                <p className="mt-2 text-xs text-text-secondary md:text-sm">
+                <p
+                  className="mt-5 max-w-prose text-sm leading-relaxed text-white/55 md:text-[15px]"
+                  style={{ fontFamily: "var(--font-sans)" }}
+                >
+                  花・風は{" "}
+                  <span className="font-medium text-white/80">2,480万円〜</span>
+                  （目安）。坪数・間取り・設備は家族に合わせて変わります。
+                </p>
+                <p className="mt-4 text-[11px] leading-relaxed text-white/40">
                   ※ 土地代・登記等は別途です
                 </p>
               </div>
+              <div
+                aria-hidden
+                className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-main via-main/60 to-transparent"
+              />
+            </div>
+
+            <div className="flex flex-col justify-between border-t border-border bg-bg-secondary/50 p-8 md:p-10 lg:col-span-5 lg:border-l lg:border-t-0 lg:bg-bg-secondary/30">
+              <div>
+                <p
+                  className="text-[10px] font-semibold tracking-[0.22em] text-text-secondary"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  SCOPE
+                </p>
+                <p
+                  className="mt-4 text-base font-medium leading-relaxed text-text-primary md:text-lg"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  いま見ているのは「建物側」の総額感です。
+                </p>
+                <p className="mt-4 text-sm leading-[1.9] text-text-secondary">
+                  敷地や仕様で増減しますが、まずはこの枠で家計の感触をつかみます。細部の積み上げは来場時に一覧でご説明します。
+                </p>
+              </div>
+              <dl className="mt-10 grid gap-3 border-t border-border/80 pt-8 text-sm">
+                <div className="flex items-baseline justify-between gap-6 border-b border-border/60 pb-3">
+                  <dt className="text-text-secondary">表示</dt>
+                  <dd className="text-right font-medium text-text-primary">税込・建物＋付帯まで</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-6">
+                  <dt className="text-text-secondary">別枠</dt>
+                  <dd className="text-right font-medium text-text-primary">土地・登記・外構など</dd>
+                </div>
+              </dl>
             </div>
           </div>
         </div>
 
-        {/* 含む/別途 — いちばん大事な確定事項 */}
-        <div className="mb-16 md:mb-20">
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
-            <div className="lg:col-span-7">
-              <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-7">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="text-xs font-semibold tracking-[0.14em] text-main">
-                    コミコミに含まれるもの（例）
-                  </p>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-main/10 px-3 py-1 text-[11px] font-semibold text-main">
-                    <Check className="h-4 w-4" strokeWidth={2.25} />
-                    含む
-                  </span>
-                </div>
-                <ul className="mt-5 grid grid-cols-1 gap-3 text-sm text-text-secondary md:grid-cols-2">
-                  {[
-                    "建物本体",
-                    "標準設備（キッチン・浴室など）",
-                    "付帯工事",
-                    "設計・申請に関わる費用",
-                  ].map((t) => (
-                    <li key={t} className="flex items-start gap-3">
-                      <span className="mt-[0.3rem] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-main/10 text-main">
-                        <Check className="h-3.5 w-3.5" strokeWidth={2.25} />
-                      </span>
-                      <span className="leading-relaxed">{t}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
-                  含まれる範囲はプランと敷地条件で確定します。詳細は来場時に一覧でご説明します。
-                </p>
-              </div>
+        {/* 含む / 別途 — 罫線のみの編集レイアウト */}
+        <div className="mb-16 border-y border-border md:mb-20">
+          <div className="grid grid-cols-1 divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0">
+            <div className="px-0 py-10 md:py-12 md:pr-10 lg:pr-14">
+              <p
+                className="text-[10px] font-semibold tracking-[0.26em] text-main"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                INCLUDED
+              </p>
+              <p
+                className="mt-4 text-lg font-semibold text-text-primary md:text-xl"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                コミコミに含まれるもの（例）
+              </p>
+              <ul className="mt-8 space-y-4 text-sm leading-relaxed text-text-secondary md:text-[15px]">
+                {INCLUDED.map((t) => (
+                  <li key={t} className="flex gap-4">
+                    <span
+                      className="mt-0.5 shrink-0 font-medium tabular-nums text-main/80"
+                      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                    >
+                      ＋
+                    </span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 text-[12px] leading-relaxed text-text-secondary">
+                含む範囲はプランと敷地条件で確定します。
+              </p>
             </div>
-            <div className="lg:col-span-5">
-              <div className="rounded-2xl border border-border bg-bg-secondary/70 p-6 md:p-7">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="text-xs font-semibold tracking-[0.14em] text-text-primary">
-                    別途になりやすいもの（例）
-                  </p>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-text-secondary/10 px-3 py-1 text-[11px] font-semibold text-text-secondary">
-                    <Minus className="h-4 w-4" strokeWidth={2.25} />
-                    別途
-                  </span>
-                </div>
-                <ul className="mt-5 space-y-3 text-sm text-text-secondary">
-                  {[
-                    "土地代",
-                    "登記費用",
-                    "引越し費用",
-                    "外構工事（内容により）",
-                  ].map((t) => (
-                    <li key={t} className="flex items-start gap-3">
-                      <span className="mt-[0.3rem] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-text-secondary/10 text-text-secondary">
-                        <Minus className="h-3.5 w-3.5" strokeWidth={2.25} />
-                      </span>
-                      <span className="leading-relaxed">{t}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
-                  別途がどれくらい必要かは、土地とご要望次第。お金の相談で一緒に整理しましょう。
-                </p>
-              </div>
+            <div className="px-0 py-10 md:border-l md:py-12 md:pl-10 lg:pl-14">
+              <p
+                className="text-[10px] font-semibold tracking-[0.26em] text-text-secondary"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                NOT IN BUILDING
+              </p>
+              <p
+                className="mt-4 text-lg font-semibold text-text-primary md:text-xl"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                別途になりやすいもの（例）
+              </p>
+              <ul className="mt-8 space-y-4 text-sm leading-relaxed text-text-secondary md:text-[15px]">
+                {EXCLUDED.map((t) => (
+                  <li key={t} className="flex gap-4">
+                    <span
+                      className="mt-0.5 shrink-0 font-medium text-text-secondary/70"
+                      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                    >
+                      —
+                    </span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 text-[12px] leading-relaxed text-text-secondary">
+                別途の目安は土地とご要望次第。お金の相談で一緒に整理します。
+              </p>
             </div>
           </div>
         </div>
 
-        {/* 3プラン — カード */}
-        <div className="mb-16 md:mb-20">
-          <p className="mb-6 text-xs font-semibold tracking-[0.14em] text-main md:mb-8 md:text-sm">
-            3つの基本プラン（目安）
-          </p>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {PLANS.map((p) => (
+        {/* プラン：花＝全幅、風・京＝2列（同型3カードを避ける） */}
+        <div>
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4 md:mb-8">
+            <p
+              className="text-[10px] font-semibold tracking-[0.26em] text-text-secondary"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              PLANS
+            </p>
+            <p className="text-xs text-text-secondary md:text-sm">
+              広さ・間取り・価格帯の目安です。設計で組み替えます。
+            </p>
+          </div>
+
+          <article className="relative mb-5 overflow-hidden rounded-2xl border border-main/35 bg-gradient-to-br from-main/[0.08] via-bg-primary to-bg-primary md:mb-6">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full bg-main/10 blur-3xl"
+            />
+            <div className="relative grid grid-cols-1 gap-8 p-6 md:grid-cols-12 md:gap-10 md:p-8 lg:p-10">
+              <div className="flex flex-col justify-between md:col-span-5">
+                <div>
+                  <span
+                    className="inline-block text-[10px] font-semibold tracking-[0.2em] text-main"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
+                    PICK UP
+                  </span>
+                  <div className="mt-4 flex items-end gap-3">
+                    <span
+                      className="text-[clamp(40px,6vw,64px)] font-semibold leading-none text-text-primary"
+                      style={{ fontFamily: "var(--font-serif)" }}
+                    >
+                      {featured.name}
+                    </span>
+                    <span className="pb-1 text-sm text-text-secondary">{featured.reading}</span>
+                  </div>
+                  <p className="mt-4 max-w-md text-sm leading-relaxed text-text-secondary md:text-[15px]">
+                    {featured.tagline}
+                  </p>
+                </div>
+                <dl className="mt-8 grid gap-3 text-sm md:mt-0">
+                  <div className="flex justify-between gap-6 border-b border-border/70 pb-2">
+                    <dt className="text-text-secondary">延床（目安）</dt>
+                    <dd className="text-right font-medium text-text-primary">{featured.tsubo}</dd>
+                  </div>
+                  <div className="flex justify-between gap-6">
+                    <dt className="text-text-secondary">間取り</dt>
+                    <dd className="text-right font-medium text-text-primary">{featured.layout}</dd>
+                  </div>
+                </dl>
+              </div>
+              <div className="flex flex-col justify-end border-t border-border/80 pt-8 md:col-span-7 md:border-l md:border-t-0 md:pl-10 md:pt-0 lg:pl-12">
+                <p className="text-xs text-text-secondary">税込目安（建物コミコミ）</p>
+                <div className="mt-2 flex flex-wrap items-baseline gap-2">
+                  <span
+                    className="text-[clamp(36px,7vw,72px)] font-light tabular-nums tracking-[-0.04em] text-text-primary"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
+                    {featured.price}
+                  </span>
+                  <span className="text-lg text-text-secondary md:text-xl">万円〜</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+            {rest.map((p) => (
               <article
                 key={p.id}
-                className={[
-                  "relative flex flex-col rounded-xl border bg-bg-primary p-6 md:p-7",
-                  "transition-shadow duration-300",
-                  p.featured
-                    ? "border-main shadow-[0_16px_48px_-20px_rgba(90,138,74,0.35)] ring-1 ring-main/25"
-                    : "border-border card-shadow hover:-translate-y-0.5 hover:shadow-md",
-                ].join(" ")}
+                className="group flex flex-col rounded-2xl border border-border bg-bg-primary/90 p-6 transition-[border-color,box-shadow] duration-500 md:p-7"
               >
-                {p.featured && (
-                  <span className="absolute -top-2.5 left-5 bg-main px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.14em] text-white">
-                    おすすめ
-                  </span>
-                )}
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div className="flex items-baseline gap-2">
+                    <span
+                      className="text-3xl font-semibold text-text-primary md:text-4xl"
+                      style={{ fontFamily: "var(--font-serif)" }}
+                    >
+                      {p.name}
+                    </span>
+                    <span className="text-sm text-text-secondary">{p.reading}</span>
+                  </div>
                   <span
-                    className="text-3xl font-medium text-text-primary md:text-4xl"
-                    style={{ fontFamily: "var(--font-sans)" }}
+                    className="text-[10px] font-semibold tracking-[0.18em] text-text-secondary/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                   >
-                    {p.name}
+                    PLAN
                   </span>
-                  <span className="text-sm text-text-secondary">{p.reading}</span>
                 </div>
-                <p className="mt-2 min-h-[2.75rem] text-sm leading-relaxed text-text-secondary">
+                <p className="mt-3 min-h-[2.5rem] text-sm leading-relaxed text-text-secondary">
                   {p.tagline}
                 </p>
-                <div className="mt-6 border-t border-border/90 pt-6">
-                  <div className="flex items-baseline gap-1.5">
+                <div className="mt-auto border-t border-border/80 pt-6">
+                  <div className="flex items-baseline gap-2">
                     <span
-                      className="text-3xl font-light tabular-nums text-text-primary md:text-[2.125rem]"
+                      className="text-3xl font-light tabular-nums text-text-primary md:text-[2rem]"
                       style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                     >
                       {p.price}
                     </span>
                     <span className="text-sm text-text-secondary">万円〜</span>
                   </div>
-                  <dl className="mt-5 space-y-2.5 text-sm">
+                  <dl className="mt-5 space-y-2 text-sm">
                     <div className="flex justify-between gap-4 border-b border-border/60 pb-2">
                       <dt className="text-text-secondary">延床（目安）</dt>
                       <dd className="text-right font-medium text-text-primary">{p.tsubo}</dd>
@@ -283,18 +368,18 @@ export default function PriceSection() {
             ))}
           </div>
 
-          <p className="mt-6 max-w-[62rem] text-[12px] leading-[1.9] text-text-secondary md:text-[13px]">
+          <p className="mt-8 max-w-[62rem] text-[12px] leading-[1.9] text-text-secondary md:text-[13px]">
             ※ ここに載せているのは「広さ・間取り・価格帯」の目安です。間取り・坪数・設備はご家族に合わせて設計します。金額は条件により変動します。
           </p>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 md:mt-12 md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 flex flex-col gap-8 border-t border-border pt-10 md:mt-16 md:flex-row md:items-end md:justify-between md:pt-12">
           <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
             ※ 表示価格は建物本体（税込）＋付帯工事込みの目安です。土地・登記等は別途です。
             <br />
             ※ 仕様の差分や、あなた仕様への組み替えは来場時に一覧でご説明します。
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <CtaButton
               href="#money-talk"
               variant="secondary"
