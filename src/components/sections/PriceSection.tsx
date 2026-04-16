@@ -38,12 +38,6 @@ const PLANS = [
   },
 ] as const;
 
-const MATRIX_ROWS = [
-  { label: "価格（税込・コミコミ）", key: "priceYen" as const },
-  { label: "延床面積（目安）", key: "tsubo" as const },
-  { label: "間取り（目安）", key: "layout" as const },
-];
-
 function PriceStamp({ children }: { children: string }) {
   return (
     <span
@@ -248,8 +242,8 @@ export default function PriceSection() {
                 ].join(" ")}
               >
                 {p.featured && (
-                  <span className="absolute -top-2.5 left-5 bg-main px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
-                    Recommend
+                  <span className="absolute -top-2.5 left-5 bg-main px-2.5 py-0.5 text-[10px] font-semibold tracking-[0.14em] text-white">
+                    おすすめ
                   </span>
                 )}
                 <div className="flex items-baseline gap-2">
@@ -284,69 +278,14 @@ export default function PriceSection() {
                       <dd className="text-right font-medium text-text-primary">{p.layout}</dd>
                     </div>
                   </dl>
-                  <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
-                    ※ 間取り・坪数・設備はご家族に合わせて設計します。金額は条件により変動します。
-                  </p>
                 </div>
               </article>
             ))}
           </div>
-        </div>
 
-        {/* 比較マトリクス */}
-        <div className="overflow-hidden rounded-2xl border border-border bg-bg-primary shadow-sm">
-          <div className="border-b border-border bg-main-light/80 px-4 py-3 md:px-6">
-            <p
-              className="text-xs font-medium tracking-[0.08em] text-text-primary md:text-sm"
-              style={{ fontFamily: "var(--font-sans)" }}
-            >
-              スペック比較
-            </p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px] border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-border bg-main text-left text-white">
-                  <th className="w-[38%] px-4 py-4 text-xs font-normal opacity-95 md:px-6 md:text-sm">
-                    項目
-                  </th>
-                  {PLANS.map((p) => (
-                    <th
-                      key={p.id}
-                      className="px-3 py-4 text-center font-normal md:px-5"
-                    >
-                      <span className="text-lg font-medium md:text-xl">{p.name}</span>
-                      <span className="ml-1 text-xs font-normal opacity-90">
-                        {p.reading}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {MATRIX_ROWS.map((row, i) => (
-                  <tr
-                    key={row.label}
-                    className={
-                      i % 2 === 0 ? "bg-bg-primary" : "bg-bg-secondary/80"
-                    }
-                  >
-                    <td className="border-b border-border px-4 py-3.5 text-xs text-text-secondary md:px-6 md:text-sm">
-                      {row.label}
-                    </td>
-                    {PLANS.map((p) => (
-                      <td
-                        key={`${p.id}-${row.key}`}
-                        className="border-b border-border px-3 py-3.5 text-center text-sm font-medium text-text-primary md:px-5 md:text-base"
-                      >
-                        {p[row.key]}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <p className="mt-6 max-w-[62rem] text-[12px] leading-[1.9] text-text-secondary md:text-[13px]">
+            ※ ここに載せているのは「広さ・間取り・価格帯」の目安です。間取り・坪数・設備はご家族に合わせて設計します。金額は条件により変動します。
+          </p>
         </div>
 
         <div className="mt-10 flex flex-col gap-4 md:mt-12 md:flex-row md:items-center md:justify-between">
