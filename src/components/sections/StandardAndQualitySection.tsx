@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { Shield, Bug, Wrench, Phone, ShieldCheck } from "lucide-react";
+import CtaButton from "@/components/ui/CtaButton";
 
 /*
   Standard × Quality（統合）
@@ -167,16 +168,16 @@ export default function StandardAndQualitySection() {
       <div ref={ref} className="relative max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in">
         <div className="mb-10 md:mb-14 max-w-[760px]">
           <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-            外壁品質
+            品質と保証
           </p>
           <h2
             className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            10年後に差が出るのは、外壁です。
+            10年後の手間まで、含めて考える。
           </h2>
           <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-            多くの家が10年前後で外壁の塗り替えを考え始めます。やまと不動産は、外壁の仕様と施工の手間を“最初から”揃えることで、メンテの頻度を抑えやすい家を目指しています。
+            外壁は、10年前後で塗り替えを検討する方が多いと言われます。やまと不動産は、仕様と施工の手間を“最初から”揃え、メンテの頻度を抑えやすい家を目指します。さらに、保証で安心まで支えます。
           </p>
         </div>
 
@@ -256,7 +257,7 @@ export default function StandardAndQualitySection() {
           <div className="lg:col-span-4">
             <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-7">
               <p className="text-xs font-semibold tracking-[0.14em] text-main">
-                外壁の考え方
+                品質（外壁）
               </p>
               <p className="mt-3 text-sm leading-[1.9] text-text-secondary">
                 仕上がりは、完成した日に見えます。けれど差が出るのは、住み始めてからです。仕様と施工の積み重ねが、10年後の手間を左右します。
@@ -301,9 +302,11 @@ export default function StandardAndQualitySection() {
                 ))}
               </div>
 
-              <p className="mt-6 text-[11px] leading-relaxed text-text-secondary">
-                ※ 保証の内容は次のセクションでまとめてご案内しています。
-              </p>
+              <div className="mt-6 border-t border-border pt-5">
+                <p className="text-[11px] leading-relaxed text-text-secondary">
+                  ※ 保証はこの下でまとめてご案内します。
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -312,16 +315,16 @@ export default function StandardAndQualitySection() {
         <div id="guarantee" className="mt-16 border-t border-border pt-12 md:mt-20 md:pt-16">
           <div className="mb-10 md:mb-12 max-w-[760px]">
             <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-              GUARANTEE
+              品質と保証
             </p>
             <h2
               className="text-[clamp(22px,3vw,34px)] text-text-primary mb-4"
               style={{ fontFamily: "var(--font-serif)" }}
             >
-              お引き渡し後の安心まで、含めて考えます。
+              保証は、安心の根拠です。
             </h2>
             <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-              家は、建てて終わりではありません。10年、20年と住み続ける家だからこそ、保証とアフターを大切にします。
+              家は、建てて終わりではありません。第三者機関の保険と、年数の保証で、住み続ける時間を支えます。
             </p>
           </div>
 
@@ -381,6 +384,28 @@ export default function StandardAndQualitySection() {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 flex flex-col gap-4 md:mt-12 md:flex-row md:items-center md:justify-between">
+            <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
+              ※ 保証の内容は制度・条件により変わる場合があります。詳細は来場時にご案内します。
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <CtaButton
+                href="/reserve"
+                variant="primary"
+                size="md"
+                label="来場予約"
+                sublabel="品質と保証をまとめて確認"
+              />
+              <CtaButton
+                href="/contact"
+                variant="secondary"
+                size="md"
+                label="まずは質問だけ"
+                sublabel="気になる点をメッセージで"
+              />
+            </div>
           </div>
         </div>
       </div>
