@@ -79,11 +79,14 @@ export default function HeroCatalog() {
                     textShadow: "0 2px 20px rgba(0,0,0,0.5)",
                   }}
                 >
-                  2,480
+                  2,280
                 </span>
                 <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4">
                   <span className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]">
                     万円〜
+                    <span className="ml-1.5 text-[11px] md:text-sm align-baseline text-white/70 font-normal tracking-[0.04em]">
+                      （京モデル）
+                    </span>
                   </span>
                   <span className="text-white/65 text-[10px] md:text-xs leading-tight [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
                     税込・建物本体・付帯工事込み
