@@ -101,8 +101,8 @@ const QUALITY_CARDS = [
   {
     number: "10",
     unit: "年",
-    title: "外壁の耐久性",
-    desc: "一般的に塗り替えの目安とされる十年。その先を見据えた外壁仕様を、標準にしています。",
+    title: "外壁メンテの目安",
+    desc: "一般的に、外壁は10年ほどで塗り替えを検討することが多いと言われます。当社は、長期目線の外壁仕様を標準にしています。",
   },
   {
     number: "1.2",
@@ -135,22 +135,25 @@ export default function StandardAndQualitySection() {
       <div ref={ref} className="relative max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in">
         <div className="mb-10 md:mb-14 max-w-[760px]">
           <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-            STANDARD / QUALITY
+            QUALITY / STANDARD
           </p>
           <h2
             className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            標準仕様で揃え、品質で支えます。
+            10年後に差が出るのは、外壁です。
           </h2>
           <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-            見える設備は、写真で。見えない部分は、数字で。どちらも「最初から入っている前提」で、家づくりを進められるようにしています。
+            多くの家が10年前後で外壁の塗り替えを考え始めます。やまと不動産は、外壁の仕様と施工の手間を“最初から”揃えることで、メンテの頻度を抑えやすい家を目指しています。
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           {/* 左：標準仕様（写真） */}
           <div className="lg:col-span-8">
+            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary mb-3">
+              標準仕様（写真の一部）
+            </p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
               {STANDARDS.map((item) => {
                 const spanClass =
@@ -221,11 +224,26 @@ export default function StandardAndQualitySection() {
           <div className="lg:col-span-4">
             <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-7">
               <p className="text-xs font-semibold tracking-[0.14em] text-main">
-                品質の考え方
+                外壁の考え方
               </p>
               <p className="mt-3 text-sm leading-[1.9] text-text-secondary">
-                仕上がりは、最後の一日では決まりません。工程と手間が、年数が経ったときに効いてきます。
+                見た目は、最後の一日で整います。けれど差が出るのは、年数が経ってから。仕様と施工の積み重ねで、10年後の表情が変わります。
               </p>
+
+              <div className="mt-5 rounded-xl border border-border bg-bg-secondary/60 px-5 py-4">
+                <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
+                  目指している状態
+                </p>
+                <p
+                  className="mt-2 text-[15px] font-semibold leading-relaxed tracking-[0.04em] text-text-primary"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  塗り替えが必要になりにくい外壁。
+                </p>
+                <p className="mt-2 text-[12px] leading-relaxed text-text-secondary">
+                  ※ 立地や日当たり等の環境条件で、劣化のスピードは変わります。
+                </p>
+              </div>
 
               <div className="mt-6 space-y-4">
                 {QUALITY_CARDS.map((c) => (
