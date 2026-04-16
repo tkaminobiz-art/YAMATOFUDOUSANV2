@@ -46,8 +46,8 @@ export default function MechanismSection() {
         <SectionHeaderCentered
           label="MECHANISM"
           ghostText="MECHANISM"
-          title="安いのではありません。無駄がないだけです。"
-          lead="同じ仕様・同じ品質のまま、なぜ価格が変わるのか。結論からお見せします。"
+          title="安いのではございません。無駄がないだけでございます。"
+          lead="同じ仕様、同じ品質で、なぜお値段が変わるのか。結論から、お見せいたします。"
           align="left"
           className="mb-10 md:mb-12"
         />
@@ -63,9 +63,9 @@ export default function MechanismSection() {
                 className="mt-4 text-[clamp(18px,2.2vw,26px)] font-semibold leading-[1.55] tracking-[0.05em] text-text-primary"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                家そのものの原価を削らずに、
+                お家そのものの原価は、削りません。
                 <br />
-                「家に関係ないお金」を削ります。
+                「家に関係のないお金」だけを、削ります。
               </p>
 
               <div className="mt-6 rounded-xl border border-border/80 bg-bg-secondary/60 px-5 py-4">
@@ -119,15 +119,15 @@ export default function MechanismSection() {
               <ul className="mt-6 space-y-3 text-[13px] leading-relaxed text-text-secondary">
                 <li className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
-                  広告費・展示場維持費・中間マージンを最小化
+                  広告費・展示場維持費・中間マージンを、最小限に
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
-                  “家そのもの”にお金が戻る構造
+                  “お家そのもの”に、お金が戻る仕組み
                 </li>
                 <li className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
-                  次の章で、証拠（比較表）を提示します
+                  次章で、証拠（比較表）をご覧に入れます
                 </li>
               </ul>
             </div>
@@ -224,7 +224,7 @@ export default function MechanismSection() {
                   className="text-[clamp(16px,1.6vw,20px)] font-semibold tracking-[0.06em] text-text-primary"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  “家の質”ではなく、“家に関係ないコスト”が削れている。
+                  “お家の質”ではなく、“家に関係のないコスト”を、削っております。
                 </p>
               </div>
             </div>
@@ -234,7 +234,7 @@ export default function MechanismSection() {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[12px] leading-relaxed text-text-secondary">
             次の <span className="font-semibold text-text-primary">COMPARISON</span>{" "}
-            では、同じ仕様での比較を「証拠」として提示します。
+            では、同じ仕様での比較を「証拠」として、お見せいたします。
           </p>
           <a
             href="#comparison"

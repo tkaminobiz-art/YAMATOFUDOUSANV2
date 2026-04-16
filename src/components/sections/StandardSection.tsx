@@ -124,10 +124,10 @@ export default function StandardSection() {
             STANDARD
           </p>
           <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-            これが全部、標準です。
+            すべて、標準仕様でございます。
           </h2>
           <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-            モデルハウスで見た設備が、オプションではなく全邸標準。クリナップ、TOTO、YKK AP──メーカー名でご確認ください。
+            モデルハウスでご覧になった設備が、そのまま標準でございます。クリナップ、TOTO、YKK AP──名の通った国内メーカーを、標準でご用意しております。
           </p>
         </div>
 
@@ -199,7 +199,7 @@ export default function StandardSection() {
         </div>
 
         <p className="text-text-secondary text-[11px] mt-6">
-          ※ 花モデル（2,480万円）の標準仕様です。風・京は一部仕様が異なります。
+          ※ 花モデル（二千四百八十万円）の標準仕様でございます。風・京は、一部仕様が異なります。
         </p>
       </div>
     </section>

@@ -52,8 +52,8 @@ export default function ConceptSection() {
           <SectionHeaderCentered
             label="CONCEPT"
             ghostText="CONCEPT"
-            title="「予算オーバーで理想を諦める」そんな必要はありません。"
-            lead="素材も性能も同等。それでも金額が変わるのは、家づくりの“構造”が違うからです。"
+            title="予算で、理想を諦めていただく必要は、ございません。"
+            lead="素材も性能も、大手と同じ。それでもお値段が違うのは、家づくりの“構造”そのものが異なるからでございます。"
             theme="dark"
             align="left"
             className="mb-10 md:mb-12 lg:mb-14"
@@ -92,7 +92,7 @@ export default function ConceptSection() {
                   className="mt-2 text-[15px] font-medium leading-relaxed text-white/88 md:text-base"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  まずは空気感を、写真で。次に、仕組みで納得してください。
+                  まずは、写真で空気感を。続いて、仕組みで納得していただけます。
                 </p>
               </figcaption>
             </figure>
@@ -105,12 +105,12 @@ export default function ConceptSection() {
                 className="text-[clamp(15px,1.1vw,17px)] leading-[1.95] text-white/78"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                図面に落ちた理想は、見積の一行で姿を変えます。
-                <span className="text-white/55"> ここで示すのは、</span>
+                理想の図面が、お見積もりの一行で、姿を変えてしまう。
+                <span className="text-white/55"> ここでお見せするのは、</span>
                 <span className="font-medium text-white/90">
                   同じ仕様を前提にしたときの“構造の差”
                 </span>
-                <span className="text-white/55">だけです。</span>
+                <span className="text-white/55">だけでございます。</span>
               </p>
 
               <blockquote className="mt-7 rounded-2xl border border-white/12 bg-white/[0.04] px-6 py-6">
@@ -118,11 +118,11 @@ export default function ConceptSection() {
                   className="text-[clamp(16px,1.35vw,18px)] leading-[2.05] text-white/80"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  使っている素材は同じ。違うのは、
+                  お使いする素材は、同じ。違うのは、
                   <span className="font-semibold text-white">
-                    無駄な広告費や中間マージンが乗っていないこと
+                    余分な広告費や中間マージンが乗っていないこと
                   </span>
-                  だけ。
+                  、それだけでございます。
                 </p>
               </blockquote>
 
@@ -135,9 +135,9 @@ export default function ConceptSection() {
                 </p>
                 <ul className="mt-4 space-y-4">
                   {[
-                    { k: "01", t: "価格は、契約後に上がらない", d: "見積もりが最終価格。後出しの追加請求はしません。" },
-                    { k: "02", t: "地盤改良費は当社負担（最大150万円）", d: "不安になりやすい費用を、先にゼロにします。" },
-                    { k: "03", t: "モデルハウスと同等が標準仕様", d: "「気に入った設備」がオプションで増額しません。" },
+                    { k: "01", t: "お値段は、契約後に動きません", d: "お見積もりが最終価格。後から追加請求はいたしません。" },
+                    { k: "02", t: "地盤改良費は当社が負担（最大百五十万円）", d: "ご不安になりやすい費用を、先にゼロにいたします。" },
+                    { k: "03", t: "モデルハウスの設備が、そのまま標準", d: "「気に入った設備」が、オプションで増額することはございません。" },
                   ].map((p) => (
                     <li key={p.k} className="grid grid-cols-[auto_1fr] gap-x-4">
                       <span
@@ -163,7 +163,7 @@ export default function ConceptSection() {
                 className="mt-6 text-[12px] leading-[1.85] text-white/42 md:text-[13px]"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                ※金額・条件は一例です。プラン・仕様・敷地条件により変動します。
+                ※お値段・ご条件は一例でございます。プラン・仕様・敷地条件により変動いたします。
               </p>
             </div>
           </div>

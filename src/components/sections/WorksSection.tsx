@@ -96,10 +96,10 @@ export default function WorksSection() {
                 WORKS
               </p>
               <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-                実際に建てた家を、ご覧ください。
+                実際にお建てしたお家を、ご覧ください。
               </h2>
               <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-                すべてコミコミ価格で建てた、やまと不動産の施工事例です。
+                当社がお建てした、実際のお家です。価格はいずれも、すべて込みで。
               </p>
             </div>
             <div

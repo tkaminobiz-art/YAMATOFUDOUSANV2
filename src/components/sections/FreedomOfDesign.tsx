@@ -7,29 +7,29 @@ import CtaButton from "@/components/ui/CtaButton";
 const STEPS = [
   {
     num: "01",
-    title: "初回から、設計士が一緒です。",
-    body: "プロの設計士が、最初の打ち合わせから同席します。",
+    title: "初回から、設計士が同席いたします。",
+    body: "プロの設計士が、最初のお打ち合わせから、ご一緒します。",
     image: "/images/design/step-01-meeting.webp",
     alt: "設計士と夫婦が打ち合わせしている様子",
   },
   {
     num: "02",
-    title: "3ヶ月かけて、何度でもプランを磨き上げます。",
-    body: "日々の家事のしやすさも、お子様の将来も、しっかりと考え抜いて。",
+    title: "三ヶ月かけて、何度でもプランを磨き上げます。",
+    body: "日々の家事のしやすさも、お子様の将来も、じっくり考えてまいります。",
     image: "/images/design/step-02-drawing.webp",
     alt: "手描きの間取り図",
   },
   {
     num: "03",
-    title: "モデルハウスで、実物を見て選びます。",
-    body: "外壁、床、キッチン、浴室。ご家族で、触れて、座って、決めます。",
+    title: "モデルハウスで、実物をご覧いただきながら。",
+    body: "外壁、床、キッチン、浴室。ご家族で、触れて、座って、お決めください。",
     image: "/images/design/step-03-modelhouse.webp",
     alt: "モデルハウスのキッチンとリビング",
   },
   {
     num: "04",
-    title: "コンセントの位置ひとつまで、ご自由にお選びいただけます。",
-    body: "外壁、床、キッチン、窓の形まで。",
+    title: "コンセントの位置ひとつまで、お選びいただけます。",
+    body: "外壁、床、キッチン、窓の形まで、すべて。",
     image: "/images/design/step-04-finished.webp",
     alt: "完成したキッチンとダイニング",
   },
@@ -73,16 +73,16 @@ export default function FreedomOfDesign() {
           >
             「これいいな」と思ったプランに、
             <br className="hidden md:inline" />
-            「でもうちは子ども2人で…」と諦めていませんか。
+            「でも、うちには合わないかも」と、諦めておられませんか。
           </h2>
           <p
             className="text-text-primary text-[clamp(16px,1.3vw,20px)] leading-relaxed"
             style={{ fontFamily: "var(--font-sans)" }}
           >
-            花・風・京、どれを選んでも、あなた仕様に組み直します。
+            花・風・京、どのプランからでも、あなた専用にお仕立て直しいたします。
           </p>
           <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed mt-6">
-            設計士が最初から一緒に、あなたの土地と暮らし方に合わせて、ゼロから組み立てます。
+            設計士が初回から同席し、あなたの土地と暮らし方に合わせて、ゼロからご一緒に設計してまいります。
           </p>
         </div>
 
@@ -141,10 +141,10 @@ export default function FreedomOfDesign() {
               className="text-[clamp(20px,2.5vw,30px)] text-text-primary mb-3 leading-[1.5]"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              ある家族の、こだわり。
+              あるご家族の、こだわり。
             </h3>
             <p className="text-text-secondary text-sm md:text-base leading-relaxed">
-              自由設計で、実際に選ばれた仕様の一部です。
+              自由設計で、実際にお選びいただいた仕様の一部でございます。
             </p>
           </div>
 
@@ -180,10 +180,10 @@ export default function FreedomOfDesign() {
             className="text-text-primary text-lg md:text-xl mb-2 leading-[1.6] mt-10 md:mt-14"
             style={{ fontFamily: "var(--font-sans)" }}
           >
-            まずは、設計士に会ってみませんか。
+            まずは、設計士に会いに、いらしてください。
           </p>
           <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-8">
-            あなたの土地と家族の話を、その場で間取りに落としてみます。
+            あなたの土地とご家族のお話を、その場で間取りにしてまいります。
           </p>
           <div className="inline-flex">
             <CtaButton

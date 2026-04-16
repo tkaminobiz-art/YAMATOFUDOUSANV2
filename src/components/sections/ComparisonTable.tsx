@@ -114,9 +114,9 @@ export default function ComparisonTable() {
       >
         <SectionHeaderCentered
           label="COMPARISON"
-          title="違うのは価格の構造。でも、家そのものの品質は落としません。"
+          title="違うのは、価格の構造。お家そのものの品質は、落としません。"
           ghostText="COMPARISON"
-          lead="比較は3つだけ。読み切れる量に絞って、要点だけを並べました。"
+          lead="比較は三つだけ。読み切れる量に絞って、要点のみを並べました。"
           className="scroll-in"
           align="left"
         />
@@ -124,7 +124,7 @@ export default function ComparisonTable() {
         {/* ブリッジ（短く・左揃え） */}
         <div className="scroll-in mb-10 max-w-[840px] md:mb-12">
           <p className="text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-            まずは緑色のチェックが付いた項目だけ、ご覧ください。
+            まずは、緑色のチェックが付いた項目から、ご覧ください。
           </p>
         </div>
 
@@ -139,11 +139,11 @@ export default function ComparisonTable() {
                 className="mt-2 text-[clamp(18px,2.1vw,26px)] font-semibold tracking-[0.05em] text-text-primary"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                決定的に違うのは、ここだけです。
+                決定的に違うのは、この一点でございます。
               </p>
             </div>
             <p className="text-[12px] leading-relaxed text-text-secondary">
-              まずは緑の項目だけご確認ください
+              まずは、緑の項目からどうぞ。
             </p>
           </div>
 
@@ -219,10 +219,10 @@ export default function ComparisonTable() {
                   className="mt-2 text-[15px] font-semibold leading-relaxed tracking-[0.04em] text-text-primary md:text-base"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  素材・設備は、実績ある国内メーカー品を標準で採用しています。
+                  素材・設備は、信頼のある国内メーカー品を、標準でご用意しております。
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-                  この後は、項目ごとに内容を確認します。
+                  この先は、項目ごとに、内容をご覧いただけます。
                 </p>
               </figcaption>
             </figure>
@@ -282,7 +282,7 @@ export default function ComparisonTable() {
               </div>
 
               <p className="mt-4 text-[11px] leading-[1.85] text-text-secondary">
-                ※ メーカーやシリーズはプランにより異なります。詳細は来場時に一覧でご説明します。
+                ※ メーカーやシリーズは、プランにより異なります。詳細はご来場時に、一覧でご説明いたします。
               </p>
             </div>
           </div>
@@ -294,8 +294,8 @@ export default function ComparisonTable() {
             素材は同じ。違うのは、看板代と中間マージンだけ。
           </p>
           <p className="mt-4 max-w-[820px] text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-            旭化成建材・住友ゴム・クリナップ・TOTO。いずれも業界で広く信頼される国内メーカーです。
-            同じ部材・設備を、やまと不動産でもお使いいただけます。看板代や中間マージンを差し引いた分、“家そのもの”にお金が戻ります。
+            旭化成建材、住友ゴム、クリナップ、TOTO。いずれも、業界で広く信頼される国内メーカーでございます。
+            同じ部材・設備を、当社でもお使いいただけます。看板代や中間マージンを差し引いた分、“お家そのもの”に、お金が戻ります。
           </p>
         </div>
 

@@ -17,11 +17,11 @@ export default function FinalCta() {
         </p>
 
         <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-          まずは、見に来てください。
+          まずは、見にいらしてください。
         </h2>
 
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px] mx-auto mb-10">
-          写真では伝わらないものがあります。モデルハウスで、お待ちしています。
+          写真ではお伝えしきれない空気が、ございます。モデルハウスで、お待ちしております。
         </p>
 
         {/* プライマリCTA群 */}
@@ -53,7 +53,7 @@ export default function FinalCta() {
         </div>
 
         <p className="text-text-secondary text-xs mb-10">
-          強引な勧誘は一切いたしません。見学・お問い合わせすべて無料です。
+          強引な勧誘は、一切いたしません。見学・お問い合わせはすべて、無料でございます。
         </p>
 
         {/* 電話 */}

@@ -101,10 +101,10 @@ export default function EditorialPhotoGallery() {
           className="mx-auto mt-3 max-w-[520px] text-base leading-[1.75] text-white/88 md:text-lg"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          まずは、写真で。空気感だけ受け取ってください。
+          まずは、写真から。空気を感じていただければ。
         </p>
         <p className="mx-auto mt-2 max-w-[28rem] text-[13px] leading-relaxed text-white/55 md:text-sm">
-          数字の比較のあとは、実際の施工事例をじっくりご覧ください。
+          数字の比較の先に、実際のお家がございます。どうぞ、ごゆっくり。
         </p>
         <p className="mt-4 text-[11px] text-white/45 md:text-xs">
           <Link

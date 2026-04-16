@@ -42,10 +42,10 @@ export default function LotsSection() {
               まず、土地の話から。
             </h2>
             <p className="text-text-primary text-[clamp(16px,1.2vw,19px)] leading-relaxed mb-3">
-              土地探しから建物まで、ひとつの窓口でご相談ください。
+              土地から建物、その先のお手入れまで。すべて、当社が承ります。
             </p>
             <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed">
-              通学範囲・通勤経路・実家との距離。気になること、全部お聞かせください。
+              通学範囲、通勤経路、ご実家との距離。気がかりなことを、すべてお聞かせください。
             </p>
           </div>
           <div
@@ -71,7 +71,7 @@ export default function LotsSection() {
               className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              奈良・京都で、常時ご案内できる土地。
+              奈良・京都で、いつでもご案内できる土地。
             </h3>
             <p className="text-text-secondary text-sm leading-[1.9]">
               自社分譲90区画以上の実績。時期により、広告に出していない土地もあります。
@@ -86,10 +86,10 @@ export default function LotsSection() {
               className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              ご希望エリアから、一緒にお探しします。
+              ご希望のエリアから、お探しいたします。
             </h3>
             <p className="text-text-secondary text-sm leading-[1.9]">
-              「この小学校の近くで」「駅徒歩◯分以内で」。具体的なご要望、お聞かせください。
+              「この小学校の近くで」「駅徒歩◯分以内で」。具体的なご希望を、お聞かせください。
             </p>
           </div>
 
@@ -101,10 +101,10 @@ export default function LotsSection() {
               className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              土地と建物、一社完結。
+              土地と建物、まとめてお任せください。
             </h3>
             <p className="text-text-secondary text-sm leading-[1.9]">
-              つなぎ融資の負担なし。手続きも、打ち合わせも、ひとつの窓口で完結します。
+              つなぎ融資のご負担は、ございません。お手続きもお打ち合わせも、当社がまとめて承ります。
             </p>
           </div>
         </div>

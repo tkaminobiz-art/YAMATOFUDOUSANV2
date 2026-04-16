@@ -146,7 +146,7 @@ export default function VoiceSection() {
                 お客様の声
               </h2>
               <p className="text-[clamp(15px,1.1vw,17px)] leading-relaxed text-text-secondary">
-                花鳥風月で家を建てた方の、率直な感想です。
+                当社でお家を建てられた方々から、いただいたお言葉です。
               </p>
             </div>
             <div
@@ -157,7 +157,7 @@ export default function VoiceSection() {
                 50
               </span>
               <span className="text-xs text-text-secondary md:text-sm">
-                組以上のご家族
+                組以上のお客様
               </span>
             </div>
           </div>

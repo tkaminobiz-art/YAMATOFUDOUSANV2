@@ -39,12 +39,12 @@ export default function MidCta() {
           className="text-[clamp(22px,3vw,36px)] text-white mb-5 leading-[1.5]"
           style={{ fontFamily: "var(--font-sans)" }}
         >
-          ここまで読んでいただいたあなたへ。
+          ここまで、お付き合いくださいまして。
           <br className="hidden sm:inline" />
-          モデルハウスで、お会いしませんか。
+          モデルハウスで、お待ちしております。
         </h2>
         <p className="text-white/70 text-sm md:text-base leading-[1.9] max-w-[560px] mx-auto mb-10">
-          写真ではお伝えしきれないものが、きっとあります。ご相談だけでも歓迎です。
+          写真ではお伝えしきれない空気が、ございます。ご質問だけでも、どうぞ。
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -65,7 +65,7 @@ export default function MidCta() {
         </div>
 
         <p className="text-white/50 text-xs mt-6">
-          強引な勧誘は一切いたしません。
+          強引な勧誘は、一切いたしません。
         </p>
       </div>
     </section>

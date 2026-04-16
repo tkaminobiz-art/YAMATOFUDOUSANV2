@@ -39,7 +39,7 @@ const KEY_STAFF = [
     id: "92140",
     name: "入江 将大",
     role: "本社工務部 部長",
-    quote: "現場で体感する、木の温度と精度を大切にしています。",
+    quote: "現場で木の温度を手で確かめ、ミリ単位の精度を追います。",
   },
 ] as const;
 
@@ -112,7 +112,7 @@ export default function StaffStory() {
             </p>
           </blockquote>
           <p className="text-text-secondary text-sm md:text-base">
-            ご家族のお家を、この19人でずっと見守ります。
+            ご家族のお家を、十九人で、長くお守りしてまいります。
           </p>
         </div>
       </div>
@@ -204,7 +204,7 @@ export default function StaffStory() {
             STAFF
           </p>
           <h2 className="mb-4 max-w-[640px] text-[clamp(24px,3.5vw,40px)] text-text-primary">
-            この19人で、お家をつくります。
+            十九人の手で、あなたのお家をお建てします。
           </h2>
         </div>
 
@@ -298,7 +298,7 @@ export default function StaffStory() {
         {/* 締め */}
         <div className="mt-16 md:mt-24 pt-10 border-t border-border text-center">
           <p className="text-text-secondary text-sm md:text-base leading-[1.9] max-w-[640px] mx-auto">
-            契約から引き渡しまで、そして建てた後も。この19人が、一緒です。
+            ご契約からお引き渡しまで、そしてその先も。この十九人で、お供いたします。
           </p>
         </div>
       </div>
