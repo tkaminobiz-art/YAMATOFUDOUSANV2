@@ -1,4 +1,5 @@
 import SectionHeaderCentered from "@/components/SectionHeaderCentered";
+import CtaButton from "@/components/ui/CtaButton";
 
 const PLANS = [
   {
@@ -64,8 +65,8 @@ export default function PriceSection() {
             noMargin
             label="PRICING"
             ghostText="PRICING"
-            title="花・風・京｜参考プランと価格帯"
-            lead="税込・建物本体・付帯工事込みのコミコミ価格で、3モデルを並べて比較できます。土地代・登記等は含みません。間取りや坪数は、ご家族に合わせて設計します。"
+            title="価格の目安と、コミコミに含まれる範囲"
+            lead="「結局いくら？」を先に確定させるために、建物本体・標準設備・付帯工事まで含めた税込の目安を示します。"
           />
         </div>
 
@@ -78,23 +79,53 @@ export default function PriceSection() {
                   className="text-[11px] font-semibold tracking-[0.18em] text-main/90 md:text-xs"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 >
-                  価格帯
+                  PRICE RANGE
                 </p>
                 <p
                   className="mt-3 text-lg font-medium leading-snug text-text-primary md:text-xl"
                   style={{ fontFamily: "var(--font-sans)" }}
                 >
-                  コミコミ価格の目安
+                  コミコミ価格の目安（建物）
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  建物本体と標準設備・付帯工事まで含んだ、税込表示です。
+                  建物本体・標準設備・付帯工事まで含んだ税込表示です。
                 </p>
+                <div className="mt-6 rounded-xl border border-border/80 bg-bg-secondary/60 px-5 py-4">
+                  <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
+                    まずここだけ覚えてください
+                  </p>
+                  <p
+                    className="mt-2 text-[clamp(18px,2vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
+                    目安は <span className="tabular-nums">2,280</span>〜
+                    <span className="tabular-nums">2,480</span>万円
+                  </p>
+                  <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">
+                    京：2,280万円〜／花・風：2,480万円〜
+                  </p>
+                </div>
               </div>
               <div className="flex flex-col items-start gap-1 lg:items-end lg:text-right">
-                <span className="text-sm text-text-secondary md:text-base">
-                  2,280万円から
-                </span>
                 <div className="flex items-end gap-2 md:gap-3">
+                  <span
+                    className="font-light tabular-nums tracking-[-0.04em] text-text-primary"
+                    style={{
+                      fontFamily: "var(--font-inter), Inter, sans-serif",
+                      fontSize: "clamp(52px,11vw,112px)",
+                      lineHeight: 0.88,
+                    }}
+                  >
+                    2,280
+                  </span>
+                  <span
+                    className="pb-2 text-2xl font-normal text-text-primary md:pb-3 md:text-3xl"
+                    style={{ fontFamily: "var(--font-sans)" }}
+                  >
+                    万円〜
+                  </span>
+                </div>
+                <div className="mt-4 flex items-end gap-2 md:gap-3">
                   <span
                     className="font-light tabular-nums tracking-[-0.04em] text-text-primary"
                     style={{
@@ -113,7 +144,59 @@ export default function PriceSection() {
                   </span>
                 </div>
                 <p className="mt-2 text-xs text-text-secondary md:text-sm">
-                  花・風のライン／京は別価格帯
+                  ※ 土地代・登記等は別途です
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 含む/別途 — いちばん大事な確定事項 */}
+        <div className="mb-16 md:mb-20">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-6">
+            <div className="lg:col-span-7">
+              <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-7">
+                <p className="text-xs font-semibold tracking-[0.14em] text-main">
+                  コミコミに含まれるもの（例）
+                </p>
+                <ul className="mt-5 grid grid-cols-1 gap-3 text-sm text-text-secondary md:grid-cols-2">
+                  {[
+                    "建物本体",
+                    "標準設備（キッチン・浴室など）",
+                    "付帯工事",
+                    "設計・申請に関わる費用",
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
+                      <span className="leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
+                  「何が含まれるか」はプランと敷地条件で確定します。詳細は来場時に一覧でご説明します。
+                </p>
+              </div>
+            </div>
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl border border-border bg-bg-secondary/70 p-6 md:p-7">
+                <p className="text-xs font-semibold tracking-[0.14em] text-text-primary">
+                  別途になりやすいもの（例）
+                </p>
+                <ul className="mt-5 space-y-3 text-sm text-text-secondary">
+                  {[
+                    "土地代",
+                    "登記費用",
+                    "引越し費用",
+                    "外構工事（内容により）",
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-text-secondary/60" />
+                      <span className="leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
+                  “別途”がどれくらい出るかは、土地とご要望次第。ここはお金の相談で一緒に整理できます。
                 </p>
               </div>
             </div>
@@ -123,7 +206,7 @@ export default function PriceSection() {
         {/* 3プラン — カード */}
         <div className="mb-16 md:mb-20">
           <p className="mb-6 text-xs font-semibold tracking-[0.14em] text-main md:mb-8 md:text-sm">
-            3つの出発プラン
+            3つの基本プラン（目安）
           </p>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {PLANS.map((p) => (
@@ -174,6 +257,9 @@ export default function PriceSection() {
                       <dd className="text-right font-medium text-text-primary">{p.layout}</dd>
                     </div>
                   </dl>
+                  <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
+                    ※ 間取り・坪数・設備はご家族に合わせて設計します。金額は条件により変動します。
+                  </p>
                 </div>
               </article>
             ))}
@@ -236,11 +322,29 @@ export default function PriceSection() {
           </div>
         </div>
 
-        <p className="mt-8 max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
-          ※ 建物本体価格（税込）、付帯工事込みのコミコミ価格です。土地は別途です。
-          <br />
-          ※ 間取り・坪数は参考値です。仕様の差分や、あなた仕様への組み替えはショールームでご説明します。
-        </p>
+        <div className="mt-10 flex flex-col gap-4 md:mt-12 md:flex-row md:items-center md:justify-between">
+          <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
+            ※ 表示価格は建物本体（税込）＋付帯工事込みの目安です。土地・登記等は別途です。
+            <br />
+            ※ 仕様の差分や、あなた仕様への組み替えは来場時に一覧でご説明します。
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <CtaButton
+              href="#money-talk"
+              variant="secondary"
+              size="md"
+              label="お金の相談へ"
+              sublabel="払えるか不安な方へ"
+            />
+            <CtaButton
+              href="/reserve"
+              variant="primary"
+              size="md"
+              label="来場予約"
+              sublabel="ご相談は無料です"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

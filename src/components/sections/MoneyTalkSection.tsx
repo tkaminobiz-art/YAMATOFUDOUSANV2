@@ -44,7 +44,7 @@ export default function MoneyTalkSection() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section className="bg-bg-warm py-[var(--section-py)]">
+    <section id="money-talk" className="bg-bg-warm py-[var(--section-py)]">
       <div
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
