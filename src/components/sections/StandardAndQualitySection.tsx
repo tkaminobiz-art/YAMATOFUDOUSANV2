@@ -102,19 +102,19 @@ const QUALITY_CARDS = [
     number: "10",
     unit: "年",
     title: "外壁メンテの目安",
-    desc: "一般的に、外壁は10年ほどで塗り替えを検討することが多いと言われます。当社は、長期目線の外壁仕様を標準にしています。",
+    desc: "外壁は、10年前後で塗り替えを検討する方が多いと言われます。やまと不動産は、長く保ちやすい仕様を標準にしています。",
   },
   {
     number: "1.2",
     unit: "倍",
     title: "見えない部分の塗布量",
-    desc: "推奨量の1.2倍を塗布。厚みが、年数が経ったときの差になります。",
+    desc: "推奨量の1.2倍を塗布します。見えない厚みが、年数が経ったときに効いてきます。",
   },
   {
     number: "100",
     unit: "%自社",
     title: "設計から施工まで一貫",
-    desc: "工程を外に投げず、責任が途切れない体制にしています。",
+    desc: "工程を外に投げず、最後まで責任が途切れない体制にしています。",
   },
 ] as const;
 
@@ -227,7 +227,7 @@ export default function StandardAndQualitySection() {
                 外壁の考え方
               </p>
               <p className="mt-3 text-sm leading-[1.9] text-text-secondary">
-                見た目は、最後の一日で整います。けれど差が出るのは、年数が経ってから。仕様と施工の積み重ねで、10年後の表情が変わります。
+                仕上がりは、完成した日に見えます。けれど差が出るのは、住み始めてからです。仕様と施工の積み重ねが、10年後の手間を左右します。
               </p>
 
               <div className="mt-5 rounded-xl border border-border bg-bg-secondary/60 px-5 py-4">
@@ -238,10 +238,10 @@ export default function StandardAndQualitySection() {
                   className="mt-2 text-[15px] font-semibold leading-relaxed tracking-[0.04em] text-text-primary"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  塗り替えが必要になりにくい外壁。
+                  塗り替えの頻度を、できるだけ抑えられる外壁。
                 </p>
                 <p className="mt-2 text-[12px] leading-relaxed text-text-secondary">
-                  ※ 立地や日当たり等の環境条件で、劣化のスピードは変わります。
+                  ※ 立地や日当たりなどの環境条件で、劣化のスピードは変わります。
                 </p>
               </div>
 
@@ -270,7 +270,7 @@ export default function StandardAndQualitySection() {
               </div>
 
               <p className="mt-6 text-[11px] leading-relaxed text-text-secondary">
-                ※ 保証の内容は次のセクションで、まとめてご案内しています。
+                ※ 保証の内容は次のセクションでまとめてご案内しています。
               </p>
             </div>
           </div>
