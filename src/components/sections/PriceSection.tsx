@@ -10,7 +10,7 @@ export default function PriceSection() {
       <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
         {/* セクションラベル */}
         <p className="font-section-label text-main text-xs md:text-sm mb-4 tracking-[0.15em]">
-          REFERENCE PLANS
+          PRICING
         </p>
         <h2
           className="text-[clamp(22px,3vw,36px)] text-text-primary mb-4 leading-[1.5]"
