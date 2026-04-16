@@ -104,7 +104,7 @@ export default function EditorialPhotoGallery() {
           まずは、写真で。空気感だけ受け取ってください。
         </p>
         <p className="mx-auto mt-2 max-w-[28rem] text-[13px] leading-relaxed text-white/55 md:text-sm">
-          比較の次は、憧れの解像度を上げる時間です。
+          数字の比較のあとは、実際の施工事例をじっくりご覧ください。
         </p>
         <p className="mt-4 text-[11px] text-white/45 md:text-xs">
           <Link

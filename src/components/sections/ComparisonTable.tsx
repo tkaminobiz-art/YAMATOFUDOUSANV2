@@ -70,12 +70,6 @@ const COMPARISONS: Row[] = [
     diff: "big-diff",
   },
   {
-    category: "設計自由度",
-    major: "規格プランから選択",
-    yamato: "完全自由設計",
-    diff: "big-diff",
-  },
-  {
     category: "契約後の増額",
     major: "業界8割で発生",
     yamato: "¥0（見積もりから変わらず）",
@@ -85,7 +79,9 @@ const COMPARISONS: Row[] = [
 ];
 
 const BIG_DIFF = COMPARISONS.filter((r) => r.diff === "big-diff");
-const SAME_ONLY = COMPARISONS.filter((r) => r.diff === "same");
+const SAME_ONLY = COMPARISONS.filter((r) => r.diff === "same").filter((r) =>
+  ["キッチン", "浴室", "住宅性能保証"].includes(r.category),
+);
 
 export default function ComparisonTable() {
   const ref = useScrollIn<HTMLDivElement>(true);
@@ -120,7 +116,7 @@ export default function ComparisonTable() {
           label="COMPARISON"
           title="違うのは価格の構造。でも、家そのものの品質は落としません。"
           ghostText="COMPARISON"
-          lead="価格が安くなる理由をご説明したあとは、事実を項目ごとにご確認ください。"
+          lead="比較は3つだけ。読み切れる量に絞って、要点だけを並べました。"
           className="scroll-in"
           align="left"
         />
@@ -236,20 +232,14 @@ export default function ComparisonTable() {
               <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                 <div>
                   <p className="text-xs font-semibold tracking-[0.18em] text-text-secondary">
-                    SAME GRADE SPECS
+                    EQUIPMENT (REFERENCE)
                   </p>
                   <p
                     className="mt-2 text-lg font-semibold tracking-[0.05em] text-text-primary md:text-xl"
                     style={{ fontFamily: "var(--font-serif)" }}
                   >
-                    設備は、国内主要メーカーを採用しています。
+                    水回りの設備メーカー（参考）
                   </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-4 text-[11px] text-text-secondary md:justify-end">
-                  <span className="inline-flex items-center gap-2">
-                    <Equal className="h-4 w-4 text-main/70" strokeWidth={2} />
-                    大手と同等
-                  </span>
                 </div>
               </div>
 
@@ -259,7 +249,7 @@ export default function ComparisonTable() {
                     項目
                   </div>
                   <div className="border-l border-border px-4 py-3 text-center text-[10px] font-semibold tracking-[0.18em] text-text-secondary md:px-6 md:py-4">
-                    大手
+                    参考（一般）
                   </div>
                   <div className="border-l border-border bg-main/10 px-4 py-3 text-center text-[10px] font-semibold tracking-[0.18em] text-main md:px-6 md:py-4">
                     やまと
@@ -283,10 +273,6 @@ export default function ComparisonTable() {
                       </span>
                     </div>
                     <div className="flex items-center justify-center gap-2 border-l border-main/20 bg-main/5 px-3 py-3.5 md:gap-2.5 md:px-5 md:py-4">
-                      <Equal
-                        className="h-4 w-4 shrink-0 text-main md:h-[18px] md:w-[18px]"
-                        strokeWidth={2}
-                      />
                       <span className="text-center text-xs font-medium text-text-primary md:text-sm">
                         {row.yamato}
                       </span>
@@ -294,6 +280,10 @@ export default function ComparisonTable() {
                   </div>
                 ))}
               </div>
+
+              <p className="mt-4 text-[11px] leading-[1.85] text-text-secondary">
+                ※ メーカーやシリーズはプランにより異なります。詳細は来場時に一覧でご説明します。
+              </p>
             </div>
           </div>
         </div>
