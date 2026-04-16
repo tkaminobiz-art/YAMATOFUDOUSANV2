@@ -328,7 +328,7 @@ const REPRESENTATIVES: readonly Representative[] = [
     role: "代表取締役社長",
     roleEn: "Representative Director, President",
     career: "38年",
-    quote: "お引き渡しの日からが、本当のお付き合いの始まりです。",
+    quote: "値段を守ることは、職人を守ること。この順番は、変えません。",
   },
   {
     id: "92290",
@@ -337,7 +337,7 @@ const REPRESENTATIVES: readonly Representative[] = [
     role: "代表取締役専務",
     roleEn: "Representative Director, Executive",
     career: "25年",
-    quote: "見積もりから、一度も金額を上げません。",
+    quote: "仕様書に書ける品質は、半分だけ。残り半分は、現場で作る。",
   },
 ] as const;
 
@@ -490,7 +490,7 @@ function RepresentativeCard({ rep }: { rep: Representative }) {
 
       {/* 役職 (日) */}
       <p className="text-text-secondary text-[13px] md:text-sm mb-3">
-        {rep.role} · 在任 {rep.career}
+        {rep.role} · 経験 {rep.career}
       </p>
 
       {/* 氏名 (日) */}
