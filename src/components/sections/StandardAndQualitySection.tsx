@@ -311,8 +311,19 @@ export default function StandardAndQualitySection() {
           </div>
         </div>
 
+        {/* ブリッジ：品質 → 保証（空白を“間”にする） */}
+        <div className="mt-10 md:mt-12">
+          <div
+            aria-hidden
+            className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent"
+          />
+          <p className="mt-4 text-center text-[12px] leading-relaxed text-text-secondary">
+            そして、保証で“安心”まで整えます。
+          </p>
+        </div>
+
         {/* ここから保証（同じトーンで連結） */}
-        <div id="guarantee" className="mt-16 border-t border-border pt-12 md:mt-20 md:pt-16">
+        <div id="guarantee" className="mt-8 pt-8 md:mt-10 md:pt-10">
           <div className="mb-10 md:mb-12 max-w-[760px]">
             <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
               品質と保証
