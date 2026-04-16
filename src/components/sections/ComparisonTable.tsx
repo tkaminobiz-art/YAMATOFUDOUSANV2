@@ -65,7 +65,7 @@ export default function ComparisonTable() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
-    <section className="bg-bg-warm py-[var(--section-py)]">
+    <section id="comparison" className="bg-bg-warm py-[var(--section-py)]">
       <div
         ref={ref}
         className="mx-auto max-w-[1400px] px-[var(--page-px)] scroll-in"

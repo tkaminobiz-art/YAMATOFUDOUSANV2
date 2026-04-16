@@ -20,111 +20,231 @@ export default function MechanismSection() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section className="bg-bg-primary py-[var(--section-py)]">
+    <section className="relative overflow-hidden bg-[#FBF8F2] py-[var(--section-py)]">
+      {/* 紙面トーン（CONCEPTのダークから“明るい納得”へ切替） */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_20%_-10%,rgba(196,112,63,0.14)_0%,transparent_62%)]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.55]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(43,43,43,0.02), rgba(43,43,43,0.02) 1px, transparent 1px, transparent 28px)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+      />
+
       <div
         ref={ref}
-        className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
+        className="relative mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in"
       >
         <SectionHeaderCentered
           label="MECHANISM"
-          title="価格の中身が、違います。"
           ghostText="MECHANISM"
+          title="安いのではありません。無駄がないだけです。"
+          lead="同じ仕様・同じ品質のまま、価格が変わる理由を“先に結論から”お見せします。"
+          align="left"
+          className="mb-10 md:mb-12"
         />
 
-        {/* 比較図（左右カード＋中央矢印） */}
-        <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-8">
-          {/* 左：大手 */}
-          <article className="rounded-xl bg-bg-secondary p-7 md:p-8 card-shadow">
-            <p className="text-center text-sm font-semibold text-text-secondary">
-              大手ハウスメーカー
-            </p>
+        {/* 結論（先に“得”を掴ませる） */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <div className="rounded-2xl border border-border bg-white/70 p-6 shadow-[0_10px_28px_-18px_rgba(0,0,0,0.18)] md:p-7">
+              <p className="text-xs font-semibold tracking-[0.18em] text-text-secondary">
+                結論
+              </p>
+              <p
+                className="mt-4 text-[clamp(18px,2.2vw,26px)] font-semibold leading-[1.55] tracking-[0.05em] text-text-primary"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                家そのものの原価を削らずに、
+                <br />
+                「家に関係ないお金」を削ります。
+              </p>
 
-            <div className="mt-4 text-center">
-              <div className="inline-flex items-baseline gap-1">
-                <span
-                  className="text-5xl font-semibold tracking-tight text-text-primary md:text-6xl"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  4,000
-                </span>
-                <span className="text-base text-text-secondary">万円</span>
-              </div>
-              <div className="mx-auto mt-4 h-px w-[78%] bg-border" />
-            </div>
-
-            <div className="mt-5">
-              <ul className="space-y-2.5 text-[12px] text-text-secondary">
-                {OTHERS.map((item) => (
-                  <li key={item.label} className="flex items-baseline gap-3">
-                    <span className="flex-1">{item.label}</span>
-                    <span
-                      className="w-12 text-right font-semibold text-text-primary"
+              <div className="mt-6 rounded-xl border border-border/80 bg-bg-secondary/60 px-5 py-4">
+                <p className="text-[11px] font-semibold tracking-[0.2em] text-text-secondary">
+                  だから、この差が生まれます
+                </p>
+                <div className="mt-3 flex items-end justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="text-[12px] font-medium text-text-secondary">
+                      参考：大手
+                    </p>
+                    <p
+                      className="mt-1 text-3xl font-semibold tracking-tight text-text-primary md:text-[40px]"
                       style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                     >
-                      {item.pct}%
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </article>
+                      4,000
+                      <span className="ml-1 text-base font-medium text-text-secondary">
+                        万円〜
+                      </span>
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[12px] font-medium text-text-secondary">
+                      やまと不動産
+                    </p>
+                    <p
+                      className="mt-1 text-3xl font-semibold tracking-tight text-main md:text-[44px]"
+                      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                    >
+                      2,480
+                      <span className="ml-1 text-base font-semibold text-main-dark">
+                        万円〜
+                      </span>
+                    </p>
+                  </div>
+                </div>
 
-          {/* 中央：矢印＋カット額 */}
-          <div className="flex items-center justify-center">
-            <div className="relative flex w-full max-w-[420px] items-center justify-center md:max-w-none md:w-[220px]">
-              <div className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 bg-main/55" />
-              <div className="absolute right-0 top-1/2 h-0 w-0 -translate-y-1/2 border-y-[12px] border-y-transparent border-l-[18px] border-l-main/70" />
-              <span
-                className="relative inline-flex items-center justify-center rounded-md bg-main px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_28px_-14px_rgba(0,0,0,0.35)]"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                -1,520万円カット
-              </span>
+                <div className="mt-4 flex items-center justify-between gap-3 rounded-lg bg-main/10 px-4 py-3">
+                  <span className="text-sm font-semibold text-text-primary">
+                    差額
+                  </span>
+                  <span
+                    className="tabular-nums text-lg font-semibold tracking-tight text-text-primary"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
+                    -1,520万円
+                  </span>
+                </div>
+              </div>
+
+              <ul className="mt-6 space-y-3 text-[13px] leading-relaxed text-text-secondary">
+                <li className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
+                  広告費・展示場維持費・中間マージンを最小化
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
+                  “家そのもの”にお金が戻る構造
+                </li>
+                <li className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-main" />
+                  次の章で、証拠（比較表）を提示します
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* 右：やまと */}
-          <article className="rounded-xl bg-main/55 p-7 md:p-8 card-shadow">
-            <p className="text-center text-sm font-semibold text-text-primary">
-              やまと不動産
-            </p>
-
-            <div className="mt-4 text-center">
-              <div className="inline-flex items-baseline gap-1">
-                <span
-                  className="text-5xl font-semibold tracking-tight text-text-primary md:text-6xl"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  2,480
-                </span>
-                <span className="text-base text-text-primary/90">万円</span>
+          {/* 図版（編集図解として見せる） */}
+          <div className="lg:col-span-7">
+            <div className="rounded-2xl border border-border bg-white/60 p-6 shadow-[0_10px_28px_-18px_rgba(0,0,0,0.16)] md:p-7">
+              <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold tracking-[0.18em] text-text-secondary">
+                    図解
+                  </p>
+                  <p
+                    className="mt-2 text-xl font-semibold tracking-[0.05em] text-text-primary md:text-2xl"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
+                    価格の内訳（イメージ）
+                  </p>
+                </div>
+                <p className="text-[12px] text-text-secondary">
+                  ※ 構造を伝えるための概念図です
+                </p>
               </div>
-              <div className="mx-auto mt-4 h-px w-[78%] bg-black/15" />
-            </div>
 
-            <div className="mt-5">
-              <ul className="space-y-2.5 text-[12px] text-text-primary">
-                {YAMATO.map((item) => (
-                  <li key={item.label} className="flex items-baseline gap-3">
-                    <span className="flex-1 font-semibold">{item.label}</span>
-                    <span
-                      className="w-12 text-right font-semibold"
-                      style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                    >
-                      {item.pct}%
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+                {/* 大手 */}
+                <div className="rounded-xl border border-border bg-white/70 px-5 py-5">
+                  <p className="text-sm font-semibold text-text-primary">
+                    大手ハウスメーカー
+                  </p>
+                  <div className="mt-4 space-y-2.5">
+                    {OTHERS.map((item) => (
+                      <div key={item.label}>
+                        <div className="flex items-baseline justify-between gap-4">
+                          <span className="text-[12px] font-medium text-text-secondary">
+                            {item.label}
+                          </span>
+                          <span
+                            className="tabular-nums text-[12px] font-semibold text-text-primary"
+                            style={{
+                              fontFamily: "var(--font-inter), Inter, sans-serif",
+                            }}
+                          >
+                            {item.pct}%
+                          </span>
+                        </div>
+                        <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-border/70">
+                          <div
+                            className={`h-full ${item.color}`}
+                            style={{ width: `${item.pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* やまと */}
+                <div className="rounded-xl border border-main/25 bg-main/10 px-5 py-5">
+                  <p className="text-sm font-semibold text-text-primary">
+                    やまと不動産
+                  </p>
+                  <div className="mt-4 space-y-2.5">
+                    {YAMATO.map((item) => (
+                      <div key={item.label}>
+                        <div className="flex items-baseline justify-between gap-4">
+                          <span className="text-[12px] font-semibold text-text-primary">
+                            {item.label}
+                          </span>
+                          <span
+                            className="tabular-nums text-[12px] font-semibold text-text-primary"
+                            style={{
+                              fontFamily: "var(--font-inter), Inter, sans-serif",
+                            }}
+                          >
+                            {item.pct}%
+                          </span>
+                        </div>
+                        <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-main/15">
+                          <div
+                            className={`h-full ${item.color}`}
+                            style={{ width: `${item.pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-xl border border-border bg-bg-secondary/60 px-5 py-4">
+                <p
+                  className="text-[clamp(16px,1.6vw,20px)] font-semibold tracking-[0.06em] text-text-primary"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  “家の質”ではなく、“家に関係ないコスト”が削れている。
+                </p>
+              </div>
             </div>
-          </article>
+          </div>
         </div>
 
-        {/* 下部ステートメント（画像通り：一文のみ） */}
-        <div className="mt-8 rounded-xl bg-bg-secondary px-6 py-5 text-center md:mt-10 md:px-10 md:py-6 card-shadow">
-          <p className="text-[clamp(18px,2vw,24px)] font-semibold tracking-[0.06em] text-text-primary">
-            安いのではありません。無駄がないだけです。
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[12px] leading-relaxed text-text-secondary">
+            次の <span className="font-semibold text-text-primary">COMPARISON</span>{" "}
+            では、同じ仕様での比較を「証拠」として提示します。
           </p>
+          <a
+            href="#comparison"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-main underline decoration-main/30 underline-offset-4 hover:text-main-dark hover:decoration-main"
+          >
+            比較へ進む
+            <span aria-hidden className="text-base leading-none">
+              →
+            </span>
+          </a>
         </div>
       </div>
     </section>
