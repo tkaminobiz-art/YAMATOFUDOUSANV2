@@ -36,9 +36,10 @@ const MONEY_HERO = {
   alt: "内観 LDK — 暮らしの安心感",
 } as const;
 
+/** お金の相談直下は「暮らしの中心」が伝わるカットにする（構造・窓枠のディテールは文脈がズレやすい） */
 const MONEY_DETAIL = {
-  src: "/images/newsozai/interior-window-detail-01.webp",
-  alt: "内観 ディテール — 素材の質感",
+  src: "/images/newsozai/interior-kitchen-01.webp",
+  alt: "内観 キッチン — 日々の暮らしの中心",
 } as const;
 
 /** 上の「3つで確認する内容」と被らないよう、会の進み方として書く */
@@ -293,7 +294,7 @@ export default function MoneyTalkSection() {
                   />
                 </div>
                 <figcaption className="px-5 py-4 text-[12px] leading-relaxed text-text-secondary md:px-6 md:py-5">
-                  数字の前に、暮らしの質感。ここからは「続くかどうか」を一緒に見ていきます。
+                  図面や仕様のあとに並ぶのが、家計です。月々の支払いが、この先の暮らしをどう支えるかを一緒に見ます。
                 </figcaption>
               </figure>
             </div>
