@@ -98,11 +98,10 @@ export default function PriceSection() {
                     className="mt-2 text-[clamp(18px,2vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
                     style={{ fontFamily: "var(--font-serif)" }}
                   >
-                    目安は <span className="tabular-nums">2,280</span>〜
-                    <span className="tabular-nums">2,480</span>万円
+                    目安は <span className="tabular-nums">2,280</span>万円〜
                   </p>
                   <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">
-                    京：2,280万円〜／花・風：2,480万円〜
+                    花・風は 2,480万円〜（目安）
                   </p>
                 </div>
               </div>
@@ -117,24 +116,6 @@ export default function PriceSection() {
                     }}
                   >
                     2,280
-                  </span>
-                  <span
-                    className="pb-2 text-2xl font-normal text-text-primary md:pb-3 md:text-3xl"
-                    style={{ fontFamily: "var(--font-sans)" }}
-                  >
-                    万円〜
-                  </span>
-                </div>
-                <div className="mt-4 flex items-end gap-2 md:gap-3">
-                  <span
-                    className="font-light tabular-nums tracking-[-0.04em] text-text-primary"
-                    style={{
-                      fontFamily: "var(--font-inter), Inter, sans-serif",
-                      fontSize: "clamp(56px,12vw,120px)",
-                      lineHeight: 0.88,
-                    }}
-                  >
-                    2,480
                   </span>
                   <span
                     className="pb-2 text-2xl font-normal text-text-primary md:pb-3 md:text-3xl"
