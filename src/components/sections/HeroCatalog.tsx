@@ -6,11 +6,11 @@ import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
 // Heroスライドショー5枚（30秒周期・6秒表示+1秒フェード）
 const HERO_SLIDES = [
-  { src: "/images/fv/hero-01-exterior-miyamaki.webp", alt: "三山木モデル外観" },
-  { src: "/images/fv/hero-02-exterior-sakyo.webp", alt: "左京モデル外観" },
-  { src: "/images/fv/hero-03-living.webp", alt: "花鳥風月 リビング" },
-  { src: "/images/fv/hero-04-kitchen.webp", alt: "花鳥風月 キッチン" },
-  { src: "/images/fv/hero-05-washitsu.webp", alt: "花鳥風月 和室" },
+  { src: "/images/newsozai/exterior-entrance-01.webp", alt: "外観 玄関アプローチ" },
+  { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
+  { src: "/images/newsozai/interior-kitchen-01.webp", alt: "内観 キッチン" },
+  { src: "/images/newsozai/exterior-terrace-01.webp", alt: "外観 テラス" },
+  { src: "/images/newsozai/exterior-night-01.webp", alt: "外観 夜景" },
 ] as const;
 
 export default function HeroCatalog() {

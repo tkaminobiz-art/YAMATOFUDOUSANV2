@@ -11,21 +11,21 @@ import Link from "next/link";
 */
 
 const ROW_A = [
-  { src: "/images/fv/hero-03-living.webp", alt: "花鳥風月 リビング" },
-  { src: "/images/fv/hero-04-kitchen.webp", alt: "花鳥風月 キッチン" },
-  { src: "/images/works/case1-living.webp", alt: "施工事例 リビング" },
-  { src: "/images/works/case2-kitchen.webp", alt: "施工事例 キッチン" },
-  { src: "/images/fv/hero-05-washitsu.webp", alt: "花鳥風月 和室" },
-  { src: "/images/works/case3-entrance.webp", alt: "施工事例 玄関" },
+  { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
+  { src: "/images/newsozai/interior-kitchen-01.webp", alt: "内観 キッチン" },
+  { src: "/images/newsozai/interior-window-detail-01.webp", alt: "内観 ディテール" },
+  { src: "/images/newsozai/exterior-porch-01.webp", alt: "外観 玄関ポーチ" },
+  { src: "/images/newsozai/exterior-texture-detail-01.webp", alt: "外観 質感ディテール" },
+  { src: "/images/newsozai/exterior-terrace-02.webp", alt: "外観 テラス" },
 ] as const;
 
 const ROW_B = [
-  { src: "/images/fv/hero-01-exterior-miyamaki.webp", alt: "三山木モデル 外観" },
-  { src: "/images/works/case1-ext.webp", alt: "施工事例 外観" },
-  { src: "/images/fv/hero-02-exterior-sakyo.webp", alt: "左京モデル 外観" },
-  { src: "/images/works/works-02.webp", alt: "施工事例" },
-  { src: "/images/works/case2-living.webp", alt: "施工事例 リビング" },
-  { src: "/images/works/works-04.webp", alt: "施工事例" },
+  { src: "/images/newsozai/exterior-entrance-01.webp", alt: "外観 玄関アプローチ" },
+  { src: "/images/newsozai/exterior-terrace-01.webp", alt: "外観 テラス" },
+  { src: "/images/newsozai/exterior-night-01.webp", alt: "外観 夜景" },
+  { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
+  { src: "/images/newsozai/interior-kitchen-01.webp", alt: "内観 キッチン" },
+  { src: "/images/newsozai/exterior-porch-01.webp", alt: "外観 玄関ポーチ" },
 ] as const;
 
 function MarqueeTrack({
