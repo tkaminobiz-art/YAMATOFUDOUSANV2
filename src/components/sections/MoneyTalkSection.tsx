@@ -1,7 +1,16 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
-import { Calculator, Link2Off, HeartHandshake } from "lucide-react";
+import Image from "next/image";
+import SectionHeaderCentered from "@/components/SectionHeaderCentered";
+import {
+  Calculator,
+  Link2Off,
+  HeartHandshake,
+  Check,
+  ShieldCheck,
+  type LucideIcon,
+} from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
@@ -25,20 +34,40 @@ import CtaButton from "@/components/ui/CtaButton";
 const PILLARS = [
   {
     icon: HeartHandshake,
-    title: "提携のファイナンシャルプランナーに相談できます",
-    body: "ご家族の収入・支出・将来設計を踏まえて、無理のない予算を一緒に考えます。",
+    title: "提携FPと一緒に、無理のない予算を整理",
+    body: "家計と将来設計を踏まえて、「払える範囲」を先に決めます。",
   },
   {
     icon: Link2Off,
-    title: "つなぎ融資は、ありません",
-    body: "通常は土地先行の購入時に「つなぎ融資」が発生（金利高め・手数料10万円〜）。当社なら、そのコストがかかりません。",
+    title: "つなぎ融資の負担が出にくい仕組み",
+    body: "土地と建物をまとめて進められるので、余計な金融コストを避けられるケースがあります。",
   },
   {
     icon: Calculator,
-    title: "年収・家族構成に応じた、現実的な計画",
-    body: "月々の支払いが暮らしを圧迫しないよう、一緒に設計します。",
+    title: "月々の支払いがきつくならない計画に",
+    body: "「通るか」より先に「続くか」。生活を圧迫しない設計にします。",
   },
 ] as const;
+
+const MONEY_HERO = {
+  src: "/images/newsozai/interior-ldk-01.webp",
+  alt: "内観 LDK — 暮らしの安心感",
+} as const;
+
+function Pill({
+  Icon,
+  label,
+}: {
+  Icon: LucideIcon;
+  label: string;
+}) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-border bg-bg-primary/80 px-3 py-1 text-[11px] font-semibold text-text-secondary">
+      <Icon className="h-4 w-4 text-main" strokeWidth={2.1} />
+      {label}
+    </span>
+  );
+}
 
 export default function MoneyTalkSection() {
   const ref = useScrollIn<HTMLDivElement>();
@@ -47,78 +76,136 @@ export default function MoneyTalkSection() {
     <section id="money-talk" className="bg-bg-warm py-[var(--section-py)]">
       <div
         ref={ref}
-        className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
+        className="mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in"
       >
-        {/* ヘッダー */}
-        <div className="mb-12 md:mb-16 max-w-[760px]">
-          <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-            MONEY TALK
-          </p>
-          <h2
-            className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-5 leading-[1.5]"
-            style={{ fontFamily: "var(--font-sans)" }}
-          >
-            お金の話、まず気軽に。
-          </h2>
-          <p className="text-text-primary text-[clamp(16px,1.3vw,20px)] leading-relaxed mb-2">
-            「払っていけるかな」「ローン通るかな」。
-          </p>
-          <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed">
-            その不安、一緒に整理しましょう。やまとには、お金の相談窓口があります。
-          </p>
-        </div>
+        <SectionHeaderCentered
+          label="MONEY TALK"
+          ghostText="MONEY"
+          title="お金の話は、先に整える。"
+          lead="「払っていけるかな」「ローン通るかな」。その不安は、家づくりの最初に一度だけ整理すれば大丈夫です。"
+          align="left"
+          className="mb-10 md:mb-12"
+        />
 
-        {/* 3つの柱 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--card-gap)] mb-14 md:mb-20">
-          {PILLARS.map((p, i) => {
-            const Icon = p.icon;
-            return (
-              <div
-                key={i}
-                className="scroll-in bg-bg-primary rounded-lg p-[clamp(24px,3vw,36px)] card-shadow"
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-main/10 text-main mb-5">
-                  <Icon className="w-5 h-5" strokeWidth={1.5} />
-                </div>
-                <h3
-                  className="text-text-primary text-base md:text-lg mb-3 leading-[1.5] font-medium"
-                  style={{ fontFamily: "var(--font-sans)" }}
-                >
-                  {p.title}
-                </h3>
-                <p className="text-text-secondary text-sm md:text-base leading-[1.9]">
-                  {p.body}
-                </p>
+        {/* 入口：写真＋相談メモ（テンプレ3カードをやめる） */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-7">
+            <figure className="relative overflow-hidden rounded-2xl border border-border bg-bg-primary shadow-[0_18px_52px_-28px_rgba(43,43,43,0.18)]">
+              <div className="relative aspect-[16/10] w-full">
+                <Image
+                  src={MONEY_HERO.src}
+                  alt={MONEY_HERO.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent"
+                />
               </div>
-            );
-          })}
+              <figcaption className="px-6 py-5 md:px-7 md:py-6">
+                <p className="text-xs font-semibold tracking-[0.14em] text-text-secondary">
+                  相談は無料です
+                </p>
+                <p
+                  className="mt-2 text-[clamp(16px,1.8vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  数字で脅かす相談はしません。
+                </p>
+                <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
+                  まずは「いくらなら安心か」を一緒に決めて、そこからプランを組み立てます。
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="rounded-2xl border border-border bg-bg-primary p-6 shadow-[0_18px_52px_-28px_rgba(43,43,43,0.14)] md:p-7">
+              <div className="flex flex-wrap items-center gap-2">
+                <Pill Icon={ShieldCheck} label="無料" />
+                <Pill Icon={Check} label="しつこい営業なし" />
+              </div>
+
+              <p
+                className="mt-5 text-[clamp(18px,2vw,24px)] font-semibold leading-[1.55] tracking-[0.05em] text-text-primary"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                相談で確認するのは、3つだけです。
+              </p>
+
+              <ol className="mt-6 space-y-4">
+                {[
+                  { k: "01", t: "月々、無理のない支払い", d: "生活費・教育費を削らない範囲を決めます。" },
+                  { k: "02", t: "土地と建物の全体像", d: "「別途がどれくらい出るか」を整理します。" },
+                  { k: "03", t: "今の条件で進められる段取り", d: "不安が残るところだけ、先に潰します。" },
+                ].map((x) => (
+                  <li key={x.k} className="grid grid-cols-[auto_1fr] gap-x-4">
+                    <span className="mt-0.5 inline-flex h-7 w-10 items-center justify-center rounded-full border border-border bg-bg-secondary/70 text-[11px] font-semibold tracking-[0.12em] text-text-primary">
+                      {x.k}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-text-primary">
+                        {x.t}
+                      </p>
+                      <p className="mt-1 text-[13px] leading-[1.85] text-text-secondary">
+                        {x.d}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+
+              <div className="mt-8 flex flex-col gap-3">
+                <CtaButton
+                  href="/reserve"
+                  variant="primary"
+                  size="md"
+                  label="お金の相談を予約する"
+                  sublabel="ご相談・事前審査は無料です"
+                  icon="calendar"
+                />
+                <CtaButton
+                  href="/contact"
+                  variant="secondary"
+                  size="md"
+                  label="まずは質問だけ"
+                  sublabel="気になる点をメッセージで"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* 「きっと建てられる」メッセージ */}
-        <div className="max-w-[800px] mx-auto text-center mb-10 md:mb-14">
-          <blockquote
-            className="text-text-primary text-[clamp(20px,2.5vw,30px)] leading-[1.6] mb-4"
-            style={{ fontFamily: "var(--font-sans)" }}
-          >
-            大手で諦めかけた方こそ、一度ご相談ください。
-            <br />
-            やまとなら、建てられる道がきっとあります。
-          </blockquote>
-          <p className="text-text-secondary text-xs md:text-sm">
-            ご相談・事前審査は無料です。気になることがあれば、何でもお聞かせください。
-          </p>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <div className="inline-flex">
-            <CtaButton
-              href="/reserve"
-              variant="primary"
-              size="md"
-              label="お金の相談を予約する"
-              sublabel="ご相談・事前審査はすべて無料です"
-            />
+        {/* 3つの柱（補足）：縦リズムで読みやすく */}
+        <div className="mt-12 md:mt-16">
+          <div className="rounded-2xl border border-border bg-bg-primary p-6 md:p-8">
+            <p className="text-xs font-semibold tracking-[0.14em] text-main">
+              相談の中身（要点）
+            </p>
+            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+              {PILLARS.map((p, i) => {
+                const Icon = p.icon;
+                return (
+                  <div key={i} className="rounded-xl border border-border/80 bg-bg-secondary/60 p-5">
+                    <div className="flex items-start gap-3">
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-main/10 text-main">
+                        <Icon className="h-5 w-5" strokeWidth={1.6} />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold leading-snug text-text-primary">
+                          {p.title}
+                        </p>
+                        <p className="mt-2 text-[13px] leading-[1.85] text-text-secondary">
+                          {p.body}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
