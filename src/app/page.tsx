@@ -9,7 +9,6 @@ import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
 import PostPricingEditorialGallery from "@/components/sections/PostPricingEditorialGallery";
 import MoneyTalkSection from "@/components/sections/MoneyTalkSection";
-import GuaranteeSection from "@/components/sections/GuaranteeSection";
 import MidCta from "@/components/sections/MidCta";
 import VoiceSection from "@/components/sections/VoiceSection";
 import WorksSection from "@/components/sections/WorksSection";
@@ -90,7 +89,6 @@ export default function Home() {
         <LotsSection />
         <FreedomOfDesign />
         <StandardAndQualitySection />
-        <GuaranteeSection />
         <StaffStory />
         <VoiceSection />
         <WorksSection />

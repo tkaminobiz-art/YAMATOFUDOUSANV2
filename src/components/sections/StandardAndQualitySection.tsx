@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import { Shield, Bug, Wrench, Phone, ShieldCheck } from "lucide-react";
 
 /*
   Standard × Quality（統合）
@@ -115,6 +116,37 @@ const QUALITY_CARDS = [
     unit: "%自社",
     title: "設計から施工まで一貫",
     desc: "工程を外に投げず、最後まで責任が途切れない体制にしています。",
+  },
+] as const;
+
+const GUARANTEES = [
+  {
+    icon: Shield,
+    num: "20",
+    unit: "年",
+    title: "地盤保証",
+    desc: "地盤調査から保証まで、第三者機関が実施します。万一、地盤が沈むようなことがあっても、20年守ります。",
+  },
+  {
+    icon: Bug,
+    num: "10",
+    unit: "年",
+    title: "しろあり保証",
+    desc: "お引き渡し後、10年のしろあり保証。以降も有料延長で続けられます。",
+  },
+  {
+    icon: Wrench,
+    num: "5",
+    unit: "回",
+    title: "定期点検",
+    desc: "お引き渡し後、半年・1年・2年・5年・10年のタイミングで、自社スタッフが伺います。",
+  },
+  {
+    icon: Phone,
+    num: "1",
+    unit: "本",
+    title: "お電話ひとつで、すぐ対応",
+    desc: "お引き渡し後も、ご不具合もご相談も。お電話ひとつで、担当が伺います。",
   },
 ] as const;
 
@@ -273,6 +305,82 @@ export default function StandardAndQualitySection() {
                 ※ 保証の内容は次のセクションでまとめてご案内しています。
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* ここから保証（同じトーンで連結） */}
+        <div id="guarantee" className="mt-16 border-t border-border pt-12 md:mt-20 md:pt-16">
+          <div className="mb-10 md:mb-12 max-w-[760px]">
+            <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+              GUARANTEE
+            </p>
+            <h2
+              className="text-[clamp(22px,3vw,34px)] text-text-primary mb-4"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              お引き渡し後の安心まで、含めて考えます。
+            </h2>
+            <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
+              家は、建てて終わりではありません。10年、20年と住み続ける家だからこそ、保証とアフターを大切にします。
+            </p>
+          </div>
+
+          {/* メイン：瑕疵担保責任保険 */}
+          <div className="scroll-in bg-bg-primary rounded-2xl p-[clamp(24px,3.2vw,44px)] card-shadow mb-[var(--card-gap)] border-l-4 border-main">
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 md:gap-10 items-center">
+              <div className="flex items-baseline gap-2">
+                <ShieldCheck className="w-8 h-8 text-main shrink-0" strokeWidth={1.5} />
+                <div className="flex items-baseline gap-1">
+                  <span
+                    className="text-main font-light text-6xl md:text-7xl leading-none"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
+                    10
+                  </span>
+                  <span className="text-text-primary text-lg md:text-xl">年</span>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-baseline gap-2 flex-wrap mb-2">
+                  <h3 className="text-text-primary text-lg md:text-xl font-medium" style={{ fontFamily: "var(--font-sans)" }}>
+                    建物瑕疵担保責任保険
+                  </h3>
+                  <span className="text-accent text-[11px] font-medium tracking-wider">
+                    国交省指定・第三者機関
+                  </span>
+                </div>
+                <p className="text-text-secondary text-sm md:text-base leading-[1.9]">
+                  万一の構造不具合や雨水の浸入に対して、10年間の保証をご用意しています。国土交通大臣指定の第三者機関が引き継ぐ、法定の保険です。万が一、当社がなくなっても保証は続きます。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* サブ：4つの保証 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[var(--card-gap)]">
+            {GUARANTEES.map((g) => (
+              <div key={g.title} className="scroll-in bg-bg-primary rounded-2xl p-[var(--card-p)] card-shadow">
+                <g.icon className="w-6 h-6 text-main mb-4" strokeWidth={1.5} />
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span
+                    className="text-main font-light text-5xl md:text-6xl leading-none"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
+                    {g.num}
+                  </span>
+                  <span className="text-text-primary text-base md:text-lg">
+                    {g.unit}
+                  </span>
+                </div>
+                <h3 className="text-text-primary font-medium text-base mb-2" style={{ fontFamily: "var(--font-sans)" }}>
+                  {g.title}
+                </h3>
+                <p className="text-text-secondary text-xs leading-relaxed">
+                  {g.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
