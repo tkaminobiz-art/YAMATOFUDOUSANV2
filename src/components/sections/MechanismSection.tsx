@@ -47,7 +47,7 @@ export default function MechanismSection() {
           label="MECHANISM"
           ghostText="MECHANISM"
           title="安いのではありません。無駄がないだけです。"
-          lead="同じ仕様・同じ品質のまま、価格が変わる理由を“先に結論から”お見せします。"
+          lead="同じ仕様・同じ品質のまま、なぜ価格が変わるのか。結論からお見せします。"
           align="left"
           className="mb-10 md:mb-12"
         />
@@ -70,7 +70,7 @@ export default function MechanismSection() {
 
               <div className="mt-6 rounded-xl border border-border/80 bg-bg-secondary/60 px-5 py-4">
                 <p className="text-[11px] font-semibold tracking-[0.2em] text-text-secondary">
-                  だから、この差が生まれます
+                  その結果、この差になります
                 </p>
                 <div className="mt-3 flex items-end justify-between gap-4">
                   <div className="min-w-0">

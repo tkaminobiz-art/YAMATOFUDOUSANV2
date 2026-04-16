@@ -223,10 +223,10 @@ export default function ComparisonTable() {
                   className="mt-2 text-[15px] font-semibold leading-relaxed tracking-[0.04em] text-text-primary md:text-base"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  素材は、業界で実績のある国内メーカーの標準仕様。
+                  素材・設備は、実績ある国内メーカー品を標準で採用しています。
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.9] text-text-secondary md:text-[14px]">
-                  この後は「価格の内訳」を、項目ごとに静かに確認します。
+                  この後は、項目ごとに内容を確認します。
                 </p>
               </figcaption>
             </figure>

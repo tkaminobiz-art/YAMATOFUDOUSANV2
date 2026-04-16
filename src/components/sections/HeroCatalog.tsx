@@ -184,8 +184,8 @@ export default function HeroCatalog() {
               align="left"
               label="PRICING"
               ghostText="PRICING"
-              title="花・風・京の価格と、3プラン"
-              lead="すぐ下から同じ章の続きとしてご覧いただけます。"
+              title="3つのプランと価格"
+              lead="各プランの目安と、コミコミに含まれる範囲をこの下でご紹介します。"
             />
           </div>
           <a

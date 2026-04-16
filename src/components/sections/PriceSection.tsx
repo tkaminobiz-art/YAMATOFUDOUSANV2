@@ -66,7 +66,7 @@ export default function PriceSection() {
             label="PRICING"
             ghostText="PRICING"
             title="価格の目安と、コミコミに含まれる範囲"
-            lead="「結局いくら？」を先に確定させるために、建物本体・標準設備・付帯工事まで含めた税込の目安を示します。"
+            lead="まずは「いくらくらい？」の目安を。建物本体・標準設備・付帯工事まで含めた税込の目安を示します。"
           />
         </div>
 
@@ -79,7 +79,7 @@ export default function PriceSection() {
                   className="text-[11px] font-semibold tracking-[0.18em] text-main/90 md:text-xs"
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 >
-                  PRICE RANGE
+                  価格帯
                 </p>
                 <p
                   className="mt-3 text-lg font-medium leading-snug text-text-primary md:text-xl"
@@ -92,7 +92,7 @@ export default function PriceSection() {
                 </p>
                 <div className="mt-6 rounded-xl border border-border/80 bg-bg-secondary/60 px-5 py-4">
                   <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary">
-                    まずここだけ覚えてください
+                    まずはこの範囲で考えてください
                   </p>
                   <p
                     className="mt-2 text-[clamp(18px,2vw,22px)] font-semibold leading-[1.6] tracking-[0.05em] text-text-primary"
@@ -173,7 +173,7 @@ export default function PriceSection() {
                   ))}
                 </ul>
                 <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
-                  「何が含まれるか」はプランと敷地条件で確定します。詳細は来場時に一覧でご説明します。
+                  含まれる範囲はプランと敷地条件で確定します。詳細は来場時に一覧でご説明します。
                 </p>
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function PriceSection() {
                   ))}
                 </ul>
                 <p className="mt-5 text-[12px] leading-relaxed text-text-secondary">
-                  “別途”がどれくらい出るかは、土地とご要望次第。ここはお金の相談で一緒に整理できます。
+                  別途がどれくらい必要かは、土地とご要望次第。お金の相談で一緒に整理しましょう。
                 </p>
               </div>
             </div>
