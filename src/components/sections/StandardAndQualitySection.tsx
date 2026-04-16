@@ -12,32 +12,18 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 
 const STANDARDS = [
   {
-    category: "キッチン",
-    brand: "クリナップ",
-    detail: "システムキッチン＋食洗機＋IH3口",
-    image: "/images/standard/facility_img_01.webp",
+    category: "外壁",
+    brand: "ニチハ",
+    detail: "窯業系サイディング16mm",
+    image: "/images/standard/facility_img_04.webp",
     size: "large",
   },
   {
-    category: "浴室",
-    brand: "TOTO",
-    detail: "ユニットバス 1616 / 保温浴槽",
-    image: "/images/standard/facility_img_02.webp",
+    category: "屋根",
+    brand: "ガルバリウム",
+    detail: "高耐久 金属屋根",
+    image: "/images/standard/facility_img_07.webp",
     size: "wide",
-  },
-  {
-    category: "玄関ドア",
-    brand: "YKK AP",
-    detail: "親子ドア＋顔認証（花モデル）",
-    image: "/images/standard/facility_img_05.webp",
-    size: "wide",
-  },
-  {
-    category: "洗面台",
-    brand: "TOTO",
-    detail: "750サイズ洗面化粧台",
-    image: "/images/standard/facility_img_03.webp",
-    size: "small",
   },
   {
     category: "窓サッシ",
@@ -47,17 +33,10 @@ const STANDARDS = [
     size: "small",
   },
   {
-    category: "外壁",
-    brand: "ニチハ",
-    detail: "窯業系サイディング16mm",
-    image: "/images/standard/facility_img_04.webp",
-    size: "small",
-  },
-  {
-    category: "屋根",
-    brand: "ガルバリウム",
-    detail: "高耐久 金属屋根",
-    image: "/images/standard/facility_img_07.webp",
+    category: "玄関ドア",
+    brand: "YKK AP",
+    detail: "親子ドア＋顔認証（花モデル）",
+    image: "/images/standard/facility_img_05.webp",
     size: "small",
   },
   {
@@ -72,6 +51,27 @@ const STANDARDS = [
     brand: "無垢調フローリング",
     detail: "踏み心地にこだわる標準仕様",
     image: "/images/standard/facility_img_09.webp",
+    size: "small",
+  },
+  {
+    category: "キッチン",
+    brand: "クリナップ",
+    detail: "システムキッチン＋食洗機＋IH3口",
+    image: "/images/standard/facility_img_01.webp",
+    size: "wide",
+  },
+  {
+    category: "浴室",
+    brand: "TOTO",
+    detail: "ユニットバス 1616 / 保温浴槽",
+    image: "/images/standard/facility_img_02.webp",
+    size: "small",
+  },
+  {
+    category: "洗面台",
+    brand: "TOTO",
+    detail: "750サイズ洗面化粧台",
+    image: "/images/standard/facility_img_03.webp",
     size: "small",
   },
   {
@@ -135,7 +135,7 @@ export default function StandardAndQualitySection() {
       <div ref={ref} className="relative max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in">
         <div className="mb-10 md:mb-14 max-w-[760px]">
           <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-            QUALITY / STANDARD
+            外壁品質
           </p>
           <h2
             className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4"
@@ -152,7 +152,7 @@ export default function StandardAndQualitySection() {
           {/* 左：標準仕様（写真） */}
           <div className="lg:col-span-8">
             <p className="text-[11px] font-semibold tracking-[0.18em] text-text-secondary mb-3">
-              標準仕様（写真の一部）
+              外壁・屋根も、標準から（写真は一部）
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
               {STANDARDS.map((item) => {

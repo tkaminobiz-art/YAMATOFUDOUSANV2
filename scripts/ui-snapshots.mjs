@@ -3,10 +3,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { chromium } from "playwright";
 
-const BASE_URL = process.env.UI_BASE_URL || "http://localhost:3000";
 const PORT = Number(process.env.UI_PORT || 3000);
 const HEADLESS = process.env.UI_HEADLESS !== "false";
-
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function waitForHttpOk(url, { timeoutMs = 60_000 } = {}) {
@@ -26,11 +24,15 @@ async function waitForHttpOk(url, { timeoutMs = 60_000 } = {}) {
   }
 }
 
-function startDevServer() {
-  const child = spawn(process.platform === "win32" ? "npm.cmd" : "npm", ["run", "dev", "--", "--port", String(PORT)], {
+function startDevServer(port) {
+  const child = spawn(
+    process.platform === "win32" ? "npm.cmd" : "npm",
+    ["run", "dev", "--", "--port", String(port)],
+    {
     stdio: "inherit",
-    env: { ...process.env, PORT: String(PORT) },
-  });
+    env: { ...process.env, PORT: String(port) },
+    },
+  );
   return child;
 }
 
@@ -39,15 +41,18 @@ async function main() {
   const outDir = join(process.cwd(), "artifacts", "ui-snapshots", ts);
   await mkdir(outDir, { recursive: true });
 
-  // If a dev server is already running, don't try to start another one.
+  const BASE_URL = `http://localhost:${PORT}`;
+
+  // Prefer an already-running dev server (no extra noise).
   let server = null;
   try {
-    await waitForHttpOk(`${BASE_URL}/`, { timeoutMs: 2000 });
+    await waitForHttpOk(`${BASE_URL}/`, { timeoutMs: 2500 });
   } catch {
-    server = startDevServer();
+    // Start one. If the port is held by a stale/unknown process, this will fail fast.
+    server = startDevServer(PORT);
   }
   try {
-    await waitForHttpOk(`${BASE_URL}/`);
+    await waitForHttpOk(`${BASE_URL}/`, { timeoutMs: 60_000 });
 
     const browser = await chromium.launch({ headless: HEADLESS });
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -90,7 +95,10 @@ async function main() {
       results.push({ name: t.name, file, ok: true });
     }
 
-    await writeFile(join(outDir, "manifest.json"), JSON.stringify({ baseUrl: BASE_URL, createdAt: new Date().toISOString(), results }, null, 2));
+    await writeFile(
+      join(outDir, "manifest.json"),
+      JSON.stringify({ baseUrl: BASE_URL, port: PORT, createdAt: new Date().toISOString(), results }, null, 2),
+    );
     await browser.close();
 
     const failed = results.filter((r) => !r.ok);
