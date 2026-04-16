@@ -4,13 +4,13 @@ import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 import SectionHeaderCentered from "@/components/SectionHeaderCentered";
 
-// Heroスライドショー5枚（30秒周期・6秒表示+1秒フェード）
+// Heroスライドショー4枚（28秒周期・7秒表示+1秒フェード）
+// 色温度リズム: cool → warm → cool → warm でビジュアルの緩急をつける
 const HERO_SLIDES = [
-  { src: "/images/newsozai/exterior-entrance-01.webp", alt: "外観 玄関アプローチ" },
-  { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
+  { src: "/images/newsozai/hero-night-shijoji.webp", alt: "外観 夜景ライトアップ" },
   { src: "/images/newsozai/interior-kitchen-01.webp", alt: "内観 キッチン" },
-  { src: "/images/newsozai/exterior-terrace-01.webp", alt: "外観 テラス" },
-  { src: "/images/newsozai/exterior-night-01.webp", alt: "外観 夜景" },
+  { src: "/images/newsozai/hero-day-green-exterior.webp", alt: "外観 緑と青空" },
+  { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
 ] as const;
 
 export default function HeroCatalog() {
@@ -18,15 +18,15 @@ export default function HeroCatalog() {
     <section>
       {/* ===== メインヒーロー ===== */}
       <div className="relative w-full min-h-[100svh] overflow-hidden">
-        {/* スライドショー5枚 — 各 5s表示 + 1s クロスフェード、計 25s ループ */}
-        {/* delay: i*5 - 1 でslide 0が即表示（fade-in状態を飛ばして始まる） */}
+        {/* スライドショー4枚 — 各 7s表示 + 1s クロスフェード、計 28s ループ */}
+        {/* delay: i*7 - 1 でslide 0が即表示（fade-in状態を飛ばして始まる） */}
         <div className="absolute inset-0">
           {HERO_SLIDES.map((slide, i) => (
             <div
               key={slide.src}
               className="hero-slide absolute inset-0"
               style={{
-                animationDelay: `${i * 5 - 1}s`,
+                animationDelay: `${i * 7 - 1}s`,
               }}
             >
               <div className="hero-ken-burns absolute inset-0">
