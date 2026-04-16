@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "download:voice-images": "node scripts/download-voice-images.cjs"
+    "download:voice-images": "node scripts/download-voice-images.cjs",
+    "ui:snapshots": "node scripts/ui-snapshots.mjs"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.21",

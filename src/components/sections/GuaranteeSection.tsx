@@ -50,7 +50,7 @@ export default function GuaranteeSection() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
-    <section className="bg-bg-secondary py-[var(--section-py)]">
+    <section id="guarantee" className="bg-bg-secondary py-[var(--section-py)]">
       <div
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"

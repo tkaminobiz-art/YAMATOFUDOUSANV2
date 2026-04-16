@@ -122,7 +122,7 @@ export default function StandardAndQualitySection() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
-    <section className="relative overflow-hidden bg-bg-secondary py-[var(--section-py)]">
+    <section id="standard-quality" className="relative overflow-hidden bg-bg-secondary py-[var(--section-py)]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.33]"

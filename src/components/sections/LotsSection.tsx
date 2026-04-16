@@ -24,7 +24,7 @@ export default function LotsSection() {
   const featured = LOTS.filter((l) => l.photos.length > 0).slice(0, 6);
 
   return (
-    <section className="relative overflow-hidden bg-bg-secondary py-[var(--section-py)]">
+    <section id="lots" className="relative overflow-hidden bg-bg-secondary py-[var(--section-py)]">
       {/* 紙面のような極薄グリッド（A案：装飾より編集） */}
       <div
         aria-hidden
