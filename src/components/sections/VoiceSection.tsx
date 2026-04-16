@@ -1,256 +1,357 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
 import { getVoice } from "@/data/voices";
+import {
+  CHAPTERS,
+  WALL_LINES,
+  SECTION_HEADER,
+  type ChapterConfig,
+  type VoiceCardConfig,
+  type WallLine,
+} from "@/data/voiceHome";
 
 /*
-  VoiceSection — Phase 2 改（エディトリアル）
-  - PC: 写真の大小・左右交互で非対称（雑誌風）
-  - SP: 大きな写真＋キャッチのカルーセル（scroll-snap）
-  - スクロール時は子要素に stagger の fade-up
+  VoiceSection — Phase 3 (Voices Book)
+  -------------------------------------
+  50件の声を「4章構成（土地／標準／打ち合わせ／建てたあと）」で提示。
+  データ: src/data/voiceHome.ts（キュレーション）
+       + src/data/voices.json（一次情報: 写真URL・家名・エリア）
+
+  設計方針:
+  - 章カード: 2枚写真＋原文引用（Serif）＋タグ。担当者名は非表示（全50件共通方針）
+  - 統一フィルタ（grayscale 0.35 / saturate 1.05 / contrast 1.04）で 50枚の写真を1つのシリーズに
+  - 最後に 50件のワンライナー "声の壁"。id でソートはせずキュレーション順
 */
 
-/** トップ掲載コピーと voices.json の顧客レコードを対応付け（旧サイトと同じ写真＝JSON 1枚目） */
-const HOME_VOICE_SNIPPETS = [
-  {
-    voiceId: "242157",
-    area: "奈良市",
-    name: "O様邸",
-    highlight: "打ち合わせが、家族の楽しみになった。",
-    deciding: "土地が見つからず、新築を1度諦めていた中、偶然ネットで土地を見つけて。",
-    review:
-      "玄関カギのタッチレスキーやタッチレス水栓、自動開閉機能付きトイレ、ソフトクローズの扉など、標準仕様で色々付いていたところ。打ち合わせに行くたびに「今日は誰に合いに行くの？」と家族全員が楽しみにしていました。",
-  },
-  {
-    voiceId: "240061",
-    area: "奈良市",
-    name: "H様邸",
-    highlight: "大空間収納と浄水器が、大活躍。",
-    deciding: "たまたまネットでやまとを知って、半信半疑で話を聞きに行ったら、もっと早く知りたかったと思える所でした。",
-    review:
-      "大空間収納と、浄水・還元水素水の出る整水器をつけたところ。水派な子どもたちなので大活躍で最高です。何度でも変更できるからと、プランを立てたりアドバイスをしていただき、念願のマイホームにたどり着けました。",
-  },
-  {
-    voiceId: "216803",
-    area: "生駒市",
-    name: "I様邸",
-    highlight: "「代わりにこんな感じで」と代案を出してくれた。",
-    deciding: "土地も工務店も良い条件が見つからず、一度はマイホームを諦めかけていた時にやまと不動産に出会いました。",
-    review:
-      "要望やこだわりが多かったと思いますが、親身になって聞いてくださって、楽しく打ち合わせできたのが印象に残っています。設計上無理なことも「代わりにこんな感じでどうですか？」と代案を出してくださり、納得のできる家が建てられました。",
-  },
-  {
-    voiceId: "225610",
-    area: "奈良市",
-    name: "A様邸",
-    highlight: "追加を、無理に勧められなかった。",
-    deciding: "モデルルームの設備がどれも標準仕様だったこと。追加を無理に勧められなかったこと。",
-    review:
-      "オプションの価格は一覧表になっており、予算と相談しながら決めることができました。追加を無理に勧められることはなく、とてもありがたかったです。家づくりをとても楽しめました。",
-  },
-  {
-    voiceId: "265580",
-    area: "橿原市",
-    name: "S様邸",
-    highlight: "売却から新築まで、一社で完結。",
-    deciding: "たまたまモデルハウスを見に行ったら、外観や間取り、内装が好きな雰囲気で、ご対応いただいた方が信用に足りると直感で感じました。",
-    review:
-      "マンションの売却から新築の竣工まで、ワンストップでお任せできました。保育園の都合等も考慮いただき、全体行程の調整も柔軟に対応。納得のいく住まいづくりを実現することができました。",
-  },
-  {
-    voiceId: "276846",
-    area: "京田辺市",
-    name: "T様邸",
-    highlight: "設計・工務・営業、全員が優しかった。",
-    deciding: "契約前から非常に親身になって下さり、不安もなくやまと不動産で家を建てたいと思えました。",
-    review:
-      "最高の場所に最高の家を建てることができて大満足。やまと不動産という会社はアットホームで風通しの良い会社。設計・工務・営業すべての方が優しく、この方に出会えていなかったら性格上悩みすぎて途方に暮れていたでしょう。",
-  },
-  {
-    voiceId: "225612",
-    area: "奈良市",
-    name: "M様邸",
-    highlight: "カフェのようなリビングで、毎日を。",
-    deciding: "担当者の人柄です。何気なく立ち寄ったモデルルームで、軽快なトークに魅了され一気に購入まで。",
-    review:
-      "広いリビングと落ち着いた内装の配色、そして陽当たり。カフェのようなリビングで毎日を楽しく過ごしています。約半年間の打ち合わせをしましたが、本当に誠実に対応していただきました。",
-  },
-  {
-    voiceId: "279076",
-    area: "京田辺市",
-    name: "K様邸",
-    highlight: "建てたあとも、ずっとフォロー。",
-    deciding: "土地の場所がよかった。標準設備がよかった。",
-    review:
-      "やりたいことをすべて叶えていただきありがとうございます。打合せ時間もとても長い時間だったのに嫌な顔一つせず対応していただきました。建てておわりじゃなく、その後もしっかりフォローがあり安心しています。",
-  },
-  {
-    voiceId: "237069",
-    area: "生駒市",
-    name: "N様邸",
-    highlight: "青い外壁が見えると、気持ちが上がる。",
-    deciding: "予算内で注文住宅ができたこと。駅近で理想の大きさの土地だったこと。",
-    review:
-      "外壁の青色とベランダの茶色の2色展開が周りからも評判良く、とても気に入ってます。家に帰ってくる時に青色が見えると気持ちが上がり、見るたびに「良い家だなぁ」と浸っています。担当さんが迅速に対応してくださるので安心。",
-  },
-  {
-    voiceId: "225603",
-    area: "天理市",
-    name: "O様邸",
-    highlight: "理想を、ちゃんと形にしてくれた。",
-    deciding: "標準仕様の内容と大空間収納。",
-    review:
-      "設計の先生や担当者が出来る限りの理想をかなえてくれたので、満足のいくマイホームができました。イメージのつかないことや優柔不断になるところに対しても、私達の好みやイメージを理解してくださり、提案してくれました。",
-  },
-  {
-    voiceId: "239226",
-    area: "斑鳩町",
-    name: "K様邸",
-    highlight: "打ち合わせが、楽しみになっていた。",
-    deciding: "標準グレードが非常に高い。間取りの事由がとてもきく。親身になって相談にのっていただけた。",
-    review:
-      "心から信頼して家づくりをお願いして良かった。お会いした時から親身になって現状の悩みを聞いてくださり、今思い返しても感謝することばかりです。気付けば打ち合わせを楽しみに過ごしていたのが懐かしいです。",
-  },
-  {
-    voiceId: "256807",
-    area: "奈良市",
-    name: "F様邸",
-    highlight: "金額が明確で、不安が消えた。",
-    deciding: "妻の実家から近いところの土地を販売していたため。プランがわかりやすかった。",
-    review:
-      "色んな不動産を見ているときは、金額の面で不明確なところが多く不安を抱えていましたが、やまと不動産のモデルハウスを初めて見学させてもらった時に、担当者からわかりやすく金額の話をしていただいたことで、具体的なイメージを持つことができ、安心できました。",
-  },
-] as const;
+const PHOTO_FILTER =
+  "grayscale(0.35) saturate(1.05) contrast(1.04)";
 
-const VOICE_IMAGE_FALLBACK = "/images/fv/hero-03-living.webp";
+/* =============================================================================
+   Section Header
+   ========================================================================== */
 
-function coverImageForVoice(voiceId: string): string {
-  return getVoice(voiceId)?.photos[0] ?? VOICE_IMAGE_FALLBACK;
+function SectionHeader() {
+  return (
+    <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="max-w-[640px] scroll-in">
+          <p className="font-section-label mb-4 text-xs tracking-[0.15em] text-main md:text-sm">
+            {SECTION_HEADER.label}
+          </p>
+          <h2
+            className="mb-6 text-[clamp(28px,4vw,52px)] font-light leading-[1.35] text-text-primary"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
+            {SECTION_HEADER.headline}
+          </h2>
+          <p className="text-[clamp(15px,1.1vw,17px)] leading-[1.95] text-text-secondary">
+            {SECTION_HEADER.lead}
+          </p>
+        </div>
+        <div
+          className="scroll-in text-right"
+          style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+        >
+          <span className="block text-7xl font-extralight leading-none text-accent md:text-8xl">
+            {SECTION_HEADER.bigNumber}
+          </span>
+          <span className="text-xs tracking-wider text-text-secondary md:text-sm">
+            {SECTION_HEADER.bigNumberCaption}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
+/* =============================================================================
+   Voice Card（章の中の個別カード）
+   ========================================================================== */
+
+function VoiceCard({ config }: { config: VoiceCardConfig }) {
+  const voice = getVoice(config.id);
+  if (!voice) {
+    // 万が一 id が無い場合も壊さない
+    return null;
+  }
+
+  const indices = config.photoIndices ?? [0];
+  const photos = indices
+    .map((i) => voice.photos[i])
+    .filter((p): p is string => Boolean(p));
+  const [mainPhoto, subPhoto] = photos;
+
+  return (
+    <Link
+      href={`/voice/${voice.id}`}
+      className="scroll-in group block"
+      aria-label={`${voice.area} ${voice.familyName}邸の詳細を見る`}
+    >
+      <article className="grid gap-5 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-7">
+        {/* 写真（1〜2枚） */}
+        <div className="relative flex flex-col gap-3 md:gap-4">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-bg-secondary">
+            {mainPhoto && (
+              <Image
+                src={mainPhoto}
+                alt={`${voice.area} ${voice.familyName}邸の室内写真`}
+                fill
+                sizes="(max-width: 768px) 92vw, (max-width: 1200px) 48vw, 560px"
+                className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                style={{ filter: PHOTO_FILTER }}
+              />
+            )}
+          </div>
+          {subPhoto && (
+            <div className="relative hidden aspect-[16/10] overflow-hidden rounded-sm bg-bg-secondary md:block">
+              <Image
+                src={subPhoto}
+                alt={`${voice.area} ${voice.familyName}邸の別角度`}
+                fill
+                sizes="(max-width: 1200px) 48vw, 560px"
+                className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                style={{ filter: PHOTO_FILTER }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* 本文 */}
+        <div className="flex flex-col justify-center">
+          {/* メタ（エリア・家名） */}
+          <div
+            className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs text-text-secondary md:mb-5"
+            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+          >
+            <span className="tracking-[0.12em] text-main">
+              {voice.area || "奈良"}
+            </span>
+            <span className="text-text-secondary/50">/</span>
+            <span
+              className="text-sm text-text-primary"
+              style={{ fontFamily: "var(--font-sans)" }}
+            >
+              {voice.familyName}邸
+            </span>
+          </div>
+
+          {/* 引用（原文ママ） */}
+          <blockquote
+            className="mb-6 text-[clamp(17px,1.5vw,22px)] font-light leading-[1.9] text-text-primary md:mb-7"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
+            <span aria-hidden className="pr-0.5 text-accent/60">「</span>
+            {config.quote}
+            <span aria-hidden className="pl-0.5 text-accent/60">」</span>
+          </blockquote>
+
+          {/* タグ */}
+          <div className="flex flex-wrap gap-x-3 gap-y-2">
+            {config.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[11px] tracking-wider text-accent"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                # {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </article>
+    </Link>
+  );
+}
+
+/* =============================================================================
+   Chapter（章ヘッダ + 4カード + 章フッタ）
+   ========================================================================== */
+
+function Chapter({ chapter }: { chapter: ChapterConfig }) {
+  const chapterRef = useScrollIn<HTMLDivElement>(true);
+
+  return (
+    <div ref={chapterRef} className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+      {/* === 章ヘッダ === */}
+      <header className="scroll-in border-t border-border pt-10 md:pt-16">
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between md:gap-10">
+          <div className="max-w-[760px]">
+            <p
+              className="mb-5 text-[11px] tracking-[0.22em] text-text-secondary md:text-xs"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              <span className="mr-2">{chapter.ordinal}</span>
+              <span className="inline-block w-10 border-t border-accent-soft align-middle" />
+              <span className="ml-2">{chapter.label}</span>
+            </p>
+            <h3
+              className="mb-6 text-[clamp(26px,3.6vw,46px)] font-light leading-[1.4] text-text-primary md:mb-8"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              {chapter.headline}
+            </h3>
+            <p
+              className="text-[clamp(14px,1.05vw,16px)] leading-[2] text-text-secondary"
+              style={{ maxWidth: "52ch" }}
+            >
+              {chapter.lead}
+            </p>
+          </div>
+
+          {/* 章の統計（accent） */}
+          <div className="flex-shrink-0 md:text-right">
+            <p
+              className="mb-1 text-[11px] tracking-[0.18em] text-text-secondary"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              DATA
+            </p>
+            <p
+              className="text-[clamp(13px,1vw,15px)] font-light tracking-wide text-accent"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              {chapter.stat}
+            </p>
+          </div>
+        </div>
+      </header>
+
+      {/* === カード × 4 === */}
+      <div className="mt-14 flex flex-col gap-16 md:mt-20 md:gap-24">
+        {chapter.voices.map((v) => (
+          <VoiceCard key={`${chapter.key}-${v.id}`} config={v} />
+        ))}
+      </div>
+
+      {/* === 章フッタ（内訳） === */}
+      <footer className="scroll-in mt-16 md:mt-24">
+        <div className="flex flex-wrap items-end gap-x-12 gap-y-6 border-t border-border pt-8 md:pt-10">
+          {chapter.breakdown.map((b) => (
+            <div key={b.label}>
+              <span
+                className="block text-[28px] font-extralight leading-none text-text-primary md:text-[40px]"
+                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+              >
+                {b.count}
+              </span>
+              <span className="mt-2 block text-[11px] tracking-wider text-text-secondary md:text-xs">
+                {b.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+/* =============================================================================
+   Voice Wall — 50件のワンライナー壁
+   ========================================================================== */
+
+const SIZE_CLASS: Record<NonNullable<WallLine["emphasis"]>, string> = {
+  lg: "text-[clamp(16px,1.7vw,22px)] md:text-[clamp(18px,1.9vw,24px)]",
+  md: "text-[clamp(14px,1.25vw,17px)] md:text-[clamp(15px,1.4vw,18px)]",
+  sm: "text-[clamp(12px,1vw,14px)] md:text-[clamp(13px,1.15vw,15px)]",
+};
+
+function VoiceWall() {
+  const wallRef = useScrollIn<HTMLDivElement>(true);
+
+  return (
+    <div ref={wallRef} className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+      <div className="scroll-in border-t border-border pt-12 md:pt-20">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4 md:mb-14">
+          <div>
+            <p
+              className="mb-4 text-[11px] tracking-[0.22em] text-text-secondary md:text-xs"
+              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+            >
+              ALL 50 VOICES
+            </p>
+            <h3
+              className="text-[clamp(22px,2.8vw,36px)] font-light leading-[1.4] text-text-primary"
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              50組の、ひとことずつ。
+            </h3>
+          </div>
+          <p className="max-w-[28ch] text-xs leading-relaxed text-text-secondary md:text-sm">
+            お客様ご自身の言葉から、一言ずつ。クリックすると、その声の全文が読めます。
+          </p>
+        </div>
+      </div>
+
+      {/* ワンライナーの壁 */}
+      <div className="scroll-in flex flex-wrap gap-x-7 gap-y-5 md:gap-x-10 md:gap-y-7">
+        {WALL_LINES.map((w) => {
+          const size = SIZE_CLASS[w.emphasis ?? "md"];
+          return (
+            <Link
+              key={w.id}
+              href={`/voice/${w.id}`}
+              className={`group inline-flex items-baseline whitespace-nowrap font-light leading-[1.7] text-text-primary transition-colors hover:text-accent ${size}`}
+              style={{ fontFamily: "var(--font-serif)" }}
+            >
+              <span className="text-accent/50 group-hover:text-accent">
+                {w.line}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* =============================================================================
+   Section
+   ========================================================================== */
+
 export default function VoiceSection() {
-  const sectionRef = useScrollIn<HTMLDivElement>(true);
+  const sectionRef = useScrollIn<HTMLDivElement>(false);
 
   return (
     <section className="bg-bg-warm py-[var(--section-py)]">
-      <div ref={sectionRef} className="max-w-[1400px] mx-auto">
-        <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-          <div className="scroll-in mb-12 flex flex-wrap items-end justify-between gap-4 md:mb-20">
-            <div className="max-w-[640px]">
-              <p className="font-section-label mb-3 text-xs tracking-[0.15em] text-main md:text-sm">
-                VOICE
-              </p>
-              <h2 className="mb-4 text-[clamp(24px,3.5vw,40px)] text-text-primary">
-                お客様の声
-              </h2>
-              <p className="text-[clamp(15px,1.1vw,17px)] leading-relaxed text-text-secondary">
-                当社でお家を建てられた方々から、いただいたお言葉です。
-              </p>
-            </div>
-            <div
-              className="text-right"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              <span className="block text-6xl font-light leading-none text-accent md:text-7xl">
-                50
-              </span>
-              <span className="text-xs text-text-secondary md:text-sm">
-                組以上のお客様
-              </span>
-            </div>
-          </div>
+      <div ref={sectionRef}>
+        <SectionHeader />
+
+        {/* 4章 */}
+        <div className="mt-24 flex flex-col gap-24 md:mt-40 md:gap-40">
+          {CHAPTERS.map((chapter) => (
+            <Chapter key={chapter.key} chapter={chapter} />
+          ))}
         </div>
 
-        {/* SP: 横スワイプ / PC: エディトリアル（非対称） */}
-        <div className="md:px-[var(--page-px)]">
-          <div
-            className="flex flex-row gap-5 overflow-x-auto px-[var(--page-px)] pb-6 scrollbar-hide md:mx-0 md:flex-col md:gap-16 md:overflow-visible md:px-0 md:pb-0 lg:gap-24"
-            style={{
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
-          >
-            {HOME_VOICE_SNIPPETS.map((v, i) => {
-              const img = coverImageForVoice(v.voiceId);
-              const widePhoto = i % 3 !== 1; /* 3件に1回は「文字多め」レイアウト */
-              return (
-                <article
-                  key={v.area + v.name + i}
-                  className={`
-                    scroll-in shrink-0 snap-center
-                    w-[min(88vw,380px)] max-w-[100%]
-                    flex flex-col overflow-hidden rounded-xl bg-bg-primary card-shadow
-                    md:w-full md:flex-row md:items-stretch md:gap-10 md:overflow-visible md:rounded-none md:bg-transparent md:shadow-none lg:gap-14
-                    ${i % 2 === 1 ? "md:flex-row-reverse" : ""}
-                  `}
-                >
-                  <div
-                    className={`
-                      relative aspect-[16/11] w-full shrink-0 overflow-hidden bg-bg-secondary
-                      md:aspect-auto md:rounded-sm
-                      ${widePhoto ? "md:w-[min(58%,640px)] md:min-h-[min(52vw,420px)] lg:min-h-[440px]" : "md:w-[min(48%,520px)] md:min-h-[min(44vw,360px)] lg:min-h-[380px]"}
-                    `}
-                  >
-                    <Image
-                      src={img}
-                      alt={`${v.area} ${v.name}の住まいのイメージ`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 88vw, (max-width: 1200px) 55vw, 640px"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent md:from-black/20" />
-                  </div>
-
-                  <div className="flex flex-col p-6 md:flex-1 md:justify-center md:px-0 md:py-4 md:pl-2 md:pr-4">
-                    <div className="mb-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                      <span className="text-xs font-medium tracking-wider text-main">
-                        {v.area}
-                      </span>
-                      <span
-                        className="text-base text-text-primary"
-                        style={{ fontFamily: "var(--font-sans)" }}
-                      >
-                        {v.name}
-                      </span>
-                    </div>
-
-                    <h3
-                      className="mb-5 text-lg font-medium leading-[1.55] text-text-primary md:text-2xl lg:text-[1.65rem] lg:leading-snug"
-                      style={{ fontFamily: "var(--font-serif)" }}
-                    >
-                      「{v.highlight}」
-                    </h3>
-
-                    <p className="mb-4 text-xs leading-relaxed text-text-secondary">
-                      <span className="font-medium text-accent">決め手：</span>
-                      {v.deciding}
-                    </p>
-
-                    <blockquote className="relative mt-auto border-l-2 border-accent/35 pl-4 text-sm leading-[1.9] text-text-secondary md:text-[15px]">
-                      {v.review}
-                    </blockquote>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+        {/* 50件ワンライナー壁 */}
+        <div className="mt-24 md:mt-40">
+          <VoiceWall />
         </div>
 
-        <p className="px-[var(--page-px)] text-center text-xs tracking-wider text-text-secondary md:hidden">
-          ← 横にスワイプできます →
-        </p>
-
-        <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-          <div className="scroll-in mt-12 text-center md:mt-20">
-            <div className="inline-flex">
-              <CtaButton
-                href="/voice"
-                variant="secondary"
-                size="md"
-                label="すべてのお客様の声を見る"
-              />
+        {/* 締めCTA */}
+        <div className="mt-20 md:mt-32">
+          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+            <div className="scroll-in flex flex-col items-center gap-6 border-t border-border pt-12 text-center md:pt-16">
+              <p
+                className="max-w-[36ch] text-[clamp(16px,1.4vw,20px)] font-light leading-[1.95] text-text-primary"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                一人でも多くの方に、同じ感想を持っていただきたい。
+                <br />
+                それが、やまと不動産の目標です。
+              </p>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <CtaButton
+                  href="/voice"
+                  variant="secondary"
+                  size="md"
+                  label="すべてのお客様の声を読む"
+                />
+              </div>
             </div>
           </div>
         </div>
