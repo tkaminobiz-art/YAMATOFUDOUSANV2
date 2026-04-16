@@ -6,7 +6,7 @@ const PLANS = [
     id: "hana" as const,
     name: "花",
     reading: "hana",
-    tagline: "部屋数も収納も、ゆとりを優先したい方へ",
+    tagline: "部屋数と収納に、ゆとりをお求めのご家族に。",
     price: "2,480",
     priceYen: "2,480万円",
     tsubo: "33坪（109㎡）",
@@ -17,7 +17,7 @@ const PLANS = [
     id: "kaze" as const,
     name: "風",
     reading: "kaze",
-    tagline: "家事動線と広さのバランスを取りたい方へ",
+    tagline: "家事のしやすさと、広さを両立させたいご家族に。",
     price: "2,480",
     priceYen: "2,480万円",
     tsubo: "30坪",
@@ -28,7 +28,7 @@ const PLANS = [
     id: "miyako" as const,
     name: "京",
     reading: "miyako",
-    tagline: "必要十分に、コンパクトに建てたい方へ",
+    tagline: "必要なものを、コンパクトに。ご夫婦や少人数のご家族に。",
     price: "2,280",
     priceYen: "2,280万円",
     tsubo: "28坪",
@@ -39,16 +39,16 @@ const PLANS = [
 
 const INCLUDED = [
   "建物本体",
-  "標準設備（キッチン・浴室など）",
+  "標準設備（キッチン・浴室など、ひととおり）",
   "付帯工事",
-  "設計・申請に関わる費用",
+  "設計料と、お申請のお手続き費用",
 ] as const;
 
 const EXCLUDED = [
-  "土地代",
-  "登記費用",
-  "引越し費用",
-  "外構工事（内容により）",
+  "土地のお代",
+  "登記のお手続き費用",
+  "お引越し費用",
+  "外構工事（ご要望の内容により）",
 ] as const;
 
 export default function PriceSection() {
@@ -85,8 +85,8 @@ export default function PriceSection() {
           noMargin
           label="PRICING"
           ghostText="PRICE"
-          title="お値段は、最初にお伝えいたします。"
-          lead="建物本体・標準設備・付帯工事まで含めた、税込の目安でございます。土地や登記は別途となりますので、その前提も、ここでそろえてまいります。"
+          title="お値段は、はじめにすべて、お伝えいたします。"
+          lead="建物本体・標準設備・付帯工事まで含めた、税込の目安でございます。土地や登記は別途となりますので、そのご前提も、こちらでそろえておきます。"
           className="mb-12 md:mb-16 lg:mb-20"
         />
 
@@ -112,7 +112,7 @@ export default function PriceSection() {
                   className="mt-5 max-w-[20ch] text-[clamp(22px,2.4vw,30px)] font-semibold leading-snug tracking-[0.04em]"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  すべて込み（建物）、税込の目安
+                  建物まわりすべて込み・税込の目安
                 </p>
               </div>
               <div className="relative mt-10 lg:mt-0">
@@ -140,10 +140,10 @@ export default function PriceSection() {
                 >
                   花・風は{" "}
                   <span className="font-medium text-white/80">2,480万円〜</span>
-                  （目安）。坪数・間取り・設備は、ご家族に合わせて変わります。
+                  が目安でございます。坪数・間取り・設備は、ご家族に合わせて変わります。
                 </p>
                 <p className="mt-4 text-[11px] leading-relaxed text-white/40">
-                  ※ 土地代・登記等は、別途となります
+                  ※ 土地のお代・登記等は、別途となります
                 </p>
               </div>
               <div
@@ -164,19 +164,19 @@ export default function PriceSection() {
                   className="mt-4 text-base font-medium leading-relaxed text-text-primary md:text-lg"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  いま、ご覧いただいているのは「建物側」の総額の目安でございます。
+                  いま、ご覧いただいておりますのは、建物側の総額の目安でございます。
                 </p>
                 <p className="mt-4 text-sm leading-[1.9] text-text-secondary">
-                  敷地や仕様によって増減いたしますが、まずはこの枠で、家計の感触をつかんでいただけます。細部の積み上げは、ご来場時に一覧でご説明いたします。
+                  敷地や仕様によって前後いたしますが、まずはこの枠で、家計の見通しを立てていただけます。細部の積み上げは、ご来場のおりに一覧でご説明いたします。
                 </p>
               </div>
               <dl className="mt-10 grid gap-3 border-t border-border/80 pt-8 text-sm">
                 <div className="flex items-baseline justify-between gap-6 border-b border-border/60 pb-3">
-                  <dt className="text-text-secondary">表示</dt>
-                  <dd className="text-right font-medium text-text-primary">税込・建物＋付帯まで</dd>
+                  <dt className="text-text-secondary">表記</dt>
+                  <dd className="text-right font-medium text-text-primary">税込で、建物と付帯工事まで</dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-6">
-                  <dt className="text-text-secondary">別枠</dt>
+                  <dt className="text-text-secondary">別途</dt>
                   <dd className="text-right font-medium text-text-primary">土地・登記・外構など</dd>
                 </div>
               </dl>
@@ -198,7 +198,7 @@ export default function PriceSection() {
                 className="mt-4 text-lg font-semibold text-text-primary md:text-xl"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                お値段に含まれているもの（例）
+                お値段に含まれているもの、たとえば
               </p>
               <ul className="mt-8 space-y-4 text-sm leading-relaxed text-text-secondary md:text-[15px]">
                 {INCLUDED.map((t) => (
@@ -214,7 +214,7 @@ export default function PriceSection() {
                 ))}
               </ul>
               <p className="mt-8 text-[12px] leading-relaxed text-text-secondary">
-                含む範囲は、プランと敷地条件によって確定いたします。
+                含む範囲は、プランと敷地の条件でお決めいたします。
               </p>
             </div>
             <div className="px-0 py-10 md:border-l md:py-12 md:pl-10 lg:pl-14">
@@ -228,7 +228,7 @@ export default function PriceSection() {
                 className="mt-4 text-lg font-semibold text-text-primary md:text-xl"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                別途になりやすいもの（例）
+                別途となりやすいもの、たとえば
               </p>
               <ul className="mt-8 space-y-4 text-sm leading-relaxed text-text-secondary md:text-[15px]">
                 {EXCLUDED.map((t) => (
@@ -244,7 +244,7 @@ export default function PriceSection() {
                 ))}
               </ul>
               <p className="mt-8 text-[12px] leading-relaxed text-text-secondary">
-                別途の目安は、土地とご要望によって変わります。お金のご相談で、ご一緒に整理いたします。
+                別途の目安は、土地のご条件とご要望によって変わります。お金のご相談の場で、ご一緒に整理いたしましょう。
               </p>
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function PriceSection() {
               PLANS
             </p>
             <p className="text-xs text-text-secondary md:text-sm">
-              広さ・間取り・価格帯の目安でございます。設計で、お仕立て直しいたします。
+              広さ・間取り・価格帯の目安でございます。実際のプランは、設計でお仕立て直しいたします。
             </p>
           </div>
 
@@ -271,7 +271,7 @@ export default function PriceSection() {
               <div className="flex flex-col justify-between md:col-span-5">
                 <div>
                   <p className="text-[11px] font-medium tracking-[0.12em] text-text-secondary">
-                    軸となる一つのプラン
+                    軸となる、一つのプラン
                   </p>
                   <div className="mt-4 flex items-end gap-3">
                     <span
@@ -298,7 +298,7 @@ export default function PriceSection() {
                 </dl>
               </div>
               <div className="flex flex-col justify-end border-t border-border pt-8 md:col-span-7 md:border-l md:border-t-0 md:pl-10 md:pt-0 lg:pl-12">
-                <p className="text-xs text-text-secondary">税込目安（建物、すべて込み）</p>
+                <p className="text-xs text-text-secondary">税込目安（建物まわり、すべて込み）</p>
                 <div className="mt-2 flex flex-wrap items-baseline gap-2">
                   <span
                     className="text-[clamp(36px,7vw,72px)] font-light tabular-nums tracking-[-0.04em] text-text-primary"
@@ -356,23 +356,23 @@ export default function PriceSection() {
           </div>
 
           <p className="mt-8 max-w-[62rem] text-[12px] leading-[1.9] text-text-secondary md:text-[13px]">
-            ※ こちらに載せておりますのは「広さ・間取り・価格帯」の目安でございます。間取り・坪数・設備は、ご家族に合わせて設計いたします。お値段は、条件により変動いたします。
+            ※ こちらは、広さ・間取り・価格帯の目安でございます。間取り・坪数・設備は、ご家族に合わせて設計いたします。お値段は、条件により変わります。
           </p>
         </div>
 
         <div className="mt-14 flex flex-col gap-8 border-t border-border pt-10 md:mt-16 md:flex-row md:items-end md:justify-between md:pt-12">
           <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
-            ※ 表示価格は、建物本体（税込）に付帯工事まで含んだ目安でございます。土地・登記等は、別途となります。
+            ※ 表示価格は、建物本体（税込）に付帯工事まで含む目安でございます。土地・登記等は別途となります。
             <br />
-            ※ 仕様の違いや、あなた専用へのお仕立て直しは、ご来場時に一覧でご説明いたします。
+            ※ 仕様の違いや、あなた専用へのお仕立て直しにつきましては、ご来場のおりに一覧でご説明いたします。
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <CtaButton
               href="#money-talk"
               variant="secondary"
               size="md"
-              label="お金のご相談へ"
-              sublabel="ご不安な方、こちらから"
+              label="お金のご相談、承ります"
+              sublabel="ご不安な方は、どうぞこちらへ"
             />
             <CtaButton
               href="/reserve"
