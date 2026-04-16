@@ -53,5 +53,8 @@ public/images/**/_original/
 screenshots/comparison-*.png
 *.swp
 
+# UI自動スナップショット出力
+artifacts/
+
 # OS
 Thumbs.db
