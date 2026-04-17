@@ -140,6 +140,116 @@ p, blockquote, dd, li {
   will-change: transform;
 }
 
+/* =============================================================================
+   HeroVoiceMagazine（TORICHO 型・超巨大タイポ誌面）
+   最終方針: 純白 × ほぼ真黒 × 深紅 #B91C1C × 極太ゴシック Noto Sans JP 900
+   ========================================================================== */
+
+:root {
+  /* 背景：純白（参考サイト TORICHO 準拠） */
+  --voice-bg: #FFFFFF;
+  --voice-bg-paper: #F7F7F5;
+  /* テキスト：ほぼ真黒 */
+  --voice-text: #0A0A0A;
+  --voice-text-sub: #5A5A5A;
+  --voice-text-inv: #FFFFFF;
+  /* アクセント：深紅（TORICHO のインパクトを借りつつ、純赤は避けた中間） */
+  --voice-accent: #B91C1C;
+  /* 罫線 */
+  --voice-rule: #0A0A0A;
+  --voice-rule-soft: rgba(10, 10, 10, 0.08);
+}
+
+/* 幕扉は今回廃止（ユーザー判断 2026-04-17） */
+
+/* 雑誌の引用符 */
+.voice-quote-serif {
+  position: relative;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--voice-text);
+}
+.voice-quote-serif::before {
+  content: "\201C";
+  position: absolute;
+  left: -0.55ch;
+  top: -0.1em;
+  color: var(--voice-accent);
+  font-size: 1.5em;
+  line-height: 0;
+  opacity: 0.55;
+}
+
+/* 柄帯区切り（青海波を極薄で） */
+.voice-divider {
+  width: 100%;
+  height: 36px;
+  margin: clamp(48px, 6vw, 96px) 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 20' preserveAspectRatio='xMinYMid slice'><path d='M0,12 Q5,2 10,12 T20,12 T30,12 T40,12' fill='none' stroke='%23DDD6C8' stroke-width='0.6' stroke-linecap='round'/><path d='M-10,17 Q-5,7 0,17 T10,17 T20,17 T30,17 T40,17 T50,17' fill='none' stroke='%23DDD6C8' stroke-width='0.6' stroke-linecap='round'/></svg>");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+/* Imperfect Design: アバターに微細な傾き */
+.voice-avatar-tilt {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.voice-avatar-tilt-a { transform: rotate(-1.2deg); }
+.voice-avatar-tilt-b { transform: rotate(0.8deg); }
+.voice-avatar-tilt-c { transform: rotate(-0.6deg); }
+.voice-avatar-tilt:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+/* モバイル判定時は写真の傾きをリセット（崩れ防止） */
+@media (max-width: 640px) {
+  .voice-avatar-tilt-a,
+  .voice-avatar-tilt-b,
+  .voice-avatar-tilt-c {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-avatar-tilt,
+  .voice-avatar-tilt-a,
+  .voice-avatar-tilt-b,
+  .voice-avatar-tilt-c {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Hero 絵巻（HeroEmaki）— 5行の横流れ + 縦書き大見せ */
+@keyframes emaki-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes emaki-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+.emaki-track {
+  display: inline-flex;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.emaki-row {
+  /* 親に hover で子トラックを停止 */
+}
+.emaki-row:hover .emaki-track {
+  animation-play-state: paused;
+}
+/* 縦書き大見せのクロスフェード */
+@keyframes emaki-breathe {
+  0%, 100% { opacity: 0.92; transform: translateY(0); }
+  50%      { opacity: 1;    transform: translateY(-2px); }
+}
+.emaki-breathe {
+  animation: emaki-breathe 6s ease-in-out infinite;
+}
+
 /* 装飾アクセント: 引用符・縦罫線用 */
 .accent-quote::before {
   content: "\201C";
@@ -166,7 +276,9 @@ p, blockquote, dd, li {
     display: none;
   }
   .gallery-marquee-left,
-  .gallery-marquee-right {
+  .gallery-marquee-right,
+  .emaki-track,
+  .emaki-breathe {
     animation: none !important;
     transform: none !important;
   }

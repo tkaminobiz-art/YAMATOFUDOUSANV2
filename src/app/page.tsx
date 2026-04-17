@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import HeroCatalog from "@/components/sections/HeroCatalog";
+import HeroVoiceMagazine from "@/components/sections/HeroVoiceMagazine";
 import ConceptSection from "@/components/sections/ConceptSection";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismSection from "@/components/sections/MechanismSection";
@@ -79,6 +80,7 @@ export default function Home() {
       <Header />
       <main>
         <HeroCatalog />
+        <HeroVoiceMagazine />
         <ConceptSection />
         <MechanismSection />
         <EditorialPhotoGallery />

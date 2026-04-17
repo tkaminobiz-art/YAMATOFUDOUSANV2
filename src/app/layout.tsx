@@ -3,10 +3,12 @@ import { Noto_Sans_JP, Noto_Serif_JP, Inter } from "next/font/google";
 import "./globals.css";
 // Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
 import "leaflet/dist/leaflet.css";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  // 900 は HeroVoiceMagazine の TORICHO 型超巨大タイポのみで使用
+  weight: ["400", "500", "700", "900"],
   variable: "--font-noto",
   display: "swap",
 });
@@ -40,7 +42,7 @@ export default function RootLayout({
       className={`${notoSansJP.variable} ${notoSerifJP.variable} ${inter.variable}`}
     >
       <body className="relative min-h-svh">
-        {children}
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
         {/* 和紙・砂壁のような微細ノイズ（全面・操作は透過） */}
         <span
           aria-hidden
