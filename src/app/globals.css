@@ -146,18 +146,25 @@ p, blockquote, dd, li {
    ========================================================================== */
 
 :root {
-  /* 背景：純白（参考サイト TORICHO 準拠） */
+  /* 背景：純白 */
   --voice-bg: #FFFFFF;
   --voice-bg-paper: #F7F7F5;
-  /* テキスト：ほぼ真黒 */
+  /* テキスト：真黒 */
   --voice-text: #0A0A0A;
   --voice-text-sub: #5A5A5A;
   --voice-text-inv: #FFFFFF;
-  /* アクセント：深紅（TORICHO のインパクトを借りつつ、純赤は避けた中間） */
-  --voice-accent: #B91C1C;
   /* 罫線 */
   --voice-rule: #0A0A0A;
   --voice-rule-soft: rgba(10, 10, 10, 0.08);
+
+  /* Neo Japan ビビッド 5 色（メインは Electric Red） */
+  --vivid-red: #FF2D2D;       /* メインアクセント */
+  --vivid-blue: #002FA7;      /* Klein Blue */
+  --vivid-pink: #FF0080;      /* Shocking Pink */
+  --vivid-yellow: #FFD600;    /* Marigold Yellow */
+  --vivid-green: #00A870;     /* Viridian */
+  /* 旧 voice-accent を Electric Red に置換（下層互換） */
+  --voice-accent: #FF2D2D;
 }
 
 /* 幕扉は今回廃止（ユーザー判断 2026-04-17） */
