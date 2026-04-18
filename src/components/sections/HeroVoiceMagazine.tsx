@@ -145,13 +145,12 @@ const TEXT_BLOCKS_PC: TextBlock[] = [
   { key: "p-h-d", text: "まで。", size: "md", color: "black", pos: { top: "9%", right: "6%" }, delay: 150, zIndex: 3 },
 
   // ===== Zone A-LEFT: 01 ANXIETY（真の主役） =====
-  { key: "p-01-mega", text: "諦", size: "mega", color: "red", opacity: 0.08, pos: { top: "18%", left: "-2%" }, delay: 200, zIndex: 0 },
-  { key: "p-01-a", text: "2年近く", size: "lg", color: "black", rotate: -3, pos: { top: "18%", left: "12%" }, delay: 250, zIndex: 2 },
-  { key: "p-01-b", text: "土地が", size: "xl", color: "black", pos: { top: "23%", left: "16%" }, delay: 300, zIndex: 2 },
-  { key: "p-01-c", text: "見つからなかった。", size: "xxl", color: "red", pos: { top: "32%", left: "10%" }, delay: 350, zIndex: 2, voiceId: "199927" },
-  { key: "p-01-d", text: "やっと", size: "lg", color: "yellow", pos: { top: "48%", left: "14%" }, delay: 400, zIndex: 2, rotate: -2 },
-  { key: "p-01-e", text: "納得できたのが、", size: "md", color: "black", pos: { top: "50%", left: "24%" }, delay: 450, zIndex: 2 },
-  { key: "p-01-f", text: "やまとの分譲地でした。", size: "xl", color: "blue", pos: { top: "54%", left: "12%" }, delay: 500, zIndex: 2, voiceId: "199927" },
+  { key: "p-01-a", text: "2年近く", size: "lg", color: "black", rotate: -3, pos: { top: "16%", left: "6%" }, delay: 250, zIndex: 2 },
+  { key: "p-01-b", text: "土地が", size: "xl", color: "black", pos: { top: "21%", left: "10%" }, delay: 300, zIndex: 2 },
+  { key: "p-01-c", text: "見つからなかった。", size: "xxl", color: "red", pos: { top: "29%", left: "4%" }, delay: 350, zIndex: 2, voiceId: "199927" },
+  { key: "p-01-d", text: "やっと", size: "md", color: "yellow", pos: { top: "44%", left: "8%" }, delay: 400, zIndex: 2, rotate: -2 },
+  { key: "p-01-e", text: "納得できたのが、", size: "md", color: "black", pos: { top: "44%", left: "17%" }, delay: 450, zIndex: 2 },
+  { key: "p-01-f", text: "やまとの分譲地でした。", size: "lg", color: "blue", pos: { top: "48%", left: "6%" }, delay: 500, zIndex: 2, voiceId: "199927" },
 
   // ===== Zone A-RIGHT: 02 STANDARD =====
   { key: "p-02-a", text: "他社のオプションが、", size: "md", color: "black", pos: { top: "18%", right: "4%" }, delay: 550, zIndex: 2 },
@@ -161,27 +160,26 @@ const TEXT_BLOCKS_PC: TextBlock[] = [
   { key: "p-02-e", text: "ゼロ。", size: "lg", color: "green", pos: { top: "41%", right: "4%" }, delay: 750, voiceId: "208787", rotate: 2, zIndex: 2 },
 
   // ===== Zone X: 中央装飾 =====
-  { key: "p-excl", text: "！", size: "xxl", color: "pink", pos: { top: "49%", left: "48%" }, delay: 800, zIndex: 1, rotate: 6 },
-  { key: "p-05-vert", text: "非公開", size: "lg", color: "yellow", vertical: true, pos: { top: "54%", right: "30%" }, delay: 850, zIndex: 1 },
+  { key: "p-excl", text: "！", size: "xxl", color: "pink", pos: { top: "42%", left: "46%" }, delay: 800, zIndex: 1, rotate: 6 },
+  { key: "p-05-vert", text: "非公開", size: "md", color: "yellow", vertical: true, pos: { top: "48%", right: "32%" }, delay: 850, zIndex: 1 },
 
   // ===== Zone B-LEFT: 03 COMPARISON =====
-  { key: "p-03-a", text: "他社の標準は", size: "md", color: "black", pos: { top: "66%", left: "12%" }, delay: 900, zIndex: 2 },
-  { key: "p-03-b", text: "グレードが", size: "lg", color: "black", pos: { top: "69%", left: "14%" }, delay: 950, rotate: -1, zIndex: 2 },
-  { key: "p-03-c", text: "低い。", size: "xl", color: "green", pos: { top: "73%", left: "24%" }, delay: 1000, voiceId: "279070", zIndex: 2 },
+  { key: "p-03-a", text: "他社の標準は", size: "md", color: "black", pos: { top: "55%", left: "6%" }, delay: 900, zIndex: 2 },
+  { key: "p-03-b", text: "グレードが", size: "lg", color: "black", pos: { top: "57%", left: "8%" }, delay: 950, rotate: -1, zIndex: 2 },
+  { key: "p-03-c", text: "低い。", size: "xl", color: "green", pos: { top: "61%", left: "18%" }, delay: 1000, voiceId: "279070", zIndex: 2 },
 
   // ===== Zone B-CENTER: 04 RESCUE =====
-  { key: "p-04-a", text: "諦めかけた時に、", size: "md", color: "black", pos: { top: "66%", left: "40%" }, delay: 1050, zIndex: 2 },
-  { key: "p-04-b", text: "出会えた。", size: "xl", color: "pink", pos: { top: "70%", left: "42%" }, delay: 1100, voiceId: "216803", rotate: 3, zIndex: 2 },
+  { key: "p-04-a", text: "諦めかけた時に、", size: "md", color: "black", pos: { top: "55%", left: "38%" }, delay: 1050, zIndex: 2 },
+  { key: "p-04-b", text: "出会えた。", size: "xl", color: "pink", pos: { top: "59%", left: "40%" }, delay: 1100, voiceId: "216803", rotate: 3, zIndex: 2 },
 
   // ===== Zone B-RIGHT: 05 DISCOVERY =====
-  { key: "p-05-a", text: "ドンピシャを、", size: "md", color: "black", pos: { top: "66%", right: "4%" }, delay: 1150, zIndex: 2 },
-  { key: "p-05-b", text: "紹介してくれた。", size: "lg", color: "black", pos: { top: "69%", right: "4%" }, delay: 1200, voiceId: "240061", zIndex: 2 },
+  { key: "p-05-a", text: "ドンピシャを、", size: "md", color: "black", pos: { top: "55%", right: "4%" }, delay: 1150, zIndex: 2 },
+  { key: "p-05-b", text: "紹介してくれた。", size: "lg", color: "black", pos: { top: "58%", right: "4%" }, delay: 1200, voiceId: "240061", zIndex: 2 },
 
-  // ===== Zone C: 06/07/08 下段（1行ずつ、色でアクセント） =====
-  { key: "p-06", text: "やまとの土地は、どこも住みやすい。", size: "md", color: "green", pos: { top: "88%", left: "12%" }, delay: 1250, voiceId: "276882", zIndex: 2 },
-  { key: "p-arrow", text: "→", size: "xl", color: "red", pos: { top: "87%", left: "38%" }, delay: 1300, rotate: -8, zIndex: 1 },
-  { key: "p-07", text: "「ここに建てたい」土地に、旗が。", size: "md", color: "blue", pos: { top: "88%", left: "44%" }, delay: 1350, voiceId: "202180", zIndex: 2 },
-  { key: "p-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "md", color: "red", pos: { top: "88%", right: "4%" }, delay: 1400, voiceId: "256807", zIndex: 2 },
+  // ===== Zone C: 06/07/08 下段（GENSEKI 風・階段状に大きく） =====
+  { key: "p-06", text: "やまとの土地は、どこも住みやすい。", size: "lg", color: "green", pos: { top: "72%", left: "4%" }, delay: 1250, voiceId: "276882", zIndex: 2, rotate: -1 },
+  { key: "p-07", text: "「ここに建てたい」土地に、旗が。", size: "lg", color: "blue", pos: { top: "79%", left: "20%" }, delay: 1350, voiceId: "202180", zIndex: 2 },
+  { key: "p-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "lg", color: "red", pos: { top: "86%", left: "6%" }, delay: 1400, voiceId: "256807", zIndex: 2, rotate: -1 },
 ];
 
 /* =============================================================================
@@ -203,11 +201,10 @@ const TEXT_BLOCKS_MB: TextBlock[] = [
   { key: "m-h-e", text: "まで。", size: "lg", color: "black", pos: { top: "11.5%", right: "4%" }, delay: 200, zIndex: 3 },
 
   // ===== Zone A: 01 ANXIETY =====
-  { key: "m-01-mega", text: "諦", size: "mega", color: "red", opacity: 0.1, pos: { top: "20%", left: "-4%" }, delay: 250, zIndex: 0 },
-  { key: "m-01-a", text: "2年近く", size: "md", color: "black", rotate: -2, pos: { top: "19%", right: "4%" }, delay: 300, zIndex: 2 },
-  { key: "m-01-b", text: "土地が", size: "lg", color: "black", pos: { top: "23%", right: "4%" }, delay: 350, zIndex: 2 },
-  { key: "m-01-c", text: "見つからなかった。", size: "lg", color: "red", pos: { top: "28%", right: "4%" }, delay: 400, voiceId: "199927", zIndex: 2 },
-  { key: "m-01-d", text: "やまとの分譲地で解決。", size: "sm", color: "blue", pos: { top: "34%", right: "4%" }, delay: 450, voiceId: "199927", zIndex: 2 },
+  { key: "m-01-a", text: "2年近く", size: "md", color: "black", rotate: -2, pos: { top: "17%", left: "4%" }, delay: 300, zIndex: 2 },
+  { key: "m-01-b", text: "土地が", size: "lg", color: "black", pos: { top: "21%", left: "4%" }, delay: 350, zIndex: 2 },
+  { key: "m-01-c", text: "見つからなかった。", size: "xl", color: "red", pos: { top: "26%", left: "4%" }, delay: 400, voiceId: "199927", zIndex: 2 },
+  { key: "m-01-d", text: "やまとの分譲地で解決。", size: "sm", color: "blue", pos: { top: "32%", left: "4%" }, delay: 450, voiceId: "199927", zIndex: 2 },
 
   // ===== Zone B: 02 STANDARD + ! =====
   { key: "m-02-a", text: "他社のオプションが、", size: "md", color: "black", pos: { top: "42%", left: "4%" }, delay: 500, zIndex: 2 },
@@ -223,15 +220,14 @@ const TEXT_BLOCKS_MB: TextBlock[] = [
   { key: "m-04-b", text: "出会えた。", size: "lg", color: "pink", pos: { top: "69%", right: "4%" }, delay: 900, voiceId: "216803", rotate: 3, zIndex: 2 },
 
   // ===== Zone D: 05 DISCOVERY + 非公開 =====
-  { key: "m-05-vert", text: "非公開", size: "md", color: "yellow", vertical: true, pos: { top: "62%", right: "38%" }, delay: 950, zIndex: 1 },
-  { key: "m-05-a", text: "ドンピシャの土地を、", size: "sm", color: "black", pos: { top: "76%", left: "4%" }, delay: 1000, zIndex: 2 },
-  { key: "m-05-b", text: "紹介してくれた。", size: "md", color: "black", pos: { top: "78.5%", left: "4%" }, delay: 1050, voiceId: "240061", zIndex: 2 },
+  { key: "m-05-vert", text: "非公開", size: "md", color: "yellow", vertical: true, pos: { top: "58%", right: "38%" }, delay: 950, zIndex: 1 },
+  { key: "m-05-a", text: "ドンピシャの土地を、", size: "sm", color: "black", pos: { top: "72%", left: "4%" }, delay: 1000, zIndex: 2 },
+  { key: "m-05-b", text: "紹介してくれた。", size: "md", color: "black", pos: { top: "74.5%", left: "4%" }, delay: 1050, voiceId: "240061", zIndex: 2 },
 
-  // ===== Zone E: 06/07/08 下段（FloatingCta と衝突しないよう top を圧縮） =====
-  { key: "m-06", text: "やまとの土地は、どこも住みやすい。", size: "sm", color: "green", pos: { top: "83%", left: "4%" }, delay: 1100, voiceId: "276882", zIndex: 2 },
-  { key: "m-07", text: "「ここに建てたい」土地に、旗が。", size: "sm", color: "blue", pos: { top: "86%", left: "4%" }, delay: 1150, voiceId: "202180", zIndex: 2 },
-  { key: "m-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "sm", color: "red", pos: { top: "89%", left: "4%" }, delay: 1200, voiceId: "256807", zIndex: 2 },
-  { key: "m-arrow", text: "→", size: "xl", color: "red", pos: { top: "83%", right: "4%" }, delay: 1250, rotate: -8, zIndex: 1 },
+  // ===== Zone E: 06/07/08 下段（3行を大きく・階段状。FloatingCta 上に収まる） =====
+  { key: "m-06", text: "やまとの土地は、どこも住みやすい。", size: "md", color: "green", pos: { top: "79%", left: "4%" }, delay: 1100, voiceId: "276882", zIndex: 2, rotate: -1 },
+  { key: "m-07", text: "「ここに建てたい」土地に、旗が。", size: "md", color: "blue", pos: { top: "83%", left: "4%" }, delay: 1150, voiceId: "202180", zIndex: 2 },
+  { key: "m-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "md", color: "red", pos: { top: "87%", left: "4%" }, delay: 1200, voiceId: "256807", zIndex: 2, rotate: -1 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
