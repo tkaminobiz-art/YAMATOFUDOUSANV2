@@ -1,19 +1,18 @@
 "use client";
 
 /**
- * HeroVoiceMagazine — カオス・タイポグラフィ（v9）
+ * HeroVoiceMagazine — 感情のタイポグラフィ（v10・広告ポスター型）
  * ----------------------------------------------------------------------
- * 2026-04-17 最終方針:
- *   - 文字だけで勝負（画像・ウォーターマーク全廃）
- *   - サイズ階層 7段（mega / xxl / xl / lg / md / sm / xs）
- *   - 文節分解：1文を複数パーツに切って色・サイズを変える
- *   - 意図的な重なり・回転で密度を上げる
- *   - 縦書きの巨大漢字を背景風レイヤーに
- *   - 記号（、 。 ！ →）を単独で特大配置
- *   - PC / Mobile 両方 100svh 1画面カオス（モバイル専用座標）
+ * 2026-04-18 方針刷新:
+ *   - 白背景 × 大きな余白 × 3 色（黒・赤・青）のみ
+ *   - レビュー一覧ではなく「感情のタイポグラフィ」として見せる
+ *   - 中央に最大コピー「諦めかけた時に、出会えた。」
+ *   - 周辺に短い声の断片を 4 つ散らす（強弱でリズム）
+ *   - 下部に属性行（誰の声か、小さく）+ 右下 CTA
+ *   - 回転・装飾記号・緑/黄/ピンクは廃止（ノイズ除去）
  *
- * Neo Japan 5色（メイン Electric Red）
- *   red #FF2D2D / blue #002FA7 / pink #FF0080 / yellow #FFD600 / green #00A870
+ * 使用色:
+ *   black #0A0A0A（本体）/ red #FF2D2D（感情ピーク 1 箇所）/ blue #002FA7（信頼 1 箇所）
  */
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -78,26 +77,26 @@ const COLOR: Record<Color, string> = {
   green: "#00A870",
 };
 
-/* PC サイズ定義（6段 + mega） */
+/* PC サイズ定義（広告ポスター型） */
 const SIZE_PC: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  mega: { fontSize: "clamp(120px, 14vw, 220px)", weight: 900, lh: 0.88, ls: "-0.06em" },
+  mega: { fontSize: "clamp(96px, 11vw, 168px)", weight: 900, lh: 0.88, ls: "-0.06em" },
   xxl:  { fontSize: "clamp(72px, 8.4vw, 132px)", weight: 900, lh: 0.94, ls: "-0.05em" },
-  xl:   { fontSize: "clamp(44px, 5vw, 80px)",    weight: 900, lh: 1.0,  ls: "-0.04em" },
-  lg:   { fontSize: "clamp(28px, 3vw, 48px)",    weight: 900, lh: 1.08, ls: "-0.03em" },
-  md:   { fontSize: "clamp(16px, 1.6vw, 22px)",  weight: 700, lh: 1.5,  ls: "0em" },
-  sm:   { fontSize: "clamp(12px, 1.1vw, 15px)",  weight: 500, lh: 1.6,  ls: "0.01em" },
-  xs:   { fontSize: "10.5px",                     weight: 700, lh: 1.4,  ls: "0.22em" },
+  xl:   { fontSize: "clamp(36px, 4vw, 64px)",    weight: 900, lh: 1.2,  ls: "-0.03em" },
+  lg:   { fontSize: "clamp(24px, 2.4vw, 36px)",  weight: 900, lh: 1.2,  ls: "-0.02em" },
+  md:   { fontSize: "clamp(16px, 1.5vw, 20px)",  weight: 500, lh: 1.6,  ls: "0em" },
+  sm:   { fontSize: "clamp(13px, 1.1vw, 15px)",  weight: 500, lh: 1.6,  ls: "0em" },
+  xs:   { fontSize: "12px",                       weight: 500, lh: 1.7,  ls: "0.04em" },
 };
 
 /* Mobile サイズ定義（375 × 700 最適化） */
 const SIZE_MB: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  mega: { fontSize: "72px", weight: 900, lh: 0.9,  ls: "-0.05em" },
+  mega: { fontSize: "56px", weight: 900, lh: 0.9,  ls: "-0.05em" },
   xxl:  { fontSize: "36px", weight: 900, lh: 0.98, ls: "-0.04em" },
-  xl:   { fontSize: "24px", weight: 900, lh: 1.05, ls: "-0.03em" },
-  lg:   { fontSize: "18px", weight: 900, lh: 1.1,  ls: "-0.02em" },
-  md:   { fontSize: "12px", weight: 700, lh: 1.4,  ls: "0em" },
-  sm:   { fontSize: "10.5px", weight: 500, lh: 1.5, ls: "0em" },
-  xs:   { fontSize: "8.5px", weight: 700, lh: 1.3, ls: "0.2em" },
+  xl:   { fontSize: "22px", weight: 900, lh: 1.25, ls: "-0.02em" },
+  lg:   { fontSize: "17px", weight: 900, lh: 1.3,  ls: "-0.01em" },
+  md:   { fontSize: "13px", weight: 500, lh: 1.5,  ls: "0em" },
+  sm:   { fontSize: "11px", weight: 500, lh: 1.5,  ls: "0em" },
+  xs:   { fontSize: "10px", weight: 500, lh: 1.6,  ls: "0.02em" },
 };
 
 type BlockPos = {
@@ -123,111 +122,63 @@ type TextBlock = {
 };
 
 /* =============================================================================
-   PC レイアウト（1440 × 790 相当、12列×10行の仮想グリッドで再計算）
-
-   ┌ Row1-2  (0-12%)  Zone H : 大見出し
-   ├ Row3-5  (14-44%) Zone A : 01 ANXIETY 左・02 STANDARD 右
-   ├ Row5-7  (44-60%) Zone X : 中央装飾（！・→）+ 非公開縦書き右
-   ├ Row7-9  (60-80%) Zone B : 03 COMPARISON 左・04 RESCUE 中・05 DISCOVERY 右
-   └ Row10   (85-96%) Zone C : 06・07・08 下段 1 行ずつ
-
-   zIndex 体系:
-     0: 背景の巨大漢字「諦」
-     1: 装飾記号「！」「→」「非公開」
-     2: 主要テキスト
-     3: 大見出し
+   PC レイアウト（1440 × 790）— 感情のタイポグラフィ・広告ポスター型
+   ----------------------------------------------------------------------------
+   方針:
+     - 白背景 × 大きな余白 × 黒+赤+青の 3 色のみ
+     - 「諦めかけた時に、」→「出会えた。」を中央の最大コピーに
+     - 周辺に短いフレーズ 4 つを散らす（強弱でリズム）
+     - 最下部に属性行（誰の声か）と CTA
+     - 回転・装飾記号（！・→・非公開）・緑・黄・ピンクは廃止
+   ----------------------------------------------------------------------------
+   Zone 配置:
+     [TL] VOICE ラベル          [TR] なし
+     [ML 上] 諦めかけた時に、    [MR] 標準で、十分だった。
+     [M 中央] 出会えた。 ← mega / red（感情ピーク）
+     [ML 下] ここに住みたい。    [MR 下] 建てた後も、安心。 (blue)
+     [BL] 属性行 3 つ            [BR] CTA
    ========================================================================== */
 const TEXT_BLOCKS_PC: TextBlock[] = [
-  // ===== Zone H: 大見出し（コンパクト、下段に主役を譲る） =====
-  { key: "p-h-a", text: "「諦めかけていた」", size: "lg", color: "black", pos: { top: "1%", left: "4%" }, delay: 0, zIndex: 3 },
-  { key: "p-h-b", text: "から、", size: "md", color: "black", pos: { top: "2.5%", left: "30%" }, delay: 50, zIndex: 3 },
-  { key: "p-h-c", text: "「やまとでよかった」", size: "xl", color: "red", pos: { top: "6%", left: "6%" }, delay: 100, zIndex: 3, rotate: -1 },
-  { key: "p-h-d", text: "まで。", size: "md", color: "black", pos: { top: "9%", right: "6%" }, delay: 150, zIndex: 3 },
+  // ===== ラベル =====
+  { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== Zone A-LEFT: 01 ANXIETY（真の主役） =====
-  { key: "p-01-a", text: "2年近く", size: "lg", color: "black", rotate: -3, pos: { top: "16%", left: "6%" }, delay: 250, zIndex: 2 },
-  { key: "p-01-b", text: "土地が", size: "xl", color: "black", pos: { top: "21%", left: "10%" }, delay: 300, zIndex: 2 },
-  { key: "p-01-c", text: "見つからなかった。", size: "xxl", color: "red", pos: { top: "29%", left: "4%" }, delay: 350, zIndex: 2, voiceId: "199927" },
-  { key: "p-01-d", text: "やっと", size: "md", color: "yellow", pos: { top: "44%", left: "8%" }, delay: 400, zIndex: 2, rotate: -2 },
-  { key: "p-01-e", text: "納得できたのが、", size: "md", color: "black", pos: { top: "44%", left: "17%" }, delay: 450, zIndex: 2 },
-  { key: "p-01-f", text: "やまとの分譲地でした。", size: "lg", color: "blue", pos: { top: "48%", left: "6%" }, delay: 500, zIndex: 2, voiceId: "199927" },
+  // ===== 中央の最大コピー =====
+  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "22%", left: "16%" }, delay: 150, zIndex: 2 },
+  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "30%", left: "14%" }, delay: 300, voiceId: "216803", zIndex: 2 },
 
-  // ===== Zone A-RIGHT: 02 STANDARD =====
-  { key: "p-02-a", text: "他社のオプションが、", size: "md", color: "black", pos: { top: "18%", right: "4%" }, delay: 550, zIndex: 2 },
-  { key: "p-02-b", text: "やまとでは", size: "lg", color: "black", pos: { top: "21%", right: "4%" }, delay: 600, zIndex: 2 },
-  { key: "p-02-c", text: "標準。", size: "xl", color: "blue", pos: { top: "26%", right: "4%" }, delay: 650, voiceId: "208787", rotate: -2, zIndex: 2 },
-  { key: "p-02-d", text: "追加費用、", size: "md", color: "black", pos: { top: "38%", right: "4%" }, delay: 700, zIndex: 2 },
-  { key: "p-02-e", text: "ゼロ。", size: "lg", color: "green", pos: { top: "41%", right: "4%" }, delay: 750, voiceId: "208787", rotate: 2, zIndex: 2 },
+  // ===== 周辺の断片（上部右・中部右・左下） =====
+  { key: "p-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "20%", right: "6%" }, delay: 500, voiceId: "208787", zIndex: 2 },
+  { key: "p-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "52%", right: "8%" }, delay: 650, voiceId: "256807", zIndex: 2 },
+  { key: "p-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "66%", left: "14%" }, delay: 800, voiceId: "202180", zIndex: 2 },
+  { key: "p-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "72%", right: "12%" }, delay: 950, voiceId: "256807", zIndex: 2 },
 
-  // ===== Zone X: 中央装飾 =====
-  { key: "p-excl", text: "！", size: "xxl", color: "pink", pos: { top: "42%", left: "46%" }, delay: 800, zIndex: 1, rotate: 6 },
-  { key: "p-05-vert", text: "非公開", size: "md", color: "yellow", vertical: true, pos: { top: "48%", right: "32%" }, delay: 850, zIndex: 1 },
-
-  // ===== Zone B-LEFT: 03 COMPARISON =====
-  { key: "p-03-a", text: "他社の標準は", size: "md", color: "black", pos: { top: "55%", left: "6%" }, delay: 900, zIndex: 2 },
-  { key: "p-03-b", text: "グレードが", size: "lg", color: "black", pos: { top: "57%", left: "8%" }, delay: 950, rotate: -1, zIndex: 2 },
-  { key: "p-03-c", text: "低い。", size: "xl", color: "green", pos: { top: "61%", left: "18%" }, delay: 1000, voiceId: "279070", zIndex: 2 },
-
-  // ===== Zone B-CENTER: 04 RESCUE =====
-  { key: "p-04-a", text: "諦めかけた時に、", size: "md", color: "black", pos: { top: "55%", left: "38%" }, delay: 1050, zIndex: 2 },
-  { key: "p-04-b", text: "出会えた。", size: "xl", color: "pink", pos: { top: "59%", left: "40%" }, delay: 1100, voiceId: "216803", rotate: 3, zIndex: 2 },
-
-  // ===== Zone B-RIGHT: 05 DISCOVERY =====
-  { key: "p-05-a", text: "ドンピシャを、", size: "md", color: "black", pos: { top: "55%", right: "4%" }, delay: 1150, zIndex: 2 },
-  { key: "p-05-b", text: "紹介してくれた。", size: "lg", color: "black", pos: { top: "58%", right: "4%" }, delay: 1200, voiceId: "240061", zIndex: 2 },
-
-  // ===== Zone C: 06/07/08 下段（GENSEKI 風・階段状に大きく） =====
-  { key: "p-06", text: "やまとの土地は、どこも住みやすい。", size: "lg", color: "green", pos: { top: "72%", left: "4%" }, delay: 1250, voiceId: "276882", zIndex: 2, rotate: -1 },
-  { key: "p-07", text: "「ここに建てたい」土地に、旗が。", size: "lg", color: "blue", pos: { top: "79%", left: "20%" }, delay: 1350, voiceId: "202180", zIndex: 2 },
-  { key: "p-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "lg", color: "red", pos: { top: "86%", left: "6%" }, delay: 1400, voiceId: "256807", zIndex: 2, rotate: -1 },
+  // ===== 下部の属性行（誰の声か・小さく、トラスト補強） =====
+  { key: "p-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "85%", left: "4%" }, delay: 1100, zIndex: 2 },
+  { key: "p-a2", text: "40代ご夫婦／他社比較 半年／斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "89%", left: "4%" }, delay: 1150, zIndex: 2 },
+  { key: "p-a3", text: "引き渡し後 5年／京田辺市 K様邸", size: "xs", color: "black", pos: { top: "93%", left: "4%" }, delay: 1200, zIndex: 2 },
 ];
 
 /* =============================================================================
-   Mobile レイアウト（375 × 700 相当、10 行に正確分割）
-
-   Row 1-2  (0-13%)   Zone H : 大見出し
-   Row 3-5  (16-40%)  Zone A : 01 ANXIETY（右寄り）+ 諦 mega 左背景
-   Row 5-7  (40-58%)  Zone B : 02 STANDARD（左）+ ！（右中央アクセント）
-   Row 7-8  (58-70%)  Zone C : 03 COMPARISON（左）+ 04 RESCUE（右）
-   Row 8-9  (68-80%)  Zone D : 05 DISCOVERY + 非公開 縦書き
-   Row 10   (80-95%)  Zone E : 06/07/08 下段 + → アクセント
+   Mobile レイアウト（375 × 700）— PC と同じ広告ポスター構造を縦方向に圧縮
    ========================================================================== */
 const TEXT_BLOCKS_MB: TextBlock[] = [
-  // ===== Zone H: 大見出し =====
-  { key: "m-h-a", text: "「諦めかけ」", size: "xxl", color: "black", pos: { top: "1%", left: "4%" }, delay: 0, zIndex: 3 },
-  { key: "m-h-b", text: "から、", size: "lg", color: "black", pos: { top: "2%", right: "4%" }, delay: 50, zIndex: 3 },
-  { key: "m-h-c", text: "「やまとで", size: "xl", color: "red", pos: { top: "7.5%", left: "14%" }, delay: 100, zIndex: 3 },
-  { key: "m-h-d", text: "よかった」", size: "xl", color: "red", pos: { top: "11.5%", left: "22%" }, delay: 150, zIndex: 3, rotate: -2 },
-  { key: "m-h-e", text: "まで。", size: "lg", color: "black", pos: { top: "11.5%", right: "4%" }, delay: 200, zIndex: 3 },
+  // ===== ラベル =====
+  { key: "m-label", text: "VOICE / お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== Zone A: 01 ANXIETY =====
-  { key: "m-01-a", text: "2年近く", size: "md", color: "black", rotate: -2, pos: { top: "17%", left: "4%" }, delay: 300, zIndex: 2 },
-  { key: "m-01-b", text: "土地が", size: "lg", color: "black", pos: { top: "21%", left: "4%" }, delay: 350, zIndex: 2 },
-  { key: "m-01-c", text: "見つからなかった。", size: "xl", color: "red", pos: { top: "26%", left: "4%" }, delay: 400, voiceId: "199927", zIndex: 2 },
-  { key: "m-01-d", text: "やまとの分譲地で解決。", size: "sm", color: "blue", pos: { top: "32%", left: "4%" }, delay: 450, voiceId: "199927", zIndex: 2 },
+  // ===== 中央の最大コピー =====
+  { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "15%", left: "4%" }, delay: 150, zIndex: 2 },
+  { key: "m-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "22%", left: "4%" }, delay: 300, voiceId: "216803", zIndex: 2 },
 
-  // ===== Zone B: 02 STANDARD + ! =====
-  { key: "m-02-a", text: "他社のオプションが、", size: "md", color: "black", pos: { top: "42%", left: "4%" }, delay: 500, zIndex: 2 },
-  { key: "m-02-b", text: "やまとは標準。", size: "lg", color: "blue", pos: { top: "45%", left: "4%" }, delay: 550, voiceId: "208787", rotate: -1, zIndex: 2 },
-  { key: "m-02-c", text: "追加費用", size: "md", color: "black", pos: { top: "52%", left: "4%" }, delay: 600, zIndex: 2 },
-  { key: "m-02-d", text: "ゼロ。", size: "lg", color: "green", pos: { top: "51%", left: "38%" }, delay: 650, rotate: -3, voiceId: "208787", zIndex: 2 },
-  { key: "m-excl", text: "！", size: "xxl", color: "pink", pos: { top: "44%", right: "4%" }, delay: 700, zIndex: 1, rotate: 8 },
+  // ===== 周辺の断片（4 つ、縦にリズム） =====
+  { key: "m-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "42%", left: "4%" }, delay: 500, voiceId: "208787", zIndex: 2 },
+  { key: "m-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "50%", left: "4%" }, delay: 650, voiceId: "256807", zIndex: 2 },
+  { key: "m-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "60%", left: "4%" }, delay: 800, voiceId: "202180", zIndex: 2 },
+  { key: "m-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "67%", left: "4%" }, delay: 950, voiceId: "256807", zIndex: 2 },
 
-  // ===== Zone C: 03 + 04 =====
-  { key: "m-03-a", text: "他社の標準は", size: "sm", color: "black", pos: { top: "60%", left: "4%" }, delay: 750, zIndex: 2 },
-  { key: "m-03-b", text: "グレードが低い。", size: "lg", color: "green", pos: { top: "62%", left: "4%" }, delay: 800, voiceId: "279070", rotate: -1, zIndex: 2 },
-  { key: "m-04-a", text: "諦めかけた時に、", size: "sm", color: "black", pos: { top: "67%", right: "4%" }, delay: 850, zIndex: 2 },
-  { key: "m-04-b", text: "出会えた。", size: "lg", color: "pink", pos: { top: "69%", right: "4%" }, delay: 900, voiceId: "216803", rotate: 3, zIndex: 2 },
-
-  // ===== Zone D: 05 DISCOVERY + 非公開 =====
-  { key: "m-05-vert", text: "非公開", size: "md", color: "yellow", vertical: true, pos: { top: "58%", right: "38%" }, delay: 950, zIndex: 1 },
-  { key: "m-05-a", text: "ドンピシャの土地を、", size: "sm", color: "black", pos: { top: "72%", left: "4%" }, delay: 1000, zIndex: 2 },
-  { key: "m-05-b", text: "紹介してくれた。", size: "md", color: "black", pos: { top: "74.5%", left: "4%" }, delay: 1050, voiceId: "240061", zIndex: 2 },
-
-  // ===== Zone E: 06/07/08 下段（3行を大きく・階段状。FloatingCta 上に収まる） =====
-  { key: "m-06", text: "やまとの土地は、どこも住みやすい。", size: "md", color: "green", pos: { top: "79%", left: "4%" }, delay: 1100, voiceId: "276882", zIndex: 2, rotate: -1 },
-  { key: "m-07", text: "「ここに建てたい」土地に、旗が。", size: "md", color: "blue", pos: { top: "83%", left: "4%" }, delay: 1150, voiceId: "202180", zIndex: 2 },
-  { key: "m-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "md", color: "red", pos: { top: "87%", left: "4%" }, delay: 1200, voiceId: "256807", zIndex: 2, rotate: -1 },
+  // ===== 下部属性行（FloatingCta 上に収まる top） =====
+  { key: "m-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "80%", left: "4%" }, delay: 1100, zIndex: 2 },
+  { key: "m-a2", text: "40代ご夫婦／他社比較／斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "84%", left: "4%" }, delay: 1150, zIndex: 2 },
+  { key: "m-a3", text: "引き渡し後 5年／京田辺市 K様邸", size: "xs", color: "black", pos: { top: "88%", left: "4%" }, delay: 1200, zIndex: 2 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
