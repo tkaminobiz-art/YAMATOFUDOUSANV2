@@ -143,47 +143,62 @@ type TextBlock = {
      [BL] 属性行 3 つ            [BR] CTA
    ========================================================================== */
 const TEXT_BLOCKS_PC: TextBlock[] = [
-  // ===== ラベル（対角に配置） =====
+  // ===== ヘッダーラベル =====
   { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "5%", left: "6%" }, delay: 0, zIndex: 2 },
-  { key: "p-label-r", text: "04 Testimonials", size: "xs", color: "black", uppercase: false, pos: { top: "5%", right: "6%" }, delay: 0, zIndex: 2 },
+  { key: "p-label-r", text: "Testimonials — Vol. 04", size: "xs", color: "black", uppercase: false, pos: { top: "5%", right: "6%" }, delay: 0, zIndex: 2 },
 
-  // ===== 中央の最重要コピー（真の水平中央・縦方向も中央寄り） =====
-  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "30%" }, delay: 150, zIndex: 2 },
-  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "40%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  // ===== 衛星 01: 上左（初見の感情） =====
+  { key: "p-s1-num", text: "No. 01", size: "xs", color: "black", pos: { top: "16%", left: "6%" }, delay: 450, zIndex: 2 },
+  { key: "p-s1", text: "「ここに住みたい、と思えた。」", size: "sm", color: "black", pos: { top: "19%", left: "6%" }, delay: 500, voiceId: "202180", zIndex: 2 },
+  { key: "p-s1-attr", text: "— 斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "22%", left: "6%" }, delay: 550, zIndex: 2 },
 
-  // ===== 中央下: 属性 1 行（誰の声か・主役の直下に） =====
-  { key: "p-attr", text: "奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", centerX: true, pos: { top: "66%" }, delay: 1100, zIndex: 2 },
+  // ===== 衛星 02: 上右（標準仕様への満足） =====
+  { key: "p-s2-num", text: "No. 02", size: "xs", color: "black", textAlignRight: true, pos: { top: "16%", right: "6%" }, delay: 600, zIndex: 2 },
+  { key: "p-s2", text: "「標準で、十分だった。」", size: "sm", color: "black", textAlignRight: true, pos: { top: "19%", right: "6%" }, delay: 650, voiceId: "208787", zIndex: 2 },
+  { key: "p-s2-attr", text: "— 奈良市 A様邸", size: "xs", color: "black", textAlignRight: true, pos: { top: "22%", right: "6%" }, delay: 700, zIndex: 2 },
 
-  // ===== 衛星フレーズ 3 件（主役の周囲に散らす・編集済み） =====
-  // 上左: 初見の感情
-  { key: "p-s1", text: "ここに住みたい、と思えた。", size: "sm", color: "black", pos: { top: "18%", left: "8%" }, delay: 500, voiceId: "202180", zIndex: 2 },
-  // 上右: 中立的な比較トラスト
-  { key: "p-s2", text: "標準で、十分だった。", size: "sm", color: "black", textAlignRight: true, pos: { top: "18%", right: "8%" }, delay: 650, voiceId: "208787", zIndex: 2 },
-  // 下右: アフター（唯一の青アクセント）
-  { key: "p-s3", text: "建てた後も、安心。", size: "lg", color: "blue", textAlignRight: true, pos: { top: "80%", right: "8%" }, delay: 800, voiceId: "256807", zIndex: 2 },
+  // ===== 中央: ピックアップ（主役） =====
+  { key: "p-pick", text: "— PICK UP —", size: "xs", color: "red", centerX: true, pos: { top: "31%" }, delay: 120, zIndex: 2 },
+  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "36%" }, delay: 150, zIndex: 2 },
+  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "46%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  { key: "p-rule", text: "─────────", size: "xs", color: "black", centerX: true, pos: { top: "72%" }, delay: 1080, zIndex: 2 },
+  { key: "p-hero-attr", text: "— 奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", centerX: true, pos: { top: "75%" }, delay: 1100, zIndex: 2 },
+
+  // ===== 衛星 03: 下右（アフター・唯一の青アクセント・CTA と衝突しない高さ） =====
+  { key: "p-s3-num", text: "No. 03", size: "xs", color: "black", textAlignRight: true, pos: { top: "75%", right: "6%" }, delay: 750, zIndex: 2 },
+  { key: "p-s3", text: "「建てた後も、安心。」", size: "lg", color: "blue", textAlignRight: true, pos: { top: "78%", right: "6%" }, delay: 800, voiceId: "256807", zIndex: 2 },
+  { key: "p-s3-attr", text: "— 京田辺市 K様邸", size: "xs", color: "black", textAlignRight: true, pos: { top: "86%", right: "6%" }, delay: 850, zIndex: 2 },
 ];
 
 /* =============================================================================
    Mobile レイアウト（375 × 700）— PC と同じ広告ポスター構造を縦方向に圧縮
    ========================================================================== */
 const TEXT_BLOCKS_MB: TextBlock[] = [
-  // ===== ラベル =====
+  // ===== ヘッダーラベル =====
   { key: "m-label", text: "VOICE / お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
-  { key: "m-label-r", text: "04", size: "xs", color: "black", pos: { top: "3%", right: "4%" }, delay: 0, zIndex: 2 },
+  { key: "m-label-r", text: "Vol. 04", size: "xs", color: "black", textAlignRight: true, pos: { top: "3%", right: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== 上の衛星フレーズ 1 =====
-  { key: "m-s1", text: "ここに住みたい、と思えた。", size: "sm", color: "black", pos: { top: "12%", left: "4%" }, delay: 500, voiceId: "202180", zIndex: 2 },
+  // ===== 衛星 01: 上左 =====
+  { key: "m-s1-num", text: "No. 01", size: "xs", color: "black", pos: { top: "10%", left: "4%" }, delay: 450, zIndex: 2 },
+  { key: "m-s1", text: "「ここに住みたい、と思えた。」", size: "sm", color: "black", pos: { top: "13%", left: "4%" }, delay: 500, voiceId: "202180", zIndex: 2 },
+  { key: "m-s1-attr", text: "— 斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "16%", left: "4%" }, delay: 550, zIndex: 2 },
 
-  // ===== 中央の主役コピー（水平中央） =====
+  // ===== 中央: ピックアップ =====
+  { key: "m-pick", text: "— PICK UP —", size: "xs", color: "red", centerX: true, pos: { top: "23%" }, delay: 120, zIndex: 2 },
   { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "28%" }, delay: 150, zIndex: 2 },
   { key: "m-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "37%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  { key: "m-rule", text: "──────", size: "xs", color: "black", centerX: true, pos: { top: "54%" }, delay: 1080, zIndex: 2 },
+  { key: "m-hero-attr", text: "— 奈良市 M様邸（30代ご夫婦）", size: "xs", color: "black", centerX: true, pos: { top: "57%" }, delay: 1100, zIndex: 2 },
 
-  // ===== 中央下: 属性 1 行 =====
-  { key: "m-attr", text: "奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", centerX: true, pos: { top: "56%" }, delay: 1100, zIndex: 2 },
+  // ===== 衛星 02: 下左 =====
+  { key: "m-s2-num", text: "No. 02", size: "xs", color: "black", pos: { top: "65%", left: "4%" }, delay: 600, zIndex: 2 },
+  { key: "m-s2", text: "「標準で、十分だった。」", size: "sm", color: "black", pos: { top: "68%", left: "4%" }, delay: 650, voiceId: "208787", zIndex: 2 },
+  { key: "m-s2-attr", text: "— 奈良市 A様邸", size: "xs", color: "black", pos: { top: "71%", left: "4%" }, delay: 700, zIndex: 2 },
 
-  // ===== 下の衛星フレーズ 2（対角配置） =====
-  { key: "m-s2", text: "標準で、十分だった。", size: "sm", color: "black", textAlignRight: true, pos: { top: "68%", right: "4%" }, delay: 650, voiceId: "208787", zIndex: 2 },
-  { key: "m-s3", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "75%", left: "4%" }, delay: 800, voiceId: "256807", zIndex: 2 },
+  // ===== 衛星 03: 下右（青アクセント） =====
+  { key: "m-s3-num", text: "No. 03", size: "xs", color: "black", textAlignRight: true, pos: { top: "77%", right: "4%" }, delay: 750, zIndex: 2 },
+  { key: "m-s3", text: "「建てた後も、安心。」", size: "lg", color: "blue", textAlignRight: true, pos: { top: "80%", right: "4%" }, delay: 800, voiceId: "256807", zIndex: 2 },
+  { key: "m-s3-attr", text: "— 京田辺市 K様邸", size: "xs", color: "black", textAlignRight: true, pos: { top: "88%", right: "4%" }, delay: 850, zIndex: 2 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
