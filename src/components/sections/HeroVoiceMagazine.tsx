@@ -1,28 +1,23 @@
 "use client";
 
 /**
- * HeroVoiceMagazine — タイポグラフィ・ジャングル版（v8）
+ * HeroVoiceMagazine — カオス・タイポグラフィ（v9）
  * ----------------------------------------------------------------------
- * 参考: マクドナルド "マックデリバリー 小腹、別腹、いろんな腹に" 広告式の
- *       "文字の洪水" デザイン。1画面にカオティックに文字が散らばる。
+ * 2026-04-17 最終方針:
+ *   - 文字だけで勝負（画像・ウォーターマーク全廃）
+ *   - サイズ階層 7段（mega / xxl / xl / lg / md / sm / xs）
+ *   - 文節分解：1文を複数パーツに切って色・サイズを変える
+ *   - 意図的な重なり・回転で密度を上げる
+ *   - 縦書きの巨大漢字を背景風レイヤーに
+ *   - 記号（、 。 ！ →）を単独で特大配置
+ *   - PC / Mobile 両方 100svh 1画面カオス（モバイル専用座標）
  *
- * 2026-04-17 ユーザー承認済:
- *   - ビビッド Neo Japan 5色（メイン Electric Red #FF2D2D）
- *   - サイズ階層 5段（極大/大/中/小/極小）
- *   - 縦書き 2〜3箇所混ぜる
- *   - 絶対位置でカオス配置
- *   - 家写真アバター 2〜3個を左に縦並び
- *   - 1画面（100svh）制約維持
- *   - 単語ハイライト方式：キーワードだけに色をつける
- *
- * データ: @/data/voiceHome.ts の MAGAZINE_FIGURES（8件）
+ * Neo Japan 5色（メイン Electric Red）
+ *   red #FF2D2D / blue #002FA7 / pink #FF0080 / yellow #FFD600 / green #00A870
  */
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import CtaButton from "@/components/ui/CtaButton";
-import { getVoice } from "@/data/voices";
 import { MAGAZINE_FIGURES } from "@/data/voiceHome";
 
 /* ---------- prefers-reduced-motion ---------- */
@@ -41,8 +36,8 @@ function getReducedMotionServerSnapshot() {
 }
 
 /* ---------- reveal hook ---------- */
-function useRevealContainer() {
-  const ref = useRef<HTMLDivElement>(null);
+function useRevealContainer<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
   const reduced = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
@@ -71,17 +66,8 @@ function useRevealContainer() {
 }
 
 /* ---------- 型 ---------- */
-type Size = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
+type Size = "mega" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 type Color = "black" | "red" | "blue" | "pink" | "yellow" | "green";
-
-const SIZE: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  xxl: { fontSize: "clamp(34px, 5vw, 80px)",   weight: 900, lh: 0.98, ls: "-0.04em" },
-  xl:  { fontSize: "clamp(24px, 3.6vw, 56px)", weight: 900, lh: 1.04, ls: "-0.03em" },
-  lg:  { fontSize: "clamp(18px, 2.4vw, 36px)", weight: 900, lh: 1.1,  ls: "-0.02em" },
-  md:  { fontSize: "clamp(13px, 1.3vw, 18px)", weight: 700, lh: 1.5,  ls: "0em" },
-  sm:  { fontSize: "clamp(11px, 1vw, 14px)",   weight: 500, lh: 1.65, ls: "0.02em" },
-  xs:  { fontSize: "10.5px",                    weight: 700, lh: 1.4,  ls: "0.22em" },
-};
 
 const COLOR: Record<Color, string> = {
   black: "#0A0A0A",
@@ -90,6 +76,28 @@ const COLOR: Record<Color, string> = {
   pink: "#FF0080",
   yellow: "#FFD600",
   green: "#00A870",
+};
+
+/* PC サイズ定義（6段 + mega） */
+const SIZE_PC: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
+  mega: { fontSize: "clamp(120px, 14vw, 220px)", weight: 900, lh: 0.88, ls: "-0.06em" },
+  xxl:  { fontSize: "clamp(72px, 8.4vw, 132px)", weight: 900, lh: 0.94, ls: "-0.05em" },
+  xl:   { fontSize: "clamp(44px, 5vw, 80px)",    weight: 900, lh: 1.0,  ls: "-0.04em" },
+  lg:   { fontSize: "clamp(28px, 3vw, 48px)",    weight: 900, lh: 1.08, ls: "-0.03em" },
+  md:   { fontSize: "clamp(16px, 1.6vw, 22px)",  weight: 700, lh: 1.5,  ls: "0em" },
+  sm:   { fontSize: "clamp(12px, 1.1vw, 15px)",  weight: 500, lh: 1.6,  ls: "0.01em" },
+  xs:   { fontSize: "10.5px",                     weight: 700, lh: 1.4,  ls: "0.22em" },
+};
+
+/* Mobile サイズ定義（375 × 700 最適化） */
+const SIZE_MB: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
+  mega: { fontSize: "72px", weight: 900, lh: 0.9,  ls: "-0.05em" },
+  xxl:  { fontSize: "36px", weight: 900, lh: 0.98, ls: "-0.04em" },
+  xl:   { fontSize: "24px", weight: 900, lh: 1.05, ls: "-0.03em" },
+  lg:   { fontSize: "18px", weight: 900, lh: 1.1,  ls: "-0.02em" },
+  md:   { fontSize: "12px", weight: 700, lh: 1.4,  ls: "0em" },
+  sm:   { fontSize: "10.5px", weight: 500, lh: 1.5, ls: "0em" },
+  xs:   { fontSize: "8.5px", weight: 700, lh: 1.3, ls: "0.2em" },
 };
 
 type BlockPos = {
@@ -107,424 +115,152 @@ type TextBlock = {
   vertical?: boolean;
   rotate?: number;
   uppercase?: boolean;
+  opacity?: number;
   pos: BlockPos;
-  /** アニメ stagger（ms） */
   delay?: number;
-  /** ハイパーリンク（voiceId があれば /voice/[id] へ） */
   voiceId?: string;
   zIndex?: number;
 };
 
-type AvatarBlock = {
-  key: string;
-  voiceId: string;
-  sizePx: number;
-  pos: BlockPos;
-  rotate?: number;
-  delay?: number;
-  zIndex?: number;
-};
+/* =============================================================================
+   PC 用レイアウト（1440 × (100svh - 110px) = 1440 × 790 相当）
+   ========================================================================== */
+const TEXT_BLOCKS_PC: TextBlock[] = [
+  // ========== ヘッダ ==========
+  { key: "p-cap-l", text: "VOICE / VOL.01 / 2026", size: "xs", color: "red", uppercase: true, pos: { top: "1%", left: "3%" }, delay: 0 },
+  { key: "p-cap-r", text: "FIGURES ／ 08", size: "xs", color: "black", uppercase: true, pos: { top: "1%", right: "3%" }, delay: 50 },
 
-type WatermarkBlock = {
-  key: string;
-  text: string;
-  fontSize: string;
-  color: Color;
-  opacity: number;
-  pos: BlockPos;
-  zIndex?: number;
-};
+  // ========== 大見出し（文節分解） ==========
+  { key: "p-h-a", text: "「諦めかけていた」", size: "xl", color: "black", pos: { top: "5%", left: "3%" }, delay: 100, zIndex: 3 },
+  { key: "p-h-b", text: "から、", size: "xl", color: "black", pos: { top: "5%", left: "33%" }, delay: 150, zIndex: 3 },
+  { key: "p-h-c", text: "「やまとでよかった」", size: "xxl", color: "red", pos: { top: "9%", left: "8%" }, delay: 200, zIndex: 3, rotate: -1 },
+  { key: "p-h-d", text: "まで。", size: "xl", color: "black", pos: { top: "11%", right: "8%" }, delay: 250, zIndex: 3 },
 
-/* ---------- レイアウト定義 ----------
-   画面（100svh × container幅）を下記の仮想ブロックに分割:
+  // ========== 01 ANXIETY（左・主役） ==========
+  // 背景の巨大漢字
+  { key: "p-01-mega", text: "諦", size: "mega", color: "red", opacity: 0.12, pos: { top: "20%", left: "0%" }, delay: 300, zIndex: 0 },
+  // 縦書きラベル
+  { key: "p-01-vert", text: "第一幕", size: "xs", color: "red", vertical: true, uppercase: false, pos: { top: "24%", left: "10%" }, delay: 350, zIndex: 2 },
+  // 文節
+  { key: "p-01-a", text: "2年近く", size: "xl", color: "black", rotate: -2, pos: { top: "26%", left: "14%" }, delay: 400, zIndex: 2 },
+  { key: "p-01-b", text: "土地が", size: "xxl", color: "black", pos: { top: "32%", left: "16%" }, delay: 450, zIndex: 2 },
+  { key: "p-01-c", text: "見つからなかった。", size: "xxl", color: "red", pos: { top: "41%", left: "14%" }, delay: 500, zIndex: 2, voiceId: "199927" },
+  { key: "p-01-d", text: "やっと", size: "lg", color: "yellow", pos: { top: "52%", left: "14%" }, delay: 550, zIndex: 2, rotate: -2 },
+  { key: "p-01-e", text: "納得できたのが、", size: "md", color: "black", pos: { top: "54%", left: "24%" }, delay: 600, zIndex: 2 },
+  { key: "p-01-f", text: "やまとの分譲地でした。", size: "lg", color: "blue", pos: { top: "58%", left: "14%" }, delay: 650, zIndex: 2 },
+  { key: "p-01-g", text: "No.199927 ／ 奈良市 Ｍ様邸", size: "xs", color: "red", uppercase: true, pos: { top: "64%", left: "14%" }, delay: 700, voiceId: "199927" },
 
-   [1400 × 100svh の Desktop レイアウト]
-   Row A (top  0-12%): セクションラベル + 大見出し
-   Row B (top 12-42%): 左に avatar01 + 01 ANXIETY 群（左半分） / 02 STANDARD 群（右半分）
-   Row C (top 42-70%): 03 COMPARISON + 04 RESCUE + 05 DISCOVERY + 縦書きラベル
-   Row D (top 70-88%): 06-08 ＋ avatar02, avatar03
-   Row E (top 88-100%): CTA
-*/
+  // ========== 02 STANDARD（右上） ==========
+  { key: "p-02-tag", text: "#02 STANDARD", size: "xs", color: "blue", uppercase: true, pos: { top: "18%", right: "3%" }, delay: 750 },
+  { key: "p-02-a", text: "他社のオプションが、", size: "md", color: "black", pos: { top: "20%", right: "3%" }, delay: 800 },
+  { key: "p-02-b", text: "やまとでは", size: "xl", color: "black", pos: { top: "23%", right: "3%" }, delay: 850 },
+  // Mega 「標準」
+  { key: "p-02-c", text: "標準。", size: "xxl", color: "blue", pos: { top: "29%", right: "3%" }, delay: 900, voiceId: "208787", rotate: -1 },
+  { key: "p-02-d", text: "追加費用、", size: "md", color: "black", pos: { top: "38%", right: "3%" }, delay: 950 },
+  { key: "p-02-e", text: "ゼロ。", size: "lg", color: "green", pos: { top: "40%", right: "3%" }, delay: 1000 },
+  { key: "p-02-id", text: "No.208787 ／ 奈良市 Ｉ様邸", size: "xs", color: "blue", uppercase: true, pos: { top: "45%", right: "3%" }, delay: 1050, voiceId: "208787" },
 
-const TEXT_BLOCKS: TextBlock[] = [
-  // ============ ヘッダ ============
-  {
-    key: "section-label",
-    text: "VOICE / VOL.01 / 2026",
-    size: "xs",
-    color: "red",
-    uppercase: true,
-    pos: { top: "3%", left: "3%" },
-    delay: 0,
-  },
-  {
-    key: "figures-label",
-    text: "FIGURES / 08",
-    size: "xs",
-    color: "black",
-    uppercase: true,
-    pos: { top: "3%", right: "3%" },
-    delay: 50,
-  },
-  // 大見出し（3行）
-  {
-    key: "h1-a",
-    text: "「諦めかけていた」から、",
-    size: "xxl",
-    color: "black",
-    pos: { top: "8%", left: "3%" },
-    delay: 100,
-    zIndex: 2,
-  },
-  {
-    key: "h1-b",
-    text: "「やまとでよかった」",
-    size: "xxl",
-    color: "red",
-    pos: { top: "18%", left: "8%" },
-    delay: 150,
-    zIndex: 2,
-  },
-  {
-    key: "h1-c",
-    text: "まで。",
-    size: "xxl",
-    color: "black",
-    pos: { top: "18%", right: "8%" },
-    delay: 200,
-    zIndex: 2,
-  },
+  // ========== 中央：特大アクセント記号 ==========
+  { key: "p-excl", text: "！", size: "mega", color: "pink", pos: { top: "46%", left: "44%" }, delay: 1100, zIndex: 1, rotate: 4 },
 
-  // ============ 01 ANXIETY（主役・左） ============
-  {
-    key: "01-vert",
-    text: "第一幕",
-    size: "xs",
-    color: "red",
-    vertical: true,
-    pos: { top: "32%", left: "3%" },
-    delay: 250,
-  },
-  {
-    key: "01-s1",
-    text: "2年近く土地が",
-    size: "xl",
-    color: "black",
-    pos: { top: "32%", left: "18%" },
-    delay: 300,
-  },
-  {
-    key: "01-s2",
-    text: "見つからなかった。",
-    size: "xl",
-    color: "red",
-    pos: { top: "39%", left: "22%" },
-    delay: 350,
-  },
-  {
-    key: "01-meta",
-    text: "やっと納得できたのが、やまとの分譲地でした。",
-    size: "md",
-    color: "black",
-    pos: { top: "49%", left: "18%" },
-    delay: 400,
-    voiceId: "199927",
-  },
-  {
-    key: "01-id",
-    text: "No.199927 ／ 奈良市 Ｍ様邸",
-    size: "xs",
-    color: "red",
-    uppercase: true,
-    pos: { top: "53%", left: "18%" },
-    delay: 450,
-    voiceId: "199927",
-  },
+  // ========== 03 COMPARISON（左下） ==========
+  { key: "p-03-tag", text: "#03 COMPARISON", size: "xs", color: "green", uppercase: true, pos: { top: "70%", left: "14%" }, delay: 1150 },
+  { key: "p-03-a", text: "他社の標準は", size: "md", color: "black", pos: { top: "72%", left: "14%" }, delay: 1200 },
+  { key: "p-03-b", text: "グレードが", size: "lg", color: "black", pos: { top: "75%", left: "14%" }, delay: 1250, rotate: -1 },
+  { key: "p-03-c", text: "低い。", size: "xl", color: "green", pos: { top: "79%", left: "26%" }, delay: 1300, voiceId: "279070" },
+  { key: "p-03-id", text: "No.279070 ／ 斑鳩町", size: "xs", color: "green", uppercase: true, pos: { top: "88%", left: "14%" }, delay: 1350, voiceId: "279070" },
 
-  // ============ 02 STANDARD（右上） ============
-  {
-    key: "02-tag",
-    text: "#02 STANDARD",
-    size: "xs",
-    color: "blue",
-    uppercase: true,
-    pos: { top: "30%", right: "4%" },
-    delay: 500,
-  },
-  {
-    key: "02-s1",
-    text: "他社のオプションが、",
-    size: "lg",
-    color: "black",
-    pos: { top: "33%", right: "4%" },
-    delay: 550,
-  },
-  {
-    key: "02-s2",
-    text: "やまとでは、標準。",
-    size: "lg",
-    color: "blue",
-    pos: { top: "38%", right: "4%" },
-    delay: 600,
-  },
-  {
-    key: "02-soft",
-    text: "追加費用は、必要なかった。",
-    size: "sm",
-    color: "black",
-    pos: { top: "44%", right: "4%" },
-    delay: 650,
-    voiceId: "208787",
-  },
-  {
-    key: "02-id",
-    text: "No.208787 ／ 奈良市 Ｉ様邸",
-    size: "xs",
-    color: "blue",
-    uppercase: true,
-    pos: { top: "47%", right: "4%" },
-    delay: 700,
-    voiceId: "208787",
-  },
+  // ========== 04 RESCUE（中央下） ==========
+  { key: "p-04-tag", text: "#04 RESCUE", size: "xs", color: "pink", uppercase: true, pos: { top: "70%", left: "40%" }, delay: 1400 },
+  { key: "p-04-a", text: "諦めかけた時に、", size: "md", color: "black", pos: { top: "72%", left: "40%" }, delay: 1450 },
+  { key: "p-04-b", text: "出会えた。", size: "xl", color: "pink", pos: { top: "75%", left: "40%" }, delay: 1500, voiceId: "216803", rotate: 2 },
+  { key: "p-04-id", text: "No.216803 ／ 生駒市", size: "xs", color: "pink", uppercase: true, pos: { top: "88%", left: "40%" }, delay: 1550, voiceId: "216803" },
 
-  // ============ 03 COMPARISON（左下段） ============
-  {
-    key: "03-tag",
-    text: "#03 COMPARISON",
-    size: "xs",
-    color: "green",
-    uppercase: true,
-    pos: { top: "60%", left: "18%" },
-    delay: 750,
-  },
-  {
-    key: "03-s1",
-    text: "他社の標準仕様は、",
-    size: "md",
-    color: "black",
-    pos: { top: "63%", left: "18%" },
-    delay: 800,
-  },
-  {
-    key: "03-s2",
-    text: "グレードが低い。",
-    size: "lg",
-    color: "green",
-    pos: { top: "66%", left: "18%" },
-    delay: 850,
-    voiceId: "279070",
-  },
-  {
-    key: "03-id",
-    text: "No.279070 ／ 斑鳩町 Ｉ様邸",
-    size: "xs",
-    color: "green",
-    uppercase: true,
-    pos: { top: "72%", left: "18%" },
-    delay: 900,
-    voiceId: "279070",
-  },
+  // ========== 05 DISCOVERY（右下） ==========
+  { key: "p-05-vert", text: "非公開", size: "lg", color: "yellow", vertical: true, pos: { top: "52%", right: "32%" }, delay: 1600, zIndex: 1 },
+  { key: "p-05-tag", text: "#05 DISCOVERY", size: "xs", color: "yellow", uppercase: true, pos: { top: "70%", right: "3%" }, delay: 1650 },
+  { key: "p-05-a", text: "ドンピシャを、", size: "md", color: "black", pos: { top: "72%", right: "3%" }, delay: 1700 },
+  { key: "p-05-b", text: "紹介してくれた。", size: "lg", color: "black", pos: { top: "75%", right: "3%" }, delay: 1750, voiceId: "240061" },
+  { key: "p-05-id", text: "No.240061 ／ 奈良市", size: "xs", color: "red", uppercase: true, pos: { top: "88%", right: "3%" }, delay: 1800, voiceId: "240061" },
 
-  // ============ 04 RESCUE（中央下） ============
-  {
-    key: "04-tag",
-    text: "#04 RESCUE",
-    size: "xs",
-    color: "pink",
-    uppercase: true,
-    pos: { top: "58%", left: "42%" },
-    delay: 950,
-  },
-  {
-    key: "04-s1",
-    text: "諦めかけた時に、",
-    size: "lg",
-    color: "black",
-    pos: { top: "61%", left: "42%" },
-    delay: 1000,
-  },
-  {
-    key: "04-s2",
-    text: "出会えた。",
-    size: "xl",
-    color: "pink",
-    pos: { top: "65%", left: "42%" },
-    delay: 1050,
-    voiceId: "216803",
-  },
-  {
-    key: "04-id",
-    text: "No.216803 ／ 生駒市 Ｉ様邸",
-    size: "xs",
-    color: "pink",
-    uppercase: true,
-    pos: { top: "72%", left: "42%" },
-    delay: 1100,
-    voiceId: "216803",
-  },
+  // ========== 06 LAND / 07 ENCOUNTER / 08 AFTER（下段 1行ずつ） ==========
+  { key: "p-06", text: "やまとの土地は、どこも住みやすい。", size: "sm", color: "black", pos: { top: "93%", left: "14%" }, delay: 1850, voiceId: "276882" },
+  { key: "p-06-tag", text: "06 LAND", size: "xs", color: "green", uppercase: true, pos: { top: "96%", left: "14%" }, delay: 1900 },
+  { key: "p-07", text: "「ここに建てたい」土地に、旗が立っていた。", size: "sm", color: "black", pos: { top: "93%", left: "40%" }, delay: 1950, voiceId: "202180" },
+  { key: "p-07-tag", text: "07 ENCOUNTER", size: "xs", color: "blue", uppercase: true, pos: { top: "96%", left: "40%" }, delay: 2000 },
+  { key: "p-08", text: "建てた後も、すぐ駆けつけてくれる。", size: "sm", color: "black", pos: { top: "93%", right: "3%" }, delay: 2050, voiceId: "256807" },
+  { key: "p-08-tag", text: "08 AFTER", size: "xs", color: "red", uppercase: true, pos: { top: "96%", right: "3%" }, delay: 2100 },
 
-  // ============ 05 DISCOVERY（右下段） ============
-  {
-    key: "05-vert",
-    text: "非公開",
-    size: "lg",
-    color: "yellow",
-    vertical: true,
-    pos: { top: "58%", right: "14%" },
-    delay: 1150,
-    zIndex: 1,
-  },
-  {
-    key: "05-s1",
-    text: "ドンピシャを、",
-    size: "md",
-    color: "black",
-    pos: { top: "62%", right: "4%" },
-    delay: 1200,
-  },
-  {
-    key: "05-s2",
-    text: "紹介してくれた。",
-    size: "lg",
-    color: "black",
-    pos: { top: "66%", right: "4%" },
-    delay: 1250,
-    voiceId: "240061",
-  },
-  {
-    key: "05-id",
-    text: "No.240061 ／ 奈良市 H様邸",
-    size: "xs",
-    color: "red",
-    uppercase: true,
-    pos: { top: "72%", right: "4%" },
-    delay: 1300,
-    voiceId: "240061",
-  },
-
-  // ============ 06 LAND / 07 ENCOUNTER / 08 AFTER（下段小） ============
-  {
-    key: "06-s",
-    text: "やまとの土地は、どこも住みやすい。",
-    size: "sm",
-    color: "black",
-    pos: { top: "80%", left: "18%" },
-    delay: 1350,
-    voiceId: "276882",
-  },
-  {
-    key: "06-id",
-    text: "06 LAND ／ No.276882",
-    size: "xs",
-    color: "green",
-    uppercase: true,
-    pos: { top: "83%", left: "18%" },
-    delay: 1400,
-  },
-  {
-    key: "07-s",
-    text: "「ここに建てたい」土地に、旗が立っていた。",
-    size: "sm",
-    color: "black",
-    pos: { top: "80%", left: "42%" },
-    delay: 1450,
-    voiceId: "202180",
-  },
-  {
-    key: "07-id",
-    text: "07 ENCOUNTER ／ No.202180",
-    size: "xs",
-    color: "blue",
-    uppercase: true,
-    pos: { top: "83%", left: "42%" },
-    delay: 1500,
-  },
-  {
-    key: "08-s",
-    text: "建てた後も、すぐ駆けつけてくれる。",
-    size: "sm",
-    color: "black",
-    pos: { top: "80%", right: "4%" },
-    delay: 1550,
-    voiceId: "256807",
-  },
-  {
-    key: "08-id",
-    text: "08 AFTER ／ No.256807",
-    size: "xs",
-    color: "red",
-    uppercase: true,
-    pos: { top: "83%", right: "4%" },
-    delay: 1600,
-  },
-
-  // ============ 縦書きアクセント ============
-  {
-    key: "vert-voice",
-    text: "VOICE / 50",
-    size: "xs",
-    color: "black",
-    vertical: true,
-    pos: { top: "32%", right: "1.5%" },
-    delay: 350,
-  },
+  // ========== 装飾記号 ==========
+  { key: "p-arrow", text: "→", size: "xxl", color: "red", pos: { top: "92%", left: "33%" }, delay: 2150, rotate: -8 },
 ];
 
-const AVATAR_BLOCKS: AvatarBlock[] = [
-  {
-    key: "av-01",
-    voiceId: "199927",
-    sizePx: 120,
-    pos: { top: "28%", left: "3%" },
-    rotate: -2,
-    delay: 250,
-    zIndex: 1,
-  },
-  {
-    key: "av-02",
-    voiceId: "208787",
-    sizePx: 68,
-    pos: { top: "68%", left: "4%" },
-    rotate: 2,
-    delay: 1000,
-    zIndex: 1,
-  },
-  {
-    key: "av-03",
-    voiceId: "256807",
-    sizePx: 60,
-    pos: { top: "82%", left: "9%" },
-    rotate: -1,
-    delay: 1500,
-    zIndex: 1,
-  },
+/* =============================================================================
+   Mobile 用レイアウト（375 × (100svh - 110px) ≒ 375 × 700）
+   ========================================================================== */
+const TEXT_BLOCKS_MB: TextBlock[] = [
+  // ヘッダ
+  { key: "m-cap", text: "VOICE / 08", size: "xs", color: "red", uppercase: true, pos: { top: "1.5%", left: "4%" }, delay: 0 },
+  { key: "m-h-a", text: "「諦めかけ」", size: "xxl", color: "black", pos: { top: "4%", left: "4%" }, delay: 50, zIndex: 3 },
+  { key: "m-h-b", text: "から、", size: "lg", color: "black", pos: { top: "4%", right: "4%" }, delay: 100, zIndex: 3 },
+  { key: "m-h-c", text: "「やまとで", size: "xl", color: "red", pos: { top: "10%", left: "10%" }, delay: 150, zIndex: 3 },
+  { key: "m-h-d", text: "よかった」", size: "xl", color: "red", pos: { top: "14%", left: "22%" }, delay: 200, zIndex: 3, rotate: -2 },
+  { key: "m-h-e", text: "まで。", size: "lg", color: "black", pos: { top: "14%", right: "4%" }, delay: 250, zIndex: 3 },
+
+  // 01 ANXIETY（縦書き巨大 "諦" 左、本文右）
+  { key: "m-01-mega", text: "諦", size: "mega", color: "red", opacity: 0.15, pos: { top: "23%", left: "-2%" }, delay: 300, zIndex: 0 },
+  { key: "m-01-tag", text: "#01 ANXIETY", size: "xs", color: "red", uppercase: true, pos: { top: "22%", right: "4%" }, delay: 350 },
+  { key: "m-01-a", text: "2年近く", size: "md", color: "black", pos: { top: "24%", right: "4%" }, delay: 400 },
+  { key: "m-01-b", text: "土地が", size: "lg", color: "black", pos: { top: "26%", right: "4%" }, delay: 450 },
+  { key: "m-01-c", text: "見つからなかった。", size: "lg", color: "red", pos: { top: "30%", right: "4%" }, delay: 500, voiceId: "199927" },
+  { key: "m-01-d", text: "やまとの分譲地で解決。", size: "sm", color: "blue", pos: { top: "34%", right: "4%" }, delay: 550 },
+
+  // 02 STANDARD（右上端→左に広がる）
+  { key: "m-02-tag", text: "#02 STANDARD", size: "xs", color: "blue", uppercase: true, pos: { top: "38%", left: "4%" }, delay: 600 },
+  { key: "m-02-a", text: "他社オプション＝", size: "md", color: "black", pos: { top: "40%", left: "4%" }, delay: 650 },
+  { key: "m-02-b", text: "やまとは標準。", size: "lg", color: "blue", pos: { top: "42%", left: "4%" }, delay: 700, voiceId: "208787" },
+  { key: "m-02-c", text: "追加費用", size: "md", color: "black", pos: { top: "46%", left: "4%" }, delay: 750 },
+  { key: "m-02-d", text: "ゼロ。", size: "lg", color: "green", pos: { top: "46%", left: "38%" }, delay: 800, rotate: -3 },
+
+  // 中央 大アクセント ！
+  { key: "m-excl", text: "！", size: "xxl", color: "pink", pos: { top: "39%", right: "4%" }, delay: 850, zIndex: 1, rotate: 6 },
+
+  // 03 COMPARISON
+  { key: "m-03-tag", text: "#03 COMPARISON", size: "xs", color: "green", uppercase: true, pos: { top: "52%", left: "4%" }, delay: 900 },
+  { key: "m-03-a", text: "他社の標準は", size: "md", color: "black", pos: { top: "54%", left: "4%" }, delay: 950 },
+  { key: "m-03-b", text: "グレードが低い。", size: "lg", color: "green", pos: { top: "56%", left: "4%" }, delay: 1000, voiceId: "279070", rotate: -1 },
+
+  // 04 RESCUE
+  { key: "m-04-tag", text: "#04 RESCUE", size: "xs", color: "pink", uppercase: true, pos: { top: "62%", left: "4%" }, delay: 1050 },
+  { key: "m-04-a", text: "諦めかけた時に、", size: "md", color: "black", pos: { top: "64%", left: "4%" }, delay: 1100 },
+  { key: "m-04-b", text: "出会えた。", size: "lg", color: "pink", pos: { top: "64%", right: "4%" }, delay: 1150, voiceId: "216803", rotate: 3 },
+
+  // 05 DISCOVERY
+  { key: "m-05-vert", text: "非公開", size: "md", color: "yellow", vertical: true, pos: { top: "68%", right: "4%" }, delay: 1200, zIndex: 1 },
+  { key: "m-05-tag", text: "#05 DISCOVERY", size: "xs", color: "yellow", uppercase: true, pos: { top: "68%", left: "4%" }, delay: 1250 },
+  { key: "m-05-a", text: "ドンピシャの土地を、", size: "md", color: "black", pos: { top: "70%", left: "4%" }, delay: 1300 },
+  { key: "m-05-b", text: "紹介してくれた。", size: "md", color: "black", pos: { top: "73%", left: "4%" }, delay: 1350, voiceId: "240061" },
+
+  // 06 / 07 / 08（下段 1行ずつ、色分け）
+  { key: "m-06", text: "06 LAND ─ やまとの土地は、どこも住みやすい。", size: "sm", color: "green", pos: { top: "80%", left: "4%" }, delay: 1400, voiceId: "276882" },
+  { key: "m-07", text: "07 ENCOUNTER ─ 旗が、立っていた。", size: "sm", color: "blue", pos: { top: "83%", left: "4%" }, delay: 1450, voiceId: "202180" },
+  { key: "m-08", text: "08 AFTER ─ 何かあると、すぐ駆けつけてくれる。", size: "sm", color: "red", pos: { top: "86%", left: "4%" }, delay: 1500, voiceId: "256807" },
+
+  // CTA の前の矢印アクセント
+  { key: "m-arrow", text: "→", size: "xl", color: "red", pos: { top: "90%", right: "4%" }, delay: 1550, rotate: -8 },
 ];
 
-const WATERMARKS: WatermarkBlock[] = [
-  {
-    key: "wm-01",
-    text: "01",
-    fontSize: "clamp(180px, 22vw, 340px)",
-    color: "red",
-    opacity: 0.06,
-    pos: { top: "22%", left: "22%" },
-    zIndex: 0,
-  },
-  {
-    key: "wm-08",
-    text: "08",
-    fontSize: "clamp(140px, 18vw, 260px)",
-    color: "yellow",
-    opacity: 0.1,
-    pos: { bottom: "2%", right: "22%" },
-    zIndex: 0,
-  },
-];
-
-/* ---------- Block コンポーネント ---------- */
-
-function TextBlockEl({ block, visible }: { block: TextBlock; visible: boolean }) {
-  const s = SIZE[block.size];
+/* ---------- TextBlock 描画 ---------- */
+function TextBlockEl({
+  block,
+  visible,
+  sizeMap,
+}: {
+  block: TextBlock;
+  visible: boolean;
+  sizeMap: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }>;
+}) {
+  const s = sizeMap[block.size];
   const color = COLOR[block.color ?? "black"];
 
   const baseStyle: React.CSSProperties = {
@@ -540,16 +276,14 @@ function TextBlockEl({ block, visible }: { block: TextBlock; visible: boolean })
     whiteSpace: "nowrap",
     zIndex: block.zIndex ?? 1,
     pointerEvents: block.voiceId ? "auto" : "none",
-    transition: "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
+    transition:
+      "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
     transitionDelay: `${block.delay ?? 0}ms`,
-    opacity: visible ? 1 : 0,
+    opacity: visible ? (block.opacity ?? 1) : 0,
     transform: visible
-      ? block.vertical
-        ? `translateY(0) rotate(${block.rotate ?? 0}deg)`
-        : `translateY(0) rotate(${block.rotate ?? 0}deg)`
-      : block.vertical
-        ? "translateY(20px)"
-        : "translateY(20px)",
+      ? `translateY(0) rotate(${block.rotate ?? 0}deg)`
+      : `translateY(12px) rotate(${block.rotate ?? 0}deg)`,
+    userSelect: block.voiceId ? "auto" : "none",
   };
 
   if (block.vertical) {
@@ -561,8 +295,6 @@ function TextBlockEl({ block, visible }: { block: TextBlock; visible: boolean })
     baseStyle.fontFamily = "var(--font-inter), Inter, sans-serif";
   }
 
-  const content = block.text;
-
   if (block.voiceId) {
     return (
       <Link
@@ -570,271 +302,78 @@ function TextBlockEl({ block, visible }: { block: TextBlock; visible: boolean })
         style={baseStyle}
         className="hover:underline hover:decoration-2 hover:underline-offset-4"
       >
-        {content}
+        {block.text}
       </Link>
     );
   }
-
-  return <span style={baseStyle}>{content}</span>;
+  return <span style={baseStyle}>{block.text}</span>;
 }
 
-function AvatarBlockEl({ block, visible }: { block: AvatarBlock; visible: boolean }) {
-  const v = getVoice(block.voiceId);
-  const photo = v?.photos?.[0];
-  if (!photo) return null;
-
+/* ---------- CTA（PC, Mobile 共通で右下に固定） ---------- */
+function MagazineCta() {
   return (
-    <Link
-      href={`/voice/${block.voiceId}`}
-      style={{
-        position: "absolute",
-        ...block.pos,
-        width: `${block.sizePx}px`,
-        height: `${block.sizePx}px`,
-        borderRadius: "50%",
-        overflow: "hidden",
-        zIndex: block.zIndex ?? 1,
-        border: "2px solid #0A0A0A",
-        boxShadow: "0 4px 20px rgba(10,10,10,0.15)",
-        transition:
-          "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 500ms cubic-bezier(0.16,1,0.3,1)",
-        transitionDelay: `${block.delay ?? 0}ms`,
-        opacity: visible ? 1 : 0,
-        transform: `translateY(${visible ? 0 : 20}px) rotate(${block.rotate ?? 0}deg)`,
-      }}
-      className="hover:!rotate-0 hover:scale-[1.04]"
-      aria-label={`${v?.area} ${v?.familyName}邸`}
-    >
-      <Image
-        src={photo}
-        alt=""
-        fill
-        sizes={`${block.sizePx}px`}
-        className="object-cover"
-        style={{ filter: "saturate(0.95) contrast(1.05)" }}
-      />
-    </Link>
-  );
-}
-
-function WatermarkEl({ block, visible }: { block: WatermarkBlock; visible: boolean }) {
-  return (
-    <span
-      aria-hidden
-      style={{
-        position: "absolute",
-        ...block.pos,
-        fontFamily: "var(--font-inter), Inter, sans-serif",
-        fontWeight: 900,
-        fontSize: block.fontSize,
-        color: COLOR[block.color],
-        opacity: visible ? block.opacity : 0,
-        letterSpacing: "-0.05em",
-        lineHeight: 1,
-        pointerEvents: "none",
-        transition: "opacity 1200ms ease-out",
-        zIndex: block.zIndex ?? 0,
-        userSelect: "none",
-      }}
-    >
-      {block.text}
-    </span>
-  );
-}
-
-/* ---------- モバイル用：元の Bento に近い縦並び ---------- */
-
-function MobileFallback() {
-  return (
-    <div className="flex flex-col gap-4 px-[var(--page-px)] py-12 md:hidden">
-      <p
-        className="uppercase"
+    <div className="absolute bottom-[2%] right-[3%] z-[5] flex items-center gap-2 md:gap-3">
+      <Link
+        href="/voice"
+        className="border-b-2 pb-0.5"
         style={{
           fontFamily: "var(--font-inter), Inter, sans-serif",
-          color: COLOR.red,
           fontSize: "10.5px",
-          letterSpacing: "0.22em",
           fontWeight: 700,
-        }}
-      >
-        VOICE / VOL.01 / 2026
-      </p>
-      <h2
-        style={{
-          fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
-          fontWeight: 900,
-          fontSize: "clamp(28px, 8vw, 40px)",
-          lineHeight: 1.15,
-          letterSpacing: "-0.04em",
+          letterSpacing: "0.22em",
           color: COLOR.black,
-          wordBreak: "keep-all",
+          textTransform: "uppercase",
+          borderColor: COLOR.red,
         }}
       >
-        <span className="block">「諦めかけていた」から、</span>
-        <span className="block" style={{ color: COLOR.red }}>
-          「やまとでよかった」
-          <span style={{ color: COLOR.black }}>まで。</span>
-        </span>
-      </h2>
-
-      <div className="mt-6 flex flex-col gap-8">
-        {MAGAZINE_FIGURES.map((f, i) => {
-          const colors: Color[] = ["red", "blue", "green", "pink", "yellow", "black", "black", "black"];
-          const c = COLOR[colors[i] ?? "black"];
-          return (
-            <Link
-              key={f.voiceId + f.figureNo}
-              href={`/voice/${f.voiceId}`}
-              className="flex flex-col gap-2"
-            >
-              <span
-                className="uppercase"
-                style={{
-                  fontFamily: "var(--font-inter), Inter, sans-serif",
-                  color: c,
-                  fontSize: "10px",
-                  letterSpacing: "0.22em",
-                  fontWeight: 700,
-                }}
-              >
-                #{f.figureNo} ／ {f.chapterEn}
-              </span>
-              <p
-                style={{
-                  fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
-                  fontWeight: 900,
-                  fontSize: "clamp(20px, 5.4vw, 28px)",
-                  lineHeight: 1.18,
-                  letterSpacing: "-0.03em",
-                  color: c,
-                  whiteSpace: "pre-line",
-                  wordBreak: "keep-all",
-                }}
-              >
-                {f.headlineStrong}
-              </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
-                  fontWeight: 500,
-                  fontSize: "13px",
-                  lineHeight: 1.7,
-                  color: COLOR.black,
-                  whiteSpace: "pre-line",
-                }}
-              >
-                {f.headlineSoft}
-              </p>
-              <span
-                style={{
-                  fontFamily: "var(--font-inter), Inter, sans-serif",
-                  fontSize: "10px",
-                  letterSpacing: "0.15em",
-                  color: c,
-                  fontWeight: 700,
-                }}
-              >
-                No.{f.voiceId} ／ {f.attribution}
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-
-      <div className="mt-8 flex flex-col gap-2">
-        <CtaButton
-          href="/reserve"
-          variant="primary"
-          size="md"
-          label="モデルハウスを予約する"
-          sublabel="無料・10秒で完了"
-        />
-        <CtaButton
-          href="/voice"
-          variant="secondary"
-          size="md"
-          label="すべての声を読む"
-        />
-      </div>
+        すべて読む
+      </Link>
+      <Link
+        href="/reserve"
+        className="inline-block hover:opacity-90"
+        style={{
+          padding: "10px 16px",
+          backgroundColor: COLOR.red,
+          color: "#FFFFFF",
+          fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
+          fontSize: "12px",
+          fontWeight: 900,
+          letterSpacing: "0.04em",
+        }}
+      >
+        モデルハウス予約 →
+      </Link>
     </div>
   );
 }
 
 /* ---------- メイン ---------- */
-
 export default function HeroVoiceMagazine() {
-  const { ref, visible } = useRevealContainer();
+  // PC・Mobile 別々に reveal — 分割代入で ref と visible を取り出す
+  const { ref: pcRef, visible: pcVisible } = useRevealContainer<HTMLDivElement>();
+  const { ref: mbRef, visible: mbVisible } = useRevealContainer<HTMLDivElement>();
+
+  /* MAGAZINE_FIGURES は将来の拡張用（現在は直接テキスト埋め込み） */
+  void MAGAZINE_FIGURES;
 
   return (
     <section
       aria-label="VOICE — やまと不動産 お客様の声"
-      className="relative w-full md:pt-[110px]"
+      className="relative w-full pt-[110px]"
       style={{ backgroundColor: "var(--voice-bg)", color: "var(--voice-text)" }}
     >
-      {/* ===== Desktop: タイポジャングル（絶対配置） =====
-          section の pt-[110px] で sticky header を避ける。
-          container 高は viewport から header 分引いた領域。
-          container 内の絶対配置 top: 0 は header 直下 */}
+      {/* ===== PC（md 以上） ===== */}
       <div
-        ref={ref}
-        className="relative mx-auto hidden h-[calc(100svh-110px)] min-h-[640px] w-full max-w-[1600px] overflow-hidden px-[clamp(20px,2.4vw,48px)] py-[clamp(12px,1.5vw,24px)] md:block"
+        ref={pcRef}
+        className="relative mx-auto hidden h-[calc(100svh-110px)] min-h-[680px] w-full max-w-[1600px] overflow-hidden px-[clamp(20px,2.4vw,48px)] py-[clamp(12px,1.5vw,24px)] md:block"
       >
-        {WATERMARKS.map((w) => (
-          <WatermarkEl key={w.key} block={w} visible={visible} />
+        {TEXT_BLOCKS_PC.map((b) => (
+          <TextBlockEl key={b.key} block={b} visible={pcVisible} sizeMap={SIZE_PC} />
         ))}
-        {AVATAR_BLOCKS.map((a) => (
-          <AvatarBlockEl key={a.key} block={a} visible={visible} />
-        ))}
-        {TEXT_BLOCKS.map((b) => (
-          <TextBlockEl key={b.key} block={b} visible={visible} />
-        ))}
-
-        {/* CTA（右下） */}
-        <div
-          className="absolute bottom-[3%] right-[3%] flex items-center gap-3"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: `translateY(${visible ? 0 : 10}px)`,
-            transition:
-              "opacity 700ms ease-out 1700ms, transform 700ms ease-out 1700ms",
-          }}
-        >
-          <Link
-            href="/voice"
-            style={{
-              fontFamily: "var(--font-inter), Inter, sans-serif",
-              fontSize: "11px",
-              fontWeight: 700,
-              letterSpacing: "0.22em",
-              color: COLOR.black,
-              textTransform: "uppercase",
-              borderBottom: `2px solid ${COLOR.red}`,
-              paddingBottom: "2px",
-            }}
-          >
-            すべての声を読む →
-          </Link>
-          <span
-            style={{
-              display: "inline-block",
-              padding: "12px 20px",
-              backgroundColor: COLOR.red,
-              color: "#FFFFFF",
-              fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
-              fontSize: "13px",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-            }}
-          >
-            <Link href="/reserve" style={{ color: "inherit" }}>
-              モデルハウスを予約する →
-            </Link>
-          </span>
-        </div>
-
-        {/* 左下 FIN */}
+        <MagazineCta />
         <span
-          className="absolute bottom-[3%] left-[3%]"
+          aria-hidden
+          className="absolute bottom-[2%] left-[3%] z-[5]"
           style={{
             fontFamily: "var(--font-inter), Inter, sans-serif",
             fontSize: "10px",
@@ -842,16 +381,23 @@ export default function HeroVoiceMagazine() {
             letterSpacing: "0.22em",
             color: COLOR.black,
             textTransform: "uppercase",
-            opacity: visible ? 0.6 : 0,
-            transition: "opacity 700ms ease-out 1700ms",
+            opacity: 0.6,
           }}
         >
-          — 8 Voices of 50 ／ FIN
+          — 8 Voices of 50
         </span>
       </div>
 
-      {/* ===== Mobile: 縦並び ===== */}
-      <MobileFallback />
+      {/* ===== Mobile（md 未満、1画面カオス） ===== */}
+      <div
+        ref={mbRef}
+        className="relative h-[calc(100svh-110px)] min-h-[600px] w-full overflow-hidden md:hidden"
+      >
+        {TEXT_BLOCKS_MB.map((b) => (
+          <TextBlockEl key={b.key} block={b} visible={mbVisible} sizeMap={SIZE_MB} />
+        ))}
+        <MagazineCta />
+      </div>
     </section>
   );
 }
