@@ -140,22 +140,22 @@ type TextBlock = {
    ========================================================================== */
 const TEXT_BLOCKS_PC: TextBlock[] = [
   // ===== ラベル =====
-  { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
+  { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "4%", left: "6%" }, delay: 0, zIndex: 2 },
+  { key: "p-label-r", text: "04 Testimonials", size: "xs", color: "black", uppercase: false, pos: { top: "4%", right: "6%" }, delay: 0, zIndex: 2 },
 
-  // ===== 中央の最大コピー =====
-  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "22%", left: "16%" }, delay: 150, zIndex: 2 },
-  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "30%", left: "14%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  // ===== 左ブロック: 主役の 2 行コピー（中央寄り、上下のバランスを取る）=====
+  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "24%", left: "6%" }, delay: 150, zIndex: 2 },
+  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "34%", left: "6%" }, delay: 300, voiceId: "216803", zIndex: 2 },
 
-  // ===== 周辺の断片（上部右・中部右・左下） =====
-  { key: "p-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "20%", right: "6%" }, delay: 500, voiceId: "208787", zIndex: 2 },
-  { key: "p-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "52%", right: "8%" }, delay: 650, voiceId: "256807", zIndex: 2 },
-  { key: "p-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "66%", left: "14%" }, delay: 800, voiceId: "202180", zIndex: 2 },
-  { key: "p-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "72%", right: "12%" }, delay: 950, voiceId: "256807", zIndex: 2 },
+  // ===== 左ブロック下: 属性行（主役コピーの下に寄せる→ひと固まりに見える）=====
+  { key: "p-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "62%", left: "6%" }, delay: 1100, zIndex: 2 },
+  { key: "p-a2", text: "引き渡し後 5年／京田辺市 K様邸・斑鳩町 I様邸 ほか", size: "xs", color: "black", pos: { top: "65%", left: "6%" }, delay: 1150, zIndex: 2 },
 
-  // ===== 下部の属性行（誰の声か・小さく、トラスト補強） =====
-  { key: "p-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "85%", left: "4%" }, delay: 1100, zIndex: 2 },
-  { key: "p-a2", text: "40代ご夫婦／他社比較 半年／斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "89%", left: "4%" }, delay: 1150, zIndex: 2 },
-  { key: "p-a3", text: "引き渡し後 5年／京田辺市 K様邸", size: "xs", color: "black", pos: { top: "93%", left: "4%" }, delay: 1200, zIndex: 2 },
+  // ===== 右ブロック: 断片リスト 4 件（上下の重心を主役の高さに合わせる） =====
+  { key: "p-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "24%", right: "6%" }, delay: 500, voiceId: "208787", zIndex: 2 },
+  { key: "p-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "36%", right: "6%" }, delay: 650, voiceId: "256807", zIndex: 2 },
+  { key: "p-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "50%", right: "6%" }, delay: 800, voiceId: "202180", zIndex: 2 },
+  { key: "p-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "62%", right: "6%" }, delay: 950, voiceId: "256807", zIndex: 2 },
 ];
 
 /* =============================================================================
@@ -165,20 +165,19 @@ const TEXT_BLOCKS_MB: TextBlock[] = [
   // ===== ラベル =====
   { key: "m-label", text: "VOICE / お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== 中央の最大コピー =====
-  { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "15%", left: "4%" }, delay: 150, zIndex: 2 },
-  { key: "m-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "22%", left: "4%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  // ===== 主役コピー =====
+  { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "14%", left: "4%" }, delay: 150, zIndex: 2 },
+  { key: "m-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "21%", left: "4%" }, delay: 300, voiceId: "216803", zIndex: 2 },
 
-  // ===== 周辺の断片（4 つ、縦にリズム） =====
-  { key: "m-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "42%", left: "4%" }, delay: 500, voiceId: "208787", zIndex: 2 },
-  { key: "m-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "50%", left: "4%" }, delay: 650, voiceId: "256807", zIndex: 2 },
-  { key: "m-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "60%", left: "4%" }, delay: 800, voiceId: "202180", zIndex: 2 },
-  { key: "m-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "67%", left: "4%" }, delay: 950, voiceId: "256807", zIndex: 2 },
+  // ===== 属性（主役の下に即座に置いてひと固まりに） =====
+  { key: "m-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "38%", left: "4%" }, delay: 1100, zIndex: 2 },
+  { key: "m-a2", text: "引き渡し後 5年／京田辺市 K様邸 ほか", size: "xs", color: "black", pos: { top: "41%", left: "4%" }, delay: 1150, zIndex: 2 },
 
-  // ===== 下部属性行（FloatingCta 上に収まる top） =====
-  { key: "m-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "80%", left: "4%" }, delay: 1100, zIndex: 2 },
-  { key: "m-a2", text: "40代ご夫婦／他社比較／斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "84%", left: "4%" }, delay: 1150, zIndex: 2 },
-  { key: "m-a3", text: "引き渡し後 5年／京田辺市 K様邸", size: "xs", color: "black", pos: { top: "88%", left: "4%" }, delay: 1200, zIndex: 2 },
+  // ===== 断片リスト 4 件（下半分に整列） =====
+  { key: "m-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "50%", left: "4%" }, delay: 500, voiceId: "208787", zIndex: 2 },
+  { key: "m-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "56%", left: "4%" }, delay: 650, voiceId: "256807", zIndex: 2 },
+  { key: "m-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "66%", left: "4%" }, delay: 800, voiceId: "202180", zIndex: 2 },
+  { key: "m-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "72%", left: "4%" }, delay: 950, voiceId: "256807", zIndex: 2 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
