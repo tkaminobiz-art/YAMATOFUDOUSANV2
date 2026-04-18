@@ -119,6 +119,10 @@ type TextBlock = {
   delay?: number;
   voiceId?: string;
   zIndex?: number;
+  /** 水平中央揃え（left:50% + translateX(-50%)） */
+  centerX?: boolean;
+  /** 右揃え（テキストを右端基準で揃える） */
+  textAlignRight?: boolean;
 };
 
 /* =============================================================================
@@ -139,23 +143,24 @@ type TextBlock = {
      [BL] 属性行 3 つ            [BR] CTA
    ========================================================================== */
 const TEXT_BLOCKS_PC: TextBlock[] = [
-  // ===== ラベル =====
-  { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "4%", left: "6%" }, delay: 0, zIndex: 2 },
-  { key: "p-label-r", text: "04 Testimonials", size: "xs", color: "black", uppercase: false, pos: { top: "4%", right: "6%" }, delay: 0, zIndex: 2 },
+  // ===== ラベル（対角に配置） =====
+  { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "5%", left: "6%" }, delay: 0, zIndex: 2 },
+  { key: "p-label-r", text: "04 Testimonials", size: "xs", color: "black", uppercase: false, pos: { top: "5%", right: "6%" }, delay: 0, zIndex: 2 },
 
-  // ===== 左ブロック: 主役の 2 行コピー（中央寄り、上下のバランスを取る）=====
-  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "24%", left: "6%" }, delay: 150, zIndex: 2 },
-  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "34%", left: "6%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  // ===== 中央の最重要コピー（真の水平中央・縦方向も中央寄り） =====
+  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "30%" }, delay: 150, zIndex: 2 },
+  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "40%" }, delay: 300, voiceId: "216803", zIndex: 2 },
 
-  // ===== 左ブロック下: 属性行（主役コピーの下に寄せる→ひと固まりに見える）=====
-  { key: "p-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "62%", left: "6%" }, delay: 1100, zIndex: 2 },
-  { key: "p-a2", text: "引き渡し後 5年／京田辺市 K様邸・斑鳩町 I様邸 ほか", size: "xs", color: "black", pos: { top: "65%", left: "6%" }, delay: 1150, zIndex: 2 },
+  // ===== 中央下: 属性 1 行（誰の声か・主役の直下に） =====
+  { key: "p-attr", text: "奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", centerX: true, pos: { top: "66%" }, delay: 1100, zIndex: 2 },
 
-  // ===== 右ブロック: 断片リスト 4 件（上下の重心を主役の高さに合わせる） =====
-  { key: "p-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "24%", right: "6%" }, delay: 500, voiceId: "208787", zIndex: 2 },
-  { key: "p-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "36%", right: "6%" }, delay: 650, voiceId: "256807", zIndex: 2 },
-  { key: "p-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "50%", right: "6%" }, delay: 800, voiceId: "202180", zIndex: 2 },
-  { key: "p-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "62%", right: "6%" }, delay: 950, voiceId: "256807", zIndex: 2 },
+  // ===== 衛星フレーズ 3 件（主役の周囲に散らす・編集済み） =====
+  // 上左: 初見の感情
+  { key: "p-s1", text: "ここに住みたい、と思えた。", size: "sm", color: "black", pos: { top: "18%", left: "8%" }, delay: 500, voiceId: "202180", zIndex: 2 },
+  // 上右: 中立的な比較トラスト
+  { key: "p-s2", text: "標準で、十分だった。", size: "sm", color: "black", textAlignRight: true, pos: { top: "18%", right: "8%" }, delay: 650, voiceId: "208787", zIndex: 2 },
+  // 下右: アフター（唯一の青アクセント）
+  { key: "p-s3", text: "建てた後も、安心。", size: "lg", color: "blue", textAlignRight: true, pos: { top: "80%", right: "8%" }, delay: 800, voiceId: "256807", zIndex: 2 },
 ];
 
 /* =============================================================================
@@ -164,20 +169,21 @@ const TEXT_BLOCKS_PC: TextBlock[] = [
 const TEXT_BLOCKS_MB: TextBlock[] = [
   // ===== ラベル =====
   { key: "m-label", text: "VOICE / お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
+  { key: "m-label-r", text: "04", size: "xs", color: "black", pos: { top: "3%", right: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== 主役コピー =====
-  { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", pos: { top: "14%", left: "4%" }, delay: 150, zIndex: 2 },
-  { key: "m-hero", text: "出会えた。", size: "mega", color: "red", pos: { top: "21%", left: "4%" }, delay: 300, voiceId: "216803", zIndex: 2 },
+  // ===== 上の衛星フレーズ 1 =====
+  { key: "m-s1", text: "ここに住みたい、と思えた。", size: "sm", color: "black", pos: { top: "12%", left: "4%" }, delay: 500, voiceId: "202180", zIndex: 2 },
 
-  // ===== 属性（主役の下に即座に置いてひと固まりに） =====
-  { key: "m-a1", text: "30代ご夫婦／土地探し 2年／奈良市 M様邸", size: "xs", color: "black", pos: { top: "38%", left: "4%" }, delay: 1100, zIndex: 2 },
-  { key: "m-a2", text: "引き渡し後 5年／京田辺市 K様邸 ほか", size: "xs", color: "black", pos: { top: "41%", left: "4%" }, delay: 1150, zIndex: 2 },
+  // ===== 中央の主役コピー（水平中央） =====
+  { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "28%" }, delay: 150, zIndex: 2 },
+  { key: "m-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "37%" }, delay: 300, voiceId: "216803", zIndex: 2 },
 
-  // ===== 断片リスト 4 件（下半分に整列） =====
-  { key: "m-s1", text: "標準で、十分だった。", size: "md", color: "black", pos: { top: "50%", left: "4%" }, delay: 500, voiceId: "208787", zIndex: 2 },
-  { key: "m-s2", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "56%", left: "4%" }, delay: 650, voiceId: "256807", zIndex: 2 },
-  { key: "m-s3", text: "ここに住みたい、と思えた。", size: "md", color: "black", pos: { top: "66%", left: "4%" }, delay: 800, voiceId: "202180", zIndex: 2 },
-  { key: "m-s4", text: "すぐ駆けつけてくれる。", size: "md", color: "black", pos: { top: "72%", left: "4%" }, delay: 950, voiceId: "256807", zIndex: 2 },
+  // ===== 中央下: 属性 1 行 =====
+  { key: "m-attr", text: "奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", centerX: true, pos: { top: "56%" }, delay: 1100, zIndex: 2 },
+
+  // ===== 下の衛星フレーズ 2（対角配置） =====
+  { key: "m-s2", text: "標準で、十分だった。", size: "sm", color: "black", textAlignRight: true, pos: { top: "68%", right: "4%" }, delay: 650, voiceId: "208787", zIndex: 2 },
+  { key: "m-s3", text: "建てた後も、安心。", size: "lg", color: "blue", pos: { top: "75%", left: "4%" }, delay: 800, voiceId: "256807", zIndex: 2 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
@@ -193,9 +199,23 @@ function TextBlockEl({
   const s = sizeMap[block.size];
   const color = COLOR[block.color ?? "black"];
 
+  // centerX: left 50% + translateX(-50%) で水平中央に揃える
+  const posForCenter = block.centerX ? { ...block.pos, left: "50%" } : block.pos;
+
+  // textAlignRight: right 基準で text-align:right にする（行末を右に揃えたい時）
+  const textAlignStyle: Pick<React.CSSProperties, "textAlign"> = block.textAlignRight
+    ? { textAlign: "right" }
+    : {};
+
+  // transform: センタリング用の translateX(-50%) と rotate を合成
+  const translateXForCenter = block.centerX ? "-50%" : "0";
+  const baseTransform = `translate3d(${translateXForCenter}, 0, 0) rotate(${block.rotate ?? 0}deg)`;
+  const hiddenTransform = `translate3d(${translateXForCenter}, 12px, 0) rotate(${block.rotate ?? 0}deg)`;
+
   const baseStyle: React.CSSProperties = {
     position: "absolute",
-    ...block.pos,
+    ...posForCenter,
+    ...textAlignStyle,
     fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
     fontSize: s.fontSize,
     fontWeight: s.weight,
@@ -210,9 +230,7 @@ function TextBlockEl({
       "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
     transitionDelay: `${block.delay ?? 0}ms`,
     opacity: visible ? (block.opacity ?? 1) : 0,
-    transform: visible
-      ? `translateY(0) rotate(${block.rotate ?? 0}deg)`
-      : `translateY(12px) rotate(${block.rotate ?? 0}deg)`,
+    transform: visible ? baseTransform : hiddenTransform,
     userSelect: block.voiceId ? "auto" : "none",
   };
 
