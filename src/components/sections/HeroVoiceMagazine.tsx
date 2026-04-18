@@ -1,18 +1,17 @@
 "use client";
 
 /**
- * HeroVoiceMagazine — 感情のタイポグラフィ（v10・広告ポスター型）
+ * HeroVoiceMagazine — プレミアム・ボイス型（v11・密度ある誌面）
  * ----------------------------------------------------------------------
- * 2026-04-18 方針刷新:
- *   - 白背景 × 大きな余白 × 3 色（黒・赤・青）のみ
- *   - レビュー一覧ではなく「感情のタイポグラフィ」として見せる
- *   - 中央に最大コピー「諦めかけた時に、出会えた。」
- *   - 周辺に短い声の断片を 4 つ散らす（強弱でリズム）
- *   - 下部に属性行（誰の声か、小さく）+ 右下 CTA
- *   - 回転・装飾記号・緑/黄/ピンクは廃止（ノイズ除去）
+ * 2026-04-18 方針再刷新（リファレンス: プレミアム・ボイス｜お客様の声）:
+ *   - 白背景 × 密度の中の呼吸（ミニマルではない）
+ *   - 中央に最大の「悩み/不安の言葉」を赤で特大（× 解決ではなく課題を真ん中に）
+ *   - 周囲に「答え」の声 7-8 個を青・緑・黒で散らす
+ *   - ！マーク 3 個（赤・赤・ピンク）を装飾アンカーとして配置
+ *   - 結論風の一言「これが正解だった」を右下に再掲
  *
  * 使用色:
- *   black #0A0A0A（本体）/ red #FF2D2D（感情ピーク 1 箇所）/ blue #002FA7（信頼 1 箇所）
+ *   black #0A0A0A / red #FF2D2D / blue #002FA7 / green #00A870 / pink #FF0080
  */
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -77,24 +76,24 @@ const COLOR: Record<Color, string> = {
   green: "#00A870",
 };
 
-/* PC サイズ定義（広告ポスター型） */
+/* PC サイズ定義（プレミアム・ボイス型：中央大 PAIN、周囲 md 声群） */
 const SIZE_PC: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  mega: { fontSize: "clamp(96px, 11vw, 168px)", weight: 900, lh: 0.88, ls: "-0.06em" },
-  xxl:  { fontSize: "clamp(72px, 8.4vw, 132px)", weight: 900, lh: 0.94, ls: "-0.05em" },
-  xl:   { fontSize: "clamp(36px, 4vw, 64px)",    weight: 900, lh: 1.2,  ls: "-0.03em" },
-  lg:   { fontSize: "clamp(24px, 2.4vw, 36px)",  weight: 900, lh: 1.2,  ls: "-0.02em" },
-  md:   { fontSize: "clamp(16px, 1.5vw, 20px)",  weight: 500, lh: 1.6,  ls: "0em" },
+  mega: { fontSize: "clamp(80px, 9vw, 132px)",   weight: 900, lh: 0.92, ls: "-0.05em" },
+  xxl:  { fontSize: "clamp(56px, 6.2vw, 96px)",  weight: 900, lh: 1.0,  ls: "-0.04em" },
+  xl:   { fontSize: "clamp(32px, 3.4vw, 52px)",  weight: 900, lh: 1.1,  ls: "-0.03em" },
+  lg:   { fontSize: "clamp(22px, 2.2vw, 32px)",  weight: 900, lh: 1.25, ls: "-0.02em" },
+  md:   { fontSize: "clamp(16px, 1.5vw, 22px)",  weight: 700, lh: 1.5,  ls: "0em" },
   sm:   { fontSize: "clamp(13px, 1.1vw, 15px)",  weight: 500, lh: 1.6,  ls: "0em" },
   xs:   { fontSize: "12px",                       weight: 500, lh: 1.7,  ls: "0.04em" },
 };
 
-/* Mobile サイズ定義（375 × 700 最適化） */
+/* Mobile サイズ定義 */
 const SIZE_MB: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  mega: { fontSize: "56px", weight: 900, lh: 0.9,  ls: "-0.05em" },
-  xxl:  { fontSize: "36px", weight: 900, lh: 0.98, ls: "-0.04em" },
-  xl:   { fontSize: "22px", weight: 900, lh: 1.25, ls: "-0.02em" },
+  mega: { fontSize: "40px", weight: 900, lh: 0.95, ls: "-0.05em" },
+  xxl:  { fontSize: "32px", weight: 900, lh: 1.0,  ls: "-0.04em" },
+  xl:   { fontSize: "22px", weight: 900, lh: 1.2,  ls: "-0.02em" },
   lg:   { fontSize: "17px", weight: 900, lh: 1.3,  ls: "-0.01em" },
-  md:   { fontSize: "13px", weight: 500, lh: 1.5,  ls: "0em" },
+  md:   { fontSize: "13px", weight: 700, lh: 1.5,  ls: "0em" },
   sm:   { fontSize: "11px", weight: 500, lh: 1.5,  ls: "0em" },
   xs:   { fontSize: "10px", weight: 500, lh: 1.6,  ls: "0.02em" },
 };
@@ -144,61 +143,78 @@ type TextBlock = {
    ========================================================================== */
 const TEXT_BLOCKS_PC: TextBlock[] = [
   // ===== ヘッダーラベル =====
-  { key: "p-label", text: "VOICE / お客様の声", size: "xs", color: "black", uppercase: false, pos: { top: "5%", left: "6%" }, delay: 0, zIndex: 2 },
-  { key: "p-label-r", text: "Testimonials — Vol. 04", size: "xs", color: "black", uppercase: false, pos: { top: "5%", right: "6%" }, delay: 0, zIndex: 2 },
+  { key: "p-label", text: "プレミアム・ボイス｜お客様の声", size: "xs", color: "black", pos: { top: "4%", left: "4%" }, delay: 0, zIndex: 2 },
+  { key: "p-label-r", text: "Testimonials — Vol. 04", size: "xs", color: "black", textAlignRight: true, pos: { top: "4%", right: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== 衛星 01: 上左（初見の感情） =====
-  { key: "p-s1-num", text: "No. 01", size: "xs", color: "black", pos: { top: "16%", left: "6%" }, delay: 450, zIndex: 2 },
-  { key: "p-s1", text: "「ここに住みたい、と思えた。」", size: "sm", color: "black", pos: { top: "19%", left: "6%" }, delay: 500, voiceId: "202180", zIndex: 2 },
-  { key: "p-s1-attr", text: "— 斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "22%", left: "6%" }, delay: 550, zIndex: 2 },
+  // ===== 上段 3 つの声（密度高く） =====
+  { key: "p-v1", text: "「諦めかけた時、出会えた。」", size: "md", color: "blue", pos: { top: "11%", left: "4%" }, delay: 200, voiceId: "216803", zIndex: 2 },
+  { key: "p-v2", text: "嘘のない、標準仕様。", size: "md", color: "black", pos: { top: "11%", left: "34%" }, delay: 250, voiceId: "208787", zIndex: 2 },
+  { key: "p-v3", text: "「これが正解だった」と、心から言える。", size: "md", color: "blue", textAlignRight: true, pos: { top: "11%", right: "4%" }, delay: 300, voiceId: "199927", zIndex: 2 },
 
-  // ===== 衛星 02: 上右（標準仕様への満足） =====
-  { key: "p-s2-num", text: "No. 02", size: "xs", color: "black", textAlignRight: true, pos: { top: "16%", right: "6%" }, delay: 600, zIndex: 2 },
-  { key: "p-s2", text: "「標準で、十分だった。」", size: "sm", color: "black", textAlignRight: true, pos: { top: "19%", right: "6%" }, delay: 650, voiceId: "208787", zIndex: 2 },
-  { key: "p-s2-attr", text: "— 奈良市 A様邸", size: "xs", color: "black", textAlignRight: true, pos: { top: "22%", right: "6%" }, delay: 700, zIndex: 2 },
+  // ===== 装飾 ! (1) 右上 =====
+  { key: "p-excl-1", text: "！", size: "xxl", color: "red", pos: { top: "17%", right: "28%" }, delay: 400, zIndex: 1, rotate: -6 },
 
-  // ===== 中央: ピックアップ（主役） =====
-  { key: "p-pick", text: "— PICK UP —", size: "xs", color: "red", centerX: true, pos: { top: "31%" }, delay: 120, zIndex: 2 },
-  { key: "p-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "36%" }, delay: 150, zIndex: 2 },
-  { key: "p-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "46%" }, delay: 300, voiceId: "216803", zIndex: 2 },
-  { key: "p-rule", text: "─────────", size: "xs", color: "black", centerX: true, pos: { top: "72%" }, delay: 1080, zIndex: 2 },
-  { key: "p-hero-attr", text: "— 奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", centerX: true, pos: { top: "75%" }, delay: 1100, zIndex: 2 },
+  // ===== 中央: PAIN POINT（HUGE RED・2 行、行間 mega lh 0.92 分を確保） =====
+  { key: "p-pain-lead", text: "2年近く、", size: "xl", color: "black", pos: { top: "24%", left: "4%" }, delay: 500, zIndex: 2 },
+  { key: "p-pain-1", text: "土地が、", size: "mega", color: "red", pos: { top: "32%", left: "4%" }, delay: 600, zIndex: 2 },
+  { key: "p-pain-2", text: "見つからなかった。", size: "mega", color: "red", pos: { top: "50%", left: "4%" }, delay: 650, voiceId: "199927", zIndex: 2 },
 
-  // ===== 衛星 03: 下右（アフター・唯一の青アクセント・CTA と衝突しない高さ） =====
-  { key: "p-s3-num", text: "No. 03", size: "xs", color: "black", textAlignRight: true, pos: { top: "75%", right: "6%" }, delay: 750, zIndex: 2 },
-  { key: "p-s3", text: "「建てた後も、安心。」", size: "lg", color: "blue", textAlignRight: true, pos: { top: "78%", right: "6%" }, delay: 800, voiceId: "256807", zIndex: 2 },
-  { key: "p-s3-attr", text: "— 京田辺市 K様邸", size: "xs", color: "black", textAlignRight: true, pos: { top: "86%", right: "6%" }, delay: 850, zIndex: 2 },
+  // ===== 装飾 ! (2) PAIN の右隣（最大） =====
+  { key: "p-excl-2", text: "！", size: "mega", color: "red", pos: { top: "38%", right: "6%" }, delay: 700, zIndex: 1, rotate: 8 },
+
+  // ===== PAIN の発話者名 =====
+  { key: "p-pain-attr", text: "— 奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", pos: { top: "66%", left: "4%" }, delay: 1100, zIndex: 2 },
+
+  // ===== 下段: 解決・満足の声（緑・黒・青のグループ） =====
+  { key: "p-v4", text: "どんな時も、駆けつけてくれた。", size: "md", color: "green", pos: { top: "72%", left: "4%" }, delay: 800, voiceId: "256807", zIndex: 2 },
+  { key: "p-v5", text: "追加費用は、ゼロ。", size: "md", color: "green", pos: { top: "72%", left: "36%" }, delay: 850, voiceId: "208787", zIndex: 2 },
+
+  // ===== 装飾 ! (3) ピンク =====
+  { key: "p-excl-3", text: "！", size: "lg", color: "pink", pos: { top: "70%", left: "58%" }, delay: 900, zIndex: 1, rotate: -12 },
+
+  // ===== 下段 2 段目 =====
+  { key: "p-v6", text: "「標準設備に、震えた。」", size: "md", color: "black", pos: { top: "81%", left: "4%" }, delay: 950, voiceId: "279070", zIndex: 2 },
+  { key: "p-v7", text: "やっと、ここに決められた。", size: "md", color: "blue", pos: { top: "81%", left: "36%" }, delay: 1000, voiceId: "202180", zIndex: 2 },
+
+  // ===== 下段 右下: 結論風の再掲（青・2 行） =====
+  { key: "p-v8-1", text: "「これが正解だった」と、", size: "md", color: "blue", textAlignRight: true, pos: { top: "75%", right: "4%" }, delay: 1050, zIndex: 2 },
+  { key: "p-v8-2", text: "心から言える。", size: "lg", color: "blue", textAlignRight: true, pos: { top: "79%", right: "4%" }, delay: 1080, voiceId: "199927", zIndex: 2 },
 ];
 
 /* =============================================================================
    Mobile レイアウト（375 × 700）— PC と同じ広告ポスター構造を縦方向に圧縮
    ========================================================================== */
 const TEXT_BLOCKS_MB: TextBlock[] = [
-  // ===== ヘッダーラベル =====
-  { key: "m-label", text: "VOICE / お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
-  { key: "m-label-r", text: "Vol. 04", size: "xs", color: "black", textAlignRight: true, pos: { top: "3%", right: "4%" }, delay: 0, zIndex: 2 },
+  // ===== ヘッダー =====
+  { key: "m-label", text: "プレミアム・ボイス｜お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
 
-  // ===== 衛星 01: 上左 =====
-  { key: "m-s1-num", text: "No. 01", size: "xs", color: "black", pos: { top: "10%", left: "4%" }, delay: 450, zIndex: 2 },
-  { key: "m-s1", text: "「ここに住みたい、と思えた。」", size: "sm", color: "black", pos: { top: "13%", left: "4%" }, delay: 500, voiceId: "202180", zIndex: 2 },
-  { key: "m-s1-attr", text: "— 斑鳩町 I様邸", size: "xs", color: "black", pos: { top: "16%", left: "4%" }, delay: 550, zIndex: 2 },
+  // ===== 上段の声 2 つ =====
+  { key: "m-v1", text: "「諦めかけた時、出会えた。」", size: "sm", color: "blue", pos: { top: "8%", left: "4%" }, delay: 200, voiceId: "216803", zIndex: 2 },
+  { key: "m-v2", text: "嘘のない、標準仕様。", size: "sm", color: "black", pos: { top: "12%", right: "4%" }, delay: 250, voiceId: "208787", textAlignRight: true, zIndex: 2 },
 
-  // ===== 中央: ピックアップ =====
-  { key: "m-pick", text: "— PICK UP —", size: "xs", color: "red", centerX: true, pos: { top: "23%" }, delay: 120, zIndex: 2 },
-  { key: "m-lead", text: "諦めかけた時に、", size: "xl", color: "black", centerX: true, pos: { top: "28%" }, delay: 150, zIndex: 2 },
-  { key: "m-hero", text: "出会えた。", size: "mega", color: "red", centerX: true, pos: { top: "37%" }, delay: 300, voiceId: "216803", zIndex: 2 },
-  { key: "m-rule", text: "──────", size: "xs", color: "black", centerX: true, pos: { top: "54%" }, delay: 1080, zIndex: 2 },
-  { key: "m-hero-attr", text: "— 奈良市 M様邸（30代ご夫婦）", size: "xs", color: "black", centerX: true, pos: { top: "57%" }, delay: 1100, zIndex: 2 },
+  // ===== 装飾 ! 右 =====
+  { key: "m-excl-1", text: "！", size: "xxl", color: "red", pos: { top: "17%", right: "10%" }, delay: 400, zIndex: 1, rotate: -6 },
 
-  // ===== 衛星 02: 下左 =====
-  { key: "m-s2-num", text: "No. 02", size: "xs", color: "black", pos: { top: "65%", left: "4%" }, delay: 600, zIndex: 2 },
-  { key: "m-s2", text: "「標準で、十分だった。」", size: "sm", color: "black", pos: { top: "68%", left: "4%" }, delay: 650, voiceId: "208787", zIndex: 2 },
-  { key: "m-s2-attr", text: "— 奈良市 A様邸", size: "xs", color: "black", pos: { top: "71%", left: "4%" }, delay: 700, zIndex: 2 },
+  // ===== 中央: PAIN（HUGE 赤・2 行） =====
+  { key: "m-pain-lead", text: "2年近く、", size: "xl", color: "black", pos: { top: "22%", left: "4%" }, delay: 500, zIndex: 2 },
+  { key: "m-pain-1", text: "土地が、", size: "mega", color: "red", pos: { top: "28%", left: "4%" }, delay: 600, zIndex: 2 },
+  { key: "m-pain-2", text: "見つからなかった。", size: "mega", color: "red", pos: { top: "38%", left: "4%" }, delay: 650, voiceId: "199927", zIndex: 2 },
 
-  // ===== 衛星 03: 下右（青アクセント） =====
-  { key: "m-s3-num", text: "No. 03", size: "xs", color: "black", textAlignRight: true, pos: { top: "77%", right: "4%" }, delay: 750, zIndex: 2 },
-  { key: "m-s3", text: "「建てた後も、安心。」", size: "lg", color: "blue", textAlignRight: true, pos: { top: "80%", right: "4%" }, delay: 800, voiceId: "256807", zIndex: 2 },
-  { key: "m-s3-attr", text: "— 京田辺市 K様邸", size: "xs", color: "black", textAlignRight: true, pos: { top: "88%", right: "4%" }, delay: 850, zIndex: 2 },
+  // ===== 装飾 ! ピンク =====
+  { key: "m-excl-2", text: "！", size: "xl", color: "pink", pos: { top: "48%", right: "6%" }, delay: 900, zIndex: 1, rotate: -10 },
+
+  // ===== PAIN 発話者 =====
+  { key: "m-pain-attr", text: "— 奈良市 M様邸（30代ご夫婦・土地探し 2年）", size: "xs", color: "black", pos: { top: "55%", left: "4%" }, delay: 1100, zIndex: 2 },
+
+  // ===== 下段の解決の声 =====
+  { key: "m-v4", text: "どんな時も、駆けつけてくれた。", size: "sm", color: "green", pos: { top: "62%", left: "4%" }, delay: 800, voiceId: "256807", zIndex: 2 },
+  { key: "m-v5", text: "追加費用は、ゼロ。", size: "sm", color: "green", pos: { top: "66%", left: "4%" }, delay: 850, voiceId: "208787", zIndex: 2 },
+  { key: "m-v6", text: "「標準設備に、震えた。」", size: "sm", color: "black", pos: { top: "70%", left: "4%" }, delay: 950, voiceId: "279070", zIndex: 2 },
+  { key: "m-v7", text: "やっと、ここに決められた。", size: "sm", color: "black", pos: { top: "74%", left: "4%" }, delay: 1000, voiceId: "202180", zIndex: 2 },
+
+  // ===== 下段 右下: 結論風（青・2 行） =====
+  { key: "m-v8-1", text: "「これが正解だった」と、", size: "sm", color: "blue", textAlignRight: true, pos: { top: "80%", right: "4%" }, delay: 1050, zIndex: 2 },
+  { key: "m-v8-2", text: "心から言える。", size: "lg", color: "blue", textAlignRight: true, pos: { top: "84%", right: "4%" }, delay: 1080, voiceId: "199927", zIndex: 2 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
