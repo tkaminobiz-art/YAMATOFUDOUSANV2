@@ -391,10 +391,10 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
             writingMode: "vertical-rl",
             textOrientation: "mixed",
             fontFamily: TOKENS.serif,
-            fontSize: "clamp(36px, 4vw, 58px)",
+            fontSize: "clamp(44px, 5vw, 72px)",
             fontWeight: 600,
-            lineHeight: 1.6,
-            letterSpacing: "0.08em",
+            lineHeight: 1.55,
+            letterSpacing: "0.06em",
             color: TOKENS.ink,
             textDecoration: "none",
             ...revealStyle(visible, DELAY.spine, 0),
@@ -464,6 +464,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       {/* ============================================================
          Chapter 5 ── アフター: 建てた後も、続く安心
          「そして今も、」で時間の継続を示す narrative 接続
+         marginTop: -10px で上に寄せて「いつでも、駆けつけ」と被らないように
          ============================================================ */}
       <div
         style={{
@@ -475,7 +476,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           fontWeight: 400,
           letterSpacing: "0.12em",
           color: TOKENS.sub,
-          paddingTop: "clamp(4px, 0.6vw, 8px)",
+          marginTop: "clamp(-14px, -1vw, -8px)",
           ...revealStyle(visible, 1100),
         }}
       >
@@ -869,6 +870,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           fontWeight: 400,
           letterSpacing: "0.12em",
           color: TOKENS.sub,
+          marginTop: "-8px",
           ...revealStyle(visible, 1020),
         }}
       >
@@ -927,9 +929,9 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           href="/voice/199927"
           style={{
             fontFamily: TOKENS.serif,
-            fontSize: "26px",
+            fontSize: "32px",
             fontWeight: 600,
-            letterSpacing: "0.02em",
+            letterSpacing: "0.01em",
             color: TOKENS.ink,
             textDecoration: "none",
           }}
