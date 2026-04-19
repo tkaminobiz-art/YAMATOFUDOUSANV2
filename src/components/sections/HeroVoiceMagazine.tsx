@@ -1,29 +1,25 @@
 "use client";
 
 /**
- * HeroVoiceMagazine — 3×3 グリッド型（v12・全声同サイズ・色分けの序列）
+ * HeroVoiceMagazine — v20「静かな信頼」編集型（CSS Grid 12×16 baseline）
  * ----------------------------------------------------------------------
- * 2026-04-18 設計思想の転換:
- *   - サイズで強弱を付けるのではなく、同サイズで並べて「色」で意味を分類する
- *   - スイス・タイポグラフィ（Müller-Brockmann）に近い厳格なグリッド
- *   - PC: 3 列 × 3 行 = 9 スロット、全声 lg サイズ、weight 900
- *   - Mobile: 縦 1 列スタック（3×3 は幅不足）、同サイズ同色分類
+ * 方針:
+ *   - タイポグラフィ: Noto Serif JP 400-500 (感情) × Noto Sans JP 400 (観察) × Inter 500 (メタ)
+ *   - カラー: Oak Brown / Warm Amber / Forest Green / Charcoal / Linen White (やまとブランド)
+ *   - レイアウト: CSS Grid 12 col × 16 row baseline（absolute 寄せ集め廃止）
+ *   - 2026 trend: 既存 grain-overlay (noise) を継承。追加装飾なし = 静けさ
  *
- * 色の意味づけ（ストーリーを色が語る）:
- *   赤 #FF2D2D  = 課題・不安（Pain）
- *   青 #002FA7  = 決断・出会い（Decision）
- *   緑 #00A870  = 満足・安心（After）
- *   黒 #0A0A0A  = 事実・観察（Neutral）
+ * 感情導線:
+ *   Pain (Oak 過去) → Decision (Amber 黄金) → After (Forest 継続) → 結論 (Charcoal 縦組 spine)
  *
- * 並び順（9 マスの色配置）— 左→右・上→下で「Pain → Decision → After」が流れる:
- *   Row 1 :  赤 ──  赤 ──  青
- *   Row 2 :  青 ──  青 ──  黒
- *   Row 3 :  緑 ──  緑 ──  黒
+ * design-critic 改善項目 (v19 → v20):
+ *   - Noto Sans JP 900 一辺倒 → Serif × Sans 2 フォント対比
+ *   - Neo Japan ビビッド信号色 → やまと和モダンパレット
+ *   - absolute 寄せ集め → CSS Grid 12×16 baseline
  */
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { MAGAZINE_FIGURES } from "@/data/voiceHome";
 
 /* ---------- prefers-reduced-motion ---------- */
 const PREFERS_REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
@@ -62,7 +58,7 @@ function useRevealContainer<T extends HTMLElement>() {
           }
         });
       },
-      { threshold: 0.2 },
+      { threshold: 0.15 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -70,327 +66,848 @@ function useRevealContainer<T extends HTMLElement>() {
   return { ref, visible: reduced || visible };
 }
 
-/* ---------- 型 ---------- */
-type Size = "mega" | "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
-type Color = "black" | "red" | "blue" | "pink" | "yellow" | "green";
+/* ---------- デザイントークン（やまと F-1〜F-8 準拠） ---------- */
+const TOKENS = {
+  // Colors
+  bg:      "#FAFAF7",
+  ink:     "#1C1C1C",
+  sub:     "#777777",
+  line:    "#D9D0BE",
+  oak:     "#7B6544",   // Pain — 時間の重み
+  amber:   "#C4851F",   // Decision — 黄金の瞬間
+  forest:  "#6B8F71",   // After — 継続の安心
 
-const COLOR: Record<Color, string> = {
-  black: "#0A0A0A",
-  red: "#FF2D2D",
-  blue: "#002FA7",
-  pink: "#FF0080",
-  yellow: "#FFD600",
-  green: "#00A870",
-};
+  // Font families
+  serif:   "var(--font-noto-serif), 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif",
+  sans:    "var(--font-noto), 'Noto Sans JP', sans-serif",
+  latin:   "var(--font-inter-var), 'Inter', sans-serif",
+} as const;
 
-/* PC サイズ定義（3×3 グリッド・誌面ヘッドライン調） */
-const SIZE_PC: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  mega: { fontSize: "clamp(80px, 9vw, 132px)",   weight: 900, lh: 0.92, ls: "-0.05em" },
-  xxl:  { fontSize: "clamp(56px, 6.2vw, 96px)",  weight: 900, lh: 1.0,  ls: "-0.04em" },
-  xl:   { fontSize: "clamp(32px, 3.4vw, 52px)",  weight: 900, lh: 1.1,  ls: "-0.03em" },
-  lg:   { fontSize: "clamp(22px, 2.0vw, 28px)",  weight: 900, lh: 1.22, ls: "-0.03em" },
-  md:   { fontSize: "clamp(14px, 1.3vw, 18px)",  weight: 500, lh: 1.55, ls: "0em" },
-  sm:   { fontSize: "clamp(12px, 1.0vw, 14px)",  weight: 500, lh: 1.6,  ls: "0em" },
-  xs:   { fontSize: "11px",                       weight: 500, lh: 1.7,  ls: "0.08em" },
-};
+/* ---------- アニメーション遅延（stagger） ---------- */
+const DELAY = {
+  headerL: 0,
+  headerR: 80,
+  pain1:   180,
+  pain2:   260,
+  hero1:   420,
+  hero2:   540,
+  attr:    700,
+  spineMeta: 380,
+  spine:   500,
+  sat1:    760,
+  sat2:    820,
+  sat3:    880,
+  sat4:    940,
+  sat5:    1000,
+  sat6:    1060,
+  footer:  1160,
+  cta:     1220,
+} as const;
 
-/* Mobile サイズ定義（縦 1 列、誌面調・参照画像準拠） */
-const SIZE_MB: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
-  mega: { fontSize: "52px", weight: 900, lh: 0.92, ls: "-0.05em" }, // 縦組 spine 専用の大判
-  xxl:  { fontSize: "42px", weight: 900, lh: 0.95, ls: "-0.04em" }, // Hero 3 行用
-  xl:   { fontSize: "28px", weight: 900, lh: 1.1,  ls: "-0.03em" }, // 「出会えた。」mini-hero
-  lg:   { fontSize: "19px", weight: 900, lh: 1.25, ls: "-0.02em" }, // Pain 1・強 satellite
-  md:   { fontSize: "14px", weight: 700, lh: 1.45, ls: "0em" },     // 通常 satellite
-  sm:   { fontSize: "11px", weight: 500, lh: 1.5,  ls: "0em" },     // minor
-  xs:   { fontSize: "10px", weight: 500, lh: 1.6,  ls: "0.08em" },  // 属性・ヘッダー
-};
-
-type BlockPos = {
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-};
-
-type TextBlock = {
-  key: string;
-  text: string;
-  size: Size;
-  color?: Color;
-  vertical?: boolean;
-  rotate?: number;
-  uppercase?: boolean;
-  opacity?: number;
-  pos: BlockPos;
-  delay?: number;
-  voiceId?: string;
-  zIndex?: number;
-  /** 水平中央揃え（left:50% + translateX(-50%)） */
-  centerX?: boolean;
-  /** 右揃え（テキストを右端基準で揃える） */
-  textAlignRight?: boolean;
-  /** 下線装飾（1 箇所のアクセント用・色指定） */
-  underline?: Color;
-};
-
-/* =============================================================================
-   PC レイアウト（1440 × 790）— 感情のタイポグラフィ・広告ポスター型
-   ----------------------------------------------------------------------------
-   方針:
-     - 白背景 × 大きな余白 × 黒+赤+青の 3 色のみ
-     - 「諦めかけた時に、」→「出会えた。」を中央の最大コピーに
-     - 周辺に短いフレーズ 4 つを散らす（強弱でリズム）
-     - 最下部に属性行（誰の声か）と CTA
-     - 回転・装飾記号（！・→・非公開）・緑・黄・ピンクは廃止
-   ----------------------------------------------------------------------------
-   Zone 配置:
-     [TL] VOICE ラベル          [TR] なし
-     [ML 上] 諦めかけた時に、    [MR] 標準で、十分だった。
-     [M 中央] 出会えた。 ← mega / red（感情ピーク）
-     [ML 下] ここに住みたい。    [MR 下] 建てた後も、安心。 (blue)
-     [BL] 属性行 3 つ            [BR] CTA
-   ========================================================================== */
-const TEXT_BLOCKS_PC: TextBlock[] = [
-  // ===== ヘッダー（左: 誌面タイトル Latin+JP の 2 段、右: 号数） =====
-  { key: "p-label-en", text: "VOICE", size: "xs", color: "black", uppercase: true, pos: { top: "4%", left: "3%" }, delay: 0, zIndex: 3 },
-  { key: "p-label-jp", text: "お客様の声", size: "sm", color: "black", pos: { top: "7%", left: "3%" }, delay: 50, zIndex: 3 },
-  { key: "p-label-r",  text: "Testimonials — Vol. 04", size: "xs", color: "black", uppercase: true, textAlignRight: true, pos: { top: "4%", right: "3%" }, delay: 0, zIndex: 3 },
-  { key: "p-label-r2", text: "2026 Spring / Yamato Real Estate", size: "xs", color: "black", textAlignRight: true, pos: { top: "7%", right: "3%" }, delay: 50, zIndex: 3 },
-
-  // ===== 上部左: PAIN（赤・xl・2 行）=====
-  { key: "p-r1-a", text: "「2年、",                   size: "xl", color: "red", pos: { top: "15%", left: "3%" }, delay: 200, zIndex: 2 },
-  { key: "p-r1-b", text: "見つからなかった。」",       size: "xl", color: "red", pos: { top: "22%", left: "3%" }, delay: 240, voiceId: "199927", zIndex: 2 },
-
-  // ===== 上部中右: PAIN 2（赤・xl・2 行）=====
-  { key: "p-r2-a", text: "「他社は、",                 size: "xl", color: "red", pos: { top: "15%", left: "38%" }, delay: 280, zIndex: 2 },
-  { key: "p-r2-b", text: "標準が低かった。」",         size: "xl", color: "red", pos: { top: "22%", left: "38%" }, delay: 320, voiceId: "279070", zIndex: 2 },
-
-  // ===== 上部右小: After 1（緑・md）=====
-  { key: "p-g1", text: "「追加費用は、ゼロだった。」", size: "md", color: "green", pos: { top: "32%", left: "38%" }, delay: 360, voiceId: "208787", zIndex: 2 },
-
-  // ===== HERO: Decision の頂点（青・mega・2 行、左寄り大判）=====
-  { key: "p-hero-a", text: "「ここに住みたい、",       size: "mega", color: "blue", pos: { top: "36%", left: "1%" },  delay: 420, zIndex: 3 },
-  { key: "p-hero-b", text: "と思えた。」",             size: "mega", color: "blue", pos: { top: "53%", left: "6%" },  delay: 480, voiceId: "202180", zIndex: 3 },
-
-  // ===== 右 spine: 黒縦組（Neutral 結論）— 縦書きは右から読むので 正解だったと、を右端に =====
-  { key: "p-vert-1", text: "正解だったと、", size: "xxl", color: "black", vertical: true, pos: { top: "12%", right: "3%" },  delay: 540, zIndex: 1 },
-  { key: "p-vert-2", text: "言える。",       size: "xxl", color: "black", vertical: true, pos: { top: "12%", right: "12%" }, delay: 580, voiceId: "199927", zIndex: 1 },
-
-  // ===== 中段右: Decision satellite（青・md）=====
-  { key: "p-sat-b", text: "諦めかけた時、出会えた。", size: "lg", color: "blue", pos: { top: "72%", left: "44%" }, delay: 620, voiceId: "216803", zIndex: 2 },
-
-  // ===== 下部左: Neutral（黒・lg）=====
-  { key: "p-black-1", text: "嘘のない、標準仕様だった。", size: "lg", color: "black", pos: { top: "81%", left: "3%" }, delay: 660, voiceId: "208787", zIndex: 2 },
-
-  // ===== 下部中: Minor（黒・sm）=====
-  { key: "p-black-2", text: "やっと、決められた。", size: "md", color: "black", pos: { top: "90%", left: "38%" }, delay: 700, voiceId: "199927", zIndex: 2 },
-
-  // ===== 下部右: After 2（緑・lg・下線アクセント）=====
-  { key: "p-g2", text: "いつでも駆けつけてくれる。", size: "lg", color: "green", underline: "green", pos: { top: "90%", left: "58%" }, delay: 740, voiceId: "256807", zIndex: 2 },
-
-  // ===== フッター =====
-  { key: "p-footer-l", text: "奈良市・斑鳩町・京田辺市・生駒市 ほか、お客様 9 組の声より", size: "xs", color: "black", pos: { top: "96%", left: "3%" }, delay: 900, zIndex: 3 },
-  { key: "p-footer-r", text: "Editorial / Yamato Real Estate, 2026", size: "xs", color: "black", textAlignRight: true, pos: { top: "96%", right: "3%" }, delay: 950, zIndex: 3 },
-];
-
-/* =============================================================================
-   Mobile レイアウト（375 × 700）— PC と同じ広告ポスター構造を縦方向に圧縮
-   ========================================================================== */
-const TEXT_BLOCKS_MB: TextBlock[] = [
-  // ===== ヘッダー =====
-  { key: "m-label-en", text: "VOICE", size: "xs", color: "black", uppercase: true, pos: { top: "2%", left: "4%" }, delay: 0, zIndex: 3 },
-  { key: "m-label-jp", text: "お客様の声", size: "xs", color: "black", pos: { top: "4.5%", left: "4%" }, delay: 50, zIndex: 3 },
-  { key: "m-label-r",  text: "Vol. 04 — 2026", size: "xs", color: "black", uppercase: true, textAlignRight: true, pos: { top: "3%", right: "4%" }, delay: 0, zIndex: 3 },
-
-  // ===== 右 spine: 黒縦組 mega・単一列 — ページを貫通する巨大 spine =====
-  { key: "m-vert", text: "正解だったと、言える。", size: "mega", color: "black", vertical: true, pos: { top: "8%", right: "4%" }, delay: 540, voiceId: "199927", zIndex: 1 },
-
-  // ===== PAIN 1（赤・xl・1 行）Tier 2 = ストーリー冒頭 punch =====
-  { key: "m-r1", text: "「2年、見つからなかった」", size: "xl", color: "red", pos: { top: "10%", left: "1%" }, delay: 200, voiceId: "199927", zIndex: 2 },
-
-  // ===== PAIN 2（赤・md・2 行・中央右寄り）Tier 4 = 補足 =====
-  { key: "m-r2-a", text: "「他社は、標準が",   size: "md", color: "red", pos: { top: "16%", left: "44%" }, delay: 280, zIndex: 2 },
-  { key: "m-r2-b", text: "低かった。」",       size: "md", color: "red", pos: { top: "19%", left: "52%" }, delay: 320, voiceId: "279070", zIndex: 2 },
-
-  // ===== HERO（青・xxl・3 行）Tier 1 =====
-  { key: "m-hero-a", text: "「ここに",     size: "xxl", color: "blue", pos: { top: "24%", left: "1%" }, delay: 420, zIndex: 3 },
-  { key: "m-hero-b", text: "住みたい、",    size: "xxl", color: "blue", pos: { top: "30%", left: "4%" }, delay: 460, zIndex: 3 },
-  { key: "m-hero-c", text: "と思えた。」",  size: "xxl", color: "blue", pos: { top: "36%", left: "7%" }, delay: 500, voiceId: "202180", zIndex: 3 },
-
-  // ===== Satellites（Tier 3 に底上げして誌面の punch を増やす） =====
-
-  // Block A: 諦めかけた時、(Tier 4 minor) / 出会えた。(Tier 2 sub-hero)
-  { key: "m-sat-b",   text: "諦めかけた時、",   size: "md", color: "blue",  pos: { top: "44%", left: "3%" }, delay: 620, zIndex: 2 },
-  { key: "m-sat-b2",  text: "出会えた。",       size: "xl", color: "blue",  pos: { top: "47.5%", left: "8%" }, delay: 640, voiceId: "216803", zIndex: 2 },
-
-  // Block B: 追加費用（緑 Tier 3）
-  { key: "m-g1", text: "「追加費用は、ゼロだった。」", size: "lg", color: "green", pos: { top: "55%", left: "3%" }, delay: 700, voiceId: "208787", zIndex: 2 },
-
-  // Block C: 嘘のない、/ 標準仕様だった。（黒 Tier 3 2 行）
-  { key: "m-black-1",  text: "嘘のない、",       size: "lg", color: "black", pos: { top: "61%", left: "3%" }, delay: 660, zIndex: 2 },
-  { key: "m-black-1b", text: "標準仕様だった。", size: "lg", color: "black", pos: { top: "65%", left: "3%" }, delay: 680, voiceId: "208787", zIndex: 2 },
-
-  // Block D: いつでも駆けつけてくれる。（緑 Tier 3・下線アクセント）
-  { key: "m-g2", text: "いつでも駆けつけてくれる。", size: "lg", color: "green", underline: "green", pos: { top: "71%", left: "3%" }, delay: 740, voiceId: "256807", zIndex: 2 },
-
-  // Block E: やっと、決められた。（黒 Tier 2・結末 punch）
-  { key: "m-black-2", text: "やっと、決められた。", size: "xl", color: "black", pos: { top: "77%", left: "8%" }, delay: 780, voiceId: "199927", zIndex: 2 },
-
-  // ===== フッター（右側は spine と x 衝突するため削除。header の Vol.04—2026 と情報的にも冗長） =====
-  { key: "m-footer-l", text: "奈良・京都／お客様 9 組の声より", size: "xs", color: "black", pos: { top: "87%", left: "4%" }, delay: 900, zIndex: 3 },
-];
-
-/* ---------- TextBlock 描画 ---------- */
-function TextBlockEl({
-  block,
-  visible,
-  sizeMap,
-}: {
-  block: TextBlock;
-  visible: boolean;
-  sizeMap: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }>;
-}) {
-  const s = sizeMap[block.size];
-  const color = COLOR[block.color ?? "black"];
-
-  // centerX: left 50% + translateX(-50%) で水平中央に揃える
-  const posForCenter = block.centerX ? { ...block.pos, left: "50%" } : block.pos;
-
-  // textAlignRight: right 基準で text-align:right にする（行末を右に揃えたい時）
-  const textAlignStyle: Pick<React.CSSProperties, "textAlign"> = block.textAlignRight
-    ? { textAlign: "right" }
-    : {};
-
-  // transform: センタリング用の translateX(-50%) と rotate を合成
-  const translateXForCenter = block.centerX ? "-50%" : "0";
-  const baseTransform = `translate3d(${translateXForCenter}, 0, 0) rotate(${block.rotate ?? 0}deg)`;
-  const hiddenTransform = `translate3d(${translateXForCenter}, 12px, 0) rotate(${block.rotate ?? 0}deg)`;
-
-  const baseStyle: React.CSSProperties = {
-    position: "absolute",
-    ...posForCenter,
-    ...textAlignStyle,
-    fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
-    fontSize: s.fontSize,
-    fontWeight: s.weight,
-    lineHeight: s.lh,
-    letterSpacing: s.ls,
-    color,
-    wordBreak: "keep-all",
-    whiteSpace: "nowrap",
-    zIndex: block.zIndex ?? 1,
-    pointerEvents: block.voiceId ? "auto" : "none",
+/* ---------- Reveal スタイルヘルパー ---------- */
+function revealStyle(visible: boolean, delay: number, translateY = 12): React.CSSProperties {
+  return {
+    opacity: visible ? 1 : 0,
+    transform: visible ? "translate3d(0,0,0)" : `translate3d(0,${translateY}px,0)`,
     transition:
-      "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1)",
-    transitionDelay: `${block.delay ?? 0}ms`,
-    opacity: visible ? (block.opacity ?? 1) : 0,
-    transform: visible ? baseTransform : hiddenTransform,
-    userSelect: block.voiceId ? "auto" : "none",
+      "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 800ms cubic-bezier(0.16,1,0.3,1)",
+    transitionDelay: `${delay}ms`,
   };
-
-  if (block.vertical) {
-    baseStyle.writingMode = "vertical-rl";
-    baseStyle.textOrientation = "mixed";
-  }
-  if (block.uppercase) {
-    baseStyle.textTransform = "uppercase";
-    baseStyle.fontFamily = "var(--font-inter), Inter, sans-serif";
-  }
-  if (block.underline) {
-    baseStyle.textDecoration = "underline";
-    baseStyle.textDecorationColor = COLOR[block.underline];
-    baseStyle.textDecorationThickness = "3px";
-    baseStyle.textUnderlineOffset = "0.2em";
-  }
-
-  if (block.voiceId) {
-    return (
-      <Link
-        href={`/voice/${block.voiceId}`}
-        style={baseStyle}
-        className="hover:underline hover:decoration-2 hover:underline-offset-4"
-      >
-        {block.text}
-      </Link>
-    );
-  }
-  return <span style={baseStyle}>{block.text}</span>;
 }
 
-/* ---------- CTA（PC, Mobile 共通で右下に固定） ---------- */
-function MagazineCta() {
+/* =============================================================================
+   PC レイアウト: CSS Grid 12 col × 16 row
+   ========================================================================== */
+function VoiceGridPC({ visible }: { visible: boolean }) {
   return (
-    <div className="absolute bottom-[2%] right-[3%] z-[5] flex items-center gap-2 md:gap-3">
+    <div
+      className="relative hidden h-full w-full md:block"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(12, 1fr)",
+        gridTemplateRows: "repeat(16, 1fr)",
+        columnGap: "clamp(12px, 1.4vw, 24px)",
+        rowGap: "0",
+        padding: "clamp(20px, 3vw, 56px) clamp(20px, 4vw, 72px)",
+      }}
+    >
+      {/* ===== ヘッダー: Latin caps + JP subtitle ===== */}
+      <div style={{ gridColumn: "1 / 5", gridRow: "1", alignSelf: "end", ...revealStyle(visible, DELAY.headerL) }}>
+        <div
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 500,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Voice — Testimonials
+        </div>
+        <div
+          style={{
+            fontFamily: TOKENS.serif,
+            fontSize: "clamp(18px, 1.6vw, 22px)",
+            fontWeight: 500,
+            letterSpacing: "0.08em",
+            color: TOKENS.ink,
+            marginTop: 4,
+          }}
+        >
+          お客様の声
+        </div>
+      </div>
+
+      <div style={{ gridColumn: "8 / 13", gridRow: "1", alignSelf: "end", textAlign: "right", ...revealStyle(visible, DELAY.headerR) }}>
+        <div
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 500,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          No. 04 — 2026 Spring
+        </div>
+        <div
+          style={{
+            fontFamily: TOKENS.serif,
+            fontSize: "13px",
+            fontWeight: 400,
+            letterSpacing: "0.04em",
+            color: TOKENS.ink,
+            marginTop: 4,
+          }}
+        >
+          やまと不動産 / 奈良・京都
+        </div>
+      </div>
+
+      {/* 区切り罫線（row 2 下部、全幅） */}
+      <div
+        style={{
+          gridColumn: "1 / 13",
+          gridRow: "2",
+          alignSelf: "end",
+          borderBottom: `1px solid ${TOKENS.line}`,
+          ...revealStyle(visible, 150),
+        }}
+      />
+
+      {/* ===== Pain 1: 「2年、見つからなかった」(Serif Oak) ===== */}
+      <Link
+        href="/voice/199927"
+        style={{
+          gridColumn: "1 / 6",
+          gridRow: "4 / 6",
+          alignSelf: "start",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(22px, 2.4vw, 32px)",
+          fontWeight: 400,
+          lineHeight: 1.4,
+          letterSpacing: "0.02em",
+          color: TOKENS.oak,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.pain1),
+        }}
+      >
+        「2年、見つからなかった。」
+      </Link>
+
+      {/* ===== Pain 2: 「他社は、標準が低かった」(Serif Oak) ===== */}
+      <Link
+        href="/voice/279070"
+        style={{
+          gridColumn: "7 / 11",
+          gridRow: "4 / 6",
+          alignSelf: "start",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(20px, 2.2vw, 28px)",
+          fontWeight: 400,
+          lineHeight: 1.4,
+          letterSpacing: "0.02em",
+          color: TOKENS.oak,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.pain2),
+        }}
+      >
+        「他社は、標準が低かった。」
+      </Link>
+
+      {/* ===== HERO 1 行目 (Serif Charcoal・静けさ) ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 10",
+          gridRow: "7 / 9",
+          alignSelf: "end",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(44px, 5.6vw, 82px)",
+          fontWeight: 400,
+          lineHeight: 1.15,
+          letterSpacing: "0.01em",
+          color: TOKENS.ink,
+          ...revealStyle(visible, DELAY.hero1, 20),
+        }}
+      >
+        「ここに住みたい、
+      </div>
+
+      {/* ===== HERO 2 行目 (Serif Amber・決断の瞬間) ===== */}
+      <Link
+        href="/voice/202180"
+        style={{
+          gridColumn: "2 / 11",
+          gridRow: "9 / 11",
+          alignSelf: "start",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(44px, 5.6vw, 82px)",
+          fontWeight: 500,
+          lineHeight: 1.15,
+          letterSpacing: "0.01em",
+          color: TOKENS.amber,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.hero2, 20),
+        }}
+      >
+        と思えた。」
+      </Link>
+
+      {/* ===== Hero attribution ===== */}
+      <div
+        style={{
+          gridColumn: "2 / 8",
+          gridRow: "11",
+          alignSelf: "start",
+          fontFamily: TOKENS.sans,
+          fontSize: "12px",
+          fontWeight: 400,
+          letterSpacing: "0.08em",
+          color: TOKENS.sub,
+          paddingTop: 8,
+          ...revealStyle(visible, DELAY.attr),
+        }}
+      >
+        — 奈良市 M様邸（30代ご夫婦・土地探し 2年）
+      </div>
+
+      {/* ===== 縦組 spine: 「正解だったと、言える。」 ===== */}
+      <div
+        style={{
+          gridColumn: "11 / 13",
+          gridRow: "3 / 15",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          paddingRight: "clamp(4px, 0.6vw, 10px)",
+          borderRight: `1px solid ${TOKENS.line}`,
+          ...revealStyle(visible, DELAY.spineMeta),
+        }}
+      >
+        <div
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+            marginBottom: 16,
+            writingMode: "horizontal-tb",
+          }}
+        >
+          結論 · Conclusion
+        </div>
+        <Link
+          href="/voice/199927"
+          style={{
+            writingMode: "vertical-rl",
+            textOrientation: "mixed",
+            fontFamily: TOKENS.serif,
+            fontSize: "clamp(28px, 3.4vw, 48px)",
+            fontWeight: 500,
+            lineHeight: 1.6,
+            letterSpacing: "0.08em",
+            color: TOKENS.ink,
+            textDecoration: "none",
+            ...revealStyle(visible, DELAY.spine, 0),
+          }}
+        >
+          正解だったと、言える。
+        </Link>
+      </div>
+
+      {/* ===== Satellite: 諦めかけた時、/ 出会えた。 ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 5",
+          gridRow: "13 / 15",
+          ...revealStyle(visible, DELAY.sat1),
+        }}
+      >
+        <div
+          style={{
+            fontFamily: TOKENS.sans,
+            fontSize: "clamp(14px, 1.1vw, 16px)",
+            fontWeight: 400,
+            color: TOKENS.sub,
+            letterSpacing: "0.04em",
+          }}
+        >
+          諦めかけた時、
+        </div>
+        <Link
+          href="/voice/216803"
+          style={{
+            display: "inline-block",
+            marginTop: 6,
+            marginLeft: "clamp(18px, 2vw, 32px)",
+            fontFamily: TOKENS.serif,
+            fontSize: "clamp(22px, 2.2vw, 32px)",
+            fontWeight: 500,
+            lineHeight: 1.2,
+            letterSpacing: "0.02em",
+            color: TOKENS.amber,
+            textDecoration: "none",
+          }}
+        >
+          出会えた。
+        </Link>
+      </div>
+
+      {/* ===== Neutral: 嘘のない、標準仕様だった。 ===== */}
+      <Link
+        href="/voice/208787"
+        style={{
+          gridColumn: "5 / 9",
+          gridRow: "13 / 14",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(15px, 1.3vw, 18px)",
+          fontWeight: 400,
+          lineHeight: 1.7,
+          letterSpacing: "0.04em",
+          color: TOKENS.ink,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.sat2),
+        }}
+      >
+        嘘のない、<br />標準仕様だった。
+      </Link>
+
+      {/* ===== After 1: 追加費用は、ゼロだった。(Forest) ===== */}
+      <Link
+        href="/voice/208787"
+        style={{
+          gridColumn: "5 / 10",
+          gridRow: "14 / 15",
+          alignSelf: "end",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(15px, 1.3vw, 18px)",
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+          color: TOKENS.forest,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.sat3),
+        }}
+      >
+        追加費用は、ゼロだった。
+      </Link>
+
+      {/* ===== After 2: いつでも駆けつけてくれる。(Forest + 下線アクセント) ===== */}
+      <Link
+        href="/voice/256807"
+        style={{
+          gridColumn: "1 / 6",
+          gridRow: "15 / 16",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(16px, 1.4vw, 19px)",
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+          color: TOKENS.forest,
+          textDecoration: "underline",
+          textDecorationColor: TOKENS.forest,
+          textDecorationThickness: "1.5px",
+          textUnderlineOffset: "0.25em",
+          ...revealStyle(visible, DELAY.sat4),
+        }}
+      >
+        いつでも、駆けつけてくれる。
+      </Link>
+
+      {/* ===== Minor: やっと、決められた。 ===== */}
+      <Link
+        href="/voice/199927"
+        style={{
+          gridColumn: "6 / 10",
+          gridRow: "15 / 16",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(13px, 1.05vw, 15px)",
+          fontWeight: 400,
+          letterSpacing: "0.06em",
+          color: TOKENS.sub,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.sat5),
+        }}
+      >
+        やっと、決められた。
+      </Link>
+
+      {/* ===== フッター罫線 ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 13",
+          gridRow: "16",
+          alignSelf: "start",
+          borderTop: `1px solid ${TOKENS.line}`,
+          ...revealStyle(visible, DELAY.footer),
+        }}
+      />
+
+      {/* ===== フッター左: 出典 ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 8",
+          gridRow: "16",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "12px",
+          fontWeight: 400,
+          letterSpacing: "0.06em",
+          color: TOKENS.sub,
+          paddingTop: 12,
+          ...revealStyle(visible, DELAY.footer),
+        }}
+      >
+        奈良市・斑鳩町・京田辺市・生駒市 ほか、お客様 9 組の声より（2024–2026 竣工）
+      </div>
+
+      {/* ===== CTA: すべての声を読む → ===== */}
       <Link
         href="/voice"
-        className="border-b-2 pb-0.5"
         style={{
-          fontFamily: "var(--font-inter), Inter, sans-serif",
-          fontSize: "10.5px",
-          fontWeight: 700,
-          letterSpacing: "0.22em",
-          color: COLOR.black,
-          textTransform: "uppercase",
-          borderColor: COLOR.red,
+          gridColumn: "8 / 13",
+          gridRow: "16",
+          alignSelf: "center",
+          justifySelf: "end",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(14px, 1.2vw, 17px)",
+          fontWeight: 500,
+          letterSpacing: "0.06em",
+          color: TOKENS.ink,
+          textDecoration: "none",
+          borderBottom: `1.5px solid ${TOKENS.amber}`,
+          paddingTop: 12,
+          paddingBottom: 4,
+          transition: "color 400ms cubic-bezier(0.16,1,0.3,1)",
+          ...revealStyle(visible, DELAY.cta),
         }}
+        className="voice-cta-link"
       >
-        すべて読む
-      </Link>
-      <Link
-        href="/reserve"
-        className="inline-block hover:opacity-90"
-        style={{
-          padding: "10px 16px",
-          backgroundColor: COLOR.red,
-          color: "#FFFFFF",
-          fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
-          fontSize: "12px",
-          fontWeight: 900,
-          letterSpacing: "0.04em",
-        }}
-      >
-        モデルハウス予約 →
+        すべての声を読む <span style={{ fontFamily: TOKENS.latin, color: TOKENS.amber, marginLeft: 6 }}>→</span>
       </Link>
     </div>
   );
 }
 
-/* ---------- メイン ---------- */
+/* =============================================================================
+   Mobile レイアウト: CSS Grid 6 col × 18 row
+   ========================================================================== */
+function VoiceGridMB({ visible }: { visible: boolean }) {
+  return (
+    <div
+      className="relative h-full w-full md:hidden"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(6, 1fr)",
+        gridTemplateRows: "repeat(18, 1fr)",
+        columnGap: "8px",
+        rowGap: 0,
+        padding: "clamp(16px, 5vw, 24px) clamp(16px, 5vw, 20px)",
+      }}
+    >
+      {/* ===== ヘッダー ===== */}
+      <div style={{ gridColumn: "1 / 4", gridRow: "1 / 2", alignSelf: "end", ...revealStyle(visible, DELAY.headerL) }}>
+        <div
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Voice
+        </div>
+        <div
+          style={{
+            fontFamily: TOKENS.serif,
+            fontSize: "15px",
+            fontWeight: 500,
+            letterSpacing: "0.08em",
+            color: TOKENS.ink,
+            marginTop: 2,
+          }}
+        >
+          お客様の声
+        </div>
+      </div>
+
+      <div style={{ gridColumn: "4 / 7", gridRow: "1 / 2", alignSelf: "end", textAlign: "right", ...revealStyle(visible, DELAY.headerR) }}>
+        <div
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          No. 04 / 2026
+        </div>
+      </div>
+
+      {/* 罫線 */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "2",
+          alignSelf: "end",
+          borderBottom: `1px solid ${TOKENS.line}`,
+          ...revealStyle(visible, 150),
+        }}
+      />
+
+      {/* ===== Pain 1（赤の代わりに Oak で「時間の重み」を表現） ===== */}
+      <Link
+        href="/voice/199927"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "3 / 4",
+          alignSelf: "center",
+          fontFamily: TOKENS.serif,
+          fontSize: "20px",
+          fontWeight: 400,
+          lineHeight: 1.3,
+          letterSpacing: "0.02em",
+          color: TOKENS.oak,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.pain1),
+        }}
+      >
+        「2年、見つからなかった。」
+      </Link>
+
+      {/* ===== Pain 2 ===== */}
+      <Link
+        href="/voice/279070"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "4 / 5",
+          alignSelf: "center",
+          fontFamily: TOKENS.serif,
+          fontSize: "18px",
+          fontWeight: 400,
+          lineHeight: 1.3,
+          letterSpacing: "0.02em",
+          color: TOKENS.oak,
+          textDecoration: "none",
+          paddingLeft: "8%",
+          ...revealStyle(visible, DELAY.pain2),
+        }}
+      >
+        「他社は、標準が低かった。」
+      </Link>
+
+      {/* ===== HERO line 1 (Charcoal Serif) ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "6 / 8",
+          alignSelf: "end",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(32px, 10vw, 42px)",
+          fontWeight: 400,
+          lineHeight: 1.2,
+          letterSpacing: "0.01em",
+          color: TOKENS.ink,
+          ...revealStyle(visible, DELAY.hero1, 20),
+        }}
+      >
+        「ここに住みたい、
+      </div>
+
+      {/* ===== HERO line 2 (Amber Serif) ===== */}
+      <Link
+        href="/voice/202180"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "8 / 10",
+          alignSelf: "start",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(32px, 10vw, 42px)",
+          fontWeight: 500,
+          lineHeight: 1.2,
+          letterSpacing: "0.01em",
+          color: TOKENS.amber,
+          textDecoration: "none",
+          paddingLeft: "10%",
+          ...revealStyle(visible, DELAY.hero2, 20),
+        }}
+      >
+        と思えた。」
+      </Link>
+
+      {/* Hero attribution */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "10 / 11",
+          alignSelf: "start",
+          fontFamily: TOKENS.sans,
+          fontSize: "11px",
+          letterSpacing: "0.08em",
+          color: TOKENS.sub,
+          paddingLeft: "10%",
+          paddingTop: 6,
+          ...revealStyle(visible, DELAY.attr),
+        }}
+      >
+        — 奈良市 M様邸（30代ご夫婦）
+      </div>
+
+      {/* ===== 薄い罫線 ===== */}
+      <div
+        style={{
+          gridColumn: "2 / 5",
+          gridRow: "11",
+          alignSelf: "center",
+          height: 1,
+          backgroundColor: TOKENS.line,
+          ...revealStyle(visible, 600),
+        }}
+      />
+
+      {/* ===== Satellite: 諦めかけた時、/ 出会えた。 ===== */}
+      <div style={{ gridColumn: "1 / 7", gridRow: "12 / 13", ...revealStyle(visible, DELAY.sat1) }}>
+        <span
+          style={{
+            fontFamily: TOKENS.sans,
+            fontSize: "13px",
+            color: TOKENS.sub,
+            letterSpacing: "0.04em",
+          }}
+        >
+          諦めかけた時、
+        </span>
+        <Link
+          href="/voice/216803"
+          style={{
+            marginLeft: 10,
+            fontFamily: TOKENS.serif,
+            fontSize: "22px",
+            fontWeight: 500,
+            color: TOKENS.amber,
+            textDecoration: "none",
+            letterSpacing: "0.02em",
+          }}
+        >
+          出会えた。
+        </Link>
+      </div>
+
+      {/* ===== Neutral 1: 嘘のない、標準仕様だった。 ===== */}
+      <Link
+        href="/voice/208787"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "13 / 14",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "16px",
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+          color: TOKENS.ink,
+          textDecoration: "none",
+          ...revealStyle(visible, DELAY.sat2),
+        }}
+      >
+        嘘のない、標準仕様だった。
+      </Link>
+
+      {/* ===== After 1: 追加費用は、ゼロ ===== */}
+      <Link
+        href="/voice/208787"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "14 / 15",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "16px",
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+          color: TOKENS.forest,
+          textDecoration: "none",
+          paddingLeft: "5%",
+          ...revealStyle(visible, DELAY.sat3),
+        }}
+      >
+        追加費用は、ゼロだった。
+      </Link>
+
+      {/* ===== After 2: いつでも駆けつけて（下線） ===== */}
+      <Link
+        href="/voice/256807"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "15 / 16",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "16px",
+          fontWeight: 400,
+          letterSpacing: "0.04em",
+          color: TOKENS.forest,
+          textDecoration: "underline",
+          textDecorationColor: TOKENS.forest,
+          textDecorationThickness: "1.5px",
+          textUnderlineOffset: "0.25em",
+          ...revealStyle(visible, DELAY.sat4),
+        }}
+      >
+        いつでも、駆けつけてくれる。
+      </Link>
+
+      {/* ===== 縦組 spine 「正解だったと、言える。」モバイル版は横書きで "結論" を示す ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "16 / 17",
+          alignSelf: "center",
+          display: "flex",
+          alignItems: "baseline",
+          gap: 12,
+          paddingTop: 16,
+          borderTop: `1px solid ${TOKENS.line}`,
+          ...revealStyle(visible, DELAY.spine),
+        }}
+      >
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+            whiteSpace: "nowrap",
+          }}
+        >
+          結論
+        </span>
+        <Link
+          href="/voice/199927"
+          style={{
+            fontFamily: TOKENS.serif,
+            fontSize: "22px",
+            fontWeight: 500,
+            letterSpacing: "0.04em",
+            color: TOKENS.ink,
+            textDecoration: "none",
+          }}
+        >
+          正解だったと、言える。
+        </Link>
+      </div>
+
+      {/* ===== Footer ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "17 / 18",
+          alignSelf: "center",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          paddingTop: 16,
+          borderTop: `1px solid ${TOKENS.line}`,
+          ...revealStyle(visible, DELAY.footer),
+        }}
+      >
+        <span
+          style={{
+            fontFamily: TOKENS.sans,
+            fontSize: "10px",
+            letterSpacing: "0.06em",
+            color: TOKENS.sub,
+          }}
+        >
+          奈良・京都／お客様 9 組より
+        </span>
+        <Link
+          href="/voice"
+          style={{
+            fontFamily: TOKENS.serif,
+            fontSize: "13px",
+            fontWeight: 500,
+            letterSpacing: "0.06em",
+            color: TOKENS.ink,
+            textDecoration: "none",
+            borderBottom: `1.5px solid ${TOKENS.amber}`,
+            paddingBottom: 2,
+          }}
+        >
+          すべて読む <span style={{ color: TOKENS.amber, fontFamily: TOKENS.latin }}>→</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+/* =============================================================================
+   Main
+   ========================================================================== */
 export default function HeroVoiceMagazine() {
-  // PC・Mobile 別々に reveal — 分割代入で ref と visible を取り出す
   const { ref: pcRef, visible: pcVisible } = useRevealContainer<HTMLDivElement>();
   const { ref: mbRef, visible: mbVisible } = useRevealContainer<HTMLDivElement>();
-
-  /* MAGAZINE_FIGURES は将来の拡張用（現在は直接テキスト埋め込み） */
-  void MAGAZINE_FIGURES;
 
   return (
     <section
       aria-label="VOICE — やまと不動産 お客様の声"
-      className="relative w-full pt-[110px]"
-      style={{ backgroundColor: "var(--voice-bg)", color: "var(--voice-text)" }}
+      className="relative w-full"
+      style={{
+        backgroundColor: TOKENS.bg,
+        color: TOKENS.ink,
+        paddingTop: "110px",
+      }}
     >
-      {/* ===== PC（md 以上） ===== */}
+      {/* PC */}
       <div
         ref={pcRef}
-        className="relative mx-auto hidden h-[calc(100svh-110px)] min-h-[680px] w-full max-w-[1600px] overflow-hidden px-[clamp(20px,2.4vw,48px)] py-[clamp(12px,1.5vw,24px)] md:block"
+        className="relative mx-auto hidden h-[calc(100svh-110px)] min-h-[720px] w-full max-w-[1600px] overflow-hidden md:block"
       >
-        {TEXT_BLOCKS_PC.map((b) => (
-          <TextBlockEl key={b.key} block={b} visible={pcVisible} sizeMap={SIZE_PC} />
-        ))}
-        <MagazineCta />
+        <VoiceGridPC visible={pcVisible} />
       </div>
 
-      {/* ===== Mobile（md 未満、1画面カオス） ===== */}
+      {/* Mobile */}
       <div
         ref={mbRef}
-        className="relative h-[calc(100svh-110px)] min-h-[600px] w-full overflow-hidden md:hidden"
+        className="relative h-[calc(100svh-110px)] min-h-[640px] w-full overflow-hidden md:hidden"
       >
-        {TEXT_BLOCKS_MB.map((b) => (
-          <TextBlockEl key={b.key} block={b} visible={mbVisible} sizeMap={SIZE_MB} />
-        ))}
-        <MagazineCta />
+        <VoiceGridMB visible={mbVisible} />
       </div>
+
+      {/* CTA hover style */}
+      <style jsx>{`
+        :global(.voice-cta-link:hover) {
+          color: ${TOKENS.amber};
+        }
+      `}</style>
     </section>
   );
 }
