@@ -205,36 +205,36 @@ const TEXT_BLOCKS_MB: TextBlock[] = [
   // ===== 右 spine: 黒縦組 mega・単一列 — ページを貫通する巨大 spine =====
   { key: "m-vert", text: "正解だったと、言える。", size: "mega", color: "black", vertical: true, pos: { top: "8%", right: "4%" }, delay: 540, voiceId: "199927", zIndex: 1 },
 
-  // ===== PAIN 1（赤・lg・1 行） =====
-  { key: "m-r1", text: "「2年、見つからなかった」", size: "lg", color: "red", pos: { top: "10%", left: "3%" }, delay: 200, voiceId: "199927", zIndex: 2 },
+  // ===== PAIN 1（赤・xl・1 行）Tier 2 = ストーリー冒頭 punch =====
+  { key: "m-r1", text: "「2年、見つからなかった」", size: "xl", color: "red", pos: { top: "10%", left: "1%" }, delay: 200, voiceId: "199927", zIndex: 2 },
 
-  // ===== PAIN 2（赤・md・2 行・中央右寄り） =====
-  { key: "m-r2-a", text: "「他社は、標準が",   size: "md", color: "red", pos: { top: "15%", left: "44%" }, delay: 280, zIndex: 2 },
-  { key: "m-r2-b", text: "低かった。」",       size: "md", color: "red", pos: { top: "18%", left: "52%" }, delay: 320, voiceId: "279070", zIndex: 2 },
+  // ===== PAIN 2（赤・md・2 行・中央右寄り）Tier 4 = 補足 =====
+  { key: "m-r2-a", text: "「他社は、標準が",   size: "md", color: "red", pos: { top: "16%", left: "44%" }, delay: 280, zIndex: 2 },
+  { key: "m-r2-b", text: "低かった。」",       size: "md", color: "red", pos: { top: "19%", left: "52%" }, delay: 320, voiceId: "279070", zIndex: 2 },
 
-  // ===== HERO（青・xxl・3 行、階段状インデント、密な行間） =====
-  { key: "m-hero-a", text: "「ここに",     size: "xxl", color: "blue", pos: { top: "23%", left: "1%" }, delay: 420, zIndex: 3 },
-  { key: "m-hero-b", text: "住みたい、",    size: "xxl", color: "blue", pos: { top: "29%", left: "4%" }, delay: 460, zIndex: 3 },
-  { key: "m-hero-c", text: "と思えた。」",  size: "xxl", color: "blue", pos: { top: "35%", left: "7%" }, delay: 500, voiceId: "202180", zIndex: 3 },
+  // ===== HERO（青・xxl・3 行）Tier 1 =====
+  { key: "m-hero-a", text: "「ここに",     size: "xxl", color: "blue", pos: { top: "24%", left: "1%" }, delay: 420, zIndex: 3 },
+  { key: "m-hero-b", text: "住みたい、",    size: "xxl", color: "blue", pos: { top: "30%", left: "4%" }, delay: 460, zIndex: 3 },
+  { key: "m-hero-c", text: "と思えた。」",  size: "xxl", color: "blue", pos: { top: "36%", left: "7%" }, delay: 500, voiceId: "202180", zIndex: 3 },
 
-  // ===== Satellites（密に詰める） =====
+  // ===== Satellites（Tier 3 に底上げして誌面の punch を増やす） =====
 
-  // Block A: 諦めかけた時、/ 出会えた。
-  { key: "m-sat-b",   text: "諦めかけた時、",   size: "md", color: "blue",  pos: { top: "43%", left: "3%" },  delay: 620, zIndex: 2 },
-  { key: "m-sat-b2",  text: "出会えた。",       size: "xl", color: "blue",  pos: { top: "47%", left: "8%" },  delay: 640, voiceId: "216803", zIndex: 2 },
+  // Block A: 諦めかけた時、(Tier 4 minor) / 出会えた。(Tier 2 sub-hero)
+  { key: "m-sat-b",   text: "諦めかけた時、",   size: "md", color: "blue",  pos: { top: "44%", left: "3%" }, delay: 620, zIndex: 2 },
+  { key: "m-sat-b2",  text: "出会えた。",       size: "xl", color: "blue",  pos: { top: "47.5%", left: "8%" }, delay: 640, voiceId: "216803", zIndex: 2 },
 
-  // Block B: 追加費用（緑）
-  { key: "m-g1", text: "「追加費用は、ゼロだった。」", size: "md", color: "green", pos: { top: "55%", left: "3%" }, delay: 700, voiceId: "208787", zIndex: 2 },
+  // Block B: 追加費用（緑 Tier 3）
+  { key: "m-g1", text: "「追加費用は、ゼロだった。」", size: "lg", color: "green", pos: { top: "55%", left: "3%" }, delay: 700, voiceId: "208787", zIndex: 2 },
 
-  // Block C: 嘘のない、/ 標準仕様だった。（黒 2 行）
-  { key: "m-black-1",  text: "嘘のない、",       size: "md", color: "black", pos: { top: "61%", left: "3%" }, delay: 660, zIndex: 2 },
-  { key: "m-black-1b", text: "標準仕様だった。", size: "md", color: "black", pos: { top: "64.5%", left: "3%" }, delay: 680, voiceId: "208787", zIndex: 2 },
+  // Block C: 嘘のない、/ 標準仕様だった。（黒 Tier 3 2 行）
+  { key: "m-black-1",  text: "嘘のない、",       size: "lg", color: "black", pos: { top: "61%", left: "3%" }, delay: 660, zIndex: 2 },
+  { key: "m-black-1b", text: "標準仕様だった。", size: "lg", color: "black", pos: { top: "65%", left: "3%" }, delay: 680, voiceId: "208787", zIndex: 2 },
 
-  // Block D: いつでも駆けつけてくれる。（緑・下線）
-  { key: "m-g2", text: "いつでも駆けつけてくれる。", size: "md", color: "green", underline: "green", pos: { top: "70%", left: "3%" }, delay: 740, voiceId: "256807", zIndex: 2 },
+  // Block D: いつでも駆けつけてくれる。（緑 Tier 3・下線アクセント）
+  { key: "m-g2", text: "いつでも駆けつけてくれる。", size: "lg", color: "green", underline: "green", pos: { top: "71%", left: "3%" }, delay: 740, voiceId: "256807", zIndex: 2 },
 
-  // Block E: やっと、決められた。（黒 md・中央寄せ）
-  { key: "m-black-2", text: "やっと、決められた。", size: "md", color: "black", pos: { top: "76%", left: "22%" }, delay: 780, voiceId: "199927", zIndex: 2 },
+  // Block E: やっと、決められた。（黒 Tier 2・結末 punch）
+  { key: "m-black-2", text: "やっと、決められた。", size: "xl", color: "black", pos: { top: "77%", left: "8%" }, delay: 780, voiceId: "199927", zIndex: 2 },
 
   // ===== フッター（右側は spine と x 衝突するため削除。header の Vol.04—2026 と情報的にも冗長） =====
   { key: "m-footer-l", text: "奈良・京都／お客様 9 組の声より", size: "xs", color: "black", pos: { top: "87%", left: "4%" }, delay: 900, zIndex: 3 },
