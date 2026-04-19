@@ -202,28 +202,38 @@ const TEXT_BLOCKS_MB: TextBlock[] = [
   { key: "m-label-jp", text: "お客様の声", size: "sm", color: "black", pos: { top: "5%", left: "4%" }, delay: 50, zIndex: 3 },
   { key: "m-label-r",  text: "Vol. 04 — 2026", size: "xs", color: "black", uppercase: true, textAlignRight: true, pos: { top: "3.5%", right: "4%" }, delay: 0, zIndex: 3 },
 
-  // ===== 上部: PAIN 2 本（赤・md・2 行ずつ・左右分割）=====
-  { key: "m-r1-a", text: "「2年、",             size: "md", color: "red", pos: { top: "11%", left: "4%" }, delay: 200, zIndex: 2 },
-  { key: "m-r1-b", text: "見つからなかった。」", size: "md", color: "red", pos: { top: "14.5%", left: "4%" }, delay: 240, voiceId: "199927", zIndex: 2 },
-  { key: "m-r2-a", text: "「他社は、",           size: "md", color: "red", pos: { top: "11%", right: "4%" }, delay: 280, textAlignRight: true, zIndex: 2 },
-  { key: "m-r2-b", text: "標準が低かった。」",   size: "md", color: "red", pos: { top: "14.5%", right: "4%" }, delay: 320, voiceId: "279070", textAlignRight: true, zIndex: 2 },
+  // ===== 上部 PAIN duo（中央寄せで duo 感を強化・インデント規則 +8%） =====
+  { key: "m-r1-a", text: "「2年、",             size: "md", color: "red", pos: { top: "11%", left: "4%" },  delay: 200, zIndex: 2 },
+  { key: "m-r1-b", text: "見つからなかった。」", size: "md", color: "red", pos: { top: "14.5%", left: "12%" }, delay: 240, voiceId: "199927", zIndex: 2 },
+  { key: "m-r2-a", text: "「他社は、",           size: "md", color: "red", pos: { top: "11%", left: "48%" },  delay: 280, zIndex: 2 },
+  { key: "m-r2-b", text: "標準が低かった。」",   size: "md", color: "red", pos: { top: "14.5%", left: "56%" }, delay: 320, voiceId: "279070", zIndex: 2 },
 
-  // ===== HERO（青・xxl・2 行、左寄り大判）— PC の mega 青 Hero を縦長に翻訳 =====
-  { key: "m-hero-a", text: "「ここに住みたい、", size: "xxl", color: "blue", pos: { top: "22%", left: "2%" }, delay: 420, zIndex: 3 },
-  { key: "m-hero-b", text: "と思えた。」",       size: "xxl", color: "blue", pos: { top: "29%", left: "8%" }, delay: 480, voiceId: "202180", zIndex: 3 },
+  // ===== 右 spine: 黒縦組（xxl・2 列）— top 18% から開始して Hero と並走・ページを貫通 =====
+  { key: "m-vert-1", text: "正解だったと、", size: "xxl", color: "black", vertical: true, pos: { top: "18%", right: "3%" },  delay: 540, zIndex: 1 },
+  { key: "m-vert-2", text: "言える。",       size: "xxl", color: "black", vertical: true, pos: { top: "18%", right: "13%" }, delay: 580, voiceId: "199927", zIndex: 1 },
 
-  // ===== 右 spine: 黒縦組（xl・2 列）— Hero の下から伸びて下段を貫通 =====
-  { key: "m-vert-1", text: "正解だったと、", size: "xl", color: "black", vertical: true, pos: { top: "42%", right: "3%" },  delay: 540, zIndex: 1 },
-  { key: "m-vert-2", text: "言える。",       size: "xl", color: "black", vertical: true, pos: { top: "42%", right: "11%" }, delay: 580, voiceId: "199927", zIndex: 1 },
+  // ===== HERO（青・xxl・2 行、line 2 を +14% 大胆インデント） =====
+  { key: "m-hero-a", text: "「ここに住みたい、", size: "xxl", color: "blue", pos: { top: "22%", left: "2%" },  delay: 420, zIndex: 3 },
+  { key: "m-hero-b", text: "と思えた。」",       size: "xxl", color: "blue", pos: { top: "31%", left: "16%" }, delay: 480, voiceId: "202180", zIndex: 3 },
 
-  // ===== 左列 satellites（縦組 spine と並走、インデント違いで誌面のリズム）=====
-  { key: "m-sat-b",   text: "諦めかけた時、",             size: "md", color: "blue",  pos: { top: "44%", left: "4%" },  delay: 620, zIndex: 2 },
-  { key: "m-sat-b2",  text: "出会えた。",                 size: "lg", color: "blue",  pos: { top: "47.5%", left: "10%" }, delay: 640, voiceId: "216803", zIndex: 2 },
-  { key: "m-black-1", text: "嘘のない、",                 size: "md", color: "black", pos: { top: "56%", left: "4%" },  delay: 660, zIndex: 2 },
-  { key: "m-black-1b",text: "標準仕様だった。",           size: "md", color: "black", pos: { top: "60%", left: "8%" },  delay: 680, voiceId: "208787", zIndex: 2 },
-  { key: "m-g1",      text: "「追加費用は、ゼロだった。」", size: "sm", color: "green", pos: { top: "68%", left: "4%" },  delay: 700, voiceId: "208787", zIndex: 2 },
-  { key: "m-g2",      text: "いつでも駆けつけてくれる。", size: "md", color: "green", underline: "green", pos: { top: "73%", left: "4%" }, delay: 740, voiceId: "256807", zIndex: 2 },
-  { key: "m-black-2", text: "やっと、決められた。",       size: "sm", color: "black", pos: { top: "79%", left: "10%" }, delay: 780, voiceId: "199927", zIndex: 2 },
+  // ===== Satellites（インデント規則：1 行目 left 4% / 続行 left 12% / 単文 独立は left 28%） =====
+
+  // Block A: 諦めかけた時、/ 出会えた。（青 2 行）
+  { key: "m-sat-b",   text: "諦めかけた時、",   size: "md", color: "blue",  pos: { top: "44%", left: "4%" },  delay: 620, zIndex: 2 },
+  { key: "m-sat-b2",  text: "出会えた。",       size: "lg", color: "blue",  pos: { top: "47.5%", left: "12%" }, delay: 640, voiceId: "216803", zIndex: 2 },
+
+  // Block B: 「追加費用は、ゼロだった。」（緑・単文を 28% 深インデント — 色バンドを割る配置）
+  { key: "m-g1",      text: "「追加費用は、ゼロだった。」", size: "sm", color: "green", pos: { top: "54%", left: "28%" }, delay: 700, voiceId: "208787", zIndex: 2 },
+
+  // Block C: 嘘のない、/ 標準仕様だった。（黒 2 行）
+  { key: "m-black-1", text: "嘘のない、",       size: "md", color: "black", pos: { top: "60%", left: "4%" },  delay: 660, zIndex: 2 },
+  { key: "m-black-1b",text: "標準仕様だった。", size: "md", color: "black", pos: { top: "63.5%", left: "12%" }, delay: 680, voiceId: "208787", zIndex: 2 },
+
+  // Block D: いつでも駆けつけてくれる。（緑・下線アクセント）
+  { key: "m-g2",      text: "いつでも駆けつけてくれる。", size: "md", color: "green", underline: "green", pos: { top: "72%", left: "4%" }, delay: 740, voiceId: "256807", zIndex: 2 },
+
+  // Block E: やっと、決められた。（黒・単文を 28% 深インデント）
+  { key: "m-black-2", text: "やっと、決められた。", size: "sm", color: "black", pos: { top: "80%", left: "28%" }, delay: 780, voiceId: "199927", zIndex: 2 },
 
   // ===== フッター =====
   { key: "m-footer-l", text: "奈良・京都 / お客様 9 組の声より", size: "xs", color: "black", pos: { top: "87%", left: "4%" }, delay: 900, zIndex: 3 },
