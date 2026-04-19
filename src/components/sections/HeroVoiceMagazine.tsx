@@ -125,7 +125,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(12, 1fr)",
-        gridTemplateRows: "repeat(16, 1fr)",
+        gridTemplateRows: "repeat(17, 1fr)",
         columnGap: "clamp(12px, 1.4vw, 24px)",
         rowGap: "0",
         padding: "clamp(20px, 3vw, 56px) clamp(20px, 4vw, 72px)",
@@ -197,17 +197,21 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         }}
       />
 
-      {/* ===== Pain 1: 「2年、見つからなかった」(強い opening・Oak Serif 400 大) ===== */}
+      {/* ============================================================
+         Chapter 1 ── 問題: 「2 年探したが、見つからなかった」
+         Pain 1 = 物語の起点（問題提起）
+         Pain 2 = whisper echo（Pain 1 の補足 / 比較）
+         ============================================================ */}
       <Link
         href="/voice/199927"
         style={{
-          gridColumn: "1 / 7",
-          gridRow: "4 / 6",
+          gridColumn: "1 / 8",
+          gridRow: "4 / 5",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(28px, 3.2vw, 48px)",
+          fontSize: "clamp(26px, 2.8vw, 40px)",
           fontWeight: 400,
-          lineHeight: 1.2,
+          lineHeight: 1.25,
           letterSpacing: "0.01em",
           color: TOKENS.oak,
           textDecoration: "none",
@@ -217,78 +221,137 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         「2年、見つからなかった。」
       </Link>
 
-      {/* ===== Pain 2: whisper echo（Pain 1 の半分以下、sub gray っぽい Oak） ===== */}
       <Link
         href="/voice/279070"
         style={{
-          gridColumn: "7 / 11",
+          gridColumn: "1 / 7",
           gridRow: "5 / 6",
-          alignSelf: "end",
+          alignSelf: "start",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(14px, 1.2vw, 18px)",
+          fontSize: "clamp(13px, 1.1vw, 16px)",
           fontWeight: 400,
           lineHeight: 1.4,
           letterSpacing: "0.04em",
           color: TOKENS.oak,
-          opacity: 0.75,
+          opacity: 0.7,
           textDecoration: "none",
+          paddingLeft: "clamp(14px, 1.4vw, 24px)",
           ...revealStyle(visible, DELAY.pain2),
         }}
       >
-        ── 「他社は、標準が低かった。」
+        ──── 「他社は、標準が低かった。」
       </Link>
 
-      {/* ===== HERO 1 行目 (語りの入り・Serif 400・相対的に小・Charcoal) ===== */}
+      {/* ============================================================
+         Chapter 2 ── 転機: 諦めかけた時、やまとに 出会えた。
+         pivot を 76px で Hero の次に大きく。物語の 2 つ目の punch
+         ============================================================ */}
       <div
         style={{
-          gridColumn: "1 / 8",
+          gridColumn: "1 / 5",
           gridRow: "7 / 8",
-          alignSelf: "end",
-          fontFamily: TOKENS.serif,
-          fontSize: "clamp(36px, 4.2vw, 60px)",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(13px, 1.1vw, 15px)",
           fontWeight: 400,
-          lineHeight: 1.15,
-          letterSpacing: "0.01em",
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          ...revealStyle(visible, 620),
+        }}
+      >
+        諦めかけた時、
+      </div>
+
+      <Link
+        href="/voice/216803"
+        style={{
+          gridColumn: "1 / 8",
+          gridRow: "7 / 9",
+          alignSelf: "end",
+          justifySelf: "start",
+          marginLeft: "clamp(60px, 8vw, 140px)",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(40px, 4.8vw, 76px)",
+          fontWeight: 500,
+          lineHeight: 1.05,
+          letterSpacing: "-0.01em",
+          color: TOKENS.amber,
+          textDecoration: "none",
+          ...revealStyle(visible, 700, 18),
+        }}
+      >
+        出会えた。
+      </Link>
+
+      {/* ============================================================
+         Chapter 3 ── 感情の頂点（HERO）: 「ここに住みたい、」
+         主役は line 1（欲求の表明）。line 2「と思えた。」は反芻として 1/3 サイズ
+         narrative 接続詞「そして、」を小さく前置きして 2→3 章の繋ぎに
+         ============================================================ */}
+      <div
+        style={{
+          gridColumn: "1 / 5",
+          gridRow: "9 / 10",
+          alignSelf: "end",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontWeight: 400,
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          marginTop: "clamp(12px, 1.2vw, 20px)",
+          ...revealStyle(visible, 820),
+        }}
+      >
+        そして、初めての見学で。
+      </div>
+
+      <div
+        style={{
+          gridColumn: "1 / 12",
+          gridRow: "10 / 13",
+          alignSelf: "center",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(72px, 9vw, 132px)",
+          fontWeight: 500,
+          lineHeight: 1.02,
+          letterSpacing: "-0.01em",
           color: TOKENS.ink,
-          ...revealStyle(visible, DELAY.hero1, 20),
+          ...revealStyle(visible, DELAY.hero1, 24),
         }}
       >
         「ここに住みたい、
       </div>
 
-      {/* ===== HERO 2 行目 (決断の punch・Serif 600 Amber・2 行目が主役) ===== */}
       <Link
         href="/voice/202180"
         style={{
-          gridColumn: "1 / 12",
-          gridRow: "8 / 12",
+          gridColumn: "3 / 10",
+          gridRow: "13 / 14",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(72px, 9.2vw, 132px)",
-          fontWeight: 600,
-          lineHeight: 1.02,
-          letterSpacing: "-0.01em",
+          fontSize: "clamp(28px, 3vw, 44px)",
+          fontWeight: 400,
+          lineHeight: 1.2,
+          letterSpacing: "0em",
           color: TOKENS.amber,
           textDecoration: "none",
-          paddingLeft: "clamp(24px, 3vw, 60px)",
-          ...revealStyle(visible, DELAY.hero2, 24),
+          ...revealStyle(visible, DELAY.hero2, 20),
         }}
       >
         と思えた。」
       </Link>
 
-      {/* ===== Hero attribution ===== */}
       <div
         style={{
-          gridColumn: "2 / 8",
-          gridRow: "11",
+          gridColumn: "3 / 9",
+          gridRow: "14 / 15",
           alignSelf: "start",
           fontFamily: TOKENS.sans,
           fontSize: "12px",
           fontWeight: 400,
           letterSpacing: "0.08em",
           color: TOKENS.sub,
-          paddingTop: 8,
+          paddingTop: 6,
           ...revealStyle(visible, DELAY.attr),
         }}
       >
@@ -341,71 +404,50 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         </Link>
       </div>
 
-      {/* ===== Satellite block: 諦めかけた時、(whisper 13px) + 出会えた。(mini-hero 40px) ===== */}
+      {/* ============================================================
+         Chapter 4 ── 理由: なぜ「住みたい」と思えたのか
+         「なぜなら、」で因果を明示。2 つの理由を並列表示
+         ============================================================ */}
       <div
         style={{
-          gridColumn: "1 / 6",
-          gridRow: "13 / 15",
-          alignSelf: "center",
-          ...revealStyle(visible, DELAY.sat1),
+          gridColumn: "1 / 4",
+          gridRow: "15 / 16",
+          alignSelf: "start",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontWeight: 400,
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          ...revealStyle(visible, 1040),
         }}
       >
-        <div
-          style={{
-            fontFamily: TOKENS.sans,
-            fontSize: "13px",
-            fontWeight: 400,
-            color: TOKENS.sub,
-            letterSpacing: "0.08em",
-          }}
-        >
-          諦めかけた時、
-        </div>
-        <Link
-          href="/voice/216803"
-          style={{
-            display: "inline-block",
-            marginTop: 4,
-            marginLeft: "clamp(32px, 3.5vw, 60px)",
-            fontFamily: TOKENS.serif,
-            fontSize: "clamp(28px, 3vw, 44px)",
-            fontWeight: 500,
-            lineHeight: 1.15,
-            letterSpacing: "0.01em",
-            color: TOKENS.amber,
-            textDecoration: "none",
-          }}
-        >
-          出会えた。
-        </Link>
+        なぜなら、
       </div>
 
-      {/* ===== Neutral: 嘘のない、標準仕様だった。(中量級 Sans 500) ===== */}
       <Link
         href="/voice/208787"
         style={{
-          gridColumn: "6 / 10",
-          gridRow: "13 / 14",
-          alignSelf: "center",
+          gridColumn: "1 / 5",
+          gridRow: "15 / 16",
+          alignSelf: "end",
           fontFamily: TOKENS.sans,
           fontSize: "clamp(17px, 1.5vw, 22px)",
           fontWeight: 500,
-          lineHeight: 1.45,
+          lineHeight: 1.35,
           letterSpacing: "0.03em",
           color: TOKENS.ink,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.sat2),
         }}
       >
-        嘘のない、<br />標準仕様だった。
+        嘘のない、標準仕様だった。
       </Link>
 
-      {/* ===== After 1: 追加費用は、ゼロだった。(Forest・中量級) ===== */}
       <Link
         href="/voice/208787"
         style={{
-          gridColumn: "6 / 11",
-          gridRow: "14 / 15",
+          gridColumn: "5 / 8",
+          gridRow: "15 / 16",
           alignSelf: "end",
           fontFamily: TOKENS.sans,
           fontSize: "clamp(16px, 1.4vw, 20px)",
@@ -419,15 +461,35 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         追加費用は、ゼロだった。
       </Link>
 
-      {/* ===== After 2: いつでも、駆けつけてくれる。(Forest・下線・weight 500 で punch) ===== */}
+      {/* ============================================================
+         Chapter 5 ── アフター: 建てた後も、続く安心
+         「そして今も、」で時間の継続を示す narrative 接続
+         ============================================================ */}
+      <div
+        style={{
+          gridColumn: "1 / 4",
+          gridRow: "16 / 17",
+          alignSelf: "start",
+          fontFamily: TOKENS.sans,
+          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontWeight: 400,
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          paddingTop: "clamp(4px, 0.6vw, 8px)",
+          ...revealStyle(visible, 1100),
+        }}
+      >
+        そして今も、
+      </div>
+
       <Link
         href="/voice/256807"
         style={{
           gridColumn: "1 / 7",
-          gridRow: "15 / 16",
-          alignSelf: "center",
+          gridRow: "16 / 17",
+          alignSelf: "end",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(18px, 1.6vw, 24px)",
+          fontSize: "clamp(17px, 1.5vw, 22px)",
           fontWeight: 500,
           letterSpacing: "0.03em",
           color: TOKENS.forest,
@@ -441,30 +503,11 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         いつでも、駆けつけてくれる。
       </Link>
 
-      {/* ===== Minor: やっと、決められた。(最小 Sans 400 sub gray) ===== */}
-      <Link
-        href="/voice/199927"
-        style={{
-          gridColumn: "7 / 10",
-          gridRow: "15 / 16",
-          alignSelf: "center",
-          fontFamily: TOKENS.sans,
-          fontSize: "12px",
-          fontWeight: 400,
-          letterSpacing: "0.1em",
-          color: TOKENS.sub,
-          textDecoration: "none",
-          ...revealStyle(visible, DELAY.sat5),
-        }}
-      >
-        やっと、決められた。
-      </Link>
-
       {/* ===== フッター罫線 ===== */}
       <div
         style={{
           gridColumn: "1 / 13",
-          gridRow: "16",
+          gridRow: "17",
           alignSelf: "start",
           borderTop: `1px solid ${TOKENS.line}`,
           ...revealStyle(visible, DELAY.footer),
@@ -475,7 +518,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <div
         style={{
           gridColumn: "1 / 8",
-          gridRow: "16",
+          gridRow: "17",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
           fontSize: "12px",
@@ -494,7 +537,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         href="/voice"
         style={{
           gridColumn: "8 / 13",
-          gridRow: "16",
+          gridRow: "17",
           alignSelf: "center",
           justifySelf: "end",
           fontFamily: TOKENS.serif,
@@ -587,7 +630,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         }}
       />
 
-      {/* ===== Pain 1: strong opening（Serif 400・大）=====*/}
+      {/* ============ Ch.1 問題 ============ */}
       <Link
         href="/voice/199927"
         style={{
@@ -607,7 +650,6 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         「2年、見つからなかった。」
       </Link>
 
-      {/* ===== Pain 2: whisper echo（ダッシュ付き・13px 小）===== */}
       <Link
         href="/voice/279070"
         style={{
@@ -626,43 +668,120 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           ...revealStyle(visible, DELAY.pain2),
         }}
       >
-        ── 「他社は、標準が低かった。」
+        ──── 「他社は、標準が低かった。」
       </Link>
 
-      {/* ===== HERO line 1 (Charcoal Serif 400・相対的に小) ===== */}
+      {/* ============ Ch.2 転機: 諦めかけた時 → 出会えた。 ============ */}
       <div
         style={{
           gridColumn: "1 / 7",
-          gridRow: "6 / 7",
-          alignSelf: "end",
-          fontFamily: TOKENS.serif,
-          fontSize: "clamp(24px, 7vw, 32px)",
+          gridRow: "5 / 6",
+          alignSelf: "center",
+          fontFamily: TOKENS.sans,
+          fontSize: "12px",
           fontWeight: 400,
-          lineHeight: 1.2,
-          letterSpacing: "0.01em",
-          color: TOKENS.ink,
-          ...revealStyle(visible, DELAY.hero1, 20),
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          ...revealStyle(visible, 560),
         }}
       >
-        「ここに住みたい、
+        諦めかけた時、
       </div>
 
-      {/* ===== HERO line 2 (Amber Serif 600・HUGE・決断 punch) ===== */}
       <Link
-        href="/voice/202180"
+        href="/voice/216803"
         style={{
           gridColumn: "1 / 7",
-          gridRow: "7 / 10",
+          gridRow: "6 / 8",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(52px, 16vw, 72px)",
-          fontWeight: 600,
+          fontSize: "clamp(40px, 12vw, 58px)",
+          fontWeight: 500,
           lineHeight: 1.05,
           letterSpacing: "-0.01em",
           color: TOKENS.amber,
           textDecoration: "none",
           paddingLeft: "8%",
-          ...revealStyle(visible, DELAY.hero2, 24),
+          ...revealStyle(visible, 640, 20),
+        }}
+      >
+        出会えた。
+      </Link>
+
+      {/* ============ Ch.3 頂点: 「ここに住みたい、」(主) + と思えた。(従) ============ */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "8 / 9",
+          alignSelf: "end",
+          fontFamily: TOKENS.sans,
+          fontSize: "12px",
+          fontWeight: 400,
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          ...revealStyle(visible, 780),
+        }}
+      >
+        そして、初めての見学で。
+      </div>
+
+      {/* HERO line 1-a: 「ここに (主役の 1 行目) */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "9 / 10",
+          alignSelf: "end",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(44px, 15vw, 62px)",
+          fontWeight: 500,
+          lineHeight: 1.0,
+          letterSpacing: "-0.01em",
+          color: TOKENS.ink,
+          whiteSpace: "nowrap",
+          ...revealStyle(visible, DELAY.hero1, 24),
+        }}
+      >
+        「ここに
+      </div>
+
+      {/* HERO line 1-b: 住みたい、(主役の 2 行目) */}
+      <div
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "10 / 11",
+          alignSelf: "center",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(44px, 15vw, 62px)",
+          fontWeight: 500,
+          lineHeight: 1.0,
+          letterSpacing: "-0.01em",
+          color: TOKENS.ink,
+          whiteSpace: "nowrap",
+          paddingLeft: "8%",
+          ...revealStyle(visible, DELAY.hero1 + 60, 24),
+        }}
+      >
+        住みたい、
+      </div>
+
+      {/* HERO line 2: と思えた。」(反芻・小・Amber) */}
+      <Link
+        href="/voice/202180"
+        style={{
+          gridColumn: "1 / 7",
+          gridRow: "11 / 12",
+          alignSelf: "start",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(22px, 6.5vw, 28px)",
+          fontWeight: 400,
+          lineHeight: 1.2,
+          letterSpacing: "0em",
+          color: TOKENS.amber,
+          textDecoration: "none",
+          whiteSpace: "nowrap",
+          paddingLeft: "16%",
+          paddingTop: 8,
+          ...revealStyle(visible, DELAY.hero2, 18),
         }}
       >
         と思えた。」
@@ -672,67 +791,42 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
       <div
         style={{
           gridColumn: "1 / 7",
-          gridRow: "10 / 11",
-          alignSelf: "start",
+          gridRow: "12 / 13",
+          alignSelf: "center",
           fontFamily: TOKENS.sans,
           fontSize: "11px",
           letterSpacing: "0.08em",
           color: TOKENS.sub,
-          paddingLeft: "10%",
-          paddingTop: 6,
+          paddingLeft: "12%",
           ...revealStyle(visible, DELAY.attr),
         }}
       >
-        — 奈良市 M様邸（30代ご夫婦）
+        — 奈良市 M様邸（30代ご夫婦・土地探し 2年）
       </div>
 
-      {/* ===== 薄い罫線 ===== */}
+      {/* ============ Ch.4 理由 ============ */}
       <div
         style={{
-          gridColumn: "2 / 5",
-          gridRow: "11",
-          alignSelf: "center",
-          height: 1,
-          backgroundColor: TOKENS.line,
-          ...revealStyle(visible, 600),
+          gridColumn: "1 / 4",
+          gridRow: "13 / 14",
+          alignSelf: "start",
+          fontFamily: TOKENS.sans,
+          fontSize: "12px",
+          fontWeight: 400,
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          ...revealStyle(visible, 960),
         }}
-      />
-
-      {/* ===== Satellite: 諦めかけた時、(12px whisper) / 出会えた。(26px mini-hero) ===== */}
-      <div style={{ gridColumn: "1 / 7", gridRow: "12 / 13", alignSelf: "center", ...revealStyle(visible, DELAY.sat1) }}>
-        <span
-          style={{
-            fontFamily: TOKENS.sans,
-            fontSize: "12px",
-            color: TOKENS.sub,
-            letterSpacing: "0.08em",
-          }}
-        >
-          諦めかけた時、
-        </span>
-        <Link
-          href="/voice/216803"
-          style={{
-            marginLeft: 12,
-            fontFamily: TOKENS.serif,
-            fontSize: "26px",
-            fontWeight: 500,
-            color: TOKENS.amber,
-            textDecoration: "none",
-            letterSpacing: "0.01em",
-          }}
-        >
-          出会えた。
-        </Link>
+      >
+        なぜなら、
       </div>
 
-      {/* ===== Neutral 1: 嘘のない、標準仕様だった。(Sans 500 中量級) ===== */}
       <Link
         href="/voice/208787"
         style={{
           gridColumn: "1 / 7",
           gridRow: "13 / 14",
-          alignSelf: "center",
+          alignSelf: "end",
           fontFamily: TOKENS.sans,
           fontSize: "17px",
           fontWeight: 500,
@@ -745,7 +839,6 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         嘘のない、標準仕様だった。
       </Link>
 
-      {/* ===== After 1: 追加費用は、ゼロ（Forest・中量級） ===== */}
       <Link
         href="/voice/208787"
         style={{
@@ -765,13 +858,29 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         追加費用は、ゼロだった。
       </Link>
 
-      {/* ===== After 2: いつでも駆けつけて（Sans 500・太い下線 2px） ===== */}
+      {/* ============ Ch.5 アフター ============ */}
+      <div
+        style={{
+          gridColumn: "1 / 4",
+          gridRow: "15 / 16",
+          alignSelf: "start",
+          fontFamily: TOKENS.sans,
+          fontSize: "12px",
+          fontWeight: 400,
+          letterSpacing: "0.12em",
+          color: TOKENS.sub,
+          ...revealStyle(visible, 1020),
+        }}
+      >
+        そして今も、
+      </div>
+
       <Link
         href="/voice/256807"
         style={{
           gridColumn: "1 / 7",
           gridRow: "15 / 16",
-          alignSelf: "center",
+          alignSelf: "end",
           fontFamily: TOKENS.sans,
           fontSize: "18px",
           fontWeight: 500,
