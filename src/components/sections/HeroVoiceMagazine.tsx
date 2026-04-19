@@ -197,18 +197,18 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         }}
       />
 
-      {/* ===== Pain 1: 「2年、見つからなかった」(Serif Oak) ===== */}
+      {/* ===== Pain 1: 「2年、見つからなかった」(強い opening・Oak Serif 400 大) ===== */}
       <Link
         href="/voice/199927"
         style={{
-          gridColumn: "1 / 6",
+          gridColumn: "1 / 7",
           gridRow: "4 / 6",
-          alignSelf: "start",
+          alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(22px, 2.4vw, 32px)",
+          fontSize: "clamp(28px, 3.2vw, 48px)",
           fontWeight: 400,
-          lineHeight: 1.4,
-          letterSpacing: "0.02em",
+          lineHeight: 1.2,
+          letterSpacing: "0.01em",
           color: TOKENS.oak,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.pain1),
@@ -217,34 +217,35 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         「2年、見つからなかった。」
       </Link>
 
-      {/* ===== Pain 2: 「他社は、標準が低かった」(Serif Oak) ===== */}
+      {/* ===== Pain 2: whisper echo（Pain 1 の半分以下、sub gray っぽい Oak） ===== */}
       <Link
         href="/voice/279070"
         style={{
           gridColumn: "7 / 11",
-          gridRow: "4 / 6",
-          alignSelf: "start",
+          gridRow: "5 / 6",
+          alignSelf: "end",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(20px, 2.2vw, 28px)",
+          fontSize: "clamp(14px, 1.2vw, 18px)",
           fontWeight: 400,
           lineHeight: 1.4,
-          letterSpacing: "0.02em",
+          letterSpacing: "0.04em",
           color: TOKENS.oak,
+          opacity: 0.75,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.pain2),
         }}
       >
-        「他社は、標準が低かった。」
+        ── 「他社は、標準が低かった。」
       </Link>
 
-      {/* ===== HERO 1 行目 (Serif Charcoal・静けさ) ===== */}
+      {/* ===== HERO 1 行目 (語りの入り・Serif 400・相対的に小・Charcoal) ===== */}
       <div
         style={{
-          gridColumn: "1 / 10",
-          gridRow: "7 / 9",
+          gridColumn: "1 / 8",
+          gridRow: "7 / 8",
           alignSelf: "end",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(44px, 5.6vw, 82px)",
+          fontSize: "clamp(36px, 4.2vw, 60px)",
           fontWeight: 400,
           lineHeight: 1.15,
           letterSpacing: "0.01em",
@@ -255,21 +256,22 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         「ここに住みたい、
       </div>
 
-      {/* ===== HERO 2 行目 (Serif Amber・決断の瞬間) ===== */}
+      {/* ===== HERO 2 行目 (決断の punch・Serif 600 Amber・2 行目が主役) ===== */}
       <Link
         href="/voice/202180"
         style={{
-          gridColumn: "2 / 11",
-          gridRow: "9 / 11",
-          alignSelf: "start",
+          gridColumn: "1 / 12",
+          gridRow: "8 / 12",
+          alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(44px, 5.6vw, 82px)",
-          fontWeight: 500,
-          lineHeight: 1.15,
-          letterSpacing: "0.01em",
+          fontSize: "clamp(72px, 9.2vw, 132px)",
+          fontWeight: 600,
+          lineHeight: 1.02,
+          letterSpacing: "-0.01em",
           color: TOKENS.amber,
           textDecoration: "none",
-          ...revealStyle(visible, DELAY.hero2, 20),
+          paddingLeft: "clamp(24px, 3vw, 60px)",
+          ...revealStyle(visible, DELAY.hero2, 24),
         }}
       >
         と思えた。」
@@ -326,8 +328,8 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
             writingMode: "vertical-rl",
             textOrientation: "mixed",
             fontFamily: TOKENS.serif,
-            fontSize: "clamp(28px, 3.4vw, 48px)",
-            fontWeight: 500,
+            fontSize: "clamp(36px, 4vw, 58px)",
+            fontWeight: 600,
             lineHeight: 1.6,
             letterSpacing: "0.08em",
             color: TOKENS.ink,
@@ -339,21 +341,22 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         </Link>
       </div>
 
-      {/* ===== Satellite: 諦めかけた時、/ 出会えた。 ===== */}
+      {/* ===== Satellite block: 諦めかけた時、(whisper 13px) + 出会えた。(mini-hero 40px) ===== */}
       <div
         style={{
-          gridColumn: "1 / 5",
+          gridColumn: "1 / 6",
           gridRow: "13 / 15",
+          alignSelf: "center",
           ...revealStyle(visible, DELAY.sat1),
         }}
       >
         <div
           style={{
             fontFamily: TOKENS.sans,
-            fontSize: "clamp(14px, 1.1vw, 16px)",
+            fontSize: "13px",
             fontWeight: 400,
             color: TOKENS.sub,
-            letterSpacing: "0.04em",
+            letterSpacing: "0.08em",
           }}
         >
           諦めかけた時、
@@ -362,13 +365,13 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           href="/voice/216803"
           style={{
             display: "inline-block",
-            marginTop: 6,
-            marginLeft: "clamp(18px, 2vw, 32px)",
+            marginTop: 4,
+            marginLeft: "clamp(32px, 3.5vw, 60px)",
             fontFamily: TOKENS.serif,
-            fontSize: "clamp(22px, 2.2vw, 32px)",
+            fontSize: "clamp(28px, 3vw, 44px)",
             fontWeight: 500,
-            lineHeight: 1.2,
-            letterSpacing: "0.02em",
+            lineHeight: 1.15,
+            letterSpacing: "0.01em",
             color: TOKENS.amber,
             textDecoration: "none",
           }}
@@ -377,18 +380,18 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         </Link>
       </div>
 
-      {/* ===== Neutral: 嘘のない、標準仕様だった。 ===== */}
+      {/* ===== Neutral: 嘘のない、標準仕様だった。(中量級 Sans 500) ===== */}
       <Link
         href="/voice/208787"
         style={{
-          gridColumn: "5 / 9",
+          gridColumn: "6 / 10",
           gridRow: "13 / 14",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(15px, 1.3vw, 18px)",
-          fontWeight: 400,
-          lineHeight: 1.7,
-          letterSpacing: "0.04em",
+          fontSize: "clamp(17px, 1.5vw, 22px)",
+          fontWeight: 500,
+          lineHeight: 1.45,
+          letterSpacing: "0.03em",
           color: TOKENS.ink,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.sat2),
@@ -397,17 +400,17 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         嘘のない、<br />標準仕様だった。
       </Link>
 
-      {/* ===== After 1: 追加費用は、ゼロだった。(Forest) ===== */}
+      {/* ===== After 1: 追加費用は、ゼロだった。(Forest・中量級) ===== */}
       <Link
         href="/voice/208787"
         style={{
-          gridColumn: "5 / 10",
+          gridColumn: "6 / 11",
           gridRow: "14 / 15",
           alignSelf: "end",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(15px, 1.3vw, 18px)",
+          fontSize: "clamp(16px, 1.4vw, 20px)",
           fontWeight: 400,
-          letterSpacing: "0.04em",
+          letterSpacing: "0.03em",
           color: TOKENS.forest,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.sat3),
@@ -416,21 +419,21 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         追加費用は、ゼロだった。
       </Link>
 
-      {/* ===== After 2: いつでも駆けつけてくれる。(Forest + 下線アクセント) ===== */}
+      {/* ===== After 2: いつでも、駆けつけてくれる。(Forest・下線・weight 500 で punch) ===== */}
       <Link
         href="/voice/256807"
         style={{
-          gridColumn: "1 / 6",
+          gridColumn: "1 / 7",
           gridRow: "15 / 16",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(16px, 1.4vw, 19px)",
-          fontWeight: 400,
-          letterSpacing: "0.04em",
+          fontSize: "clamp(18px, 1.6vw, 24px)",
+          fontWeight: 500,
+          letterSpacing: "0.03em",
           color: TOKENS.forest,
           textDecoration: "underline",
           textDecorationColor: TOKENS.forest,
-          textDecorationThickness: "1.5px",
+          textDecorationThickness: "2px",
           textUnderlineOffset: "0.25em",
           ...revealStyle(visible, DELAY.sat4),
         }}
@@ -438,17 +441,17 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         いつでも、駆けつけてくれる。
       </Link>
 
-      {/* ===== Minor: やっと、決められた。 ===== */}
+      {/* ===== Minor: やっと、決められた。(最小 Sans 400 sub gray) ===== */}
       <Link
         href="/voice/199927"
         style={{
-          gridColumn: "6 / 10",
+          gridColumn: "7 / 10",
           gridRow: "15 / 16",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1.05vw, 15px)",
+          fontSize: "12px",
           fontWeight: 400,
-          letterSpacing: "0.06em",
+          letterSpacing: "0.1em",
           color: TOKENS.sub,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.sat5),
@@ -584,7 +587,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         }}
       />
 
-      {/* ===== Pain 1（赤の代わりに Oak で「時間の重み」を表現） ===== */}
+      {/* ===== Pain 1: strong opening（Serif 400・大）=====*/}
       <Link
         href="/voice/199927"
         style={{
@@ -592,10 +595,10 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           gridRow: "3 / 4",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "20px",
+          fontSize: "clamp(22px, 6vw, 28px)",
           fontWeight: 400,
-          lineHeight: 1.3,
-          letterSpacing: "0.02em",
+          lineHeight: 1.25,
+          letterSpacing: "0.01em",
           color: TOKENS.oak,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.pain1),
@@ -604,35 +607,36 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         「2年、見つからなかった。」
       </Link>
 
-      {/* ===== Pain 2 ===== */}
+      {/* ===== Pain 2: whisper echo（ダッシュ付き・13px 小）===== */}
       <Link
         href="/voice/279070"
         style={{
           gridColumn: "1 / 7",
           gridRow: "4 / 5",
-          alignSelf: "center",
+          alignSelf: "start",
           fontFamily: TOKENS.serif,
-          fontSize: "18px",
+          fontSize: "13px",
           fontWeight: 400,
-          lineHeight: 1.3,
-          letterSpacing: "0.02em",
+          lineHeight: 1.4,
+          letterSpacing: "0.04em",
           color: TOKENS.oak,
+          opacity: 0.75,
           textDecoration: "none",
-          paddingLeft: "8%",
+          paddingLeft: "10%",
           ...revealStyle(visible, DELAY.pain2),
         }}
       >
-        「他社は、標準が低かった。」
+        ── 「他社は、標準が低かった。」
       </Link>
 
-      {/* ===== HERO line 1 (Charcoal Serif) ===== */}
+      {/* ===== HERO line 1 (Charcoal Serif 400・相対的に小) ===== */}
       <div
         style={{
           gridColumn: "1 / 7",
-          gridRow: "6 / 8",
+          gridRow: "6 / 7",
           alignSelf: "end",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(32px, 10vw, 42px)",
+          fontSize: "clamp(24px, 7vw, 32px)",
           fontWeight: 400,
           lineHeight: 1.2,
           letterSpacing: "0.01em",
@@ -643,22 +647,22 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         「ここに住みたい、
       </div>
 
-      {/* ===== HERO line 2 (Amber Serif) ===== */}
+      {/* ===== HERO line 2 (Amber Serif 600・HUGE・決断 punch) ===== */}
       <Link
         href="/voice/202180"
         style={{
           gridColumn: "1 / 7",
-          gridRow: "8 / 10",
-          alignSelf: "start",
+          gridRow: "7 / 10",
+          alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(32px, 10vw, 42px)",
-          fontWeight: 500,
-          lineHeight: 1.2,
-          letterSpacing: "0.01em",
+          fontSize: "clamp(52px, 16vw, 72px)",
+          fontWeight: 600,
+          lineHeight: 1.05,
+          letterSpacing: "-0.01em",
           color: TOKENS.amber,
           textDecoration: "none",
-          paddingLeft: "10%",
-          ...revealStyle(visible, DELAY.hero2, 20),
+          paddingLeft: "8%",
+          ...revealStyle(visible, DELAY.hero2, 24),
         }}
       >
         と思えた。」
@@ -694,14 +698,14 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         }}
       />
 
-      {/* ===== Satellite: 諦めかけた時、/ 出会えた。 ===== */}
-      <div style={{ gridColumn: "1 / 7", gridRow: "12 / 13", ...revealStyle(visible, DELAY.sat1) }}>
+      {/* ===== Satellite: 諦めかけた時、(12px whisper) / 出会えた。(26px mini-hero) ===== */}
+      <div style={{ gridColumn: "1 / 7", gridRow: "12 / 13", alignSelf: "center", ...revealStyle(visible, DELAY.sat1) }}>
         <span
           style={{
             fontFamily: TOKENS.sans,
-            fontSize: "13px",
+            fontSize: "12px",
             color: TOKENS.sub,
-            letterSpacing: "0.04em",
+            letterSpacing: "0.08em",
           }}
         >
           諦めかけた時、
@@ -709,20 +713,20 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         <Link
           href="/voice/216803"
           style={{
-            marginLeft: 10,
+            marginLeft: 12,
             fontFamily: TOKENS.serif,
-            fontSize: "22px",
+            fontSize: "26px",
             fontWeight: 500,
             color: TOKENS.amber,
             textDecoration: "none",
-            letterSpacing: "0.02em",
+            letterSpacing: "0.01em",
           }}
         >
           出会えた。
         </Link>
       </div>
 
-      {/* ===== Neutral 1: 嘘のない、標準仕様だった。 ===== */}
+      {/* ===== Neutral 1: 嘘のない、標準仕様だった。(Sans 500 中量級) ===== */}
       <Link
         href="/voice/208787"
         style={{
@@ -730,9 +734,9 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           gridRow: "13 / 14",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
-          fontSize: "16px",
-          fontWeight: 400,
-          letterSpacing: "0.04em",
+          fontSize: "17px",
+          fontWeight: 500,
+          letterSpacing: "0.03em",
           color: TOKENS.ink,
           textDecoration: "none",
           ...revealStyle(visible, DELAY.sat2),
@@ -741,7 +745,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         嘘のない、標準仕様だった。
       </Link>
 
-      {/* ===== After 1: 追加費用は、ゼロ ===== */}
+      {/* ===== After 1: 追加費用は、ゼロ（Forest・中量級） ===== */}
       <Link
         href="/voice/208787"
         style={{
@@ -751,17 +755,17 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           fontFamily: TOKENS.sans,
           fontSize: "16px",
           fontWeight: 400,
-          letterSpacing: "0.04em",
+          letterSpacing: "0.03em",
           color: TOKENS.forest,
           textDecoration: "none",
-          paddingLeft: "5%",
+          paddingLeft: "6%",
           ...revealStyle(visible, DELAY.sat3),
         }}
       >
         追加費用は、ゼロだった。
       </Link>
 
-      {/* ===== After 2: いつでも駆けつけて（下線） ===== */}
+      {/* ===== After 2: いつでも駆けつけて（Sans 500・太い下線 2px） ===== */}
       <Link
         href="/voice/256807"
         style={{
@@ -769,13 +773,13 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           gridRow: "15 / 16",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
-          fontSize: "16px",
-          fontWeight: 400,
-          letterSpacing: "0.04em",
+          fontSize: "18px",
+          fontWeight: 500,
+          letterSpacing: "0.03em",
           color: TOKENS.forest,
           textDecoration: "underline",
           textDecorationColor: TOKENS.forest,
-          textDecorationThickness: "1.5px",
+          textDecorationThickness: "2px",
           textUnderlineOffset: "0.25em",
           ...revealStyle(visible, DELAY.sat4),
         }}
@@ -814,9 +818,9 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           href="/voice/199927"
           style={{
             fontFamily: TOKENS.serif,
-            fontSize: "22px",
-            fontWeight: 500,
-            letterSpacing: "0.04em",
+            fontSize: "26px",
+            fontWeight: 600,
+            letterSpacing: "0.02em",
             color: TOKENS.ink,
             textDecoration: "none",
           }}
