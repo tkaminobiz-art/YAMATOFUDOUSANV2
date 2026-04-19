@@ -83,26 +83,26 @@ const COLOR: Record<Color, string> = {
   green: "#00A870",
 };
 
-/* PC サイズ定義（3×3 グリッド・全声同サイズ方針） */
+/* PC サイズ定義（3×3 グリッド・誌面ヘッドライン調） */
 const SIZE_PC: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
   mega: { fontSize: "clamp(80px, 9vw, 132px)",   weight: 900, lh: 0.92, ls: "-0.05em" },
   xxl:  { fontSize: "clamp(56px, 6.2vw, 96px)",  weight: 900, lh: 1.0,  ls: "-0.04em" },
   xl:   { fontSize: "clamp(32px, 3.4vw, 52px)",  weight: 900, lh: 1.1,  ls: "-0.03em" },
-  lg:   { fontSize: "clamp(20px, 1.9vw, 27px)",  weight: 900, lh: 1.3,  ls: "-0.02em" },
-  md:   { fontSize: "clamp(16px, 1.5vw, 22px)",  weight: 700, lh: 1.5,  ls: "0em" },
-  sm:   { fontSize: "clamp(13px, 1.1vw, 15px)",  weight: 500, lh: 1.6,  ls: "0em" },
-  xs:   { fontSize: "12px",                       weight: 500, lh: 1.7,  ls: "0.04em" },
+  lg:   { fontSize: "clamp(22px, 2.0vw, 28px)",  weight: 900, lh: 1.22, ls: "-0.03em" },
+  md:   { fontSize: "clamp(14px, 1.3vw, 18px)",  weight: 500, lh: 1.55, ls: "0em" },
+  sm:   { fontSize: "clamp(12px, 1.0vw, 14px)",  weight: 500, lh: 1.6,  ls: "0em" },
+  xs:   { fontSize: "11px",                       weight: 500, lh: 1.7,  ls: "0.08em" },
 };
 
-/* Mobile サイズ定義（3×3 ではなく縦 1 列、全声同サイズ） */
+/* Mobile サイズ定義（縦 1 列、誌面調） */
 const SIZE_MB: Record<Size, { fontSize: string; weight: number; lh: number; ls: string }> = {
   mega: { fontSize: "40px", weight: 900, lh: 0.95, ls: "-0.05em" },
   xxl:  { fontSize: "32px", weight: 900, lh: 1.0,  ls: "-0.04em" },
   xl:   { fontSize: "22px", weight: 900, lh: 1.2,  ls: "-0.02em" },
-  lg:   { fontSize: "16px", weight: 900, lh: 1.35, ls: "-0.01em" },
-  md:   { fontSize: "13px", weight: 700, lh: 1.5,  ls: "0em" },
+  lg:   { fontSize: "17px", weight: 900, lh: 1.3,  ls: "-0.02em" },
+  md:   { fontSize: "13px", weight: 500, lh: 1.55, ls: "0em" },
   sm:   { fontSize: "11px", weight: 500, lh: 1.5,  ls: "0em" },
-  xs:   { fontSize: "10px", weight: 500, lh: 1.6,  ls: "0.02em" },
+  xs:   { fontSize: "10px", weight: 500, lh: 1.6,  ls: "0.08em" },
 };
 
 type BlockPos = {
@@ -149,50 +149,55 @@ type TextBlock = {
      [BL] 属性行 3 つ            [BR] CTA
    ========================================================================== */
 const TEXT_BLOCKS_PC: TextBlock[] = [
-  // ===== ヘッダーラベル =====
-  { key: "p-label",   text: "VOICE｜お客様の声", size: "xs", color: "black", pos: { top: "6%", left: "5%" }, delay: 0, zIndex: 2 },
-  { key: "p-label-r", text: "Testimonials — Vol. 04", size: "xs", color: "black", textAlignRight: true, pos: { top: "6%", right: "5%" }, delay: 0, zIndex: 2 },
+  // ===== ヘッダー（左: 誌面タイトル Latin+JP の 2 段、右: 号数） =====
+  { key: "p-label-en", text: "VOICE", size: "xs", color: "black", uppercase: true, pos: { top: "7%", left: "5%" }, delay: 0, zIndex: 2 },
+  { key: "p-label-jp", text: "お客様の声", size: "md", color: "black", pos: { top: "10.5%", left: "5%" }, delay: 50, zIndex: 2 },
+  { key: "p-label-r", text: "Testimonials — Vol. 04", size: "xs", color: "black", uppercase: true, textAlignRight: true, pos: { top: "7%", right: "5%" }, delay: 0, zIndex: 2 },
+  { key: "p-label-r2", text: "2026 Spring / Yamato Real Estate", size: "xs", color: "black", uppercase: false, textAlignRight: true, pos: { top: "10.5%", right: "5%" }, delay: 50, zIndex: 2 },
 
   // ===== Row 1 （赤・赤・青） — Pain から最初の Decision へ =====
-  { key: "p-v1", text: "「2年、見つからなかった。」",       size: "lg", color: "red",   pos: { top: "27%", left: "5%" },  delay: 200, voiceId: "199927", zIndex: 2 },
-  { key: "p-v2", text: "「他社は、標準が低かった。」",       size: "lg", color: "red",   pos: { top: "27%", left: "37%" }, delay: 260, voiceId: "279070", zIndex: 2 },
-  { key: "p-v3", text: "「ここに住みたい、と思えた。」",     size: "lg", color: "blue",  pos: { top: "27%", left: "69%" }, delay: 320, voiceId: "202180", zIndex: 2 },
+  { key: "p-v1", text: "「2年、見つからなかった。」",       size: "lg", color: "red",   pos: { top: "28%", left: "5%" },  delay: 200, voiceId: "199927", zIndex: 2 },
+  { key: "p-v2", text: "「他社は、標準が低かった。」",       size: "lg", color: "red",   pos: { top: "28%", left: "37%" }, delay: 260, voiceId: "279070", zIndex: 2 },
+  { key: "p-v3", text: "「ここに住みたい、と思えた。」",     size: "lg", color: "blue",  pos: { top: "28%", left: "69%" }, delay: 320, voiceId: "202180", zIndex: 2 },
 
   // ===== Row 2 （青・青・黒） — Decision が 2 段重なり、Neutral で締める =====
-  { key: "p-v4", text: "「諦めかけた時、出会えた。」",       size: "lg", color: "blue",  pos: { top: "47%", left: "5%" },  delay: 380, voiceId: "216803", zIndex: 2 },
-  { key: "p-v5", text: "「やっと、決められた。」",           size: "lg", color: "blue",  pos: { top: "47%", left: "37%" }, delay: 440, voiceId: "199927", zIndex: 2 },
-  { key: "p-v6", text: "「嘘のない、標準仕様だった。」",     size: "lg", color: "black", pos: { top: "47%", left: "69%" }, delay: 500, voiceId: "208787", zIndex: 2 },
+  { key: "p-v4", text: "「諦めかけた時、出会えた。」",       size: "lg", color: "blue",  pos: { top: "50%", left: "5%" },  delay: 380, voiceId: "216803", zIndex: 2 },
+  { key: "p-v5", text: "「やっと、決められた。」",           size: "lg", color: "blue",  pos: { top: "50%", left: "37%" }, delay: 440, voiceId: "199927", zIndex: 2 },
+  { key: "p-v6", text: "「嘘のない、標準仕様だった。」",     size: "lg", color: "black", pos: { top: "50%", left: "69%" }, delay: 500, voiceId: "208787", zIndex: 2 },
 
   // ===== Row 3 （緑・緑・黒） — After サービス満足 → 結論 =====
-  { key: "p-v7", text: "「追加費用は、ゼロだった。」",       size: "lg", color: "green", pos: { top: "67%", left: "5%" },  delay: 560, voiceId: "208787", zIndex: 2 },
-  { key: "p-v8", text: "「いつでも駆けつけてくれる。」",     size: "lg", color: "green", pos: { top: "67%", left: "37%" }, delay: 620, voiceId: "256807", zIndex: 2 },
-  { key: "p-v9", text: "「正解だったと、言える。」",         size: "lg", color: "black", pos: { top: "67%", left: "69%" }, delay: 680, voiceId: "199927", zIndex: 2 },
+  { key: "p-v7", text: "「追加費用は、ゼロだった。」",       size: "lg", color: "green", pos: { top: "72%", left: "5%" },  delay: 560, voiceId: "208787", zIndex: 2 },
+  { key: "p-v8", text: "「いつでも駆けつけてくれる。」",     size: "lg", color: "green", pos: { top: "72%", left: "37%" }, delay: 620, voiceId: "256807", zIndex: 2 },
+  { key: "p-v9", text: "「正解だったと、言える。」",         size: "lg", color: "black", pos: { top: "72%", left: "69%" }, delay: 680, voiceId: "199927", zIndex: 2 },
 
-  // ===== 最下部: 出典行（9 組の声の出所を一行で明示） =====
-  { key: "p-footer", text: "— 奈良市・斑鳩町・京田辺市・生駒市 ほか、お客様 9 組の声より（2026 現在）", size: "xs", color: "black", pos: { top: "88%", left: "5%" }, delay: 900, zIndex: 2 },
+  // ===== フッター（出典と誌面風コピーライトを左右で対にする） =====
+  { key: "p-footer-l", text: "奈良市・斑鳩町・京田辺市・生駒市 ほか、お客様 9 組の声より", size: "xs", color: "black", pos: { top: "89%", left: "5%" }, delay: 900, zIndex: 2 },
+  { key: "p-footer-r", text: "Editorial / Yamato Real Estate, 2026", size: "xs", color: "black", uppercase: false, textAlignRight: true, pos: { top: "89%", right: "5%" }, delay: 950, zIndex: 2 },
 ];
 
 /* =============================================================================
    Mobile レイアウト（375 × 700）— PC と同じ広告ポスター構造を縦方向に圧縮
    ========================================================================== */
 const TEXT_BLOCKS_MB: TextBlock[] = [
-  // ===== ヘッダー =====
-  { key: "m-label",   text: "VOICE｜お客様の声", size: "xs", color: "black", pos: { top: "3%", left: "4%" }, delay: 0, zIndex: 2 },
-  { key: "m-label-r", text: "Vol. 04", size: "xs", color: "black", textAlignRight: true, pos: { top: "3%", right: "4%" }, delay: 0, zIndex: 2 },
+  // ===== ヘッダー（Latin + JP の 2 段） =====
+  { key: "m-label-en", text: "VOICE", size: "xs", color: "black", uppercase: true, pos: { top: "2%", left: "4%" }, delay: 0, zIndex: 2 },
+  { key: "m-label-jp", text: "お客様の声", size: "md", color: "black", pos: { top: "5%", left: "4%" }, delay: 50, zIndex: 2 },
+  { key: "m-label-r",  text: "Vol. 04 — 2026", size: "xs", color: "black", uppercase: true, textAlignRight: true, pos: { top: "3.5%", right: "4%" }, delay: 0, zIndex: 2 },
 
   // ===== 9 声を縦 1 列に同サイズでスタック（PC と同じ色リズム） =====
-  { key: "m-v1", text: "「2年、見つからなかった。」",       size: "lg", color: "red",   pos: { top: "11%", left: "4%" }, delay: 200, voiceId: "199927", zIndex: 2 },
-  { key: "m-v2", text: "「他社は、標準が低かった。」",       size: "lg", color: "red",   pos: { top: "19%", left: "4%" }, delay: 260, voiceId: "279070", zIndex: 2 },
-  { key: "m-v3", text: "「ここに住みたい、と思えた。」",     size: "lg", color: "blue",  pos: { top: "27%", left: "4%" }, delay: 320, voiceId: "202180", zIndex: 2 },
-  { key: "m-v4", text: "「諦めかけた時、出会えた。」",       size: "lg", color: "blue",  pos: { top: "35%", left: "4%" }, delay: 380, voiceId: "216803", zIndex: 2 },
-  { key: "m-v5", text: "「やっと、決められた。」",           size: "lg", color: "blue",  pos: { top: "43%", left: "4%" }, delay: 440, voiceId: "199927", zIndex: 2 },
-  { key: "m-v6", text: "「嘘のない、標準仕様だった。」",     size: "lg", color: "black", pos: { top: "51%", left: "4%" }, delay: 500, voiceId: "208787", zIndex: 2 },
-  { key: "m-v7", text: "「追加費用は、ゼロだった。」",       size: "lg", color: "green", pos: { top: "59%", left: "4%" }, delay: 560, voiceId: "208787", zIndex: 2 },
-  { key: "m-v8", text: "「いつでも駆けつけてくれる。」",     size: "lg", color: "green", pos: { top: "67%", left: "4%" }, delay: 620, voiceId: "256807", zIndex: 2 },
-  { key: "m-v9", text: "「正解だったと、言える。」",         size: "lg", color: "black", pos: { top: "75%", left: "4%" }, delay: 680, voiceId: "199927", zIndex: 2 },
+  { key: "m-v1", text: "「2年、見つからなかった。」",       size: "lg", color: "red",   pos: { top: "14%", left: "4%" }, delay: 200, voiceId: "199927", zIndex: 2 },
+  { key: "m-v2", text: "「他社は、標準が低かった。」",       size: "lg", color: "red",   pos: { top: "22%", left: "4%" }, delay: 260, voiceId: "279070", zIndex: 2 },
+  { key: "m-v3", text: "「ここに住みたい、と思えた。」",     size: "lg", color: "blue",  pos: { top: "30%", left: "4%" }, delay: 320, voiceId: "202180", zIndex: 2 },
+  { key: "m-v4", text: "「諦めかけた時、出会えた。」",       size: "lg", color: "blue",  pos: { top: "38%", left: "4%" }, delay: 380, voiceId: "216803", zIndex: 2 },
+  { key: "m-v5", text: "「やっと、決められた。」",           size: "lg", color: "blue",  pos: { top: "46%", left: "4%" }, delay: 440, voiceId: "199927", zIndex: 2 },
+  { key: "m-v6", text: "「嘘のない、標準仕様だった。」",     size: "lg", color: "black", pos: { top: "54%", left: "4%" }, delay: 500, voiceId: "208787", zIndex: 2 },
+  { key: "m-v7", text: "「追加費用は、ゼロだった。」",       size: "lg", color: "green", pos: { top: "62%", left: "4%" }, delay: 560, voiceId: "208787", zIndex: 2 },
+  { key: "m-v8", text: "「いつでも駆けつけてくれる。」",     size: "lg", color: "green", pos: { top: "70%", left: "4%" }, delay: 620, voiceId: "256807", zIndex: 2 },
+  { key: "m-v9", text: "「正解だったと、言える。」",         size: "lg", color: "black", pos: { top: "78%", left: "4%" }, delay: 680, voiceId: "199927", zIndex: 2 },
 
-  // ===== 出典行 =====
-  { key: "m-footer", text: "— 奈良・京都 / お客様 9 組の声より（2026）", size: "xs", color: "black", pos: { top: "85%", left: "4%" }, delay: 900, zIndex: 2 },
+  // ===== フッター =====
+  { key: "m-footer-l", text: "奈良・京都 / お客様 9 組の声より", size: "xs", color: "black", pos: { top: "87%", left: "4%" }, delay: 900, zIndex: 2 },
+  { key: "m-footer-r", text: "Yamato, 2026", size: "xs", color: "black", textAlignRight: true, pos: { top: "87%", right: "4%" }, delay: 950, zIndex: 2 },
 ];
 
 /* ---------- TextBlock 描画 ---------- */
