@@ -4,10 +4,10 @@ import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  HeroMagazine v3 — 2026-04-20
-  - lines 1, 2 を強調(48→68 / 44→64)
-  - フォント可変(variant prop で切替)
-  - 装飾ゼロ(v2 の方針継続)
+  HeroMagazine v4 — 2026-04-20
+  - 「標準になる」を #A9D159 (lime green) で着色
+  - bodyVariant 追加: 数字+日本語小テキストのフォント切替可能
+  - 装飾ゼロ・サブ行強調(68/64) は v3 から継続
 */
 
 const HERO_SLIDES = [
@@ -26,21 +26,24 @@ const GRAIN_DATA_URI =
     </svg>`
   );
 
+const ACCENT_LIME = "#A9D159";
+
+// === 見出し用フォントバリアント ===
 export type HeroFontVariant = {
   id: string;
   label: string;
   description: string;
-  fontFamily: string;       // CSS font-family value
-  weightSubLines: number;   // 諦めたもの / そのすべてが
-  weightBigLine: number;    // 標準になる家
-  letterSpacing: string;    // CSS letter-spacing
+  fontFamily: string;
+  weightSubLines: number;
+  weightBigLine: number;
+  letterSpacing: string;
 };
 
 export const FONT_VARIANTS: HeroFontVariant[] = [
   {
     id: "noto-serif",
     label: "A. Noto Serif JP",
-    description: "現行baseline / Google Fonts標準・Web普及型・無難で読みやすい",
+    description: "現行baseline / Web普及型・無難で読みやすい",
     fontFamily: "var(--font-noto-serif), 'Noto Serif JP', 'Hiragino Mincho ProN', serif",
     weightSubLines: 400,
     weightBigLine: 700,
@@ -49,7 +52,7 @@ export const FONT_VARIANTS: HeroFontVariant[] = [
   {
     id: "shippori",
     label: "B. Shippori Mincho",
-    description: "出版・雑誌系 / 紙面に強い / 落ち着いた現代の太明朝",
+    description: "出版・雑誌系 / 紙面に強い・落ち着いた現代の太明朝",
     fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
     weightSubLines: 400,
     weightBigLine: 700,
@@ -58,7 +61,7 @@ export const FONT_VARIANTS: HeroFontVariant[] = [
   {
     id: "zen-old",
     label: "C. Zen Old Mincho",
-    description: "情緒・伝統 / オールド系で和の格調 / 文芸的な印象",
+    description: "情緒・伝統 / オールド系で和の格調・文芸的",
     fontFamily: "var(--font-zen-old), 'Zen Old Mincho', serif",
     weightSubLines: 400,
     weightBigLine: 700,
@@ -67,7 +70,7 @@ export const FONT_VARIANTS: HeroFontVariant[] = [
   {
     id: "kaisei",
     label: "D. Kaisei Tokumin",
-    description: "個性派 / 力強い字面 / 古い印刷物のような独特の重み",
+    description: "個性派 / 力強い字面・古い印刷物のような独特の重み",
     fontFamily: "var(--font-kaisei), 'Kaisei Tokumin', serif",
     weightSubLines: 500,
     weightBigLine: 700,
@@ -76,7 +79,7 @@ export const FONT_VARIANTS: HeroFontVariant[] = [
   {
     id: "tegomin",
     label: "E. New Tegomin",
-    description: "筆勢・手書き感 / 情緒重視 / 雑誌の特集タイトル風",
+    description: "筆勢・手書き感 / 情緒重視・雑誌の特集タイトル風",
     fontFamily: "var(--font-tegomin), 'New Tegomin', serif",
     weightSubLines: 400,
     weightBigLine: 400,
@@ -84,10 +87,67 @@ export const FONT_VARIANTS: HeroFontVariant[] = [
   },
 ];
 
+// === ボディ(数字+日本語小テキスト)バリアント ===
+export type HeroBodyVariant = {
+  id: string;
+  label: string;
+  description: string;
+  numberFontFamily: string;
+  numberWeight: number;
+  numberLetterSpacing: string;
+  jaFontFamily: string;
+  jaWeight: number;
+};
+
+export const BODY_VARIANTS: HeroBodyVariant[] = [
+  {
+    id: "modern",
+    label: "I. Modern Sans (現行)",
+    description: "Inter Light + Noto Sans JP / モダン・ニュートラル",
+    numberFontFamily: "var(--font-inter), Inter, sans-serif",
+    numberWeight: 300,
+    numberLetterSpacing: "-0.04em",
+    jaFontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
+    jaWeight: 400,
+  },
+  {
+    id: "magazine-serif",
+    label: "II. Magazine Serif",
+    description: "Bodoni Moda + Noto Serif JP / 高級雑誌のオール明朝・セリフ",
+    numberFontFamily: "var(--font-bodoni), 'Bodoni Moda', serif",
+    numberWeight: 400,
+    numberLetterSpacing: "-0.02em",
+    jaFontFamily: "var(--font-noto-serif), 'Noto Serif JP', serif",
+    jaWeight: 400,
+  },
+  {
+    id: "editorial-mix",
+    label: "III. Editorial Mix",
+    description: "Playfair Display + Shippori Mincho / 編集誌の優雅さ",
+    numberFontFamily: "var(--font-playfair), 'Playfair Display', serif",
+    numberWeight: 400,
+    numberLetterSpacing: "-0.02em",
+    jaFontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+    jaWeight: 400,
+  },
+  {
+    id: "industrial-bold",
+    label: "IV. Industrial",
+    description: "Oswald Light + Noto Sans JP 500 / コンデンス・力強い",
+    numberFontFamily: "var(--font-oswald), 'Oswald', sans-serif",
+    numberWeight: 300,
+    numberLetterSpacing: "-0.01em",
+    jaFontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
+    jaWeight: 500,
+  },
+];
+
 export default function HeroMagazine({
   variant = FONT_VARIANTS[0],
+  bodyVariant = BODY_VARIANTS[0],
 }: {
   variant?: HeroFontVariant;
+  bodyVariant?: HeroBodyVariant;
 }) {
   return (
     <section className="relative w-full min-h-[100svh] overflow-hidden bg-text-primary">
@@ -113,14 +173,11 @@ export default function HeroMagazine({
         ))}
       </div>
 
-      {/* グレイン */}
       <div
         aria-hidden
         className="absolute inset-0 z-[1] opacity-[0.05] mix-blend-overlay pointer-events-none"
         style={{ backgroundImage: `url("${GRAIN_DATA_URI}")` }}
       />
-
-      {/* オーバーレイ */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10 z-[2]" />
 
       {/* ===== コンテンツ ===== */}
@@ -165,18 +222,20 @@ export default function HeroMagazine({
                   marginTop: "0.12em",
                 }}
               >
-                標準になる家。
+                <span style={{ color: ACCENT_LIME }}>標準になる</span>
+                <span>家。</span>
               </span>
             </h1>
 
-            {/* 価格(主役維持) */}
+            {/* 価格 */}
             <div className="flex items-end gap-2 md:gap-4 leading-none">
               <span
                 className="text-white font-light whitespace-nowrap"
                 style={{
-                  fontFamily: "var(--font-inter), Inter, sans-serif",
+                  fontFamily: bodyVariant.numberFontFamily,
+                  fontWeight: bodyVariant.numberWeight,
                   fontSize: "clamp(72px, 20vw, 300px)",
-                  letterSpacing: "-0.04em",
+                  letterSpacing: bodyVariant.numberLetterSpacing,
                   lineHeight: 0.85,
                   textShadow: "0 2px 20px rgba(0,0,0,0.5)",
                 }}
@@ -184,13 +243,25 @@ export default function HeroMagazine({
                 2,280
               </span>
               <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4">
-                <span className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]">
+                <span
+                  className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]"
+                  style={{
+                    fontFamily: bodyVariant.jaFontFamily,
+                    fontWeight: bodyVariant.jaWeight,
+                  }}
+                >
                   万円〜
-                  <span className="ml-1.5 text-[11px] md:text-sm align-baseline text-white/70 font-normal tracking-[0.04em]">
+                  <span
+                    className="ml-1.5 text-[11px] md:text-sm align-baseline text-white/70 font-normal tracking-[0.04em]"
+                    style={{ fontFamily: bodyVariant.jaFontFamily }}
+                  >
                     （京モデル）
                   </span>
                 </span>
-                <span className="text-white/65 text-[10px] md:text-xs leading-tight tracking-[0.05em] [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
+                <span
+                  className="text-white/65 text-[10px] md:text-xs leading-tight tracking-[0.05em] [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]"
+                  style={{ fontFamily: bodyVariant.jaFontFamily }}
+                >
                   税込・建物本体・付帯工事込み
                 </span>
               </div>
@@ -204,41 +275,69 @@ export default function HeroMagazine({
             <div className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
               <span className="flex items-baseline gap-1.5">
                 <span
-                  className="text-white font-light text-xl md:text-2xl tabular-nums"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  className="text-white text-xl md:text-2xl tabular-nums"
+                  style={{
+                    fontFamily: bodyVariant.numberFontFamily,
+                    fontWeight: bodyVariant.numberWeight,
+                  }}
                 >
                   90
                 </span>
-                <span className="text-white/80 text-[11px] md:text-sm">
+                <span
+                  className="text-white/80 text-[11px] md:text-sm"
+                  style={{
+                    fontFamily: bodyVariant.jaFontFamily,
+                    fontWeight: bodyVariant.jaWeight,
+                  }}
+                >
                   区画以上の分譲実績
                 </span>
               </span>
               <span aria-hidden className="w-px h-3.5 bg-white/30" />
               <span className="flex items-baseline gap-1.5">
                 <span
-                  className="text-white font-light text-xl md:text-2xl tabular-nums"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  className="text-white text-xl md:text-2xl tabular-nums"
+                  style={{
+                    fontFamily: bodyVariant.numberFontFamily,
+                    fontWeight: bodyVariant.numberWeight,
+                  }}
                 >
                   50
                 </span>
-                <span className="text-white/80 text-[11px] md:text-sm">
+                <span
+                  className="text-white/80 text-[11px] md:text-sm"
+                  style={{
+                    fontFamily: bodyVariant.jaFontFamily,
+                    fontWeight: bodyVariant.jaWeight,
+                  }}
+                >
                   組以上のお客様の声
                 </span>
               </span>
               <span aria-hidden className="w-px h-3.5 bg-white/30" />
               <span className="flex items-baseline gap-1.5">
                 <span
-                  className="text-white font-light text-xl md:text-2xl tabular-nums"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  className="text-white text-xl md:text-2xl tabular-nums"
+                  style={{
+                    fontFamily: bodyVariant.numberFontFamily,
+                    fontWeight: bodyVariant.numberWeight,
+                  }}
                 >
                   14
                 </span>
-                <span className="text-white/80 text-[11px] md:text-sm">
+                <span
+                  className="text-white/80 text-[11px] md:text-sm"
+                  style={{
+                    fontFamily: bodyVariant.jaFontFamily,
+                    fontWeight: bodyVariant.jaWeight,
+                  }}
+                >
                   年の実績(2011年創立)
                 </span>
               </span>
             </div>
 
+            {/* CTA — フォント切替範囲外(CtaButton側で固定) */}
             <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch max-w-2xl">
               <CtaButton
                 href="/reserve"

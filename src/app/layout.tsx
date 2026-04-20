@@ -7,6 +7,9 @@ import {
   Zen_Old_Mincho,
   Kaisei_Tokumin,
   New_Tegomin,
+  Bodoni_Moda,
+  Playfair_Display,
+  Oswald,
 } from "next/font/google";
 import "./globals.css";
 // Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
@@ -58,6 +61,28 @@ const newTegomin = New_Tegomin({
   display: "swap",
 });
 
+// === /hero-lab ボディ系フォント比較用 ===
+const bodoniModa = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-bodoni",
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-oswald",
+  display: "swap",
+});
+
 const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
@@ -77,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${inter.variable}`}
+      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable}`}
     >
       <body className="relative min-h-svh">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
