@@ -8,12 +8,16 @@
   --color-bg-sand: #EDE4D2;        /* 少し濃いサンド: 重めの区切り */
   --color-text-primary: #2B2B2B;
   --color-text-secondary: #6B6B6B;
-  --color-main: #5A8A4A;
-  --color-main-dark: #3D6B32;
-  --color-main-light: #E8F0E5;
-  --color-accent: #C4703F;
-  --color-accent-light: #FDF0E8;
-  --color-accent-soft: #E9C9AE;    /* 柔らかい橙: 装飾用（罫線・引用符等） */
+
+  /* === ブランドカラーパレット 2026-04-20 刷新 === */
+  /* メイン: forest green / grass / lime / earth の自然系 4色 */
+  --color-main: #486B00;           /* grass - メイン緑 */
+  --color-main-dark: #2E4600;      /* forest green - 深い緑 */
+  --color-main-light: #EDF2D5;     /* grass の極薄ティント (派生) */
+  --color-lime: #A2C523;           /* lime - 強アクセント・呼応色(花鳥風月の家・標準) */
+  --color-accent: #7D4427;         /* earth - 土褐色アクセント */
+  --color-accent-light: #F2EAE0;   /* earth の極薄ティント (派生) */
+  --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (派生・装飾用) */
   --color-border: #E5E5E0;
 
   /* === Fonts === */

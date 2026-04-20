@@ -89,7 +89,8 @@ const GRAIN_DATA_URI =
     </svg>`
   );
 
-const ACCENT_LIME = "#A9D159";
+// 2026-04-20 ブランドパレット刷新: lime を #A2C523 に統一
+const ACCENT_LIME = "#A2C523";
 
 export default function HeroMagazine({
   variant = FONT_VARIANTS[0],

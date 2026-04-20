@@ -17,7 +17,7 @@ const YAMATO_PIN_SVG = `
     <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
       <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.4"/>
     </filter>
-    <path filter="url(#shadow)" d="M18 0 C8.06 0 0 8.06 0 18 C0 30.5 18 48 18 48 C18 48 36 30.5 36 18 C36 8.06 27.94 0 18 0 Z" fill="#5A8A4A"/>
+    <path filter="url(#shadow)" d="M18 0 C8.06 0 0 8.06 0 18 C0 30.5 18 48 18 48 C18 48 36 30.5 36 18 C36 8.06 27.94 0 18 0 Z" fill="#486B00"/>
     <circle cx="18" cy="18" r="6" fill="#FAFAF7"/>
   </svg>
 `;
@@ -34,9 +34,9 @@ function popupHtml(lot: MappableLot): string {
             </div>`
           : ""
       }
-      <p style="font-size:10px;color:#5A8A4A;font-weight:600;letter-spacing:0.05em;margin:0 0 2px;">${lot.city}</p>
+      <p style="font-size:10px;color:#486B00;font-weight:600;letter-spacing:0.05em;margin:0 0 2px;">${lot.city}</p>
       <p style="font-size:13px;font-weight:500;color:#2B2B2B;margin:0 0 8px;line-height:1.4;">${cleanTitle}</p>
-      <a href="/lots/${lot.id}" style="display:inline-block;font-size:12px;color:#5A8A4A;font-weight:500;text-decoration:none;">詳しく見る →</a>
+      <a href="/lots/${lot.id}" style="display:inline-block;font-size:12px;color:#486B00;font-weight:500;text-decoration:none;">詳しく見る →</a>
     </div>
   `;
 }
