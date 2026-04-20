@@ -157,9 +157,9 @@ export default function MechanismEnhanced() {
                   fontWeight: 500,
                 }}
               >
-                違うのは、販売会社が
+                違うのは、家を
                 <br />
-                家を売るためにかかるお金です。
+                届けるまでの費用です。
               </p>
 
               {/* brand mark */}
@@ -234,7 +234,7 @@ export default function MechanismEnhanced() {
                 className="mb-6 max-w-[54ch]"
                 style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
               >
-                やまとは、土地の分譲から設計、施工まで自社で一貫して進めます
+                やまとは、専用の展示場を持ちません
                 <sup
                   className="text-[0.7em] align-super font-black inline-block mx-0.5"
                   style={{
@@ -244,7 +244,14 @@ export default function MechanismEnhanced() {
                 >
                   ※2
                 </sup>
-                。間に他社が入らないので、家以外のお金は、はじめからかかりません。
+                。自社の分譲地に建てた家を、そのままモデルハウスとして使い、いずれお客様にお譲りしています。一軒の家が、展示と販売の二つの役割を果たします。
+              </p>
+
+              <p
+                className="mb-6 max-w-[54ch]"
+                style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
+              >
+                土地の分譲から設計、施工まで、自社で進めています。間に入る会社がないので、仲介のマージンも乗りません。
               </p>
 
               {/* Pull quote with hang */}
@@ -297,7 +304,7 @@ export default function MechanismEnhanced() {
                 >
                   ※3
                 </sup>
-                。家そのものの品質は、変えていません。家の周りにあるお金だけを削った結果が、2,280万円〜という価格です。
+                。家そのものの品質は、変えていません。家を届けるまでの費用を最小限にした結果が、2,280万円〜という価格です。
               </p>
             </div>
           </div>
@@ -408,7 +415,7 @@ export default function MechanismEnhanced() {
                 >
                   ※2
                 </span>
-                土地分譲・設計・施工を一気通貫
+                分譲地のモデルハウスを、販売まで回す方式
               </div>
               <div className="pl-6 relative">
                 <span
