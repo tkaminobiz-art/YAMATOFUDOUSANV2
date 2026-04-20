@@ -110,22 +110,22 @@ export default function MechanismEnhanced() {
           {/* Left: 看板タイトル */}
           <div>
             <h2
-              className="text-text-primary leading-[1.0] tracking-[-0.02em]"
+              className="text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                 fontWeight: 900,
-                fontSize: "clamp(48px, 9vw, 140px)",
+                fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              家は、原価が
+              やまとは<span style={{ color: ACCENT_LIME }}>安い</span>？
               <br />
-              <span style={{ color: ACCENT_LIME }}>九</span>割。
+              違います。
             </h2>
             <p
               className="mt-6 md:mt-10 text-text-secondary text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold"
               style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
             >
-              WHY YAMATO PRICE — 価格の本当の理由
+              WHY YAMATO PRICE — 安いのではなく、無駄がない
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export default function MechanismEnhanced() {
                   fontWeight: 500,
                 }}
               >
-                素材も性能も、大手と変わりません。
+                同じ素材、同じ性能。
               </p>
               <p
                 className="mt-3 text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
@@ -158,7 +158,7 @@ export default function MechanismEnhanced() {
                 }}
               >
                 違うのは、<br />
-                お家の周りにある費用です。
+                家の周りにあるお金です。
               </p>
 
               {/* brand mark */}
@@ -189,7 +189,7 @@ export default function MechanismEnhanced() {
                 className="inline-block w-9 h-[2.5px]"
                 style={{ background: ACCENT_LIME }}
               />
-              MECHANISM <span style={{ color: ACCENT_LIME }}>·</span> やまとの考え方
+              MECHANISM <span style={{ color: ACCENT_LIME }}>·</span> なぜ価格が違うのか
             </p>
 
             {/* Manifesto title */}
@@ -201,9 +201,9 @@ export default function MechanismEnhanced() {
                 fontSize: "clamp(28px, 5vw, 64px)",
               }}
             >
-              お家そのものの原価は、
+              家に関係のないお金は、
               <br />
-              <span style={{ color: ACCENT_LIME }}>削りません。</span>
+              当社は<span style={{ color: ACCENT_LIME }}>いただきません。</span>
             </h3>
 
             {/* Article body */}
@@ -232,14 +232,14 @@ export default function MechanismEnhanced() {
                 >
                   ※1
                 </sup>
-                。ブランド広告にかける費用、巨大な展示場の維持費、仲介を挟む手数料。お家には関係のないお金が、見積もりの三〜四割を占めることがあります。
+                。広告費、展示場の維持費、仲介マージン。家に関係のないお金が、見積もりの三割から四割を占める会社もあります。
               </p>
 
               <p
                 className="mb-6 max-w-[54ch]"
                 style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
               >
-                やまとは、自社で土地を分譲し、自社設計、自社施工で家を建てます
+                やまとは、土地の分譲から設計、施工まで自社で一貫して進めます
                 <sup
                   className="text-[0.7em] align-super font-black inline-block mx-0.5"
                   style={{
@@ -249,7 +249,7 @@ export default function MechanismEnhanced() {
                 >
                   ※2
                 </sup>
-                。間に他社が入らない分、お家以外のお金は、ほとんどかかりません。
+                。間に他社が入らないので、家以外のお金は、はじめからかかりません。
               </p>
 
               {/* Pull quote with hang */}
@@ -276,9 +276,9 @@ export default function MechanismEnhanced() {
                     fontSize: "clamp(20px, 3vw, 38px)",
                   }}
                 >
-                  家に関係のないお金を、
+                  削るのではなく、<span style={{ color: ACCENT_LIME }}>含めない</span>。
                   <br />
-                  家のお金から削る。
+                  それだけなんです。
                 </blockquote>
                 <p
                   className="mt-4 pl-14 md:pl-20 text-[10px] md:text-[11px] tracking-[0.24em] uppercase font-medium text-text-secondary"
@@ -302,7 +302,7 @@ export default function MechanismEnhanced() {
                 >
                   ※3
                 </sup>
-                。素材を落とすのでも、職人の手間を削るのでもなく、家の周りにある費用を削ったのが、私たちの2,280万円〜です。
+                。家そのものの品質は、変えていません。家の周りにあるお金だけを削った結果が、2,280万円〜という価格です。
               </p>
             </div>
           </div>
@@ -448,19 +448,30 @@ export default function MechanismEnhanced() {
           {/* Big closing statement (right) */}
           <div className="col-span-12 md:col-span-7 md:pl-8">
             <p
-              className="text-[clamp(28px,5vw,72px)] leading-[1.3] tracking-[-0.01em] text-text-primary"
+              className="text-[clamp(26px,4.5vw,64px)] leading-[1.35] tracking-[-0.01em] text-text-primary"
               style={{
                 fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                 fontWeight: 900,
               }}
             >
-              やまとは、<br />
-              家そのものに、
+              家を建てるのに必要な
               <br />
-              <span style={{ color: ACCENT_LIME }}>お金を使う。</span>
+              <span style={{ color: ACCENT_LIME }}>費用しか</span>、<br />
+              やまとはいただきません。
             </p>
             <p
-              className="mt-6 md:mt-10 text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold text-text-secondary flex items-center gap-3"
+              className="mt-6 md:mt-8 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]"
+              style={{
+                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+                fontWeight: 400,
+              }}
+            >
+              それが結果としてお客様のためになると、
+              <br className="hidden md:inline" />
+              私たちは確信しているからです。
+            </p>
+            <p
+              className="mt-8 md:mt-12 text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold text-text-secondary flex items-center gap-3"
               style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
             >
               <span aria-hidden style={{ color: ACCENT_LIME }}>◉</span>
