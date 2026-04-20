@@ -4,15 +4,17 @@ import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  HeroMagazine — 2026-04-20 C-2 Magazine Editorial 版
-  方針:
-  - 雑誌カバー型タイポグラフィ(Noto Serif JP 400 / 意味改行 / 進行インデント)
-  - 主見出し「諦めたもの、そのすべてが、標準になる家。」(copywriter A案)
-  - 価格 2,280 は主役維持(ユーザー判断)
-  - 権威バッジは FV 内に残しつつ編集誌的に小型化
-  - 右端に縦組キャプション「花鳥風月の家」
-  - 四隅にページナンバー風マーカー [01] [02]
-  - グレイン(SVGインライン)で雑誌の印刷感
+  HeroMagazine v2 — 2026-04-20 A+B(装飾全削除 + サイズ階層)
+  反省:
+  - v1 は装飾盛り盛りの「AI製雑誌風テンプレ」でダサかった
+  - ISSUE / [01][02] / 英字ラベル / 下線 すべて AI パターンの典型
+  v2 方針:
+  - 装飾ゼロ。主見出しと価格とバッジと縦組キャプションのみ
+  - Noto Serif JP weight 700 の太明朝で雑誌カバーの重み
+  - 字間 -0.02em に詰める / 行間 1.15 / サイズ階層 3倍
+  - 左揃えブロック(進行インデント廃止)
+  - 「標準」下線は廃止。代わりに最終行をサイズで圧倒
+  - 権威バッジは日本語に戻す(90区画 · 50組 · 14年)
 */
 
 const HERO_SLIDES = [
@@ -22,7 +24,6 @@ const HERO_SLIDES = [
   { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
 ] as const;
 
-// グレイン: 雑誌の印刷感を出す薄いノイズ
 const GRAIN_DATA_URI =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
@@ -57,80 +58,64 @@ export default function HeroMagazine() {
         ))}
       </div>
 
-      {/* グレイン(雑誌印刷感) */}
+      {/* 雑誌印刷感のグレイン(極薄) */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[1] opacity-[0.06] mix-blend-overlay pointer-events-none"
+        className="absolute inset-0 z-[1] opacity-[0.05] mix-blend-overlay pointer-events-none"
         style={{ backgroundImage: `url("${GRAIN_DATA_URI}")` }}
       />
 
-      {/* オーバーレイ: 非対称・下方重め */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10 z-[2]" />
-      <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/40 z-[2]" />
+      {/* オーバーレイ(下方重め) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10 z-[2]" />
 
       {/* ===== コンテンツ ===== */}
       <div className="relative z-10 min-h-[100svh] flex flex-col">
-        {/* ── 上段: ISSUE メタ + シリーズラベル + [01] ── */}
-        <div className="pt-20 md:pt-24 lg:pt-28 px-[var(--page-px)]">
-          <div className="max-w-[1400px] mx-auto">
-            {/* 上部ルール + メタ */}
-            <div className="flex items-center gap-4 md:gap-6 mb-6 md:mb-8">
-              <span aria-hidden className="h-px w-8 md:w-14 bg-white/50" />
-              <p
-                className="text-white/90 text-[10px] md:text-[11px] tracking-[0.22em] whitespace-nowrap uppercase [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                Issue <span className="text-accent">014</span>
-                <span className="mx-2 text-white/40">/</span>
-                Apr 2026
-                <span className="mx-2 text-white/40">/</span>
-                Nara
-              </p>
-              <span aria-hidden className="h-px flex-1 bg-white/30" />
-              <span
-                className="hidden md:inline-block text-white/50 text-[10px] tracking-[0.25em]"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                [01]
-              </span>
-            </div>
-
-            {/* シリーズラベル */}
-            <p className="font-section-label text-white/85 text-[11px] md:text-sm tracking-[0.2em] [text-shadow:_0_1px_8px_rgba(0,0,0,0.6)]">
-              KACHOUFUUGETSU — YAMATO NO IE
-            </p>
-          </div>
-        </div>
-
         {/* ── 中段: 主見出し + 価格 ── */}
-        <div className="flex-1 flex flex-col justify-center px-[var(--page-px)] py-8 md:py-12">
+        <div className="flex-1 flex flex-col justify-center px-[var(--page-px)] pt-24 md:pt-28 lg:pt-32 pb-10">
           <div className="max-w-[1400px] mx-auto w-full">
-            {/* 主見出し(雑誌カバー型・進行インデント) */}
+            {/* 主見出し(A+B: 左揃えブロック・サイズ階層・太明朝) */}
             <h1
-              className="text-white font-normal mb-10 md:mb-14 max-w-[18ch]"
+              className="text-white font-normal mb-10 md:mb-14"
               style={{
                 fontFamily: "var(--font-serif)",
-                fontSize: "clamp(36px, 6.8vw, 96px)",
-                letterSpacing: "0.06em",
-                lineHeight: 1.3,
-                textShadow: "0 2px 20px rgba(0,0,0,0.55)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.15,
               }}
             >
-              <span className="block">諦めたもの、</span>
-              <span className="block md:pl-[1.2em]">そのすべてが、</span>
-              <span className="block md:pl-[2.4em]">
-                <span className="relative inline-block">
-                  標準
-                  <span
-                    aria-hidden
-                    className="absolute left-0 right-0 -bottom-[0.12em] h-[0.08em] bg-accent"
-                  />
-                </span>
-                <span>になる家。</span>
+              <span
+                className="block text-white/85"
+                style={{
+                  fontSize: "clamp(24px, 3.5vw, 48px)",
+                  fontWeight: 400,
+                  textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                }}
+              >
+                諦めたもの、
+              </span>
+              <span
+                className="block text-white/85"
+                style={{
+                  fontSize: "clamp(22px, 3.2vw, 44px)",
+                  fontWeight: 400,
+                  textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                }}
+              >
+                そのすべてが、
+              </span>
+              <span
+                className="block text-white"
+                style={{
+                  fontSize: "clamp(48px, 8.5vw, 116px)",
+                  fontWeight: 700,
+                  textShadow: "0 3px 22px rgba(0,0,0,0.6)",
+                  marginTop: "0.15em",
+                }}
+              >
+                標準になる家。
               </span>
             </h1>
 
-            {/* 価格ブロック(主役維持・320px級) */}
+            {/* 価格(主役維持) */}
             <div className="flex items-end gap-2 md:gap-4 leading-none">
               <span
                 className="text-white font-light whitespace-nowrap"
@@ -159,49 +144,47 @@ export default function HeroMagazine() {
           </div>
         </div>
 
-        {/* ── 下段: 権威バッジ(編集誌型) + CTA + [02] ── */}
+        {/* ── 下段: 権威バッジ(日本語) + CTA ── */}
         <div className="pb-8 md:pb-14 px-[var(--page-px)]">
           <div className="max-w-[1400px] mx-auto">
-            {/* 権威バッジ: 編集誌型・左ルール+タイポ */}
-            <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
-              <span aria-hidden className="h-px w-6 md:w-10 bg-white/40 shrink-0" />
-              <div
-                className="flex flex-wrap items-baseline gap-x-4 md:gap-x-6 gap-y-2 text-white/85 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                <span className="flex items-baseline gap-1.5">
-                  <span className="text-white font-light text-xl md:text-2xl tabular-nums">
-                    90
-                  </span>
-                  <span className="text-white/70 text-[10px] md:text-xs tracking-[0.15em] uppercase">
-                    Lots
-                  </span>
+            {/* 権威バッジ(日本語・縦罫区切り) */}
+            <div
+              className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]"
+            >
+              <span className="flex items-baseline gap-1.5">
+                <span
+                  className="text-white font-light text-xl md:text-2xl tabular-nums"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  90
                 </span>
-                <span aria-hidden className="w-px h-3 bg-white/25" />
-                <span className="flex items-baseline gap-1.5">
-                  <span className="text-white font-light text-xl md:text-2xl tabular-nums">
-                    50
-                  </span>
-                  <span className="text-white/70 text-[10px] md:text-xs tracking-[0.15em] uppercase">
-                    Voices
-                  </span>
+                <span className="text-white/80 text-[11px] md:text-sm">
+                  区画以上の分譲実績
                 </span>
-                <span aria-hidden className="w-px h-3 bg-white/25" />
-                <span className="flex items-baseline gap-1.5">
-                  <span className="text-white font-light text-xl md:text-2xl tabular-nums">
-                    14
-                  </span>
-                  <span className="text-white/70 text-[10px] md:text-xs tracking-[0.15em] uppercase">
-                    Years
-                  </span>
+              </span>
+              <span aria-hidden className="w-px h-3.5 bg-white/30" />
+              <span className="flex items-baseline gap-1.5">
+                <span
+                  className="text-white font-light text-xl md:text-2xl tabular-nums"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  50
                 </span>
-              </div>
-              <span
-                aria-hidden
-                className="hidden md:block ml-auto text-white/45 text-[10px] tracking-[0.25em]"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                [02]
+                <span className="text-white/80 text-[11px] md:text-sm">
+                  組以上のお客様の声
+                </span>
+              </span>
+              <span aria-hidden className="w-px h-3.5 bg-white/30" />
+              <span className="flex items-baseline gap-1.5">
+                <span
+                  className="text-white font-light text-xl md:text-2xl tabular-nums"
+                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                >
+                  14
+                </span>
+                <span className="text-white/80 text-[11px] md:text-sm">
+                  年の実績(2011年創立)
+                </span>
               </span>
             </div>
 
@@ -227,13 +210,13 @@ export default function HeroMagazine() {
           </div>
         </div>
 
-        {/* ── 右端縦組キャプション(和雑誌感の要) ── */}
+        {/* ── 右端縦組キャプション(効いているので残す) ── */}
         <aside
           aria-hidden="false"
           className="hidden md:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20"
         >
           <p
-            className="text-white/80 text-[11px] lg:text-xs tracking-[0.35em] [writing-mode:vertical-rl] [text-shadow:_0_1px_6px_rgba(0,0,0,0.7)]"
+            className="text-white/70 text-[11px] lg:text-xs tracking-[0.35em] [writing-mode:vertical-rl] [text-shadow:_0_1px_6px_rgba(0,0,0,0.7)]"
             style={{ fontFamily: "var(--font-serif)" }}
           >
             花鳥風月&nbsp;の家
