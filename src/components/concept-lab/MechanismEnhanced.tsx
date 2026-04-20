@@ -119,7 +119,7 @@ export default function MechanismEnhanced() {
             >
               やまとは<span style={{ color: ACCENT_LIME }}>安い</span>？
               <br />
-              違います。
+              いいえ、違います。
             </h2>
             <p
               className="mt-6 md:mt-10 text-text-secondary text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold"
@@ -157,8 +157,9 @@ export default function MechanismEnhanced() {
                   fontWeight: 500,
                 }}
               >
-                違うのは、<br />
-                家の周りにあるお金です。
+                違うのは、販売会社が
+                <br />
+                家を売るためにかかるお金です。
               </p>
 
               {/* brand mark */}
@@ -201,28 +202,22 @@ export default function MechanismEnhanced() {
                 fontSize: "clamp(28px, 5vw, 64px)",
               }}
             >
-              家に関係のないお金は、
+              だから、当社は家に関係のない
               <br />
-              当社は<span style={{ color: ACCENT_LIME }}>いただきません。</span>
+              お金は<span style={{ color: ACCENT_LIME }}>いただきません。</span>
             </h3>
 
             {/* Article body */}
             <div className="text-[14px] md:text-[15px] leading-[2.0] tracking-[0.03em] text-text-primary">
-              {/* Drop cap paragraph */}
+              {/* Evidence statement(太字) — drop cap 廃止・エビデンス文として強調 */}
               <p
-                className="mb-6 max-w-[54ch]"
-                style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
+                className="mb-8 md:mb-10 max-w-[54ch] text-[clamp(15px,1.1vw,17px)] leading-[1.95]"
+                style={{
+                  fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+                  fontWeight: 700,
+                }}
               >
-                <span
-                  className="float-left text-[3.2em] leading-[0.85] pr-2.5 pt-1 font-black"
-                  style={{
-                    color: ACCENT_LIME,
-                    fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                  }}
-                >
-                  住
-                </span>
-                宅会社の費用が高いのは、家そのものが高いからではありません
+                広告費、展示場の維持費、仲介マージン。家に関係のないお金が、見積もりの三割から四割を占める会社もあります
                 <sup
                   className="text-[0.7em] align-super font-black inline-block mx-0.5"
                   style={{
@@ -232,7 +227,7 @@ export default function MechanismEnhanced() {
                 >
                   ※1
                 </sup>
-                。広告費、展示場の維持費、仲介マージン。家に関係のないお金が、見積もりの三割から四割を占める会社もあります。
+                。
               </p>
 
               <p
