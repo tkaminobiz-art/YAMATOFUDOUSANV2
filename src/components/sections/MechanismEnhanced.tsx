@@ -125,7 +125,7 @@ export default function MechanismEnhanced() {
               className="mt-6 md:mt-10 text-text-secondary text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold"
               style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
             >
-              WHY YAMATO PRICE — 安いのではなく、無駄がない
+              WHY YAMATO PRICE — 安いのではなく、家そのものの価格
             </p>
           </div>
 
@@ -202,9 +202,9 @@ export default function MechanismEnhanced() {
                 fontSize: "clamp(28px, 5vw, 64px)",
               }}
             >
-              だから、当社は家に関係のない
+              だから、やまとの価格は
               <br />
-              お金は<span style={{ color: ACCENT_LIME }}>いただきません。</span>
+              <span style={{ color: ACCENT_LIME }}>家そのものの価格</span>です。
             </h3>
 
             {/* Article body */}
@@ -217,7 +217,7 @@ export default function MechanismEnhanced() {
                   fontWeight: 700,
                 }}
               >
-                広告費、展示場の維持費、仲介マージン。家に関係のないお金が、見積もりの三割から四割を占める会社もあります
+                広告費、展示場の維持費、仲介マージン。これら家を届けるまでの費用が、見積もりの三割から四割を占める会社もあります
                 <sup
                   className="text-[0.7em] align-super font-black inline-block mx-0.5"
                   style={{

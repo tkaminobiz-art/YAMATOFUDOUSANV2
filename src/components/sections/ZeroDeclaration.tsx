@@ -306,7 +306,7 @@ export default function ZeroDeclaration() {
             label="ZERO DECLARATION"
             title="家づくりの費用を、八つゼロに。"
             ghostText="ZERO"
-            lead="他社では当たり前にかかる費用を、八つゼロにします。契約前・建築中・その後の時間軸で、お約束を並べます。"
+            lead="家づくりの途中で増えがちな費用があります。やまとでは、その八つをゼロにしています。契約前・建築中・その後の時間軸で、順にお見せします。"
             theme="dark"
           />
         </div>
@@ -408,7 +408,7 @@ export default function ZeroDeclaration() {
               なぜ、これだけゼロにできるのか。
             </p>
             <p className="relative mt-5 max-w-[720px] text-sm leading-[1.95] text-white/65 md:text-base md:leading-[2]">
-              設計から施工まで、すべて自社で。大量仕入れでコストを抑え、間に入る会社を挟まず、卸先まで直接交渉します。大手との価格差の正体は、ブランド代と広告費。原価は、変わりません。
+              専用の展示場を持たず、自社の分譲地に建てた家をそのままモデルハウスにしています。展示と販売を一軒で兼ねるので、維持費が見積もりに乗りません。設計から施工まで、すべて自社で。間に入る会社がないので、仲介のマージンもかかりません。原価は、変わりません。
             </p>
           </div>
         </div>
