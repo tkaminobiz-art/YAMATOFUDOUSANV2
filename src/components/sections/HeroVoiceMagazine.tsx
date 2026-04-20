@@ -278,27 +278,6 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         </span>
       </div>
 
-      {/* 装飾的 pull quote mark 『 (テキストエリア内・photo と被らない位置) */}
-      <div
-        style={{
-          gridColumn: "6 / 7",
-          gridRow: "5 / 6",
-          alignSelf: "end",
-          justifySelf: "start",
-          fontFamily: TOKENS.serif,
-          fontSize: "clamp(80px, 9vw, 132px)",
-          fontWeight: 400,
-          lineHeight: 0.8,
-          color: TOKENS.amber,
-          opacity: 0.28,
-          zIndex: 2,
-          pointerEvents: "none",
-          ...revealStyle(visible, 280, 18),
-        }}
-      >
-        『
-      </div>
-
       {/* HERO Line 1: ここに住みたい、 (photo と被らないよう col 6 開始) */}
       <div
         style={{
@@ -398,13 +377,13 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         </span>
       </div>
 
-      {/* 矩形 CTA ボタン (TORICHŌ 風 Amber) */}
+      {/* 矩形 CTA ボタン (TORICHŌ 風 Amber) — 写真の下部と揃える */}
       <Link
         href="/voice"
         style={{
           gridColumn: "6 / 10",
-          gridRow: "14 / 15",
-          alignSelf: "center",
+          gridRow: "15 / 16",
+          alignSelf: "end",
           justifySelf: "start",
           marginLeft: "clamp(32px, 4vw, 72px)",
           display: "inline-flex",
@@ -618,25 +597,6 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         >
           Nara / M-tei
         </span>
-      </div>
-
-      {/* ===== Pull quote mark 『 ===== */}
-      <div
-        style={{
-          gridColumn: "1 / 3",
-          gridRow: "9 / 10",
-          alignSelf: "end",
-          fontFamily: TOKENS.serif,
-          fontSize: "68px",
-          fontWeight: 400,
-          lineHeight: 0.8,
-          color: TOKENS.amber,
-          opacity: 0.28,
-          pointerEvents: "none",
-          ...revealStyle(visible, 300, 18),
-        }}
-      >
-        『
       </div>
 
       {/* ===== HERO Line 1 ===== */}
