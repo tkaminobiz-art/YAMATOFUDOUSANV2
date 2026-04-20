@@ -454,16 +454,29 @@ export default function MechanismEnhanced() {
               <span style={{ color: ACCENT_LIME }}>費用しか</span>、<br />
               やまとはいただきません。
             </p>
+            {/* (サブ) 当たり前を、きちんとやっているだけです — 封印+謙虚 */}
             <p
-              className="mt-6 md:mt-8 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]"
+              className="mt-5 md:mt-7 text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.8] max-w-[520px]"
+              style={{
+                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+                fontWeight: 500,
+              }}
+            >
+              <span style={{ color: ACCENT_LIME }}>当たり前</span>を、
+              <br className="hidden md:inline" />
+              きちんとやっているだけです。
+            </p>
+            {/* (最後) 確信しています — 想いで結ぶ */}
+            <p
+              className="mt-4 md:mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]"
               style={{
                 fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                 fontWeight: 400,
               }}
             >
-              それが結果としてお客様のためになると、
+              それが、お客様のためになると、
               <br className="hidden md:inline" />
-              私たちは確信しているからです。
+              私たちは確信しています。
             </p>
             <p
               className="mt-8 md:mt-12 text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold text-text-secondary flex items-center gap-3"
