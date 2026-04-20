@@ -841,7 +841,7 @@ export default function HeroVoiceMagazine() {
     getReducedMotionServerSnapshot,
   );
 
-  /* auto-rotate: 6.5 秒ごとに次の voice へ
+  /* auto-rotate: 3 秒ごとに次の voice へ（短文なので早めのテンポ）
      - paused 中は停止（ホバー or タッチ）
      - prefers-reduced-motion は自動切替なし */
   useEffect(() => {
@@ -849,7 +849,7 @@ export default function HeroVoiceMagazine() {
     if (!pcVisible && !mbVisible) return;
     const id = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % VOICES.length);
-    }, 6500);
+    }, 3000);
     return () => clearInterval(id);
   }, [paused, reduced, pcVisible, mbVisible]);
 
@@ -881,7 +881,7 @@ export default function HeroVoiceMagazine() {
               transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            <VoiceGridPC visible={pcVisible && idx === currentIndex} voice={voice} />
+            <VoiceGridPC visible={pcVisible} voice={voice} />
           </div>
         ))}
 
@@ -934,7 +934,7 @@ export default function HeroVoiceMagazine() {
               transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            <VoiceGridMB visible={mbVisible && idx === currentIndex} voice={voice} />
+            <VoiceGridMB visible={mbVisible} voice={voice} />
           </div>
         ))}
 
