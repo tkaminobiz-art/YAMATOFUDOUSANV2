@@ -17,12 +17,14 @@ const HERO_SLIDES = [
   { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
 ] as const;
 
+// グレイン: baseFrequency 0.9→0.7 で粒子を少し大きく(印刷物風)
+// numOctaves 2→3 で粒子の自然さを増す
 const GRAIN_DATA_URI =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'>
-      <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter>
-      <rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/>
+    `<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'>
+      <filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/></filter>
+      <rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/>
     </svg>`
   );
 
@@ -173,12 +175,16 @@ export default function HeroMagazine({
         ))}
       </div>
 
+      {/* グレイン: opacity 0.05→0.07 / blend overlay→soft-light(より上品) */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[1] opacity-[0.05] mix-blend-overlay pointer-events-none"
+        className="absolute inset-0 z-[1] opacity-[0.07] mix-blend-soft-light pointer-events-none"
         style={{ backgroundImage: `url("${GRAIN_DATA_URI}")` }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10 z-[2]" />
+      {/* 縦オーバーレイ: 75→62 / via 30→18 / top 10→0 (写真の呼吸を確保) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/18 to-transparent z-[2]" />
+      {/* 横オーバーレイ: 左テキストエリアを微かに沈ませる(右側の写真は鮮明に残す) */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent z-[2]" />
 
       {/* ===== コンテンツ ===== */}
       <div className="relative z-10 min-h-[100svh] flex flex-col">
@@ -350,16 +356,22 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 縦組キャプション */}
+        {/* 縦組キャプション(磨き込み版)
+            - 位置: right-4→right-6/lg:right-12 (端から少し内側へ・余白を稼ぐ)
+            - top:  画面中央→top-[44%] (主見出しと視覚バランス)
+            - 上に短いルール線を追加(編集誌の「指標」感)
+            - opacity 70→55% / tracking 0.35→0.18em (締まりを出す)
+            - text-[11px]→text-[10px] (より控えめに) */}
         <aside
           aria-hidden="false"
-          className="hidden md:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20"
+          className="hidden md:flex absolute right-6 lg:right-12 top-[44%] -translate-y-1/2 z-20 flex-col items-center gap-3"
         >
+          <span aria-hidden className="block w-px h-10 bg-white/30" />
           <p
-            className="text-white/70 text-[11px] lg:text-xs tracking-[0.35em] [writing-mode:vertical-rl] [text-shadow:_0_1px_6px_rgba(0,0,0,0.7)]"
+            className="text-white/55 text-[10px] lg:text-[11px] tracking-[0.18em] [writing-mode:vertical-rl] [text-shadow:_0_1px_6px_rgba(0,0,0,0.7)]"
             style={{ fontFamily: variant.fontFamily }}
           >
-            花鳥風月&nbsp;の家
+            花鳥風月の家
           </p>
         </aside>
       </div>
