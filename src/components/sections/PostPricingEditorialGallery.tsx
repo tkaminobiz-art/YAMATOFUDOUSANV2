@@ -96,10 +96,10 @@ export default function PostPricingEditorialGallery() {
           className="mx-auto mt-3 max-w-[34rem] text-base leading-[1.75] text-white/88 md:text-lg"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          写真だからこそ伝わる、素材の質感と、光の表情。
+          写真だから伝わる、素材の質感と、光の入り方。
         </p>
         <p className="mx-auto mt-2 max-w-[28rem] text-[13px] leading-relaxed text-white/55 md:text-sm">
-          お値段だけでなく、暮らしの心地も、どうぞ。
+          価格だけでなく、実物の雰囲気も、どうぞ。
         </p>
         <p className="mt-4 text-[11px] text-white/45 md:text-xs">
           <Link

@@ -78,13 +78,13 @@ const CHAPTERS: Chapter[] = [
       {
         num: "04",
         title: "余計な搬入費用",
-        desc: "工事車両がスムーズに入れるように分譲地を整えています。追加の資材搬入コストが出にくい環境です。",
+        desc: "工事車両がスムーズに入れるように、分譲地を整えています。追加の資材搬入コストは、お客様には請求しません。",
         Icon: Truck,
       },
       {
         num: "05",
         title: "工事車両の駐車場代",
-        desc: "自社分譲地だからこそ、工事車両の駐車スペースも確保できます。余計な負担が出にくい段取りで進めます。",
+        desc: "自社分譲地だからこそ、工事車両の駐車スペースも確保できます。駐車代の追加請求はありません。",
         Icon: Car,
       },
       {
@@ -304,9 +304,9 @@ export default function ZeroDeclaration() {
         <div className="scroll-in">
           <SectionHeaderCentered
             label="ZERO DECLARATION"
-            title="やまとの家づくり、八つのゼロ宣言。"
+            title="家づくりの費用を、八つゼロに。"
             ghostText="ZERO"
-            lead="他社では当たり前にかかる費用を、できる限りゼロにします。家づくりの時間軸（契約前／建築中／その後）に沿って、お約束を並べます。"
+            lead="他社では当たり前にかかる費用を、八つゼロにします。契約前・建築中・その後の時間軸で、お約束を並べます。"
             theme="dark"
           />
         </div>
@@ -348,7 +348,7 @@ export default function ZeroDeclaration() {
                   <span className="text-white/65">（後出しは、いたしません）</span>
                 </p>
                 <p className="mt-3 max-w-[40rem] text-sm leading-[1.9] text-white/65 md:text-[15px]">
-                  契約前、建築中、その後まで。費用もお仕様も、動かしません。お約束として、書き出しました。
+                  契約前、建築中、その後まで。費用も仕様も、動かしません。お約束として、書き出しました。
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-start gap-2 md:justify-end">
@@ -408,7 +408,7 @@ export default function ZeroDeclaration() {
               なぜ、これだけゼロにできるのか。
             </p>
             <p className="relative mt-5 max-w-[720px] text-sm leading-[1.95] text-white/65 md:text-base md:leading-[2]">
-              設計から施工まで、すべて自社で。大量仕入れでコストを抑え、間に入る会社を挟まず、卸先まで直接交渉いたします。大手との価格差の正体は、ブランド代と広告費。原価は、変わりません。
+              設計から施工まで、すべて自社で。大量仕入れでコストを抑え、間に入る会社を挟まず、卸先まで直接交渉します。大手との価格差の正体は、ブランド代と広告費。原価は、変わりません。
             </p>
           </div>
         </div>

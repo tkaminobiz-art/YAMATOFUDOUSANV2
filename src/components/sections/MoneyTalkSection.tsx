@@ -33,7 +33,7 @@ export default function MoneyTalkSection() {
         >
           お金の不安は、
           <br className="md:hidden" />
-          先にほどいておきませんか。
+          先に整理しておきませんか。
         </h2>
         <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-[1.95] mb-8 max-w-[640px] mx-auto">
           「払っていけるかな」「ローンは通るかな」。

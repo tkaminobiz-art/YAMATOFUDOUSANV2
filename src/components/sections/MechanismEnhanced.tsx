@@ -361,7 +361,7 @@ export default function MechanismEnhanced() {
                   className="font-bold text-text-primary"
                   style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif", fontSize: "16px" }}
                 >
-                  2,480<span className="text-[11px] ml-1 text-text-secondary">万円〜</span>
+                  2,280<span className="text-[11px] ml-1 text-text-secondary">万円〜</span>
                 </dd>
 
                 <dt
@@ -378,7 +378,7 @@ export default function MechanismEnhanced() {
                       fontSize: "20px",
                     }}
                   >
-                    -1,520
+                    -1,720
                   </span>
                   <span className="text-[11px] ml-1 text-text-secondary">万円</span>
                 </dd>

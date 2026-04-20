@@ -150,7 +150,7 @@ export default function StaffStory() {
           {/* CTA: /staff へ */}
           <div className="mt-14 md:mt-20 text-center">
             <p className="text-text-secondary text-sm md:text-base leading-[1.9] mb-6 max-w-[560px] mx-auto">
-              一人ひとりの、家への想い・お客様への言葉・信条を
+              一人ひとりの、家づくりの考え方・お客様への言葉・信条を
               <br className="hidden md:inline" />
               紹介ページに綴りました。
             </p>

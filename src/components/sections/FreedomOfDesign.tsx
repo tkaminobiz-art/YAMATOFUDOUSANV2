@@ -8,8 +8,8 @@ import CtaButton from "@/components/ui/CtaButton";
 const STEPS = [
   {
     num: "01",
-    title: "土地の条件を、設計の言葉に翻訳する",
-    body: "採光・道路・高低差。制約を先にほどき、「できる形」を一緒に見つけます。",
+    title: "土地の条件を、設計に落とし込む",
+    body: "採光・道路・高低差。条件を先に整理して、「できる形」を一緒に見つけます。",
     image: "/images/design/step-01-meeting.webp",
     alt: "設計士と夫婦が打ち合わせしている様子",
   },
@@ -78,8 +78,8 @@ export default function FreedomOfDesign() {
         <SectionHeaderCentered
           label="FREEDOM OF DESIGN"
           ghostText="DESIGN"
-          title="自由設計は、制約をほどくところから。"
-          lead="土地には、採光・道路・高さなどの条件があります。その条件を読み替えて、ご家族の暮らしに合う形へ。設計の自由度を、現実の中で組み立てます。"
+          title="自由設計は、土地の条件から、はじまります。"
+          lead="土地には、採光・道路・高さなどの条件があります。その条件を踏まえて、ご家族の暮らしに合う形へ。設計の自由度を、条件の中で組み立てます。"
           align="left"
           className="mb-12 md:mb-16"
         />
@@ -103,7 +103,7 @@ export default function FreedomOfDesign() {
                 設計は、ちゃんと自由になります。
               </p>
               <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary md:text-[14px]">
-                土地が決まっている方は、その条件に合わせて。これから探す方は、候補地と一緒に。設計士が初回から同席し、判断の筋道をそろえます。
+                土地が決まっている方は、その条件に合わせて。これから探す方は、候補地と一緒に。設計士が初回から同席し、考える順序をそろえます。
               </p>
 
               <div className="mt-6 border-y border-border py-5">
@@ -112,7 +112,7 @@ export default function FreedomOfDesign() {
                 </p>
                 <ul className="mt-4 space-y-3 text-sm leading-relaxed text-text-secondary">
                   {[
-                    "土地条件を前提に、間取りの“打ち手”を整理します。",
+                    "土地条件を前提に、間取りの選択肢を整理します。",
                     "仕様は実物を見ながら決めるので、納得が早くなります。",
                     "暮らしの優先順位を決めると、迷いが減ります。",
                   ].map((t) => (

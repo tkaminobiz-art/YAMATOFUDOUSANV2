@@ -39,7 +39,7 @@ const PLANS = [
 
 const INCLUDED = [
   "建物本体",
-  "標準設備（キッチン・浴室など、ひととおり）",
+  "標準設備（キッチン クリナップ・浴室 TOTO など）",
   "付帯工事",
   "設計・申請に関わる費用",
 ] as const;
@@ -164,7 +164,7 @@ export default function PriceSection() {
                   className="mt-4 text-base font-medium leading-relaxed text-text-primary md:text-lg"
                   style={{ fontFamily: "var(--font-serif)" }}
                 >
-                  いま見ているのは、建物側の総額の目安です。
+                  いま見ているのは、建物本体の総額の目安です。
                 </p>
                 <p className="mt-4 text-sm leading-[1.9] text-text-secondary">
                   敷地や仕様で前後しますが、まずはこの枠で家計の見通しを立てます。細部は来場時に一覧でご説明します。
@@ -198,7 +198,7 @@ export default function PriceSection() {
                 className="mt-4 text-lg font-semibold text-text-primary md:text-xl"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                お値段に含まれているもの、たとえば
+                価格に含まれるもの、たとえば
               </p>
               <ul className="mt-8 space-y-4 text-sm leading-relaxed text-text-secondary md:text-[15px]">
                 {INCLUDED.map((t) => (
@@ -260,7 +260,7 @@ export default function PriceSection() {
               PLANS
             </p>
             <p className="text-xs text-text-secondary md:text-sm">
-              広さ・間取り・価格帯の目安です。実際のプランは、設計でお仕立て直しできます。
+              広さ・間取り・価格帯の目安です。実際のプランは、ご家族に合わせて設計します。
             </p>
           </div>
 
@@ -364,7 +364,7 @@ export default function PriceSection() {
           <p className="max-w-[52rem] text-[11px] leading-[1.9] text-text-secondary md:text-xs">
             ※ 表示価格は建物本体（税込）に付帯工事まで含む目安です。土地・登記等は別途です。
             <br />
-            ※ 仕様の違いや、あなた専用へのお仕立て直しは来場時に一覧でご説明します。
+            ※ 仕様の違いや、ご家族に合わせた調整は、来場時にご説明します。
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <CtaButton
@@ -372,7 +372,7 @@ export default function PriceSection() {
               variant="secondary"
               size="md"
               label="お金のご相談、承ります"
-              sublabel="ご不安な方は、どうぞこちらへ"
+              sublabel="不安なことは、こちらから"
             />
             <CtaButton
               href="/reserve"
