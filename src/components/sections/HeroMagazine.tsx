@@ -53,7 +53,7 @@ function SlideOverlay({ category }: { category: SlideCategory }) {
       />
     );
   }
-  // interior(現状維持)
+  // interior(現状維持・vignette は右側に反転=テキストを右に移したため)
   return (
     <>
       <div
@@ -62,7 +62,7 @@ function SlideOverlay({ category }: { category: SlideCategory }) {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent"
+        className="absolute inset-0 bg-gradient-to-l from-black/25 via-transparent to-transparent"
       />
     </>
   );
@@ -238,8 +238,8 @@ export default function HeroMagazine({
       {/* ===== コンテンツ ===== */}
       <div className="relative z-10 min-h-[100svh] flex flex-col">
         <div className="flex-1 flex flex-col justify-center px-[var(--page-px)] pt-24 md:pt-28 lg:pt-32 pb-10">
-          <div className="max-w-[1400px] mx-auto w-full">
-            {/* 主見出し */}
+          <div className="max-w-[1400px] mx-auto w-full text-right">
+            {/* 主見出し(右寄せ) */}
             <h1
               className="text-white font-normal mb-10 md:mb-14"
               style={{
@@ -273,8 +273,8 @@ export default function HeroMagazine({
               </span>
             </h1>
 
-            {/* 価格 */}
-            <div className="flex items-end gap-2 md:gap-4 leading-none">
+            {/* 価格(右寄せ) */}
+            <div className="flex items-end gap-2 md:gap-4 leading-none justify-end">
               <span
                 className="text-white font-light whitespace-nowrap"
                 style={{
@@ -288,7 +288,7 @@ export default function HeroMagazine({
               >
                 2,280
               </span>
-              <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4">
+              <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4 text-left">
                 <span
                   className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]"
                   style={{
@@ -318,7 +318,7 @@ export default function HeroMagazine({
         {/* 下段: 権威バッジ + CTA */}
         <div className="pb-8 md:pb-14 px-[var(--page-px)]">
           <div className="max-w-[1400px] mx-auto">
-            <div className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
+            <div className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)] justify-end">
               <span className="flex items-baseline gap-1.5">
                 <span
                   className="text-white text-xl md:text-2xl tabular-nums"
@@ -383,8 +383,8 @@ export default function HeroMagazine({
               </span>
             </div>
 
-            {/* CTA — フォント切替範囲外(CtaButton側で固定) */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch max-w-2xl">
+            {/* CTA — フォント切替範囲外(CtaButton側で固定)・右寄せ */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch max-w-2xl ml-auto">
               <CtaButton
                 href="/reserve"
                 variant="dark-bg-primary"
@@ -405,15 +405,11 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 縦組キャプション(磨き込み版)
-            - 位置: right-4→right-6/lg:right-12 (端から少し内側へ・余白を稼ぐ)
-            - top:  画面中央→top-[44%] (主見出しと視覚バランス)
-            - 上に短いルール線を追加(編集誌の「指標」感)
-            - opacity 70→55% / tracking 0.35→0.18em (締まりを出す)
-            - text-[11px]→text-[10px] (より控えめに) */}
+        {/* 縦組キャプション
+            - 位置: 左側に変更(テキストが右寄せになったので視覚バランスのカウンター) */}
         <aside
           aria-hidden="false"
-          className="hidden md:flex absolute right-6 lg:right-12 top-[44%] -translate-y-1/2 z-20 flex-col items-center gap-3"
+          className="hidden md:flex absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 z-20 flex-col items-center gap-3"
         >
           <span aria-hidden className="block w-px h-10 bg-white/30" />
           <p
