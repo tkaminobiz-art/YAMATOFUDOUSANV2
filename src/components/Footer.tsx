@@ -24,6 +24,7 @@ const NAV_GROUPS = [
     items: [
       { label: "来店予約", href: "/reserve" },
       { label: "資料請求", href: "/contact" },
+      { label: "お金のお話", href: "/money" },
       { label: "店舗情報", href: "/#access" },
     ],
   },

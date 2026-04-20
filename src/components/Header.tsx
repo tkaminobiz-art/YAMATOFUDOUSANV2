@@ -34,6 +34,7 @@ const ENTRY_TABS = [
       path.startsWith("/voice") ||
       path.startsWith("/works") ||
       path.startsWith("/staff") ||
+      path.startsWith("/money") ||
       path.startsWith("/reserve") ||
       path.startsWith("/contact"),
   },
