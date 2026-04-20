@@ -101,7 +101,7 @@ type Voice = {
   hero1: string;              // 前半フレーズ (カンマ終わり)
   hero2: string;              // 後半フレーズ (句点終わり)
   heroColor: HeroColor;       // hero2 のアクセント色
-  subLines: [string, string]; // 2 行サブテキスト
+  subText: string;            // サブテキスト（自然な wrap）
   attribution: string;        // "奈良市 M様邸 ／ 30代ご夫婦 ／ 土地探し 2年"
   voiceId: string;            // /voice/xxxx へのリンク
 };
@@ -125,7 +125,7 @@ const VOICES: Voice[] = [
     hero1: "ここに住みたい、",
     hero2: "と思えた。",
     heroColor: "amber",
-    subLines: ["2年探して、ようやく出会えた。", "土地も標準仕様も、全てが納得の住まいでした。"],
+    subText: "2年探して、ようやく出会えた。土地も標準仕様も、全てが納得の住まいでした。",
     attribution: "奈良市 M様邸　／　30代ご夫婦　／　土地探し 2年",
     voiceId: "202180",
   },
@@ -137,7 +137,7 @@ const VOICES: Voice[] = [
     hero1: "2年、",
     hero2: "見つからなかった。",
     heroColor: "oak",
-    subLines: ["希望の条件で探し続けて、見つからずにいた。", "やまとの分譲地で、ようやく決められました。"],
+    subText: "希望の条件で探し続けて、見つからずにいた。やまとの分譲地で、ようやく決められました。",
     attribution: "奈良市 Y様邸　／　30代ご夫婦　／　分譲地 購入",
     voiceId: "199927",
   },
@@ -149,7 +149,7 @@ const VOICES: Voice[] = [
     hero1: "他社は、",
     hero2: "標準が低かった。",
     heroColor: "oak",
-    subLines: ["スペックを比較してはじめて気づく差。", "やまとの標準仕様は、他社の上位グレード相当でした。"],
+    subText: "スペックを比較してはじめて気づく差。やまとの標準仕様は、他社の上位グレード相当でした。",
     attribution: "斑鳩町 I様邸　／　40代ご夫婦　／　他社比較 半年",
     voiceId: "279070",
   },
@@ -161,7 +161,7 @@ const VOICES: Voice[] = [
     hero1: "諦めかけた時、",
     hero2: "出会えた。",
     heroColor: "amber",
-    subLines: ["もう無理かと思い始めていた、ちょうどその頃。", "やまとの現場見学が、全てのきっかけでした。"],
+    subText: "もう無理かと思い始めていた、ちょうどその頃。やまとの現場見学が、全てのきっかけでした。",
     attribution: "京田辺市 K様邸　／　30代ご夫婦　／　諦めからの再起",
     voiceId: "216803",
   },
@@ -173,7 +173,7 @@ const VOICES: Voice[] = [
     hero1: "嘘のない、",
     hero2: "標準仕様だった。",
     heroColor: "ink",
-    subLines: ["必要な設備が、はじめから揃っている安心感。", "追加の見積もりを求められることは一度もありませんでした。"],
+    subText: "必要な設備が、はじめから揃っている安心感。追加の見積もりを求められることは一度もありませんでした。",
     attribution: "奈良市 A様邸　／　40代ご夫婦　／　追加費用ゼロ",
     voiceId: "208787",
   },
@@ -185,7 +185,7 @@ const VOICES: Voice[] = [
     hero1: "いつでも、",
     hero2: "駆けつけてくれる。",
     heroColor: "forest",
-    subLines: ["些細な相談にも、翌日には対応してくれる。", "建てて終わりではなく、暮らしが続く関係性です。"],
+    subText: "些細な相談にも、翌日には対応してくれる。建てて終わりではなく、暮らしが続く関係性です。",
     attribution: "生駒市 U様邸　／　30代ご夫婦　／　竣工後 3年",
     voiceId: "256807",
   },
@@ -197,7 +197,7 @@ const VOICES: Voice[] = [
     hero1: "正解だったと、",
     hero2: "言える。",
     heroColor: "ink",
-    subLines: ["数年住んでもなお、決めてよかったと実感する。", "暮らしの隅々に、設計の思いやりを感じます。"],
+    subText: "数年住んでもなお、決めてよかったと実感する。暮らしの隅々に、設計の思いやりを感じます。",
     attribution: "奈良市 S様邸　／　40代ご夫婦　／　竣工後 5年",
     voiceId: "199927",
   },
@@ -209,7 +209,7 @@ const VOICES: Voice[] = [
     hero1: "建てたあとも、",
     hero2: "安心。",
     heroColor: "forest",
-    subLines: ["地震の備えも、断熱性能も、想像以上。", "季節が巡るほど、住み心地の良さが実感できます。"],
+    subText: "地震の備えも、断熱性能も、想像以上。季節が巡るほど、住み心地の良さが実感できます。",
     attribution: "斑鳩町 T様邸　／　40代ご夫婦　／　竣工後 2年",
     voiceId: "256807",
   },
@@ -221,7 +221,7 @@ const VOICES: Voice[] = [
     hero1: "やっと、",
     hero2: "決められた。",
     heroColor: "amber",
-    subLines: ["家族で悩み抜いて、最後にたどり着いた答え。", "納得するまで寄り添ってくれた営業さんに、感謝しています。"],
+    subText: "家族で悩み抜いて、最後にたどり着いた答え。納得するまで寄り添ってくれた営業さんに、感謝しています。",
     attribution: "京田辺市 N様邸　／　30代ご夫婦　／　検討期間 1年半",
     voiceId: "202180",
   },
@@ -273,8 +273,30 @@ function revealStyle(visible: boolean, delay: number, translateY = 12): React.CS
    左 cols 1-5: 写真（voice.photoUrl）
    右 cols 6-12: テキスト（voice ごとに切り替え）
    ========================================================================== */
-function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
+function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: Voice; isReversed: boolean }) {
   const heroColor = heroColorMap[voice.heroColor];
+
+  // Asymmetric layout: 奇数 index では写真左/テキスト右、偶数 index では写真右/テキスト左
+  const photoCol = isReversed ? "8 / 13" : "1 / 6";
+  // テキストエリアの各要素の grid-column 定義
+  const textCols = isReversed
+    ? {
+        meta:    "1 / 6",
+        heroL1:  "1 / 8",
+        heroL2:  "1 / 8",
+        sub:     "1 / 7",
+        attr:    "1 / 7",
+        cta:     "1 / 5",
+      }
+    : {
+        meta:    "6 / 11",
+        heroL1:  "6 / 13",
+        heroL2:  "6 / 13",
+        sub:     "6 / 12",
+        attr:    "6 / 12",
+        cta:     "6 / 10",
+      };
+
   return (
     <div
       className="relative hidden h-full w-full md:block"
@@ -287,10 +309,10 @@ function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
         padding: "clamp(20px, 3vw, 56px) clamp(20px, 4vw, 72px)",
       }}
     >
-      {/* ===== 写真（左 40%・rows 3-15、4:5 縦長・Pexels プレースホルダー） ===== */}
+      {/* ===== 写真（isReversed で左右交互に・rows 3-15、4:5 縦長） ===== */}
       <div
         style={{
-          gridColumn: "1 / 6",
+          gridColumn: photoCol,
           gridRow: "3 / 16",
           position: "relative",
           overflow: "hidden",
@@ -384,7 +406,7 @@ function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
       {/* エディトリアルメタ: 章番号 + 発話者地域 */}
       <div
         style={{
-          gridColumn: "6 / 11",
+          gridColumn: textCols.meta,
           gridRow: "4 / 5",
           alignSelf: "end",
           display: "flex",
@@ -429,7 +451,7 @@ function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
       {/* HERO Line 1: voice.hero1 */}
       <div
         style={{
-          gridColumn: "6 / 13",
+          gridColumn: textCols.heroL1,
           gridRow: "6 / 9",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
@@ -450,7 +472,7 @@ function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
       <Link
         href={`/voice/${voice.voiceId}`}
         style={{
-          gridColumn: "6 / 13",
+          gridColumn: textCols.heroL2,
           gridRow: "9 / 12",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
@@ -469,31 +491,34 @@ function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
         {voice.hero2}
       </Link>
 
-      {/* サブ 2 行 */}
+      {/* サブテキスト（自然な行送り・wordBreak auto-phrase で意味単位で改行） */}
       <div
         style={{
-          gridColumn: "6 / 12",
+          gridColumn: textCols.sub,
           gridRow: "12 / 13",
           alignSelf: "end",
           fontFamily: TOKENS.serif,
           fontSize: "clamp(15px, 1.3vw, 18px)",
           fontWeight: 400,
-          lineHeight: 1.7,
+          lineHeight: 1.9,
           letterSpacing: "0.03em",
           color: TOKENS.ink,
           paddingTop: 24,
           paddingLeft: "clamp(32px, 4vw, 72px)",
+          paddingRight: "clamp(24px, 3vw, 48px)",
+          textWrap: "pretty",
+          wordBreak: "auto-phrase",
+          lineBreak: "strict",
           ...revealStyle(visible, 600),
         }}
       >
-        {voice.subLines[0]}<br />
-        {voice.subLines[1]}
+        {voice.subText}
       </div>
 
       {/* Magazine caption 風 attribution */}
       <div
         style={{
-          gridColumn: "6 / 12",
+          gridColumn: textCols.attr,
           gridRow: "13 / 14",
           alignSelf: "center",
           display: "flex",
@@ -529,7 +554,7 @@ function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
       <Link
         href="/voice"
         style={{
-          gridColumn: "6 / 10",
+          gridColumn: textCols.cta,
           gridRow: "15 / 16",
           alignSelf: "end",
           justifySelf: "start",
@@ -741,7 +766,7 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
         {voice.hero2}
       </Link>
 
-      {/* ===== サブ 2 行 ===== */}
+      {/* ===== サブテキスト（自然な wrap） ===== */}
       <div
         style={{
           gridColumn: "1 / 7",
@@ -750,15 +775,18 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           fontFamily: TOKENS.serif,
           fontSize: "14px",
           fontWeight: 400,
-          lineHeight: 1.7,
+          lineHeight: 1.9,
           letterSpacing: "0.03em",
           color: TOKENS.ink,
           paddingTop: 16,
+          paddingRight: "4%",
+          textWrap: "pretty",
+          wordBreak: "auto-phrase",
+          lineBreak: "strict",
           ...revealStyle(visible, 620),
         }}
       >
-        {voice.subLines[0]}<br />
-        {voice.subLines[1]}
+        {voice.subText}
       </div>
 
       {/* ===== Attribution caption ===== */}
@@ -841,7 +869,7 @@ export default function HeroVoiceMagazine() {
     getReducedMotionServerSnapshot,
   );
 
-  /* auto-rotate: 3 秒ごとに次の voice へ（短文なので早めのテンポ）
+  /* auto-rotate: 4.5 秒ごとに次の voice へ
      - paused 中は停止（ホバー or タッチ）
      - prefers-reduced-motion は自動切替なし */
   useEffect(() => {
@@ -849,7 +877,7 @@ export default function HeroVoiceMagazine() {
     if (!pcVisible && !mbVisible) return;
     const id = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % VOICES.length);
-    }, 3000);
+    }, 4500);
     return () => clearInterval(id);
   }, [paused, reduced, pcVisible, mbVisible]);
 
@@ -881,7 +909,7 @@ export default function HeroVoiceMagazine() {
               transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            <VoiceGridPC visible={pcVisible} voice={voice} />
+            <VoiceGridPC visible={pcVisible} voice={voice} isReversed={idx % 2 === 1} />
           </div>
         ))}
 
