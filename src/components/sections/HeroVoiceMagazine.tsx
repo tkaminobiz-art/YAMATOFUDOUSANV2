@@ -231,13 +231,57 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       />
 
       {/* ============================================================
-         Chapter 1 ── 問題（右テキスト領域）
+         Chapter I ── 問題
          ============================================================ */}
+      <div
+        style={{
+          gridColumn: "6 / 8",
+          gridRow: "3 / 4",
+          alignSelf: "end",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          ...revealStyle(visible, DELAY.pain1 - 60),
+        }}
+      >
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 400,
+            fontStyle: "italic",
+            letterSpacing: "0.12em",
+            color: TOKENS.sub,
+          }}
+        >
+          i.
+        </span>
+        <span
+          style={{
+            width: 36,
+            height: 1,
+            backgroundColor: TOKENS.line,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Doubt
+        </span>
+      </div>
+
       <Link
         href="/voice/199927"
         style={{
           gridColumn: "6 / 13",
-          gridRow: "3 / 5",
+          gridRow: "4 / 5",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
           fontSize: "clamp(22px, 2.5vw, 36px)",
@@ -261,6 +305,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           fontFamily: TOKENS.serif,
           fontSize: "clamp(13px, 1vw, 15px)",
           fontWeight: 400,
+          fontStyle: "italic",
           lineHeight: 1.4,
           letterSpacing: "0.04em",
           color: TOKENS.oak,
@@ -270,21 +315,67 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           ...revealStyle(visible, DELAY.pain2),
         }}
       >
-        ──── 「他社は、標準が低かった。」
+        「他社は、標準が低かった。」
       </Link>
 
       {/* ============================================================
-         Chapter 2 ── 転機: 諦めかけた時、出会えた。
+         Chapter II ── 転機
          ============================================================ */}
+      <div
+        style={{
+          gridColumn: "6 / 8",
+          gridRow: "6 / 7",
+          alignSelf: "end",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 8,
+          ...revealStyle(visible, 580),
+        }}
+      >
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 400,
+            fontStyle: "italic",
+            letterSpacing: "0.12em",
+            color: TOKENS.sub,
+          }}
+        >
+          ii.
+        </span>
+        <span
+          style={{
+            width: 36,
+            height: 1,
+            backgroundColor: TOKENS.line,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Encounter
+        </span>
+      </div>
+
       <div
         style={{
           gridColumn: "6 / 10",
           gridRow: "7 / 8",
-          alignSelf: "center",
-          fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1vw, 15px)",
+          alignSelf: "start",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(13px, 1.05vw, 16px)",
           fontWeight: 400,
-          letterSpacing: "0.12em",
+          fontStyle: "italic",
+          letterSpacing: "0.04em",
           color: TOKENS.sub,
           ...revealStyle(visible, 620),
         }}
@@ -318,24 +409,93 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
          主役は line 1（欲求の表明）。line 2「と思えた。」は反芻として 1/3 サイズ
          narrative 接続詞「そして、」を小さく前置きして 2→3 章の繋ぎに
          ============================================================ */}
+      {/* ============================================================
+         Chapter III ── 感情の頂点（HERO）
+         ============================================================ */}
       <div
         style={{
-          gridColumn: "6 / 10",
+          gridColumn: "6 / 8",
           gridRow: "9 / 10",
-          alignSelf: "end",
-          fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1vw, 15px)",
+          alignSelf: "center",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 8,
+          ...revealStyle(visible, 800),
+        }}
+      >
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 400,
+            fontStyle: "italic",
+            letterSpacing: "0.12em",
+            color: TOKENS.sub,
+          }}
+        >
+          iii.
+        </span>
+        <span
+          style={{
+            width: 36,
+            height: 1,
+            backgroundColor: TOKENS.line,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Moment
+        </span>
+      </div>
+
+      <div
+        style={{
+          gridColumn: "8 / 12",
+          gridRow: "9 / 10",
+          alignSelf: "center",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(13px, 1.05vw, 16px)",
           fontWeight: 400,
-          letterSpacing: "0.12em",
+          fontStyle: "italic",
+          letterSpacing: "0.04em",
           color: TOKENS.sub,
-          marginTop: "clamp(8px, 1vw, 14px)",
           ...revealStyle(visible, 820),
         }}
       >
         そして、初めての見学で。
       </div>
 
-      {/* Hero L1 は photo を貫通するため col 5/13 (photo 終端から右端まで) */}
+      {/* 装飾的な大きな引用符『 (Amber・pull quote mark) */}
+      <div
+        style={{
+          gridColumn: "5 / 6",
+          gridRow: "10 / 11",
+          alignSelf: "end",
+          justifySelf: "end",
+          fontFamily: TOKENS.serif,
+          fontSize: "clamp(80px, 9vw, 140px)",
+          fontWeight: 400,
+          lineHeight: 0.9,
+          color: TOKENS.amber,
+          opacity: 0.35,
+          zIndex: 9,
+          marginRight: "-24px",
+          ...revealStyle(visible, DELAY.hero1 - 40, 18),
+        }}
+      >
+        『
+      </div>
+
+      {/* Hero L1 は photo を貫通するため col 5/13 */}
       <div
         style={{
           gridColumn: "5 / 13",
@@ -376,22 +536,40 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         と思えた。」
       </Link>
 
+      {/* Magazine caption style で attribution */}
       <div
         style={{
           gridColumn: "6 / 12",
           gridRow: "14 / 15",
           alignSelf: "start",
-          fontFamily: TOKENS.sans,
-          fontSize: "12px",
-          fontWeight: 400,
-          letterSpacing: "0.08em",
-          color: TOKENS.sub,
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
           paddingLeft: "clamp(24px, 3vw, 48px)",
-          paddingTop: 6,
+          paddingTop: 8,
           ...revealStyle(visible, DELAY.attr),
         }}
       >
-        — 奈良市 M様邸（30代ご夫婦・土地探し 2年）
+        <span
+          style={{
+            width: 20,
+            height: 1,
+            backgroundColor: TOKENS.line,
+            flexShrink: 0,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: TOKENS.serif,
+            fontSize: "12px",
+            fontWeight: 400,
+            fontStyle: "italic",
+            letterSpacing: "0.04em",
+            color: TOKENS.sub,
+          }}
+        >
+          奈良市 M様邸　／　30代ご夫婦　／　土地探し 2年
+        </span>
       </div>
 
       {/* ===== 結論（縦組 spine を廃止、写真の下に横書きで配置） ===== */}
@@ -436,22 +614,51 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       </div>
 
       {/* ============================================================
-         Chapter 4 ── 理由: 右カラム内で 2 行に並列
+         Chapter IV ── 理由
          ============================================================ */}
       <div
         style={{
-          gridColumn: "6 / 9",
+          gridColumn: "6 / 8",
           gridRow: "15 / 16",
           alignSelf: "start",
-          fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1vw, 15px)",
-          fontWeight: 400,
-          letterSpacing: "0.12em",
-          color: TOKENS.sub,
-          ...revealStyle(visible, 1040),
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: "-12px",
+          ...revealStyle(visible, 1020),
         }}
       >
-        なぜなら、
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 400,
+            fontStyle: "italic",
+            letterSpacing: "0.12em",
+            color: TOKENS.sub,
+          }}
+        >
+          iv.
+        </span>
+        <span
+          style={{
+            width: 36,
+            height: 1,
+            backgroundColor: TOKENS.line,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Reason
+        </span>
       </div>
 
       <Link
@@ -492,23 +699,51 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       </Link>
 
       {/* ============================================================
-         Chapter 5 ── アフター: 下線アクセント
+         Chapter V ── アフター
          ============================================================ */}
       <div
         style={{
-          gridColumn: "6 / 9",
+          gridColumn: "6 / 8",
           gridRow: "16 / 17",
           alignSelf: "start",
-          fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1vw, 15px)",
-          fontWeight: 400,
-          letterSpacing: "0.12em",
-          color: TOKENS.sub,
-          marginTop: "clamp(-14px, -1vw, -8px)",
-          ...revealStyle(visible, 1100),
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: "-12px",
+          ...revealStyle(visible, 1080),
         }}
       >
-        そして今も、
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "11px",
+            fontWeight: 400,
+            fontStyle: "italic",
+            letterSpacing: "0.12em",
+            color: TOKENS.sub,
+          }}
+        >
+          v.
+        </span>
+        <span
+          style={{
+            width: 36,
+            height: 1,
+            backgroundColor: TOKENS.line,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: TOKENS.latin,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: TOKENS.sub,
+          }}
+        >
+          Continuation
+        </span>
       </div>
 
       <Link
