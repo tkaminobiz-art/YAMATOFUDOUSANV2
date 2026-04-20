@@ -83,6 +83,157 @@ const TOKENS = {
   latin:   "var(--font-inter-var), 'Inter', sans-serif",
 } as const;
 
+/* ---------- 9 組の声データ（スライダー用） ----------
+   Hero 色は役割別:
+   - amber: decision/encounter (決断の瞬間)
+   - oak:   pain (過去の時間の重み)
+   - ink:   neutral / conclusion (客観的事実)
+   - forest: after (継続の安心)
+   写真は 4 種を循環で使用
+---------- */
+type HeroColor = "amber" | "oak" | "ink" | "forest";
+
+type Voice = {
+  id: number;
+  metaLocation: string;       // "NARA / M-TEI"
+  photoUrl: string;
+  photoAlt: string;
+  hero1: string;              // 前半フレーズ (カンマ終わり)
+  hero2: string;              // 後半フレーズ (句点終わり)
+  heroColor: HeroColor;       // hero2 のアクセント色
+  subLines: [string, string]; // 2 行サブテキスト
+  attribution: string;        // "奈良市 M様邸 ／ 30代ご夫婦 ／ 土地探し 2年"
+  voiceId: string;            // /voice/xxxx へのリンク
+};
+
+/* 和モダンスタイルの 3 枚を循環使用
+   A: Japandi 椅子 + テーブル + 植物
+   B: 窓辺 + 茶器 + 木棚
+   C: 障子 + 山並み + 和室の木テーブル */
+const PHOTOS = {
+  A: "https://images.pexels.com/photos/6633448/pexels-photo-6633448.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
+  B: "https://images.pexels.com/photos/33375085/pexels-photo-33375085.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
+  C: "https://images.pexels.com/photos/13129824/pexels-photo-13129824.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
+} as const;
+
+const VOICES: Voice[] = [
+  {
+    id: 1,
+    metaLocation: "NARA / M-TEI",
+    photoUrl: PHOTOS.A,
+    photoAlt: "Japandi 調の温かい木の内観",
+    hero1: "ここに住みたい、",
+    hero2: "と思えた。",
+    heroColor: "amber",
+    subLines: ["2年探して、ようやく出会えた。", "土地も標準仕様も、全てが納得の住まいでした。"],
+    attribution: "奈良市 M様邸　／　30代ご夫婦　／　土地探し 2年",
+    voiceId: "202180",
+  },
+  {
+    id: 2,
+    metaLocation: "NARA / Y-TEI",
+    photoUrl: PHOTOS.B,
+    photoAlt: "窓から光が差し込む木造リビング",
+    hero1: "2年、",
+    hero2: "見つからなかった。",
+    heroColor: "oak",
+    subLines: ["希望の条件で探し続けて、見つからずにいた。", "やまとの分譲地で、ようやく決められました。"],
+    attribution: "奈良市 Y様邸　／　30代ご夫婦　／　分譲地 購入",
+    voiceId: "199927",
+  },
+  {
+    id: 3,
+    metaLocation: "IKARUGA / I-TEI",
+    photoUrl: PHOTOS.C,
+    photoAlt: "暖かな木質のダイニング",
+    hero1: "他社は、",
+    hero2: "標準が低かった。",
+    heroColor: "oak",
+    subLines: ["スペックを比較してはじめて気づく差。", "やまとの標準仕様は、他社の上位グレード相当でした。"],
+    attribution: "斑鳩町 I様邸　／　40代ご夫婦　／　他社比較 半年",
+    voiceId: "279070",
+  },
+  {
+    id: 4,
+    metaLocation: "KYOTANABE / K-TEI",
+    photoUrl: PHOTOS.C,
+    photoAlt: "椅子と木の質感が印象的な空間",
+    hero1: "諦めかけた時、",
+    hero2: "出会えた。",
+    heroColor: "amber",
+    subLines: ["もう無理かと思い始めていた、ちょうどその頃。", "やまとの現場見学が、全てのきっかけでした。"],
+    attribution: "京田辺市 K様邸　／　30代ご夫婦　／　諦めからの再起",
+    voiceId: "216803",
+  },
+  {
+    id: 5,
+    metaLocation: "NARA / A-TEI",
+    photoUrl: PHOTOS.A,
+    photoAlt: "落ち着いた木質の空間",
+    hero1: "嘘のない、",
+    hero2: "標準仕様だった。",
+    heroColor: "ink",
+    subLines: ["必要な設備が、はじめから揃っている安心感。", "追加の見積もりを求められることは一度もありませんでした。"],
+    attribution: "奈良市 A様邸　／　40代ご夫婦　／　追加費用ゼロ",
+    voiceId: "208787",
+  },
+  {
+    id: 6,
+    metaLocation: "IKOMA / U-TEI",
+    photoUrl: PHOTOS.B,
+    photoAlt: "光と木の温もりのあるインテリア",
+    hero1: "いつでも、",
+    hero2: "駆けつけてくれる。",
+    heroColor: "forest",
+    subLines: ["些細な相談にも、翌日には対応してくれる。", "建てて終わりではなく、暮らしが続く関係性です。"],
+    attribution: "生駒市 U様邸　／　30代ご夫婦　／　竣工後 3年",
+    voiceId: "256807",
+  },
+  {
+    id: 7,
+    metaLocation: "NARA / S-TEI",
+    photoUrl: PHOTOS.C,
+    photoAlt: "柔らかな光の差し込む室内",
+    hero1: "正解だったと、",
+    hero2: "言える。",
+    heroColor: "ink",
+    subLines: ["数年住んでもなお、決めてよかったと実感する。", "暮らしの隅々に、設計の思いやりを感じます。"],
+    attribution: "奈良市 S様邸　／　40代ご夫婦　／　竣工後 5年",
+    voiceId: "199927",
+  },
+  {
+    id: 8,
+    metaLocation: "IKARUGA / T-TEI",
+    photoUrl: PHOTOS.C,
+    photoAlt: "木の梁が活きる居住空間",
+    hero1: "建てたあとも、",
+    hero2: "安心。",
+    heroColor: "forest",
+    subLines: ["地震の備えも、断熱性能も、想像以上。", "季節が巡るほど、住み心地の良さが実感できます。"],
+    attribution: "斑鳩町 T様邸　／　40代ご夫婦　／　竣工後 2年",
+    voiceId: "256807",
+  },
+  {
+    id: 9,
+    metaLocation: "KYOTANABE / N-TEI",
+    photoUrl: PHOTOS.A,
+    photoAlt: "静謐な日本の住空間",
+    hero1: "やっと、",
+    hero2: "決められた。",
+    heroColor: "amber",
+    subLines: ["家族で悩み抜いて、最後にたどり着いた答え。", "納得するまで寄り添ってくれた営業さんに、感謝しています。"],
+    attribution: "京田辺市 N様邸　／　30代ご夫婦　／　検討期間 1年半",
+    voiceId: "202180",
+  },
+];
+
+const heroColorMap: Record<HeroColor, string> = {
+  amber: TOKENS.amber,
+  oak: TOKENS.oak,
+  ink: TOKENS.ink,
+  forest: TOKENS.forest,
+};
+
 /* ---------- アニメーション遅延（stagger） ---------- */
 const DELAY = {
   headerL: 0,
@@ -116,17 +267,14 @@ function revealStyle(visible: boolean, delay: number, translateY = 12): React.CS
 }
 
 /* =============================================================================
-   PC レイアウト: Pattern 1 (Hero Split 見開き型)
+   PC レイアウト: Pattern 1 (Hero Split 見開き型) × スライダー
    ───────────────────────────────────────────────────────────────
    Grid: 12 col × 17 row
-   左 cols 1-5: 写真（4:5 縦長ポートレイト、rows 3-15）
-   右 cols 6-12: テキスト（Pain / Hero / 物語 / 結論 spine / CTA）
-   col 13 の代わりに text 内で右寄せで spine を配置
-   ───────────────────────────────────────────────────────────────
-   写真: Pexels ID 6633448 by Cup of Couple
-   https://www.pexels.com/photo/6633448/
+   左 cols 1-5: 写真（voice.photoUrl）
+   右 cols 6-12: テキスト（voice ごとに切り替え）
    ========================================================================== */
-function VoiceGridPC({ visible }: { visible: boolean }) {
+function VoiceGridPC({ visible, voice }: { visible: boolean; voice: Voice }) {
+  const heroColor = heroColorMap[voice.heroColor];
   return (
     <div
       className="relative hidden h-full w-full md:block"
@@ -152,8 +300,8 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.pexels.com/photos/6633448/pexels-photo-6633448.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800"
-          alt="やまと不動産の施主邸イメージ — 和モダンな木のインテリア"
+          src={voice.photoUrl}
+          alt={voice.photoAlt}
           style={{
             width: "100%",
             height: "100%",
@@ -255,7 +403,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
             color: TOKENS.sub,
           }}
         >
-          No. 01 / 09
+          No. {String(voice.id).padStart(2, "0")} / {String(VOICES.length).padStart(2, "0")}
         </span>
         <span
           style={{
@@ -274,11 +422,11 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
             color: TOKENS.sub,
           }}
         >
-          Nara / M-tei
+          {voice.metaLocation}
         </span>
       </div>
 
-      {/* HERO Line 1: ここに住みたい、 (photo と被らないよう col 6 開始) */}
+      {/* HERO Line 1: voice.hero1 */}
       <div
         style={{
           gridColumn: "6 / 13",
@@ -295,12 +443,12 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           ...revealStyle(visible, 360, 24),
         }}
       >
-        ここに住みたい、
+        {voice.hero1}
       </div>
 
-      {/* HERO Line 2: と思えた。(Amber・Hero の punch) */}
+      {/* HERO Line 2: voice.hero2 (accent color) */}
       <Link
-        href="/voice/202180"
+        href={`/voice/${voice.voiceId}`}
         style={{
           gridColumn: "6 / 13",
           gridRow: "9 / 12",
@@ -310,7 +458,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           fontWeight: 500,
           lineHeight: 1.0,
           letterSpacing: "-0.02em",
-          color: TOKENS.amber,
+          color: heroColor,
           textDecoration: "none",
           zIndex: 3,
           whiteSpace: "nowrap",
@@ -318,10 +466,10 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           ...revealStyle(visible, 460, 24),
         }}
       >
-        と思えた。
+        {voice.hero2}
       </Link>
 
-      {/* サブ一行: 物語を一言で要約 */}
+      {/* サブ 2 行 */}
       <div
         style={{
           gridColumn: "6 / 12",
@@ -338,8 +486,8 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           ...revealStyle(visible, 600),
         }}
       >
-        2年探して、ようやく出会えた。<br />
-        土地も標準仕様も、全てが納得の住まいでした。
+        {voice.subLines[0]}<br />
+        {voice.subLines[1]}
       </div>
 
       {/* Magazine caption 風 attribution */}
@@ -373,7 +521,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
             color: TOKENS.sub,
           }}
         >
-          奈良市 M様邸　／　30代ご夫婦　／　土地探し 2年
+          {voice.attribution}
         </span>
       </div>
 
@@ -405,55 +553,6 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         すべての声を読む
         <span style={{ fontFamily: TOKENS.latin }}>→</span>
       </Link>
-
-      {/* ===== フッター罫線 ===== */}
-      <div
-        style={{
-          gridColumn: "1 / 13",
-          gridRow: "17",
-          alignSelf: "start",
-          borderTop: `1px solid ${TOKENS.line}`,
-          ...revealStyle(visible, DELAY.footer),
-        }}
-      />
-
-      {/* ===== フッター左: 出典 ===== */}
-      <div
-        style={{
-          gridColumn: "1 / 8",
-          gridRow: "17",
-          alignSelf: "center",
-          fontFamily: TOKENS.sans,
-          fontSize: "12px",
-          fontWeight: 400,
-          letterSpacing: "0.06em",
-          color: TOKENS.sub,
-          paddingTop: 12,
-          ...revealStyle(visible, DELAY.footer),
-        }}
-      >
-        奈良市・斑鳩町・京田辺市・生駒市 ほか、お客様 9 組の声より（2024–2026 竣工）
-      </div>
-
-      {/* ===== フッター右: 発行情報 ===== */}
-      <div
-        style={{
-          gridColumn: "8 / 13",
-          gridRow: "17",
-          alignSelf: "center",
-          justifySelf: "end",
-          fontFamily: TOKENS.latin,
-          fontSize: "11px",
-          fontWeight: 500,
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: TOKENS.sub,
-          paddingTop: 12,
-          ...revealStyle(visible, DELAY.cta),
-        }}
-      >
-        Editorial / Yamato Real Estate, 2026
-      </div>
     </div>
   );
 }
@@ -461,7 +560,8 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
 /* =============================================================================
    Mobile レイアウト: CSS Grid 6 col × 18 row
    ========================================================================== */
-function VoiceGridMB({ visible }: { visible: boolean }) {
+function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
+  const heroColor = heroColorMap[voice.heroColor];
   return (
     <div
       className="relative h-full w-full md:hidden"
@@ -541,12 +641,13 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.pexels.com/photos/6633448/pexels-photo-6633448.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=600&w=900"
-          alt="やまと不動産の施主邸イメージ"
+          src={voice.photoUrl.replace("h=1200&w=800", "h=600&w=900")}
+          alt={voice.photoAlt}
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition: "center 40%",
             filter: "saturate(0.94) contrast(1.02)",
             display: "block",
           }}
@@ -554,7 +655,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         />
       </div>
 
-      {/* ===== メタ: No.01 / NARA M-TEI ===== */}
+      {/* ===== メタ: No.XX / metaLocation ===== */}
       <div
         style={{
           gridColumn: "1 / 7",
@@ -576,7 +677,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
             color: TOKENS.sub,
           }}
         >
-          No. 01 / 09
+          No. {String(voice.id).padStart(2, "0")} / {String(VOICES.length).padStart(2, "0")}
         </span>
         <span
           style={{
@@ -595,7 +696,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
             color: TOKENS.sub,
           }}
         >
-          Nara / M-tei
+          {voice.metaLocation}
         </span>
       </div>
 
@@ -615,12 +716,12 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           ...revealStyle(visible, 380, 24),
         }}
       >
-        ここに住みたい、
+        {voice.hero1}
       </div>
 
-      {/* ===== HERO Line 2 (Amber) ===== */}
+      {/* ===== HERO Line 2 (accent) ===== */}
       <Link
-        href="/voice/202180"
+        href={`/voice/${voice.voiceId}`}
         style={{
           gridColumn: "1 / 7",
           gridRow: "11 / 13",
@@ -630,17 +731,17 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           fontWeight: 500,
           lineHeight: 1.0,
           letterSpacing: "-0.02em",
-          color: TOKENS.amber,
+          color: heroColor,
           textDecoration: "none",
           whiteSpace: "nowrap",
           paddingLeft: "10%",
           ...revealStyle(visible, 480, 24),
         }}
       >
-        と思えた。
+        {voice.hero2}
       </Link>
 
-      {/* ===== サブ一行 ===== */}
+      {/* ===== サブ 2 行 ===== */}
       <div
         style={{
           gridColumn: "1 / 7",
@@ -656,8 +757,8 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
           ...revealStyle(visible, 620),
         }}
       >
-        2年探して、ようやく出会えた。<br />
-        土地も標準仕様も、全てが納得の住まいでした。
+        {voice.subLines[0]}<br />
+        {voice.subLines[1]}
       </div>
 
       {/* ===== Attribution caption ===== */}
@@ -690,7 +791,7 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
             color: TOKENS.sub,
           }}
         >
-          奈良市 M様邸　／　30代ご夫婦　／　土地探し 2年
+          {voice.attribution}
         </span>
       </div>
 
@@ -720,44 +821,6 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
         すべての声を読む
         <span style={{ fontFamily: TOKENS.latin }}>→</span>
       </Link>
-
-      {/* ===== Footer ===== */}
-      <div
-        style={{
-          gridColumn: "1 / 7",
-          gridRow: "17 / 18",
-          alignSelf: "center",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          paddingTop: 16,
-          borderTop: `1px solid ${TOKENS.line}`,
-          ...revealStyle(visible, DELAY.footer),
-        }}
-      >
-        <span
-          style={{
-            fontFamily: TOKENS.sans,
-            fontSize: "10px",
-            letterSpacing: "0.06em",
-            color: TOKENS.sub,
-          }}
-        >
-          奈良・京都／お客様 9 組より
-        </span>
-        <span
-          style={{
-            fontFamily: TOKENS.latin,
-            fontSize: "10px",
-            fontWeight: 500,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: TOKENS.sub,
-          }}
-        >
-          Editorial / Yamato, 2026
-        </span>
-      </div>
     </div>
   );
 }
@@ -768,6 +831,27 @@ function VoiceGridMB({ visible }: { visible: boolean }) {
 export default function HeroVoiceMagazine() {
   const { ref: pcRef, visible: pcVisible } = useRevealContainer<HTMLDivElement>();
   const { ref: mbRef, visible: mbVisible } = useRevealContainer<HTMLDivElement>();
+
+  /* スライダー状態 */
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reduced = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
+
+  /* auto-rotate: 6.5 秒ごとに次の voice へ
+     - paused 中は停止（ホバー or タッチ）
+     - prefers-reduced-motion は自動切替なし */
+  useEffect(() => {
+    if (paused || reduced) return;
+    if (!pcVisible && !mbVisible) return;
+    const id = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % VOICES.length);
+    }, 6500);
+    return () => clearInterval(id);
+  }, [paused, reduced, pcVisible, mbVisible]);
 
   return (
     <section
@@ -783,16 +867,107 @@ export default function HeroVoiceMagazine() {
       <div
         ref={pcRef}
         className="relative mx-auto hidden h-[calc(100svh-110px)] min-h-[720px] w-full max-w-[1600px] overflow-hidden md:block"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
       >
-        <VoiceGridPC visible={pcVisible} />
+        {VOICES.map((voice, idx) => (
+          <div
+            key={voice.id}
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: idx === currentIndex ? 1 : 0,
+              pointerEvents: idx === currentIndex ? "auto" : "none",
+              transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            <VoiceGridPC visible={pcVisible && idx === currentIndex} voice={voice} />
+          </div>
+        ))}
+
+        {/* インジケータ（右下の小さなドット） */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "clamp(16px, 2.4vw, 40px)",
+            right: "clamp(24px, 4vw, 72px)",
+            display: "flex",
+            gap: 8,
+            zIndex: 20,
+          }}
+        >
+          {VOICES.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              aria-label={`声 ${idx + 1} に切り替え`}
+              onClick={() => setCurrentIndex(idx)}
+              style={{
+                width: idx === currentIndex ? 24 : 8,
+                height: 2,
+                backgroundColor: idx === currentIndex ? TOKENS.amber : TOKENS.line,
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                transition: "width 500ms cubic-bezier(0.16,1,0.3,1), background-color 400ms",
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Mobile */}
       <div
         ref={mbRef}
         className="relative h-[calc(100svh-110px)] min-h-[640px] w-full overflow-hidden md:hidden"
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
       >
-        <VoiceGridMB visible={mbVisible} />
+        {VOICES.map((voice, idx) => (
+          <div
+            key={voice.id}
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: idx === currentIndex ? 1 : 0,
+              pointerEvents: idx === currentIndex ? "auto" : "none",
+              transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          >
+            <VoiceGridMB visible={mbVisible && idx === currentIndex} voice={voice} />
+          </div>
+        ))}
+
+        {/* Mobile インジケータ（下部中央） */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 88,
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: 6,
+            zIndex: 20,
+          }}
+        >
+          {VOICES.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              aria-label={`声 ${idx + 1} に切り替え`}
+              onClick={() => setCurrentIndex(idx)}
+              style={{
+                width: idx === currentIndex ? 20 : 6,
+                height: 2,
+                backgroundColor: idx === currentIndex ? TOKENS.amber : TOKENS.line,
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                transition: "width 500ms cubic-bezier(0.16,1,0.3,1), background-color 400ms",
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* CTA hover style */}
