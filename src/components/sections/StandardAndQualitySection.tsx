@@ -323,21 +323,40 @@ export default function StandardAndQualitySection() {
         ref={ref}
         className="relative max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* ヘッダ */}
-        <div className="mb-10 md:mb-14 max-w-[760px]">
-          <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.18em]">
-            QUALITY / WARRANTY
+        {/* ヘッダ — 2026-04-20 strong catch 版
+            「品質は?手抜きじゃ?」の疑念を固有名詞で直撃する */}
+        <div className="mb-10 md:mb-14 max-w-[900px]">
+          <p
+            className="font-section-label text-main text-[10px] md:text-[11px] mb-5 tracking-[0.22em]"
+            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+          >
+            WHAT YOU GET — 標準で揃う、実際の名前
           </p>
           <h2
-            className="text-[clamp(28px,4vw,52px)] text-text-primary mb-5 font-light leading-[1.3]"
-            style={{ fontFamily: "var(--font-serif)" }}
+            className="text-text-primary mb-8 leading-[1.15] tracking-[-0.01em]"
+            style={{
+              fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+              fontWeight: 700,
+              fontSize: "clamp(36px, 6vw, 88px)",
+            }}
           >
-            事実だけ、並べます。
-          </h2>
-          <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-            標準仕様。品質の数字。保証。
+            品質は、大手と
             <br />
-            全部、名前と数字で置きます。
+            <span style={{ color: "var(--color-lime)" }}>同じ素材</span>です。
+          </h2>
+          <p
+            className="text-text-primary text-[clamp(16px,1.2vw,20px)] leading-[1.8] mb-3 max-w-[640px]"
+            style={{
+              fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+              fontWeight: 500,
+            }}
+          >
+            旭化成、TOTO、住友ゴム。
+          </p>
+          <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-[1.9] max-w-[640px]">
+            ここに並ぶのは、すべて標準装備です。
+            <br className="hidden md:inline" />
+            他社ではオプションになる素材も、やまとでは追加費用なしで入ります。
           </p>
         </div>
 
