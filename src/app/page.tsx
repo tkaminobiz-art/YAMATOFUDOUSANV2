@@ -1,6 +1,16 @@
 import Header from "@/components/Header";
-import HeroCatalog from "@/components/sections/HeroCatalog";
+import HeroMagazine from "@/components/sections/HeroMagazine";
+import {
+  FONT_VARIANTS,
+  BODY_VARIANTS,
+} from "@/components/sections/HeroMagazine.fonts";
 import HeroVoiceMagazine from "@/components/sections/HeroVoiceMagazine";
+
+// 確定組合せ: B(Shippori Mincho) + IV(Industrial: Oswald + Noto Sans JP 500)
+const HERO_HEADLINE_VARIANT =
+  FONT_VARIANTS.find((v) => v.id === "shippori") ?? FONT_VARIANTS[0];
+const HERO_BODY_VARIANT =
+  BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
 import ConceptSection from "@/components/sections/ConceptSection";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismSection from "@/components/sections/MechanismSection";
@@ -30,7 +40,7 @@ import FloatingCta from "@/components/FloatingCta";
   土地 → お金 → 比較 → やまとならなんとかなるかも。
 
   【① フック】
-  1. Hero              驚き（2,480万〜・権威バッジ込み）
+  1. Hero              C-2 Magazine Editorial（諦めたもの…標準になる家。 + 2,280万〜・権威バッジ込み）
 
   【② 共感 — 諦めかけたあなたへ】
   2. Concept          核メッセージ（ダーク帯・旧FounderQuoteの重複コピーは統合のため削除）
@@ -79,7 +89,10 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <HeroCatalog />
+        <HeroMagazine
+          variant={HERO_HEADLINE_VARIANT}
+          bodyVariant={HERO_BODY_VARIANT}
+        />
         <HeroVoiceMagazine />
         <ConceptSection />
         <MechanismSection />
