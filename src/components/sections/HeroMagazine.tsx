@@ -405,23 +405,24 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 縦組キャプション(可視性UP・左側)
-            v8: 白55% + 10-11px が地味すぎたので強化
-            - opacity 55→85% / 10-11px → 13-15px
-            - 上のルール線 h-10/30% → h-14/60% で「目印」感を強化
-            - 影を二重(blur 強め+黒80%)で写真上でも浮く */}
+        {/* 縦組キャプション(v10: サイズ大幅UP + ACCENT_LIME 着色)
+            - サイズ 13-15px → 38-42px (約3倍)
+            - 色: 白 → ACCENT_LIME (#A9D159) で「標準になる」と視覚的に呼応
+            - tracking 0.22em → 0.12em (大型化に伴い詰める)
+            - ルール線も h-14 → h-20 にスケール */}
         <aside
           aria-hidden="false"
-          className="hidden md:flex absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 z-20 flex-col items-center gap-4"
+          className="hidden md:flex absolute left-6 lg:left-12 top-[42%] -translate-y-1/2 z-20 flex-col items-center gap-5"
         >
-          <span aria-hidden className="block w-px h-14 bg-white/60" />
+          <span aria-hidden className="block w-px h-20 bg-white/60" />
           <p
-            className="text-white/85 text-[13px] lg:text-[15px] tracking-[0.22em] [writing-mode:vertical-rl]"
+            className="text-[38px] lg:text-[42px] tracking-[0.12em] [writing-mode:vertical-rl]"
             style={{
               fontFamily: variant.fontFamily,
               fontWeight: 500,
+              color: ACCENT_LIME,
               textShadow:
-                "0 2px 10px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.6)",
+                "0 2px 14px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.55)",
             }}
           >
             花鳥風月の家
