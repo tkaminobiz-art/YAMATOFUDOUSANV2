@@ -276,6 +276,21 @@ function revealStyle(visible: boolean, delay: number, translateY = 12): React.CS
 function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: Voice; isReversed: boolean }) {
   const heroColor = heroColorMap[voice.heroColor];
 
+  // hero2 は文字数により写真領域に食い込む（"駆けつけてくれる。" / "見つからなかった。" 等 9 文字）
+  // 7 cols (≈ 690px @1440) に paddingLeft 57px を加味すると 8 文字以上は clamp 6.8vw で overflow する。
+  // 文字数に応じて段階的に縮小して必ず写真側へ食い込まないようにする。
+  const hero1Len = voice.hero1.length;
+  const hero2Len = voice.hero2.length;
+  const hero1FontSize =
+    hero1Len >= 8 ? "clamp(44px, 5.0vw, 80px)"
+    : hero1Len >= 7 ? "clamp(48px, 5.6vw, 88px)"
+    : "clamp(52px, 6vw, 92px)";
+  const hero2FontSize =
+    hero2Len >= 9 ? "clamp(40px, 4.6vw, 72px)"
+    : hero2Len >= 8 ? "clamp(48px, 5.4vw, 84px)"
+    : hero2Len >= 7 ? "clamp(54px, 6vw, 94px)"
+    : "clamp(60px, 6.8vw, 108px)";
+
   // Asymmetric layout: 奇数 index では写真左/テキスト右、偶数 index では写真右/テキスト左
   const photoCol = isReversed ? "8 / 13" : "1 / 6";
   // テキストエリアの各要素の grid-column 定義
@@ -455,7 +470,7 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           gridRow: "6 / 9",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(52px, 6vw, 92px)",
+          fontSize: hero1FontSize,
           fontWeight: 500,
           lineHeight: 1.0,
           letterSpacing: "-0.02em",
@@ -476,7 +491,7 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           gridRow: "9 / 12",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(60px, 6.8vw, 108px)",
+          fontSize: hero2FontSize,
           fontWeight: 500,
           lineHeight: 1.0,
           letterSpacing: "-0.02em",
@@ -587,6 +602,18 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
    ========================================================================== */
 function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
   const heroColor = heroColorMap[voice.heroColor];
+  // Mobile 375px でも 9 文字の hero2 は 14vw (52px) で画面幅を越える。文字数で縮小。
+  const hero1Len = voice.hero1.length;
+  const hero2Len = voice.hero2.length;
+  const hero1FontSizeMB =
+    hero1Len >= 8 ? "clamp(30px, 8.6vw, 46px)"
+    : hero1Len >= 7 ? "clamp(34px, 10vw, 52px)"
+    : "clamp(40px, 12vw, 60px)";
+  const hero2FontSizeMB =
+    hero2Len >= 9 ? "clamp(32px, 9vw, 50px)"
+    : hero2Len >= 8 ? "clamp(38px, 10.5vw, 58px)"
+    : hero2Len >= 7 ? "clamp(44px, 12vw, 64px)"
+    : "clamp(48px, 14vw, 72px)";
   return (
     <div
       className="relative h-full w-full md:hidden"
@@ -732,7 +759,7 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           gridRow: "9 / 11",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(40px, 12vw, 60px)",
+          fontSize: hero1FontSizeMB,
           fontWeight: 500,
           lineHeight: 1.0,
           letterSpacing: "-0.02em",
@@ -752,7 +779,7 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           gridRow: "11 / 13",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(48px, 14vw, 72px)",
+          fontSize: hero2FontSizeMB,
           fontWeight: 500,
           lineHeight: 1.0,
           letterSpacing: "-0.02em",
