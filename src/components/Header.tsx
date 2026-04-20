@@ -19,12 +19,13 @@ const ENTRY_TABS = [
   { label: "土地・家を売りたい方", href: "/sell", match: (path: string) => path.startsWith("/sell") },
 ] as const;
 
-// Desktop 用メインナビ（4項目）
+// Desktop 用メインナビ
 const NAV_ITEMS = [
   { label: "商品紹介", href: "/#product" },
   { label: "物件情報", href: "/lots" },
   { label: "施工事例", href: "/#works" },
   { label: "お客様の声", href: "/voice" },
+  { label: "スタッフ紹介", href: "/staff" },
 ] as const;
 
 // SP メニュー用（全項目）
