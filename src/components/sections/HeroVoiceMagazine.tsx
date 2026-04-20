@@ -116,7 +116,15 @@ function revealStyle(visible: boolean, delay: number, translateY = 12): React.CS
 }
 
 /* =============================================================================
-   PC レイアウト: CSS Grid 12 col × 16 row
+   PC レイアウト: Pattern 1 (Hero Split 見開き型)
+   ───────────────────────────────────────────────────────────────
+   Grid: 12 col × 17 row
+   左 cols 1-5: 写真（4:5 縦長ポートレイト、rows 3-15）
+   右 cols 6-12: テキスト（Pain / Hero / 物語 / 結論 spine / CTA）
+   col 13 の代わりに text 内で右寄せで spine を配置
+   ───────────────────────────────────────────────────────────────
+   写真: Pexels ID 6633448 by Cup of Couple
+   https://www.pexels.com/photo/6633448/
    ========================================================================== */
 function VoiceGridPC({ visible }: { visible: boolean }) {
   return (
@@ -131,8 +139,33 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         padding: "clamp(20px, 3vw, 56px) clamp(20px, 4vw, 72px)",
       }}
     >
+      {/* ===== 写真（左 40%・rows 3-15、4:5 縦長・Pexels プレースホルダー） ===== */}
+      <div
+        style={{
+          gridColumn: "1 / 6",
+          gridRow: "3 / 16",
+          position: "relative",
+          overflow: "hidden",
+          backgroundColor: TOKENS.bg,
+          ...revealStyle(visible, 80),
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://images.pexels.com/photos/6633448/pexels-photo-6633448.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800"
+          alt="やまと不動産の施主邸イメージ — 和モダンな木のインテリア"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            filter: "saturate(0.94) contrast(1.02)",
+            display: "block",
+          }}
+          loading="lazy"
+        />
+      </div>
       {/* ===== ヘッダー: Latin caps + JP subtitle ===== */}
-      <div style={{ gridColumn: "1 / 5", gridRow: "1", alignSelf: "end", ...revealStyle(visible, DELAY.headerL) }}>
+      <div style={{ gridColumn: "1 / 6", gridRow: "1", alignSelf: "end", ...revealStyle(visible, DELAY.headerL) }}>
         <div
           style={{
             fontFamily: TOKENS.latin,
@@ -198,18 +231,16 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       />
 
       {/* ============================================================
-         Chapter 1 ── 問題: 「2 年探したが、見つからなかった」
-         Pain 1 = 物語の起点（問題提起）
-         Pain 2 = whisper echo（Pain 1 の補足 / 比較）
+         Chapter 1 ── 問題（右テキスト領域）
          ============================================================ */}
       <Link
         href="/voice/199927"
         style={{
-          gridColumn: "1 / 8",
-          gridRow: "4 / 5",
+          gridColumn: "6 / 13",
+          gridRow: "3 / 5",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(26px, 2.8vw, 40px)",
+          fontSize: "clamp(22px, 2.5vw, 36px)",
           fontWeight: 400,
           lineHeight: 1.25,
           letterSpacing: "0.01em",
@@ -224,11 +255,11 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <Link
         href="/voice/279070"
         style={{
-          gridColumn: "1 / 7",
+          gridColumn: "6 / 12",
           gridRow: "5 / 6",
           alignSelf: "start",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(13px, 1.1vw, 16px)",
+          fontSize: "clamp(13px, 1vw, 15px)",
           fontWeight: 400,
           lineHeight: 1.4,
           letterSpacing: "0.04em",
@@ -243,16 +274,15 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       </Link>
 
       {/* ============================================================
-         Chapter 2 ── 転機: 諦めかけた時、やまとに 出会えた。
-         pivot を 76px で Hero の次に大きく。物語の 2 つ目の punch
+         Chapter 2 ── 転機: 諦めかけた時、出会えた。
          ============================================================ */}
       <div
         style={{
-          gridColumn: "1 / 5",
+          gridColumn: "6 / 10",
           gridRow: "7 / 8",
           alignSelf: "center",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontSize: "clamp(13px, 1vw, 15px)",
           fontWeight: 400,
           letterSpacing: "0.12em",
           color: TOKENS.sub,
@@ -265,13 +295,13 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <Link
         href="/voice/216803"
         style={{
-          gridColumn: "1 / 8",
+          gridColumn: "6 / 13",
           gridRow: "7 / 9",
           alignSelf: "end",
           justifySelf: "start",
-          marginLeft: "clamp(60px, 8vw, 140px)",
+          marginLeft: "clamp(40px, 5vw, 90px)",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(40px, 4.8vw, 76px)",
+          fontSize: "clamp(36px, 4.2vw, 64px)",
           fontWeight: 500,
           lineHeight: 1.05,
           letterSpacing: "-0.01em",
@@ -290,32 +320,35 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
          ============================================================ */}
       <div
         style={{
-          gridColumn: "1 / 5",
+          gridColumn: "6 / 10",
           gridRow: "9 / 10",
           alignSelf: "end",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontSize: "clamp(13px, 1vw, 15px)",
           fontWeight: 400,
           letterSpacing: "0.12em",
           color: TOKENS.sub,
-          marginTop: "clamp(12px, 1.2vw, 20px)",
+          marginTop: "clamp(8px, 1vw, 14px)",
           ...revealStyle(visible, 820),
         }}
       >
         そして、初めての見学で。
       </div>
 
+      {/* Hero L1 は photo を貫通するため col 5/13 (photo 終端から右端まで) */}
       <div
         style={{
-          gridColumn: "1 / 12",
+          gridColumn: "5 / 13",
           gridRow: "10 / 13",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(72px, 9vw, 132px)",
+          fontSize: "clamp(56px, 6.5vw, 102px)",
           fontWeight: 500,
           lineHeight: 1.02,
           letterSpacing: "-0.01em",
           color: TOKENS.ink,
+          zIndex: 10,
+          whiteSpace: "nowrap",
           ...revealStyle(visible, DELAY.hero1, 24),
         }}
       >
@@ -325,16 +358,18 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <Link
         href="/voice/202180"
         style={{
-          gridColumn: "3 / 10",
+          gridColumn: "6 / 12",
           gridRow: "13 / 14",
           alignSelf: "center",
           fontFamily: TOKENS.serif,
-          fontSize: "clamp(28px, 3vw, 44px)",
+          fontSize: "clamp(24px, 2.6vw, 38px)",
           fontWeight: 400,
           lineHeight: 1.2,
           letterSpacing: "0em",
           color: TOKENS.amber,
           textDecoration: "none",
+          paddingLeft: "clamp(24px, 3vw, 48px)",
+          zIndex: 10,
           ...revealStyle(visible, DELAY.hero2, 20),
         }}
       >
@@ -343,7 +378,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
 
       <div
         style={{
-          gridColumn: "3 / 9",
+          gridColumn: "6 / 12",
           gridRow: "14 / 15",
           alignSelf: "start",
           fontFamily: TOKENS.sans,
@@ -351,6 +386,7 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
           fontWeight: 400,
           letterSpacing: "0.08em",
           color: TOKENS.sub,
+          paddingLeft: "clamp(24px, 3vw, 48px)",
           paddingTop: 6,
           ...revealStyle(visible, DELAY.attr),
         }}
@@ -358,16 +394,16 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         — 奈良市 M様邸（30代ご夫婦・土地探し 2年）
       </div>
 
-      {/* ===== 縦組 spine: 「正解だったと、言える。」 ===== */}
+      {/* ===== 結論（縦組 spine を廃止、写真の下に横書きで配置） ===== */}
       <div
         style={{
-          gridColumn: "11 / 13",
-          gridRow: "3 / 15",
+          gridColumn: "1 / 6",
+          gridRow: "16 / 17",
+          alignSelf: "start",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-end",
-          paddingRight: "clamp(4px, 0.6vw, 10px)",
-          borderRight: `1px solid ${TOKENS.line}`,
+          gap: 6,
+          paddingTop: "clamp(8px, 1vw, 16px)",
           ...revealStyle(visible, DELAY.spineMeta),
         }}
       >
@@ -379,8 +415,6 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
             letterSpacing: "0.24em",
             textTransform: "uppercase",
             color: TOKENS.sub,
-            marginBottom: 16,
-            writingMode: "horizontal-tb",
           }}
         >
           結論 · Conclusion
@@ -388,33 +422,29 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
         <Link
           href="/voice/199927"
           style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
             fontFamily: TOKENS.serif,
-            fontSize: "clamp(44px, 5vw, 72px)",
+            fontSize: "clamp(18px, 1.7vw, 24px)",
             fontWeight: 600,
-            lineHeight: 1.55,
-            letterSpacing: "0.06em",
+            lineHeight: 1.3,
+            letterSpacing: "0.02em",
             color: TOKENS.ink,
             textDecoration: "none",
-            ...revealStyle(visible, DELAY.spine, 0),
           }}
         >
-          正解だったと、言える。
+          「正解だったと、言える。」
         </Link>
       </div>
 
       {/* ============================================================
-         Chapter 4 ── 理由: なぜ「住みたい」と思えたのか
-         「なぜなら、」で因果を明示。2 つの理由を並列表示
+         Chapter 4 ── 理由: 右カラム内で 2 行に並列
          ============================================================ */}
       <div
         style={{
-          gridColumn: "1 / 4",
+          gridColumn: "6 / 9",
           gridRow: "15 / 16",
           alignSelf: "start",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontSize: "clamp(13px, 1vw, 15px)",
           fontWeight: 400,
           letterSpacing: "0.12em",
           color: TOKENS.sub,
@@ -427,11 +457,11 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <Link
         href="/voice/208787"
         style={{
-          gridColumn: "1 / 5",
+          gridColumn: "6 / 10",
           gridRow: "15 / 16",
           alignSelf: "end",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(17px, 1.5vw, 22px)",
+          fontSize: "clamp(16px, 1.4vw, 20px)",
           fontWeight: 500,
           lineHeight: 1.35,
           letterSpacing: "0.03em",
@@ -446,11 +476,11 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <Link
         href="/voice/208787"
         style={{
-          gridColumn: "5 / 8",
+          gridColumn: "10 / 13",
           gridRow: "15 / 16",
           alignSelf: "end",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(16px, 1.4vw, 20px)",
+          fontSize: "clamp(15px, 1.3vw, 18px)",
           fontWeight: 400,
           letterSpacing: "0.03em",
           color: TOKENS.forest,
@@ -462,17 +492,15 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       </Link>
 
       {/* ============================================================
-         Chapter 5 ── アフター: 建てた後も、続く安心
-         「そして今も、」で時間の継続を示す narrative 接続
-         marginTop: -10px で上に寄せて「いつでも、駆けつけ」と被らないように
+         Chapter 5 ── アフター: 下線アクセント
          ============================================================ */}
       <div
         style={{
-          gridColumn: "1 / 4",
+          gridColumn: "6 / 9",
           gridRow: "16 / 17",
           alignSelf: "start",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(13px, 1.1vw, 15px)",
+          fontSize: "clamp(13px, 1vw, 15px)",
           fontWeight: 400,
           letterSpacing: "0.12em",
           color: TOKENS.sub,
@@ -486,11 +514,11 @@ function VoiceGridPC({ visible }: { visible: boolean }) {
       <Link
         href="/voice/256807"
         style={{
-          gridColumn: "1 / 7",
+          gridColumn: "6 / 12",
           gridRow: "16 / 17",
           alignSelf: "end",
           fontFamily: TOKENS.sans,
-          fontSize: "clamp(17px, 1.5vw, 22px)",
+          fontSize: "clamp(16px, 1.4vw, 20px)",
           fontWeight: 500,
           letterSpacing: "0.03em",
           color: TOKENS.forest,
