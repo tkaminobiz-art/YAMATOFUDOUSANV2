@@ -9,6 +9,7 @@ const NAV_GROUPS = [
       { label: "物件情報", href: "/lots" },
       { label: "施工事例", href: "/#works" },
       { label: "お客様の声", href: "/voice" },
+      { label: "スタッフ紹介", href: "/staff" },
     ],
   },
   {

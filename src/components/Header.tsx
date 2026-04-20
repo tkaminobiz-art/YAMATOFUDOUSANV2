@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 */
 
 const ENTRY_TABS = [
-  { label: "家を買いたい・建てたい方", href: "/", match: (path: string) => path === "/" || path.startsWith("/lots") || path.startsWith("/voice") || path.startsWith("/reserve") || path.startsWith("/contact") },
+  { label: "家を買いたい・建てたい方", href: "/", match: (path: string) => path === "/" || path.startsWith("/lots") || path.startsWith("/voice") || path.startsWith("/staff") || path.startsWith("/reserve") || path.startsWith("/contact") },
   { label: "土地・家を売りたい方", href: "/sell", match: (path: string) => path.startsWith("/sell") },
 ] as const;
 
@@ -34,6 +34,7 @@ const SP_NAV_ITEMS = [
   { label: "物件情報", href: "/lots" },
   { label: "施工事例", href: "/#works" },
   { label: "お客様の声", href: "/voice" },
+  { label: "スタッフ紹介", href: "/staff" },
   { label: "店舗情報", href: "/#access" },
 ] as const;
 
