@@ -7,7 +7,7 @@ const NAV_GROUPS = [
       { label: "やまとの家づくり", href: "/#concept" },
       { label: "商品紹介", href: "/#product" },
       { label: "物件情報", href: "/lots" },
-      { label: "施工事例", href: "/#works" },
+      { label: "施工事例", href: "/works" },
       { label: "お客様の声", href: "/voice" },
       { label: "スタッフ紹介", href: "/staff" },
     ],

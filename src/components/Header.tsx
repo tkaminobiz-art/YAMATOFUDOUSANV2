@@ -32,6 +32,7 @@ const ENTRY_TABS = [
       path === "/" ||
       path.startsWith("/lots") ||
       path.startsWith("/voice") ||
+      path.startsWith("/works") ||
       path.startsWith("/staff") ||
       path.startsWith("/reserve") ||
       path.startsWith("/contact"),
@@ -46,7 +47,7 @@ const ENTRY_TABS = [
 const NAV_ITEMS: NavItem[] = [
   { label: "商品紹介", href: "/#product" },
   { label: "物件情報", href: "/lots" },
-  { label: "施工事例", href: "/#works" },
+  { label: "施工事例", href: "/works" },
   { label: "お客様の声", href: "/voice" },
   { label: "スタッフ紹介", href: "/staff" },
 ];
@@ -55,7 +56,7 @@ const SP_NAV_ITEMS: NavItem[] = [
   { label: "やまとの家づくり", href: "/#concept" },
   { label: "商品紹介", href: "/#product" },
   { label: "物件情報", href: "/lots" },
-  { label: "施工事例", href: "/#works" },
+  { label: "施工事例", href: "/works" },
   { label: "お客様の声", href: "/voice" },
   { label: "スタッフ紹介", href: "/staff" },
   { label: "店舗情報", href: "/#access" },
