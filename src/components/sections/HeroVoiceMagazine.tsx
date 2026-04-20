@@ -249,14 +249,16 @@ const DELAY = {
   cta:     1220,
 } as const;
 
-/* ---------- Reveal スタイルヘルパー ---------- */
+/* ---------- Reveal スタイルヘルパー ----------
+   - 入場時 (visible=true) は delay を効かせてスタガー
+   - 退場時 (visible=false) は delay 0 で即座にリセット → 重ねて消えない */
 function revealStyle(visible: boolean, delay: number, translateY = 12): React.CSSProperties {
   return {
     opacity: visible ? 1 : 0,
     transform: visible ? "translate3d(0,0,0)" : `translate3d(0,${translateY}px,0)`,
     transition:
-      "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 800ms cubic-bezier(0.16,1,0.3,1)",
-    transitionDelay: `${delay}ms`,
+      "opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 900ms cubic-bezier(0.16,1,0.3,1)",
+    transitionDelay: visible ? `${delay}ms` : "0ms",
   };
 }
 
@@ -267,8 +269,21 @@ function revealStyle(visible: boolean, delay: number, translateY = 12): React.CS
    左 cols 1-5: 写真（voice.photoUrl）
    右 cols 6-12: テキスト（voice ごとに切り替え）
    ========================================================================== */
-function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: Voice; isReversed: boolean }) {
+function VoiceGridPC({
+  visible,
+  active,
+  voice,
+  isReversed,
+}: {
+  visible: boolean;
+  active: boolean;
+  voice: Voice;
+  isReversed: boolean;
+}) {
   const heroColor = heroColorMap[voice.heroColor];
+  // スライダー切替のスタガー: visible=初期スクロールイン、active=現在表示中
+  // 両方満たすときだけ内側要素が段階的に入場する
+  const show = visible && active;
 
   // hero2 は文字数により写真領域に食い込む（"駆けつけてくれる。" / "見つからなかった。" 等 9 文字）
   // 7 cols (≈ 690px @1440) に paddingLeft 57px を加味すると 8 文字以上は clamp 6.8vw で overflow する。
@@ -318,6 +333,73 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
         padding: "clamp(20px, 3vw, 56px) clamp(20px, 4vw, 72px)",
       }}
     >
+      {/* ===== 背景装飾 1: 巨大な声番号（誌面の章扉）===== */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          ...(isReversed
+            ? { left: "clamp(20px, 4vw, 72px)", transform: "translateY(-50%)" }
+            : { right: "clamp(20px, 4vw, 72px)", transform: "translateY(-50%)" }),
+          top: "50%",
+          fontFamily: TOKENS.latin,
+          fontSize: "clamp(200px, 26vw, 380px)",
+          fontWeight: 200,
+          lineHeight: 0.82,
+          letterSpacing: "-0.06em",
+          color: heroColor,
+          opacity: 0.08,
+          pointerEvents: "none",
+          zIndex: 0,
+          fontVariantNumeric: "tabular-nums",
+          transition:
+            "opacity 900ms cubic-bezier(0.16,1,0.3,1), color 900ms cubic-bezier(0.16,1,0.3,1)",
+          mixBlendMode: "multiply",
+          userSelect: "none",
+        }}
+      >
+        {String(voice.id).padStart(2, "0")}
+      </div>
+
+      {/* ===== 背景装飾 2: エッジ縦色帯（hero color）===== */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          width: 4,
+          ...(isReversed ? { left: 0 } : { right: 0 }),
+          backgroundColor: heroColor,
+          opacity: show ? 0.55 : 0,
+          transform: show ? "scaleY(1)" : "scaleY(0.3)",
+          transformOrigin: "center",
+          transition:
+            "opacity 900ms cubic-bezier(0.16,1,0.3,1), transform 1100ms cubic-bezier(0.16,1,0.3,1), background-color 900ms",
+          zIndex: 2,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ===== 背景装飾 3: hero2 背後のアンビエントグロー ===== */}
+      <div
+        aria-hidden
+        style={{
+          gridColumn: textCols.heroL2,
+          gridRow: "8 / 13",
+          alignSelf: "center",
+          justifySelf: isReversed ? "start" : "end",
+          width: "70%",
+          height: "70%",
+          background: `radial-gradient(ellipse at center, ${heroColor}33 0%, ${heroColor}00 65%)`,
+          opacity: show ? 1 : 0,
+          transition: "opacity 1200ms cubic-bezier(0.16,1,0.3,1), background 900ms",
+          zIndex: 1,
+          pointerEvents: "none",
+          filter: "blur(24px)",
+        }}
+      />
+
       {/* ===== 写真（isReversed で左右交互に・rows 3-15、4:5 縦長） ===== */}
       <div
         style={{
@@ -326,8 +408,10 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           position: "relative",
           overflow: "hidden",
           backgroundColor: TOKENS.bg,
-          ...revealStyle(visible, 80),
+          zIndex: 2,
+          ...revealStyle(show, 60),
         }}
+        className="voice-photo-hover"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -339,12 +423,15 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
             objectFit: "cover",
             filter: "saturate(0.94) contrast(1.02)",
             display: "block",
+            transform: show ? "scale(1)" : "scale(1.04)",
+            transition: "transform 1400ms cubic-bezier(0.16,1,0.3,1)",
           }}
           loading="lazy"
         />
       </div>
+
       {/* ===== ヘッダー: Latin caps + JP subtitle ===== */}
-      <div style={{ gridColumn: "1 / 6", gridRow: "1", alignSelf: "end", ...revealStyle(visible, DELAY.headerL) }}>
+      <div style={{ gridColumn: "1 / 6", gridRow: "1", alignSelf: "end", zIndex: 3, ...revealStyle(show, DELAY.headerL) }}>
         <div
           style={{
             fontFamily: TOKENS.latin,
@@ -371,7 +458,7 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
         </div>
       </div>
 
-      <div style={{ gridColumn: "8 / 13", gridRow: "1", alignSelf: "end", textAlign: "right", ...revealStyle(visible, DELAY.headerR) }}>
+      <div style={{ gridColumn: "8 / 13", gridRow: "1", alignSelf: "end", textAlign: "right", zIndex: 3, ...revealStyle(show, DELAY.headerR) }}>
         <div
           style={{
             fontFamily: TOKENS.latin,
@@ -405,14 +492,15 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           gridRow: "2",
           alignSelf: "end",
           borderBottom: `1px solid ${TOKENS.line}`,
-          ...revealStyle(visible, 150),
+          zIndex: 3,
+          ...revealStyle(show, 120),
         }}
       />
 
       {/* ============================================================
          HERO — 1 メッセージ・ドカン型（TORICHŌ / Full Editorial 思想）
          ============================================================ */}
-      {/* エディトリアルメタ: 章番号 + 発話者地域 */}
+      {/* エディトリアルメタ: 章番号 + 発話者地域 + hero カラーのドット */}
       <div
         style={{
           gridColumn: textCols.meta,
@@ -421,9 +509,19 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           display: "flex",
           alignItems: "center",
           gap: 12,
-          ...revealStyle(visible, 200),
+          zIndex: 3,
+          ...revealStyle(show, 220),
         }}
       >
+        <span
+          style={{
+            width: 8,
+            height: 8,
+            backgroundColor: heroColor,
+            borderRadius: 0,
+            transition: "background-color 900ms cubic-bezier(0.16,1,0.3,1)",
+          }}
+        />
         <span
           style={{
             fontFamily: TOKENS.latin,
@@ -471,7 +569,7 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           color: TOKENS.ink,
           zIndex: 3,
           whiteSpace: "nowrap",
-          ...revealStyle(visible, 360, 24),
+          ...revealStyle(show, 360, 20),
         }}
       >
         {voice.hero1}
@@ -494,7 +592,7 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           zIndex: 3,
           whiteSpace: "nowrap",
           paddingLeft: "clamp(32px, 4vw, 72px)",
-          ...revealStyle(visible, 460, 24),
+          ...revealStyle(show, 520, 24),
         }}
       >
         {voice.hero2}
@@ -518,7 +616,8 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           textWrap: "pretty",
           wordBreak: "auto-phrase",
           lineBreak: "strict",
-          ...revealStyle(visible, 600),
+          zIndex: 3,
+          ...revealStyle(show, 680),
         }}
       >
         {voice.subText}
@@ -534,15 +633,18 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           alignItems: "center",
           gap: 10,
           paddingLeft: "clamp(32px, 4vw, 72px)",
-          ...revealStyle(visible, 700),
+          zIndex: 3,
+          ...revealStyle(show, 820),
         }}
       >
         <span
           style={{
             width: 24,
             height: 1,
-            backgroundColor: TOKENS.line,
+            backgroundColor: heroColor,
+            opacity: 0.7,
             flexShrink: 0,
+            transition: "background-color 900ms cubic-bezier(0.16,1,0.3,1)",
           }}
         />
         <span
@@ -579,8 +681,9 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
           fontWeight: 500,
           letterSpacing: "0.08em",
           textDecoration: "none",
-          transition: "background-color 400ms cubic-bezier(0.16,1,0.3,1)",
-          ...revealStyle(visible, 800),
+          zIndex: 3,
+          transition: "background-color 400ms cubic-bezier(0.16,1,0.3,1), transform 400ms cubic-bezier(0.16,1,0.3,1), box-shadow 400ms",
+          ...revealStyle(show, 960),
         }}
         className="voice-primary-cta"
       >
@@ -594,8 +697,17 @@ function VoiceGridPC({ visible, voice, isReversed }: { visible: boolean; voice: 
 /* =============================================================================
    Mobile レイアウト: CSS Grid 6 col × 18 row
    ========================================================================== */
-function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
+function VoiceGridMB({
+  visible,
+  active,
+  voice,
+}: {
+  visible: boolean;
+  active: boolean;
+  voice: Voice;
+}) {
   const heroColor = heroColorMap[voice.heroColor];
+  const show = visible && active;
   // Mobile 375px でも 9 文字の hero2 は 14vw (52px) で画面幅を越える。文字数で縮小。
   const hero1Len = voice.hero1.length;
   const hero2Len = voice.hero2.length;
@@ -620,8 +732,53 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
         padding: "clamp(16px, 5vw, 24px) clamp(16px, 5vw, 20px)",
       }}
     >
+      {/* ===== 背景装飾: 巨大な声番号（hero color で切替）===== */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          right: 8,
+          bottom: "12%",
+          fontFamily: TOKENS.latin,
+          fontSize: "clamp(140px, 44vw, 220px)",
+          fontWeight: 200,
+          lineHeight: 0.82,
+          letterSpacing: "-0.06em",
+          color: heroColor,
+          opacity: 0.07,
+          pointerEvents: "none",
+          zIndex: 0,
+          fontVariantNumeric: "tabular-nums",
+          mixBlendMode: "multiply",
+          transition: "color 900ms cubic-bezier(0.16,1,0.3,1)",
+          userSelect: "none",
+        }}
+      >
+        {String(voice.id).padStart(2, "0")}
+      </div>
+
+      {/* ===== 背景装飾: エッジ横色帯（上辺、hero color）===== */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 3,
+          backgroundColor: heroColor,
+          opacity: show ? 0.6 : 0,
+          transform: show ? "scaleX(1)" : "scaleX(0.3)",
+          transformOrigin: "left center",
+          transition:
+            "opacity 800ms cubic-bezier(0.16,1,0.3,1), transform 1000ms cubic-bezier(0.16,1,0.3,1), background-color 900ms",
+          zIndex: 4,
+          pointerEvents: "none",
+        }}
+      />
+
       {/* ===== ヘッダー ===== */}
-      <div style={{ gridColumn: "1 / 4", gridRow: "1 / 2", alignSelf: "end", ...revealStyle(visible, DELAY.headerL) }}>
+      <div style={{ gridColumn: "1 / 4", gridRow: "1 / 2", alignSelf: "end", zIndex: 3, ...revealStyle(show, DELAY.headerL) }}>
         <div
           style={{
             fontFamily: TOKENS.latin,
@@ -648,7 +805,7 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
         </div>
       </div>
 
-      <div style={{ gridColumn: "4 / 7", gridRow: "1 / 2", alignSelf: "end", textAlign: "right", ...revealStyle(visible, DELAY.headerR) }}>
+      <div style={{ gridColumn: "4 / 7", gridRow: "1 / 2", alignSelf: "end", textAlign: "right", zIndex: 3, ...revealStyle(show, DELAY.headerR) }}>
         <div
           style={{
             fontFamily: TOKENS.latin,
@@ -670,7 +827,8 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           gridRow: "2",
           alignSelf: "end",
           borderBottom: `1px solid ${TOKENS.line}`,
-          ...revealStyle(visible, 150),
+          zIndex: 3,
+          ...revealStyle(show, 150),
         }}
       />
 
@@ -682,7 +840,8 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           position: "relative",
           overflow: "hidden",
           backgroundColor: TOKENS.bg,
-          ...revealStyle(visible, 180),
+          zIndex: 2,
+          ...revealStyle(show, 120),
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -696,12 +855,14 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
             objectPosition: "center 40%",
             filter: "saturate(0.94) contrast(1.02)",
             display: "block",
+            transform: show ? "scale(1)" : "scale(1.05)",
+            transition: "transform 1300ms cubic-bezier(0.16,1,0.3,1)",
           }}
           loading="lazy"
         />
       </div>
 
-      {/* ===== メタ: No.XX / metaLocation ===== */}
+      {/* ===== メタ: No.XX / metaLocation + color dot ===== */}
       <div
         style={{
           gridColumn: "1 / 7",
@@ -710,9 +871,18 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           display: "flex",
           alignItems: "center",
           gap: 10,
-          ...revealStyle(visible, 260),
+          zIndex: 3,
+          ...revealStyle(show, 260),
         }}
       >
+        <span
+          style={{
+            width: 6,
+            height: 6,
+            backgroundColor: heroColor,
+            transition: "background-color 900ms cubic-bezier(0.16,1,0.3,1)",
+          }}
+        />
         <span
           style={{
             fontFamily: TOKENS.latin,
@@ -727,7 +897,7 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
         </span>
         <span
           style={{
-            width: 32,
+            width: 24,
             height: 1,
             backgroundColor: TOKENS.line,
           }}
@@ -759,7 +929,8 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           letterSpacing: "-0.02em",
           color: TOKENS.ink,
           whiteSpace: "nowrap",
-          ...revealStyle(visible, 380, 24),
+          zIndex: 3,
+          ...revealStyle(show, 380, 20),
         }}
       >
         {voice.hero1}
@@ -781,7 +952,8 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           textDecoration: "none",
           whiteSpace: "nowrap",
           paddingLeft: "10%",
-          ...revealStyle(visible, 480, 24),
+          zIndex: 3,
+          ...revealStyle(show, 540, 24),
         }}
       >
         {voice.hero2}
@@ -804,7 +976,8 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           textWrap: "pretty",
           wordBreak: "auto-phrase",
           lineBreak: "strict",
-          ...revealStyle(visible, 620),
+          zIndex: 3,
+          ...revealStyle(show, 700),
         }}
       >
         {voice.subText}
@@ -819,15 +992,18 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           display: "flex",
           alignItems: "center",
           gap: 8,
-          ...revealStyle(visible, 700),
+          zIndex: 3,
+          ...revealStyle(show, 840),
         }}
       >
         <span
           style={{
             width: 20,
             height: 1,
-            backgroundColor: TOKENS.line,
+            backgroundColor: heroColor,
+            opacity: 0.7,
             flexShrink: 0,
+            transition: "background-color 900ms cubic-bezier(0.16,1,0.3,1)",
           }}
         />
         <span
@@ -863,8 +1039,9 @@ function VoiceGridMB({ visible, voice }: { visible: boolean; voice: Voice }) {
           fontWeight: 500,
           letterSpacing: "0.08em",
           textDecoration: "none",
+          zIndex: 3,
           transition: "background-color 400ms cubic-bezier(0.16,1,0.3,1)",
-          ...revealStyle(visible, 820),
+          ...revealStyle(show, 980),
         }}
       >
         すべての声を読む
@@ -930,9 +1107,37 @@ export default function HeroVoiceMagazine() {
               transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            <VoiceGridPC visible={pcVisible} voice={voice} isReversed={idx % 2 === 1} />
+            <VoiceGridPC visible={pcVisible} active={idx === currentIndex} voice={voice} isReversed={idx % 2 === 1} />
           </div>
         ))}
+
+        {/* プログレスバー: 4.5s かけて amber が左→右へ充填。currentIndex 変化で再スタート */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 2,
+            backgroundColor: `${TOKENS.line}66`,
+            zIndex: 15,
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            key={`pcprog-${currentIndex}-${paused ? "p" : "r"}`}
+            style={{
+              height: "100%",
+              width: "100%",
+              backgroundColor: TOKENS.amber,
+              transformOrigin: "left center",
+              animation:
+                paused || reduced
+                  ? "none"
+                  : "voiceProgress 4500ms linear forwards",
+            }}
+          />
+        </div>
 
         {/* インジケータ（右下の小さなドット） */}
         <div
@@ -983,9 +1188,37 @@ export default function HeroVoiceMagazine() {
               transition: "opacity 900ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            <VoiceGridMB visible={mbVisible} voice={voice} />
+            <VoiceGridMB visible={mbVisible} active={idx === currentIndex} voice={voice} />
           </div>
         ))}
+
+        {/* Mobile プログレスバー */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 2,
+            backgroundColor: `${TOKENS.line}66`,
+            zIndex: 15,
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            key={`mbprog-${currentIndex}-${paused ? "p" : "r"}`}
+            style={{
+              height: "100%",
+              width: "100%",
+              backgroundColor: TOKENS.amber,
+              transformOrigin: "left center",
+              animation:
+                paused || reduced
+                  ? "none"
+                  : "voiceProgress 4500ms linear forwards",
+            }}
+          />
+        </div>
 
         {/* Mobile インジケータ（下部中央） */}
         <div
@@ -1019,10 +1252,39 @@ export default function HeroVoiceMagazine() {
         </div>
       </div>
 
-      {/* CTA hover style */}
+      {/* アニメーション: プログレスバー + CTA hover + 写真 hover zoom */}
       <style jsx>{`
-        :global(.voice-cta-link:hover) {
-          color: ${TOKENS.amber};
+        @keyframes voiceProgress {
+          from {
+            transform: scaleX(0);
+          }
+          to {
+            transform: scaleX(1);
+          }
+        }
+        :global(.voice-primary-cta:hover) {
+          background-color: #a06b15 !important;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 20px rgba(196, 133, 31, 0.24);
+        }
+        :global(.voice-photo-hover img) {
+          transition:
+            transform 1400ms cubic-bezier(0.16, 1, 0.3, 1),
+            filter 600ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        :global(.voice-photo-hover:hover img) {
+          transform: scale(1.03) !important;
+          filter: saturate(1.02) contrast(1.03) brightness(1.02);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          @keyframes voiceProgress {
+            from {
+              transform: scaleX(1);
+            }
+            to {
+              transform: scaleX(1);
+            }
+          }
         }
       `}</style>
     </section>
