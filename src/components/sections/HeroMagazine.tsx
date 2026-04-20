@@ -10,12 +10,63 @@ import CtaButton from "@/components/ui/CtaButton";
   - 装飾ゼロ・サブ行強調(68/64) は v3 から継続
 */
 
-const HERO_SLIDES = [
-  { src: "/images/newsozai/hero-miyamaki-mountain.webp", alt: "三山木モデルハウス 山並みと青空" },
-  { src: "/images/newsozai/interior-kitchen-01.webp", alt: "内観 キッチン" },
-  { src: "/images/newsozai/hero-day-green-exterior.webp", alt: "外観 緑と青空" },
-  { src: "/images/newsozai/interior-ldk-01.webp", alt: "内観 LDK" },
-] as const;
+type SlideCategory = "exterior" | "interior";
+
+type HeroSlide = {
+  src: string;
+  alt: string;
+  category: SlideCategory; // exterior=外観(写真主役・オーバーレイ薄く) / interior=室内(雰囲気重視・オーバーレイ厚く)
+};
+
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    src: "/images/newsozai/hero-miyamaki-mountain.webp",
+    alt: "三山木モデルハウス 山並みと青空",
+    category: "exterior",
+  },
+  {
+    src: "/images/newsozai/interior-kitchen-01.webp",
+    alt: "内観 キッチン",
+    category: "interior",
+  },
+  {
+    src: "/images/newsozai/hero-day-green-exterior.webp",
+    alt: "外観 緑と青空",
+    category: "exterior",
+  },
+  {
+    src: "/images/newsozai/interior-ldk-01.webp",
+    alt: "内観 LDK",
+    category: "interior",
+  },
+];
+
+// スライド種別ごとのオーバーレイ
+// exterior: HM業界の標準(底35〜40%) / 写真主役・呼吸を確保
+// interior: 雰囲気重視で現状維持(底62%) / 編集誌的なドラマ感
+function SlideOverlay({ category }: { category: SlideCategory }) {
+  if (category === "exterior") {
+    return (
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-t from-black/38 via-black/6 to-transparent"
+      />
+    );
+  }
+  // interior(現状維持)
+  return (
+    <>
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/18 to-transparent"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent"
+      />
+    </>
+  );
+}
 
 // グレイン: baseFrequency 0.9→0.7 で粒子を少し大きく(印刷物風)
 // numOctaves 2→3 で粒子の自然さを増す
@@ -153,7 +204,7 @@ export default function HeroMagazine({
 }) {
   return (
     <section className="relative w-full min-h-[100svh] overflow-hidden bg-text-primary">
-      {/* ===== 背景: スライドショー ===== */}
+      {/* ===== 背景: スライドショー(オーバーレイは各スライドに内包) ===== */}
       <div className="absolute inset-0">
         {HERO_SLIDES.map((slide, i) => (
           <div
@@ -171,20 +222,18 @@ export default function HeroMagazine({
                 sizes="100vw"
               />
             </div>
+            {/* スライド種別ごとに濃度を変える(exterior=薄/interior=現状) */}
+            <SlideOverlay category={slide.category} />
           </div>
         ))}
       </div>
 
-      {/* グレイン: opacity 0.05→0.07 / blend overlay→soft-light(より上品) */}
+      {/* グレイン: 全スライド共通(オーバーレイの上に乗せて印刷感を出す) */}
       <div
         aria-hidden
         className="absolute inset-0 z-[1] opacity-[0.07] mix-blend-soft-light pointer-events-none"
         style={{ backgroundImage: `url("${GRAIN_DATA_URI}")` }}
       />
-      {/* 縦オーバーレイ: 75→62 / via 30→18 / top 10→0 (写真の呼吸を確保) */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/18 to-transparent z-[2]" />
-      {/* 横オーバーレイ: 左テキストエリアを微かに沈ませる(右側の写真は鮮明に残す) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent z-[2]" />
 
       {/* ===== コンテンツ ===== */}
       <div className="relative z-10 min-h-[100svh] flex flex-col">
