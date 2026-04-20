@@ -4,17 +4,10 @@ import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  HeroMagazine v2 — 2026-04-20 A+B(装飾全削除 + サイズ階層)
-  反省:
-  - v1 は装飾盛り盛りの「AI製雑誌風テンプレ」でダサかった
-  - ISSUE / [01][02] / 英字ラベル / 下線 すべて AI パターンの典型
-  v2 方針:
-  - 装飾ゼロ。主見出しと価格とバッジと縦組キャプションのみ
-  - Noto Serif JP weight 700 の太明朝で雑誌カバーの重み
-  - 字間 -0.02em に詰める / 行間 1.15 / サイズ階層 3倍
-  - 左揃えブロック(進行インデント廃止)
-  - 「標準」下線は廃止。代わりに最終行をサイズで圧倒
-  - 権威バッジは日本語に戻す(90区画 · 50組 · 14年)
+  HeroMagazine v3 — 2026-04-20
+  - lines 1, 2 を強調(48→68 / 44→64)
+  - フォント可変(variant prop で切替)
+  - 装飾ゼロ(v2 の方針継続)
 */
 
 const HERO_SLIDES = [
@@ -33,7 +26,69 @@ const GRAIN_DATA_URI =
     </svg>`
   );
 
-export default function HeroMagazine() {
+export type HeroFontVariant = {
+  id: string;
+  label: string;
+  description: string;
+  fontFamily: string;       // CSS font-family value
+  weightSubLines: number;   // 諦めたもの / そのすべてが
+  weightBigLine: number;    // 標準になる家
+  letterSpacing: string;    // CSS letter-spacing
+};
+
+export const FONT_VARIANTS: HeroFontVariant[] = [
+  {
+    id: "noto-serif",
+    label: "A. Noto Serif JP",
+    description: "現行baseline / Google Fonts標準・Web普及型・無難で読みやすい",
+    fontFamily: "var(--font-noto-serif), 'Noto Serif JP', 'Hiragino Mincho ProN', serif",
+    weightSubLines: 400,
+    weightBigLine: 700,
+    letterSpacing: "-0.02em",
+  },
+  {
+    id: "shippori",
+    label: "B. Shippori Mincho",
+    description: "出版・雑誌系 / 紙面に強い / 落ち着いた現代の太明朝",
+    fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
+    weightSubLines: 400,
+    weightBigLine: 700,
+    letterSpacing: "-0.02em",
+  },
+  {
+    id: "zen-old",
+    label: "C. Zen Old Mincho",
+    description: "情緒・伝統 / オールド系で和の格調 / 文芸的な印象",
+    fontFamily: "var(--font-zen-old), 'Zen Old Mincho', serif",
+    weightSubLines: 400,
+    weightBigLine: 700,
+    letterSpacing: "-0.01em",
+  },
+  {
+    id: "kaisei",
+    label: "D. Kaisei Tokumin",
+    description: "個性派 / 力強い字面 / 古い印刷物のような独特の重み",
+    fontFamily: "var(--font-kaisei), 'Kaisei Tokumin', serif",
+    weightSubLines: 500,
+    weightBigLine: 700,
+    letterSpacing: "0em",
+  },
+  {
+    id: "tegomin",
+    label: "E. New Tegomin",
+    description: "筆勢・手書き感 / 情緒重視 / 雑誌の特集タイトル風",
+    fontFamily: "var(--font-tegomin), 'New Tegomin', serif",
+    weightSubLines: 400,
+    weightBigLine: 400,
+    letterSpacing: "0em",
+  },
+];
+
+export default function HeroMagazine({
+  variant = FONT_VARIANTS[0],
+}: {
+  variant?: HeroFontVariant;
+}) {
   return (
     <section className="relative w-full min-h-[100svh] overflow-hidden bg-text-primary">
       {/* ===== 背景: スライドショー ===== */}
@@ -58,45 +113,44 @@ export default function HeroMagazine() {
         ))}
       </div>
 
-      {/* 雑誌印刷感のグレイン(極薄) */}
+      {/* グレイン */}
       <div
         aria-hidden
         className="absolute inset-0 z-[1] opacity-[0.05] mix-blend-overlay pointer-events-none"
         style={{ backgroundImage: `url("${GRAIN_DATA_URI}")` }}
       />
 
-      {/* オーバーレイ(下方重め) */}
+      {/* オーバーレイ */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/10 z-[2]" />
 
       {/* ===== コンテンツ ===== */}
       <div className="relative z-10 min-h-[100svh] flex flex-col">
-        {/* ── 中段: 主見出し + 価格 ── */}
         <div className="flex-1 flex flex-col justify-center px-[var(--page-px)] pt-24 md:pt-28 lg:pt-32 pb-10">
           <div className="max-w-[1400px] mx-auto w-full">
-            {/* 主見出し(A+B: 左揃えブロック・サイズ階層・太明朝) */}
+            {/* 主見出し */}
             <h1
               className="text-white font-normal mb-10 md:mb-14"
               style={{
-                fontFamily: "var(--font-serif)",
-                letterSpacing: "-0.02em",
+                fontFamily: variant.fontFamily,
+                letterSpacing: variant.letterSpacing,
                 lineHeight: 1.15,
               }}
             >
               <span
-                className="block text-white/85"
+                className="block text-white/90"
                 style={{
-                  fontSize: "clamp(24px, 3.5vw, 48px)",
-                  fontWeight: 400,
+                  fontSize: "clamp(32px, 4.8vw, 68px)",
+                  fontWeight: variant.weightSubLines,
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
                 }}
               >
                 諦めたもの、
               </span>
               <span
-                className="block text-white/85"
+                className="block text-white/90"
                 style={{
-                  fontSize: "clamp(22px, 3.2vw, 44px)",
-                  fontWeight: 400,
+                  fontSize: "clamp(30px, 4.5vw, 64px)",
+                  fontWeight: variant.weightSubLines,
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
                 }}
               >
@@ -105,10 +159,10 @@ export default function HeroMagazine() {
               <span
                 className="block text-white"
                 style={{
-                  fontSize: "clamp(48px, 8.5vw, 116px)",
-                  fontWeight: 700,
+                  fontSize: "clamp(56px, 9.5vw, 128px)",
+                  fontWeight: variant.weightBigLine,
                   textShadow: "0 3px 22px rgba(0,0,0,0.6)",
-                  marginTop: "0.15em",
+                  marginTop: "0.12em",
                 }}
               >
                 標準になる家。
@@ -144,13 +198,10 @@ export default function HeroMagazine() {
           </div>
         </div>
 
-        {/* ── 下段: 権威バッジ(日本語) + CTA ── */}
+        {/* 下段: 権威バッジ + CTA */}
         <div className="pb-8 md:pb-14 px-[var(--page-px)]">
           <div className="max-w-[1400px] mx-auto">
-            {/* 権威バッジ(日本語・縦罫区切り) */}
-            <div
-              className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]"
-            >
+            <div className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]">
               <span className="flex items-baseline gap-1.5">
                 <span
                   className="text-white font-light text-xl md:text-2xl tabular-nums"
@@ -188,7 +239,6 @@ export default function HeroMagazine() {
               </span>
             </div>
 
-            {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch max-w-2xl">
               <CtaButton
                 href="/reserve"
@@ -210,14 +260,14 @@ export default function HeroMagazine() {
           </div>
         </div>
 
-        {/* ── 右端縦組キャプション(効いているので残す) ── */}
+        {/* 縦組キャプション */}
         <aside
           aria-hidden="false"
           className="hidden md:block absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20"
         >
           <p
             className="text-white/70 text-[11px] lg:text-xs tracking-[0.35em] [writing-mode:vertical-rl] [text-shadow:_0_1px_6px_rgba(0,0,0,0.7)]"
-            style={{ fontFamily: "var(--font-serif)" }}
+            style={{ fontFamily: variant.fontFamily }}
           >
             花鳥風月&nbsp;の家
           </p>

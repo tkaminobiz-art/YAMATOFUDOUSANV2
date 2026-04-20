@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Noto_Serif_JP, Inter } from "next/font/google";
+import {
+  Noto_Sans_JP,
+  Noto_Serif_JP,
+  Inter,
+  Shippori_Mincho,
+  Zen_Old_Mincho,
+  Kaisei_Tokumin,
+  New_Tegomin,
+} from "next/font/google";
 import "./globals.css";
 // Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
 import "leaflet/dist/leaflet.css";
@@ -15,8 +23,38 @@ const notoSansJP = Noto_Sans_JP({
 
 const notoSerifJP = Noto_Serif_JP({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  // 700 は HeroMagazine の太明朝見出し用
+  weight: ["400", "500", "600", "700"],
   variable: "--font-noto-serif",
+  display: "swap",
+});
+
+// === /hero-lab のフォント比較用 ===
+const shipporiMincho = Shippori_Mincho({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-shippori",
+  display: "swap",
+});
+
+const zenOldMincho = Zen_Old_Mincho({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-zen-old",
+  display: "swap",
+});
+
+const kaiseiTokumin = Kaisei_Tokumin({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-kaisei",
+  display: "swap",
+});
+
+const newTegomin = New_Tegomin({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-tegomin",
   display: "swap",
 });
 
@@ -39,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${inter.variable}`}
+      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${inter.variable}`}
     >
       <body className="relative min-h-svh">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
