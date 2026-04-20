@@ -405,16 +405,24 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 縦組キャプション
-            - 位置: 左側に変更(テキストが右寄せになったので視覚バランスのカウンター) */}
+        {/* 縦組キャプション(可視性UP・左側)
+            v8: 白55% + 10-11px が地味すぎたので強化
+            - opacity 55→85% / 10-11px → 13-15px
+            - 上のルール線 h-10/30% → h-14/60% で「目印」感を強化
+            - 影を二重(blur 強め+黒80%)で写真上でも浮く */}
         <aside
           aria-hidden="false"
-          className="hidden md:flex absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 z-20 flex-col items-center gap-3"
+          className="hidden md:flex absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 z-20 flex-col items-center gap-4"
         >
-          <span aria-hidden className="block w-px h-10 bg-white/30" />
+          <span aria-hidden className="block w-px h-14 bg-white/60" />
           <p
-            className="text-white/55 text-[10px] lg:text-[11px] tracking-[0.18em] [writing-mode:vertical-rl] [text-shadow:_0_1px_6px_rgba(0,0,0,0.7)]"
-            style={{ fontFamily: variant.fontFamily }}
+            className="text-white/85 text-[13px] lg:text-[15px] tracking-[0.22em] [writing-mode:vertical-rl]"
+            style={{
+              fontFamily: variant.fontFamily,
+              fontWeight: 500,
+              textShadow:
+                "0 2px 10px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.6)",
+            }}
           >
             花鳥風月の家
           </p>
