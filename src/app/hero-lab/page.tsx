@@ -10,11 +10,13 @@ import HeroMagazine, {
 
 // 納品前に削除する検証用ページ(本番 page.tsx からは独立)
 export default function HeroLabPage() {
-  // ユーザー注目: B(Shippori), D(Kaisei)。デフォルトは B
+  // ユーザー確定: B(Shippori) + IV(Industrial: Oswald + Noto Sans JP 500)
   const [variant, setVariant] = useState<HeroFontVariant>(
     FONT_VARIANTS.find((v) => v.id === "shippori") ?? FONT_VARIANTS[0]
   );
-  const [bodyVariant, setBodyVariant] = useState<HeroBodyVariant>(BODY_VARIANTS[0]);
+  const [bodyVariant, setBodyVariant] = useState<HeroBodyVariant>(
+    BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0]
+  );
 
   return (
     <main>

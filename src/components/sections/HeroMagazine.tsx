@@ -193,25 +193,16 @@ export default function HeroMagazine({
                 lineHeight: 1.15,
               }}
             >
+              {/* PC: 1行 / SP: 2行 (br className="md:hidden" で切替) */}
               <span
-                className="block text-white/90"
+                className="block text-white/90 md:whitespace-nowrap"
                 style={{
-                  fontSize: "clamp(32px, 4.8vw, 68px)",
+                  fontSize: "clamp(28px, 4.6vw, 68px)",
                   fontWeight: variant.weightSubLines,
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
                 }}
               >
-                諦めたもの、
-              </span>
-              <span
-                className="block text-white/90"
-                style={{
-                  fontSize: "clamp(30px, 4.5vw, 64px)",
-                  fontWeight: variant.weightSubLines,
-                  textShadow: "0 2px 16px rgba(0,0,0,0.5)",
-                }}
-              >
-                そのすべてが、
+                諦めたもの、<br className="md:hidden" />そのすべてが、
               </span>
               <span
                 className="block text-white"
