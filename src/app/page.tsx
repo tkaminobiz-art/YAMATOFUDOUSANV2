@@ -4,18 +4,9 @@ import {
   FONT_VARIANTS,
   BODY_VARIANTS,
 } from "@/components/sections/HeroMagazine.fonts";
-import HeroVoiceMagazine from "@/components/sections/HeroVoiceMagazine";
-
-// 確定組合せ: B(Shippori Mincho) + IV(Industrial: Oswald + Noto Sans JP 500)
-const HERO_HEADLINE_VARIANT =
-  FONT_VARIANTS.find((v) => v.id === "shippori") ?? FONT_VARIANTS[0];
-const HERO_BODY_VARIANT =
-  BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
 import ConceptSection from "@/components/sections/ConceptSection";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismSection from "@/components/sections/MechanismSection";
-import EditorialPhotoGallery from "@/components/sections/EditorialPhotoGallery";
-import StandardSection from "@/components/sections/StandardSection";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
 import PostPricingEditorialGallery from "@/components/sections/PostPricingEditorialGallery";
@@ -33,55 +24,55 @@ import StandardAndQualitySection from "@/components/sections/StandardAndQualityS
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
+// 確定組合せ: B(Shippori Mincho) + IV(Industrial: Oswald + Noto Sans JP 500)
+const HERO_HEADLINE_VARIANT =
+  FONT_VARIANTS.find((v) => v.id === "shippori") ?? FONT_VARIANTS[0];
+const HERO_BODY_VARIANT =
+  BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
+
 /*
-  22セクション構成（PRICING〜MoneyTalk間に編集ギャラリー帯を追加）
+  18セクション構成 — 2026-04-20 情報整理(audit) reorder
 
-  家を買う人の思考順に寄り添う構造：
-  土地 → お金 → 比較 → やまとならなんとかなるかも。
+  読者像: ① 他社見積もりで諦めかけ ② 「ハウスメーカー奈良」検索流入
+  目的: 来場予約 / 資料請求 / LINE の問い合わせ獲得
 
-  【① フック】
-  1. Hero              C-2 Magazine Editorial（諦めたもの…標準になる家。 + 2,280万〜・権威バッジ込み）
+  【①フック】
+  1. HeroMagazine        C-2 Magazine Editorial「諦めたもの…標準になる家。」+ 2,280万〜
 
-  【② 共感 — 諦めかけたあなたへ】
-  2. Concept          核メッセージ（ダーク帯・旧FounderQuoteの重複コピーは統合のため削除）
+  【②共感→理屈】
+  2. ConceptSection      核メッセージ
+  3. MechanismSection    なぜ安いか(諦めかけ層への最強の説得)
 
-  【③ 比較と納得 — 大手と何が違うか】
-  3. Mechanism        価格のカラクリ（理屈）
-  4. Comparison(新)   大手 vs やまと（証拠）
-  （ギャラリー帯）    竣工写真の流れ（Zero の直前）
-  5. Zero             追加費用ゼロ
+  【③証拠】
+  4. ZeroDeclaration     追加費用ゼロ
+  5. PriceSection        3プラン価格
+  6. PostPricingEditorialGallery  呼吸帯(写真マルキー)
 
-  【④ 実現可能性 — 払えるのか】
-  7. Price            料金目安（2,480万〜バーン）
-  （ギャラリー帯）    PRICING直後・編集写真（紙が語るトーン／ダーク帯）
-  8. MoneyTalk(新)    お金の話、まず気軽に（FP・つなぎ融資なし）
+  【④商品の魅力】
+  7. LotsSection         土地6件 teaser → /lots
+  8. FreedomOfDesign     完全自由設計
+  9. StandardAndQualitySection  標準仕様
 
-  【⑤ 土地の安心 — 最初の悩み】
-  9. Lots(前倒し)     まず、土地の話から（土地＋建物セット提案）
+  【⑤社会的証明(信頼)】
+  10. StaffStory         19人 teaser → /staff
+  11. VoiceSection       3件 teaser → /voice (※近日 teaser 化予定)
+  12. WorksSection       3件 teaser → /works (※新ページ作成予定)
 
-  【⑥ 商品の魅力】
-  10. FreedomOfDesign 完全自由設計
-  11. Standard        標準仕様
+  【⑥行動喚起①】
+  13. MidCta             ここまで読んで
 
-  【⑦ 信頼の裏付け】
-  12. Quality         品質
-  13. Guarantee       保証
-  14. StaffStory      19人の職人
+  【⑦行動直前】
+  14. FlowSection        家づくりの流れ
+  15. MoneyTalkSection   お金の話 teaser → /money (※新ページ作成予定)
+  16. FaqSection         残不安
 
-  【⑧ 実例】
-  15. Voice           お客様の声
-  16. Works           施工事例
+  【⑧クロージング】
+  17. AccessSection      会社概要
+  18. FinalCta           決断
 
-  【⑨ 行動喚起①】
-  17. MidCta          ここまで読んで
-
-  【⑩ 行動直前】
-  18. Flow            家づくりの流れ
-  19. FAQ             残存不安
-
-  【⑪ クロージング】
-  20. Access          会社概要
-  21. FinalCta        決断
+  --- 削除済 ---
+  - HeroVoiceMagazine: Hero直後の二度打ちで dilution(声は #11 で見せる)
+  - EditorialPhotoGallery(前): #6 の PostPricing と同種で重複
 */
 
 export default function Home() {
@@ -93,14 +84,11 @@ export default function Home() {
           variant={HERO_HEADLINE_VARIANT}
           bodyVariant={HERO_BODY_VARIANT}
         />
-        <HeroVoiceMagazine />
         <ConceptSection />
         <MechanismSection />
-        <EditorialPhotoGallery />
         <ZeroDeclaration />
         <PriceSection />
         <PostPricingEditorialGallery />
-        <MoneyTalkSection />
         <LotsSection />
         <FreedomOfDesign />
         <StandardAndQualitySection />
@@ -109,6 +97,7 @@ export default function Home() {
         <WorksSection />
         <MidCta />
         <FlowSection />
+        <MoneyTalkSection />
         <FaqSection />
         <AccessSection />
         <FinalCta />
