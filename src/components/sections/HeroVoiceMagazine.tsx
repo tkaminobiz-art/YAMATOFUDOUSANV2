@@ -126,8 +126,8 @@ const VOICES: Voice[] = [
   {
     id: 2,
     metaLocation: "NARA / M-TEI",
-    photoUrl: voicePhoto("199927"),
-    photoAlt: "奈良市 M様邸 — 2年の土地探しの末にたどり着いた家",
+    photoUrl: "/images/voices/199927_3.webp",
+    photoAlt: "奈良市 M様邸 — キッチンとダイニングで暮らすご家族",
     hero1: "2年、歩いて。",
     hero2: "ここに着いた。",
     heroColor: "oak",
