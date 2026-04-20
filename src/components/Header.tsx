@@ -1,35 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 /*
-  Header — 2段構成（2026-04-15 リニューアル）
-  神野さん決定：案α（2段構成）
-  - 上段：買い手 / 売り手 の2入口タブ（公式トップとして必須の導線）
-  - 下段：ロゴ + メインナビ + CTA
+  Header — 2026-04-20 A+C ハイブリッド
+  A: スマート縮小sticky(スクロール下で上段タブが消え、下段高さが縮小、背景blur)
+  C: ロゴ中央 + ナビ両翼分割(左2 / 右3)
 
-  CTAは緑Primary + 黒線Secondary（選択肢B）
+  拡張ポイント:
+  - NavItem に children? を持たせた(将来メガメニュー/アコーディオン対応)
+  - 現時点では全ナビがフラットリンク。サブページ増加時は children を足すだけ。
 */
 
+type NavChild = {
+  label: string;
+  href: string;
+  desc?: string;
+};
+
+type NavItem = {
+  label: string;
+  href: string;
+  children?: NavChild[];
+};
+
 const ENTRY_TABS = [
-  { label: "家を買いたい・建てたい方", href: "/", match: (path: string) => path === "/" || path.startsWith("/lots") || path.startsWith("/voice") || path.startsWith("/staff") || path.startsWith("/reserve") || path.startsWith("/contact") },
-  { label: "土地・家を売りたい方", href: "/sell", match: (path: string) => path.startsWith("/sell") },
+  {
+    label: "家を買いたい・建てたい方",
+    href: "/",
+    match: (path: string) =>
+      path === "/" ||
+      path.startsWith("/lots") ||
+      path.startsWith("/voice") ||
+      path.startsWith("/staff") ||
+      path.startsWith("/reserve") ||
+      path.startsWith("/contact"),
+  },
+  {
+    label: "土地・家を売りたい方",
+    href: "/sell",
+    match: (path: string) => path.startsWith("/sell"),
+  },
 ] as const;
 
-// Desktop 用メインナビ
-const NAV_ITEMS = [
+// Desktop: ロゴを中心に左右分割
+const NAV_LEFT: NavItem[] = [
   { label: "商品紹介", href: "/#product" },
   { label: "物件情報", href: "/lots" },
+];
+
+const NAV_RIGHT: NavItem[] = [
   { label: "施工事例", href: "/#works" },
   { label: "お客様の声", href: "/voice" },
   { label: "スタッフ紹介", href: "/staff" },
-] as const;
+];
 
-// SP メニュー用（全項目）
-const SP_NAV_ITEMS = [
+// SP: 全項目
+const SP_NAV_ITEMS: NavItem[] = [
   { label: "やまとの家づくり", href: "/#concept" },
   { label: "商品紹介", href: "/#product" },
   { label: "物件情報", href: "/lots" },
@@ -37,16 +67,54 @@ const SP_NAV_ITEMS = [
   { label: "お客様の声", href: "/voice" },
   { label: "スタッフ紹介", href: "/staff" },
   { label: "店舗情報", href: "/#access" },
-] as const;
+];
+
+// ホバーアンダーラインのナビリンク
+function NavLink({ item }: { item: NavItem }) {
+  const hasChildren = Boolean(item.children && item.children.length > 0);
+  return (
+    <a
+      href={item.href}
+      className="relative group whitespace-nowrap text-sm text-text-primary transition-colors hover:text-main py-2"
+      aria-haspopup={hasChildren ? "menu" : undefined}
+    >
+      <span>{item.label}</span>
+      {/* ホバーで下線がスライドイン */}
+      <span
+        aria-hidden
+        className="absolute left-0 right-0 -bottom-0.5 h-px origin-left scale-x-0 bg-main transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+      />
+    </a>
+  );
+}
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-bg-primary">
-      {/* ===== 上段：買い手 / 売り手の2入口タブ ===== */}
-      <div className="border-b border-border bg-bg-secondary">
+    <header
+      className={`sticky top-0 z-50 w-full transition-[backdrop-filter,background-color] duration-300 ${
+        scrolled
+          ? "bg-bg-primary/85 backdrop-blur-md"
+          : "bg-bg-primary"
+      }`}
+    >
+      {/* ===== 上段: 買い手 / 売り手(スクロールで高さ0へ) ===== */}
+      <div
+        aria-hidden={scrolled}
+        className={`overflow-hidden border-b border-border bg-bg-secondary transition-[max-height,opacity] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          scrolled ? "max-h-0 opacity-0 border-b-0" : "max-h-[48px] opacity-100"
+        }`}
+      >
         <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
           <nav className="flex" aria-label="訪問目的ナビゲーション">
             {ENTRY_TABS.map((tab) => {
@@ -76,88 +144,47 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ===== 下段：ロゴ + ナビ + CTA ===== */}
-      <div className="border-b border-border">
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-[var(--page-px)] gap-4">
-          {/* SP: hamburger */}
-          <button
-            type="button"
-            className="flex h-11 w-11 items-center justify-center rounded lg:hidden shrink-0"
-            aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            {menuOpen ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <line x1="6" y1="6" x2="18" y2="18" />
-                <line x1="6" y1="18" x2="18" y2="6" />
-              </svg>
-            ) : (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <line x1="4" y1="7" x2="20" y2="7" />
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <line x1="4" y1="17" x2="20" y2="17" />
-              </svg>
-            )}
-          </button>
-
-          {/* Logo */}
-          <Link href="/" className="shrink-0">
-            <Image
-              src="/images/logo.png"
-              alt="やまと不動産"
-              width={160}
-              height={40}
-              className="h-8 md:h-9 w-auto"
-              priority
-            />
-          </Link>
-
-          {/* Desktop nav (center) */}
-          <nav
-            className="hidden flex-1 items-center justify-center gap-5 xl:gap-8 lg:flex"
-            aria-label="メインナビゲーション"
-          >
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="whitespace-nowrap text-sm font-normal text-text-primary transition-colors hover:text-main"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            {/* Secondary 資料請求（黒線） */}
-            <Link
-              href="/contact"
-              className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium border border-text-primary text-text-primary rounded transition-colors duration-[400ms] hover:text-white whitespace-nowrap"
+      {/* ===== 下段: ロゴ中央 + ナビ両翼分割 + CTA ===== */}
+      <div className={`border-b border-border transition-colors duration-300`}>
+        <div
+          className={`relative mx-auto max-w-[1400px] px-[var(--page-px)] transition-[height] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            scrolled ? "h-14" : "h-20"
+          }`}
+        >
+          {/* === モバイル (SP): hamburger + logo + reserve === */}
+          <div className="lg:hidden flex items-center justify-between h-full">
+            <button
+              type="button"
+              className="flex h-11 w-11 items-center justify-center rounded shrink-0"
+              aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((v) => !v)}
             >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
+              {menuOpen ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                  <line x1="6" y1="18" x2="18" y2="6" />
+                </svg>
+              ) : (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="4" y1="7" x2="20" y2="7" />
+                  <line x1="4" y1="12" x2="20" y2="12" />
+                  <line x1="4" y1="17" x2="20" y2="17" />
+                </svg>
+              )}
+            </button>
+
+            <Link href="/" className="shrink-0">
+              <Image
+                src="/images/logo.png"
+                alt="やまと不動産"
+                width={160}
+                height={40}
+                className={`w-auto transition-[height] duration-300 ${scrolled ? "h-6" : "h-8"}`}
+                priority
               />
-              <span className="relative">資料請求</span>
             </Link>
 
-            {/* Primary 来店予約（緑solid + シマー） */}
-            <Link
-              href="/reserve"
-              className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium bg-main text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_8px_24px_-4px_rgba(90,138,74,0.45)] whitespace-nowrap"
-            >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
-              />
-              <span className="relative">来店予約</span>
-            </Link>
-          </div>
-
-          {/* SP 右端: 来店予約CTA のみ */}
-          <div className="flex items-center gap-2 lg:hidden">
             <Link
               href="/reserve"
               className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-medium bg-main text-white rounded whitespace-nowrap"
@@ -165,10 +192,77 @@ export default function Header() {
               来店予約
             </Link>
           </div>
+
+          {/* === デスクトップ(lg+): C パターン 3カラム === */}
+          <div className="hidden lg:grid h-full items-center grid-cols-[1fr_auto_1fr] gap-6 xl:gap-10">
+            {/* 左翼ナビ */}
+            <nav
+              className="flex items-center justify-start gap-5 xl:gap-8"
+              aria-label="メインナビゲーション(左)"
+            >
+              {NAV_LEFT.map((item) => (
+                <NavLink key={item.href} item={item} />
+              ))}
+            </nav>
+
+            {/* 中央ロゴ */}
+            <Link
+              href="/"
+              className="justify-self-center"
+              aria-label="やまと不動産 トップ"
+            >
+              <Image
+                src="/images/logo.png"
+                alt="やまと不動産"
+                width={200}
+                height={50}
+                className={`w-auto transition-[height] duration-300 ${
+                  scrolled ? "h-7" : "h-10"
+                }`}
+                priority
+              />
+            </Link>
+
+            {/* 右翼ナビ + CTA */}
+            <div className="flex items-center justify-end gap-5 xl:gap-8">
+              <nav
+                className="flex items-center gap-5 xl:gap-8"
+                aria-label="メインナビゲーション(右)"
+              >
+                {NAV_RIGHT.map((item) => (
+                  <NavLink key={item.href} item={item} />
+                ))}
+              </nav>
+
+              {/* CTA 2種 */}
+              <div className="flex items-center gap-2 shrink-0 ml-2 xl:ml-4">
+                <Link
+                  href="/contact"
+                  className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium border border-text-primary text-text-primary rounded transition-colors duration-[400ms] hover:text-white whitespace-nowrap"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
+                  />
+                  <span className="relative">資料請求</span>
+                </Link>
+                <Link
+                  href="/reserve"
+                  className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium bg-main text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_8px_24px_-4px_rgba(90,138,74,0.45)] whitespace-nowrap"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+                  />
+                  <span className="relative">来店予約</span>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* SP menu overlay */}
+      {/* ===== SPメニューオーバーレイ ===== */}
       {menuOpen && (
         <nav
           className="border-t border-border bg-bg-primary lg:hidden"
@@ -186,7 +280,6 @@ export default function Header() {
                 </a>
               </li>
             ))}
-            {/* SP メニュー内のCTA */}
             <li className="border-t border-border px-6 py-4 space-y-2">
               <Link
                 href="/contact"
