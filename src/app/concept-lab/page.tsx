@@ -10,7 +10,7 @@ import ConceptSection from "@/components/sections/ConceptSection";
 import MechanismSection from "@/components/sections/MechanismSection";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import PriceSection from "@/components/sections/PriceSection";
-import MechanismEnhanced from "@/components/concept-lab/MechanismEnhanced";
+import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import ZeroTeaser from "@/components/concept-lab/ZeroTeaser";
 import WhyYamato from "@/components/concept-lab/WhyYamato";
 

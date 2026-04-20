@@ -4,9 +4,8 @@ import {
   FONT_VARIANTS,
   BODY_VARIANTS,
 } from "@/components/sections/HeroMagazine.fonts";
-import ConceptSection from "@/components/sections/ConceptSection";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
-import MechanismSection from "@/components/sections/MechanismSection";
+import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
 import PostPricingEditorialGallery from "@/components/sections/PostPricingEditorialGallery";
@@ -39,9 +38,9 @@ const HERO_BODY_VARIANT =
   【①フック】
   1. HeroMagazine        C-2 Magazine Editorial「諦めたもの…標準になる家。」+ 2,280万〜
 
-  【②共感→理屈】
-  2. ConceptSection      核メッセージ
-  3. MechanismSection    なぜ安いか(諦めかけ層への最強の説得)
+  【②理屈】
+  2. MechanismEnhanced   なぜ安いか(ASAGIRI/C-2 Magazine Editorial + ConceptSection吸収)
+                         2026-04-20: strong catch「やまとは安い？いいえ、違います。」
 
   【③証拠】
   4. ZeroDeclaration     追加費用ゼロ
@@ -84,8 +83,7 @@ export default function Home() {
           variant={HERO_HEADLINE_VARIANT}
           bodyVariant={HERO_BODY_VARIANT}
         />
-        <ConceptSection />
-        <MechanismSection />
+        <MechanismEnhanced />
         <ZeroDeclaration />
         <PriceSection />
         <PostPricingEditorialGallery />
