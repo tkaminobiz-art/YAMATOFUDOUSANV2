@@ -120,7 +120,7 @@ export default function MechanismEnhanced() {
               <p
                 className="font-shippori font-bold mb-8 md:mb-10 max-w-[54ch] text-[clamp(15px,1.1vw,17px)] leading-[1.95]"
               >
-                広告費、展示場の維持費、仲介マージン。これら家を届けるまでの費用が、見積もりの三割から四割を占める会社もあります
+                広告費、展示場の維持費、仲介マージン。見積もりの三割から四割。そんな会社も、あります
                 <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※1
                 </sup>
@@ -132,11 +132,11 @@ export default function MechanismEnhanced() {
                 <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※2
                 </sup>
-                。自社の分譲地に建てた家を、そのままモデルハウスとして使い、いずれお客様にお譲りしています。一軒の家が、展示と販売の二つの役割を果たします。
+                。分譲地に建てた家を、そのままモデルハウスに。いずれ、販売します。一軒が、二つの役割を果たします。
               </p>
 
               <p className="font-shippori mb-6 max-w-[54ch]">
-                土地の分譲から設計、施工まで、自社で進めています。間に入る会社がないので、仲介のマージンも乗りません。
+                土地の分譲から設計、施工まで、自社で進めます。間に入る会社がないので、仲介マージンも乗りません。
               </p>
 
               {/* Pull quote with hang */}
@@ -166,7 +166,7 @@ export default function MechanismEnhanced() {
                 <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※3
                 </sup>
-                。家そのものの品質は、変えていません。家を届けるまでの費用を最小限にした結果が、2,280万円〜という価格です。
+                。家そのものの品質は、変えていません。届けるまでの費用だけを、絞りました。結果が、2,280万円〜です。
               </p>
             </div>
           </div>
