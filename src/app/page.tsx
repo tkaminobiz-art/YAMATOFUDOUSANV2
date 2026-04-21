@@ -42,13 +42,15 @@ const HERO_BODY_VARIANT =
                          2026-04-20: strong catch「やまとは安い？いいえ、違います。」
 
   【③証拠】
-  4. ZeroDeclaration     追加費用ゼロ
-  5. PriceSection        3プラン価格
+  3. ZeroDeclaration     追加費用ゼロ
+  4. PriceSection        3プラン価格(三つの、家。)
 
   【④商品の魅力】
-  6. LotsSection         土地6件 teaser → /lots
-  7. FreedomOfDesign     完全自由設計
-  8. StandardAndQualitySection  標準仕様
+     2026-04-21 reorder: 商品(ラインナップ) → 中身 → 可変性 → 置く場所
+     の論理順に整理(従来: 土地→自由→標準で商品魅力の流れが途切れていた)
+  5. StandardAndQualitySection  標準仕様(商品の中身)
+  6. FreedomOfDesign     完全自由設計(商品の可変性)
+  7. LotsSection         土地6件 teaser → /lots (商品を置く場所)
 
   【⑤社会的証明(信頼)】
   10. StaffStory         19人 teaser → /staff
@@ -86,9 +88,9 @@ export default function Home() {
         <MechanismEnhanced />
         <ZeroDeclaration />
         <PriceSection />
-        <LotsSection />
-        <FreedomOfDesign />
         <StandardAndQualitySection />
+        <FreedomOfDesign />
+        <LotsSection />
         <StaffStory />
         <VoiceSection />
         <WorksSection />
