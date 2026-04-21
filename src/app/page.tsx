@@ -8,7 +8,6 @@ import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
-import PostPricingEditorialGallery from "@/components/sections/PostPricingEditorialGallery";
 import MoneyTalkSection from "@/components/sections/MoneyTalkSection";
 import MidCta from "@/components/sections/MidCta";
 import VoiceSection from "@/components/sections/VoiceSection";
@@ -45,12 +44,11 @@ const HERO_BODY_VARIANT =
   【③証拠】
   4. ZeroDeclaration     追加費用ゼロ
   5. PriceSection        3プラン価格
-  6. PostPricingEditorialGallery  呼吸帯(写真マルキー)
 
   【④商品の魅力】
-  7. LotsSection         土地6件 teaser → /lots
-  8. FreedomOfDesign     完全自由設計
-  9. StandardAndQualitySection  標準仕様
+  6. LotsSection         土地6件 teaser → /lots
+  7. FreedomOfDesign     完全自由設計
+  8. StandardAndQualitySection  標準仕様
 
   【⑤社会的証明(信頼)】
   10. StaffStory         19人 teaser → /staff
@@ -71,7 +69,9 @@ const HERO_BODY_VARIANT =
 
   --- 削除済 ---
   - HeroVoiceMagazine: Hero直後の二度打ちで dilution(声は #11 で見せる)
-  - EditorialPhotoGallery(前): #6 の PostPricing と同種で重複
+  - EditorialPhotoGallery(前): PostPricing と同種で重複
+  - PostPricingEditorialGallery (2026-04-21 design-critic #7):
+    周囲の白基調と暗背景マーキーが断絶し呼吸帯として機能せず
 */
 
 export default function Home() {
@@ -86,7 +86,6 @@ export default function Home() {
         <MechanismEnhanced />
         <ZeroDeclaration />
         <PriceSection />
-        <PostPricingEditorialGallery />
         <LotsSection />
         <FreedomOfDesign />
         <StandardAndQualitySection />

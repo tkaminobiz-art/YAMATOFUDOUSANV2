@@ -12,6 +12,10 @@ import { useScrollIn } from "@/hooks/useScrollIn";
   - 残すのは版面(21:9ブリード/非対称グリッド/pull quote/sidecar)のみ
   - ACCENT_LIME は主見出し1ワード × 4 + 金額(-1,720) の 5箇所に制限
 
+  2026-04-21 design-critic 指摘 #4 反映:
+  - inline fontFamily の繰り返し(13回)を Tailwind v4 の font-shippori / font-inter
+    ユーティリティに置換
+
   構造:
   1. 非対称グリッド (1.4fr:1fr / 1.3fr:1fr)
   2. 写真統合: 21:9 ブリード / 4:5 sidecar / 16:10 detail
@@ -66,9 +70,8 @@ export default function MechanismEnhanced() {
           {/* Left: 看板タイトル */}
           <div>
             <h2
-              className="text-text-primary leading-[1.05] tracking-[-0.02em]"
+              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
-                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                 fontWeight: 900,
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
@@ -83,20 +86,12 @@ export default function MechanismEnhanced() {
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p
-                className="text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
-                style={{
-                  fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                  fontWeight: 500,
-                }}
+                className="font-shippori font-medium text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
               >
                 同じ素材、同じ性能。
               </p>
               <p
-                className="mt-3 text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
-                style={{
-                  fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                  fontWeight: 500,
-                }}
+                className="mt-3 font-shippori font-medium text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
               >
                 違うのは、家を
                 <br />
@@ -114,9 +109,8 @@ export default function MechanismEnhanced() {
           <div>
             {/* Manifesto title */}
             <h3
-              className="text-text-primary leading-[1.18] tracking-[-0.01em] mb-12 md:mb-16"
+              className="font-shippori text-text-primary leading-[1.18] tracking-[-0.01em] mb-12 md:mb-16"
               style={{
-                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                 fontWeight: 900,
                 fontSize: "clamp(28px, 5vw, 64px)",
               }}
@@ -128,67 +122,41 @@ export default function MechanismEnhanced() {
 
             {/* Article body */}
             <div className="text-[14px] md:text-[15px] leading-[2.0] tracking-[0.03em] text-text-primary">
-              {/* Evidence statement(太字) — drop cap 廃止・エビデンス文として強調 */}
+              {/* Evidence statement(太字) */}
               <p
-                className="mb-8 md:mb-10 max-w-[54ch] text-[clamp(15px,1.1vw,17px)] leading-[1.95]"
-                style={{
-                  fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                  fontWeight: 700,
-                }}
+                className="font-shippori font-bold mb-8 md:mb-10 max-w-[54ch] text-[clamp(15px,1.1vw,17px)] leading-[1.95]"
               >
                 広告費、展示場の維持費、仲介マージン。これら家を届けるまでの費用が、見積もりの三割から四割を占める会社もあります
-                <sup
-                  className="text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary"
-                  style={{
-                    fontFamily: "var(--font-inter), Inter, sans-serif",
-                  }}
-                >
+                <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※1
                 </sup>
                 。
               </p>
 
-              <p
-                className="mb-6 max-w-[54ch]"
-                style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
-              >
+              <p className="font-shippori mb-6 max-w-[54ch]">
                 やまとは、専用の展示場を持ちません
-                <sup
-                  className="text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary"
-                  style={{
-                    fontFamily: "var(--font-inter), Inter, sans-serif",
-                  }}
-                >
+                <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※2
                 </sup>
                 。自社の分譲地に建てた家を、そのままモデルハウスとして使い、いずれお客様にお譲りしています。一軒の家が、展示と販売の二つの役割を果たします。
               </p>
 
-              <p
-                className="mb-6 max-w-[54ch]"
-                style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
-              >
+              <p className="font-shippori mb-6 max-w-[54ch]">
                 土地の分譲から設計、施工まで、自社で進めています。間に入る会社がないので、仲介のマージンも乗りません。
               </p>
 
               {/* Pull quote with hang */}
-              <aside
-                className="relative my-10 md:my-14 py-7 md:py-10 border-y-[3px] border-text-primary lg:-ml-12 lg:pl-12"
-              >
+              <aside className="relative my-10 md:my-14 py-7 md:py-10 border-y-[3px] border-text-primary lg:-ml-12 lg:pl-12">
                 <span
                   aria-hidden
-                  className="absolute left-1 top-2 leading-none font-black select-none pointer-events-none text-text-primary/20"
-                  style={{
-                    fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                    fontSize: "clamp(72px, 9vw, 120px)",
-                  }}
+                  className="font-shippori absolute left-1 top-2 leading-none font-black select-none pointer-events-none text-text-primary/20"
+                  style={{ fontSize: "clamp(72px, 9vw, 120px)" }}
                 >
                   『
                 </span>
                 <blockquote
-                  className="pl-14 md:pl-20 text-text-primary leading-[1.5] tracking-[0.01em]"
+                  className="font-shippori pl-14 md:pl-20 text-text-primary leading-[1.5] tracking-[0.01em]"
                   style={{
-                    fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                     fontWeight: 900,
                     fontSize: "clamp(20px, 3vw, 38px)",
                   }}
@@ -199,17 +167,9 @@ export default function MechanismEnhanced() {
                 </blockquote>
               </aside>
 
-              <p
-                className="mb-6 max-w-[54ch]"
-                style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif" }}
-              >
+              <p className="font-shippori mb-6 max-w-[54ch]">
                 だから、同じ素材・同じ性能でも、価格は違って見えます
-                <sup
-                  className="text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary"
-                  style={{
-                    fontFamily: "var(--font-inter), Inter, sans-serif",
-                  }}
-                >
+                <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※3
                 </sup>
                 。家そのものの品質は、変えていません。家を届けるまでの費用を最小限にした結果が、2,280万円〜という価格です。
@@ -229,10 +189,7 @@ export default function MechanismEnhanced() {
                 sizes="(max-width: 1024px) 100vw, 30vw"
                 style={{ filter: PHOTO_FILTER }}
               />
-              <figcaption
-                className="absolute left-0 bottom-0 max-w-[75%] px-4 py-3 bg-[#FAF8F3] border-t border-r border-text-primary text-[10px] tracking-[0.16em] uppercase text-text-secondary font-medium"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
+              <figcaption className="font-inter absolute left-0 bottom-0 max-w-[75%] px-4 py-3 bg-[#FAF8F3] border-t border-r border-text-primary text-[10px] tracking-[0.16em] uppercase text-text-secondary font-medium">
                 現場の素材ひとつ、削らない
               </figcaption>
             </figure>
@@ -242,53 +199,38 @@ export default function MechanismEnhanced() {
               className="bg-[#FAF8F3] p-6 md:p-7"
               style={{ border: "1.5px solid #1A1411" }}
             >
-              <p
-                className="text-[10px] tracking-[0.28em] uppercase font-black mb-4 pb-3 border-b border-[#CFC5B5] text-text-secondary"
-                style={{
-                  fontFamily: "var(--font-inter), Inter, sans-serif",
-                }}
-              >
+              <p className="font-inter text-[10px] tracking-[0.28em] uppercase font-black mb-4 pb-3 border-b border-[#CFC5B5] text-text-secondary">
                 大手との差
               </p>
-              <dl
-                className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-3 text-sm tabular-nums"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                <dt
-                  className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary"
-                >
+              <dl className="font-inter grid grid-cols-[auto_1fr] gap-x-5 gap-y-3 text-sm tabular-nums">
+                <dt className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary">
                   参考・大手
                 </dt>
                 <dd
-                  className="font-bold text-text-primary"
-                  style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif", fontSize: "16px" }}
+                  className="font-shippori font-bold text-text-primary"
+                  style={{ fontSize: "16px" }}
                 >
                   4,000<span className="text-[11px] ml-1 text-text-secondary">万円〜</span>
                 </dd>
 
-                <dt
-                  className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary"
-                >
+                <dt className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary">
                   やまと
                 </dt>
                 <dd
-                  className="font-bold text-text-primary"
-                  style={{ fontFamily: "var(--font-shippori), 'Shippori Mincho', serif", fontSize: "16px" }}
+                  className="font-shippori font-bold text-text-primary"
+                  style={{ fontSize: "16px" }}
                 >
                   2,280<span className="text-[11px] ml-1 text-text-secondary">万円〜</span>
                 </dd>
 
-                <dt
-                  className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary"
-                >
+                <dt className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary">
                   差額
                 </dt>
                 <dd>
                   <span
-                    className="font-black"
+                    className="font-inter font-black"
                     style={{
                       color: ACCENT_LIME,
-                      fontFamily: "var(--font-inter), Inter, sans-serif",
                       fontSize: "20px",
                     }}
                   >
@@ -300,10 +242,7 @@ export default function MechanismEnhanced() {
             </div>
 
             {/* Bottom: margin notes */}
-            <div
-              className="bg-[#FAF8F3] px-6 py-5 md:px-7 md:py-6 border-t-2 border-text-primary border-b border-dashed border-[#CFC5B5] grid gap-3.5 text-[12px] leading-[1.8] text-text-secondary"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
+            <div className="font-inter bg-[#FAF8F3] px-6 py-5 md:px-7 md:py-6 border-t-2 border-text-primary border-b border-dashed border-[#CFC5B5] grid gap-3.5 text-[12px] leading-[1.8] text-text-secondary">
               <div className="pl-6 relative">
                 <span
                   aria-hidden
@@ -354,37 +293,22 @@ export default function MechanismEnhanced() {
           {/* Big closing statement (right) */}
           <div className="col-span-12 md:col-span-7 md:pl-8">
             <p
-              className="text-[clamp(26px,4.5vw,64px)] leading-[1.35] tracking-[-0.01em] text-text-primary"
-              style={{
-                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                fontWeight: 900,
-              }}
+              className="font-shippori text-[clamp(26px,4.5vw,64px)] leading-[1.35] tracking-[-0.01em] text-text-primary"
+              style={{ fontWeight: 900 }}
             >
               家を建てるのに必要な
               <br />
               <span style={{ color: ACCENT_LIME }}>費用しか</span>、<br />
               やまとはいただきません。
             </p>
-            {/* (サブ) 当たり前を、きちんとやっているだけです — 封印+謙虚 */}
-            <p
-              className="mt-5 md:mt-7 text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.8] max-w-[520px]"
-              style={{
-                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                fontWeight: 500,
-              }}
-            >
+            {/* (サブ) 当たり前を、きちんとやっているだけです */}
+            <p className="font-shippori font-medium mt-5 md:mt-7 text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.8] max-w-[520px]">
               当たり前を、
               <br className="hidden md:inline" />
               きちんとやっているだけです。
             </p>
-            {/* (最後) 確信しています — 想いで結ぶ */}
-            <p
-              className="mt-4 md:mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]"
-              style={{
-                fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-                fontWeight: 400,
-              }}
-            >
+            {/* (最後) 確信しています */}
+            <p className="font-shippori mt-4 md:mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]">
               それが、お客様のためになると、
               <br className="hidden md:inline" />
               私たちは確信しています。

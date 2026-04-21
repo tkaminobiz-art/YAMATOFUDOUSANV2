@@ -33,10 +33,11 @@ const notoSerifJP = Noto_Serif_JP({
 });
 
 // === /hero-lab のフォント比較用 ===
+// variable名を -var 化し、@theme で fallback 付きの --font-shippori にエイリアスする
 const shipporiMincho = Shippori_Mincho({
   subsets: ["latin"],
   weight: ["400", "700"],
-  variable: "--font-shippori",
+  variable: "--font-shippori-var",
   display: "swap",
 });
 
@@ -79,7 +80,7 @@ const playfairDisplay = Playfair_Display({
 const oswald = Oswald({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
-  variable: "--font-oswald",
+  variable: "--font-oswald-var",
   display: "swap",
 });
 

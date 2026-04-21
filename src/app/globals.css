@@ -20,13 +20,17 @@
   --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (派生・装飾用) */
   --color-border: #E5E5E0;
 
-  /* === Fonts === */
+  /* === Fonts ===
+     Tailwind v4: @theme の --font-* が font-* ユーティリティを生成
+     next/font は --font-*-var で供給し、ここで fallback 付きにエイリアス化 */
   --font-sans: var(--font-noto), "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-serif: var(--font-noto-serif), "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --font-inter: var(--font-inter-var), "Inter", sans-serif;
+  --font-shippori: var(--font-shippori-var), "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-oswald: var(--font-oswald-var), "Oswald", "Helvetica Neue", Arial, sans-serif;
 
   /* === Spacing tokens ===（Phase 2: 余白 1.5〜2倍 — ラグジュアリーな呼吸） */
   --section-py: clamp(96px, calc(48px + 7.5vw), 320px);
-  --font-serif: var(--font-noto-serif), "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --page-px: clamp(16px, 5vw, 80px);
   --card-p: clamp(20px, calc(14px + 1.5vw), 48px);
   --card-gap: clamp(16px, calc(10px + 1.5vw), 32px);
