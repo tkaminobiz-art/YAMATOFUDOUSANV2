@@ -14,7 +14,6 @@ import VoiceSection from "@/components/sections/VoiceSection";
 import WorksSection from "@/components/sections/WorksSection";
 import FlowSection from "@/components/sections/FlowSection";
 import LotsSection from "@/components/sections/LotsSection";
-import StaffStory from "@/components/sections/StaffStory";
 import FaqSection from "@/components/sections/FaqSection";
 import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
@@ -53,9 +52,10 @@ const HERO_BODY_VARIANT =
   7. LotsSection         土地6件 teaser → /lots (商品を置く場所)
 
   【⑤社会的証明(信頼)】
-  10. StaffStory         19人 teaser → /staff
-  11. VoiceSection       3件 teaser → /voice (※近日 teaser 化予定)
-  12. WorksSection       3件 teaser → /works (※新ページ作成予定)
+  2026-04-21: StaffStory をトップから撤去(/staff へ完全移譲)
+              "人"の存在感は Voice(50組の声) + Works(施工事例)で担保
+  9. VoiceSection        3件 teaser → /voice
+  10. WorksSection       3件 teaser → /works
 
   【⑥行動喚起①】
   13. MidCta             ここまで読んで
@@ -70,10 +70,12 @@ const HERO_BODY_VARIANT =
   18. FinalCta           決断
 
   --- 削除済 ---
-  - HeroVoiceMagazine: Hero直後の二度打ちで dilution(声は #11 で見せる)
+  - HeroVoiceMagazine: Hero直後の二度打ちで dilution(声は Voice で見せる)
   - EditorialPhotoGallery(前): PostPricing と同種で重複
   - PostPricingEditorialGallery (2026-04-21 design-critic #7):
     周囲の白基調と暗背景マーキーが断絶し呼吸帯として機能せず
+  - StaffStory (2026-04-21 ユーザー判断): 別ページ /staff で詳細を読ませる構造に
+    (ファイル自体は保持し再利用可能)
 */
 
 export default function Home() {
@@ -91,7 +93,6 @@ export default function Home() {
         <StandardAndQualitySection />
         <FreedomOfDesign />
         <LotsSection />
-        <StaffStory />
         <VoiceSection />
         <WorksSection />
         <MidCta />
