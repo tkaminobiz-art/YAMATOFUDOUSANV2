@@ -180,20 +180,30 @@ function SImageTile({
         alt={`${item.category}の標準仕様 - ${item.brand} | やまと不動産`}
         fill
         priority={priority}
-        className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+        className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.08]"
         sizes={IMAGE_SIZES[item.size]}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/10 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
-        <p className="font-inter text-white/75 text-[10px] md:text-[11px] tracking-[0.18em] mb-1">
-          {item.brand}
-        </p>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/15 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-3 md:p-4 lg:p-5">
+        {/* 設備名を主役に反転(Shippori Black 大) */}
         <h3
-          className={`font-shippori text-white ${item.size === "2x2" ? "text-base md:text-lg" : "text-sm"}`}
-          style={{ fontWeight: 700 }}
+          className="font-shippori text-white leading-[1.15] tracking-[0.02em]"
+          style={{
+            fontWeight: 900,
+            fontSize:
+              item.size === "2x2"
+                ? "clamp(22px, 2.4vw, 34px)"
+                : item.size === "2x1"
+                  ? "clamp(18px, 1.8vw, 24px)"
+                  : "clamp(16px, 1.4vw, 20px)",
+          }}
         >
           {item.category}
         </h3>
+        {/* ブランド名はサブ(Inter 小・tracking大) */}
+        <p className="font-inter text-white/80 text-[10px] md:text-[11px] tracking-[0.22em] uppercase mt-2 font-bold">
+          {item.brand}
+        </p>
       </div>
     </div>
   );
@@ -270,32 +280,42 @@ function SNumberTile({ tile }: { tile: NumberTile }) {
 // 時間軸ラベル
 // ────────────────────────────────────────────────
 
-function TimeAxisLabel({
+function ChapterHeading({
   step,
-  label,
+  title,
+  caption,
 }: {
   step: string;
-  label: string;
+  title: string;
+  caption: string;
 }) {
   return (
-    <div className="col-span-2 sm:col-span-4 lg:col-span-8 flex items-baseline gap-5 mt-10 md:mt-14 mb-3">
-      <span
-        className="font-oswald text-text-primary/80 leading-none"
+    <div className="col-span-2 sm:col-span-4 lg:col-span-8 mt-16 md:mt-24 mb-6 md:mb-8">
+      <div className="flex items-baseline gap-5 mb-4 md:mb-5">
+        <span
+          className="font-oswald text-text-primary leading-none tabular-nums"
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(36px, 4vw, 60px)",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {step}
+        </span>
+        <span className="flex-1 h-px bg-text-primary/15" />
+      </div>
+      <h3
+        className="font-shippori text-text-primary leading-[1.2] tracking-[-0.01em]"
         style={{
-          fontWeight: 300,
-          fontSize: "clamp(28px, 3vw, 44px)",
-          letterSpacing: "-0.02em",
+          fontWeight: 900,
+          fontSize: "clamp(28px, 4vw, 52px)",
         }}
       >
-        {step}
-      </span>
-      <span className="flex-1 h-px bg-text-primary/15" />
-      <span
-        className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
-        style={{ fontWeight: 500 }}
-      >
-        {label}
-      </span>
+        {title}
+      </h3>
+      <p className="mt-3 md:mt-4 font-shippori text-text-primary/75 text-[clamp(14px,1.1vw,17px)] leading-[1.9] max-w-[44rem]">
+        {caption}
+      </p>
     </div>
   );
 }
@@ -348,10 +368,44 @@ export default function StandardAndQualitySection() {
           </aside>
         </div>
 
+        {/* ============= BLEED PHOTO 21:9 — "中身"のビジュアル証明 ============= */}
+        <div className="relative w-full aspect-[21/9] overflow-hidden bg-text-primary mb-10 md:mb-14 -mx-[var(--page-px)] md:mx-0">
+          <Image
+            src="/images/newsozai/interior-kitchen-01.webp"
+            alt="標準で揃うキッチン"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            style={{ filter: "saturate(0.9) contrast(1.02) brightness(0.95)" }}
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"
+          />
+          <div className="absolute inset-x-0 bottom-0 px-6 md:px-10 lg:px-14 pb-8 md:pb-12 lg:pb-16 pointer-events-none">
+            <p
+              className="font-shippori text-white leading-[1.25] tracking-[-0.01em] max-w-[720px]"
+              style={{
+                fontWeight: 900,
+                fontSize: "clamp(26px, 3.6vw, 52px)",
+                textShadow: "0 3px 18px rgba(0,0,0,0.45)",
+              }}
+            >
+              大手で<span style={{ color: "var(--color-lime)" }}>オプション</span>になるものが、
+              <br />
+              やまとでは標準です。
+            </p>
+          </div>
+        </div>
+
         {/* タイルグリッド（時間軸ラベルで区切るためdense packingは使わない） */}
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4">
           {/* 時間軸① 建てるとき */}
-          <TimeAxisLabel step="01" label="建てるとき。" />
+          <ChapterHeading
+            step="01"
+            title="建てる、その瞬間から。"
+            caption="標準で揃う、12の素材。大手でオプションになるものも、やまとでは追加費用なしで入ります。"
+          />
           {STANDARDS.map((item, idx) => (
             <SImageTile key={item.category} item={item} priority={idx === 0} />
           ))}
@@ -362,13 +416,21 @@ export default function StandardAndQualitySection() {
           </p>
 
           {/* 時間軸② 住み始めてから */}
-          <TimeAxisLabel step="02" label="住み始めてから。" />
+          <ChapterHeading
+            step="02"
+            title="住み始めて、気付く差。"
+            caption="塗布量は、推奨の1.2倍。自社施工、100%。外壁の節目は、10年。"
+          />
           {QUALITY_TILES.map((tile) => (
             <SNumberTile key={tile.title} tile={tile} />
           ))}
 
           {/* 時間軸③ 10年後・その先 */}
-          <TimeAxisLabel step="03" label="10年後、その先。" />
+          <ChapterHeading
+            step="03"
+            title="10年後、その先まで。"
+            caption="建物瑕疵担保10年、地盤20年、しろあり10年。電話一本で、担当者が伺います。"
+          />
 
           {/* 瑕疵担保（大タイル 4x2） */}
           <SNumberTile tile={HAKKI_TILE} />
