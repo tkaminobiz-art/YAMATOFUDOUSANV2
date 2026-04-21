@@ -198,9 +198,9 @@ export default function FreedomOfDesign() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              設計は、自由。
+              設計は、
               <br />
-              土地の条件の中で。
+              自由。
             </h2>
           </div>
           <aside className="lg:pt-4">
