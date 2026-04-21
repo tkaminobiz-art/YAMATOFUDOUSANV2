@@ -184,7 +184,18 @@ export default function ZeroDeclaration() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              八つの、ゼロ。
+              <span
+                className="font-oswald"
+                style={{
+                  fontWeight: 300,
+                  letterSpacing: "-0.04em",
+                  color: "#A2C523",
+                  marginRight: "0.08em",
+                }}
+              >
+                8
+              </span>
+              つのゼロ
             </h2>
           </div>
 
