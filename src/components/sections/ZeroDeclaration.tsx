@@ -27,6 +27,84 @@ type Zero = {
   phase: "Before" | "During" | "After";
 };
 
+/*
+  カード色の交互パターン(2026-04-21 ユーザー要望):
+  - 奇数(01,03,05,07): bg-white + LIME番号(現状)
+  - 偶数(02,04,06,08): bg-LIME + forest-green テキスト
+    (forest green = --color-main-dark #2E4600 / ブランドパレット自然系4色の1つ)
+  LIMEのコントラスト確保で白文字ではなく深緑を採用。
+*/
+const LIME = "#A2C523";
+const FOREST = "#2E4600";
+
+function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
+  const isLime = index % 2 === 1;
+
+  return (
+    <article
+      className={`group relative flex flex-col p-6 md:p-7 min-h-[280px] md:min-h-[300px] border transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
+        isLime
+          ? "bg-[#A2C523] border-[#2E4600]/15 hover:border-[#2E4600]/45 hover:shadow-[0_24px_48px_-24px_rgba(46,70,0,0.35)]"
+          : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
+      }`}
+    >
+      {/* ¥0 バッジ */}
+      <span
+        className={`font-inter absolute top-5 right-5 md:top-6 md:right-6 text-[10px] tracking-[0.22em] font-bold px-2 py-[3px] border ${
+          isLime
+            ? "text-[#2E4600] border-[#2E4600]/30 bg-white/25"
+            : "text-text-primary border-text-primary/20"
+        }`}
+      >
+        ¥0
+      </span>
+
+      {/* 番号 — 奇数: LIME / 偶数: forest green */}
+      <span
+        className="font-oswald leading-[0.85] transition-colors duration-500 tabular-nums"
+        style={{
+          fontWeight: 300,
+          fontSize: "clamp(56px, 6vw, 96px)",
+          letterSpacing: "-0.02em",
+          color: isLime ? `${FOREST}40` : `${LIME}8C`,
+        }}
+      >
+        {zero.num}
+      </span>
+
+      {/* 時期タグ */}
+      <p
+        className={`font-inter text-[10px] tracking-[0.28em] uppercase font-bold mt-auto pt-6 md:pt-8 ${
+          isLime ? "text-[#2E4600]/70" : "text-text-secondary"
+        }`}
+      >
+        {zero.phase}
+      </p>
+
+      {/* 項目名 */}
+      <h3
+        className="font-shippori leading-[1.3] tracking-[0.01em] mt-3"
+        style={{
+          fontWeight: 700,
+          fontSize: "clamp(18px, 1.6vw, 24px)",
+          color: isLime ? FOREST : undefined,
+        }}
+      >
+        {zero.title}
+      </h3>
+
+      {/* 1行説明 */}
+      <p
+        className={`font-shippori text-[clamp(13px,1vw,15px)] leading-[2.0] mt-3 ${
+          isLime ? "text-[#2E4600]/85" : "text-text-primary/70"
+        }`}
+      >
+        {zero.desc}
+      </p>
+    </article>
+  );
+}
+
 const ZEROS: readonly Zero[] = [
   {
     num: "01",
@@ -120,52 +198,10 @@ export default function ZeroDeclaration() {
           </aside>
         </div>
 
-        {/* ================= 8 タイル ================= */}
+        {/* ================= 8 タイル(白 × LIME 交互) ================= */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {ZEROS.map((z) => (
-            <article
-              key={z.num}
-              className="group relative flex flex-col bg-white border border-text-primary/10 p-6 md:p-7 min-h-[280px] md:min-h-[300px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
-            >
-              {/* ¥0 バッジ — 右上に控えめに */}
-              <span className="font-inter absolute top-5 right-5 md:top-6 md:right-6 text-[10px] tracking-[0.22em] font-bold text-text-primary border border-text-primary/20 px-2 py-[3px]">
-                ¥0
-              </span>
-
-              {/* 番号 — Oswald Light × LIME(ゼロというテーマの主役色)
-                  通常 /55 の落ち着き、ホバーで /85 に濃くなる触覚的反応 */}
-              <span
-                className="font-oswald leading-[0.85] transition-colors duration-500 text-[#A2C523]/55 group-hover:text-[#A2C523]/90"
-                style={{
-                  fontWeight: 300,
-                  fontSize: "clamp(56px, 6vw, 96px)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                {z.num}
-              </span>
-
-              {/* 時期タグ — 大小の比を作るため上マージン大きめ */}
-              <p className="font-inter text-[10px] tracking-[0.28em] uppercase text-text-secondary font-bold mt-auto pt-6 md:pt-8">
-                {z.phase}
-              </p>
-
-              {/* 項目名 — Shippori Bold で視線のピーク */}
-              <h3
-                className="font-shippori text-text-primary leading-[1.3] tracking-[0.01em] mt-3"
-                style={{
-                  fontWeight: 700,
-                  fontSize: "clamp(18px, 1.6vw, 24px)",
-                }}
-              >
-                {z.title}
-              </h3>
-
-              {/* 1行説明 — 2.0行間で編集誌的に */}
-              <p className="font-shippori text-text-primary/70 text-[clamp(13px,1vw,15px)] leading-[2.0] mt-3">
-                {z.desc}
-              </p>
-            </article>
+          {ZEROS.map((z, i) => (
+            <ZeroCard key={z.num} zero={z} index={i} />
           ))}
         </div>
 
