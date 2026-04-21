@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
@@ -143,7 +144,29 @@ export default function PriceSection() {
       id="product"
       className="relative scroll-mt-20 overflow-hidden bg-[#FAF8F3] text-text-primary py-[var(--section-py)] md:scroll-mt-24"
     >
-      <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+      {/* ========== 背景画像レイヤー ==========
+          外観テラス(exterior-terrace-01)を薄く透かして「紙の下で写真が呼吸する」誌面感。
+          - 画像 opacity 0.22 + 編集誌フィルター(低彩度/低コントラスト/微セピア)
+          - 暖白オーバーレイ /55 で本文視認性を確保
+          - 上下グラデ(中央透明→端 /40)で本文域を優先
+          - カード(bg-white)は画像を完全に隠す → カード間のgap と余白に写真がうっすら透ける */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <Image
+          src="/images/newsozai/exterior-terrace-01.webp"
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+          style={{
+            opacity: 0.22,
+            filter: "saturate(0.82) contrast(0.98) sepia(0.08) brightness(1.06)",
+          }}
+        />
+        <div className="absolute inset-0 bg-[#FAF8F3]/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F3]/40 via-transparent to-[#FAF8F3]/55" />
+      </div>
+
+      <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ================= HEADER (非対称) ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
           {/* Left: 看板 */}
