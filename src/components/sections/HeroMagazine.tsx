@@ -14,10 +14,11 @@ export { FONT_VARIANTS, BODY_VARIANTS };
 export type { HeroFontVariant, HeroBodyVariant };
 
 /*
-  HeroMagazine v4 — 2026-04-20
-  - 「標準になる」を #A9D159 (lime green) で着色
-  - bodyVariant 追加: 数字+日本語小テキストのフォント切替可能
-  - 装飾ゼロ・サブ行強調(68/64) は v3 から継続
+  HeroMagazine v5 — 2026-04-21
+  - 主見出しを事実の核へ: 「同じ素材、同じ性能。」→「家そのものの、価格。」
+    (design-critic 指摘#2: 詩的抽象→事実直撃)
+  - 主見出しからLIME除去(design-critic 指摘#3: アクセント節約)
+  - 縦組「花鳥風月の家」のLIMEのみ残す(ブランドマーク1箇所)
 */
 
 type SlideCategory = "exterior" | "interior";
@@ -145,7 +146,7 @@ export default function HeroMagazine({
                 lineHeight: 1.15,
               }}
             >
-              {/* PC: 1行 / SP: 2行 (br className="md:hidden" で切替) */}
+              {/* PC: 1行 / SP: 2行 */}
               <span
                 className="block text-white/90 md:whitespace-nowrap"
                 style={{
@@ -154,10 +155,10 @@ export default function HeroMagazine({
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
                 }}
               >
-                諦めたもの、<br className="md:hidden" />そのすべてが、
+                同じ素材、<br className="md:hidden" />同じ性能。
               </span>
               <span
-                className="block text-white"
+                className="block text-white md:whitespace-nowrap"
                 style={{
                   fontSize: "clamp(56px, 9.5vw, 128px)",
                   fontWeight: variant.weightBigLine,
@@ -165,8 +166,7 @@ export default function HeroMagazine({
                   marginTop: "0.12em",
                 }}
               >
-                <span style={{ color: ACCENT_LIME }}>標準になる</span>
-                <span>家。</span>
+                家そのものの、<br className="md:hidden" />価格。
               </span>
             </h1>
 
@@ -302,11 +302,7 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 縦組キャプション(v10: サイズ大幅UP + ACCENT_LIME 着色)
-            - サイズ 13-15px → 38-42px (約3倍)
-            - 色: 白 → ACCENT_LIME (#A9D159) で「標準になる」と視覚的に呼応
-            - tracking 0.22em → 0.12em (大型化に伴い詰める)
-            - ルール線も h-14 → h-20 にスケール */}
+        {/* 縦組キャプション — ブランドマーク(ページ内LIME唯一の装飾色) */}
         <aside
           aria-hidden="false"
           className="hidden md:flex absolute left-6 lg:left-12 top-[42%] -translate-y-1/2 z-20 flex-col items-center gap-5"

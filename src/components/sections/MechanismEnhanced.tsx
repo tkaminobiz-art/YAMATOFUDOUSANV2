@@ -4,23 +4,19 @@ import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
-  MechanismEnhanced — Plan B 用(ASAGIRI / C-2 Magazine Editorial 適用版)
+  MechanismEnhanced — 価格メカニズム
   -----------------------------------------------------------------
-  ASAGIRI 9原則の適用:
-  1. 非対称構造 (1.4fr:1fr / 1.3fr:1fr)
-  2. 階層: 看板タイトル「家は、原価が九割。」
-  3. 呼応: ACCENT_LIME #A2C523 を 7+箇所に分散
-  4. 写真統合: 21:9 ブリード / 4:5 sidecar / 16:10 detail / トーン統一フィルター
-  5. 密疎リズム: opening疎 → manifesto密 → closing疎
-  6. 間の能動性: ブリード・ハング・オーバーレイ
-  7. 位置ローテーション: 写真位置を交互(L→R)
-  8. キャンバス単位配置: 12列構造
-  9. サイドカー禁止: 右列は stretch分散(photo+data+notes)
+  2026-04-21 design-critic 指摘 #1 反映:
+  - 「雑誌ごっこ」(ISSUE/MECHANISM kicker/Yamato Editorial/Founder's Note/
+     END OF MECHANISM/◉記号) を全削除
+  - 残すのは版面(21:9ブリード/非対称グリッド/pull quote/sidecar)のみ
+  - ACCENT_LIME は主見出し1ワード × 4 + 金額(-1,720) の 5箇所に制限
 
-  ルールセット適用:
-  - B(テキスト幅): standard / drop cap / hang quote / margin notes
-  - C(改行リズム): 意味改行 + orphan 排除
-  - D(キャプション): 写真overlay / margin notes / sidecar内
+  構造:
+  1. 非対称グリッド (1.4fr:1fr / 1.3fr:1fr)
+  2. 写真統合: 21:9 ブリード / 4:5 sidecar / 16:10 detail
+  3. 密疎リズム: opening疎 → manifesto密 → closing疎
+  4. サイドカー: photo + data + notes の stretch分散
 */
 
 const ACCENT_LIME = "#A2C523";
@@ -51,23 +47,6 @@ export default function MechanismEnhanced() {
       ref={ref}
       className="relative overflow-hidden bg-[#FAF8F3] text-text-primary scroll-in"
     >
-      {/* ============= TOP RUNNING HEAD ============= */}
-      <div className="px-[var(--page-px)] pt-12 md:pt-16 pb-6 max-w-[1400px] mx-auto">
-        <div
-          className="flex justify-between items-baseline text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-text-secondary"
-          style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-        >
-          <span>
-            ISSUE <span style={{ color: ACCENT_LIME }}>014</span>
-            <span className="mx-3 text-text-secondary/40">/</span>
-            NARA
-          </span>
-          <span>
-            MECHANISM <span style={{ color: ACCENT_LIME }}>01</span>
-          </span>
-        </div>
-      </div>
-
       {/* ============= OPENING — 21:9 BLEED PHOTO ============= */}
       <div className="relative w-full aspect-[21/9] overflow-hidden bg-text-primary">
         <Image
@@ -79,29 +58,6 @@ export default function MechanismEnhanced() {
           style={{ filter: `${PHOTO_FILTER} brightness(0.85)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/40 pointer-events-none" />
-
-        {/* Bottom overlay */}
-        <div className="absolute inset-x-0 bottom-0 px-[var(--page-px)] pb-8 md:pb-12 pointer-events-none">
-          <div className="max-w-[1400px] mx-auto flex justify-between items-end gap-6">
-            {/* Kicker (左下) */}
-            <p
-              className="text-[#F5F0E6]/90 text-[10px] md:text-[11px] font-black tracking-[0.32em] uppercase flex items-center gap-3"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              MECHANISM
-              <span aria-hidden className="inline-block w-12 h-[1.5px] bg-[#F5F0E6]/80" />
-            </p>
-            {/* Byline (右下) */}
-            <p
-              className="text-[#F5F0E6]/70 text-[10px] md:text-[11px] tracking-[0.18em] text-right leading-[1.8]"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              YAMATO FUDOSAN
-              <br />
-              EST. 2011 / NARA
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* ============= OPENING BODY — Asymmetric ============= */}
@@ -121,26 +77,11 @@ export default function MechanismEnhanced() {
               <br />
               いいえ、違います。
             </h2>
-            <p
-              className="mt-6 md:mt-10 text-text-secondary text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              WHY YAMATO PRICE — 安いのではなく、家そのものの価格
-            </p>
           </div>
 
           {/* Right: LEAD with top border */}
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
-              <p
-                className="text-[10px] tracking-[0.28em] font-black uppercase mb-4"
-                style={{
-                  color: ACCENT_LIME,
-                  fontFamily: "var(--font-inter), Inter, sans-serif",
-                }}
-              >
-                LEAD
-              </p>
               <p
                 className="text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
                 style={{
@@ -161,15 +102,6 @@ export default function MechanismEnhanced() {
                 <br />
                 届けるまでの費用です。
               </p>
-
-              {/* brand mark */}
-              <p
-                className="mt-10 text-[11px] tracking-[0.22em] uppercase font-bold text-text-secondary flex items-center gap-3"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                <span aria-hidden style={{ color: ACCENT_LIME }}>◉</span>
-                Yamato Editorial
-              </p>
             </div>
           </aside>
         </div>
@@ -180,19 +112,6 @@ export default function MechanismEnhanced() {
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-24 items-stretch">
           {/* === LEFT: Article === */}
           <div>
-            {/* Section label */}
-            <p
-              className="font-black uppercase text-[11px] tracking-[0.32em] mb-6 md:mb-10 inline-flex items-center gap-3"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              <span
-                aria-hidden
-                className="inline-block w-9 h-[2.5px]"
-                style={{ background: ACCENT_LIME }}
-              />
-              MECHANISM <span style={{ color: ACCENT_LIME }}>·</span> なぜ価格が違うのか
-            </p>
-
             {/* Manifesto title */}
             <h3
               className="text-text-primary leading-[1.18] tracking-[-0.01em] mb-12 md:mb-16"
@@ -219,9 +138,8 @@ export default function MechanismEnhanced() {
               >
                 広告費、展示場の維持費、仲介マージン。これら家を届けるまでの費用が、見積もりの三割から四割を占める会社もあります
                 <sup
-                  className="text-[0.7em] align-super font-black inline-block mx-0.5"
+                  className="text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary"
                   style={{
-                    color: ACCENT_LIME,
                     fontFamily: "var(--font-inter), Inter, sans-serif",
                   }}
                 >
@@ -236,9 +154,8 @@ export default function MechanismEnhanced() {
               >
                 やまとは、専用の展示場を持ちません
                 <sup
-                  className="text-[0.7em] align-super font-black inline-block mx-0.5"
+                  className="text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary"
                   style={{
-                    color: ACCENT_LIME,
                     fontFamily: "var(--font-inter), Inter, sans-serif",
                   }}
                 >
@@ -260,12 +177,10 @@ export default function MechanismEnhanced() {
               >
                 <span
                   aria-hidden
-                  className="absolute left-1 top-2 leading-none font-black select-none pointer-events-none"
+                  className="absolute left-1 top-2 leading-none font-black select-none pointer-events-none text-text-primary/20"
                   style={{
-                    color: ACCENT_LIME,
                     fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
                     fontSize: "clamp(72px, 9vw, 120px)",
-                    opacity: 0.85,
                   }}
                 >
                   『
@@ -282,12 +197,6 @@ export default function MechanismEnhanced() {
                   <br />
                   それだけなんです。
                 </blockquote>
-                <p
-                  className="mt-4 pl-14 md:pl-20 text-[10px] md:text-[11px] tracking-[0.24em] uppercase font-medium text-text-secondary"
-                  style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-                >
-                  <span style={{ color: ACCENT_LIME }}>—</span> Yamato Founder's Note
-                </p>
               </aside>
 
               <p
@@ -296,9 +205,8 @@ export default function MechanismEnhanced() {
               >
                 だから、同じ素材・同じ性能でも、価格は違って見えます
                 <sup
-                  className="text-[0.7em] align-super font-black inline-block mx-0.5"
+                  className="text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary"
                   style={{
-                    color: ACCENT_LIME,
                     fontFamily: "var(--font-inter), Inter, sans-serif",
                   }}
                 >
@@ -325,7 +233,7 @@ export default function MechanismEnhanced() {
                 className="absolute left-0 bottom-0 max-w-[75%] px-4 py-3 bg-[#FAF8F3] border-t border-r border-text-primary text-[10px] tracking-[0.16em] uppercase text-text-secondary font-medium"
                 style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
               >
-                現場の素材ひとつ、<span style={{ color: ACCENT_LIME }}>削らない</span>
+                現場の素材ひとつ、削らない
               </figcaption>
             </figure>
 
@@ -335,13 +243,12 @@ export default function MechanismEnhanced() {
               style={{ border: "1.5px solid #1A1411" }}
             >
               <p
-                className="text-[10px] tracking-[0.28em] uppercase font-black mb-4 pb-3 border-b border-[#CFC5B5]"
+                className="text-[10px] tracking-[0.28em] uppercase font-black mb-4 pb-3 border-b border-[#CFC5B5] text-text-secondary"
                 style={{
-                  color: ACCENT_LIME,
                   fontFamily: "var(--font-inter), Inter, sans-serif",
                 }}
               >
-                PRICE DIFFERENCE — 大手との差
+                大手との差
               </p>
               <dl
                 className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-3 text-sm tabular-nums"
@@ -400,8 +307,7 @@ export default function MechanismEnhanced() {
               <div className="pl-6 relative">
                 <span
                   aria-hidden
-                  className="absolute left-0 top-0.5 text-[11px] font-black"
-                  style={{ color: ACCENT_LIME }}
+                  className="absolute left-0 top-0.5 text-[11px] font-bold text-text-secondary"
                 >
                   ※1
                 </span>
@@ -410,8 +316,7 @@ export default function MechanismEnhanced() {
               <div className="pl-6 relative">
                 <span
                   aria-hidden
-                  className="absolute left-0 top-0.5 text-[11px] font-black"
-                  style={{ color: ACCENT_LIME }}
+                  className="absolute left-0 top-0.5 text-[11px] font-bold text-text-secondary"
                 >
                   ※2
                 </span>
@@ -420,8 +325,7 @@ export default function MechanismEnhanced() {
               <div className="pl-6 relative">
                 <span
                   aria-hidden
-                  className="absolute left-0 top-0.5 text-[11px] font-black"
-                  style={{ color: ACCENT_LIME }}
+                  className="absolute left-0 top-0.5 text-[11px] font-bold text-text-secondary"
                 >
                   ※3
                 </span>
@@ -469,7 +373,7 @@ export default function MechanismEnhanced() {
                 fontWeight: 500,
               }}
             >
-              <span style={{ color: ACCENT_LIME }}>当たり前</span>を、
+              当たり前を、
               <br className="hidden md:inline" />
               きちんとやっているだけです。
             </p>
@@ -484,13 +388,6 @@ export default function MechanismEnhanced() {
               それが、お客様のためになると、
               <br className="hidden md:inline" />
               私たちは確信しています。
-            </p>
-            <p
-              className="mt-8 md:mt-12 text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-bold text-text-secondary flex items-center gap-3"
-              style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-            >
-              <span aria-hidden style={{ color: ACCENT_LIME }}>◉</span>
-              END OF MECHANISM
             </p>
           </div>
         </div>
