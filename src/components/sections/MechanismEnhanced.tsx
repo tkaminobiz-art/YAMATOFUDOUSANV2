@@ -290,7 +290,9 @@ export default function MechanismEnhanced() {
             />
           </figure>
 
-          {/* Big closing statement (right) */}
+          {/* Big closing statement (right) — 大宣言のみ。
+              pull quote「削るのではなく、含めない。」で既に結論は出ているので、
+              念押し2段(「当たり前を〜」「私たちは確信しています」) は削除。 */}
           <div className="col-span-12 md:col-span-7 md:pl-8">
             <p
               className="font-shippori text-[clamp(26px,4.5vw,64px)] leading-[1.35] tracking-[-0.01em] text-text-primary"
@@ -300,18 +302,6 @@ export default function MechanismEnhanced() {
               <br />
               <span style={{ color: ACCENT_LIME }}>費用しか</span>、<br />
               やまとはいただきません。
-            </p>
-            {/* (サブ) 当たり前を、きちんとやっているだけです */}
-            <p className="font-shippori font-medium mt-5 md:mt-7 text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.8] max-w-[520px]">
-              当たり前を、
-              <br className="hidden md:inline" />
-              きちんとやっているだけです。
-            </p>
-            {/* (最後) 確信しています */}
-            <p className="font-shippori mt-4 md:mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]">
-              それが、お客様のためになると、
-              <br className="hidden md:inline" />
-              私たちは確信しています。
             </p>
           </div>
         </div>
