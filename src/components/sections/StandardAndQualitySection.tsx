@@ -213,46 +213,65 @@ function SImageTile({
 // N-Tile（数字タイル）
 // ────────────────────────────────────────────────
 
-function SNumberTile({ tile }: { tile: NumberTile }) {
+function SNumberTile({ tile, isLime = false }: { tile: NumberTile; isLime?: boolean }) {
   const isLarge = tile.size === "4x2";
   const Icon = tile.icon;
 
   return (
     <div
-      className={`scroll-in group relative flex flex-col justify-between overflow-hidden border border-text-primary/10 bg-white p-5 md:p-6 transition-[border-color,box-shadow] duration-500 hover:border-text-primary/25 hover:shadow-[0_20px_44px_-24px_rgba(0,0,0,0.12)] ${NUMBER_TILE_SPAN[tile.size]}`}
+      className={`scroll-in group relative flex flex-col justify-between overflow-hidden border p-5 md:p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
+        isLime
+          ? "bg-[#A2C523] border-[#2E4600]/15 hover:border-[#2E4600]/45 hover:shadow-[0_20px_44px_-24px_rgba(46,70,0,0.3)]"
+          : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_20px_44px_-24px_rgba(0,0,0,0.12)]"
+      } ${NUMBER_TILE_SPAN[tile.size]}`}
     >
       {/* 上段: アイコン or 余白 */}
       <div className="flex items-start justify-between">
         {Icon ? (
           <Icon
-            className={`text-main ${isLarge ? "w-7 h-7" : "w-5 h-5"}`}
+            className={`${isLarge ? "w-7 h-7" : "w-5 h-5"}`}
+            style={{ color: isLime ? "#2E4600" : "var(--color-main)" }}
             strokeWidth={1.4}
           />
         ) : (
           <span />
         )}
         {tile.chip ? (
-          <span className="font-inter text-[10px] md:text-[11px] text-text-secondary tracking-[0.14em]">
+          <span
+            className={`font-inter text-[10px] md:text-[11px] tracking-[0.14em] ${
+              isLime ? "text-[#2E4600]/80" : "text-text-secondary"
+            }`}
+          >
             {tile.chip}
           </span>
         ) : null}
       </div>
 
-      {/* 中段: 巨大数字(Oswald Light / Price と統一) */}
+      {/* 中段: 巨大数字(Oswald Light)
+          - 白カード: 数字 LIME(Zero 統一)
+          - LIMEカード: 数字 forest(Zero 統一) */}
       <div className="flex items-baseline gap-1.5 md:gap-2">
         <span
-          className={`font-oswald text-text-primary leading-[0.85] tabular-nums ${
+          className={`font-oswald leading-[0.85] tabular-nums ${
             isLarge
               ? "text-[clamp(72px,10vw,140px)]"
               : "text-[clamp(48px,6vw,88px)]"
           }`}
-          style={{ fontWeight: 300, letterSpacing: "-0.02em" }}
+          style={{
+            fontWeight: 300,
+            letterSpacing: "-0.02em",
+            color: isLime ? "rgba(46,70,0,0.45)" : "rgba(162,197,35,0.7)",
+          }}
         >
           {tile.num}
         </span>
         <span
-          className={`font-shippori text-text-primary/75 ${isLarge ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}
-          style={{ fontWeight: 500 }}
+          className={`font-shippori ${isLarge ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}
+          style={{
+            fontWeight: 500,
+            color: isLime ? "#2E4600" : undefined,
+            opacity: isLime ? 0.8 : undefined,
+          }}
         >
           {tile.unit}
         </span>
@@ -261,13 +280,18 @@ function SNumberTile({ tile }: { tile: NumberTile }) {
       {/* 下段: 項目名と説明 */}
       <div>
         <h3
-          className={`font-shippori text-text-primary ${isLarge ? "text-lg md:text-xl" : "text-sm md:text-base"}`}
-          style={{ fontWeight: 700 }}
+          className={`font-shippori ${isLarge ? "text-lg md:text-xl" : "text-sm md:text-base"}`}
+          style={{
+            fontWeight: 700,
+            color: isLime ? "#2E4600" : undefined,
+          }}
         >
           {tile.title}
         </h3>
         <p
-          className={`font-shippori mt-1.5 text-text-primary/70 leading-[1.85] ${isLarge ? "text-sm md:text-base" : "text-[12px] md:text-[13px]"}`}
+          className={`font-shippori mt-1.5 leading-[1.85] ${isLarge ? "text-sm md:text-base" : "text-[12px] md:text-[13px]"} ${
+            isLime ? "text-[#2E4600]/85" : "text-text-primary/70"
+          }`}
         >
           {tile.desc}
         </p>
@@ -415,29 +439,40 @@ export default function StandardAndQualitySection() {
             ※ 花モデル（2,480万円）の標準仕様です。風・京は一部異なります。
           </p>
 
-          {/* 時間軸② 住み始めてから */}
+          {/* 時間軸② 住み始めてから (チェス盤: 白-LIME-白) */}
           <ChapterHeading
             step="02"
             title="住み始めて、気付く差。"
             caption="塗布量は、推奨の1.2倍。自社施工、100%。外壁の節目は、10年。"
           />
-          {QUALITY_TILES.map((tile) => (
-            <SNumberTile key={tile.title} tile={tile} />
+          {QUALITY_TILES.map((tile, i) => (
+            <SNumberTile
+              key={tile.title}
+              tile={tile}
+              isLime={i % 2 === 1}
+            />
           ))}
 
-          {/* 時間軸③ 10年後・その先 */}
+          {/* 時間軸③ 10年後・その先 (チェス盤:
+              HAKKI(大)=LIME 主役、周囲W1-W4でチェス盤
+              Row1: [HAKKI LIME][W1 白][W2 LIME]
+              Row2: [HAKKI LIME][W3 LIME][W4 白]) */}
           <ChapterHeading
             step="03"
             title="10年後、その先まで。"
             caption="建物瑕疵担保10年、地盤20年、しろあり10年。電話一本で、担当者が伺います。"
           />
 
-          {/* 瑕疵担保（大タイル 4x2） */}
-          <SNumberTile tile={HAKKI_TILE} />
+          {/* 瑕疵担保（大タイル 4x2 / LIME 主役） */}
+          <SNumberTile tile={HAKKI_TILE} isLime />
 
-          {/* 保証4タイル */}
-          {WARRANTY_TILES.map((tile) => (
-            <SNumberTile key={tile.title} tile={tile} />
+          {/* 保証4タイル: W1=白, W2=LIME, W3=LIME, W4=白 */}
+          {WARRANTY_TILES.map((tile, i) => (
+            <SNumberTile
+              key={tile.title}
+              tile={tile}
+              isLime={i === 1 || i === 2}
+            />
           ))}
 
           {/* 注記（保証） */}
