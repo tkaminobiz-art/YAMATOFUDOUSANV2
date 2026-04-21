@@ -48,13 +48,18 @@ function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
           : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
       }`}
     >
-      {/* ¥0 バッジ */}
+      {/* ¥0 バッジ — ゼロ連呼というテーマの主役級に昇格 */}
       <span
-        className={`font-inter absolute top-5 right-5 md:top-6 md:right-6 text-[10px] tracking-[0.22em] font-bold px-2 py-[3px] border ${
+        className={`font-oswald absolute top-4 right-4 md:top-5 md:right-5 leading-none inline-flex items-center justify-center px-3 py-1.5 md:px-3.5 md:py-2 border-[1.5px] tabular-nums ${
           isLime
-            ? "text-[#2E4600] border-[#2E4600]/30 bg-white/25"
-            : "text-text-primary border-text-primary/20"
+            ? "text-[#2E4600] border-[#2E4600]/40 bg-white/35"
+            : "text-[#A2C523] border-[#A2C523]/55 bg-white"
         }`}
+        style={{
+          fontWeight: 500,
+          fontSize: "clamp(15px, 1.35vw, 19px)",
+          letterSpacing: "-0.01em",
+        }}
       >
         ¥0
       </span>
