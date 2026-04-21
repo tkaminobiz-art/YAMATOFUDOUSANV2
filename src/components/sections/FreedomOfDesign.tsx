@@ -32,7 +32,7 @@ import CtaButton from "@/components/ui/CtaButton";
 const STEPS = [
   {
     num: "01",
-    title: "土地の条件を、設計に落とし込む",
+    title: "土地の条件を、設計に。",
     body: "採光・道路・高低差。条件を先に整理して、「できる形」を一緒に見つけます。",
     image: "/images/design/step-01-meeting.webp",
     alt: "設計士と夫婦が打ち合わせしている様子",
@@ -56,7 +56,7 @@ const STEPS = [
   },
   {
     num: "04",
-    title: "最後は、暮らしの“クセ”まで合わせる",
+    title: "最後は、暮らしの“クセ”まで。",
     body: "コンセントや照明、窓の高さ。日々の動きに合わせて整えます。",
     image: "/images/design/step-04-finished.webp",
     alt: "完成したキッチンとダイニング",
@@ -215,7 +215,7 @@ export default function FreedomOfDesign() {
               className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
               style={{ fontWeight: 500 }}
             >
-              こだわりは、ここまで詰められます。
+              こだわりは、ここまで。
             </span>
           </div>
 

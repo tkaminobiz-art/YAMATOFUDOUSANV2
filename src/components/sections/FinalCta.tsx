@@ -17,7 +17,7 @@ export default function FinalCta() {
         </p>
 
         <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-          まずは、見にいらしてください。
+          まずは、見に来て。
         </h2>
 
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9] max-w-[640px] mx-auto mb-10">
