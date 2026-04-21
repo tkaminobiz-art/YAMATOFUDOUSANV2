@@ -25,10 +25,10 @@ export default function WorksSection() {
                 WORKS
               </p>
               <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-                実際にお建てしたお家を、ご覧ください。
+                建てた、家たち。
               </h2>
               <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-                ここでは代表3件をご紹介します。価格はいずれも、すべて込みで。
+                代表の3件。価格は、すべて込みで。
               </p>
             </div>
             <div
