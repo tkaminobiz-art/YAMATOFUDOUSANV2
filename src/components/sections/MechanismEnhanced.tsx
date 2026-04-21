@@ -37,10 +37,6 @@ const PHOTOS = {
     src: "/images/newsozai/interior-ldk-01.webp",
     alt: "現場の素材ひとつ、削らない",
   },
-  detail: {
-    src: "/images/newsozai/exterior-texture-detail-01.webp",
-    alt: "素材のディテール",
-  },
 } as const;
 
 export default function MechanismEnhanced() {
@@ -273,37 +269,6 @@ export default function MechanismEnhanced() {
         </div>
       </div>
 
-      {/* ============= CLOSING — 12列キャンバス + 大宣言 ============= */}
-      <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-20 md:pt-32 pb-24 md:pb-40">
-        <div className="grid grid-cols-12 gap-4 md:gap-8 items-end">
-          {/* Detail photo (left, smaller) */}
-          <figure className="col-span-12 md:col-span-5 relative aspect-[16/10] overflow-hidden">
-            <Image
-              src={PHOTOS.detail.src}
-              alt="素材のディテール"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 40vw"
-              style={{ filter: PHOTO_FILTER }}
-            />
-          </figure>
-
-          {/* Big closing statement (right) — 大宣言のみ。
-              pull quote「削るのではなく、含めない。」で既に結論は出ているので、
-              念押し2段(「当たり前を〜」「私たちは確信しています」) は削除。 */}
-          <div className="col-span-12 md:col-span-7 md:pl-8">
-            <p
-              className="font-shippori text-[clamp(26px,4.5vw,64px)] leading-[1.35] tracking-[-0.01em] text-text-primary"
-              style={{ fontWeight: 900 }}
-            >
-              家を建てるのに必要な
-              <br />
-              <span style={{ color: ACCENT_LIME }}>費用しか</span>、<br />
-              やまとはいただきません。
-            </p>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
