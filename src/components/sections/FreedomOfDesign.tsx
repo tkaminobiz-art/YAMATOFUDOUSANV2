@@ -5,144 +5,171 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  FreedomOfDesign — 2026-04-21 全面リニューアル(Plan A: Bento 4STEPS)
+  FreedomOfDesign — 2026-04-21 再リニューアル v2
   -----------------------------------------------------------------
-  旧: 246行 / 左 sticky パネル(「このセクションで分かること」3項目) +
-       右 2枚パネル(「進め方」+「実例」) /
-       「HOW WE DESIGN」「進め方」「実例」の3重ラベル /
-       radial-gradient + repeating-linear-gradient 背景
+  v1(40点評価): プロセス語り(4 STEPS 大判)に偏って"自由"の結果が見えない
+                + 暗写真4枚で前セクションのダーク連続を助長
 
-  新: 約160行 / 暖白#FAF8F3 (Mechanism〜Price と連続) /
-       非対称ヘッダー(1.4fr:1fr / border-t-[3px]) /
-       4 STEPS を Bento 3列 × 2行(01 wide + 02 + 03 + 04 wide の対角線) /
-       EXAMPLES 3枚は下部の補助ギャラリー
+  v2: 「プロセス語り → 結果見せ」へ方向転換
+  1. ヘッダー(非対称) — 継承
+  2. 自由度マップ(4軸: 窓/収納/光/素材) — テキストBento新設
+  3. 実例ギャラリー(6枚写真Bento 3×2) — 明るい写真で自由の幅を可視化
+  4. STEPS 圧縮(4行テキスト) — プロセスは簡素に添える
+  5. 注記 + CTA — 継承
 
-  Bento 設計:
-    ┌───────────────┬───────┐
-    │  01  (wide)   │  02   │   01 = 起点(重要)
-    ├───────┬───────┴───────┤   04 = 仕上げ(暮らしのクセ)
-    │  03   │  04  (wide)   │   対角線でリズムを作る
-    └───────┴───────────────┘
-    各カード: 背景写真 + 暗オーバーレイ + 番号(Oswald) + タイトル + 本文
-    aspect 8:3(wide) / 4:3(normal) で両行の高さが揃う
-
-  ユーザー心理: 「画一的じゃなく、自分らしくできる?」への回答
+  VP-6 コピー適用:
+  - 軸の caption は体言止め / 1文40字以内
+  - 実例の caption はミニマル宣言文
 */
 
-const STEPS = [
+const AXES = [
   {
     num: "01",
-    title: "土地の条件を、設計に。",
-    body: "採光・道路・高低差。条件を先に整理して、「できる形」を一緒に見つけます。",
-    image: "/images/design/step-01-meeting.webp",
-    alt: "設計士と夫婦が打ち合わせしている様子",
-    wide: true,
+    title: "窓",
+    degree: "完全自由",
+    body: "大きさ、位置、形。暮らしの景色を、切り取る。",
   },
   {
     num: "02",
-    title: "暮らしの優先順位を、図面に",
-    body: "家事動線、収納、将来の部屋。迷いが減るまで、図面を磨いていきます。",
-    image: "/images/design/step-02-drawing.webp",
-    alt: "手描きの間取り図",
-    wide: false,
+    title: "収納",
+    degree: "完全自由",
+    body: "量も、場所も、暮らしに合わせて。",
   },
   {
     num: "03",
-    title: "実物を見ながら、仕様を決める",
-    body: "外壁、床、キッチン、浴室。写真では分からない差を、体感で揃えます。",
-    image: "/images/design/step-03-modelhouse.webp",
-    alt: "モデルハウスのキッチンとリビング",
-    wide: false,
+    title: "光",
+    degree: "完全自由",
+    body: "自然光の入り方、照明計画。一日を、光で描く。",
   },
   {
     num: "04",
-    title: "最後は、暮らしの“クセ”まで。",
-    body: "コンセントや照明、窓の高さ。日々の動きに合わせて整えます。",
-    image: "/images/design/step-04-finished.webp",
-    alt: "完成したキッチンとダイニング",
-    wide: true,
+    title: "素材",
+    degree: "無垢 / タイル / 塗り壁ほか",
+    body: "手触りから、選ぶ。",
   },
 ] as const;
 
-const EXAMPLES = [
+const GALLERIES = [
   {
-    name: "カフェのような、リビング。",
-    detail: "折下天井＋間接照明",
-    image: "/images/design/example-coveceiling.webp",
+    src: "/images/design/example-coveceiling.webp",
+    alt: "折下天井+間接照明のリビング",
+    tag: "光",
+    caption: "折下天井の、間接照明。",
+    aspect: "aspect-[4/3]",
   },
   {
-    name: "家族の服、全部入る収納。",
-    detail: "大空間収納",
-    image: "/images/design/example-storage.webp",
+    src: "/images/newsozai/interior-window-detail-01.webp",
+    alt: "窓のディテール",
+    tag: "窓",
+    caption: "窓は、景色の切り取り方。",
+    aspect: "aspect-[4/3]",
   },
   {
-    name: "2階に、もうひとつの部屋を。",
-    detail: "バルコニー",
-    image: "/images/design/example-balcony.webp",
+    src: "/images/design/example-storage.webp",
+    alt: "大空間収納",
+    tag: "収納",
+    caption: "家族の服が、全部入る。",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    src: "/images/design/example-balcony.webp",
+    alt: "2階バルコニー",
+    tag: "間取り",
+    caption: "2階に、もうひとつの部屋を。",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    src: "/images/newsozai/interior-ldk-01.webp",
+    alt: "LDK",
+    tag: "LDK",
+    caption: "人が、集まる場所。",
+    aspect: "aspect-[4/3]",
+  },
+  {
+    src: "/images/newsozai/exterior-texture-detail-01.webp",
+    alt: "素材のディテール",
+    tag: "素材",
+    caption: "手触りから、選ぶ。",
+    aspect: "aspect-[4/3]",
   },
 ] as const;
 
-type Step = (typeof STEPS)[number];
+const STEPS = [
+  { num: "01", text: "土地の条件を、整理する。" },
+  { num: "02", text: "優先順位を、決める。" },
+  { num: "03", text: "実物で、確かめる。" },
+  { num: "04", text: "暮らしの“クセ”まで。" },
+] as const;
 
-function StepCard({ step }: { step: Step }) {
-  const isWide = step.wide;
+type Axis = (typeof AXES)[number];
+type Gallery = (typeof GALLERIES)[number];
+
+function AxisCard({ axis }: { axis: Axis }) {
   return (
-    <article
-      className={`group relative overflow-hidden bg-text-primary border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.22)] ${
-        isWide ? "md:col-span-2 aspect-[16/9] md:aspect-[8/3]" : "aspect-[4/3]"
-      }`}
-    >
-      <Image
-        src={step.image}
-        alt={step.alt}
-        fill
-        className="object-cover opacity-80 transition-[transform,opacity] duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-95 group-hover:scale-[1.04]"
-        sizes={
-          isWide
-            ? "(max-width: 768px) 100vw, 66vw"
-            : "(max-width: 768px) 100vw, 33vw"
-        }
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10 pointer-events-none"
-      />
-
-      <div className="relative h-full flex flex-col p-6 md:p-8">
+    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-6 md:p-7 min-h-[220px] md:min-h-[240px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
+      <div className="flex items-baseline gap-3 mb-5">
         <span
-          className="font-oswald text-white/75 leading-[0.85] tabular-nums"
+          className="font-oswald text-text-primary/25 leading-none tabular-nums"
           style={{
             fontWeight: 300,
-            fontSize: isWide ? "clamp(64px,7vw,110px)" : "clamp(48px,5vw,80px)",
+            fontSize: "clamp(32px, 3.2vw, 48px)",
             letterSpacing: "-0.02em",
           }}
         >
-          {step.num}
+          {axis.num}
         </span>
+        <span className="flex-1 h-px bg-text-primary/15" />
+      </div>
 
-        <div className="mt-auto max-w-[42ch]">
-          <h3
-            className="font-shippori text-white leading-[1.3] tracking-[0.01em]"
-            style={{
-              fontWeight: 700,
-              fontSize: isWide
-                ? "clamp(20px,2vw,28px)"
-                : "clamp(16px,1.4vw,20px)",
-            }}
-          >
-            {step.title}
-          </h3>
-          <p
-            className="font-shippori text-white/80 mt-3 leading-[1.85]"
-            style={{
-              fontSize: isWide
-                ? "clamp(14px,1.05vw,16px)"
-                : "clamp(12px,0.9vw,14px)",
-            }}
-          >
-            {step.body}
-          </p>
-        </div>
+      <h3
+        className="font-shippori text-text-primary leading-[1.15] tracking-[-0.01em]"
+        style={{
+          fontWeight: 900,
+          fontSize: "clamp(28px, 3vw, 44px)",
+        }}
+      >
+        {axis.title}
+      </h3>
+
+      <p
+        className="font-inter mt-4 md:mt-5 text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-bold"
+        style={{ color: "#A2C523" }}
+      >
+        {axis.degree}
+      </p>
+
+      <p className="font-shippori mt-auto pt-4 text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.85]">
+        {axis.body}
+      </p>
+    </article>
+  );
+}
+
+function GalleryCard({ gallery }: { gallery: Gallery }) {
+  return (
+    <article className="group relative overflow-hidden bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
+      <div className={`relative ${gallery.aspect} overflow-hidden bg-text-primary/5`}>
+        <Image
+          src={gallery.src}
+          alt={gallery.alt}
+          fill
+          className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+          sizes="(max-width: 640px) 100vw, 33vw"
+        />
+      </div>
+      <div className="p-5 md:p-6">
+        <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold mb-2">
+          {gallery.tag}
+        </p>
+        <p
+          className="font-shippori text-text-primary leading-[1.35]"
+          style={{
+            fontWeight: 700,
+            fontSize: "clamp(15px, 1.1vw, 17px)",
+          }}
+        >
+          {gallery.caption}
+        </p>
       </div>
     </article>
   );
@@ -158,7 +185,7 @@ export default function FreedomOfDesign() {
       className="relative overflow-hidden bg-[#FAF8F3] text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-        {/* ================= HEADER (非対称・Mechanism/Zero/Price/Standard 継承) ================= */}
+        {/* ================= HEADER (非対称) ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
           <div>
             <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
@@ -190,16 +217,9 @@ export default function FreedomOfDesign() {
           </aside>
         </div>
 
-        {/* ================= Bento 4 STEPS ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {STEPS.map((s) => (
-            <StepCard key={s.num} step={s} />
-          ))}
-        </div>
-
-        {/* ================= 実例ギャラリー ================= */}
-        <div className="mt-16 md:mt-24">
-          <div className="flex items-baseline gap-5 mb-6 md:mb-8">
+        {/* ================= 自由度マップ(4軸) ================= */}
+        <div className="mb-6 md:mb-8">
+          <div className="flex items-baseline gap-5">
             <span
               className="font-oswald text-text-primary/80 leading-none"
               style={{
@@ -208,7 +228,36 @@ export default function FreedomOfDesign() {
                 letterSpacing: "-0.02em",
               }}
             >
-              05
+              01
+            </span>
+            <span className="flex-1 h-px bg-text-primary/15" />
+            <span
+              className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
+              style={{ fontWeight: 500 }}
+            >
+              何が、自由になるのか。
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-16 md:mb-24">
+          {AXES.map((axis) => (
+            <AxisCard key={axis.num} axis={axis} />
+          ))}
+        </div>
+
+        {/* ================= 実例ギャラリー ================= */}
+        <div className="mb-6 md:mb-8">
+          <div className="flex items-baseline gap-5">
+            <span
+              className="font-oswald text-text-primary/80 leading-none"
+              style={{
+                fontWeight: 300,
+                fontSize: "clamp(28px, 3vw, 44px)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              02
             </span>
             <span className="flex-1 h-px bg-text-primary/15" />
             <span
@@ -218,37 +267,62 @@ export default function FreedomOfDesign() {
               こだわりは、ここまで。
             </span>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
-            {EXAMPLES.map((ex) => (
-              <article
-                key={ex.name}
-                className="group overflow-hidden bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mb-16 md:mb-24">
+          {GALLERIES.map((g) => (
+            <GalleryCard key={g.src} gallery={g} />
+          ))}
+        </div>
+
+        {/* ================= STEPS 圧縮(4行テキスト) ================= */}
+        <div className="mb-14 md:mb-20">
+          <div className="flex items-baseline gap-5 mb-8 md:mb-10">
+            <span
+              className="font-oswald text-text-primary/80 leading-none"
+              style={{
+                fontWeight: 300,
+                fontSize: "clamp(28px, 3vw, 44px)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              03
+            </span>
+            <span className="flex-1 h-px bg-text-primary/15" />
+            <span
+              className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
+              style={{ fontWeight: 500 }}
+            >
+              4回の打合せで、図面は固まる。
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 md:gap-x-8">
+            {STEPS.map((s) => (
+              <div
+                key={s.num}
+                className="flex items-baseline gap-3 py-3 border-t border-text-primary/15"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-text-primary/5">
-                  <Image
-                    src={ex.image}
-                    alt={ex.name}
-                    fill
-                    className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                  />
-                </div>
-                <div className="p-5 md:p-6">
-                  <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold mb-2">
-                    {ex.detail}
-                  </p>
-                  <p
-                    className="font-shippori text-text-primary leading-[1.45]"
-                    style={{
-                      fontWeight: 700,
-                      fontSize: "clamp(15px, 1.1vw, 17px)",
-                    }}
-                  >
-                    {ex.name}
-                  </p>
-                </div>
-              </article>
+                <span
+                  className="font-oswald text-text-primary/35 leading-none shrink-0 tabular-nums"
+                  style={{
+                    fontWeight: 300,
+                    fontSize: "clamp(20px, 1.6vw, 24px)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {s.num}
+                </span>
+                <p
+                  className="font-shippori text-text-primary leading-[1.5]"
+                  style={{
+                    fontWeight: 500,
+                    fontSize: "clamp(14px, 1.05vw, 16px)",
+                  }}
+                >
+                  {s.text}
+                </p>
+              </div>
             ))}
           </div>
         </div>
