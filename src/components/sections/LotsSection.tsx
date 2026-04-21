@@ -54,9 +54,9 @@ export default function LotsSection() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              まず、土地
+              土地も、
               <br />
-              から。
+              やまとで。
             </h2>
           </div>
 
@@ -167,9 +167,9 @@ export default function LotsSection() {
         {/* ================= 注記 + CTA ================= */}
         <div className="mt-14 md:mt-20 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
           <p className="font-shippori max-w-[44rem] text-[clamp(13px,1vw,15px)] leading-[1.95] text-text-secondary">
-            土地が決まったら、次は「この土地で、どう暮らすか」。
+            土地が決まったら、次は「どう暮らすか」。
             <br />
-            土地と建物をまとめて進められるため、条件次第で余計な金融コストを抑えられることがあります。
+            土地と建物をまとめれば、余計な金融コストも抑えられます。
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end shrink-0">
             <CtaButton
