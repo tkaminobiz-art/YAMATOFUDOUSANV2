@@ -56,7 +56,6 @@ const OTHERS = [
 ] as const;
 
 const PHOTO_FILTER = "saturate(0.92) contrast(1.02) sepia(0.04)";
-const LIME = "#A2C523";
 
 function FeaturedVoiceCard() {
   const voice = getVoice(FEATURED.id);
@@ -106,22 +105,10 @@ function FeaturedVoiceCard() {
           </span>
         </div>
 
-        {/* 大引用符 + ヘッドライン */}
+        {/* ヘッドライン + 引用 */}
         <div className="flex-1">
-          <span
-            aria-hidden
-            className="font-shippori block leading-[0.8] mb-2"
-            style={{
-              fontWeight: 900,
-              fontSize: "clamp(72px, 8vw, 120px)",
-              color: LIME,
-              opacity: 0.7,
-            }}
-          >
-            『
-          </span>
           <h3
-            className="font-shippori text-text-primary leading-[1.25] tracking-[-0.01em] -mt-8 md:-mt-10"
+            className="font-shippori text-text-primary leading-[1.25] tracking-[-0.01em]"
             style={{
               fontWeight: 900,
               fontSize: "clamp(28px, 3.2vw, 48px)",
@@ -133,7 +120,7 @@ function FeaturedVoiceCard() {
           <blockquote
             className="font-shippori mt-6 md:mt-8 text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[36em]"
           >
-            {FEATURED.quote}
+            「{FEATURED.quote}」
           </blockquote>
         </div>
 
@@ -211,7 +198,7 @@ function OtherVoiceCard({
 
         {/* 引用抜粋 */}
         <blockquote className="font-shippori mt-3 text-text-primary/70 text-[clamp(12px,0.95vw,14px)] leading-[1.9] line-clamp-3">
-          {config.quote}
+          「{config.quote}」
         </blockquote>
       </div>
     </Link>
