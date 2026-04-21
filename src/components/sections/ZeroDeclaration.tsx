@@ -28,17 +28,24 @@ type Zero = {
 };
 
 /*
-  カード色の交互パターン(2026-04-21 ユーザー要望):
-  - 奇数(01,03,05,07): bg-white + LIME番号(現状)
-  - 偶数(02,04,06,08): bg-LIME + forest-green テキスト
-    (forest green = --color-main-dark #2E4600 / ブランドパレット自然系4色の1つ)
-  LIMEのコントラスト確保で白文字ではなく深緑を採用。
+  カード色のチェス盤パターン(2026-04-21 更新):
+  PC 4列グリッドで対角線に同色が並ぶよう配置
+  ┌──┬──┬──┬──┐
+  │01白│02🟢│03白│04🟢│  1行目
+  ├──┼──┼──┼──┤
+  │05🟢│06白│07🟢│08白│  2行目(反転)
+  └──┴──┴──┴──┘
+  判定式: (index + Math.floor(index / 4)) % 2 === 1
+  - LIMEカード: bg-LIME + forest-green テキスト
+  - 白カード: bg-white + LIME番号 + 黒テキスト
+  forest green = --color-main-dark #2E4600 (ブランドパレット自然系4色の1つ)
 */
 const LIME = "#A2C523";
 const FOREST = "#2E4600";
 
 function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
-  const isLime = index % 2 === 1;
+  // チェス盤パターン: 4列で1行目→2行目の色が反転
+  const isLime = (index + Math.floor(index / 4)) % 2 === 1;
 
   return (
     <article
