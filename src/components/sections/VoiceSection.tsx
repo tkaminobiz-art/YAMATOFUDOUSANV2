@@ -128,7 +128,7 @@ export default function VoiceSection() {
               50通りの、本当の答え。
             </h2>
             <p className="text-[clamp(15px,1.1vw,17px)] leading-[1.95] text-text-secondary">
-              花鳥風月で家を建てた50組のご家族の、そのままの言葉。装飾も、誇張もありません。ここでは、代表的な3組の声を載せています。
+              花鳥風月で家を建てた50組の、そのままの言葉。装飾も、誇張もありません。代表の3組を、ここに。
             </p>
           </div>
           <div

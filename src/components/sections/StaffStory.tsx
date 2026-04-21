@@ -137,7 +137,7 @@ export default function StaffStory() {
                 className="text-[clamp(20px,2.4vw,28px)] text-text-primary leading-[1.5] font-light"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
-                そして、この二人で会社を背負っています。
+                この二人が、会社を動かしています。
               </h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
@@ -150,9 +150,9 @@ export default function StaffStory() {
           {/* CTA: /staff へ */}
           <div className="mt-14 md:mt-20 text-center">
             <p className="text-text-secondary text-sm md:text-base leading-[1.9] mb-6 max-w-[560px] mx-auto">
-              一人ひとりの、家づくりの考え方・お客様への言葉・信条を
+              一人ひとりの言葉を、
               <br className="hidden md:inline" />
-              紹介ページに綴りました。
+              紹介ページに。
             </p>
             <Link
               href="/staff"

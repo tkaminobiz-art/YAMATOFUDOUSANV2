@@ -31,15 +31,15 @@ export default function MoneyTalkSection() {
           className="text-[clamp(24px,3.2vw,40px)] text-text-primary leading-[1.45] tracking-[0.04em] mb-6 font-light"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          お金の不安は、
+          お金の話、
           <br className="md:hidden" />
-          先に整理しておきませんか。
+          先に。
         </h2>
         <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-[1.95] mb-8 max-w-[640px] mx-auto">
           「払っていけるかな」「ローンは通るかな」。
-          ご相談で確認するのは、月々の支払い・全体像・段取りの3つだけ。
+          確認するのは、月々の支払い・全体像・段取りの3つだけ。
           <br />
-          初回は無料、しつこい営業もいたしません。
+          初回は無料。しつこい営業は、しません。
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">

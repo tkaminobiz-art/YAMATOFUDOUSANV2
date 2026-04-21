@@ -103,10 +103,10 @@ export default function FaqSection() {
           FAQ
         </p>
         <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-          よくあるご質問
+          よくある質問。
         </h2>
         <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
-          よくお寄せいただくご質問に、まとめてお答えします。
+          よくお寄せいただく質問を、まとめて。
         </p>
 
         <div>
