@@ -132,9 +132,10 @@ export default function ZeroDeclaration() {
                 ¥0
               </span>
 
-              {/* 番号 — Oswald Light で主役級に */}
+              {/* 番号 — Oswald Light × LIME(ゼロというテーマの主役色)
+                  通常 /55 の落ち着き、ホバーで /85 に濃くなる触覚的反応 */}
               <span
-                className="font-oswald text-text-primary/25 leading-[0.85] transition-colors duration-500 group-hover:text-text-primary/45"
+                className="font-oswald leading-[0.85] transition-colors duration-500 text-[#A2C523]/55 group-hover:text-[#A2C523]/90"
                 style={{
                   fontWeight: 300,
                   fontSize: "clamp(56px, 6vw, 96px)",
@@ -173,7 +174,7 @@ export default function ZeroDeclaration() {
           <div className="flex items-start gap-4 md:gap-6 pt-8 border-t border-text-primary/15">
             <span
               aria-hidden
-              className="font-oswald text-text-primary/60 shrink-0 leading-none pt-1"
+              className="font-oswald shrink-0 leading-none pt-1 text-[#A2C523]"
               style={{
                 fontWeight: 300,
                 fontSize: "clamp(20px, 1.6vw, 24px)",
