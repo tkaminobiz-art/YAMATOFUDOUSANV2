@@ -173,7 +173,7 @@ function SImageTile({
 }) {
   return (
     <div
-      className={`scroll-in relative group overflow-hidden rounded-lg border border-border bg-bg-primary ${IMAGE_TILE_SPAN[item.size]}`}
+      className={`scroll-in relative group overflow-hidden border border-text-primary/10 bg-white ${IMAGE_TILE_SPAN[item.size]}`}
     >
       <Image
         src={item.image}
@@ -183,14 +183,14 @@ function SImageTile({
         className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
         sizes={IMAGE_SIZES[item.size]}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/10 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
-        <p className="text-white/75 text-[10px] md:text-[11px] tracking-wider mb-0.5">
+        <p className="font-inter text-white/75 text-[10px] md:text-[11px] tracking-[0.18em] mb-1">
           {item.brand}
         </p>
         <h3
-          className={`text-white font-medium ${item.size === "2x2" ? "text-base md:text-lg" : "text-sm"}`}
-          style={{ fontFamily: "var(--font-sans)" }}
+          className={`font-shippori text-white ${item.size === "2x2" ? "text-base md:text-lg" : "text-sm"}`}
+          style={{ fontWeight: 700 }}
         >
           {item.category}
         </h3>
@@ -209,40 +209,40 @@ function SNumberTile({ tile }: { tile: NumberTile }) {
 
   return (
     <div
-      className={`scroll-in relative flex flex-col justify-between overflow-hidden rounded-lg border border-border bg-bg-primary p-5 md:p-6 ${NUMBER_TILE_SPAN[tile.size]}`}
+      className={`scroll-in group relative flex flex-col justify-between overflow-hidden border border-text-primary/10 bg-white p-5 md:p-6 transition-[border-color,box-shadow] duration-500 hover:border-text-primary/25 hover:shadow-[0_20px_44px_-24px_rgba(0,0,0,0.12)] ${NUMBER_TILE_SPAN[tile.size]}`}
     >
       {/* 上段: アイコン or 余白 */}
       <div className="flex items-start justify-between">
         {Icon ? (
           <Icon
             className={`text-main ${isLarge ? "w-7 h-7" : "w-5 h-5"}`}
-            strokeWidth={1.5}
+            strokeWidth={1.4}
           />
         ) : (
           <span />
         )}
         {tile.chip ? (
-          <span className="text-[10px] md:text-[11px] text-text-secondary tracking-wider">
+          <span className="font-inter text-[10px] md:text-[11px] text-text-secondary tracking-[0.14em]">
             {tile.chip}
           </span>
         ) : null}
       </div>
 
-      {/* 中段: 巨大数字 */}
-      <div className="flex items-baseline gap-1 md:gap-2">
+      {/* 中段: 巨大数字(Oswald Light / Price と統一) */}
+      <div className="flex items-baseline gap-1.5 md:gap-2">
         <span
-          className={`text-text-primary font-light leading-none ${
+          className={`font-oswald text-text-primary leading-[0.85] tabular-nums ${
             isLarge
               ? "text-[clamp(72px,10vw,140px)]"
               : "text-[clamp(48px,6vw,88px)]"
           }`}
-          style={{ fontFamily: "var(--font-serif)" }}
+          style={{ fontWeight: 300, letterSpacing: "-0.02em" }}
         >
           {tile.num}
         </span>
         <span
-          className={`text-text-primary font-light ${isLarge ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}
-          style={{ fontFamily: "var(--font-serif)" }}
+          className={`font-shippori text-text-primary/75 ${isLarge ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}
+          style={{ fontWeight: 500 }}
         >
           {tile.unit}
         </span>
@@ -251,13 +251,13 @@ function SNumberTile({ tile }: { tile: NumberTile }) {
       {/* 下段: 項目名と説明 */}
       <div>
         <h3
-          className={`text-text-primary font-medium ${isLarge ? "text-lg md:text-xl" : "text-sm md:text-base"}`}
-          style={{ fontFamily: "var(--font-sans)" }}
+          className={`font-shippori text-text-primary ${isLarge ? "text-lg md:text-xl" : "text-sm md:text-base"}`}
+          style={{ fontWeight: 700 }}
         >
           {tile.title}
         </h3>
         <p
-          className={`mt-1.5 text-text-secondary leading-[1.8] ${isLarge ? "text-sm md:text-base" : "text-[12px] md:text-[13px]"}`}
+          className={`font-shippori mt-1.5 text-text-primary/70 leading-[1.85] ${isLarge ? "text-sm md:text-base" : "text-[12px] md:text-[13px]"}`}
         >
           {tile.desc}
         </p>
@@ -278,17 +278,21 @@ function TimeAxisLabel({
   label: string;
 }) {
   return (
-    <div className="col-span-2 sm:col-span-4 lg:col-span-8 flex items-baseline gap-4 mt-8 md:mt-12 mb-2">
+    <div className="col-span-2 sm:col-span-4 lg:col-span-8 flex items-baseline gap-5 mt-10 md:mt-14 mb-3">
       <span
-        className="text-main font-medium text-xs md:text-sm tracking-[0.3em]"
-        style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+        className="font-oswald text-text-primary/80 leading-none"
+        style={{
+          fontWeight: 300,
+          fontSize: "clamp(28px, 3vw, 44px)",
+          letterSpacing: "-0.02em",
+        }}
       >
         {step}
       </span>
-      <span className="flex-1 h-px bg-border" />
+      <span className="flex-1 h-px bg-text-primary/15" />
       <span
-        className="text-text-primary text-sm md:text-base tracking-[0.08em]"
-        style={{ fontFamily: "var(--font-sans)" }}
+        className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
+        style={{ fontWeight: 500 }}
       >
         {label}
       </span>
@@ -306,58 +310,42 @@ export default function StandardAndQualitySection() {
   return (
     <section
       id="standard-quality"
-      className="relative overflow-hidden bg-bg-secondary py-[var(--section-py)]"
+      className="relative overflow-hidden bg-[#FAF8F3] py-[var(--section-py)]"
     >
-      {/* 背景: 72pxグリッド */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.33]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(43,43,43,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(43,43,43,0.04) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-        }}
-      />
-
       <div
         ref={ref}
         className="relative max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* ヘッダ — 2026-04-20 strong catch 版
-            「品質は?手抜きじゃ?」の疑念を固有名詞で直撃する */}
-        <div className="mb-10 md:mb-14 max-w-[900px]">
-          <p
-            className="font-section-label text-main text-[10px] md:text-[11px] mb-5 tracking-[0.22em]"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-          >
-            WHAT YOU GET — 標準で揃う、実際の名前
-          </p>
-          <h2
-            className="text-text-primary mb-8 leading-[1.15] tracking-[-0.01em]"
-            style={{
-              fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-              fontWeight: 700,
-              fontSize: "clamp(36px, 6vw, 88px)",
-            }}
-          >
-            品質は、大手と
-            <br />
-            <span style={{ color: "var(--color-lime)" }}>同じ素材</span>です。
-          </h2>
-          <p
-            className="text-text-primary text-[clamp(16px,1.2vw,20px)] leading-[1.8] mb-3 max-w-[640px]"
-            style={{
-              fontFamily: "var(--font-shippori), 'Shippori Mincho', serif",
-              fontWeight: 500,
-            }}
-          >
-            旭化成、TOTO、住友ゴム。
-          </p>
-          <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-[1.9] max-w-[640px]">
-            ここに並ぶのは、すべて標準装備です。
-            <br className="hidden md:inline" />
-            他社ではオプションになる素材も、やまとでは追加費用なしで入ります。
-          </p>
+        {/* ================= HEADER (非対称・Mechanism/Zero/Price 継承) ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
+          <div>
+            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
+              What You Get
+            </p>
+            <h2
+              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
+              style={{
+                fontWeight: 900,
+                fontSize: "clamp(44px, 8vw, 120px)",
+              }}
+            >
+              大手と<span style={{ color: "var(--color-lime)" }}>同じ</span>、
+              <br />
+              中身。
+            </h2>
+          </div>
+          <aside className="lg:pt-4">
+            <div className="border-t-[3px] border-text-primary pt-6">
+              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
+                旭化成、TOTO、住友ゴム。
+              </p>
+              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
+                追加費用なしで、
+                <br />
+                すべて標準装備です。
+              </p>
+            </div>
+          </aside>
         </div>
 
         {/* タイルグリッド（時間軸ラベルで区切るためdense packingは使わない） */}
