@@ -74,6 +74,10 @@ const EXCLUDED = [
 ] as const;
 
 function PlanCard({ plan }: { plan: Plan }) {
+  // Hero のメインメッセージ「2,280万円〜」と呼応する最安プラン(京)の
+  // 価格数字のみ LIME で着色。ブランド色の継承で視線を誘導。
+  const isHeadliner = plan.price === "2,280";
+
   return (
     <article className="group relative flex flex-col bg-white border border-text-primary/10 p-7 md:p-9 min-h-[520px] md:min-h-[560px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
       {/* 漢字 — Shippori Black 主役 */}
@@ -113,15 +117,16 @@ function PlanCard({ plan }: { plan: Plan }) {
         {plan.tagline}
       </p>
 
-      {/* 価格(底) */}
+      {/* 価格(底) — 京(2,280)のみ LIME で Hero 連動 */}
       <div className="mt-auto pt-10 md:pt-12 border-t border-text-primary/10">
         <div className="flex items-baseline gap-2 md:gap-3">
           <span
-            className="font-oswald tabular-nums text-text-primary leading-[0.85]"
+            className="font-oswald tabular-nums leading-[0.85]"
             style={{
               fontWeight: 300,
               fontSize: "clamp(64px, 8vw, 112px)",
               letterSpacing: "-0.03em",
+              color: isHeadliner ? "#A2C523" : undefined,
             }}
           >
             {plan.price}
@@ -189,7 +194,7 @@ export default function PriceSection() {
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                2,280万円から。
+                <span style={{ color: "#A2C523" }}>2,280</span>万円から。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
                 税込・建物本体と付帯工事まで込み。
@@ -221,8 +226,8 @@ export default function PriceSection() {
                 >
                   <span
                     aria-hidden
-                    className="font-oswald text-text-primary/45 shrink-0 pt-[2px]"
-                    style={{ fontWeight: 300, fontSize: "12px" }}
+                    className="font-oswald shrink-0 pt-[2px]"
+                    style={{ fontWeight: 500, fontSize: "14px", color: "#A2C523" }}
                   >
                     +
                   </span>
