@@ -82,17 +82,15 @@ export default function MechanismEnhanced() {
             </h2>
           </div>
 
-          {/* Right: LEAD with top border */}
+          {/* Right: LEAD with top border — 看板の「問い」に対する「答え」なので、
+              1文目は太字大きめで強調。左の看板(8vw/120px)に対し、
+              LEAD 1文目 2.2vw/32px、2文目 1.5vw/22px のリズムに調整。 */}
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
-              <p
-                className="font-shippori font-medium text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
-              >
+              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
                 同じ素材、同じ性能。
               </p>
-              <p
-                className="mt-3 font-shippori font-medium text-[clamp(15px,1.2vw,18px)] leading-[2.0] tracking-[0.02em] max-w-[420px]"
-              >
+              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] tracking-[0.02em] max-w-[480px] text-text-primary/90">
                 違うのは、家を
                 <br />
                 届けるまでの費用です。
