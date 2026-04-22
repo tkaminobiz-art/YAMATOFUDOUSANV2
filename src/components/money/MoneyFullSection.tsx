@@ -117,8 +117,10 @@ const RULES = [
 ] as const;
 
 // 賃貸 vs 持家
+// 想定: やまと京プラン(2,280万円) + 奈良市八田町等のお手頃な土地(800万円前後) +
+//       諸費用 → 借入3,000万円・1.0%・35年 ≈ 月々8.5万円
 const COMPARE = [
-  { axis: "30年後の累計支出", rent: "3,600万円", own: "約3,700万円", positive: false },
+  { axis: "30年後の累計支出", rent: "3,060万円", own: "約3,150万円", positive: false },
   { axis: "30年後に残るもの", rent: "なし", own: "持ち家(資産として残る)", positive: true },
   { axis: "老後の住居費", rent: "引き続き家賃", own: "完済後は固定資産税と修繕費のみ", positive: true },
   { axis: "間取り・設備", rent: "原則そのまま", own: "家族の変化に合わせて変えられる", positive: true },
@@ -650,7 +652,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="03"
             question={<>賃貸と、<br />本当は何が違いますか？</>}
-            lead="同じ月10万円で、30年後に何が残るか。両方を並べて、ご一緒に見てまいります。"
+            lead="やまとの京プランと奈良市八田町等のお手頃な土地を組み合わせると、月々8.5万円ほどに収まる方が多くいらっしゃいます。同じ月8.5万円で30年、何が残るか。"
           />
 
           {/* 大きな2カラム比較 */}
@@ -664,9 +666,9 @@ export default function MoneyFullSection() {
                 className="text-text-primary leading-[1.2] tracking-[-0.02em]"
                 style={{ fontWeight: 500, fontSize: "clamp(28px, 3.4vw, 48px)" }}
               >
-                月10万円
+                月8.5万円
               </p>
-              <p className="text-text-secondary text-sm mt-2">を30年</p>
+              <p className="text-text-secondary text-sm mt-2">の家賃を30年</p>
               <div className="mt-8 pt-6 border-t border-text-primary/10">
                 <p className="font-inter text-[10px] tracking-[0.18em] uppercase text-text-secondary font-bold">
                   After 30 years
@@ -675,7 +677,7 @@ export default function MoneyFullSection() {
                   className="mt-3 font-oswald tabular-nums text-text-primary"
                   style={{ fontWeight: 300, fontSize: "clamp(40px, 4.4vw, 64px)", letterSpacing: "-0.02em" }}
                 >
-                  3,600
+                  3,060
                   <span className="text-text-secondary text-base ml-1">万円の支出</span>
                 </p>
                 <p className="mt-3 text-text-secondary text-[13px] leading-[1.85]">
@@ -692,9 +694,9 @@ export default function MoneyFullSection() {
                 className="text-text-primary leading-[1.2] tracking-[-0.02em]"
                 style={{ fontWeight: 500, fontSize: "clamp(28px, 3.4vw, 48px)" }}
               >
-                月10万円相当
+                月8.5万円相当
               </p>
-              <p className="text-text-primary/70 text-sm mt-2">のローンを30年</p>
+              <p className="text-text-primary/70 text-sm mt-2">のローン(借入3,000万円)を30年</p>
               <div className="mt-8 pt-6 border-t" style={{ borderColor: "rgba(72,107,0,0.2)" }}>
                 <p className="font-inter text-[10px] tracking-[0.18em] uppercase font-bold" style={{ color: FOREST }}>
                   After 30 years
@@ -704,7 +706,7 @@ export default function MoneyFullSection() {
                     className="font-oswald tabular-nums"
                     style={{ fontWeight: 300, fontSize: "clamp(40px, 4.4vw, 64px)", letterSpacing: "-0.02em", color: FOREST }}
                   >
-                    約3,700
+                    約3,150
                   </span>
                   <span className="text-text-primary/85 text-base">万円の支出</span>
                 </div>
@@ -720,6 +722,25 @@ export default function MoneyFullSection() {
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* やまと現実シナリオ補足 */}
+          <div
+            className="mt-8 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-start px-6 md:px-8 py-5 md:py-6 border"
+            style={{ background: "#EDF2D5", borderColor: "rgba(72,107,0,0.2)" }}
+          >
+            <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-bold whitespace-nowrap" style={{ color: FOREST }}>
+              Yamato case
+            </p>
+            <p className="text-text-primary text-[13px] md:text-[14px] leading-[1.95]">
+              想定: 京プラン
+              <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>2,280</span>万円 + 奈良市八田町等のお手頃な土地
+              <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>800</span>万円前後 +
+              諸費用 → 借入
+              <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>3,000</span>万円・金利1.0%・35年で月々
+              <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>8.5</span>万円ほど。
+              ご家族の状況・土地のエリアによって、もっと抑えられる場合もあります。
+            </p>
           </div>
 
           {/* 4軸比較表 */}
@@ -1039,7 +1060,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="08"
             question={<>「払えなくなったら」の<br />不安に、先にお答えします。</>}
-            lead="ご相談の前に、よくお寄せいただく質問をまとめました。書ききれないことは、ご来店時にお気軽にお尋ねください。"
+            lead="ご相談の前に、よくお寄せいただく質問をまとめました。書ききれないことは、ご来場時にお気軽にお尋ねください。"
             align="center"
           />
 
