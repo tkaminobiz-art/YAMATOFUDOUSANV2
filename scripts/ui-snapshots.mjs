@@ -63,7 +63,6 @@ async function main() {
       { name: "home-full", kind: "fullPage" },
       { name: "concept", selector: "#concept" },
       { name: "pricing", selector: "#product" },
-      { name: "money-talk", selector: "#money-talk" },
       { name: "lots", selector: "#lots" },
       { name: "design", selector: "#design" },
       { name: "standard-quality", selector: "#standard-quality" },

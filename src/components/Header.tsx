@@ -47,6 +47,7 @@ const ENTRY_TABS = [
 
 const NAV_ITEMS: NavItem[] = [
   { label: "商品紹介", href: "/#product" },
+  { label: "資金計画", href: "/money" },
   { label: "物件情報", href: "/lots" },
   { label: "施工事例", href: "/works" },
   { label: "お客様の声", href: "/voice" },
@@ -56,6 +57,7 @@ const NAV_ITEMS: NavItem[] = [
 const SP_NAV_ITEMS: NavItem[] = [
   { label: "やまとの家づくり", href: "/#concept" },
   { label: "商品紹介", href: "/#product" },
+  { label: "資金計画", href: "/money" },
   { label: "物件情報", href: "/lots" },
   { label: "施工事例", href: "/works" },
   { label: "お客様の声", href: "/voice" },

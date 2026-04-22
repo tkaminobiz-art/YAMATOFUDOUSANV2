@@ -269,11 +269,11 @@ export default function PriceSection() {
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end shrink-0">
             <CtaButton
-              href="#money-talk"
+              href="/money"
               variant="secondary"
               size="md"
-              label="お金のご相談、承ります"
-              sublabel="不安なことは、こちらから"
+              label="資金計画を詳しく見る"
+              sublabel="月々のお支払いの目安まで"
             />
             <CtaButton
               href="/reserve"

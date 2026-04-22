@@ -8,7 +8,6 @@ import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
 import PriceSection from "@/components/sections/PriceSection";
-import MoneyTalkSection from "@/components/sections/MoneyTalkSection";
 import MidCta from "@/components/sections/MidCta";
 import VoiceSection from "@/components/sections/VoiceSection";
 import WorksSection from "@/components/sections/WorksSection";
@@ -62,8 +61,10 @@ const HERO_BODY_VARIANT =
 
   【⑦行動直前】
   14. FlowSection        家づくりの流れ
-  15. MoneyTalkSection   お金の話 teaser → /money (※新ページ作成予定)
-  16. FaqSection         残不安
+  15. FaqSection         残不安
+  ※ 2026-04-22: MoneyTalk teaser を撤去。資金計画は独立ページ /money に集約。
+                ヘッダーNAVに「資金計画」を追加し、TOPでは PriceSection + ZeroDeclaration
+                でお金は2回触れている(三度目は dilution)ため。
 
   【⑧クロージング】
   17. AccessSection      会社概要
@@ -97,7 +98,6 @@ export default function Home() {
         <WorksSection />
         <MidCta />
         <FlowSection />
-        <MoneyTalkSection />
         <FaqSection />
         <AccessSection />
         <FinalCta />
