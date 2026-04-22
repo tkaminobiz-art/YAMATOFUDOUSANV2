@@ -29,7 +29,7 @@ import { getVoice } from "@/data/voices";
 
 const FEATURED = {
   id: "216803",
-  headline: "諦めかけていた、その時に。",
+  headline: "諦めかけた頃に、やまとに出会いました。",
   quote:
     "土地探しや、工務店選びでなかなか良い所がなく、一度諦めようと思っていた時に、何気なくネットで見つけた。",
   photoIndex: 0,
@@ -39,7 +39,7 @@ const FEATURED = {
 const OTHERS = [
   {
     id: "279070",
-    headline: "他社の標準と、何かが違った。",
+    headline: "他社の標準と、何かが違いました。",
     quote:
       "他社様の標準仕様はグレードが低いものが多く、やまとさんは、標準仕様が元々すごく良かったのが決め手。",
     photoIndex: 0,
@@ -47,7 +47,7 @@ const OTHERS = [
   },
   {
     id: "237085",
-    headline: "希望以上の家になった。",
+    headline: "希望以上の家に、なりました。",
     quote:
       "とにかく標準設備がハイグレード！ ほとんど追加料金がかかることもなく、希望以上の設備を設置していただけました。",
     photoIndex: 0,
@@ -258,13 +258,13 @@ function AllVoicesCard() {
               color: "#2E4600",
             }}
           >
-            50組の、すべての声。
+            50組すべての声が、別ページにあります。
           </h3>
           <p
             className="font-shippori mt-3 text-[clamp(12px,0.95vw,14px)] leading-[1.85]"
             style={{ color: "rgba(46,70,0,0.85)" }}
           >
-            装飾も、誇張も、ありません。奈良・京都、50組の本当の声を、別ページに。
+            装飾も、誇張も、ありません。奈良・京都の50組の声を、別ページにまとめています。
           </p>
           <p
             className="font-inter mt-6 text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-bold group-hover:translate-x-1 transition-transform"
@@ -302,9 +302,9 @@ export default function VoiceSection() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              50通りの、
+              50組の家族が、
               <br />
-              本当の答え。
+              本音で答えています。
             </h2>
           </div>
 
@@ -315,9 +315,9 @@ export default function VoiceSection() {
                 装飾も、誇張も、ありません。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                奈良・京都、50組のご家族の、
+                奈良・京都から、50組の本音が
                 <br />
-                そのままの言葉。
+                届きました。
               </p>
             </div>
           </aside>

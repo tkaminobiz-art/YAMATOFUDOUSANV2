@@ -34,7 +34,7 @@ const PLANS: readonly Plan[] = [
     id: "hana",
     name: "花",
     reading: "hana",
-    tagline: "部屋数と収納に、ゆとりを。",
+    tagline: "4LDK・33坪、ゆとりのある間取りです。",
     price: "2,480",
     tsubo: "33坪（109㎡）",
     layout: "4LDK",
@@ -43,7 +43,7 @@ const PLANS: readonly Plan[] = [
     id: "kaze",
     name: "風",
     reading: "kaze",
-    tagline: "家事も、広さも。",
+    tagline: "30坪で、家事動線を整えています。",
     price: "2,480",
     tsubo: "30坪",
     layout: "4LDK",
@@ -52,7 +52,7 @@ const PLANS: readonly Plan[] = [
     id: "miyako",
     name: "京",
     reading: "miyako",
-    tagline: "必要なものだけを、コンパクトに。",
+    tagline: "3LDK・28坪、必要な広さに絞りました。",
     price: "2,280",
     tsubo: "28坪",
     layout: "3LDK",
@@ -186,7 +186,7 @@ export default function PriceSection() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              三つの、家。
+              三タイプ、<br />ご用意しています。
             </h2>
           </div>
 
@@ -194,10 +194,10 @@ export default function PriceSection() {
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                <span style={{ color: "#A2C523" }}>2,280</span>万円から。
+                京モデルは、<span style={{ color: "#A2C523" }}>2,280</span>万円から始まります。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                税込・建物本体と付帯工事まで込み。
+                税込で、建物本体と付帯工事まで含みます。
                 <br />
                 土地や登記は別途です。
               </p>

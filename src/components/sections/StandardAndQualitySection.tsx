@@ -373,15 +373,15 @@ export default function StandardAndQualitySection() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              大手と<span style={{ color: "var(--color-lime)" }}>同じ</span>、
+              中身は、
               <br />
-              中身。
+              大手と<span style={{ color: "var(--color-lime)" }}>同じ</span>です。
             </h2>
           </div>
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                旭化成、TOTO、住友ゴム。
+                旭化成・TOTO・住友ゴムを、<br />標準にしています。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
                 追加費用なしで、
@@ -427,8 +427,8 @@ export default function StandardAndQualitySection() {
           {/* 時間軸① 建てるとき */}
           <ChapterHeading
             step="01"
-            title="建てる、その瞬間から。"
-            caption="標準で揃う、12の素材。大手でオプションになるものも、やまとでは追加費用なしで入ります。"
+            title="建てる日から、12の素材が標準です。"
+            caption="12の素材が、標準で揃います。大手でオプションになるものも、やまとでは追加費用なしで入ります。"
           />
           {STANDARDS.map((item, idx) => (
             <SImageTile key={item.category} item={item} priority={idx === 0} />
@@ -442,8 +442,8 @@ export default function StandardAndQualitySection() {
           {/* 時間軸② 住み始めてから (チェス盤: 白-LIME-白) */}
           <ChapterHeading
             step="02"
-            title="住み始めて、気付く差。"
-            caption="塗布量は、推奨の1.2倍。自社施工、100%。外壁の節目は、10年。"
+            title="1.2倍の塗布量が、10年後に効いてきます。"
+            caption="塗布量は、推奨の1.2倍です。設計から現場まで、自社で施工しています。10年が、外壁の節目になります。"
           />
           {QUALITY_TILES.map((tile, i) => (
             <SNumberTile
@@ -459,8 +459,8 @@ export default function StandardAndQualitySection() {
               Row2: [HAKKI LIME][W3 LIME][W4 白]) */}
           <ChapterHeading
             step="03"
-            title="10年後、その先まで。"
-            caption="建物瑕疵担保10年、地盤20年、しろあり10年。電話一本で、担当者が伺います。"
+            title="10年後も、やまとが点検に伺います。"
+            caption="3つの保証が、10年から20年続きます。電話一本で、担当者が伺います。"
           />
 
           {/* 瑕疵担保（大タイル 4x2 / LIME 主役） */}
@@ -492,7 +492,7 @@ export default function StandardAndQualitySection() {
             variant="primary"
             size="md"
             label="来場予約"
-            sublabel="モデルハウスで、現物を"
+            sublabel="モデルハウスでご覧いただけます"
           />
           <CtaButton
             href="/contact"

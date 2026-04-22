@@ -56,7 +56,7 @@ export default function LotsSection() {
             >
               土地も、
               <br />
-              やまとで。
+              やまとでお探しします。
             </h2>
           </div>
 
@@ -84,7 +84,7 @@ export default function LotsSection() {
 
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                奈良・京都、全エリア。
+                奈良・京都で、90区画を<br />分譲してきました。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
                 通学・通勤・ご実家距離まで、
@@ -167,7 +167,7 @@ export default function LotsSection() {
         {/* ================= 注記 + CTA ================= */}
         <div className="mt-14 md:mt-20 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
           <p className="font-shippori max-w-[44rem] text-[clamp(13px,1vw,15px)] leading-[1.95] text-text-secondary">
-            土地が決まったら、次は「どう暮らすか」。
+            土地が決まれば、次は「どう暮らすか」を考えます。
             <br />
             土地と建物をまとめれば、余計な金融コストも抑えられます。
           </p>

@@ -155,7 +155,7 @@ export default function HeroMagazine({
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
                 }}
               >
-                同じ素材、<br className="md:hidden" />同じ性能。
+                素材も性能も、<br className="md:hidden" />大手と同じです。
               </span>
               <span
                 className="block text-white md:whitespace-nowrap"
@@ -166,7 +166,7 @@ export default function HeroMagazine({
                   marginTop: "0.12em",
                 }}
               >
-                家そのものの、<br className="md:hidden" />価格。
+                家そのものを、<br className="md:hidden" />届けています。
               </span>
             </h1>
 
@@ -205,7 +205,7 @@ export default function HeroMagazine({
                   className="text-white/65 text-[10px] md:text-xs leading-tight tracking-[0.05em] [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)]"
                   style={{ fontFamily: bodyVariant.jaFontFamily }}
                 >
-                  税込・建物本体・付帯工事込み
+                  税込・建物本体と付帯工事まで含みます
                 </span>
               </div>
             </div>

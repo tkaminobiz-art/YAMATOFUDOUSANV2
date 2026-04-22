@@ -202,7 +202,7 @@ export default function ZeroDeclaration() {
               >
                 8
               </span>
-              つのゼロ
+              つが、ゼロです。
             </h2>
           </div>
 
@@ -210,7 +210,7 @@ export default function ZeroDeclaration() {
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                契約前・建築中・その後。
+                契約前から引渡し後まで、<br />費用は動きません。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
                 家づくりで増えがちな費用を、

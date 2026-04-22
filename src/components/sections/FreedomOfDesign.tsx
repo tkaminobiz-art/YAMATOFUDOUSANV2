@@ -27,25 +27,25 @@ const AXES = [
     num: "01",
     title: "窓",
     degree: "完全自由",
-    body: "大きさ、位置、形。暮らしの景色を、切り取る。",
+    body: "大きさも位置も形も、自由に決められます。窓が、暮らしの景色を切り取ります。",
   },
   {
     num: "02",
     title: "収納",
     degree: "完全自由",
-    body: "量も、場所も、暮らしに合わせて。",
+    body: "量も場所も、暮らしに合わせて決めます。",
   },
   {
     num: "03",
     title: "光",
     degree: "完全自由",
-    body: "自然光の入り方、照明計画。一日を、光で描く。",
+    body: "光の入り方と照明を、あわせて設計します。朝から夜まで、光の表情が変わります。",
   },
   {
     num: "04",
     title: "素材",
     degree: "無垢 / タイル / 塗り壁ほか",
-    body: "手触りから、選ぶ。",
+    body: "手触りから、選んでいただけます。",
   },
 ] as const;
 
@@ -54,51 +54,51 @@ const GALLERIES = [
     src: "/images/design/example-coveceiling.webp",
     alt: "折下天井+間接照明のリビング",
     tag: "光",
-    caption: "折下天井の、間接照明。",
+    caption: "折下天井に、間接照明を仕込みます。",
     aspect: "aspect-[4/3]",
   },
   {
     src: "/images/newsozai/interior-window-detail-01.webp",
     alt: "窓のディテール",
     tag: "窓",
-    caption: "窓は、景色の切り取り方。",
+    caption: "窓の位置で、見える景色が変わります。",
     aspect: "aspect-[4/3]",
   },
   {
     src: "/images/design/example-storage.webp",
     alt: "大空間収納",
     tag: "収納",
-    caption: "家族の服が、全部入る。",
+    caption: "家族の服が、すべて収まります。",
     aspect: "aspect-[4/3]",
   },
   {
     src: "/images/design/example-balcony.webp",
     alt: "2階バルコニー",
     tag: "間取り",
-    caption: "2階に、もうひとつの部屋を。",
+    caption: "2階に、もうひと部屋つくれます。",
     aspect: "aspect-[4/3]",
   },
   {
     src: "/images/newsozai/interior-ldk-01.webp",
     alt: "LDK",
     tag: "LDK",
-    caption: "人が、集まる場所。",
+    caption: "LDKは、家族が集まる場所です。",
     aspect: "aspect-[4/3]",
   },
   {
     src: "/images/newsozai/exterior-texture-detail-01.webp",
     alt: "素材のディテール",
     tag: "素材",
-    caption: "手触りから、選ぶ。",
+    caption: "素材は、手触りで決められます。",
     aspect: "aspect-[4/3]",
   },
 ] as const;
 
 const STEPS = [
-  { num: "01", text: "土地の条件を、整理する。" },
-  { num: "02", text: "優先順位を、決める。" },
-  { num: "03", text: "実物で、確かめる。" },
-  { num: "04", text: "暮らしの“クセ”まで。" },
+  { num: "01", text: "土地の条件を、整理します。" },
+  { num: "02", text: "ご家族で、優先順位を決めます。" },
+  { num: "03", text: "実物で、確かめていただきます。" },
+  { num: "04", text: "暮らしのクセまで、図面に落とします。" },
 ] as const;
 
 type Axis = (typeof AXES)[number];
@@ -198,15 +198,15 @@ export default function FreedomOfDesign() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              設計は、
+              間取りも設備も、
               <br />
-              自由。
+              自由に決められます。
             </h2>
           </div>
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                「できる／できない」を先に。
+                できる・できないを、<br />先にお伝えします。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
                 条件を並べてから、
@@ -235,7 +235,7 @@ export default function FreedomOfDesign() {
               className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
               style={{ fontWeight: 500 }}
             >
-              何が、自由になるのか。
+              自由になるのは、4つの要素です。
             </span>
           </div>
         </div>
@@ -264,7 +264,7 @@ export default function FreedomOfDesign() {
               className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
               style={{ fontWeight: 500 }}
             >
-              こだわりは、ここまで。
+              こだわりは、ここまで実現できます。
             </span>
           </div>
         </div>
@@ -293,7 +293,7 @@ export default function FreedomOfDesign() {
               className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
               style={{ fontWeight: 500 }}
             >
-              4回の打合せで、図面は固まる。
+              4回の打合せで、図面が固まります。
             </span>
           </div>
 

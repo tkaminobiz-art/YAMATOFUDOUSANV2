@@ -54,9 +54,9 @@ export default function WorksSection() {
                 fontSize: "clamp(44px, 8vw, 120px)",
               }}
             >
-              建てた、
+              やまとが建てた、
               <br />
-              家たち。
+              実際の家です。
             </h2>
           </div>
 
@@ -84,12 +84,12 @@ export default function WorksSection() {
 
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                やまとで建てた、実際の家。
+                8件の完成事例を、<br />写真で紹介しています。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                価格はいずれも、
+                価格はすべて、
                 <br />
-                すべて込みで。
+                付帯工事まで込みです。
               </p>
             </div>
           </aside>
@@ -269,7 +269,7 @@ export default function WorksSection() {
               aria-hidden
               className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
             />
-            <span className="relative">施工事例を、すべて見る</span>
+            <span className="relative">施工事例をすべて見る</span>
             <span
               aria-hidden
               className="relative transition-transform duration-300 group-hover:translate-x-1"

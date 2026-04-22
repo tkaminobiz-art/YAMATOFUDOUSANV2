@@ -84,7 +84,7 @@ export default function MechanismEnhanced() {
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                同じ素材、同じ性能。
+                大手が使う素材を、<br />うちも使っています。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] tracking-[0.02em] max-w-[480px] text-text-primary/90">
                 違うのは、家を
@@ -120,11 +120,11 @@ export default function MechanismEnhanced() {
               <p
                 className="font-shippori font-bold mb-8 md:mb-10 max-w-[54ch] text-[clamp(15px,1.1vw,17px)] leading-[1.95]"
               >
-                広告費、展示場の維持費、仲介マージン。見積もりの三割から四割。そんな会社も、あります
+                広告費も、展示場の維持費も、仲介マージンも、乗せる会社があります。合計で、見積もりの三〜四割
                 <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※1
                 </sup>
-                。
+                にのぼります。
               </p>
 
               <p className="font-shippori mb-6 max-w-[54ch]">
@@ -132,7 +132,7 @@ export default function MechanismEnhanced() {
                 <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
                   ※2
                 </sup>
-                。分譲地に建てた家を、そのままモデルハウスに。いずれ、販売します。一軒が、二つの役割を果たします。
+                。分譲地に建てた家を、そのままモデルハウスにしています。いずれ、販売します。一軒が、二つの役割を果たします。
               </p>
 
               <p className="font-shippori mb-6 max-w-[54ch]">
@@ -155,9 +155,9 @@ export default function MechanismEnhanced() {
                     fontSize: "clamp(20px, 3vw, 38px)",
                   }}
                 >
-                  削るのではなく、<span style={{ color: ACCENT_LIME }}>含めない</span>。
+                  後から削るのではなく、
                   <br />
-                  それだけなんです。
+                  最初から<span style={{ color: ACCENT_LIME }}>含めていません</span>。
                 </blockquote>
               </aside>
 
@@ -184,7 +184,7 @@ export default function MechanismEnhanced() {
                 style={{ filter: PHOTO_FILTER }}
               />
               <figcaption className="font-inter absolute left-0 bottom-0 max-w-[75%] px-4 py-3 bg-[#FAF8F3] border-t border-r border-text-primary text-[10px] tracking-[0.16em] uppercase text-text-secondary font-medium">
-                現場の素材ひとつ、削らない
+                現場の素材は、ひとつも削りません
               </figcaption>
             </figure>
 
@@ -253,7 +253,7 @@ export default function MechanismEnhanced() {
                 >
                   ※2
                 </span>
-                分譲地のモデルハウスを、販売まで回す方式
+                分譲地のモデルハウスを、販売まで回しています
               </div>
               <div className="pl-6 relative">
                 <span
@@ -262,7 +262,7 @@ export default function MechanismEnhanced() {
                 >
                   ※3
                 </span>
-                京モデル30坪 4LDK の場合
+                京モデル30坪・4LDKの場合です
               </div>
             </div>
           </aside>
