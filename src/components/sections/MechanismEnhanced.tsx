@@ -47,7 +47,7 @@ export default function MechanismEnhanced() {
       ref={ref}
       className="relative overflow-hidden bg-[#FAF8F3] text-text-primary scroll-in"
     >
-      {/* ============= OPENING — 21:9 BLEED PHOTO ============= */}
+      {/* ============= OPENING — 21:9 BLEED PHOTO(案A: "中扉"としてキャッチを重ねる) ============= */}
       <div className="relative w-full aspect-[21/9] overflow-hidden bg-text-primary">
         <Image
           src={PHOTOS.opening.src}
@@ -55,9 +55,41 @@ export default function MechanismEnhanced() {
           fill
           className="object-cover"
           sizes="100vw"
-          style={{ filter: `${PHOTO_FILTER} brightness(0.85)` }}
+          style={{ filter: `${PHOTO_FILTER} brightness(0.78)` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/40 pointer-events-none" />
+        {/* 下部を濃いめに落として白明朝の視認性を確保 */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/60 pointer-events-none"
+        />
+
+        {/* Page 02 ノンブル — Hero の Page 01 と対で見開きを成立 */}
+        <div className="hidden md:block absolute top-8 right-10 lg:right-14 z-10">
+          <p
+            className="font-inter text-white/75 text-[10px] lg:text-[11px] tracking-[0.32em] uppercase"
+            style={{ textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}
+          >
+            Page 02 / 02
+          </p>
+        </div>
+
+        {/* 中扉キャッチ — Hero からの"問いの転換" */}
+        <div className="absolute inset-0 flex items-end">
+          <div className="w-full max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-16 lg:pb-20">
+            <p
+              className="font-shippori text-white leading-[1.25] tracking-[0.01em] max-w-[900px]"
+              style={{
+                fontWeight: 700,
+                fontSize: "clamp(26px, 4vw, 60px)",
+                textShadow: "0 3px 22px rgba(0,0,0,0.55)",
+              }}
+            >
+              違うのは、家を届けるまでの
+              <br />
+              費用です。
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* ============= OPENING BODY — Asymmetric ============= */}
@@ -87,9 +119,9 @@ export default function MechanismEnhanced() {
                 大手が使う素材を、<br />うちも使っています。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] tracking-[0.02em] max-w-[480px] text-text-primary/90">
-                違うのは、家を
+                中間マージンも、
                 <br />
-                届けるまでの費用です。
+                乗せていません。
               </p>
             </div>
           </aside>

@@ -146,24 +146,26 @@ export default function HeroMagazine({
                 lineHeight: 1.15,
               }}
             >
-              {/* PC: 1行 / SP: 2行 */}
+              {/* PC/SP共に2行想定(はみ出し防止・Mag表紙として落ち着き) */}
               <span
-                className="block text-white/90 md:whitespace-nowrap"
+                className="block text-white/90"
                 style={{
-                  fontSize: "clamp(28px, 4.6vw, 68px)",
+                  fontSize: "clamp(22px, 3.2vw, 44px)",
                   fontWeight: variant.weightSubLines,
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                  lineHeight: 1.35,
                 }}
               >
-                素材も性能も、<br className="md:hidden" />大手と同じです。
+                素材も性能も、大手と同じです。
               </span>
               <span
-                className="block text-white md:whitespace-nowrap"
+                className="block text-white"
                 style={{
-                  fontSize: "clamp(56px, 9.5vw, 128px)",
+                  fontSize: "clamp(40px, 6vw, 96px)",
                   fontWeight: variant.weightBigLine,
                   textShadow: "0 3px 22px rgba(0,0,0,0.6)",
-                  marginTop: "0.12em",
+                  marginTop: "0.18em",
+                  lineHeight: 1.18,
                 }}
               >
                 家そのものを、<br className="md:hidden" />届けています。
@@ -301,6 +303,19 @@ export default function HeroMagazine({
             </div>
           </div>
         </div>
+
+        {/* ノンブル — 編集誌の表紙ページ番号(案A 表紙→中扉 連続構成) */}
+        <aside
+          aria-hidden
+          className="hidden md:block absolute left-8 lg:left-14 top-24 z-20"
+        >
+          <p
+            className="font-inter text-white/70 text-[10px] lg:text-[11px] tracking-[0.32em] uppercase"
+            style={{ textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}
+          >
+            Page 01 / 02
+          </p>
+        </aside>
 
         {/* 縦組キャプション — ブランドマーク(ページ内LIME唯一の装飾色) */}
         <aside
