@@ -117,7 +117,7 @@ const RULES = [
 ] as const;
 
 // 賃貸 vs 持家
-// 想定: やまと京プラン(2,280万円) + 奈良市八田町等のお手頃な土地(800万円前後) +
+// 想定: やまと京プラン(2,280万円) + 奈良市矢田町等のお手頃な土地(800万円前後) +
 //       諸費用 → 借入3,000万円・1.0%・35年 ≈ 月々8.5万円
 const COMPARE = [
   { axis: "30年後の累計支出", rent: "3,060万円", own: "約3,150万円", positive: false },
@@ -652,7 +652,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="03"
             question={<>賃貸と、<br />本当は何が違いますか？</>}
-            lead="やまとの京プランと奈良市八田町等のお手頃な土地を組み合わせると、月々8.5万円ほどに収まる方が多くいらっしゃいます。同じ月8.5万円で30年、何が残るか。"
+            lead="やまとの京プランと奈良市矢田町等のお手頃な土地を組み合わせると、月々8.5万円ほどに収まる方が多くいらっしゃいます。同じ月8.5万円で30年、何が残るか。"
           />
 
           {/* 大きな2カラム比較 */}
@@ -734,7 +734,7 @@ export default function MoneyFullSection() {
             </p>
             <p className="text-text-primary text-[13px] md:text-[14px] leading-[1.95]">
               想定: 京プラン
-              <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>2,280</span>万円 + 奈良市八田町等のお手頃な土地
+              <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>2,280</span>万円 + 奈良市矢田町等のお手頃な土地
               <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>800</span>万円前後 +
               諸費用 → 借入
               <span className="font-oswald tabular-nums mx-1.5" style={{ fontWeight: 400 }}>3,000</span>万円・金利1.0%・35年で月々
