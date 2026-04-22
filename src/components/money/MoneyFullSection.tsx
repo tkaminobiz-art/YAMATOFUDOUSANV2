@@ -864,25 +864,68 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="05"
             question={<>「つなぎ融資」って、<br />何ですか？</>}
-            lead="土地と建物の段取り次第で、ローンの利息は変わります。やまとは段取りの一本化で、負担を抑えられる場合があります。"
+            lead="土地と建物を別々に進めると、住宅ローン実行までの間に発生する一時的な借入のこと。金利2〜4%・事務手数料・印紙代で、一般的に30〜80万円の上乗せになります。"
           />
 
-          {/* タイムライン図 */}
+          {/* やまとの売り — 大きな結論ボックス */}
+          <div
+            className="mb-10 md:mb-14 grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-8 lg:gap-12 items-center px-8 md:px-12 py-10 md:py-14 border-2"
+            style={{ background: "#EDF2D5", borderColor: FOREST }}
+          >
+            <div>
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-bold mb-4" style={{ color: FOREST }}>
+                Yamato Edge · やまとの売り
+              </p>
+              <h3
+                className="text-text-primary leading-[1.2] tracking-[-0.01em]"
+                style={{ fontWeight: 500, fontSize: "clamp(28px, 3.6vw, 52px)" }}
+              >
+                やまとなら、
+                <br />
+                つなぎ融資は<span style={{ color: FOREST }}>発生しません</span>。
+              </h3>
+              <p className="mt-5 text-[13px] md:text-[14px] leading-[1.95] text-text-primary/85 max-w-[560px]">
+                土地分譲と建物施工を、すべて自社で進めるから。
+                土地購入と建物着工のタイムラグを埋める必要がなく、
+                利息と手数料はそのまま家計に残ります。
+              </p>
+            </div>
+            <div className="lg:border-l lg:pl-12" style={{ borderColor: "rgba(72,107,0,0.25)" }}>
+              <p className="font-inter text-[10px] tracking-[0.22em] uppercase font-bold" style={{ color: FOREST }}>
+                Saved
+              </p>
+              <div className="mt-3 flex items-baseline gap-2">
+                <span
+                  className="font-oswald tabular-nums leading-[0.85]"
+                  style={{ fontWeight: 300, fontSize: "clamp(56px, 7vw, 100px)", letterSpacing: "-0.04em", color: FOREST }}
+                >
+                  30〜80
+                </span>
+                <span className="text-text-primary text-base md:text-lg font-medium">万円</span>
+              </div>
+              <p className="mt-2 text-[12px] leading-[1.7] text-text-primary/70">
+                一般的なつなぎ融資で発生する金額の目安。<br />
+                やまとなら、ゼロ。
+              </p>
+            </div>
+          </div>
+
+          {/* タイムライン図 — 比較で「なぜ発生しないか」を見せる */}
           <div className="bg-white border border-text-primary/15 p-8 md:p-12">
             <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold mb-8">
-              Timeline · 段取りで変わる利息
+              Timeline · なぜ発生しないか
             </p>
 
             {/* 他社パターン */}
             <div className="mb-10">
               <p className="text-text-primary text-[13px] md:text-sm font-medium mb-4">
-                ❶ 土地と建物を別々に進めた場合
+                ❶ 一般的な進め方(土地と建物を別々の会社で)
               </p>
               <div className="relative h-12 md:h-16 w-full bg-bg-secondary/40 border border-text-primary/10 flex items-center">
                 <div className="h-full w-[35%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: "#7D4427" }}>
                   土地購入
                 </div>
-                <div className="h-full w-[15%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em] bg-text-primary/60">
+                <div className="h-full w-[15%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em] bg-text-primary/70">
                   つなぎ融資 ⚠
                 </div>
                 <div className="h-full w-[50%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: FOREST }}>
@@ -890,30 +933,30 @@ export default function MoneyFullSection() {
                 </div>
               </div>
               <p className="mt-3 text-[12px] text-text-secondary">
-                土地購入から建物完成までの間、つなぎ融資の利息と手数料が上乗せされます。
+                土地購入から建物完成までの間に、住宅ローン実行までをつなぐ一時的な借入が発生。利息(金利2〜4%)と手数料が上乗せされます。
               </p>
             </div>
 
             {/* やまとパターン */}
             <div>
               <p className="font-medium mb-4 text-[13px] md:text-sm" style={{ color: FOREST }}>
-                ❷ やまと: 土地と建物をまとめて進めた場合
+                ❷ やまと: 土地分譲と建物施工を、自社で一貫
               </p>
-              <div className="relative h-12 md:h-16 w-full border flex items-center" style={{ background: "#EDF2D5", borderColor: "rgba(72,107,0,0.25)" }}>
+              <div className="relative h-12 md:h-16 w-full border-2 flex items-center" style={{ background: "#EDF2D5", borderColor: FOREST }}>
                 <div className="h-full w-[40%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: "#7D4427" }}>
-                  土地・建物を同時に
+                  土地・建物 まとめて
                 </div>
                 <div className="h-full w-[60%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: FOREST }}>
                   建物着工 → 完成
                 </div>
               </div>
-              <p className="mt-3 text-[12px] leading-[1.85]" style={{ color: FOREST }}>
-                ✓ つなぎ融資が不要になったり、期間を短くできたりするケースがあります。
+              <p className="mt-3 text-[12px] leading-[1.85] font-medium" style={{ color: FOREST }}>
+                ✓ つなぎ融資の出番がない。利息も手数料も、発生しません。
               </p>
             </div>
 
             <p className="mt-8 pt-6 border-t border-text-primary/10 text-[12px] leading-[1.85] text-text-secondary">
-              やまとは奈良・京都での土地分譲の実績があり、土地と建物の段取りを一本化できる案件が多くあります。内容は金融機関の条件や案件ごとに異なります。
+              ※ ご家族が独自にお持ちの土地で建てる場合や、特殊な金融機関の条件下では別途ご相談となるケースがあります。やまとの土地+建物セットなら、この心配は要りません。
             </p>
           </div>
         </div>
