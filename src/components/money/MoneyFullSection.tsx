@@ -6,73 +6,101 @@ import {
   ShieldCheck,
   Plus,
   Minus,
-  Scale,
+  Heart,
+  Coffee,
+  Home as HomeIcon,
+  TrendingUp,
 } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  MoneyFullSection — /money 完全版（2026-04-22 v2 リビルド）
+  MoneyFullSection — /money 完全版（2026-04-22 v3 リデザイン）
   ------------------------------------------------------------
-  v1(serif多用) → v2: TOPと地続きの編集誌的トーンに統一
-    - 和文は全て Noto Sans JP(ゴシック・default)
-    - 数字は font-oswald(Oswald Light) で巨大表示
-    - 欧文ラベルは font-inter(Inter UPPERCASE)
-    - 非対称グリッド(1.4fr:1fr)・border-t-[3px]・大きなジャンプ率
-    - PriceSection / MechanismEnhanced と同じ視覚秩序
+  v2(編集誌的硬派) → v3: 5人デザイナー会議の総意を反映
+    - 質問起点の章タイトル(宣言→疑問形)
+    - 5つの財布を「比率バー」で視覚化(羅列→可視化)
+    - 月々シミュレーションは「想定モデル」を主役に(表→具体)
+    - FP章を「黒の正直さ」から「温かい光の信頼」へ転換
+    - 写真を呼吸として2-3箇所挟む
+    - 各章の冒頭で「希望」を先出し(損失回避だけに偏らない)
 
-  消費者心理5段階(関心→共感→納得→確信→行動) は v1 から継承。
-  内容は変更なし。表現のみ刷新。
+  消費者心理5段階(関心→共感→納得→確信→行動) は v1〜v2 から継承。
+  「ポジティブに読める」を最重要に、シビアな数字は誠実に並べつつ
+  暮らしの言葉で噛み砕く。
 */
 
-const ACCENT = "#A2C523"; // LIME - PriceSectionと統一
+const ACCENT = "#A2C523"; // LIME
+const FOREST = "#486B00"; // main green
 
 // ─────────────────────────────────────────────
 // データ
 // ─────────────────────────────────────────────
 
-const COST_BUCKETS = [
+// 5つの財布: 比率バー用 + 詳細
+const BUCKETS = [
   {
     no: "01",
     label: "建物本体",
     amount: "2,280〜2,480",
     unit: "万円",
+    pct: 50,
+    color: FOREST,
     body: "京・風・花の3プラン。標準仕様で揃えています。",
-    sub: "やまと: 京 2,280万円〜（税込）",
+    yamato: "やまと: 京 2,280万円〜（税込）",
   },
   {
     no: "02",
     label: "付帯工事",
     amount: "0",
     unit: "円(やまと)",
+    pct: 5,
+    color: ACCENT,
     body: "地盤改良費(最大150万円)・仲介手数料は当社が負担します。",
-    sub: "他社目安: 別途 100〜300万円",
+    yamato: "他社目安: 別途 100〜300万円",
   },
   {
     no: "03",
     label: "土地代",
-    amount: "別途",
-    unit: "",
+    amount: "1,000〜2,500",
+    unit: "万円",
+    pct: 35,
+    color: "#7D4427",
     body: "奈良・京都の自社分譲地のほか、ご希望のエリアもご一緒に探します。",
-    sub: "目安: 1,000〜2,500万円(エリアによる)",
+    yamato: "目安(エリアによる)",
   },
   {
     no: "04",
     label: "諸費用",
-    amount: "別途",
-    unit: "",
+    amount: "200〜400",
+    unit: "万円",
+    pct: 8,
+    color: "#9A8978",
     body: "登記・印紙税・ローン手数料・火災保険等。総額の5〜10%が目安です。",
-    sub: "目安: 200〜400万円",
+    yamato: "目安",
   },
   {
     no: "05",
     label: "引越し・家具・カーテン",
-    amount: "別途",
-    unit: "",
+    amount: "50〜150",
+    unit: "万円",
+    pct: 2,
+    color: "#C7B299",
     body: "暮らしを始めるための分。最初から詰め込まず、暮らしながら整えるご家族も多いです。",
-    sub: "目安: 50〜150万円",
+    yamato: "目安",
   },
 ] as const;
+
+// 月々シミュレーション
+const MODEL_FAMILY = {
+  who: "30代ご夫婦・お子様1人",
+  income: "世帯年収 500万円",
+  borrow: "2,500万円",
+  monthly: "7.1",
+  rate: "金利1.0%・35年・元利均等",
+  comment:
+    "返済比率は年収の17%前後。生活費・教育費を圧迫しない、ご家族のための「無理しない設計」の一例です。",
+} as const;
 
 const RATE_HEADERS = ["1.0%", "1.5%", "2.0%"] as const;
 const LOAN_TABLE = [
@@ -83,31 +111,30 @@ const LOAN_TABLE = [
 ] as const;
 
 const RULES = [
-  { label: "RULE", t: "月々の返済は、年収の20〜25%が目安。", d: "「借りられる額」ではなく「返せる額」で考えると、生活費・教育費を圧迫しません。" },
-  { label: "CHECK", t: "教育費のピークと、返済額のピークを重ねない。", d: "お子様の進学時期に合わせて、繰上げ返済の余地を残す設計をご一緒に考えます。" },
-  { label: "RESERVE", t: "生活防衛費は、3〜6ヶ月分残す。", d: "頭金にすべて充てると、急な出費に対応できなくなります。手元に残す額もご一緒に決めます。" },
+  { label: "Rule", t: "月々の返済は、年収の20〜25%が目安。", d: "「借りられる額」ではなく「返せる額」で考えると、生活費・教育費を圧迫しません。" },
+  { label: "Check", t: "教育費のピークと、返済のピークを重ねない。", d: "進学時期に合わせて、繰上げ返済の余地を残す設計を一緒に考えます。" },
+  { label: "Reserve", t: "生活防衛費は、3〜6ヶ月分残す。", d: "頭金にすべて充てると急な出費に対応できません。手元に残す額も一緒に決めます。" },
 ] as const;
 
-const RENT_VS_OWN = [
-  { axis: "30年後の累計支出", rent: "3,600万円", own: "約3,700万円" },
-  { axis: "30年後に残るもの", rent: "なし", own: "持ち家(資産として残る)" },
-  { axis: "老後の住居費", rent: "引き続き家賃が発生", own: "完済後は固定資産税と修繕費のみ" },
-  { axis: "間取り・設備", rent: "原則そのまま", own: "家族の変化に合わせて変えられる" },
+// 賃貸 vs 持家
+const COMPARE = [
+  { axis: "30年後の累計支出", rent: "3,600万円", own: "約3,700万円", positive: false },
+  { axis: "30年後に残るもの", rent: "なし", own: "持ち家(資産として残る)", positive: true },
+  { axis: "老後の住居費", rent: "引き続き家賃", own: "完済後は固定資産税と修繕費のみ", positive: true },
+  { axis: "間取り・設備", rent: "原則そのまま", own: "家族の変化に合わせて変えられる", positive: true },
 ] as const;
 
 const LOAN_TYPES = [
   {
     name: "変動金利型",
     rate: "0.4〜0.7",
-    rateUnit: "%",
     pros: "金利が低い。総返済額を抑えやすい。",
     cons: "金利が上昇すると、月々の支払いが増える可能性。",
     when: "繰上げ返済の余力がある／返済期間が短めの方に。",
   },
   {
-    name: "全期間固定型(フラット35等)",
+    name: "全期間固定型",
     rate: "1.7〜2.0",
-    rateUnit: "%",
     pros: "完済まで月々の額が変わらない。家計設計が立てやすい。",
     cons: "変動より金利が高め。総返済額は大きくなる。",
     when: "教育費・老後資金とのバランスを最優先する方に。",
@@ -115,7 +142,6 @@ const LOAN_TYPES = [
   {
     name: "固定期間選択型",
     rate: "1.0〜1.5",
-    rateUnit: "%",
     pros: "一定期間の金利を確定でき、変動と固定の中間。",
     cons: "固定期間終了後の金利が読めない。",
     when: "教育費のピークに合わせて期間を区切りたい方に。",
@@ -124,33 +150,40 @@ const LOAN_TYPES = [
 
 const SUPPORTS = [
   {
-    name: "住宅ローン控除(住宅ローン減税)",
+    name: "住宅ローン控除",
+    sub: "(住宅ローン減税)",
     body: "年末ローン残高の0.7%が、最大13年間にわたり所得税(住民税)から控除されます。長期優良住宅・ZEH水準なら控除上限が拡大します。",
   },
   {
     name: "子育てエコホーム支援事業",
+    sub: "(最大100万円補助)",
     body: "省エネ基準を満たす新築住宅で、世帯条件により最大100万円の補助。年度ごとに予算枠があるため、早めの確認をおすすめします。",
   },
   {
     name: "GX志向型住宅補助",
+    sub: "",
     body: "高断熱・高効率設備を備えた住宅向けの補助制度。条件と申請時期は年度ごとに変わります。",
   },
   {
     name: "贈与税の非課税特例",
+    sub: "",
     body: "親・祖父母からの住宅取得資金の贈与に、一定額まで非課税枠があります。条件は時期により変わります。",
   },
 ] as const;
 
 const FP_PROMISES = [
   {
+    icon: Heart,
     title: "売り場のFPではなく、ご家族のFPに。",
     body: "ハウスメーカー直営のFPは、家を売ることが前提です。やまとは、提携FPに「家を建てない選択を含めて、率直に話してほしい」とお願いしています。",
   },
   {
+    icon: Coffee,
     title: "ご相談料は、いただきません。",
     body: "ご家族から相談料はお預かりしません。やまとと提携FPの間で取り決めをし、無理のない範囲でお話しできる体制にしています。",
   },
   {
+    icon: HomeIcon,
     title: "ご紹介の押しつけは、しません。",
     body: "FPと話したあとに「やっぱり今は建てない」とお決めになっても、それで構いません。あとから連絡を重ねるようなことは、いたしません。",
   },
@@ -161,16 +194,19 @@ const FLOW_STEPS = [
     k: "01",
     title: "いまの暮らしと、時期のめど",
     body: "ご家族の人数や通勤・通学、引っ越しをいつ頃に考えているか。金額の前に、生活の前提をそろえます。",
+    image: "/images/works/case1-living.webp",
   },
   {
     k: "02",
     title: "費用のかたちを、資料でたどる",
     body: "図や資料を見ながら、土地・建物・諸費用の全体像をざっくり追います。細かい確定は、このあとの段階で進められます。",
+    image: "/images/works/case2-kitchen.webp",
   },
   {
     k: "03",
     title: "帰るまでに、次の一手を決める",
     body: "持ち帰り資料、家で話し合っておきたいこと、次の面談や現地のご案内など、次に何をするかをはっきりさせます。",
+    image: "/images/works/case3-living.webp",
   },
 ] as const;
 
@@ -202,87 +238,59 @@ const FAQS = [
 ] as const;
 
 // ─────────────────────────────────────────────
-// 編集誌的セクション見出し（PriceSection と同型・非対称）
+// 部品
 // ─────────────────────────────────────────────
 
-function EditorialHeader({
-  kicker,
-  title,
-  leadStrong,
-  leadBody,
-}: {
-  kicker: string;
-  title: React.ReactNode;
-  leadStrong: React.ReactNode;
-  leadBody?: React.ReactNode;
-}) {
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
-      <div>
-        <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-          {kicker}
-        </p>
-        <h2
-          className="text-text-primary leading-[1.05] tracking-[-0.02em]"
-          style={{
-            fontWeight: 500,
-            fontSize: "clamp(36px, 6.4vw, 96px)",
-          }}
-        >
-          {title}
-        </h2>
-      </div>
-
-      <aside className="lg:pt-4">
-        <div className="border-t-[3px] border-text-primary pt-6">
-          <p className="font-medium text-[clamp(18px,1.9vw,28px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-            {leadStrong}
-          </p>
-          {leadBody ? (
-            <p className="mt-5 text-[clamp(14px,1vw,16px)] leading-[1.95] max-w-[480px] text-text-secondary">
-              {leadBody}
-            </p>
-          ) : null}
-        </div>
-      </aside>
-    </div>
-  );
-}
-
-function CenteredHeader({
-  kicker,
-  title,
+function ChapterHeader({
+  no,
+  question,
   lead,
   light = false,
+  align = "left",
 }: {
-  kicker: string;
-  title: React.ReactNode;
+  no: string;
+  question: React.ReactNode;
   lead?: React.ReactNode;
   light?: boolean;
+  align?: "left" | "center";
 }) {
+  const isCenter = align === "center";
   return (
-    <div className="mb-14 md:mb-20">
-      <p
-        className={`font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase mb-6 font-bold ${
-          light ? "text-white/70" : "text-text-secondary"
-        }`}
-      >
-        {kicker}
-      </p>
+    <div className={`mb-12 md:mb-20 ${isCenter ? "text-center mx-auto max-w-[760px]" : "max-w-[840px]"}`}>
+      <div className={`flex items-baseline gap-4 mb-6 ${isCenter ? "justify-center" : ""}`}>
+        <span
+          className="font-oswald tabular-nums leading-none"
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(28px, 3vw, 44px)",
+            color: light ? "rgba(255,255,255,0.45)" : "rgba(43,43,43,0.35)",
+          }}
+        >
+          Q.{no}
+        </span>
+        <span
+          className={`font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-bold ${
+            light ? "text-white/55" : "text-text-secondary"
+          }`}
+        >
+          {/* 章番号と並べて読ませる小ラベル */}
+          Chapter {no}
+        </span>
+      </div>
       <h2
-        className={`leading-[1.1] tracking-[-0.01em] ${light ? "text-white" : "text-text-primary"}`}
+        className={`leading-[1.2] tracking-[-0.01em] ${light ? "text-white" : "text-text-primary"}`}
         style={{
           fontWeight: 500,
-          fontSize: "clamp(32px, 5vw, 72px)",
+          fontSize: "clamp(30px, 4.4vw, 60px)",
         }}
       >
-        {title}
+        {question}
       </h2>
       {lead ? (
         <p
-          className={`mt-6 max-w-[680px] text-[clamp(14px,1.05vw,16px)] leading-[1.95] ${
-            light ? "text-white/70" : "text-text-secondary"
-          }`}
+          className={`mt-6 text-[clamp(14px,1.05vw,16px)] leading-[1.95] ${
+            light ? "text-white/75" : "text-text-secondary"
+          } ${isCenter ? "mx-auto max-w-[640px]" : "max-w-[640px]"}`}
         >
           {lead}
         </p>
@@ -291,14 +299,10 @@ function CenteredHeader({
   );
 }
 
-// ─────────────────────────────────────────────
-// FAQ アイテム(FaqSection と同様の作り)
-// ─────────────────────────────────────────────
-
 function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(index === 0);
   return (
-    <div className="border-b border-border">
+    <div className="border-b border-text-primary/15">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -306,14 +310,10 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
         aria-expanded={open}
       >
         <span className="flex items-start gap-4 flex-1">
-          <span
-            className="font-inter text-main text-sm md:text-base font-medium mt-0.5 shrink-0"
-          >
+          <span className="font-inter text-main text-sm md:text-base font-medium mt-0.5 shrink-0">
             Q.{String(index + 1).padStart(2, "0")}
           </span>
-          <span className="text-text-primary text-sm md:text-base font-medium">
-            {q}
-          </span>
+          <span className="text-text-primary text-sm md:text-base font-medium">{q}</span>
         </span>
         <span className="shrink-0 text-main">
           {open ? <Minus className="w-5 h-5" strokeWidth={1.5} /> : <Plus className="w-5 h-5" strokeWidth={1.5} />}
@@ -325,6 +325,44 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
         </div>
       )}
     </div>
+  );
+}
+
+// 写真ブリージング
+function BreathingImage({ src, alt, caption }: { src: string; alt: string; caption?: string }) {
+  return (
+    <section className="relative overflow-hidden">
+      <div className="relative aspect-[21/9] w-full bg-text-primary">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          style={{ filter: "saturate(0.92) contrast(1.04)" }}
+        />
+        {caption ? (
+          <div className="absolute inset-0 flex items-end pointer-events-none">
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent"
+            />
+            <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-14 w-full">
+              <p
+                className="text-white max-w-[600px] leading-[1.55] tracking-[0.04em]"
+                style={{
+                  fontWeight: 500,
+                  fontSize: "clamp(18px, 2vw, 28px)",
+                  textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                }}
+              >
+                {caption}
+              </p>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </section>
   );
 }
 
@@ -345,26 +383,66 @@ export default function MoneyFullSection() {
   return (
     <>
       {/* ============================================================
-          1. BREAKDOWN — 総額の見える化
+          1. ぜんぶで、いくら？  — 5つの財布 + 比率バー
           ============================================================ */}
-      <section className="relative bg-[#FAF8F3] py-[var(--section-py)]">
-        <div ref={r1} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
-          <EditorialHeader
-            kicker="Breakdown / 総額の見える化"
-            title={<>家づくりの総額には、<br />5つの財布があります。</>}
-            leadStrong={<>「ぜんぶで、いくら」。<br />最初に必要なのは、桁の見当ではなく、内訳です。</>}
-            leadBody="やまとは、含まれるもの・別途になるものを、最初の打ち合わせで明らかにします。"
+      <section id="ch-breakdown" className="relative bg-bg-primary py-[var(--section-py)] scroll-mt-20">
+        <div ref={r1} className="relative mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in">
+          <ChapterHeader
+            no="01"
+            question={<>家づくりは、<br />ぜんぶでいくらですか？</>}
+            lead="桁の見当ではなく、内訳から。やまとは「含まれるもの」と「別途になるもの」を、最初の打ち合わせで全部出します。"
           />
 
-          {/* 5つの財布 — 編集誌的フラット縦列(カード羅列を排除) */}
+          {/* 比率バー(視覚化) */}
+          <div className="mb-12 md:mb-16">
+            <div className="flex items-baseline justify-between mb-4 gap-4">
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold">
+                Typical proportion · 一般的な比率
+              </p>
+              <p className="font-inter text-[10px] md:text-[11px] text-text-secondary tracking-[0.16em]">
+                4,500〜5,000万円規模(目安)
+              </p>
+            </div>
+            <div className="flex h-12 md:h-14 w-full overflow-hidden border border-text-primary/15">
+              {BUCKETS.map((b) => (
+                <div
+                  key={b.no}
+                  className="relative group flex items-center justify-center transition-opacity hover:opacity-90"
+                  style={{ width: `${b.pct}%`, background: b.color }}
+                  title={`${b.label} 約${b.pct}%`}
+                >
+                  <span className="font-inter text-white text-[10px] md:text-[11px] font-bold tracking-[0.1em] truncate px-1">
+                    {b.pct >= 5 ? `${b.pct}%` : ""}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+              {BUCKETS.map((b) => (
+                <div key={b.no} className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3" style={{ background: b.color }} />
+                  <span className="text-[11px] md:text-[12px] text-text-secondary">{b.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 5つの詳細(編集誌的フラット縦列) */}
           <div className="border-t border-text-primary/15">
-            {COST_BUCKETS.map((b) => (
+            {BUCKETS.map((b) => (
               <article
                 key={b.no}
-                className="grid grid-cols-1 md:grid-cols-[80px_1fr_minmax(0,260px)] gap-6 md:gap-10 border-b border-text-primary/15 py-7 md:py-10 transition-colors hover:bg-white/40"
+                className="grid grid-cols-1 md:grid-cols-[80px_1fr_minmax(0,260px)] gap-6 md:gap-10 border-b border-text-primary/15 py-7 md:py-9 transition-colors hover:bg-bg-warm/40"
               >
-                <div className="font-oswald text-text-secondary tracking-[-0.02em] text-3xl md:text-4xl" style={{ fontWeight: 300 }}>
-                  {b.no}
+                <div className="flex items-baseline gap-2">
+                  <span className="font-oswald text-text-secondary tracking-[-0.02em] text-3xl md:text-4xl" style={{ fontWeight: 300 }}>
+                    {b.no}
+                  </span>
+                  <span
+                    className="hidden md:inline-block w-3 h-3 self-center"
+                    style={{ background: b.color }}
+                    aria-hidden
+                  />
                 </div>
                 <div>
                   <p className="text-text-primary text-[clamp(18px,1.7vw,22px)] font-medium tracking-[0.04em] leading-[1.5]">
@@ -374,7 +452,7 @@ export default function MoneyFullSection() {
                     {b.body}
                   </p>
                   <p className="mt-3 font-inter text-[10px] md:text-[11px] tracking-[0.16em] text-text-secondary/80">
-                    {b.sub}
+                    {b.yamato}
                   </p>
                 </div>
                 <div className="md:text-right">
@@ -383,16 +461,14 @@ export default function MoneyFullSection() {
                       className="font-oswald tabular-nums leading-[0.85] text-text-primary"
                       style={{
                         fontWeight: 300,
-                        fontSize: "clamp(36px, 4vw, 56px)",
+                        fontSize: "clamp(34px, 3.6vw, 52px)",
                         letterSpacing: "-0.03em",
                       }}
                     >
                       {b.amount}
                     </span>
                     {b.unit ? (
-                      <span className="text-text-secondary text-sm md:text-base font-medium">
-                        {b.unit}
-                      </span>
+                      <span className="text-text-secondary text-sm md:text-base font-medium">{b.unit}</span>
                     ) : null}
                   </div>
                 </div>
@@ -400,100 +476,163 @@ export default function MoneyFullSection() {
             ))}
           </div>
 
-          {/* やまと負担 callout */}
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-center border-t-[3px] border-text-primary pt-8 md:pt-10">
+          {/* やまと負担 callout — lime warm */}
+          <div
+            className="mt-12 grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-6 lg:gap-10 items-center px-6 md:px-10 py-8 md:py-10 border"
+            style={{ background: "#EDF2D5", borderColor: "rgba(72,107,0,0.2)" }}
+          >
+            <ShieldCheck className="h-7 w-7 shrink-0" style={{ color: FOREST }} strokeWidth={1.6} />
             <div>
-              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-main mb-3 font-bold">
-                Yamato pays for you
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-bold mb-2" style={{ color: FOREST }}>
+                Yamato pays for you · やまとが負担
               </p>
-              <p className="text-text-primary text-[clamp(18px,1.9vw,26px)] font-medium leading-[1.55] tracking-[0.04em]">
-                やまとが負担しているもの。
+              <p className="text-text-primary text-[clamp(16px,1.6vw,22px)] font-medium leading-[1.55]">
+                地盤改良費(最大150万円)・仲介手数料・契約後の追加見積。これらは、当社が負担します。
               </p>
-              <p className="mt-3 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary max-w-[760px]">
-                地盤改良費(最大150万円)、仲介手数料、契約後の追加見積。これらは当社が負担、もしくは「最初の見積もりから変わらない」を原則にしています。
-                業界では契約後の増額が8割で発生すると言われますが、やまとはそれをしません。
+              <p className="mt-2 text-[12px] md:text-[13px] leading-[1.85] text-text-primary/75 max-w-[760px]">
+                業界では契約後の増額が8割で発生すると言われますが、やまとは「最初の見積もりから変わらない」を原則にしています。
               </p>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <ShieldCheck className="h-5 w-5 text-main" strokeWidth={2} />
-              <span className="font-inter text-[11px] tracking-[0.18em] uppercase text-main font-bold">No hidden cost</span>
-            </div>
+            <span
+              className="font-inter text-[10px] tracking-[0.18em] uppercase font-bold whitespace-nowrap"
+              style={{ color: FOREST }}
+            >
+              No hidden cost
+            </span>
           </div>
         </div>
       </section>
 
+      {/* === BREATHING #1 === */}
+      <BreathingImage
+        src="/images/newsozai/exterior-terrace-01.webp"
+        alt="テラスからの暮らし"
+        caption="数字の先にある暮らしを、いつも一緒に見ます。"
+      />
+
       {/* ============================================================
-          2. SIMULATION — 月々の早見表
+          2. 月々、いくらですか？  — 想定モデル + 早見表
           ============================================================ */}
-      <section className="relative bg-bg-primary py-[var(--section-py)]">
+      <section id="ch-monthly" className="relative bg-bg-primary py-[var(--section-py)] scroll-mt-20">
         <div ref={r2} className="relative mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in">
-          <CenteredHeader
-            kicker="Simulation / 月々のお支払い"
-            title={<>いくら借りるかより、<br />いくらなら返せるか。</>}
-            lead="借入額・期間・金利を組み合わせると、月々のお支払いの目安が見えてきます。35年返済(元利均等・ボーナス払いなし)で並べました。ご家族の年収・教育費・老後資金との兼ね合いで、無理のない額を探してまいります。"
+          <ChapterHeader
+            no="02"
+            question={<>月々のお支払いは、<br />どれくらいですか？</>}
+            lead="「いくら借りられるか」より「いくらなら返せるか」。ご家族の暮らしに合う額を、具体的に。"
           />
 
-          {/* テーブル */}
-          <div className="overflow-hidden border border-text-primary/15 bg-white">
-            <div className="grid grid-cols-[minmax(120px,1fr)_repeat(3,minmax(0,1fr))] border-b border-text-primary/15 bg-bg-secondary/50">
-              <div className="px-4 py-4 md:px-6 md:py-5 font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold">
-                借入 / 金利
+          {/* 想定モデル(主役) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-px bg-text-primary/10 border border-text-primary/15">
+            {/* Left: モデル */}
+            <div className="bg-[#FAF8F3] p-8 md:p-12">
+              <div className="flex items-center gap-3 mb-6">
+                <span
+                  className="inline-block w-2 h-2 rounded-full"
+                  style={{ background: ACCENT }}
+                  aria-hidden
+                />
+                <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold">
+                  Model Family · 想定モデル
+                </p>
               </div>
-              {RATE_HEADERS.map((r) => (
-                <div
-                  key={r}
-                  className="border-l border-text-primary/15 px-3 py-4 md:px-5 md:py-5 text-center font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold"
+              <p className="text-text-primary text-[clamp(18px,1.8vw,24px)] font-medium leading-[1.55]">
+                {MODEL_FAMILY.who}
+                <br />
+                <span className="text-text-secondary text-[clamp(14px,1.2vw,17px)] font-normal">
+                  {MODEL_FAMILY.income}
+                </span>
+              </p>
+
+              <div className="mt-10 flex items-baseline gap-3 flex-wrap">
+                <span className="font-inter text-[11px] tracking-[0.18em] uppercase text-text-secondary font-bold">
+                  借入 {MODEL_FAMILY.borrow}
+                </span>
+                <span className="text-text-secondary/50">→</span>
+                <span className="font-inter text-[11px] tracking-[0.18em] uppercase text-text-secondary font-bold">
+                  月々
+                </span>
+              </div>
+              <div className="mt-2 flex items-baseline gap-2">
+                <span
+                  className="font-oswald tabular-nums leading-[0.85] text-text-primary"
+                  style={{
+                    fontWeight: 300,
+                    fontSize: "clamp(72px, 11vw, 160px)",
+                    letterSpacing: "-0.04em",
+                    color: FOREST,
+                  }}
                 >
-                  {r}
-                </div>
-              ))}
+                  {MODEL_FAMILY.monthly}
+                </span>
+                <span className="text-text-primary text-xl md:text-2xl font-medium">万円</span>
+                <span className="text-text-secondary text-sm md:text-base">/月</span>
+              </div>
+              <p className="font-inter text-[11px] tracking-[0.16em] text-text-secondary mt-2">
+                {MODEL_FAMILY.rate}
+              </p>
+
+              <p className="mt-8 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary max-w-[480px]">
+                {MODEL_FAMILY.comment}
+              </p>
             </div>
-            {LOAN_TABLE.map((row, i) => (
-              <div
-                key={row.borrow}
-                className={`grid grid-cols-[minmax(120px,1fr)_repeat(3,minmax(0,1fr))] border-b border-text-primary/10 last:border-b-0 ${
-                  i % 2 === 0 ? "bg-white" : "bg-bg-secondary/20"
-                }`}
-              >
-                <div className="px-4 py-5 md:px-6 md:py-7 flex items-baseline gap-1.5">
-                  <span
-                    className="font-oswald tabular-nums text-text-primary leading-none"
-                    style={{ fontWeight: 300, fontSize: "clamp(20px, 2vw, 28px)" }}
-                  >
-                    {row.borrow}
-                  </span>
-                  <span className="text-text-secondary text-[11px] md:text-xs font-medium">万円</span>
-                </div>
-                {row.monthly.map((m, j) => (
-                  <div
-                    key={j}
-                    className="border-l border-text-primary/10 px-3 py-5 md:px-5 md:py-7 flex items-baseline justify-center gap-1.5"
-                  >
-                    <span
-                      className="font-oswald tabular-nums text-text-primary leading-none"
-                      style={{ fontWeight: 400, fontSize: "clamp(22px, 2.4vw, 34px)", letterSpacing: "-0.02em" }}
-                    >
-                      {m}
+
+            {/* Right: 早見表(コンパクト) */}
+            <div className="bg-white p-6 md:p-8">
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold mb-1">
+                Quick Reference · 早見表
+              </p>
+              <p className="text-[12px] text-text-secondary mb-6">35年・元利均等・ボーナス払いなし</p>
+
+              <div className="border-t border-text-primary/10">
+                <div className="grid grid-cols-[1fr_repeat(3,minmax(0,1fr))] py-2 border-b border-text-primary/10">
+                  <span className="font-inter text-[10px] tracking-[0.18em] text-text-secondary">借入</span>
+                  {RATE_HEADERS.map((r) => (
+                    <span key={r} className="font-inter text-[10px] tracking-[0.18em] text-text-secondary text-center">
+                      {r}
                     </span>
-                    <span className="text-text-secondary text-[11px] md:text-xs font-medium">万円/月</span>
+                  ))}
+                </div>
+                {LOAN_TABLE.map((row) => (
+                  <div
+                    key={row.borrow}
+                    className="grid grid-cols-[1fr_repeat(3,minmax(0,1fr))] py-3 md:py-4 border-b border-text-primary/10 last:border-b-0 items-baseline"
+                  >
+                    <span className="font-oswald text-text-primary tabular-nums" style={{ fontWeight: 400, fontSize: "clamp(14px,1.4vw,18px)" }}>
+                      {row.borrow}
+                      <span className="text-text-secondary text-[11px] ml-1">万</span>
+                    </span>
+                    {row.monthly.map((m, j) => (
+                      <span key={j} className="font-oswald text-text-primary tabular-nums text-center" style={{ fontWeight: 400, fontSize: "clamp(15px,1.5vw,19px)" }}>
+                        {m}
+                        <span className="text-text-secondary text-[10px] ml-0.5">万</span>
+                      </span>
+                    ))}
                   </div>
                 ))}
               </div>
-            ))}
+            </div>
           </div>
 
           <p className="mt-6 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary max-w-[860px]">
-            ※ 返済期間35年・元利均等返済・ボーナス払いなしで試算した目安です。実際の金利は金融機関・商品・審査時期により異なります。月々のお支払いには、固定資産税・修繕費が別途かかります。
+            ※ 上記は試算の一例です。実際の金利は金融機関・商品・審査時期により異なります。月々のお支払いには固定資産税・修繕費が別途かかります。
           </p>
 
           {/* 3つのルール */}
-          <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/10">
-            {RULES.map((r) => (
-              <div key={r.label} className="bg-white p-7 md:p-9">
-                <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-main font-bold">
-                  {r.label}
-                </p>
-                <p className="mt-5 text-text-primary text-[clamp(16px,1.4vw,20px)] font-medium leading-[1.55] tracking-[0.04em]">
+          <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {RULES.map((r, i) => (
+              <div key={r.label} className="border-t-[3px] border-text-primary/85 pt-6">
+                <div className="flex items-baseline gap-3 mb-4">
+                  <span
+                    className="font-oswald tabular-nums leading-none text-text-secondary/40"
+                    style={{ fontWeight: 300, fontSize: "clamp(28px,2.6vw,40px)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-inter text-[10px] tracking-[0.28em] uppercase text-main font-bold">
+                    {r.label}
+                  </span>
+                </div>
+                <p className="text-text-primary text-[clamp(16px,1.4vw,20px)] font-medium leading-[1.55] tracking-[0.03em]">
                   {r.t}
                 </p>
                 <p className="mt-3 text-[13px] leading-[1.9] text-text-secondary">{r.d}</p>
@@ -504,47 +643,104 @@ export default function MoneyFullSection() {
       </section>
 
       {/* ============================================================
-          3. RENT vs OWN — 比較
+          3. 賃貸と、何が違いますか?
           ============================================================ */}
-      <section className="relative bg-[#FAF8F3] py-[var(--section-py)]">
+      <section id="ch-vs" className="relative bg-[#FAF8F3] py-[var(--section-py)] scroll-mt-20">
         <div ref={r3} className="relative mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in">
-          <EditorialHeader
-            kicker="Rent vs Own / 比較"
-            title={<>払うお金は同じくらい。<br />残るものが、違います。</>}
-            leadStrong={<>賃貸と持家。<br />同じ月10万円で、30年後に何が残るか。</>}
-            leadBody="持家には固定資産税や修繕費もかかります。両方を並べてご覧ください。"
+          <ChapterHeader
+            no="03"
+            question={<>賃貸と、<br />本当は何が違いますか？</>}
+            lead="同じ月10万円で、30年後に何が残るか。両方を並べて、ご一緒に見てまいります。"
           />
 
-          <div className="overflow-hidden border border-text-primary/15 bg-white">
-            <div className="grid grid-cols-[minmax(140px,1.2fr)_minmax(0,1fr)_minmax(0,1fr)] border-b border-text-primary/15 bg-bg-secondary/50">
-              <div className="px-4 py-4 md:px-6 md:py-5 font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold">
-                くらべる項目
-              </div>
-              <div className="border-l border-text-primary/15 px-3 py-4 md:px-5 md:py-5 text-center font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold">
-                Rent / 賃貸
-              </div>
-              <div
-                className="border-l border-text-primary/15 px-3 py-4 md:px-5 md:py-5 text-center font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-bold"
-                style={{ background: ACCENT, color: "#1A2A00" }}
+          {/* 大きな2カラム比較 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-px md:bg-text-primary/10 md:border md:border-text-primary/15">
+            {/* 賃貸 */}
+            <div className="bg-white p-8 md:p-12 border md:border-0 border-text-primary/15">
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold mb-4">
+                Rent · 賃貸
+              </p>
+              <p
+                className="text-text-primary leading-[1.2] tracking-[-0.02em]"
+                style={{ fontWeight: 500, fontSize: "clamp(28px, 3.4vw, 48px)" }}
               >
-                Own / 持家
+                月10万円
+              </p>
+              <p className="text-text-secondary text-sm mt-2">を30年</p>
+              <div className="mt-8 pt-6 border-t border-text-primary/10">
+                <p className="font-inter text-[10px] tracking-[0.18em] uppercase text-text-secondary font-bold">
+                  After 30 years
+                </p>
+                <p
+                  className="mt-3 font-oswald tabular-nums text-text-primary"
+                  style={{ fontWeight: 300, fontSize: "clamp(40px, 4.4vw, 64px)", letterSpacing: "-0.02em" }}
+                >
+                  3,600
+                  <span className="text-text-secondary text-base ml-1">万円の支出</span>
+                </p>
+                <p className="mt-3 text-text-secondary text-[13px] leading-[1.85]">
+                  資産は、残りません。<br />老後も家賃が続きます。
+                </p>
               </div>
             </div>
-            {RENT_VS_OWN.map((row, i) => (
+            {/* 持家 */}
+            <div className="p-8 md:p-12 border md:border-0 border-text-primary/15" style={{ background: "#EDF2D5" }}>
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-bold mb-4" style={{ color: FOREST }}>
+                Own · 持家
+              </p>
+              <p
+                className="text-text-primary leading-[1.2] tracking-[-0.02em]"
+                style={{ fontWeight: 500, fontSize: "clamp(28px, 3.4vw, 48px)" }}
+              >
+                月10万円相当
+              </p>
+              <p className="text-text-primary/70 text-sm mt-2">のローンを30年</p>
+              <div className="mt-8 pt-6 border-t" style={{ borderColor: "rgba(72,107,0,0.2)" }}>
+                <p className="font-inter text-[10px] tracking-[0.18em] uppercase font-bold" style={{ color: FOREST }}>
+                  After 30 years
+                </p>
+                <div className="mt-3 flex items-baseline gap-3 flex-wrap">
+                  <span
+                    className="font-oswald tabular-nums"
+                    style={{ fontWeight: 300, fontSize: "clamp(40px, 4.4vw, 64px)", letterSpacing: "-0.02em", color: FOREST }}
+                  >
+                    約3,700
+                  </span>
+                  <span className="text-text-primary/85 text-base">万円の支出</span>
+                </div>
+                <div className="mt-2 flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" style={{ color: FOREST }} strokeWidth={2} />
+                  <p className="text-[13px] font-medium" style={{ color: FOREST }}>
+                    家が、資産として残る。
+                  </p>
+                </div>
+                <p className="mt-3 text-text-primary/75 text-[13px] leading-[1.85]">
+                  完済後の住居費は、固定資産税と修繕費のみ。<br />
+                  老後の家計が、楽になります。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 4軸比較表 */}
+          <div className="mt-10 md:mt-12 overflow-hidden border border-text-primary/15 bg-white">
+            {COMPARE.map((row, i) => (
               <div
                 key={row.axis}
-                className={`grid grid-cols-[minmax(140px,1.2fr)_minmax(0,1fr)_minmax(0,1fr)] border-b border-text-primary/10 last:border-b-0 ${
+                className={`grid grid-cols-[minmax(120px,1fr)_minmax(0,1fr)_minmax(0,1fr)] border-b border-text-primary/10 last:border-b-0 ${
                   i % 2 === 0 ? "bg-white" : "bg-bg-secondary/15"
                 }`}
               >
-                <div className="px-4 py-5 md:px-6 md:py-7 text-[13px] md:text-sm font-medium text-text-primary">
+                <div className="px-4 py-4 md:px-6 md:py-5 text-[13px] md:text-sm text-text-secondary font-medium">
                   {row.axis}
                 </div>
-                <div className="flex items-center justify-center border-l border-text-primary/10 px-3 py-5 md:px-5 md:py-7 text-center text-[13px] md:text-sm text-text-secondary">
+                <div className="border-l border-text-primary/10 px-3 py-4 md:px-5 md:py-5 text-center text-[13px] md:text-sm text-text-secondary">
                   {row.rent}
                 </div>
                 <div
-                  className="flex items-center justify-center border-l border-text-primary/10 px-3 py-5 md:px-5 md:py-7 text-center text-[13px] md:text-sm font-medium text-text-primary"
+                  className={`border-l border-text-primary/10 px-3 py-4 md:px-5 md:py-5 text-center text-[13px] md:text-sm font-medium ${
+                    row.positive ? "text-text-primary" : "text-text-primary"
+                  }`}
                   style={{ background: "rgba(162,197,35,0.08)" }}
                 >
                   {row.own}
@@ -554,24 +750,24 @@ export default function MoneyFullSection() {
           </div>
 
           <p className="mt-6 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary max-w-[860px]">
-            ※ 持家には固定資産税(年10〜15万円目安)・修繕費(10〜15年で50〜100万円目安)が別途かかります。それでも「資産として残る」「老後の住居費が下がる」点は、家計の長期設計で大きな違いになります。
+            ※ 持家には固定資産税(年10〜15万円目安)・修繕費(10〜15年で50〜100万円目安)が別途かかります。長期で見ると、それでも「資産として残る」「老後の住居費が下がる」ことが大きな違いになります。
           </p>
         </div>
       </section>
 
       {/* ============================================================
-          4. LOAN DESIGN — 金利タイプ + 制度
+          4. ローンと制度。3分でわかります。
           ============================================================ */}
-      <section className="relative bg-bg-primary py-[var(--section-py)]">
+      <section id="ch-loan" className="relative bg-bg-primary py-[var(--section-py)] scroll-mt-20">
         <div ref={r4} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
-          <CenteredHeader
-            kicker="Loan Design / ローンの組み方"
-            title={<>金利のタイプと、<br />使える制度。先に整理します。</>}
-            lead="住宅ローンは「変動か、固定か」だけでは決まりません。控除制度・補助金・贈与の特例まで含めて、ご家族の状況に合うかたちを一緒に考えます。"
+          <ChapterHeader
+            no="04"
+            question={<>ローンの種類と、<br />使える制度は？</>}
+            lead="変動か固定かだけでは決まりません。控除制度・補助金・贈与の特例まで含めて、ご家族の状況に合うかたちを考えます。"
           />
 
           {/* 3タイプ */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15">
             {LOAN_TYPES.map((t) => (
               <article key={t.name} className="bg-white p-7 md:p-9 flex flex-col">
                 <p className="text-text-primary text-[clamp(17px,1.5vw,21px)] font-medium tracking-[0.04em] leading-[1.5]">
@@ -579,12 +775,12 @@ export default function MoneyFullSection() {
                 </p>
                 <div className="mt-5 flex items-baseline gap-1.5">
                   <span
-                    className="font-oswald tabular-nums text-text-primary leading-none"
-                    style={{ fontWeight: 300, fontSize: "clamp(40px, 4.4vw, 64px)", color: ACCENT, letterSpacing: "-0.02em" }}
+                    className="font-oswald tabular-nums leading-none"
+                    style={{ fontWeight: 300, fontSize: "clamp(40px, 4.4vw, 64px)", color: FOREST, letterSpacing: "-0.02em" }}
                   >
                     {t.rate}
                   </span>
-                  <span className="text-text-secondary text-sm font-medium">{t.rateUnit}</span>
+                  <span className="text-text-secondary text-sm font-medium">%</span>
                 </div>
                 <p className="font-inter text-[10px] tracking-[0.16em] uppercase text-text-secondary mt-1">
                   Reference rate · 2026
@@ -625,6 +821,7 @@ export default function MoneyFullSection() {
                   <div>
                     <p className="text-text-primary text-[15px] md:text-base font-medium leading-[1.6]">
                       {s.name}
+                      {s.sub ? <span className="text-text-secondary text-[12px] md:text-[13px] font-normal ml-2">{s.sub}</span> : null}
                     </p>
                     <p className="mt-2 text-[13px] leading-[1.95] text-text-secondary">{s.body}</p>
                   </div>
@@ -632,101 +829,133 @@ export default function MoneyFullSection() {
               ))}
             </div>
             <p className="mt-8 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary max-w-[860px]">
-              ※ 各制度の要件・上限額・申請期間は年度ごとに変わります。最新の条件は、ご相談時に確認のうえご案内します。
+              ※ 各制度の要件・上限額・申請期間は年度ごとに変わります。最新の条件はご相談時にご案内します。
             </p>
           </div>
         </div>
       </section>
 
       {/* ============================================================
-          5. BRIDGE LOAN — つなぎ融資
+          5. つなぎ融資って、何？
           ============================================================ */}
-      <section className="relative bg-[#FAF8F3] py-[var(--section-py)]">
+      <section id="ch-bridge" className="relative bg-[#FAF8F3] py-[var(--section-py)] scroll-mt-20">
         <div ref={r5} className="relative mx-auto max-w-[1240px] px-[var(--page-px)] scroll-in">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end">
-            <div>
-              <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-                Bridge Loan / つなぎ融資
+          <ChapterHeader
+            no="05"
+            question={<>「つなぎ融資」って、<br />何ですか？</>}
+            lead="土地と建物の段取り次第で、ローンの利息は変わります。やまとは段取りの一本化で、負担を抑えられる場合があります。"
+          />
+
+          {/* タイムライン図 */}
+          <div className="bg-white border border-text-primary/15 p-8 md:p-12">
+            <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold mb-8">
+              Timeline · 段取りで変わる利息
+            </p>
+
+            {/* 他社パターン */}
+            <div className="mb-10">
+              <p className="text-text-primary text-[13px] md:text-sm font-medium mb-4">
+                ❶ 土地と建物を別々に進めた場合
               </p>
-              <h2
-                className="text-text-primary leading-[1.05] tracking-[-0.02em]"
-                style={{ fontWeight: 500, fontSize: "clamp(34px, 5.6vw, 84px)" }}
-              >
-                土地と建物の段取りで、
-                <br />
-                利息は変わります。
-              </h2>
-            </div>
-            <aside className="lg:pt-4">
-              <div className="border-t-[3px] border-text-primary pt-6">
-                <p className="font-medium text-[clamp(17px,1.7vw,24px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                  土地と建物をまとめて進めると、負担を抑えられる場合があります。
-                </p>
-                <p className="mt-5 text-[13px] md:text-[14px] leading-[1.95] max-w-[480px] text-text-secondary">
-                  土地だけを先に購入し、あとから建物資金につなぐ場合、工事までのあいだに「つなぎ融資」が入ることがあります。利息や手数料が上乗せされ、思ったより総額が膨らむ要因になります。
-                </p>
-                <p className="mt-4 text-[13px] md:text-[14px] leading-[1.95] max-w-[480px] text-text-secondary">
-                  やまとは奈良・京都での土地分譲の実績があり、土地と建物の段取りを一本化できる案件が多くあります。段取り次第で、つなぎ融資が不要になったり、期間を短くできたりするケースがあります。
-                </p>
-                <p className="mt-4 font-inter text-[11px] tracking-[0.16em] text-text-secondary">
-                  ※ 内容は金融機関の条件や案件ごとに異なります。
-                </p>
+              <div className="relative h-12 md:h-16 w-full bg-bg-secondary/40 border border-text-primary/10 flex items-center">
+                <div className="h-full w-[35%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: "#7D4427" }}>
+                  土地購入
+                </div>
+                <div className="h-full w-[15%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em] bg-text-primary/60">
+                  つなぎ融資 ⚠
+                </div>
+                <div className="h-full w-[50%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: FOREST }}>
+                  建物着工 → 完成
+                </div>
               </div>
-            </aside>
+              <p className="mt-3 text-[12px] text-text-secondary">
+                土地購入から建物完成までの間、つなぎ融資の利息と手数料が上乗せされます。
+              </p>
+            </div>
+
+            {/* やまとパターン */}
+            <div>
+              <p className="font-medium mb-4 text-[13px] md:text-sm" style={{ color: FOREST }}>
+                ❷ やまと: 土地と建物をまとめて進めた場合
+              </p>
+              <div className="relative h-12 md:h-16 w-full border flex items-center" style={{ background: "#EDF2D5", borderColor: "rgba(72,107,0,0.25)" }}>
+                <div className="h-full w-[40%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: "#7D4427" }}>
+                  土地・建物を同時に
+                </div>
+                <div className="h-full w-[60%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium tracking-[0.08em]" style={{ background: FOREST }}>
+                  建物着工 → 完成
+                </div>
+              </div>
+              <p className="mt-3 text-[12px] leading-[1.85]" style={{ color: FOREST }}>
+                ✓ つなぎ融資が不要になったり、期間を短くできたりするケースがあります。
+              </p>
+            </div>
+
+            <p className="mt-8 pt-6 border-t border-text-primary/10 text-[12px] leading-[1.85] text-text-secondary">
+              やまとは奈良・京都での土地分譲の実績があり、土地と建物の段取りを一本化できる案件が多くあります。内容は金融機関の条件や案件ごとに異なります。
+            </p>
           </div>
         </div>
       </section>
 
+      {/* === BREATHING #2 === */}
+      <BreathingImage
+        src="/images/works/case2-living.webp"
+        alt="家族の暮らし"
+        caption="家計を整えると、暮らしが軽くなります。"
+      />
+
       {/* ============================================================
-          6. FP NEUTRALITY — 黒背景・3つの約束
+          6. FPって、誰のために動く人？  — 温かい光へ転換
           ============================================================ */}
-      <section className="relative overflow-hidden bg-text-primary py-[var(--section-py)]">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.4]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, rgba(255,255,255,0.018), rgba(255,255,255,0.018) 1px, transparent 1px, transparent 28px)",
-          }}
-        />
+      <section id="ch-fp" className="relative bg-bg-warm py-[var(--section-py)] scroll-mt-20">
         <div ref={r6} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
-          <CenteredHeader
-            light
-            kicker="FP Neutrality / 提携FPの3つの約束"
-            title={<>「家を売るためのFP」では、<br />ありません。</>}
+          <ChapterHeader
+            no="06"
+            question={<>FPって、<br />誰のために動く人ですか？</>}
             lead="ハウスメーカーや不動産会社が紹介するFPは、家を売ることが前提になりがちです。やまとが提携しているFPには、ご家族のライフプランを軸に、率直にお話しいただくようお願いしています。"
           />
 
           {/* 3つの約束 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 border border-white/10">
-            {FP_PROMISES.map((p, i) => (
-              <article key={p.title} className="bg-text-primary p-7 md:p-9">
-                <div className="flex items-baseline gap-3">
-                  <span
-                    className="font-oswald text-white/90 leading-none"
-                    style={{ fontWeight: 300, fontSize: "clamp(40px, 4vw, 56px)", color: ACCENT, letterSpacing: "-0.02em" }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-inter text-[10px] tracking-[0.22em] uppercase text-white/55 font-bold">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {FP_PROMISES.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <article
+                  key={p.title}
+                  className="bg-white border border-text-primary/10 p-7 md:p-9 transition-shadow hover:shadow-[0_18px_40px_-24px_rgba(43,43,43,0.18)]"
+                >
+                  <div className="flex items-baseline justify-between mb-6">
+                    <span
+                      className="font-oswald tabular-nums leading-none"
+                      style={{ fontWeight: 300, fontSize: "clamp(36px, 3.6vw, 52px)", color: FOREST, letterSpacing: "-0.02em" }}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <Icon className="h-5 w-5" style={{ color: FOREST }} strokeWidth={1.5} />
+                  </div>
+                  <p className="font-inter text-[10px] tracking-[0.22em] uppercase text-text-secondary font-bold mb-3">
                     Promise
-                  </span>
-                </div>
-                <p className="mt-6 text-white text-[clamp(17px,1.5vw,21px)] font-medium leading-[1.55] tracking-[0.04em]">
-                  {p.title}
-                </p>
-                <p className="mt-3 text-[13px] leading-[1.95] text-white/70">{p.body}</p>
-              </article>
-            ))}
+                  </p>
+                  <p className="text-text-primary text-[clamp(16px,1.4vw,20px)] font-medium leading-[1.55] tracking-[0.03em]">
+                    {p.title}
+                  </p>
+                  <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary">{p.body}</p>
+                </article>
+              );
+            })}
           </div>
 
-          <div className="mt-16 grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 lg:gap-10 items-start border-t border-white/15 pt-10">
-            <Scale className="h-6 w-6 text-white/85" strokeWidth={1.6} />
+          {/* やまと社内資格 */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-8 items-start border-t border-text-primary/15 pt-8">
+            <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold">
+              In-house Advisor
+            </p>
             <div>
-              <p className="text-white text-[clamp(15px,1.3vw,19px)] font-medium leading-[1.6] tracking-[0.04em]">
+              <p className="text-text-primary text-[clamp(15px,1.3vw,19px)] font-medium leading-[1.6]">
                 社内にも、住宅ローンアドバイザー資格保有者がいます。
               </p>
-              <p className="mt-3 text-[13px] md:text-[14px] leading-[1.95] text-white/70 max-w-[760px]">
+              <p className="mt-2 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary max-w-[760px]">
                 大和信用金庫・奈良中央信用金庫・南都銀行・りそな銀行など、複数の金融機関の中からご状況に合うものをご一緒に整理します。
               </p>
             </div>
@@ -735,103 +964,83 @@ export default function MoneyFullSection() {
       </section>
 
       {/* ============================================================
-          7. FIRST MEETING — 初回相談の流れ
+          7. はじめての方へ。ご相談のながれ。
           ============================================================ */}
-      <section className="relative bg-bg-primary py-[var(--section-py)]">
+      <section id="ch-flow" className="relative bg-bg-primary py-[var(--section-py)] scroll-mt-20">
         <div ref={r7} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
-            {/* Left: コピー + 写真 */}
-            <div>
-              <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-                First Meeting / はじめての方へ
-              </p>
-              <h2
-                className="text-text-primary leading-[1.1] tracking-[-0.02em]"
-                style={{ fontWeight: 500, fontSize: "clamp(32px, 4.8vw, 64px)" }}
-              >
-                資料は、お揃いでなくて構いません。
-              </h2>
-              <p className="mt-6 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary max-w-[480px]">
-                初回は、気がかりなことを一つずつ整理する時間です。図面や金融の細部は、必要になった段階で少しずつお話しします。
-                持参不要、お電話一本でご予約いただけます。
-              </p>
+          <ChapterHeader
+            no="07"
+            question={<>はじめての方は、<br />何を持っていけばいいですか？</>}
+            lead="持参不要です。資料はお揃いでなくて構いません。気がかりなことを一つずつ整理する時間です。お電話一本でご予約いただけます。"
+          />
 
-              <figure className="mt-10 overflow-hidden border border-text-primary/10">
-                <div className="relative aspect-[4/3] w-full">
+          {/* 3ステップ — 写真付き横3列 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {FLOW_STEPS.map((s) => (
+              <article key={s.k} className="flex flex-col">
+                <figure className="relative aspect-[4/3] w-full overflow-hidden border border-text-primary/10">
                   <Image
-                    src="/images/newsozai/interior-kitchen-01.webp"
-                    alt="内観 — 暮らしの中心"
+                    src={s.image}
+                    alt={s.title}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 45vw"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
+                </figure>
+                <div className="pt-6 md:pt-7 border-t-[3px] border-text-primary mt-6">
+                  <div className="flex items-baseline gap-3 mb-3">
+                    <span
+                      className="font-oswald tabular-nums leading-none text-text-primary"
+                      style={{ fontWeight: 300, fontSize: "clamp(40px, 4vw, 56px)", letterSpacing: "-0.02em" }}
+                    >
+                      {s.k}
+                    </span>
+                    <span className="font-inter text-[10px] tracking-[0.22em] uppercase text-text-secondary font-bold">
+                      Step
+                    </span>
+                  </div>
+                  <p className="text-text-primary text-[clamp(17px,1.5vw,21px)] font-medium leading-[1.5] tracking-[0.04em]">
+                    {s.title}
+                  </p>
+                  <p className="mt-4 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary">
+                    {s.body}
+                  </p>
                 </div>
-              </figure>
-            </div>
+              </article>
+            ))}
+          </div>
 
-            {/* Right: 3 ステップ + CTA */}
-            <div>
-              <div className="border-t-[3px] border-text-primary pt-8">
-                <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary mb-2 font-bold">
-                  Flow · 初回面談のながれ
-                </p>
-                <p className="text-[12px] leading-relaxed text-text-secondary">
-                  所要時間は内容により前後します。お子様連れも歓迎です。
-                </p>
-
-                <div className="mt-10 space-y-10">
-                  {FLOW_STEPS.map((s) => (
-                    <div key={s.k} className="grid grid-cols-[auto_1fr] gap-x-6 md:gap-x-8 border-b border-text-primary/10 pb-10 last:border-b-0">
-                      <span
-                        className="font-oswald text-text-primary tracking-[-0.02em] leading-none"
-                        style={{ fontWeight: 300, fontSize: "clamp(40px, 4vw, 56px)" }}
-                      >
-                        {s.k}
-                      </span>
-                      <div>
-                        <p className="text-text-primary text-[clamp(17px,1.5vw,21px)] font-medium leading-[1.5] tracking-[0.04em]">
-                          {s.title}
-                        </p>
-                        <p className="mt-3 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary">
-                          {s.body}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10 flex flex-col sm:flex-row gap-3">
-                  <CtaButton
-                    href="/reserve"
-                    variant="primary"
-                    size="md"
-                    label="初回相談を予約する"
-                    sublabel="ご相談・事前審査は無料"
-                    icon="calendar"
-                  />
-                  <CtaButton
-                    href="/contact"
-                    variant="secondary"
-                    size="md"
-                    label="まずは質問だけ"
-                    sublabel="メッセージで気軽にどうぞ"
-                  />
-                </div>
-              </div>
-            </div>
+          {/* インラインCTA */}
+          <div className="mt-14 md:mt-20 flex flex-col sm:flex-row justify-center gap-4">
+            <CtaButton
+              href="/reserve"
+              variant="primary"
+              size="md"
+              label="初回相談を予約する"
+              sublabel="ご相談・事前審査は無料"
+              icon="calendar"
+            />
+            <CtaButton
+              href="/contact"
+              variant="secondary"
+              size="md"
+              label="まずは質問だけ"
+              sublabel="メッセージで気軽にどうぞ"
+            />
           </div>
         </div>
       </section>
 
       {/* ============================================================
-          8. FAQ
+          8. よくある不安
           ============================================================ */}
-      <section className="relative bg-[#FAF8F3] py-[var(--section-py)]">
+      <section id="ch-faq" className="relative bg-[#FAF8F3] py-[var(--section-py)] scroll-mt-20">
         <div ref={r8} className="mx-auto max-w-[1000px] px-[var(--page-px)] scroll-in">
-          <CenteredHeader
-            kicker="FAQ / お金まわりの不安"
-            title={<>「払えなくなったら」の<br />不安に、先にお答えします。</>}
+          <ChapterHeader
+            no="08"
+            question={<>「払えなくなったら」の<br />不安に、先にお答えします。</>}
             lead="ご相談の前に、よくお寄せいただく質問をまとめました。書ききれないことは、ご来店時にお気軽にお尋ねください。"
+            align="center"
           />
 
           <div>

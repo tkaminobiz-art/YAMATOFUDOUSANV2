@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import MoneyFullSection from "@/components/money/MoneyFullSection";
+import MoneyJumpNav from "@/components/money/MoneyJumpNav";
 
 export const metadata: Metadata = {
   title: "資金計画 | やまと不動産 花鳥風月",
@@ -13,22 +14,24 @@ export const metadata: Metadata = {
 };
 
 /*
-  /money — 資金計画ページ（2026-04-22 v2）
-  v1(serif多用) → v2: TOPと地続きの編集誌的ゴシック秩序に統一
-    - 和文: 全て Noto Sans JP(default sans)
-    - 数字: font-oswald
-    - 欧文ラベル: font-inter UPPERCASE
-    - PriceSection と同じ非対称グリッド(1.4fr:1fr / border-t-[3px])
+  /money — 資金計画ページ（2026-04-22 v3）
+  v2(編集誌的硬派) → v3: 5人デザイナー会議の総意
+    - シビアな数字を、暮らしの言葉で噛み砕く
+    - 写真を呼吸として2-3箇所挟む
+    - 章タイトルを「質問」起点に(宣言→疑問形)
+    - 月々シミュレーションは「想定モデル」を主役に
+    - FPは黒の正直さ→温かい光の信頼へ
+    - ジャンプナビ追加(章間の移動を快適に)
 */
 export default function MoneyIndexPage() {
   return (
     <>
       <Header />
       <main>
-        {/* === ヒーロー(編集誌的・非対称) === */}
-        <section className="relative overflow-hidden bg-[#FAF8F3]">
-          {/* 背景イメージ(薄く敷く) */}
-          <div aria-hidden className="pointer-events-none absolute inset-0">
+        {/* === ヒーロー — 写真主役の暖かいオープナー === */}
+        <section className="relative overflow-hidden bg-text-primary">
+          {/* 背景写真 */}
+          <div aria-hidden className="absolute inset-0">
             <Image
               src="/images/newsozai/interior-ldk-01.webp"
               alt=""
@@ -37,66 +40,85 @@ export default function MoneyIndexPage() {
               className="object-cover"
               sizes="100vw"
               style={{
-                opacity: 0.16,
-                filter: "saturate(0.85) brightness(1.06)",
+                filter: "saturate(0.92) contrast(1.05) brightness(0.85)",
               }}
             />
-            <div className="absolute inset-0 bg-[#FAF8F3]/55" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F3]/35 via-transparent to-[#FAF8F3]/75" />
+            {/* 下方向グラデで本文視認性を確保 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/30 to-black/15" />
           </div>
 
-          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-[clamp(64px,calc(32px+5vw),160px)] pb-[clamp(80px,calc(40px+6vw),200px)]">
+          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-[clamp(80px,calc(40px+6vw),200px)] pb-[clamp(80px,calc(40px+6vw),200px)]">
             {/* Page label */}
-            <div className="flex items-center justify-between border-b border-text-primary/15 pb-6 mb-12 md:mb-20">
-              <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-primary font-bold">
+            <div className="flex items-center justify-between mb-12 md:mb-20">
+              <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-white/85 font-bold">
                 Financial Plan
               </p>
-              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary">
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/55">
                 資金計画 / Money &amp; Loan
               </p>
             </div>
 
-            {/* Asymmetric headline: 1.4fr : 1fr */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end">
+            {/* Headline + anchor stat */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-12 lg:gap-20 items-end">
               <div>
                 <h1
-                  className="text-text-primary leading-[1.05] tracking-[-0.02em]"
+                  className="text-white leading-[1.05] tracking-[-0.02em]"
                   style={{
                     fontWeight: 500,
-                    fontSize: "clamp(40px, 7.6vw, 124px)",
+                    fontSize: "clamp(40px, 7vw, 112px)",
+                    textShadow: "0 3px 24px rgba(0,0,0,0.45)",
                   }}
                 >
-                  払えなくなる家を、
+                  数字より先に、
                   <br />
-                  僕らはお売りしません。
+                  暮らしから。
                 </h1>
+                <p className="mt-8 max-w-[560px] text-white/85 text-[clamp(15px,1.2vw,18px)] leading-[1.95]">
+                  月々のお支払い、住宅ローン、提携FPの中立性まで。
+                  家を建てる前に整理しておきたいお金の話を、ご家族の暮らしを軸に、ご一緒にほどいてまいります。
+                </p>
               </div>
 
+              {/* Anchor stat box */}
               <aside className="lg:pt-4">
-                <div className="border-t-[3px] border-text-primary pt-6">
-                  <p className="text-text-primary font-medium text-[clamp(18px,1.9vw,26px)] leading-[1.55] tracking-[0.02em] max-w-[480px]">
-                    月々のお支払い、ローン、<br />提携FPの中立性まで。
+                <div className="border-t-[3px] border-white pt-6">
+                  <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/70 font-bold">
+                    Model · 30代ご夫婦+お子様1人 / 年収500万円
                   </p>
-                  <p className="mt-5 text-[clamp(14px,1vw,16px)] leading-[1.95] text-text-secondary max-w-[480px]">
-                    家を建てる前に整理しておきたいお金の話を、ご家族の暮らしを軸にほどいてまいります。
-                    初回ご相談・事前審査は無料、しつこい営業もいたしません。
+                  <div className="mt-4 flex items-baseline gap-2">
+                    <span className="text-white text-sm font-medium">月々</span>
+                    <span
+                      className="font-oswald tabular-nums leading-[0.85] text-white"
+                      style={{
+                        fontWeight: 300,
+                        fontSize: "clamp(64px, 8vw, 120px)",
+                        letterSpacing: "-0.04em",
+                      }}
+                    >
+                      7.1
+                    </span>
+                    <span className="text-white text-xl md:text-2xl font-medium">万円</span>
+                  </div>
+                  <p className="mt-2 text-[12px] text-white/70 leading-[1.7]">
+                    から建てられる暮らしの目安。<br />
+                    ご家族の状況に合わせて、ご一緒に整えます。
                   </p>
 
                   <div className="mt-8 flex flex-col sm:flex-row gap-3">
                     <CtaButton
                       href="/reserve"
-                      variant="primary"
+                      variant="dark-bg-primary"
                       size="md"
-                      label="初回相談を予約する"
+                      label="初回相談を予約"
                       sublabel="ご相談・事前審査は無料"
                       icon="calendar"
                     />
                     <CtaButton
-                      href="/contact"
-                      variant="secondary"
+                      href="#ch-monthly"
+                      variant="dark-bg-secondary"
                       size="md"
-                      label="まずは質問だけ"
-                      sublabel="気になる点をメッセージで"
+                      label="月々の目安を見る"
+                      sublabel="想定モデルへ"
                     />
                   </div>
                 </div>
@@ -105,7 +127,10 @@ export default function MoneyIndexPage() {
           </div>
         </section>
 
-        {/* === 本文(8セクション) === */}
+        {/* === ジャンプナビ(sticky) === */}
+        <MoneyJumpNav />
+
+        {/* === 本文(8章) === */}
         <MoneyFullSection />
 
         {/* === 締めCTA === */}
@@ -121,7 +146,8 @@ export default function MoneyIndexPage() {
               気になる点を、まずはひとつ。
             </p>
             <p className="mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[540px] mx-auto">
-              ご来店でも、メッセージでも、どちらでも構いません。<br className="hidden md:block" />
+              ご来店でも、メッセージでも、どちらでも構いません。
+              <br className="hidden md:block" />
               「今は建てない」とお決めになっても、それで構いません。
             </p>
             <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
