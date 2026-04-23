@@ -18,7 +18,7 @@ const FOREST = "#486B00";
 /*
   /money — 資金計画ページ v6
   v5(9章編集誌・情報詰めすぎ) → v6: 「3スクロールで要点が伝わる」構造へ
-    1. Hero — 明るい写真 + 「家のお金、ご一緒に整えます。」
+    1. Hero — 明るい写真 + 「心配を、軽く。家のお金は、ご一緒に。」(FP+やまと対句)
     2. BigNumbers — 3つの数字をドカン(月7.1万 / 0円 / 700万)
     3. SellingPointsStrip — 3つの売り(短く)
     4. ThirtyYearAnswer — 30年で残るもの(常に見える図解)
@@ -59,21 +59,20 @@ export default function MoneyIndexPage() {
             </p>
 
             <h1
-              className="text-text-primary leading-[1.05] tracking-[-0.02em] max-w-[860px]"
+              className="text-text-primary leading-[1.15] tracking-[-0.01em] max-w-[920px]"
               style={{
                 fontWeight: 500,
-                fontSize: "clamp(40px, 7.6vw, 124px)",
+                fontSize: "clamp(34px, 6.4vw, 104px)",
               }}
             >
-              家のお金、
+              心配は、軽く。
               <br />
-              ご一緒に整えます。
+              家のお金は、ご一緒に。
             </h1>
 
-            <p className="mt-8 max-w-[560px] text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.95]">
-              やまとなら、月々<span className="font-bold" style={{ color: FOREST }}>7.1万円</span>から建てられます。
-              <br className="hidden md:block" />
-              大きな数字も、難しい言葉も、ご家族の暮らしに置き換えてお見せします。
+            <p className="mt-8 max-w-[640px] text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.95]">
+              中立な提携FPがご家族の心配を軽くし、やまとは暮らしに合わせて、ご一緒に考えます。
+              月々<span className="font-bold" style={{ color: FOREST }}>7.1万円</span>から建てられる、現実的なご計画をお見せします。
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
