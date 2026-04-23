@@ -6,6 +6,7 @@ import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import MoneyFullSection from "@/components/money/MoneyFullSection";
 import MoneyJumpNav from "@/components/money/MoneyJumpNav";
+import SellingPointsStrip from "@/components/money/SellingPointsStrip";
 
 export const metadata: Metadata = {
   title: "資金計画 | やまと不動産 花鳥風月",
@@ -30,7 +31,7 @@ export default function MoneyIndexPage() {
       <main>
         {/* === ヒーロー — 写真主役の暖かいオープナー === */}
         <section className="relative overflow-hidden bg-text-primary">
-          {/* 背景写真 */}
+          {/* 背景写真 — 暗オーバーレイを薄くして明るく */}
           <div aria-hidden className="absolute inset-0">
             <Image
               src="/images/newsozai/interior-ldk-01.webp"
@@ -40,11 +41,11 @@ export default function MoneyIndexPage() {
               className="object-cover"
               sizes="100vw"
               style={{
-                filter: "saturate(0.92) contrast(1.05) brightness(0.85)",
+                filter: "saturate(0.94) contrast(1.04) brightness(0.95)",
               }}
             />
-            {/* 下方向グラデで本文視認性を確保 */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/30 to-black/15" />
+            {/* 視認性は確保しつつ、暗さを抑える */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/22 to-black/8" />
           </div>
 
           <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-[clamp(80px,calc(40px+6vw),200px)] pb-[clamp(80px,calc(40px+6vw),200px)]">
@@ -127,6 +128,9 @@ export default function MoneyIndexPage() {
           </div>
         </section>
 
+        {/* === やまとの3つの売り(Hero直下のストリップ) === */}
+        <SellingPointsStrip />
+
         {/* === ジャンプナビ(sticky) === */}
         <MoneyJumpNav />
 
@@ -146,7 +150,7 @@ export default function MoneyIndexPage() {
               気になる点を、まずはひとつ。
             </p>
             <p className="mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[540px] mx-auto">
-              ご来店でも、メッセージでも、どちらでも構いません。
+              ご来場でも、メッセージでも、どちらでも構いません。
               <br className="hidden md:block" />
               「今は建てない」とお決めになっても、それで構いません。
             </p>

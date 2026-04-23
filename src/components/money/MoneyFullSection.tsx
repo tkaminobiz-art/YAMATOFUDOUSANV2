@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import {
   ShieldCheck,
@@ -177,17 +178,17 @@ const FP_PROMISES = [
   {
     icon: Heart,
     title: "売り場のFPではなく、ご家族のFPに。",
-    body: "ハウスメーカー直営のFPは、家を売ることが前提です。やまとは、提携FPに「家を建てない選択を含めて、率直に話してほしい」とお願いしています。",
+    body: "ハウスメーカー直営のFPは、家を売ることが前提です。やまとは社内にFPを置かず、独立した提携先のFP事務所に「家を建てない選択を含めて、率直に話してほしい」とお願いしています。",
   },
   {
     icon: Coffee,
     title: "ご相談料は、いただきません。",
-    body: "ご家族から相談料はお預かりしません。やまとと提携FPの間で取り決めをし、無理のない範囲でお話しできる体制にしています。",
+    body: "ご家族から相談料はお預かりしません。やまとと提携先のFP事務所との間で取り決めをし、無理のない範囲でお話しできる体制にしています。",
   },
   {
     icon: HomeIcon,
     title: "ご紹介の押しつけは、しません。",
-    body: "FPと話したあとに「やっぱり今は建てない」とお決めになっても、それで構いません。あとから連絡を重ねるようなことは、いたしません。",
+    body: "提携FPと話したあとに「やっぱり今は建てない」とお決めになっても、それで構いません。あとから連絡を重ねるようなことは、いたしません。",
   },
 ] as const;
 
@@ -246,12 +247,15 @@ const FAQS = [
 function ChapterHeader({
   no,
   question,
+  answer,
   lead,
   light = false,
   align = "left",
 }: {
   no: string;
   question: React.ReactNode;
+  /** 質問の直下に置く「先回りの答え一行」(明るく前向きに) */
+  answer?: React.ReactNode;
   lead?: React.ReactNode;
   light?: boolean;
   align?: "left" | "center";
@@ -288,6 +292,25 @@ function ChapterHeader({
       >
         {question}
       </h2>
+      {answer ? (
+        <div className={`mt-5 flex items-baseline gap-3 ${isCenter ? "justify-center" : ""}`}>
+          <span
+            className={`font-inter text-[10px] tracking-[0.28em] uppercase font-bold ${
+              light ? "text-white/55" : "text-main"
+            }`}
+          >
+            A.
+          </span>
+          <p
+            className={`text-[clamp(15px,1.4vw,20px)] font-medium leading-[1.55] tracking-[0.03em] ${
+              light ? "text-white/95" : "text-text-primary"
+            }`}
+            style={{ borderBottom: light ? "2px solid rgba(255,255,255,0.55)" : "2px solid #486B00", paddingBottom: "0.2em" }}
+          >
+            {answer}
+          </p>
+        </div>
+      ) : null}
       {lead ? (
         <p
           className={`mt-6 text-[clamp(14px,1.05vw,16px)] leading-[1.95] ${
@@ -378,6 +401,7 @@ export default function MoneyFullSection() {
   const r3 = useScrollIn<HTMLDivElement>();
   const r4 = useScrollIn<HTMLDivElement>();
   const r5 = useScrollIn<HTMLDivElement>();
+  const rLand = useScrollIn<HTMLDivElement>();
   const r6 = useScrollIn<HTMLDivElement>();
   const r7 = useScrollIn<HTMLDivElement>();
   const r8 = useScrollIn<HTMLDivElement>();
@@ -392,6 +416,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="01"
             question={<>家づくりは、<br />ぜんぶでいくらですか？</>}
+            answer={<>内訳は、5つ。やまとは付帯工事と仲介手数料を負担します。</>}
             lead="桁の見当ではなく、内訳から。やまとは「含まれるもの」と「別途になるもの」を、最初の打ち合わせで全部出します。"
           />
 
@@ -520,6 +545,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="02"
             question={<>月々のお支払いは、<br />どれくらいですか？</>}
+            answer={<>想定モデルで、月々7.1万円から始められます。</>}
             lead="「いくら借りられるか」より「いくらなら返せるか」。ご家族の暮らしに合う額を、具体的に。"
           />
 
@@ -652,8 +678,104 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="03"
             question={<>賃貸と、<br />本当は何が違いますか？</>}
+            answer={<>30年で同じ額。残るものが、違います。</>}
             lead="やまとの京プランと奈良市矢田町等のお手頃な土地を組み合わせると、月々8.5万円ほどに収まる方が多くいらっしゃいます。同じ月8.5万円で30年、何が残るか。"
           />
+
+          {/* 累計支出タイムライン棒グラフ */}
+          <div className="mb-12 md:mb-16 bg-white border border-text-primary/15 p-7 md:p-10">
+            <div className="flex items-baseline justify-between mb-6 gap-4 flex-wrap">
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold">
+                Cumulative cost over years · 累計支出の見える化
+              </p>
+              <div className="flex gap-4 text-[11px] md:text-[12px]">
+                <span className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3 bg-text-secondary/65" />
+                  賃貸
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="inline-block w-3 h-3" style={{ background: FOREST }} />
+                  持家
+                </span>
+              </div>
+            </div>
+
+            {/* 4 milestone bars */}
+            {(() => {
+              const MAX = 4590;
+              const ROWS = [
+                { years: "10", rent: 1020, own: 1016, note: "" },
+                { years: "20", rent: 2040, own: 2032, note: "" },
+                { years: "30", rent: 3060, own: 3049, note: "" },
+                { years: "45", rent: 4590, own: 3900, note: "持家は完済済み(35年)。差は約700万円。" },
+              ] as const;
+              return (
+                <div className="space-y-5 md:space-y-6">
+                  {ROWS.map((r) => {
+                    const rentPct = (r.rent / MAX) * 100;
+                    const ownPct = (r.own / MAX) * 100;
+                    const isLast = r.years === "45";
+                    return (
+                      <div key={r.years} className="grid grid-cols-[44px_1fr] md:grid-cols-[60px_1fr] gap-3 md:gap-5 items-start">
+                        <div className="pt-1">
+                          <span
+                            className="font-oswald tabular-nums leading-none text-text-primary"
+                            style={{ fontWeight: 400, fontSize: "clamp(20px, 2vw, 28px)" }}
+                          >
+                            {r.years}
+                          </span>
+                          <span className="text-text-secondary text-[11px] ml-0.5">年</span>
+                        </div>
+                        <div className="space-y-1.5">
+                          {/* 賃貸 bar */}
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-3 md:h-4 bg-bg-secondary/40 relative overflow-hidden">
+                              <div
+                                className="h-full bg-text-secondary/65 transition-[width] duration-700"
+                                style={{ width: `${rentPct}%` }}
+                              />
+                            </div>
+                            <span className="font-oswald tabular-nums text-text-primary text-[12px] md:text-[14px] min-w-[58px] text-right" style={{ fontWeight: 400 }}>
+                              {r.rent.toLocaleString()}
+                              <span className="text-text-secondary text-[10px] ml-0.5">万</span>
+                            </span>
+                          </div>
+                          {/* 持家 bar */}
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-3 md:h-4 bg-bg-secondary/40 relative overflow-hidden">
+                              <div
+                                className="h-full transition-[width] duration-700"
+                                style={{ width: `${ownPct}%`, background: FOREST }}
+                              />
+                            </div>
+                            <span className="font-oswald tabular-nums text-text-primary text-[12px] md:text-[14px] min-w-[58px] text-right" style={{ fontWeight: 400 }}>
+                              {r.own.toLocaleString()}
+                              <span className="text-text-secondary text-[10px] ml-0.5">万</span>
+                            </span>
+                          </div>
+                          {r.note ? (
+                            <p
+                              className={`text-[11px] md:text-[12px] mt-2 leading-[1.7] font-medium ${
+                                isLast ? "" : "text-text-secondary"
+                              }`}
+                              style={isLast ? { color: FOREST } : undefined}
+                            >
+                              ✓ {r.note}
+                            </p>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+
+            <p className="mt-6 pt-5 border-t border-text-primary/10 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
+              ※ 賃貸: 月8.5万円 × 各年数。 持家: 借入3,000万円・1.0%・35年で月8.47万円(税・修繕費10〜15万円/年を含めた概算)。
+              35年で完済後、家計の住居費は固定資産税と修繕費のみに。老後の差が、暮らしを軽くします。
+            </p>
+          </div>
 
           {/* 大きな2カラム比較 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-px md:bg-text-primary/10 md:border md:border-text-primary/15">
@@ -784,6 +906,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="04"
             question={<>ローンの種類と、<br />使える制度は？</>}
+            answer={<>金利のタイプ3つと、使える控除・補助金まで一緒に。</>}
             lead="変動か固定かだけでは決まりません。控除制度・補助金・贈与の特例まで含めて、ご家族の状況に合うかたちを考えます。"
           />
 
@@ -864,6 +987,7 @@ export default function MoneyFullSection() {
           <ChapterHeader
             no="05"
             question={<>「つなぎ融資」って、<br />何ですか？</>}
+            answer={<>やまとなら、ゼロ円。30〜80万円が、家計に戻ります。</>}
             lead="土地と建物を別々に進めると、住宅ローン実行までの間に発生する一時的な借入のこと。金利2〜4%・事務手数料・印紙代で、一般的に30〜80万円の上乗せになります。"
           />
 
@@ -962,6 +1086,145 @@ export default function MoneyFullSection() {
         </div>
       </section>
 
+      {/* ============================================================
+          6. 土地は、どこで買えますか？  — やまと自社分譲地
+          ============================================================ */}
+      <section id="ch-land" className="relative bg-bg-primary py-[var(--section-py)] scroll-mt-20">
+        <div ref={rLand} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
+          <ChapterHeader
+            no="06"
+            question={<>土地は、<br />どこで買えますか？</>}
+            answer={<>矢田町ほか、奈良・京都のお手頃エリアで直接ご紹介。</>}
+            lead="やまと不動産は、宅地分譲が事業の柱の一つです。中間業者を挟まないので、お手頃な価格で、段取りも一本にまとめられます。"
+          />
+
+          {/* やまと土地の3つのメリット */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15 mb-12 md:mb-16">
+            {[
+              {
+                no: "01",
+                tag: "Direct",
+                title: "中間マージンなし",
+                body: "宅建会社直営の分譲地。仲介会社を挟まないので、その分だけお手頃です。仲介手数料も発生しません。",
+              },
+              {
+                no: "02",
+                tag: "One-stop",
+                title: "段取りが一本",
+                body: "土地と建物を同じやまとでまとめられます。打ち合わせも書類も一度で済み、つなぎ融資もゼロ。",
+              },
+              {
+                no: "03",
+                tag: "Ground OK",
+                title: "地盤の不安なし",
+                body: "造成済みの分譲地。地盤改良費(最大150万円)は当社が負担します。追加費用の心配は要りません。",
+              },
+            ].map((m) => (
+              <article key={m.no} className="bg-white p-7 md:p-9">
+                <div className="flex items-baseline gap-3 mb-5">
+                  <span
+                    className="font-oswald tabular-nums leading-none"
+                    style={{ fontWeight: 300, fontSize: "clamp(36px, 3.6vw, 52px)", color: FOREST, letterSpacing: "-0.02em" }}
+                  >
+                    {m.no}
+                  </span>
+                  <span className="font-inter text-[10px] tracking-[0.22em] uppercase text-text-secondary font-bold">
+                    {m.tag}
+                  </span>
+                </div>
+                <p className="text-text-primary text-[clamp(17px,1.5vw,21px)] font-medium leading-[1.5] tracking-[0.04em]">
+                  {m.title}
+                </p>
+                <p className="mt-3 text-[13px] leading-[1.95] text-text-secondary">{m.body}</p>
+              </article>
+            ))}
+          </div>
+
+          {/* エリア例 — 編集誌的フラット縦列 */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
+            <div>
+              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary font-bold mb-4">
+                Areas · 取り扱いエリアの例
+              </p>
+              <p className="text-text-primary text-[clamp(17px,1.5vw,21px)] font-medium leading-[1.55] tracking-[0.04em]">
+                奈良・京都のお手頃な土地を、ご一緒にお選びします。
+              </p>
+              <p className="mt-3 text-[13px] leading-[1.95] text-text-secondary">
+                自社分譲の実績は90区画以上。エリアや価格帯のご希望から、ご家族に合うものをご提案します。
+              </p>
+            </div>
+
+            <div className="border-t border-text-primary/15">
+              {[
+                {
+                  area: "奈良市矢田町",
+                  price: "800",
+                  unit: "万円前後",
+                  note: "やまとが扱うお手頃エリアの代表例。京プランと組み合わせて月々8.5万円ほど。",
+                },
+                {
+                  area: "奈良市内 自社分譲地",
+                  price: "—",
+                  unit: "区画により",
+                  note: "やまと本社(大宮町)を中心に、奈良市内で複数区画の分譲実績があります。",
+                },
+                {
+                  area: "京都・宇治エリア",
+                  price: "—",
+                  unit: "区画により",
+                  note: "京都支店(宇治市小倉町)を起点に、京都南部のエリアもご相談いただけます。",
+                },
+              ].map((row) => (
+                <div
+                  key={row.area}
+                  className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 md:gap-8 border-b border-text-primary/15 py-5 md:py-7"
+                >
+                  <div>
+                    <p className="text-text-primary text-[15px] md:text-base font-medium">{row.area}</p>
+                    <p className="mt-2 text-[12px] md:text-[13px] leading-[1.85] text-text-secondary max-w-[480px]">
+                      {row.note}
+                    </p>
+                  </div>
+                  <div className="md:text-right md:min-w-[140px]">
+                    <div className="flex md:justify-end items-baseline gap-1">
+                      {row.price === "—" ? (
+                        <span className="text-text-secondary text-[13px]">{row.unit}</span>
+                      ) : (
+                        <>
+                          <span
+                            className="font-oswald tabular-nums leading-none text-text-primary"
+                            style={{ fontWeight: 300, fontSize: "clamp(28px, 2.8vw, 40px)", letterSpacing: "-0.03em" }}
+                          >
+                            {row.price}
+                          </span>
+                          <span className="text-text-secondary text-[12px] md:text-[13px] font-medium">
+                            {row.unit}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-baseline justify-between gap-4 border-t-[3px] border-text-primary pt-6">
+            <p className="text-text-primary text-[13px] md:text-[14px] leading-[1.95] max-w-[700px]">
+              現在の分譲区画は、随時更新しています。最新情報は
+              <Link href="/lots" className="underline text-main hover:text-main-dark">物件情報</Link>
+              からどうぞ。
+            </p>
+            <Link
+              href="/lots"
+              className="font-inter text-[11px] tracking-[0.18em] uppercase text-main font-bold hover:text-main-dark"
+            >
+              View all lots →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* === BREATHING #2 === */}
       <BreathingImage
         src="/images/works/case2-living.webp"
@@ -975,9 +1238,10 @@ export default function MoneyFullSection() {
       <section id="ch-fp" className="relative bg-bg-warm py-[var(--section-py)] scroll-mt-20">
         <div ref={r6} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
           <ChapterHeader
-            no="06"
+            no="07"
             question={<>FPって、<br />誰のために動く人ですか？</>}
-            lead="ハウスメーカーや不動産会社が紹介するFPは、家を売ることが前提になりがちです。やまとが提携しているFPには、ご家族のライフプランを軸に、率直にお話しいただくようお願いしています。"
+            answer={<>やまと社内ではなく、独立した提携先のFP事務所へ。</>}
+            lead="やまと不動産には、FPは在籍していません。提携先のFP事務所と組み、ご家族のライフプランを軸に率直にお話しいただくようお願いしています。「家を売るためのFP」ではない、外部の中立な目線です。"
           />
 
           {/* 3つの約束 */}
@@ -1013,14 +1277,14 @@ export default function MoneyFullSection() {
           {/* やまと社内資格 */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-8 items-start border-t border-text-primary/15 pt-8">
             <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold">
-              In-house Advisor
+              In-house Loan Advisor
             </p>
             <div>
               <p className="text-text-primary text-[clamp(15px,1.3vw,19px)] font-medium leading-[1.6]">
-                社内にも、住宅ローンアドバイザー資格保有者がいます。
+                社内には、住宅ローンアドバイザー資格保有者がおります(FPとは別)。
               </p>
               <p className="mt-2 text-[13px] md:text-[14px] leading-[1.95] text-text-secondary max-w-[760px]">
-                大和信用金庫・奈良中央信用金庫・南都銀行・りそな銀行など、複数の金融機関の中からご状況に合うものをご一緒に整理します。
+                大和信用金庫・奈良中央信用金庫・南都銀行・りそな銀行など、複数の金融機関の中からご状況に合うものをご一緒に整理します。家計全体のライフプランは、独立した提携先のFP事務所にご相談いただきます。
               </p>
             </div>
           </div>
@@ -1033,9 +1297,10 @@ export default function MoneyFullSection() {
       <section id="ch-flow" className="relative bg-bg-primary py-[var(--section-py)] scroll-mt-20">
         <div ref={r7} className="relative mx-auto max-w-[1320px] px-[var(--page-px)] scroll-in">
           <ChapterHeader
-            no="07"
+            no="08"
             question={<>はじめての方は、<br />何を持っていけばいいですか？</>}
-            lead="持参不要です。資料はお揃いでなくて構いません。気がかりなことを一つずつ整理する時間です。お電話一本でご予約いただけます。"
+            answer={<>持参不要。お電話1本でご予約いただけます。</>}
+            lead="資料はお揃いでなくて構いません。気がかりなことを一つずつ整理する時間です。お子様連れも歓迎です。"
           />
 
           {/* 3ステップ — 写真付き横3列 */}
@@ -1101,8 +1366,9 @@ export default function MoneyFullSection() {
       <section id="ch-faq" className="relative bg-[#FAF8F3] py-[var(--section-py)] scroll-mt-20">
         <div ref={r8} className="mx-auto max-w-[1000px] px-[var(--page-px)] scroll-in">
           <ChapterHeader
-            no="08"
+            no="09"
             question={<>「払えなくなったら」の<br />不安に、先にお答えします。</>}
+            answer={<>代表的なご不安への答えを、6つご用意しました。</>}
             lead="ご相談の前に、よくお寄せいただく質問をまとめました。書ききれないことは、ご来場時にお気軽にお尋ねください。"
             align="center"
           />

@@ -14,8 +14,10 @@ const CHAPTERS = [
   { id: "ch-monthly", label: "月々", num: "02" },
   { id: "ch-vs", label: "賃貸 vs 持家", num: "03" },
   { id: "ch-loan", label: "ローン", num: "04" },
-  { id: "ch-fp", label: "FP", num: "06" },
-  { id: "ch-flow", label: "ご相談", num: "07" },
+  { id: "ch-bridge", label: "つなぎ融資", num: "05" },
+  { id: "ch-land", label: "土地", num: "06" },
+  { id: "ch-fp", label: "FP", num: "07" },
+  { id: "ch-flow", label: "ご相談", num: "08" },
 ] as const;
 
 export default function MoneyJumpNav() {
