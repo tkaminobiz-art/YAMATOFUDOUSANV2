@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
@@ -43,9 +44,23 @@ export default function MoneyIndexPage() {
       <Header />
       {/* font-sans で和文ゴシックをルートロック(明朝禁止) */}
       <main className="font-sans">
-        {/* === 1. ページヘッダー(ミニマル) — FV撤去版 === */}
-        <section className="bg-bg-primary border-b border-text-primary/10">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)] pt-10 md:pt-14 pb-6 md:pb-8">
+        {/* === 1. ページヘッダー(ミニマル + ghost text) === */}
+        <section className="relative overflow-hidden bg-bg-primary border-b border-text-primary/10">
+          {/* ghost text — 背景に薄く "MONEY" を巨大に */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -top-2 right-2 md:-top-4 md:right-6 select-none font-oswald uppercase whitespace-nowrap"
+            style={{
+              fontWeight: 200,
+              fontSize: "clamp(80px, 14vw, 220px)",
+              letterSpacing: "0.04em",
+              color: "rgba(43,43,43,0.04)",
+              lineHeight: 1,
+            }}
+          >
+            Money
+          </span>
+          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-10 md:pt-14 pb-6 md:pb-8">
             <p
               className="text-[12px] md:text-[13px] tracking-[0.18em] font-bold"
               style={{ color: FOREST }}
@@ -64,10 +79,43 @@ export default function MoneyIndexPage() {
           </div>
         </section>
 
-        {/* === 2. BIG NUMBERS — 3つの数字(現在の主役) === */}
+        {/* === 2. 暮らしの写真ブリージング — 数字の前に温度 === */}
+        <section className="relative overflow-hidden">
+          <div className="relative aspect-[21/9] md:aspect-[21/8] w-full bg-text-primary">
+            <Image
+              src="/images/newsozai/interior-kitchen-01.webp"
+              alt="ご家族の暮らし — キッチンの朝"
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+              style={{ filter: "saturate(0.94) contrast(1.04)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"
+            />
+            <div className="absolute inset-0 flex items-end">
+              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-8 md:pb-14 w-full">
+                <p
+                  className="text-white max-w-[640px] leading-[1.55] tracking-[0.04em]"
+                  style={{
+                    fontWeight: 500,
+                    fontSize: "clamp(16px, 2vw, 26px)",
+                    textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  数字の前に、暮らしから。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* === 3. BIG NUMBERS — 3つの数字 === */}
         <section
           id="big-numbers"
-          className="relative bg-bg-primary py-[clamp(48px,6vw,120px)] scroll-mt-20"
+          className="relative bg-[#FAF8F3] py-[clamp(48px,6vw,120px)] scroll-mt-20"
         >
           <div className="max-w-[1320px] mx-auto px-[var(--page-px)]">
             <div className="text-center mb-12 md:mb-16">
@@ -85,7 +133,7 @@ export default function MoneyIndexPage() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 items-stretch">
               {[
                 {
                   label: "月々の住宅ローン",
@@ -93,6 +141,7 @@ export default function MoneyIndexPage() {
                   unit: "万円",
                   suffix: "から",
                   body: "想定モデル(30代夫婦+子1・年収500万・借入2,500万・1.0%・35年)。",
+                  highlight: false,
                 },
                 {
                   label: "つなぎ融資",
@@ -100,6 +149,7 @@ export default function MoneyIndexPage() {
                   unit: "円",
                   suffix: "",
                   body: "やまとは土地+建物を自社一貫。一般的な30〜80万円の上乗せが、ありません。",
+                  highlight: true, // 中央カード=やまと最大の売り
                 },
                 {
                   label: "45年後の累計差",
@@ -107,12 +157,27 @@ export default function MoneyIndexPage() {
                   unit: "万円",
                   suffix: "",
                   body: "同じ月8.5万円で45年。賃貸は払い続け、持家は完済済み。家計が軽くなります。",
+                  highlight: false,
                 },
               ].map((n, i) => (
-                <div key={i} className="bg-white p-7 md:p-10">
-                  <p
-                    className="text-[12px] md:text-[13px] tracking-[0.06em] text-text-secondary font-bold mb-5"
-                  >
+                <article
+                  key={i}
+                  className={`group relative bg-white p-7 md:p-10 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 motion-reduce:hover:translate-y-0 ${
+                    n.highlight
+                      ? "border-2 md:scale-[1.04] md:shadow-[0_24px_48px_-24px_rgba(72,107,0,0.32)] hover:shadow-[0_28px_56px_-20px_rgba(72,107,0,0.4)]"
+                      : "border border-text-primary/15 shadow-[0_4px_16px_-8px_rgba(43,43,43,0.08)] hover:shadow-[0_18px_40px_-20px_rgba(43,43,43,0.18)]"
+                  }`}
+                  style={n.highlight ? { borderColor: FOREST } : undefined}
+                >
+                  {n.highlight && (
+                    <span
+                      className="absolute -top-2.5 left-7 px-2.5 py-0.5 text-[10px] tracking-[0.12em] font-bold text-white"
+                      style={{ background: FOREST }}
+                    >
+                      やまと最大の売り
+                    </span>
+                  )}
+                  <p className="text-[12px] md:text-[13px] tracking-[0.06em] text-text-secondary font-bold mb-5">
                     {n.label}
                   </p>
                   <div className="flex items-baseline gap-2">
@@ -120,7 +185,7 @@ export default function MoneyIndexPage() {
                       className="font-oswald tabular-nums leading-[0.85]"
                       style={{
                         fontWeight: 300,
-                        fontSize: "clamp(64px, 7.5vw, 120px)",
+                        fontSize: n.highlight ? "clamp(72px, 8.5vw, 140px)" : "clamp(64px, 7.5vw, 120px)",
                         letterSpacing: "-0.04em",
                         color: FOREST,
                       }}
@@ -137,7 +202,7 @@ export default function MoneyIndexPage() {
                   <p className="mt-5 text-[12px] md:text-[13px] leading-[1.95] text-text-secondary">
                     {n.body}
                   </p>
-                </div>
+                </article>
               ))}
             </div>
           </div>

@@ -172,7 +172,13 @@ function ThirtyYearAnswer() {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="flex-1 h-3 md:h-4 bg-bg-secondary/40 relative overflow-hidden">
-                      <div className="h-full transition-[width] duration-700" style={{ width: `${ownPct}%`, background: FOREST }} />
+                      <div
+                        className="h-full transition-[width] duration-700"
+                        style={{
+                          width: `${ownPct}%`,
+                          background: `linear-gradient(90deg, ${FOREST} 0%, ${FOREST} 60%, ${ACCENT} 100%)`,
+                        }}
+                      />
                     </div>
                     <span className="font-oswald tabular-nums text-text-primary text-[12px] md:text-[14px] min-w-[58px] text-right" style={{ fontWeight: 400 }}>
                       {r.own.toLocaleString()}<span className="text-text-secondary text-[10px] ml-0.5">万</span>
@@ -245,7 +251,13 @@ function QItem({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border border-text-primary/15 bg-white">
+    <div
+      className={`border bg-white transition-[border-color,box-shadow] duration-[300ms] ${
+        open
+          ? "border-text-primary/30 shadow-[0_12px_32px_-20px_rgba(43,43,43,0.18)]"
+          : "border-text-primary/15 hover:border-text-primary/25"
+      }`}
+    >
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -253,7 +265,7 @@ function QItem({
         aria-expanded={open}
       >
         <span
-          className="font-oswald tabular-nums leading-none shrink-0"
+          className="font-oswald tabular-nums leading-none shrink-0 transition-colors duration-300"
           style={{
             fontWeight: 300,
             fontSize: "clamp(22px, 2vw, 30px)",
@@ -271,15 +283,30 @@ function QItem({
             {teaser}
           </p>
         </div>
-        <span className="shrink-0" style={{ color: open ? FOREST : "var(--color-main)" }}>
+        <span
+          className="shrink-0 transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+          style={{
+            color: open ? FOREST : "var(--color-main)",
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          }}
+        >
           {open ? <Minus className="w-5 h-5" strokeWidth={1.5} /> : <Plus className="w-5 h-5" strokeWidth={1.5} />}
         </span>
       </button>
-      {open && (
-        <div className="px-5 md:px-7 pb-7 md:pb-9 pt-3 border-t border-text-primary/10">
-          {children}
+
+      {/* グリッド行展開アニメ — max-heightトリックではなく grid-rows */}
+      <div
+        className={`grid transition-[grid-template-rows,opacity] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+        aria-hidden={!open}
+      >
+        <div className="overflow-hidden">
+          <div className="px-5 md:px-7 pb-7 md:pb-9 pt-3 border-t border-text-primary/10">
+            {children}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -705,7 +732,7 @@ function QuestionsAccordion() {
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
               ご相談で出てきがちな言葉を、ひと言ずつ。「これってどういう意味?」のひと手間を、ここで解消できます。
             </p>
-            <div className="border-t border-text-primary/15">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-text-primary/10 border border-text-primary/15">
               {[
                 { term: "元利均等返済", body: "毎月の返済額が一定。家計が立てやすい代わりに、初期は利息の比率が高め。最も一般的。" },
                 { term: "元金均等返済", body: "毎月返済する元金が一定。総返済額は元利均等より少ないが、初期の月々負担が大きい。" },
@@ -720,8 +747,8 @@ function QuestionsAccordion() {
                 { term: "住宅ローン控除", body: "年末ローン残高の0.7%が、最大13年間にわたり所得税(住民税)から控除される制度。長期優良住宅等で枠が拡大。" },
                 { term: "事前審査(仮審査)", body: "本契約前に金融機関が借入可能性を判断する審査。やまとでは無料で複数行へ並行依頼可。" },
               ].map((t) => (
-                <div key={t.term} className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 border-b border-text-primary/15 py-4 md:py-5">
-                  <p className="text-text-primary text-[14px] md:text-[15px] font-medium">{t.term}</p>
+                <div key={t.term} className="bg-white px-4 py-4 md:px-5 md:py-5">
+                  <p className="text-text-primary text-[14px] md:text-[15px] font-medium mb-1.5">{t.term}</p>
                   <p className="text-[12px] md:text-[13px] leading-[1.95] text-text-secondary max-w-[680px]">{t.body}</p>
                 </div>
               ))}
