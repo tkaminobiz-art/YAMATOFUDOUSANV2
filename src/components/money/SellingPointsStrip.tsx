@@ -19,8 +19,8 @@ const POINTS = [
   {
     no: "02",
     label: "自社の土地",
-    headline: "800万円〜",
-    sub: "矢田町ほか、奈良・京都の自社分譲地",
+    headline: "500万円台〜",
+    sub: "大和郡山市矢田町ほか、奈良・京都で76区画の実績",
     href: "#ch-questions",
   },
   {
