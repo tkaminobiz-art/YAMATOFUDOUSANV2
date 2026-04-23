@@ -50,12 +50,9 @@ export default function MoneyIndexPage() {
 
           <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-[clamp(80px,calc(40px+6vw),200px)] pb-[clamp(80px,calc(40px+6vw),200px)]">
             {/* Page label */}
-            <div className="flex items-center justify-between mb-12 md:mb-20">
-              <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-white/85 font-bold">
-                Financial Plan
-              </p>
-              <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-white/55">
-                資金計画 / Money &amp; Loan
+            <div className="mb-12 md:mb-20">
+              <p className="text-[12px] md:text-[13px] tracking-[0.18em] text-white/85 font-bold">
+                資金計画
               </p>
             </div>
 
@@ -70,24 +67,26 @@ export default function MoneyIndexPage() {
                     textShadow: "0 3px 24px rgba(0,0,0,0.45)",
                   }}
                 >
-                  数字より先に、
+                  家のお金、
                   <br />
-                  暮らしから。
+                  まるごと整理します。
                 </h1>
                 <p className="mt-8 max-w-[560px] text-white/85 text-[clamp(15px,1.2vw,18px)] leading-[1.95]">
-                  月々のお支払い、住宅ローン、提携FPの中立性まで。
-                  家を建てる前に整理しておきたいお金の話を、ご家族の暮らしを軸に、ご一緒にほどいてまいります。
+                  土地代・建物代・諸費用・住宅ローン・提携FP・補助金まで。
+                  家を建てる前に知っておきたいお金の話を、ご家族の暮らしを軸に、ひとつずつ具体的にお見せします。
                 </p>
               </div>
 
               {/* Anchor stat box */}
               <aside className="lg:pt-4">
                 <div className="border-t-[3px] border-white pt-6">
-                  <p className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/70 font-bold">
-                    Model · 30代ご夫婦+お子様1人 / 年収500万円
+                  <p className="text-[11px] md:text-[12px] tracking-[0.06em] text-white/70 font-medium">
+                    想定モデル：30代ご夫婦+お子様1人・世帯年収500万円
                   </p>
-                  <div className="mt-4 flex items-baseline gap-2">
-                    <span className="text-white text-sm font-medium">月々</span>
+                  <p className="mt-5 text-white/90 text-[13px] md:text-[14px] font-medium">
+                    月々の住宅ローン
+                  </p>
+                  <div className="mt-1 flex items-baseline gap-2">
                     <span
                       className="font-oswald tabular-nums leading-[0.85] text-white"
                       style={{
@@ -99,10 +98,10 @@ export default function MoneyIndexPage() {
                       7.1
                     </span>
                     <span className="text-white text-xl md:text-2xl font-medium">万円</span>
+                    <span className="text-white/70 text-sm ml-1">から</span>
                   </div>
-                  <p className="mt-2 text-[12px] text-white/70 leading-[1.7]">
-                    から建てられる暮らしの目安。<br />
-                    ご家族の状況に合わせて、ご一緒に整えます。
+                  <p className="mt-3 text-[12px] text-white/70 leading-[1.7]">
+                    京プラン2,280万円 + お手頃な土地で借入2,500万円・35年返済の場合。
                   </p>
 
                   <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -140,8 +139,8 @@ export default function MoneyIndexPage() {
         {/* === 締めCTA === */}
         <section className="relative bg-bg-primary py-[clamp(80px,8vw,160px)]">
           <div className="max-w-[840px] mx-auto px-[var(--page-px)] text-center">
-            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-8 font-bold">
-              Take the first step
+            <p className="text-[12px] md:text-[13px] tracking-[0.18em] text-main mb-8 font-bold">
+              はじめの一歩を、ご一緒に。
             </p>
             <p
               className="text-text-primary text-[clamp(24px,3.4vw,44px)] leading-[1.4] tracking-[-0.01em]"

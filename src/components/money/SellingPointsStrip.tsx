@@ -1,11 +1,9 @@
 "use client";
 
 /*
-  SellingPointsStrip — /money Hero直下の「やまとの3つの売り」
-  - つなぎ融資 ¥0
-  - 自社分譲の土地 直販
-  - 中立な提携FP 売り場の外
-  3カラム横並び。1pxグリッド分割で編集誌的に。
+  SellingPointsStrip — /money Hero直下「やまとが、できること。3つあります。」
+  v2: 英字tag(Tsunagi-Yusi/Land/Neutral FP)・抽象headline(¥0/直販/外部)を整理。
+      初見ユーザーが3秒で意味を取れるよう、日本語tag + 具体数字 + 短い説明。
 */
 
 const FOREST = "#486B00";
@@ -14,30 +12,27 @@ const ACCENT = "#A2C523";
 const POINTS = [
   {
     no: "01",
-    tag: "Tsunagi-Yusi",
-    label: "つなぎ融資",
-    headline: "¥0",
-    body: "土地と建物を、自社で一貫して進めるから。一般的に発生する 30〜80万円の利息と手数料が、まるごと家計に戻ります。",
+    tag: "つなぎ融資",
+    headline: "ゼロ円",
+    sub: "30〜80万円が、家計に戻る",
+    body: "土地と建物を、自社で一貫して進めます。だから一般的に発生する つなぎ融資の利息と手数料が、まるごとかかりません。",
     href: "#ch-bridge",
-    cta: "詳しく見る",
   },
   {
     no: "02",
-    tag: "Land",
-    label: "自社分譲の土地",
-    headline: "直販",
-    body: "矢田町ほか、奈良・京都の自社分譲地を中間業者なしで直接ご紹介。仲介手数料も発生しません。",
+    tag: "自社の土地",
+    headline: "800万円〜",
+    sub: "矢田町ほか、奈良・京都の自社分譲地",
+    body: "中間業者を挟まず、やまとが直接ご紹介。仲介手数料も発生しません。土地と建物を一本の段取りで進められます。",
     href: "#ch-land",
-    cta: "詳しく見る",
   },
   {
     no: "03",
-    tag: "Neutral FP",
-    label: "中立な提携FP",
-    headline: "外部",
-    body: "やまと社内にFPはいません。独立した提携先のFP事務所が、家を売る前提ではない目線でお話しします。",
+    tag: "FP相談",
+    headline: "中立",
+    sub: "やまと社内ではなく、提携先のFP事務所",
+    body: "ファイナンシャルプランナーは社内にいません。「家を売るためのFP」ではなく、独立した事務所がご家族のライフプランを軸に、率直にお話しします。",
     href: "#ch-fp",
-    cta: "詳しく見る",
   },
 ] as const;
 
@@ -45,16 +40,19 @@ export default function SellingPointsStrip() {
   return (
     <section className="relative bg-[#FAF8F3] border-y border-text-primary/10 py-12 md:py-16">
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-        <div className="flex items-baseline justify-between gap-4 flex-wrap mb-8 md:mb-10">
+        <div className="mb-8 md:mb-10">
           <p
-            className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-bold"
+            className="text-[10px] md:text-[11px] tracking-[0.18em] font-bold mb-3"
             style={{ color: FOREST }}
           >
-            Yamato — three edges · 3つの売り
+            やまとが、できること。
           </p>
-          <p className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] text-text-secondary uppercase">
-            Real, not marketing speak
-          </p>
+          <h2
+            className="text-text-primary leading-[1.2] tracking-[-0.01em]"
+            style={{ fontWeight: 500, fontSize: "clamp(24px, 3vw, 40px)" }}
+          >
+            お金まわりの売りは、3つあります。
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15">
@@ -76,22 +74,18 @@ export default function SellingPointsStrip() {
                 >
                   {p.no}
                 </span>
-                <span className="font-inter text-[10px] tracking-[0.22em] uppercase text-text-secondary font-bold">
+                <span className="text-[12px] md:text-[13px] tracking-[0.06em] text-text-secondary font-medium">
                   {p.tag}
                 </span>
               </div>
 
-              <p className="text-text-primary text-[clamp(15px,1.3vw,18px)] font-medium tracking-[0.04em] leading-[1.5]">
-                {p.label}
-              </p>
-
-              <div className="mt-4 flex items-baseline gap-2">
+              <div className="flex items-baseline gap-2 mt-2">
                 <span
                   className="font-oswald tabular-nums leading-none"
                   style={{
                     fontWeight: 300,
-                    fontSize: "clamp(56px, 6vw, 88px)",
-                    letterSpacing: "-0.04em",
+                    fontSize: "clamp(48px, 5.5vw, 80px)",
+                    letterSpacing: "-0.03em",
                     color: FOREST,
                   }}
                 >
@@ -99,15 +93,21 @@ export default function SellingPointsStrip() {
                 </span>
               </div>
 
-              <p className="mt-5 text-[13px] leading-[1.95] text-text-secondary flex-1">
+              <p
+                className="mt-4 text-text-primary text-[clamp(14px,1.2vw,17px)] font-medium tracking-[0.04em] leading-[1.55]"
+              >
+                {p.sub}
+              </p>
+
+              <p className="mt-4 text-[13px] leading-[1.95] text-text-secondary flex-1">
                 {p.body}
               </p>
 
               <span
-                className="mt-6 inline-flex items-center gap-1 font-inter text-[11px] tracking-[0.18em] uppercase font-bold transition-colors"
+                className="mt-6 inline-flex items-center gap-1 text-[12px] md:text-[13px] font-medium transition-colors"
                 style={{ color: FOREST }}
               >
-                {p.cta}
+                詳しく見る
                 <span
                   className="inline-block transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
