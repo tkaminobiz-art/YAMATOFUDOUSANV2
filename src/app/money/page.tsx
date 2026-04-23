@@ -18,7 +18,7 @@ const FOREST = "#486B00";
 /*
   /money — 資金計画ページ v6
   v5(9章編集誌・情報詰めすぎ) → v6: 「3スクロールで要点が伝わる」構造へ
-    1. Hero — 明るい写真 + 「家のお金、こわくない」
+    1. Hero — 明るい写真 + 「家のお金、ご一緒に整えます。」
     2. BigNumbers — 3つの数字をドカン(月7.1万 / 0円 / 700万)
     3. SellingPointsStrip — 3つの売り(短く)
     4. ThirtyYearAnswer — 30年で残るもの(常に見える図解)
@@ -30,7 +30,7 @@ export default function MoneyIndexPage() {
     <>
       <Header />
       <main>
-        {/* === 1. HERO — 明るく、こわくない === */}
+        {/* === 1. HERO — お客様に寄り添う動詞で === */}
         <section className="relative overflow-hidden bg-bg-warm">
           {/* 背景写真 — 暖かい屋外、ほぼ生のまま明るく */}
           <div aria-hidden className="absolute inset-0">
@@ -67,7 +67,7 @@ export default function MoneyIndexPage() {
             >
               家のお金、
               <br />
-              こわくない。
+              ご一緒に整えます。
             </h1>
 
             <p className="mt-8 max-w-[560px] text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.95]">
