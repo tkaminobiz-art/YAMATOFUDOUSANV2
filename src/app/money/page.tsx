@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 const FOREST = "#486B00";
+const ACCENT = "#A2C523"; // LIME — やまとの売りシグナル(top stripe等で使用)
 
 /*
   /money — 資金計画ページ v6
@@ -136,7 +137,9 @@ export default function MoneyIndexPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 items-stretch">
               {[
                 {
+                  no: "01",
                   label: "月々の住宅ローン",
+                  prefix: "",
                   num: "7.1",
                   unit: "万円",
                   suffix: "から",
@@ -144,62 +147,105 @@ export default function MoneyIndexPage() {
                   highlight: false,
                 },
                 {
+                  no: "02",
                   label: "つなぎ融資",
+                  prefix: "",
                   num: "0",
                   unit: "円",
                   suffix: "",
                   body: "やまとは土地+建物を自社一貫。一般的な30〜80万円の上乗せが、ありません。",
-                  highlight: true, // 中央カード=やまと最大の売り
+                  highlight: true, // 中央=やまと最大の売り
                 },
                 {
+                  no: "03",
                   label: "45年後の累計差",
-                  num: "約700",
+                  prefix: "約",
+                  num: "700",
                   unit: "万円",
                   suffix: "",
                   body: "同じ月8.5万円で45年。賃貸は払い続け、持家は完済済み。家計が軽くなります。",
                   highlight: false,
                 },
-              ].map((n, i) => (
+              ].map((n) => (
                 <article
-                  key={i}
-                  className={`group relative bg-white p-7 md:p-10 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 motion-reduce:hover:translate-y-0 ${
+                  key={n.no}
+                  className={`group relative bg-white border border-text-primary/12 p-6 md:p-8 pt-7 md:pt-9 flex flex-col overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 motion-reduce:hover:translate-y-0 ${
                     n.highlight
-                      ? "border-2 md:scale-[1.04] md:shadow-[0_24px_48px_-24px_rgba(72,107,0,0.32)] hover:shadow-[0_28px_56px_-20px_rgba(72,107,0,0.4)]"
-                      : "border border-text-primary/15 shadow-[0_4px_16px_-8px_rgba(43,43,43,0.08)] hover:shadow-[0_18px_40px_-20px_rgba(43,43,43,0.18)]"
+                      ? "shadow-[0_18px_40px_-20px_rgba(72,107,0,0.28)] hover:shadow-[0_28px_56px_-20px_rgba(72,107,0,0.4)]"
+                      : "shadow-[0_4px_16px_-8px_rgba(43,43,43,0.08)] hover:shadow-[0_22px_44px_-22px_rgba(43,43,43,0.2)] hover:border-text-primary/25"
                   }`}
-                  style={n.highlight ? { borderColor: FOREST } : undefined}
                 >
+                  {/* Top stripe — 全カードにライム細線、主役カードは太く */}
+                  <span
+                    aria-hidden
+                    className={`absolute top-0 left-0 right-0 transition-[height] duration-300 ${
+                      n.highlight ? "h-1.5 md:h-2" : "h-0.5"
+                    }`}
+                    style={{ background: ACCENT }}
+                  />
+
+                  {/* やまと最大の売り バッジ */}
                   {n.highlight && (
                     <span
-                      className="absolute -top-2.5 left-7 px-2.5 py-0.5 text-[10px] tracking-[0.12em] font-bold text-white"
+                      className="absolute top-3 right-4 px-2.5 py-1 text-[10px] tracking-[0.12em] font-bold text-white"
                       style={{ background: FOREST }}
                     >
                       やまと最大の売り
                     </span>
                   )}
-                  <p className="text-[12px] md:text-[13px] tracking-[0.06em] text-text-secondary font-bold mb-5">
-                    {n.label}
-                  </p>
-                  <div className="flex items-baseline gap-2">
+
+                  {/* Top row: 番号 + ラベル */}
+                  <div className="flex items-baseline gap-3 mb-5 md:mb-6">
                     <span
-                      className="font-oswald tabular-nums leading-[0.85]"
+                      className="font-oswald tabular-nums leading-none"
                       style={{
-                        fontWeight: 300,
-                        fontSize: n.highlight ? "clamp(72px, 8.5vw, 140px)" : "clamp(64px, 7.5vw, 120px)",
+                        fontWeight: 400,
+                        fontSize: "clamp(20px, 1.8vw, 26px)",
+                        color: "rgba(43,43,43,0.35)",
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      {n.no}
+                    </span>
+                    <span className="text-[13px] md:text-[14px] tracking-[0.04em] text-text-secondary font-bold">
+                      {n.label}
+                    </span>
+                  </div>
+
+                  {/* 数値 — whitespace-nowrap で折返し防止 */}
+                  <div className="whitespace-nowrap leading-none flex items-baseline">
+                    {n.prefix && (
+                      <span
+                        className="text-text-primary mr-1.5"
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "clamp(22px, 2.2vw, 32px)",
+                          color: FOREST,
+                        }}
+                      >
+                        {n.prefix}
+                      </span>
+                    )}
+                    <span
+                      className="font-oswald tabular-nums"
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "clamp(56px, 6.8vw, 104px)",
                         letterSpacing: "-0.04em",
                         color: FOREST,
                       }}
                     >
                       {n.num}
                     </span>
-                    <span className="text-text-primary text-xl md:text-2xl font-medium">
+                    <span className="ml-1.5 text-text-primary font-bold" style={{ fontSize: "clamp(18px, 1.6vw, 22px)" }}>
                       {n.unit}
                     </span>
                     {n.suffix && (
-                      <span className="text-text-secondary text-base ml-1">{n.suffix}</span>
+                      <span className="ml-1.5 text-text-secondary text-[14px] md:text-[15px]">{n.suffix}</span>
                     )}
                   </div>
-                  <p className="mt-5 text-[12px] md:text-[13px] leading-[1.95] text-text-secondary">
+
+                  <p className="mt-5 text-text-primary text-[12px] md:text-[14px] leading-[1.85] flex-1">
                     {n.body}
                   </p>
                 </article>
