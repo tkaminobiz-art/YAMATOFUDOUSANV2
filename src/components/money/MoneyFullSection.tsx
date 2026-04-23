@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ShieldCheck, Plus, Minus, Heart, Coffee, Home as HomeIcon } from "lucide-react";
+import { ShieldCheck, Plus, Minus, Heart, Coffee, Home as HomeIcon, Zap, Wrench, Receipt, Flame } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
+import LoanSimulator from "@/components/money/LoanSimulator";
 
 /*
   MoneyFullSection — /money 完全リデザイン v6
@@ -41,13 +42,8 @@ const MODEL_FAMILY = {
   comment: "返済比率は年収の17%前後。生活費・教育費を圧迫しない、無理しない設計の一例です。",
 } as const;
 
-const RATE_HEADERS = ["1.0%", "1.5%", "2.0%"] as const;
-const LOAN_TABLE = [
-  { borrow: "2,500", monthly: ["7.1", "7.7", "8.3"] },
-  { borrow: "3,000", monthly: ["8.5", "9.2", "9.9"] },
-  { borrow: "3,500", monthly: ["9.9", "10.7", "11.6"] },
-  { borrow: "4,000", monthly: ["11.3", "12.2", "13.3"] },
-] as const;
+// RATE_HEADERS / LOAN_TABLE は v6 で LoanSimulator(動的) に置換し撤去
+// 早見表が必要になった場合は LoanSimulator のサブビューとして再追加
 
 const COMPARE = [
   { axis: "30年後の累計支出", rent: "3,060万円", own: "約3,150万円" },
@@ -373,8 +369,12 @@ function QuestionsAccordion() {
 
           {/* Q2: 月々いくら? */}
           <QItem no="02" q="月々のお支払いは、どれくらいですか?" teaser="想定モデル(年収500万)で月7.1万円から">
+            {/* シミュレーター(動的) */}
+            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">あなたの場合は、いくら？</p>
+            <LoanSimulator />
+
             {/* 想定モデル */}
-            <div className="mb-6 px-5 md:px-7 py-5 md:py-6 border" style={{ background: "#FAF8F3", borderColor: "rgba(72,107,0,0.15)" }}>
+            <div className="mt-8 mb-6 px-5 md:px-7 py-5 md:py-6 border" style={{ background: "#FAF8F3", borderColor: "rgba(72,107,0,0.15)" }}>
               <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">想定モデル</p>
               <p className="text-text-primary text-[15px] md:text-[16px] font-medium">
                 {MODEL_FAMILY.who}（{MODEL_FAMILY.income}）／借入 {MODEL_FAMILY.borrow}
@@ -395,30 +395,46 @@ function QuestionsAccordion() {
               </p>
             </div>
 
-            {/* 早見表 */}
-            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">早見表（35年・元利均等）</p>
-            <div className="overflow-hidden border border-text-primary/15 bg-white">
-              <div className="grid grid-cols-[1fr_repeat(3,minmax(0,1fr))] py-2 px-3 border-b border-text-primary/10 bg-bg-secondary/30">
-                <span className="text-[11px] tracking-[0.06em] text-text-secondary font-bold">借入</span>
-                {RATE_HEADERS.map((r) => (
-                  <span key={r} className="text-[11px] tracking-[0.06em] text-text-secondary font-bold text-center">{r}</span>
-                ))}
+            {/* 建てた後にもかかる費用 — ライフサイクルコスト */}
+            <div className="mt-8">
+              <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">
+                建てた後にも、こんな費用がかかります
+              </p>
+              <p className="text-[12px] md:text-[13px] leading-[1.95] text-text-secondary mb-4 max-w-[760px]">
+                住宅ローンだけで終わりではありません。下記は標準的なご家族の年間目安です。資金計画に最初から織り込んでおくと安心です。
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-text-primary/10 border border-text-primary/15">
+                {[
+                  { icon: Receipt, label: "固定資産税", amount: "10〜15", unit: "万円/年", note: "建物・土地の評価額により" },
+                  { icon: Zap, label: "光熱費", amount: "12〜20", unit: "万円/年", note: "電気・ガス・水道(家族構成・季節で変動)" },
+                  { icon: Wrench, label: "メンテナンス", amount: "50〜100", unit: "万円/10〜15年", note: "外壁塗装・水回り更新等" },
+                  { icon: Flame, label: "火災・地震保険", amount: "1〜3", unit: "万円/年", note: "補償内容により" },
+                ].map((c) => {
+                  const Icon = c.icon;
+                  return (
+                    <div key={c.label} className="bg-white p-4 md:p-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Icon className="h-4 w-4 text-main" strokeWidth={1.6} />
+                        <span className="text-[11px] md:text-[12px] text-text-secondary font-medium">{c.label}</span>
+                      </div>
+                      <div className="flex items-baseline gap-1">
+                        <span className="font-oswald tabular-nums text-text-primary leading-none" style={{ fontWeight: 400, fontSize: "clamp(20px,2vw,28px)", color: FOREST }}>
+                          {c.amount}
+                        </span>
+                        <span className="text-text-secondary text-[10px] md:text-[11px]">{c.unit}</span>
+                      </div>
+                      <p className="mt-2 text-[10px] md:text-[11px] leading-[1.7] text-text-secondary">{c.note}</p>
+                    </div>
+                  );
+                })}
               </div>
-              {LOAN_TABLE.map((row) => (
-                <div key={row.borrow} className="grid grid-cols-[1fr_repeat(3,minmax(0,1fr))] py-3 px-3 border-b border-text-primary/10 last:border-b-0 items-baseline">
-                  <span className="font-oswald text-text-primary tabular-nums" style={{ fontWeight: 400, fontSize: "clamp(14px,1.4vw,18px)" }}>
-                    {row.borrow}<span className="text-text-secondary text-[11px] ml-1">万</span>
-                  </span>
-                  {row.monthly.map((m, j) => (
-                    <span key={j} className="font-oswald text-text-primary tabular-nums text-center" style={{ fontWeight: 400, fontSize: "clamp(15px,1.5vw,19px)" }}>
-                      {m}<span className="text-text-secondary text-[10px] ml-0.5">万</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
+              <p className="mt-3 text-[10px] md:text-[11px] leading-[1.85] text-text-secondary">
+                ※ 一般的な目安です。やまとは「修繕積立的な月割り換算」もご相談時にご一緒に整理します。
+              </p>
             </div>
-            <p className="mt-3 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
-              ※ 月々のお支払いには固定資産税・修繕費が別途かかります。「借りられる額」より「返せる額」を、年収の20〜25%以内で。
+
+            <p className="mt-6 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
+              「借りられる額」より「返せる額」を、年収の20〜25%以内で。
             </p>
           </QItem>
 
@@ -587,11 +603,14 @@ function QuestionsAccordion() {
             </div>
           </QItem>
 
-          {/* Q8: はじめての相談 */}
+          {/* Q8: はじめての相談 + 家づくり全体の流れ */}
           <QItem no="08" q="はじめての相談、何を持っていけばいいですか?" teaser="持参不要。お電話1本でご予約いただけます">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
               資料はお揃いでなくて構いません。気がかりなことを一つずつ整理する時間です。お子様連れも歓迎です。
             </p>
+
+            {/* 初回相談の3ステップ */}
+            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">初回相談の流れ</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
               {FLOW_STEPS.map((s) => (
                 <article key={s.k} className="flex flex-col">
@@ -606,6 +625,51 @@ function QuestionsAccordion() {
                 </article>
               ))}
             </div>
+
+            {/* 家づくり全体の流れ — 3フェーズ */}
+            <div className="mt-12 pt-8 border-t border-text-primary/15">
+              <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">家づくり全体の流れ</p>
+              <p className="text-[12px] md:text-[13px] leading-[1.95] text-text-secondary mb-5 max-w-[760px]">
+                ご相談から引き渡し後まで、3つのフェーズに分けてご案内します。お金のことは、各フェーズでご一緒に整えてまいります。
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15">
+                {[
+                  {
+                    label: "Phase A",
+                    title: "購入前",
+                    duration: "1〜3ヶ月",
+                    items: ["初回相談・資金計画", "土地のご紹介", "住宅ローン事前審査", "間取りのたたき台"],
+                  },
+                  {
+                    label: "Phase B",
+                    title: "建築中",
+                    duration: "4〜6ヶ月",
+                    items: ["設計・仕様の決定", "住宅ローン本申込", "着工・上棟", "中間支払い"],
+                  },
+                  {
+                    label: "Phase C",
+                    title: "引渡し後",
+                    duration: "ずっと",
+                    items: ["お引き渡し・入居", "アフターメンテナンス", "固定資産税・住宅ローン控除", "10年・15年の節目点検"],
+                  },
+                ].map((p) => (
+                  <div key={p.label} className="bg-white p-5 md:p-6">
+                    <p className="text-[10px] tracking-[0.18em] uppercase font-bold mb-1" style={{ color: FOREST }}>{p.label}</p>
+                    <p className="text-text-primary text-[15px] md:text-[16px] font-medium leading-[1.5]">{p.title}</p>
+                    <p className="text-text-secondary text-[11px] mt-1">目安: {p.duration}</p>
+                    <ul className="mt-4 space-y-1.5">
+                      {p.items.map((it) => (
+                        <li key={it} className="text-[12px] md:text-[13px] text-text-secondary leading-[1.7] flex items-start gap-2">
+                          <span className="mt-1 w-1 h-1 rounded-full shrink-0" style={{ background: FOREST }} aria-hidden />
+                          {it}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <CtaButton href="/reserve" variant="primary" size="md" label="初回相談を予約する" sublabel="ご相談・事前審査は無料" icon="calendar" />
               <CtaButton href="/contact" variant="secondary" size="md" label="まずは質問だけ" sublabel="メッセージで気軽にどうぞ" />
@@ -628,6 +692,37 @@ function QuestionsAccordion() {
                 </div>
               ))}
             </div>
+          </QItem>
+
+          {/* Q10: お金の用語集 */}
+          <QItem no="10" q="お金の用語、わからない言葉が出てきたら?" teaser="住宅ローンの基本用語を、やさしく解説します">
+            <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
+              ご相談で出てきがちな言葉を、ひと言ずつ。「これってどういう意味?」のひと手間を、ここで解消できます。
+            </p>
+            <div className="border-t border-text-primary/15">
+              {[
+                { term: "元利均等返済", body: "毎月の返済額が一定。家計が立てやすい代わりに、初期は利息の比率が高め。最も一般的。" },
+                { term: "元金均等返済", body: "毎月返済する元金が一定。総返済額は元利均等より少ないが、初期の月々負担が大きい。" },
+                { term: "変動金利", body: "半年ごとに金利が見直されるタイプ。当初の金利が低いが、上昇すると月々支払いが増える可能性。" },
+                { term: "全期間固定金利", body: "完済まで金利が変わらないタイプ。変動より金利は高めだが、家計設計が確実に立てられる。" },
+                { term: "フラット35", body: "住宅金融支援機構と民間金融機関が提供する全期間固定の代表的なローン。長期で家計を安定させたい方向け。" },
+                { term: "団信(団体信用生命保険)", body: "ローン契約者が万一亡くなった/重度障害になった際、ローン残高がゼロになる保険。多くの住宅ローンで加入が必須または推奨。" },
+                { term: "つなぎ融資", body: "土地→建物完成までの間に発生する一時借入。やまとは土地+建物セットで原則発生しません(Q.04参照)。" },
+                { term: "返済比率", body: "年収に対する年間返済額の割合。25%以下が無理のない目安。30%超は要見直し。" },
+                { term: "頭金 / 自己資金", body: "借入を減らす手元資金。生活防衛費(3〜6ヶ月)を残した上で充てるのが安心。" },
+                { term: "諸費用", body: "登記費用・印紙税・ローン手数料・火災保険等の総称。総額の5〜10%が目安(Q.01参照)。" },
+                { term: "住宅ローン控除", body: "年末ローン残高の0.7%が、最大13年間にわたり所得税(住民税)から控除される制度。長期優良住宅等で枠が拡大。" },
+                { term: "事前審査(仮審査)", body: "本契約前に金融機関が借入可能性を判断する審査。やまとでは無料で複数行へ並行依頼可。" },
+              ].map((t) => (
+                <div key={t.term} className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 border-b border-text-primary/15 py-4 md:py-5">
+                  <p className="text-text-primary text-[14px] md:text-[15px] font-medium">{t.term}</p>
+                  <p className="text-[12px] md:text-[13px] leading-[1.95] text-text-secondary max-w-[680px]">{t.body}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
+              ※ ご相談時には、これらの用語をご一緒に整理しながらお話しします。わからない言葉のままで進むことはありません。
+            </p>
           </QItem>
         </div>
       </div>

@@ -217,6 +217,25 @@ export default function MoneyIndexPage() {
                 sublabel="メッセージで気軽にどうぞ"
               />
             </div>
+
+            {/* 電話番号CTA — 高齢層・即時相談派の方向け */}
+            <div className="mt-10 pt-8 border-t border-text-primary/10">
+              <p className="text-[12px] md:text-[13px] text-text-secondary mb-3">お電話でのご相談も承ります</p>
+              <a
+                href="tel:0742-36-1123"
+                className="inline-flex items-baseline gap-2 hover:opacity-80 transition-opacity"
+              >
+                <span
+                  className="font-oswald tabular-nums text-text-primary leading-none"
+                  style={{ fontWeight: 400, fontSize: "clamp(28px, 3vw, 44px)", letterSpacing: "0.02em", color: FOREST }}
+                >
+                  0742-36-1123
+                </span>
+              </a>
+              <p className="mt-2 text-[11px] md:text-[12px] text-text-secondary">
+                受付 9:00〜19:00（火・水定休）／株式会社やまと不動産 本社
+              </p>
+            </div>
           </div>
         </section>
       </main>
