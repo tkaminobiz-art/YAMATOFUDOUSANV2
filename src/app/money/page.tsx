@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
@@ -44,75 +43,31 @@ export default function MoneyIndexPage() {
       <Header />
       {/* font-sans で和文ゴシックをルートロック(明朝禁止) */}
       <main className="font-sans">
-        {/* === 1. HERO — お客様に寄り添う動詞で === */}
-        <section className="relative overflow-hidden bg-bg-warm">
-          {/* 背景写真 — 暖かい屋外、ほぼ生のまま明るく */}
-          <div aria-hidden className="absolute inset-0">
-            <Image
-              src="/images/newsozai/hero-day-green-exterior.webp"
-              alt=""
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-              style={{
-                filter: "saturate(0.95) brightness(0.95)",
-              }}
-            />
-            {/* 視認性を保ちつつ、明るさを残す */}
-            <div className="absolute inset-0 bg-gradient-to-r from-bg-warm/85 via-bg-warm/55 to-bg-warm/30" />
-            <div className="absolute inset-0 bg-gradient-to-t from-bg-warm/45 via-transparent to-transparent" />
-          </div>
-
-          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-[clamp(80px,calc(40px+6vw),200px)] pb-[clamp(80px,calc(40px+6vw),200px)]">
+        {/* === 1. ページヘッダー(ミニマル) — FV撤去版 === */}
+        <section className="bg-bg-primary border-b border-text-primary/10">
+          <div className="max-w-[1400px] mx-auto px-[var(--page-px)] pt-10 md:pt-14 pb-6 md:pb-8">
             <p
-              className="text-[12px] md:text-[13px] tracking-[0.18em] font-bold mb-8 md:mb-10"
+              className="text-[12px] md:text-[13px] tracking-[0.18em] font-bold"
               style={{ color: FOREST }}
             >
               資金計画
             </p>
-
             <h1
-              className="text-text-primary leading-[1.15] tracking-[-0.01em] max-w-[920px]"
-              style={{
-                fontWeight: 500,
-                fontSize: "clamp(34px, 6.4vw, 104px)",
-              }}
+              className="mt-3 text-text-primary leading-[1.3] tracking-[-0.01em] max-w-[860px]"
+              style={{ fontWeight: 500, fontSize: "clamp(22px, 2.6vw, 36px)" }}
             >
-              心配は、軽く。
-              <br />
-              家のお金は、ご一緒に。
+              心配は、軽く。家のお金は、ご一緒に。
             </h1>
-
-            <p className="mt-8 max-w-[640px] text-text-primary/85 text-[clamp(15px,1.2vw,18px)] leading-[1.95]">
+            <p className="mt-3 max-w-[680px] text-text-secondary text-[13px] md:text-[14px] leading-[1.85]">
               中立な提携FPがご家族の心配を軽くし、やまとは暮らしに合わせて、ご一緒に考えます。
-              月々<span className="font-bold" style={{ color: FOREST }}>7.1万円</span>から建てられる、現実的なご計画をお見せします。
             </p>
-
-            <div className="mt-10 flex flex-col sm:flex-row gap-3">
-              <CtaButton
-                href="/reserve"
-                variant="primary"
-                size="md"
-                label="無料相談を予約する"
-                sublabel="ご相談・事前審査は無料"
-                icon="calendar"
-              />
-              <CtaButton
-                href="#big-numbers"
-                variant="secondary"
-                size="md"
-                label="まず数字を見る"
-                sublabel="3つの数字へ"
-              />
-            </div>
           </div>
         </section>
 
-        {/* === 2. BIG NUMBERS — 3つの数字 === */}
+        {/* === 2. BIG NUMBERS — 3つの数字(現在の主役) === */}
         <section
           id="big-numbers"
-          className="relative bg-bg-primary py-[clamp(64px,7vw,140px)] scroll-mt-20"
+          className="relative bg-bg-primary py-[clamp(48px,6vw,120px)] scroll-mt-20"
         >
           <div className="max-w-[1320px] mx-auto px-[var(--page-px)]">
             <div className="text-center mb-12 md:mb-16">
