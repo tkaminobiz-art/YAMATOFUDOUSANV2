@@ -24,12 +24,26 @@ const FOREST = "#486B00";
     4. ThirtyYearAnswer — 30年で残るもの(常に見える図解)
     5. QuestionsAccordion — 9つの質問(全て折りたたみ)
     6. FinalCTA
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  【フォント方針 — 固定ルール (2026-04-23)】
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  和文: ゴシック (var(--font-sans) = Noto Sans JP / 游ゴシック / Hiragino Sans)
+  英字ラベル: Inter (font-inter)
+  数字: Oswald (font-oswald)
+
+  禁止: var(--font-serif) / font-shippori / "Noto Serif" / 明朝系全般
+  /money 配下の全コンポーネントに適用。
+  <main className="font-sans"> でルートロックしているため、
+  子要素は明示しない限り Noto Sans JP を継承する。
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 */
 export default function MoneyIndexPage() {
   return (
     <>
       <Header />
-      <main>
+      {/* font-sans で和文ゴシックをルートロック(明朝禁止) */}
+      <main className="font-sans">
         {/* === 1. HERO — お客様に寄り添う動詞で === */}
         <section className="relative overflow-hidden bg-bg-warm">
           {/* 背景写真 — 暖かい屋外、ほぼ生のまま明るく */}

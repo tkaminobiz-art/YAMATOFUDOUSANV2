@@ -8,6 +8,8 @@ import { useState, useMemo } from "react";
   - 借入額 × 期間 × 金利 のスライダー入力
   - 月々返済額を即時計算(元利均等返済式)
   - (任意)年収入力 → 返済比率を表示
+
+  【フォント方針】和文ゴシック / 数字 font-oswald のみ。明朝禁止。
 */
 
 const FOREST = "#486B00";

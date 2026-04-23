@@ -16,6 +16,12 @@ import LoanSimulator from "@/components/money/LoanSimulator";
     - 詳しく知りたい人だけ: QuestionsAccordion(9問・全て折りたたみ)
     - 最初の Hero / BigNumbers / SellingPoints は page.tsx に
     - JumpNav 撤去(短いページなので不要)
+
+  【フォント方針 — 固定 (page.tsx 参照)】
+  和文: ゴシック (Noto Sans JP / 游ゴシック / Hiragino Sans)
+  英字ラベル: font-inter
+  数字: font-oswald
+  禁止: var(--font-serif), font-shippori, 明朝系
 */
 
 const FOREST = "#486B00";
