@@ -214,56 +214,70 @@ export default function MechanismEnhanced() {
           <CompareBar />
         </div>
 
-        {/* ========== 比較条件の明示（2026-04-24 追加） ========== */}
-        <div className="mt-12 md:mt-14 bg-white border border-text-primary/10 px-6 py-6 md:px-8 md:py-7">
-          <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-4">
+        {/* ========== 比較条件の明示（モバイルは要約1行 / デスクトップは展開） ========== */}
+        <div className="mt-10 md:mt-14 bg-white border border-text-primary/10 px-6 py-5 md:px-8 md:py-7">
+          <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3 md:mb-4">
             Conditions · 比較の条件
           </p>
-          <p className="font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] mb-6">
-            どちらも<span className="font-bold">30坪・4LDK・建物本体＋付帯工事</span>を、同じものさしで並べています。土地・登記・外構などは、どちらの側にも含めていません。
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 pt-5 border-t border-text-primary/10">
-            <div>
-              <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
-                Included · 2,280万円に含まれるもの
-              </p>
-              <ul className="space-y-2">
-                {[
-                  "建物本体（京モデル30坪・4LDK）",
-                  "付帯工事",
-                  "地盤改良費（最大150万円まで当社負担）",
-                  "仲介手数料（当社負担）",
-                  "設計・申請費用／消費税",
-                ].map((t) => (
-                  <li key={t} className="font-sans flex items-baseline gap-2.5 text-text-primary text-[12px] md:text-[13px] leading-[1.7]">
-                    <span aria-hidden className="font-oswald shrink-0 pt-[1px] text-lime-deep" style={{ fontWeight: 500, fontSize: "12px" }}>+</span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="md:border-l md:border-text-primary/10 md:pl-10">
-              <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary mb-3">
-                Excluded · 別途となるもの
-              </p>
-              <ul className="space-y-2">
-                {[
-                  "土地代（エリアにより 500万円台〜）",
-                  "登記費用・印紙税・ローン手数料",
-                  "外構工事（ご要望の内容により）",
-                  "引越し費用・家具家電",
-                ].map((t) => (
-                  <li key={t} className="font-sans flex items-baseline gap-2.5 text-text-primary/85 text-[12px] md:text-[13px] leading-[1.7]">
-                    <span aria-hidden className="font-oswald text-text-secondary/50 shrink-0 pt-[1px]" style={{ fontWeight: 300, fontSize: "12px" }}>—</span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
+
+          {/* モバイル: 要約3行だけ */}
+          <div className="md:hidden">
+            <p className="font-sans text-text-primary/85 text-[13px] leading-[1.85]">
+              どちらも<span className="font-bold">30坪・4LDK</span>、<span className="font-bold">建物本体＋付帯工事</span>だけを同じものさしで並べています。土地・登記・外構は、どちらにも含めていません。
+            </p>
+            <p className="mt-3 font-sans text-text-secondary text-[11px] leading-[1.8]">
+              ※ 含まれるもの／別途費用の内訳は、<a href="#product" className="underline underline-offset-4 decoration-lime-deep/60 text-text-primary">プラン価格の章</a>に詳しくあります。
+            </p>
           </div>
-          <p className="mt-5 pt-4 border-t border-text-primary/10 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.8]">
-            大手側の4,000万円は、積水ハウス・ヘーベルハウス・パナソニックホームズ・大和ハウス・住友林業の5社平均公表坪単価から試算した参考値です。実際の金額は、各社の仕様・地域・商品ラインで動きます。
-          </p>
+
+          {/* デスクトップ: 詳細5+4項目 */}
+          <div className="hidden md:block">
+            <p className="font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] mb-6">
+              どちらも<span className="font-bold">30坪・4LDK・建物本体＋付帯工事</span>を、同じものさしで並べています。土地・登記・外構などは、どちらの側にも含めていません。
+            </p>
+            <div className="grid grid-cols-2 gap-10 pt-5 border-t border-text-primary/10">
+              <div>
+                <p className="font-inter font-bold text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
+                  Included · 2,280万円に含まれるもの
+                </p>
+                <ul className="space-y-2">
+                  {[
+                    "建物本体（京モデル30坪・4LDK）",
+                    "付帯工事",
+                    "地盤改良費（最大150万円まで当社負担）",
+                    "仲介手数料（当社負担）",
+                    "設計・申請費用／消費税",
+                  ].map((t) => (
+                    <li key={t} className="font-sans flex items-baseline gap-2.5 text-text-primary text-[13px] leading-[1.7]">
+                      <span aria-hidden className="font-oswald shrink-0 pt-[1px] text-lime-deep" style={{ fontWeight: 500, fontSize: "12px" }}>+</span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="border-l border-text-primary/10 pl-10">
+                <p className="font-inter font-bold text-[11px] tracking-[0.22em] uppercase text-text-secondary mb-3">
+                  Excluded · 別途となるもの
+                </p>
+                <ul className="space-y-2">
+                  {[
+                    "土地代（エリアにより 500万円台〜）",
+                    "登記費用・印紙税・ローン手数料",
+                    "外構工事（ご要望の内容により）",
+                    "引越し費用・家具家電",
+                  ].map((t) => (
+                    <li key={t} className="font-sans flex items-baseline gap-2.5 text-text-primary/85 text-[13px] leading-[1.7]">
+                      <span aria-hidden className="font-oswald text-text-secondary/50 shrink-0 pt-[1px]" style={{ fontWeight: 300, fontSize: "12px" }}>—</span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p className="mt-5 pt-4 border-t border-text-primary/10 font-sans text-text-secondary text-[12px] leading-[1.8]">
+              大手側の4,000万円は、積水ハウス・ヘーベルハウス・パナソニックホームズ・大和ハウス・住友林業の5社平均公表坪単価から試算した参考値です。実際の金額は、各社の仕様・地域・商品ラインで動きます。
+            </p>
+          </div>
         </div>
 
         {/* ========== 3つの仕組み ========== */}

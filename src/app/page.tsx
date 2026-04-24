@@ -17,6 +17,7 @@ import FaqSection from "@/components/sections/FaqSection";
 import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
 import StandardAndQualitySection from "@/components/sections/StandardAndQualitySection";
+import PhotoBreath from "@/components/sections/PhotoBreath";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
@@ -91,7 +92,15 @@ export default function Home() {
           bodyVariant={HERO_BODY_VARIANT}
         />
         <MechanismEnhanced />
+        <PhotoBreath
+          src="/images/newsozai/exterior-terrace-01.webp"
+          alt="やまとが建てた家の外観テラス"
+        />
         <ZeroDeclaration />
+        <PhotoBreath
+          src="/images/newsozai/interior-ldk-01.webp"
+          alt="やまとが建てた家のLDK"
+        />
         <PriceSection />
         <StandardAndQualitySection />
         <FreedomOfDesign />

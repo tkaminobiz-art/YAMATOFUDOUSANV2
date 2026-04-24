@@ -287,22 +287,24 @@ export default function PriceSection() {
           </div>
         </div>
 
-        {/* ========== 含む / 別途 ========== */}
-        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 lg:gap-20 pt-10 md:pt-14 border-t border-text-primary/15">
+        {/* ========== 含む / 別途 ==========
+            モバイル: 2列グリッドでコンパクト
+            デスクトップ: 従来の2カラム縦リスト */}
+        <div className="mt-10 md:mt-20 grid grid-cols-2 gap-5 md:gap-14 lg:gap-20 pt-8 md:pt-14 border-t border-text-primary/15">
           <div>
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.26em] uppercase text-lime-deep mb-5">
-              Included · 含まれるもの
+            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] md:tracking-[0.26em] uppercase text-lime-deep mb-3 md:mb-5">
+              Included · <span className="md:hidden">含むもの</span><span className="hidden md:inline">含まれるもの</span>
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {INCLUDED.map((t) => (
                 <li
                   key={t}
-                  className="font-sans flex items-baseline gap-3 text-text-primary text-[clamp(13px,1vw,15px)] leading-[1.75]"
+                  className="font-sans flex items-baseline gap-2 md:gap-3 text-text-primary text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
                 >
                   <span
                     aria-hidden
                     className="font-oswald shrink-0 pt-[2px] text-lime-deep"
-                    style={{ fontWeight: 500, fontSize: "14px" }}
+                    style={{ fontWeight: 500, fontSize: "12px" }}
                   >
                     +
                   </span>
@@ -312,19 +314,19 @@ export default function PriceSection() {
             </ul>
           </div>
           <div className="md:border-l md:border-text-primary/15 md:pl-10 lg:pl-14">
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.26em] uppercase text-text-secondary mb-5">
-              Excluded · 別途となるもの
+            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] md:tracking-[0.26em] uppercase text-text-secondary mb-3 md:mb-5">
+              Excluded · 別途
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {EXCLUDED.map((t) => (
                 <li
                   key={t}
-                  className="font-sans flex items-baseline gap-3 text-text-primary/85 text-[clamp(13px,1vw,15px)] leading-[1.75]"
+                  className="font-sans flex items-baseline gap-2 md:gap-3 text-text-primary/85 text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
                 >
                   <span
                     aria-hidden
                     className="font-oswald text-text-secondary/50 shrink-0 pt-[2px]"
-                    style={{ fontWeight: 300, fontSize: "12px" }}
+                    style={{ fontWeight: 300, fontSize: "11px" }}
                   >
                     —
                   </span>
