@@ -93,8 +93,8 @@ export default function Home() {
         />
         <MechanismEnhanced />
         <PhotoBreath
-          src="/images/newsozai/exterior-terrace-01.webp"
-          alt="やまとが建てた家の外観テラス"
+          src="/images/fv/hero-02-exterior-sakyo.webp"
+          alt="やまとが建てた邸宅の外観（左京）"
         />
         <ZeroDeclaration />
         <PhotoBreath
