@@ -150,13 +150,13 @@ export default function HeroMagazine({
                   旧メイン「家そのものを、届けています。」は "何言ってるかわからん" との指摘
                   サブ = 保証(中身は同じ) / メイン = 仕組み(何が違うか) の役割分担 */}
               <span
-                className="block text-white/90"
+                className="block text-white/90 text-left"
                 style={{
-                  fontSize: "clamp(13px, 1.3vw, 16px)",
+                  fontSize: "clamp(26px, 2.6vw, 32px)",
                   fontWeight: variant.weightSubLines,
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
-                  lineHeight: 1.6,
-                  letterSpacing: "0.08em",
+                  lineHeight: 1.5,
+                  letterSpacing: "0.04em",
                   textTransform: "none",
                 }}
               >
