@@ -196,7 +196,7 @@ export default function MechanismEnhanced() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            やまとは、安くない。
+            当社が特別安いわけではありません
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             大手と同じ素材、同じ性能です。
