@@ -72,7 +72,7 @@ function PlanCard({ plan }: { plan: Plan }) {
   const isHeadliner = plan.price === "2,280";
 
   return (
-    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-7 md:p-9 min-h-[440px] md:min-h-[480px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
+    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-6 md:p-9 md:min-h-[480px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
       {/* 漢字 1 文字(Noto Sans 900, lime-deep) + ローマ字 */}
       <div className="flex items-end gap-3">
         <span
@@ -113,7 +113,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       </p>
 
       {/* 価格(底) */}
-      <div className="mt-auto pt-8 md:pt-10 border-t border-text-primary/10">
+      <div className="mt-6 md:mt-auto pt-6 md:pt-10 border-t border-text-primary/10">
         <div className="flex items-baseline gap-2 md:gap-3">
           <span
             className="font-oswald tabular-nums leading-[0.85]"

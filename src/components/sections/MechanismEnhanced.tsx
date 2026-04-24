@@ -81,11 +81,11 @@ function CompareBar() {
           const isHero = c.tone === "hero";
           return (
             <div key={c.id}>
-              {/* ラベル行 */}
-              <div className="flex items-baseline justify-between gap-3 mb-2.5">
-                <div className="flex items-baseline gap-2 md:gap-3 flex-wrap">
+              {/* ラベル行 — mobile: ラベル+サブラベル縦積み、右に金額 / desktop: 1行 */}
+              <div className="flex items-start md:items-baseline justify-between gap-3 mb-2.5">
+                <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3 min-w-0">
                   <span
-                    className={`font-sans font-bold ${
+                    className={`font-sans font-bold whitespace-nowrap ${
                       isHero
                         ? "text-text-primary text-[15px] md:text-[17px]"
                         : "text-text-primary/80 text-[14px] md:text-[15px]"
@@ -93,7 +93,7 @@ function CompareBar() {
                   >
                     {c.label}
                   </span>
-                  <span className="font-sans text-text-secondary text-[11px] md:text-[12px]">
+                  <span className="font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.6]">
                     {c.sub}
                   </span>
                 </div>

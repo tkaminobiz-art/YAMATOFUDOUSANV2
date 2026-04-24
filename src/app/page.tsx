@@ -84,7 +84,8 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      {/* pb-[72px] md:pb-0 : モバイルの FloatingCta(h≈64px)下敷き防止 */}
+      <main className="pb-[72px] md:pb-0">
         <HeroMagazine
           variant={HERO_HEADLINE_VARIANT}
           bodyVariant={HERO_BODY_VARIANT}

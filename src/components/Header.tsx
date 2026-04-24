@@ -100,10 +100,10 @@ export default function Header() {
         scrolled ? "bg-bg-primary/90 backdrop-blur-md" : "bg-bg-primary"
       }`}
     >
-      {/* ===== 上段: 買い手 / 売り手(スクロールで非表示) ===== */}
+      {/* ===== 上段: 買い手 / 売り手(mobile 非表示、lg↑のみ、scroll で非表示) ===== */}
       <div
         aria-hidden={scrolled}
-        className={`overflow-hidden border-b border-border bg-bg-secondary transition-[max-height,opacity] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`hidden lg:block overflow-hidden border-b border-border bg-bg-secondary transition-[max-height,opacity] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           scrolled ? "max-h-0 opacity-0 border-b-0" : "max-h-[48px] opacity-100"
         }`}
       >

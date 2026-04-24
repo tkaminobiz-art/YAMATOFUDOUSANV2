@@ -245,20 +245,30 @@ export default function ZeroDeclaration() {
             <FeeRow key={fee.num} fee={fee} />
           ))}
 
-          {/* 合計行 — 二本線で強調 */}
+          {/* 合計行 — 二本線で強調
+              Mobile: 合計 label + 他社合計を左側にまとめて、¥0 右に大 / Desktop: 4列 */}
           <div
             role="row"
-            className="scroll-in grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto_auto] gap-x-4 md:gap-x-8 lg:gap-x-10 items-baseline pt-8 md:pt-10 mt-1 border-t-2 border-text-primary/60"
+            className="scroll-in grid grid-cols-[1fr_auto] md:grid-cols-[auto_1fr_auto_auto] gap-x-4 md:gap-x-8 lg:gap-x-10 items-baseline md:items-end pt-7 md:pt-10 mt-1 border-t-2 border-text-primary/60"
           >
             <span role="cell" className="hidden md:block" aria-hidden="true" />
 
-            <span
-              role="cell"
-              className="font-sans font-black text-text-primary leading-none tracking-[0.02em]"
-              style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
-            >
-              合計
-            </span>
+            {/* 合計 label + mobile 他社合計 */}
+            <div role="cell" className="flex flex-col gap-1.5 md:gap-0">
+              <span
+                className="font-sans font-black text-text-primary leading-none tracking-[0.02em]"
+                style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
+              >
+                合計
+              </span>
+              {/* Mobile 用 他社合計 */}
+              <p className="md:hidden font-sans text-[11px] text-text-secondary leading-[1.6]">
+                <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-1.5">他社</span>
+                <span className="font-oswald font-medium tabular-nums text-[14px] text-text-primary/85">
+                  {TOTAL_MARKET_MAX}
+                </span>
+              </p>
+            </div>
 
             {/* Desktop: 他社合計 */}
             <span
@@ -273,28 +283,18 @@ export default function ZeroDeclaration() {
               {TOTAL_MARKET_MAX}
             </span>
 
-            {/* やまと合計 ¥0 - セクション全体のクライマックス */}
+            {/* やまと合計 ¥0 — セクションのクライマックス */}
             <span
               role="cell"
               className="font-oswald tabular-nums text-lime-deep text-right leading-none"
               style={{
                 fontWeight: 300,
-                fontSize: "clamp(48px, 5.5vw, 88px)",
+                fontSize: "clamp(44px, 5.5vw, 88px)",
                 letterSpacing: "-0.03em",
               }}
             >
               {TOTAL_YAMATO}
             </span>
-          </div>
-
-          {/* Mobile 用 他社合計 */}
-          <div className="md:hidden mt-4 flex justify-end">
-            <p className="font-sans text-[11px] text-text-secondary leading-[1.7]">
-              <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-2">他社合計</span>
-              <span className="font-oswald font-medium tabular-nums text-[16px] text-text-primary/85">
-                {TOTAL_MARKET_MAX}
-              </span>
-            </p>
           </div>
 
           {/* 差額強調 */}
