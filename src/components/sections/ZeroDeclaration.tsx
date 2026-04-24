@@ -53,7 +53,7 @@ const FEES: readonly Fee[] = [
   },
   {
     num: "04",
-    label: "余計な搬入費",
+    label: "追加の搬入費",
     phase: "施工中",
     marketAmount: "¥100,000 〜 ¥300,000",
     marketNote: "小運搬費としての計上分",
@@ -74,15 +74,15 @@ const FEES: readonly Fee[] = [
   },
   {
     num: "07",
-    label: "打合せ後の追加費用",
-    phase: "入居後",
+    label: "契約後の追加見積り",
+    phase: "施工中",
     marketAmount: "¥200,000 〜 ¥500,000",
     marketNote: "標準外の仕様変更分",
   },
   {
     num: "08",
-    label: "モデルハウスとの差額",
-    phase: "入居後",
+    label: "標準仕様との差額",
+    phase: "契約前",
     marketAmount: "—",
     marketNote: "設備ダウングレード分",
   },
@@ -201,7 +201,7 @@ export default function ZeroDeclaration() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            他社にあって、やまとにない ８ つ。
+            後から増えやすい費用を、<br className="sm:hidden" />最初から抑える仕組み。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             家づくりで乗りがちな費用を並べると、
@@ -328,7 +328,7 @@ export default function ZeroDeclaration() {
         <div className="mt-12 md:mt-16 pt-8 border-t border-text-primary/15 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.95] space-y-1">
           <p>※ 他社金額は業界平均試算に基づく参考値です。土地条件・工法・エリアにより大きく変動します。</p>
           <p>※ やまとの金額は対応エリア・仕様により異なります。詳細は来場時にご案内します。</p>
-          <p>※ 06 不透明な追加費用 / 08 モデルハウスとの差額 は、個別条件の差が大きいため金額表示を控えています。</p>
+          <p>※ 06 不透明な追加費用 / 08 標準仕様との差額 は、個別条件の差が大きいため金額表示を控えています。</p>
         </div>
       </div>
     </section>

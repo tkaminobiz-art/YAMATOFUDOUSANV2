@@ -39,12 +39,10 @@ export default function MidCta() {
           className="text-[clamp(22px,3vw,36px)] text-white mb-5 leading-[1.5]"
           style={{ fontFamily: "var(--font-sans)" }}
         >
-          ここまで、お読みいただきました。
-          <br />
-          モデルハウスで、お待ちしています。
+          気になることがあれば、<br />実物を見ながらご相談ください。
         </h2>
         <p className="text-white/70 text-sm md:text-base leading-[1.9] max-w-[560px] mx-auto mb-10">
-          写真では、伝わらない空気があります。
+          広さ・素材感・標準仕様を、実物でご確認いただけます。
           <br className="sm:hidden" />
           質問だけでも、歓迎しています。
         </p>

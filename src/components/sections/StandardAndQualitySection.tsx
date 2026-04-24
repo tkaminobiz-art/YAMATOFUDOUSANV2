@@ -292,7 +292,7 @@ export default function StandardAndQualitySection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "clamp(28px, 4vw, 56px)" }}
           >
-            これが全部、標準です。
+            モデルごとに標準仕様を、<br className="sm:hidden" />明確にしています。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
             12の素材・設備を、追加費用なしで入れています。
@@ -318,19 +318,14 @@ export default function StandardAndQualitySection() {
               className="font-sans font-black text-text-primary leading-[1.25] tracking-[0.01em]"
               style={{ fontSize: "clamp(26px, 4vw, 56px)" }}
             >
-              20年、<br className="sm:hidden" />やまとが<br className="sm:hidden" />お付き合いします。
+              地盤保証20年をはじめ、<br className="sm:hidden" />建てた後の安心も整えています。
             </h3>
             {/* 品質 3 ファクトをインラインに溶かす(Lime太字数字) */}
             <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[720px]">
-              推奨量の
-              <span className="font-bold text-lime-deep nowrap">1.2倍</span>
-              で塗る、設計から施工まで
-              <span className="font-bold text-lime-deep nowrap">100%自社</span>
-              、外壁の節目は
-              <span className="font-bold text-lime-deep nowrap">10年</span>
-              。
-              <br className="hidden md:inline" />
-              建てた後に効く 5 つの約束を、時間軸でお見せします。
+              外壁塗装は、<span className="font-bold text-lime-deep nowrap">メーカー推奨量を上回る塗布量</span>で施工。
+              設計から施工まで<span className="font-bold text-lime-deep nowrap">100%自社</span>、外壁の節目は<span className="font-bold text-lime-deep nowrap">10年</span>。
+              <br />
+              耐久性にも配慮し、建てた後に効く 5 つの約束を時間軸でお見せします。
             </p>
           </header>
 

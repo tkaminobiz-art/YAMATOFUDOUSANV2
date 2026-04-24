@@ -62,9 +62,9 @@ const MECHANISMS: readonly Mechanism[] = [
   },
   {
     num: "03",
-    title: "広告は、地元だけ。",
+    title: "広告費は、地域に必要な範囲へ。",
     summary: "全国TVCM、全国紙、折込広告の全国展開は行っていません。",
-    body: "届けるべき人に届く範囲だけで出しています。",
+    body: "奈良・京都南部のお客様に届く範囲へ絞っています。",
   },
 ] as const;
 
@@ -196,7 +196,7 @@ export default function MechanismEnhanced() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            当社が特別安いわけではありません
+            安さではなく、<br className="sm:hidden" />費用のかけ方を見直しました。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             大手と同じ素材、同じ性能です。
@@ -276,7 +276,7 @@ export default function MechanismEnhanced() {
               この差は、3 つの仕組みから。
             </h3>
             <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[580px]">
-              後から削るのではなく、<br className="sm:hidden" />最初から、家そのもの以外を乗せていません。
+              家づくりに直接関係しないコストを、<br className="sm:hidden" />できる限り抑えています。
             </p>
           </header>
 

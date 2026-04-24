@@ -21,19 +21,19 @@ const AXES = [
   {
     num: "01",
     title: "窓",
-    degree: "完全自由",
+    degree: "自由設計",
     body: "大きさも位置も形も、自由に決められます。窓が、暮らしの景色を切り取ります。",
   },
   {
     num: "02",
     title: "収納",
-    degree: "完全自由",
+    degree: "自由設計",
     body: "量も場所も、暮らしに合わせて決めます。",
   },
   {
     num: "03",
     title: "光",
-    degree: "完全自由",
+    degree: "自由設計",
     body: "光の入り方と照明を、あわせて設計します。朝から夜まで、光の表情が変わります。",
   },
   {
@@ -87,7 +87,7 @@ const STEPS = [
   { num: "01", text: "土地の条件を、整理します。" },
   { num: "02", text: "ご家族で、優先順位を決めます。" },
   { num: "03", text: "実物で、確かめていただきます。" },
-  { num: "04", text: "暮らしのクセまで、図面に落とします。" },
+  { num: "04", text: "ご家族の生活動線まで、設計に落とし込みます。" },
 ] as const;
 
 type Axis = (typeof AXES)[number];
@@ -184,7 +184,7 @@ export default function FreedomOfDesign() {
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
             できる・できないを、先にお伝えします。
             <br />
-            条件を並べてから、設計は、ちゃんと自由になります。
+            制約を明確にしたうえで、ご家族に合わせた自由設計をご提案します。
           </p>
         </header>
 
