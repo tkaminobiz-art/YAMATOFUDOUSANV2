@@ -130,7 +130,7 @@ function FeeRow({ fee }: { fee: Fee }) {
         <div className="md:hidden mt-2">
           <p className="font-sans text-[11px] text-text-secondary leading-[1.7]">
             <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-2">他社</span>
-            <span className={`font-oswald tabular-nums text-[13px] ${hasAmount ? "text-text-primary/55" : "text-text-primary/30"}`}>
+            <span className={`font-oswald font-medium tabular-nums text-[13px] ${hasAmount ? "text-text-primary/80" : "text-text-primary/35"}`}>
               {fee.marketAmount}
             </span>
           </p>
@@ -146,10 +146,10 @@ function FeeRow({ fee }: { fee: Fee }) {
       <div role="cell" className="hidden md:block text-right">
         <span
           className={`font-oswald tabular-nums whitespace-nowrap ${
-            hasAmount ? "text-text-primary/55" : "text-text-primary/25"
+            hasAmount ? "text-text-primary/80" : "text-text-primary/35"
           }`}
           style={{
-            fontWeight: 300,
+            fontWeight: 400,
             fontSize: "clamp(16px, 1.4vw, 22px)",
             letterSpacing: "-0.02em",
           }}
@@ -201,7 +201,7 @@ export default function ZeroDeclaration() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            他社にあって、やまとにない 8 つ。
+            他社にあって、やまとにない ８ つ。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             家づくりで乗りがちな費用を並べると、
@@ -263,9 +263,9 @@ export default function ZeroDeclaration() {
             {/* Desktop: 他社合計 */}
             <span
               role="cell"
-              className="hidden md:block text-right font-oswald tabular-nums text-text-primary/60 whitespace-nowrap"
+              className="hidden md:block text-right font-oswald tabular-nums text-text-primary/85 whitespace-nowrap"
               style={{
-                fontWeight: 300,
+                fontWeight: 400,
                 fontSize: "clamp(22px, 2.2vw, 36px)",
                 letterSpacing: "-0.02em",
               }}
@@ -291,7 +291,7 @@ export default function ZeroDeclaration() {
           <div className="md:hidden mt-4 flex justify-end">
             <p className="font-sans text-[11px] text-text-secondary leading-[1.7]">
               <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-2">他社合計</span>
-              <span className="font-oswald tabular-nums text-[16px] text-text-primary/60">
+              <span className="font-oswald font-medium tabular-nums text-[16px] text-text-primary/85">
                 {TOTAL_MARKET_MAX}
               </span>
             </p>
