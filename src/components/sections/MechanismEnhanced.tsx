@@ -181,7 +181,8 @@ function MechanismCard({ m }: { m: Mechanism }) {
 // ────────────────────────────────────────────────
 
 export default function MechanismEnhanced() {
-  const ref = useScrollIn<HTMLDivElement>();
+  // 3 つの MechanismCard に .scroll-in が付いているため stagger=true で子要素も観測
+  const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
     <section
