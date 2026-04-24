@@ -49,12 +49,11 @@ export default function LotsSection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            土地も、<br className="sm:hidden" />やまとでお探しします。
+            こだわりの<span className="nowrap">自社分譲地</span>、<br className="sm:hidden" />
+            <span className="nowrap text-lime-deep">{LOTS.length}区画</span>。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
-            奈良・京都で、
-            <span className="font-bold text-lime-deep nowrap">{LOTS.length}区画</span>
-            を分譲してきました。
+            奈良・京都で、じぶんたちで選び抜いてきた土地だけ。
             <br />
             通学・通勤・ご実家距離まで、一緒に考えます。
           </p>

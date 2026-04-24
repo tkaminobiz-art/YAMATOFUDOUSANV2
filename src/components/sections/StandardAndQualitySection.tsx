@@ -288,7 +288,7 @@ export default function StandardAndQualitySection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "clamp(28px, 4vw, 56px)" }}
           >
-            これが、全部、標準です。
+            これが全部、標準です。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
             12の素材・設備を、追加費用なしで入れています。
@@ -312,9 +312,9 @@ export default function StandardAndQualitySection() {
           <header className="mb-10 md:mb-14 max-w-[960px]">
             <h3
               className="font-sans font-black text-text-primary leading-[1.25] tracking-[0.01em]"
-              style={{ fontSize: "clamp(28px, 4vw, 56px)" }}
+              style={{ fontSize: "clamp(26px, 4vw, 56px)" }}
             >
-              20年、続きます。
+              20年、<br className="sm:hidden" />やまとが<br className="sm:hidden" />お付き合いします。
             </h3>
             {/* 品質 3 ファクトをインラインに溶かす(Lime太字数字) */}
             <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[720px]">
