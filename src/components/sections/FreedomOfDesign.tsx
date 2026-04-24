@@ -183,7 +183,7 @@ export default function FreedomOfDesign() {
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
             できる・できないを、先にお伝えします。
-            <br className="hidden md:inline" />
+            <br />
             条件を並べてから、設計は、ちゃんと自由になります。
           </p>
         </header>
@@ -196,7 +196,7 @@ export default function FreedomOfDesign() {
           >
             自由になるのは、4 つの要素。
           </h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             {AXES.map((axis) => (
               <AxisCard key={axis.num} axis={axis} />
             ))}

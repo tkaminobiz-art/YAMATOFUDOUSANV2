@@ -151,14 +151,16 @@ export default function PriceSection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            三タイプ、ご用意しています。
+            三タイプ、<br className="sm:hidden" />ご用意しています。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             京モデルは、
-            <span className="font-bold text-lime-deep">2,280万円</span>
+            <span className="font-bold text-lime-deep nowrap">2,280万円</span>
             から始まります。
-            <br className="hidden md:inline" />
-            税込で、建物本体と付帯工事まで含みます。土地や登記は別途です。
+            <br />
+            税込で、建物本体と付帯工事まで含みます。
+            <br className="sm:hidden" />
+            土地や登記は別途です。
           </p>
         </header>
 

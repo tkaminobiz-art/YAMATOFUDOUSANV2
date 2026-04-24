@@ -66,9 +66,14 @@ html, body {
   overflow-wrap: anywhere;   /* 必要な時だけ折り返す */
 }
 
-/* フォールバック: auto-phrase 未対応ブラウザ */
+/* フォールバック: auto-phrase 未対応ブラウザ(Safari/iOS)
+   keep-all: 日本語をどこでも切らせず、句読点・空白でのみ改行
+   overflow-wrap: anywhere: 収まらない時のみ最終手段で破る(固有名詞の途中切れ防止) */
 @supports not (word-break: auto-phrase) {
-  html, body { word-break: normal; }
+  html, body {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {

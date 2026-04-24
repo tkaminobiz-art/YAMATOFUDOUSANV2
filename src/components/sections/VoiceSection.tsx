@@ -244,13 +244,15 @@ function AllVoicesCard() {
               color: "#2E4600",
             }}
           >
-            50組すべての声が、別ページにあります。
+            50組すべての声が、<br className="sm:hidden" />別ページにあります。
           </h3>
           <p
             className="font-sans mt-3 text-[clamp(12px,0.95vw,14px)] leading-[1.85]"
             style={{ color: "rgba(46,70,0,0.85)" }}
           >
-            装飾も、誇張も、ありません。奈良・京都の50組の声を、別ページにまとめています。
+            装飾も、誇張も、ありません。
+            <br className="sm:hidden" />
+            奈良・京都の50組の声を、別ページにまとめています。
           </p>
           <p
             className="font-inter mt-5 text-[11px] md:text-[12px] tracking-[0.22em] uppercase font-bold group-hover:translate-x-1 transition-transform"
@@ -280,11 +282,11 @@ export default function VoiceSection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            50組の家族が、本音で答えています。
+            50組の家族が、<br className="sm:hidden" />本音で答えています。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
             装飾も、誇張も、ありません。
-            <br className="hidden md:inline" />
+            <br />
             奈良・京都から、50組の本音が届きました。
           </p>
         </header>

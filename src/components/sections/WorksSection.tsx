@@ -39,12 +39,12 @@ export default function WorksSection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            やまとが建てた、実際の家です。
+            やまとが建てた、<br className="sm:hidden" />実際の家です。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
-            <span className="font-bold text-lime-deep">{TOTAL_WORKS_COUNT}件</span>
+            <span className="font-bold text-lime-deep nowrap">{TOTAL_WORKS_COUNT}件</span>
             の完成事例を、写真で紹介しています。
-            <br className="hidden md:inline" />
+            <br />
             価格はすべて、付帯工事まで込みです。
           </p>
         </header>

@@ -205,7 +205,8 @@ export default function ZeroDeclaration() {
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             家づくりで乗りがちな費用を並べると、
-            <span className="font-bold text-lime-deep">およそ ¥4,300,000</span>
+            <br className="sm:hidden" />
+            <span className="font-bold text-lime-deep nowrap">およそ ¥4,300,000</span>
             の差になります。
           </p>
         </header>

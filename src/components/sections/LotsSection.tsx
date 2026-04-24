@@ -49,13 +49,13 @@ export default function LotsSection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            土地も、やまとでお探しします。
+            土地も、<br className="sm:hidden" />やまとでお探しします。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             奈良・京都で、
-            <span className="font-bold text-lime-deep">{LOTS.length}区画</span>
+            <span className="font-bold text-lime-deep nowrap">{LOTS.length}区画</span>
             を分譲してきました。
-            <br className="hidden md:inline" />
+            <br />
             通学・通勤・ご実家距離まで、一緒に考えます。
           </p>
         </header>
@@ -113,7 +113,7 @@ export default function LotsSection() {
             </p>
             <p className="font-sans text-text-primary/85 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[62rem]">
               {cities.map((c, i) => (
-                <span key={c.city}>
+                <span key={c.city} className="nowrap">
                   {c.city}
                   <span className="font-inter text-text-secondary/70 text-[0.85em] mx-[3px]">
                     {c.count}

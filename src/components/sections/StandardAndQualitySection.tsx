@@ -292,7 +292,7 @@ export default function StandardAndQualitySection() {
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
             12の素材・設備を、追加費用なしで入れています。
-            <br className="hidden md:inline" />
+            <br />
             大手がオプションにしているものも、やまとでは最初から。
           </p>
         </header>
@@ -319,11 +319,11 @@ export default function StandardAndQualitySection() {
             {/* 品質 3 ファクトをインラインに溶かす(Lime太字数字) */}
             <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[720px]">
               推奨量の
-              <span className="font-bold text-lime-deep">1.2倍</span>
+              <span className="font-bold text-lime-deep nowrap">1.2倍</span>
               で塗る、設計から施工まで
-              <span className="font-bold text-lime-deep">100%自社</span>
+              <span className="font-bold text-lime-deep nowrap">100%自社</span>
               、外壁の節目は
-              <span className="font-bold text-lime-deep">10年</span>
+              <span className="font-bold text-lime-deep nowrap">10年</span>
               。
               <br className="hidden md:inline" />
               建てた後に効く 5 つの約束を、時間軸でお見せします。

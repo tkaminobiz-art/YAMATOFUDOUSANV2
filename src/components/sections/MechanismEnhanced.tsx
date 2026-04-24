@@ -200,10 +200,11 @@ export default function MechanismEnhanced() {
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             大手と同じ素材、同じ性能です。
+            <br />
             違うのは、<span className="font-bold">届けるまでの費用</span>だけ。
-            <br className="hidden md:inline" />
-            京モデル30坪で、その差は
-            <span className="font-bold text-lime-deep">1,720万円</span>
+            <br />
+            <span className="nowrap">京モデル30坪</span>で、その差は
+            <span className="font-bold text-lime-deep nowrap">1,720万円</span>
             になります。
           </p>
         </header>
@@ -223,7 +224,7 @@ export default function MechanismEnhanced() {
               この差は、3 つの仕組みから。
             </h3>
             <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[580px]">
-              後から削るのではなく、最初から、家そのもの以外を乗せていません。
+              後から削るのではなく、<br className="sm:hidden" />最初から、家そのもの以外を乗せていません。
             </p>
           </header>
 
