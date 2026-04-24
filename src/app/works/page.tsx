@@ -67,7 +67,7 @@ export default function WorksIndexPage() {
                 href="/reserve"
                 variant="primary"
                 size="md"
-                label="来店予約"
+                label="来場予約"
                 sublabel="ご予約不要・無料"
               />
               <CtaButton

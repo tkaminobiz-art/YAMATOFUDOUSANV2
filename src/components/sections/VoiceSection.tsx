@@ -299,7 +299,7 @@ export default function VoiceSection() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-sm)",
               }}
             >
               50組の家族が、

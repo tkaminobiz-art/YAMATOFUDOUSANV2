@@ -354,7 +354,7 @@ export default function StandardAndQualitySection() {
   return (
     <section
       id="standard-quality"
-      className="relative overflow-hidden bg-[#FAF8F3] py-[var(--section-py)]"
+      className="relative overflow-hidden bg-lime-light py-[var(--section-py)]"
     >
       <div
         ref={ref}
@@ -370,12 +370,12 @@ export default function StandardAndQualitySection() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-md)",
               }}
             >
               中身は、
               <br />
-              大手と<span style={{ color: "var(--color-lime)" }}>同じ</span>です。
+              大手と<span style={{ color: "var(--color-lime-deep)" }}>同じ</span>です。
             </h2>
           </div>
           <aside className="lg:pt-4">

@@ -12,7 +12,7 @@ export default function FinalCta() {
         ref={ref}
         className="max-w-[800px] mx-auto px-[var(--page-px)] text-center scroll-in"
       >
-        <p className="font-section-label text-main text-xs md:text-sm mb-6 tracking-[0.15em]">
+        <p className="font-section-label text-lime-deep text-xs md:text-sm mb-6 tracking-[0.15em]">
           CONTACT
         </p>
 

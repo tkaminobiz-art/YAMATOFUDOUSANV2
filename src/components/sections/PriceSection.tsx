@@ -80,13 +80,14 @@ function PlanCard({ plan }: { plan: Plan }) {
 
   return (
     <article className="group relative flex flex-col bg-white border border-text-primary/10 p-7 md:p-9 min-h-[520px] md:min-h-[560px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
-      {/* 漢字 — Shippori Black 主役 */}
+      {/* 漢字 — Shippori Black 主役(lime-deepで記憶要素に昇格) */}
       <div className="flex items-end gap-3 md:gap-4">
         <span
-          className="font-shippori text-text-primary leading-[0.85] tracking-[0.02em]"
+          className="font-shippori leading-[0.85] tracking-[0.02em]"
           style={{
             fontWeight: 900,
             fontSize: "clamp(80px, 9vw, 140px)",
+            color: "var(--color-lime-deep)",
           }}
         >
           {plan.name}
@@ -126,7 +127,7 @@ function PlanCard({ plan }: { plan: Plan }) {
               fontWeight: 300,
               fontSize: "clamp(64px, 8vw, 112px)",
               letterSpacing: "-0.03em",
-              color: isHeadliner ? "#A2C523" : undefined,
+              color: isHeadliner ? "var(--color-lime-deep)" : undefined,
             }}
           >
             {plan.price}
@@ -183,7 +184,7 @@ export default function PriceSection() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-lg)",
               }}
             >
               三タイプ、<br />ご用意しています。
@@ -194,7 +195,7 @@ export default function PriceSection() {
           <aside className="lg:pt-4">
             <div className="border-t-[3px] border-text-primary pt-6">
               <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                京モデルは、<span style={{ color: "#A2C523" }}>2,280</span>万円から始まります。
+                京モデルは、<span style={{ color: "var(--color-lime-deep)" }}>2,280</span>万円から始まります。
               </p>
               <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
                 税込で、建物本体と付帯工事まで含みます。
@@ -227,7 +228,7 @@ export default function PriceSection() {
                   <span
                     aria-hidden
                     className="font-oswald shrink-0 pt-[2px]"
-                    style={{ fontWeight: 500, fontSize: "14px", color: "#A2C523" }}
+                    style={{ fontWeight: 500, fontSize: "14px", color: "var(--color-lime-deep)" }}
                   >
                     +
                   </span>

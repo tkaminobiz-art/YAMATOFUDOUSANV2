@@ -22,12 +22,12 @@ export default function MidCta() {
             "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E\")",
         }}
       />
-      {/* ダークラジアル（ブランドカラーをほのかに） */}
+      {/* ダークラジアル — 2026-04-24 design-critic: earth brown 撤廃、Lime両サイドで呼吸 */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(at 18% 50%, rgba(90,138,74,0.16) 0%, transparent 55%), radial-gradient(at 82% 50%, rgba(196,112,63,0.10) 0%, transparent 55%)",
+            "radial-gradient(at 18% 50%, rgba(162,197,35,0.18) 0%, transparent 55%), radial-gradient(at 82% 50%, rgba(162,197,35,0.12) 0%, transparent 55%)",
         }}
       />
 

@@ -6,8 +6,9 @@ import { Phone, MessageCircle, Calendar } from "lucide-react";
 
 /*
   モバイルフッター固定CTA
-  3分割ピル型・色で役割を分ける（電話=黒/LINE=緑/予約=黒系solid）
-  Headerと同様にPrimaryは黒系で統一しつつ、LINEだけブランド色を残す
+  3分割ピル型・色で役割を分ける（電話=黒線/LINE=LINE緑/予約=Lime）
+  2026-04-24 design-critic: 予約を黒系→Limeに昇格。スクロール中常時Limeが視界に入り、
+  サイトの呼吸がLimeに戻る
 */
 export default function FloatingCta() {
   const [visible, setVisible] = useState(false);
@@ -42,14 +43,14 @@ export default function FloatingCta() {
         </a>
         <Link
           href="/reserve"
-          className="group relative flex flex-col items-center justify-center gap-0.5 min-h-[48px] flex-1 rounded overflow-hidden bg-text-primary text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          className="group relative flex flex-col items-center justify-center gap-0.5 min-h-[48px] flex-1 rounded overflow-hidden bg-lime text-lime-darker border-b-[2px] border-lime-hover transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-hover hover:shadow-[0_8px_20px_-4px_rgba(162,197,35,0.5)]"
         >
           <span
             aria-hidden
-            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
           />
-          <Calendar className="relative w-4 h-4" strokeWidth={1.5} />
-          <span className="relative text-[10px] font-medium">来場予約</span>
+          <Calendar className="relative w-4 h-4" strokeWidth={1.75} />
+          <span className="relative text-[10px] font-bold">来場予約</span>
         </Link>
       </div>
     </div>

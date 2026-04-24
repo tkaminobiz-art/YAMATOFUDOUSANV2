@@ -133,7 +133,7 @@ function AxisCard({ axis }: { axis: Axis }) {
 
       <p
         className="font-inter mt-4 md:mt-5 text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-bold"
-        style={{ color: "#A2C523" }}
+        style={{ color: "var(--color-lime-deep)" }}
       >
         {axis.degree}
       </p>
@@ -182,7 +182,7 @@ export default function FreedomOfDesign() {
     <section
       id="design"
       ref={ref}
-      className="relative overflow-hidden bg-[#FAF8F3] text-text-primary py-[var(--section-py)] scroll-in"
+      className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ================= HEADER (非対称) ================= */}
@@ -195,7 +195,7 @@ export default function FreedomOfDesign() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-md)",
               }}
             >
               間取りも設備も、

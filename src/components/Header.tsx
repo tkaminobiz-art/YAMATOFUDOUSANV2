@@ -203,23 +203,23 @@ export default function Header() {
             </Link>
             <Link
               href="/reserve"
-              className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium bg-main text-white rounded transition-all duration-[400ms] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_8px_24px_-4px_rgba(90,138,74,0.45)] whitespace-nowrap"
+              className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover transition-all duration-[400ms] hover:-translate-y-0.5 hover:bg-lime-hover hover:shadow-[0_8px_24px_-4px_rgba(162,197,35,0.5)] whitespace-nowrap"
             >
               <span
                 aria-hidden
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
               />
-              <span className="relative">来店予約</span>
+              <span className="relative">来場予約</span>
             </Link>
           </div>
 
-          {/* SP 右端: 来店予約のみ */}
+          {/* SP 右端: 来場予約のみ */}
           <div className="flex items-center gap-2 lg:hidden">
             <Link
               href="/reserve"
-              className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-medium bg-main text-white rounded whitespace-nowrap"
+              className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover whitespace-nowrap"
             >
-              来店予約
+              来場予約
             </Link>
           </div>
         </div>
@@ -253,10 +253,10 @@ export default function Header() {
               </Link>
               <Link
                 href="/reserve"
-                className="block text-center min-h-[48px] px-6 py-3 text-sm font-medium bg-main text-white rounded"
+                className="block text-center min-h-[48px] px-6 py-3 text-sm font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover"
                 onClick={() => setMenuOpen(false)}
               >
-                来店予約
+                来場予約
               </Link>
             </li>
             <li className="border-t border-border px-6 py-4">

@@ -23,8 +23,6 @@ import { useScrollIn } from "@/hooks/useScrollIn";
   4. サイドカー: photo + data + notes の stretch分散
 */
 
-const ACCENT_LIME = "#A2C523";
-
 // 全写真共通フィルター(編集誌の印刷感)
 const PHOTO_FILTER = "saturate(0.95) contrast(1.05) sepia(0.04)";
 
@@ -101,10 +99,10 @@ export default function MechanismEnhanced() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-lg)",
               }}
             >
-              やまとは<span style={{ color: ACCENT_LIME }}>安い</span>？
+              やまとは<span style={{ color: "var(--color-lime-deep)" }}>安い</span>？
               <br />
               いいえ、違います。
             </h2>
@@ -143,7 +141,7 @@ export default function MechanismEnhanced() {
             >
               だから、やまとの価格は
               <br />
-              <span style={{ color: ACCENT_LIME }}>家そのものの価格</span>です。
+              <span style={{ color: "var(--color-lime-deep)" }}>家そのものの価格</span>です。
             </h3>
 
             {/* Article body */}
@@ -189,7 +187,7 @@ export default function MechanismEnhanced() {
                 >
                   後から削るのではなく、
                   <br />
-                  最初から<span style={{ color: ACCENT_LIME }}>含めていません</span>。
+                  最初から<span style={{ color: "var(--color-lime-deep)" }}>含めていません</span>。
                 </blockquote>
               </aside>
 
@@ -256,7 +254,7 @@ export default function MechanismEnhanced() {
                   <span
                     className="font-inter font-black"
                     style={{
-                      color: ACCENT_LIME,
+                      color: "var(--color-lime-deep)",
                       fontSize: "20px",
                     }}
                   >

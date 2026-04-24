@@ -2,17 +2,17 @@
 
 /*
   共通CTAボタン（折衷案B：視認性と品格の両立）
-  2026-04-15 更新：神野さんの方針転換
-  - Primary : 緑ソリッド + シマー（CVR最優先・ブランドアクセント）
+  2026-04-24 更新：Lime主役化(design-critic)
+  - Primary : Lime(#A2C523) + darker text(#1A2600) + ハードシャドウ下辺
   - Secondary : 黒線 → 黒フィル（品格保持）
-  住宅サイトのゴール＝問い合わせCV のため、Primary は視認性を優先。
-  落ち着いたトーンは Secondary・セクション背景・フォントで守る。
+  Primary の白文字は WCAG 違反(Lime vs white = 1.8:1)なので濃緑文字に変更。
+  住宅サイトのゴール＝問い合わせCV のため、Primary は視認性を最優先。
 
   variant:
-    - primary   : 緑ソリッド + シマー（来場予約など最重要CTA）
+    - primary   : Lime + 濃緑文字 + シマー + 下辺シャドウ（来場予約など最重要CTA）
     - secondary : 黒線 → 黒フィル（資料請求・サブCTA）
     - tertiary  : ピル型 + ブランド色（LINE/電話/メール等）
-    - dark-bg   : ダーク背景上で使うprimary（白ボタン版）
+    - dark-bg   : ダーク背景上で使うprimary（Lime版）
 
   size:
     - sm : 44px / 本文リンク
@@ -83,40 +83,40 @@ export default function CtaButton({
       ? Calendar
       : null;
 
-  // ─── Primary（緑ソリッド + シマー）— CVR最優先 ───
+  // ─── Primary（Lime + 濃緑文字 + シマー + 下辺シャドウ）— CVR最優先 ───
   if (variant === "primary") {
     return (
       <Anchor href={href} external={external}
-        className={`group relative inline-flex items-center justify-center overflow-hidden bg-main text-white rounded transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_16px_40px_-8px_rgba(90,138,74,0.45)] ${sizeClass} ${className}`}
+        className={`group relative inline-flex items-center justify-center overflow-hidden bg-lime text-lime-darker rounded border-b-[3px] border-lime-hover transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-lime-hover hover:border-lime-deep hover:shadow-[0_16px_40px_-8px_rgba(162,197,35,0.55)] ${sizeClass} ${className}`}
       >
-        {/* シマー層 */}
+        {/* シマー層 — 白ハイライトで "光が通る" 表現(Lime上で視認) */}
         <span
           aria-hidden
-          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
         />
 
         {sublabel ? (
           <>
             <span className="relative flex flex-col items-start mr-3">
-              <span className="font-medium leading-tight">{label}</span>
-              <span className={`${sublabelSize} text-white/65 leading-tight mt-0.5`}>
+              <span className="font-bold leading-tight">{label}</span>
+              <span className={`${sublabelSize} text-lime-darker/70 leading-tight mt-0.5 font-medium`}>
                 {sublabel}
               </span>
             </span>
             {IconComponent && (
               <IconComponent
                 className={`relative ${iconSize} transition-transform duration-[400ms] group-hover:translate-x-1`}
-                strokeWidth={1.5}
+                strokeWidth={1.75}
               />
             )}
           </>
         ) : (
-          <span className="relative flex items-center gap-2 font-medium">
+          <span className="relative flex items-center gap-2 font-bold">
             {label}
             {IconComponent && (
               <IconComponent
                 className={`${iconSize} transition-transform duration-[400ms] group-hover:translate-x-1`}
-                strokeWidth={1.5}
+                strokeWidth={1.75}
               />
             )}
           </span>
@@ -206,22 +206,22 @@ export default function CtaButton({
     );
   }
 
-  // ─── Dark background - Primary（緑ソリッド + シマー、中央揃え縦積み） ───
-  // 2026-04-15 神野さん版に統一: Hero / MidCta / /sell Hero 共通
+  // ─── Dark background - Primary（Lime + 濃緑文字 + 下辺シャドウ、中央揃え縦積み） ───
+  // 2026-04-24 Lime主役化: ダーク背景上でも Lime bg を保持(Hero/MidCta の視線誘導)
   if (variant === "dark-bg-primary") {
     return (
       <Anchor
         href={href}
         external={external}
-        className={`group relative inline-flex ${sizeClass} ${sublabel ? "flex-col" : ""} items-center justify-center overflow-hidden rounded bg-main text-white text-center font-medium shadow-[0_12px_40px_-12px_rgba(0,0,0,0.45)] transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-main-dark hover:shadow-[0_16px_48px_-8px_rgba(90,138,74,0.5)] ${className}`}
+        className={`group relative inline-flex ${sizeClass} ${sublabel ? "flex-col" : ""} items-center justify-center overflow-hidden rounded bg-lime text-lime-darker text-center font-bold border-b-[3px] border-lime-hover shadow-[0_16px_44px_-10px_rgba(162,197,35,0.5)] transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-white hover:text-main-dark hover:border-main hover:shadow-[0_20px_52px_-10px_rgba(255,255,255,0.4)] ${className}`}
       >
         <span
           aria-hidden
-          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+          className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
         />
         <span className="relative leading-tight">{label}</span>
         {sublabel && (
-          <span className="relative mt-0.5 text-[11px] font-normal text-white/75">
+          <span className="relative mt-0.5 text-[11px] font-medium text-lime-darker/75 group-hover:text-main-dark/75 transition-colors duration-[400ms]">
             {sublabel}
           </span>
         )}

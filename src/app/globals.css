@@ -9,16 +9,33 @@
   --color-text-primary: #2B2B2B;
   --color-text-secondary: #6B6B6B;
 
-  /* === ブランドカラーパレット 2026-04-20 刷新 === */
-  /* メイン: forest green / grass / lime / earth の自然系 4色 */
-  --color-main: #486B00;           /* grass - メイン緑 */
-  --color-main-dark: #2E4600;      /* forest green - 深い緑 */
+  /* === ブランドカラーパレット 2026-04-24 刷新: Lime主役化 ===
+     --color-main / -dark は "テキスト/線用の深緑" に役割を絞り(WCAG AA クリア),
+     ボタン背景・主役アクセントは --color-lime を直接指定する(bg-lime / text-lime-deep 等)。
+     earth(#7D4427)はパレットから退場。textでは使わない。 */
+  --color-main: #486B00;           /* grass - 深緑(テキスト/罫線用, WCAG AAA on white) */
+  --color-main-dark: #2E4600;      /* forest green - 極暗緑(ダーク背景のフォールバック) */
   --color-main-light: #EDF2D5;     /* grass の極薄ティント (派生) */
-  --color-lime: #A2C523;           /* lime - 強アクセント・呼応色(花鳥風月の家・標準) */
-  --color-accent: #7D4427;         /* earth - 土褐色アクセント */
-  --color-accent-light: #F2EAE0;   /* earth の極薄ティント (派生) */
-  --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (派生・装飾用) */
+
+  /* Lime群(メイン役) */
+  --color-lime: #A2C523;           /* Lime - ボタン背景・アクセント主役 */
+  --color-lime-hover: #8FB01E;     /* Lime hover(少し暗め, 立体感) */
+  --color-lime-deep: #5C7A10;      /* 白背景上の文字用 Lime(WCAG AA 4.54:1) */
+  --color-lime-darker: #1A2600;    /* Lime背景上の文字色(コントラスト11:1, AAA) */
+  --color-lime-light: #F0F6D8;     /* Lime極薄ティント - セクション背景用 */
+
+  /* 退役予定(装飾のみ・テキスト/ボタン使用禁止) */
+  --color-accent: #7D4427;         /* earth - 装飾のみ。本文/ボタン使用禁止 */
+  --color-accent-light: #F2EAE0;   /* earth の極薄ティント (装飾用) */
+  --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (装飾用) */
   --color-border: #E5E5E0;
+
+  /* === Display scale(3層)===
+     主役 L(120) / 主力 M(80) / 補助 S(56) の2倍弱差でリズムを作る
+     既存 8vw/120px レイアウトと両立させるため L は既存値を保持 */
+  --display-lg: clamp(44px, 8vw, 120px);
+  --display-md: clamp(32px, 5.5vw, 80px);
+  --display-sm: clamp(24px, 3.8vw, 56px);
 
   /* === Fonts ===
      Tailwind v4: @theme の --font-* が font-* ユーティリティを生成

@@ -99,7 +99,7 @@ export default function FaqSection() {
         ref={sectionRef}
         className="max-w-[1000px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+        <p className="font-section-label text-lime-deep text-xs md:text-sm mb-3 tracking-[0.15em]">
           FAQ
         </p>
         <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">

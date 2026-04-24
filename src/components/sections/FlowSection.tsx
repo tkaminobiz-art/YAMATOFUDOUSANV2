@@ -5,7 +5,7 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 const FLOW_STEPS = [
   {
     num: "01",
-    title: "ご相談・ご来店",
+    title: "ご相談・ご来場",
     desc: "モデルハウスで、ご家族の暮らしをゆっくりとお聞かせください。",
     duration: "30分〜",
   },
@@ -75,7 +75,7 @@ export default function FlowSection() {
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
         <div className="mb-10 md:mb-14 max-w-[640px]">
-          <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
+          <p className="font-section-label text-lime-deep text-xs md:text-sm mb-3 tracking-[0.15em]">
             FLOW
           </p>
           <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">

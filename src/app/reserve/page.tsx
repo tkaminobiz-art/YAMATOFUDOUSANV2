@@ -98,7 +98,7 @@ export default function ReservePage() {
             RESERVATION
           </p>
           <h1 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-3">
-            来店予約
+            来場予約
           </h1>
           <p className="text-text-secondary text-sm mb-8">
             無料・1分で完了します。強引な勧誘は一切いたしません。

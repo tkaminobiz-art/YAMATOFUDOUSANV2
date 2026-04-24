@@ -51,7 +51,7 @@ export default function LotsSection() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-md)",
               }}
             >
               土地も、

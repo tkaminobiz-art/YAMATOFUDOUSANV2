@@ -64,16 +64,16 @@ function SlideOverlay({ category }: { category: SlideCategory }) {
       />
     );
   }
-  // interior(現状維持・vignette は右側に反転=テキストを右に移したため)
+  // interior(2026-04-24 design-critic: 62→48 暖色性とLimeアクセントの対比を強化)
   return (
     <>
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/18 to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-black/48 via-black/12 to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-l from-black/25 via-transparent to-transparent"
+        className="absolute inset-0 bg-gradient-to-l from-black/20 via-transparent to-transparent"
       />
     </>
   );
@@ -172,14 +172,15 @@ export default function HeroMagazine({
               </span>
             </h1>
 
-            {/* 価格(右寄せ) */}
+            {/* 価格(右寄せ) — 2026-04-24 design-critic: 300→200px に引き下げ
+                "万円〜" 側を底上げしてペア比率 4:1 に(ワイドで暴走しない) */}
             <div className="flex items-end gap-2 md:gap-4 leading-none justify-end">
               <span
                 className="text-white font-light whitespace-nowrap"
                 style={{
                   fontFamily: bodyVariant.numberFontFamily,
                   fontWeight: bodyVariant.numberWeight,
-                  fontSize: "clamp(72px, 20vw, 300px)",
+                  fontSize: "clamp(64px, 14vw, 200px)",
                   letterSpacing: bodyVariant.numberLetterSpacing,
                   lineHeight: 0.85,
                   textShadow: "0 2px 20px rgba(0,0,0,0.5)",
@@ -189,7 +190,7 @@ export default function HeroMagazine({
               </span>
               <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4 text-left">
                 <span
-                  className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]"
+                  className="text-white/90 text-2xl md:text-4xl lg:text-5xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]"
                   style={{
                     fontFamily: bodyVariant.jaFontFamily,
                     fontWeight: bodyVariant.jaWeight,

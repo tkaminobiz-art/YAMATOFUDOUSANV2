@@ -55,12 +55,12 @@ function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
           : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
       }`}
     >
-      {/* ¥0 バッジ — ゼロ連呼というテーマの主役級に昇格 */}
+      {/* ¥0 バッジ — ゼロ連呼というテーマの主役級に昇格(WCAG: 白地Limeはlime-deepに) */}
       <span
         className={`font-oswald absolute top-4 right-4 md:top-5 md:right-5 leading-none inline-flex items-center justify-center px-3 py-1.5 md:px-3.5 md:py-2 border-[1.5px] tabular-nums ${
           isLime
             ? "text-[#2E4600] border-[#2E4600]/40 bg-white/35"
-            : "text-[#A2C523] border-[#A2C523]/55 bg-white"
+            : "text-[#5C7A10] border-[#5C7A10]/55 bg-white"
         }`}
         style={{
           fontWeight: 500,
@@ -174,7 +174,7 @@ export default function ZeroDeclaration() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#FAF8F3] text-text-primary py-[var(--section-py)] scroll-in"
+      className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ================= HEADER (非対称・Mechanism 継承) ================= */}
@@ -188,7 +188,7 @@ export default function ZeroDeclaration() {
               className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
               style={{
                 fontWeight: 900,
-                fontSize: "clamp(44px, 8vw, 120px)",
+                fontSize: "var(--display-md)",
               }}
             >
               <span
@@ -196,7 +196,7 @@ export default function ZeroDeclaration() {
                 style={{
                   fontWeight: 300,
                   letterSpacing: "-0.04em",
-                  color: "#A2C523",
+                  color: "var(--color-lime-deep)",
                   marginRight: "0.08em",
                 }}
               >
@@ -233,7 +233,7 @@ export default function ZeroDeclaration() {
           <div className="flex items-start gap-4 md:gap-6 pt-8 border-t border-text-primary/15">
             <span
               aria-hidden
-              className="font-oswald shrink-0 leading-none pt-1 text-[#A2C523]"
+              className="font-oswald shrink-0 leading-none pt-1 text-[#5C7A10]"
               style={{
                 fontWeight: 300,
                 fontSize: "clamp(20px, 1.6vw, 24px)",
