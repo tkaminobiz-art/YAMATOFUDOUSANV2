@@ -146,8 +146,9 @@ export default function HeroMagazine({
                 lineHeight: 1.15,
               }}
             >
-              {/* 2026-04-24 v2: デカタイポ廃盤・Noto Sans に変更。
-                  見出しは shukobuild 型の控えめなスケールに(96→68px) */}
+              {/* 2026-04-24 v3: VP-4工房 Voice でリライト
+                  旧メイン「家そのものを、届けています。」は "何言ってるかわからん" との指摘
+                  サブ = 保証(中身は同じ) / メイン = 仕組み(何が違うか) の役割分担 */}
               <span
                 className="block text-white/90"
                 style={{
@@ -159,7 +160,7 @@ export default function HeroMagazine({
                   textTransform: "none",
                 }}
               >
-                素材も性能も、大手と同じです。
+                素材も性能も、大手と同じ。
               </span>
               <span
                 className="block text-white"
@@ -172,7 +173,7 @@ export default function HeroMagazine({
                   letterSpacing: "0.02em",
                 }}
               >
-                家そのものを、<br className="md:hidden" />届けています。
+                届けるまでの費用だけ、<br className="md:hidden" />削っています。
               </span>
             </h1>
 
