@@ -3,213 +3,331 @@
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
-  ZeroDeclaration — 2026-04-24 v5 (案A shukobuild型 カタログ)
-  ---------------------------------------------------------------
-  v4(v3まで) で残っていた:
-  - Shippori Mincho (明朝) のタイル/見出し
-  - "Zero Declaration" 英字kicker
-  - 非対称 1.4fr:1fr ヘッダー
-  を撤去。8 タイルの chess pattern はカタログ原則に合うので維持。
+  ZeroDeclaration — 2026-04-24 v6 (案A: 二列領収書・Comparison Receipt)
+  ---------------------------------------------------------------------
+  v5 までのチェス盤 8 タイル均等グリッドを全廃。
+  理由: タイル均等 = 8項目全部が等価に見え、"¥0 連打"のインパクトが潰れる。
+  読者は「またある feature grid」で目が滑る。
 
-  v5: 一言 heading + 8タイル(Lime/白交互) + 締め
+  v6 = "他社の見えない請求書 vs やまと" の 二列領収書:
+  - 左列(他社): 実費の目安金額を灰色で並べる → 読者は無意識に自分の見積と照合
+  - 右列(やまと): 8 回の "¥0" を Lime-deep で連打 → 繰り返しの視覚リズム
+  - 合計行で "およそ ¥4,300,000 の差"(=合計 vs 合計 ¥0)を叩き込む
+  - 全体は 1 枚の document = 領収書 / 請求書
+
+  哲学: 小林専務「事実で語る」。数字が仕事をする。装飾ゼロ。
+  数字の出典: 業界平均試算に基づく参考値(注釈で開示)。
 */
 
-type Zero = {
+type Phase = "契約前" | "施工中" | "入居後";
+
+type Fee = {
   num: string;
-  title: string;
-  desc: string;
-  phase: "Before" | "During" | "After";
+  label: string;
+  phase: Phase;
+  marketAmount: string;  // "¥500,000 〜 ¥1,000,000" or "最大 ¥1,500,000" or "—"
+  marketNote?: string;   // "土地 1,500万〜3,000万円の場合" 等
 };
 
-const LIME = "#A2C523";
-const FOREST = "#2E4600";
-
-function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
-  // 4列グリッドで対角線に同色が並ぶチェス盤
-  const isLime = (index + Math.floor(index / 4)) % 2 === 1;
-
-  return (
-    <article
-      className={`group relative flex flex-col p-6 md:p-7 min-h-[260px] md:min-h-[280px] border transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
-        isLime
-          ? "bg-[#A2C523] border-[#2E4600]/15 hover:border-[#2E4600]/45 hover:shadow-[0_24px_48px_-24px_rgba(46,70,0,0.35)]"
-          : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
-      }`}
-    >
-      {/* ¥0 バッジ(右上) */}
-      <span
-        className={`font-oswald absolute top-4 right-4 md:top-5 md:right-5 leading-none inline-flex items-center justify-center px-3 py-1.5 md:px-3.5 md:py-2 border-[1.5px] tabular-nums ${
-          isLime
-            ? "text-[#2E4600] border-[#2E4600]/40 bg-white/35"
-            : "text-[#5C7A10] border-[#5C7A10]/55 bg-white"
-        }`}
-        style={{
-          fontWeight: 500,
-          fontSize: "clamp(14px, 1.2vw, 17px)",
-          letterSpacing: "-0.01em",
-        }}
-      >
-        ¥0
-      </span>
-
-      {/* 番号 — 大きな数字(Oswald Light) */}
-      <span
-        className="font-oswald leading-[0.85] tabular-nums"
-        style={{
-          fontWeight: 300,
-          fontSize: "clamp(48px, 5.2vw, 84px)",
-          letterSpacing: "-0.02em",
-          color: isLime ? `${FOREST}40` : `${LIME}8C`,
-        }}
-      >
-        {zero.num}
-      </span>
-
-      {/* 時期タグ(Inter uppercase) */}
-      <p
-        className={`font-inter text-[10px] tracking-[0.24em] uppercase font-bold mt-auto pt-6 md:pt-8 ${
-          isLime ? "text-[#2E4600]/75" : "text-text-secondary"
-        }`}
-      >
-        {zero.phase}
-      </p>
-
-      {/* 項目名 — Noto Sans 700 */}
-      <h3
-        className="font-sans leading-[1.4] tracking-[0.01em] mt-3"
-        style={{
-          fontWeight: 700,
-          fontSize: "clamp(15px, 1.2vw, 18px)",
-          color: isLime ? FOREST : undefined,
-        }}
-      >
-        {zero.title}
-      </h3>
-
-      {/* 1行説明 — Noto Sans 400 */}
-      <p
-        className={`font-sans text-[clamp(12px,0.95vw,14px)] leading-[1.9] mt-2.5 ${
-          isLime ? "text-[#2E4600]/85" : "text-text-primary/70"
-        }`}
-      >
-        {zero.desc}
-      </p>
-    </article>
-  );
-}
-
-const ZEROS: readonly Zero[] = [
+const FEES: readonly Fee[] = [
   {
     num: "01",
-    title: "仲介手数料",
-    desc: "自社分譲のため、仲介会社を挟みません。",
-    phase: "Before",
+    label: "仲介手数料",
+    phase: "契約前",
+    marketAmount: "¥500,000 〜 ¥1,000,000",
+    marketNote: "土地 1,500万〜3,000万円の場合",
   },
   {
     num: "02",
-    title: "つなぎ融資",
-    desc: "土地と建物を自社一貫で進めるため、つなぎ融資は発生しません(30〜80万円分の節約)。",
-    phase: "Before",
+    label: "つなぎ融資",
+    phase: "契約前",
+    marketAmount: "¥300,000 〜 ¥800,000",
+    marketNote: "土地先行融資の金利負担",
   },
   {
     num: "03",
-    title: "地盤改良費",
-    desc: "最大150万円の地盤改良費は、当社が負担します。",
-    phase: "Before",
+    label: "地盤改良費",
+    phase: "契約前",
+    marketAmount: "最大 ¥1,500,000",
+    marketNote: "やまとは当社が負担",
   },
   {
     num: "04",
-    title: "余計な搬入費",
-    desc: "工事車両がスムーズに入れるよう、分譲地を整えています。",
-    phase: "During",
+    label: "余計な搬入費",
+    phase: "施工中",
+    marketAmount: "¥100,000 〜 ¥300,000",
+    marketNote: "小運搬費としての計上分",
   },
   {
     num: "05",
-    title: "工事車両の駐車代",
-    desc: "自社分譲地なので、駐車スペースも確保できます。",
-    phase: "During",
+    label: "工事車両の駐車代",
+    phase: "施工中",
+    marketAmount: "¥100,000 〜 ¥200,000",
+    marketNote: "工期中の近隣駐車場代",
   },
   {
     num: "06",
-    title: "不透明な追加費用",
-    desc: "見積もりに載っていない費用が、あとから乗ることはありません。",
-    phase: "During",
+    label: "不透明な追加費用",
+    phase: "施工中",
+    marketAmount: "—",
+    marketNote: "見積書に載っていない費用",
   },
   {
     num: "07",
-    title: "打合せ後の追加費用",
-    desc: "はじめから標準仕様を揃えています。打ち合わせで価格は上がりません。",
-    phase: "After",
+    label: "打合せ後の追加費用",
+    phase: "入居後",
+    marketAmount: "¥200,000 〜 ¥500,000",
+    marketNote: "標準外の仕様変更分",
   },
   {
     num: "08",
-    title: "モデルハウスとのギャップ",
-    desc: "モデルハウスの設備は、そのまま標準仕様です。",
-    phase: "After",
+    label: "モデルハウスとの差額",
+    phase: "入居後",
+    marketAmount: "—",
+    marketNote: "設備ダウングレード分",
   },
 ] as const;
+
+const TOTAL_MARKET_MAX = "およそ ¥4,300,000";
+const TOTAL_YAMATO = "¥0";
+
+// ────────────────────────────────────────────────
+// Row
+// ────────────────────────────────────────────────
+
+function FeeRow({ fee }: { fee: Fee }) {
+  const hasAmount = fee.marketAmount !== "—";
+
+  return (
+    <div
+      role="row"
+      className="scroll-in grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto_auto] gap-x-4 md:gap-x-8 lg:gap-x-10 items-baseline py-6 md:py-7 border-b border-text-primary/10"
+    >
+      {/* Number */}
+      <span
+        role="cell"
+        className="font-oswald leading-none tabular-nums text-text-primary/40 shrink-0"
+        style={{
+          fontWeight: 300,
+          fontSize: "clamp(18px, 1.5vw, 22px)",
+          letterSpacing: "-0.02em",
+        }}
+      >
+        {fee.num}
+      </span>
+
+      {/* Label(+ phase tag + mobile note) */}
+      <div role="cell" className="min-w-0">
+        <div className="flex items-baseline gap-3 flex-wrap">
+          <span className="font-sans font-bold text-text-primary text-[clamp(15px,1.2vw,18px)] leading-[1.5] tracking-[0.01em]">
+            {fee.label}
+          </span>
+          <span className="font-inter text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-text-secondary font-bold">
+            {fee.phase}
+          </span>
+        </div>
+        {/* mobile 用: 他社金額を label 直下に表示 */}
+        <div className="md:hidden mt-2">
+          <p className="font-sans text-[11px] text-text-secondary leading-[1.7]">
+            <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-2">他社</span>
+            <span className={`font-oswald tabular-nums text-[13px] ${hasAmount ? "text-text-primary/55" : "text-text-primary/30"}`}>
+              {fee.marketAmount}
+            </span>
+          </p>
+          {fee.marketNote ? (
+            <p className="font-sans text-[10px] text-text-secondary/80 leading-[1.7] mt-0.5">
+              {fee.marketNote}
+            </p>
+          ) : null}
+        </div>
+      </div>
+
+      {/* Desktop: 他社の目安 */}
+      <div role="cell" className="hidden md:block text-right">
+        <span
+          className={`font-oswald tabular-nums whitespace-nowrap ${
+            hasAmount ? "text-text-primary/55" : "text-text-primary/25"
+          }`}
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(16px, 1.4vw, 22px)",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          {fee.marketAmount}
+        </span>
+        {fee.marketNote ? (
+          <p className="font-sans text-[10px] md:text-[11px] text-text-secondary/80 leading-[1.7] mt-1">
+            {fee.marketNote}
+          </p>
+        ) : null}
+      </div>
+
+      {/* やまと ¥0 — 主役 */}
+      <span
+        role="cell"
+        className="font-oswald tabular-nums text-lime-deep text-right leading-none shrink-0"
+        style={{
+          fontWeight: 300,
+          fontSize: "clamp(32px, 3.6vw, 56px)",
+          letterSpacing: "-0.03em",
+        }}
+      >
+        {TOTAL_YAMATO}
+      </span>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────
+// メイン
+// ────────────────────────────────────────────────
 
 export default function ZeroDeclaration() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
     <section
-      ref={ref}
-      className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)] scroll-in"
+      id="zero"
+      className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)]"
     >
-      <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
+      <div
+        ref={ref}
+        className="relative max-w-[1100px] mx-auto px-[var(--page-px)] scroll-in"
+      >
         {/* ========== Heading ========== */}
-        <header className="mb-12 md:mb-16 max-w-[860px]">
+        <header className="mb-12 md:mb-16 max-w-[900px]">
           <h2
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            <span
-              className="font-oswald inline-block"
-              style={{
-                fontWeight: 300,
-                letterSpacing: "-0.04em",
-                color: "var(--color-lime-deep)",
-                marginRight: "0.12em",
-              }}
-            >
-              8
-            </span>
-            つが、ゼロです。
+            他社にあって、やまとにない 8 つ。
           </h2>
-          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
-            契約前から引渡し後まで、費用は動きません。
-            <br className="hidden md:inline" />
-            家づくりで増えがちな費用を、やまとは八つゼロにしています。
+          <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
+            家づくりで乗りがちな費用を並べると、
+            <span className="font-bold text-lime-deep">およそ ¥4,300,000</span>
+            の差になります。
           </p>
         </header>
 
-        {/* ========== 8 タイル(白 × Lime 交互) ========== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {ZEROS.map((z, i) => (
-            <ZeroCard key={z.num} zero={z} index={i} />
-          ))}
-        </div>
-
-        {/* ========== 締め ========== */}
-        <div className="mt-14 md:mt-20 max-w-[800px]">
-          <div className="flex items-start gap-4 md:gap-6 pt-8 border-t border-text-primary/15">
+        {/* ========== 領収書テーブル ========== */}
+        <div role="table" aria-label="他社とやまとの費用比較">
+          {/* ヘッダー行 */}
+          <div
+            role="row"
+            className="hidden md:grid grid-cols-[auto_1fr_auto_auto] gap-x-8 lg:gap-x-10 items-baseline pb-4 md:pb-5 border-b-2 border-text-primary/25"
+          >
+            <span role="columnheader" aria-hidden="true" />
+            <span role="columnheader" aria-hidden="true" />
             <span
-              aria-hidden
-              className="font-oswald shrink-0 leading-none pt-1 text-lime-deep"
+              role="columnheader"
+              className="font-inter text-right text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-text-secondary font-bold"
+            >
+              他社の目安
+            </span>
+            <span
+              role="columnheader"
+              className="font-inter text-right text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-lime-deep font-bold"
+            >
+              やまと
+            </span>
+          </div>
+
+          {/* モバイル用ヘッダー(簡素) */}
+          <div className="md:hidden flex justify-end pb-3 border-b-2 border-text-primary/25">
+            <span className="font-inter text-right text-[10px] tracking-[0.24em] uppercase text-lime-deep font-bold">
+              やまと
+            </span>
+          </div>
+
+          {/* 8 行 */}
+          {FEES.map((fee) => (
+            <FeeRow key={fee.num} fee={fee} />
+          ))}
+
+          {/* 合計行 — 二本線で強調 */}
+          <div
+            role="row"
+            className="scroll-in grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto_auto] gap-x-4 md:gap-x-8 lg:gap-x-10 items-baseline pt-8 md:pt-10 mt-1 border-t-2 border-text-primary/60"
+          >
+            <span role="cell" className="hidden md:block" aria-hidden="true" />
+
+            <span
+              role="cell"
+              className="font-sans font-black text-text-primary leading-none tracking-[0.02em]"
+              style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
+            >
+              合計
+            </span>
+
+            {/* Desktop: 他社合計 */}
+            <span
+              role="cell"
+              className="hidden md:block text-right font-oswald tabular-nums text-text-primary/60 whitespace-nowrap"
               style={{
                 fontWeight: 300,
-                fontSize: "clamp(20px, 1.6vw, 24px)",
+                fontSize: "clamp(22px, 2.2vw, 36px)",
+                letterSpacing: "-0.02em",
               }}
             >
-              ¥0
+              {TOTAL_MARKET_MAX}
             </span>
-            <p className="font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[1.95]">
-              お見積もりは、最終価格です。
-              <br className="sm:hidden" />
-              追加請求は、いたしません。
+
+            {/* やまと合計 ¥0 - セクション全体のクライマックス */}
+            <span
+              role="cell"
+              className="font-oswald tabular-nums text-lime-deep text-right leading-none"
+              style={{
+                fontWeight: 300,
+                fontSize: "clamp(48px, 5.5vw, 88px)",
+                letterSpacing: "-0.03em",
+              }}
+            >
+              {TOTAL_YAMATO}
+            </span>
+          </div>
+
+          {/* Mobile 用 他社合計 */}
+          <div className="md:hidden mt-4 flex justify-end">
+            <p className="font-sans text-[11px] text-text-secondary leading-[1.7]">
+              <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-2">他社合計</span>
+              <span className="font-oswald tabular-nums text-[16px] text-text-primary/60">
+                {TOTAL_MARKET_MAX}
+              </span>
             </p>
           </div>
+
+          {/* 差額強調 */}
+          <div className="mt-10 md:mt-12 pt-8 md:pt-10 border-t border-text-primary/15">
+            <div className="flex items-baseline justify-end gap-3 md:gap-4 flex-wrap">
+              <span className="font-inter text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-text-secondary font-bold">
+                差額
+              </span>
+              <div className="flex items-baseline gap-1.5">
+                <span
+                  className="font-oswald tabular-nums text-lime-deep leading-none"
+                  style={{
+                    fontWeight: 300,
+                    fontSize: "clamp(36px, 4.5vw, 72px)",
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  −¥4,300,000
+                </span>
+              </div>
+            </div>
+            <p className="mt-3 md:mt-4 font-sans text-text-primary/70 text-[clamp(13px,1vw,15px)] leading-[1.95] text-right max-w-[44rem] ml-auto">
+              広告費も、展示場維持費も、仲介マージンも、乗せる会社があります。
+              やまとはそれを、最初から乗せていません。
+            </p>
+          </div>
+        </div>
+
+        {/* ========== 注記 ========== */}
+        <div className="mt-12 md:mt-16 pt-8 border-t border-text-primary/15 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.95] space-y-1">
+          <p>※ 他社金額は業界平均試算に基づく参考値です。土地条件・工法・エリアにより大きく変動します。</p>
+          <p>※ やまとの金額は対応エリア・仕様により異なります。詳細は来場時にご案内します。</p>
+          <p>※ 06 不透明な追加費用 / 08 モデルハウスとの差額 は、個別条件の差が大きいため金額表示を控えています。</p>
         </div>
       </div>
     </section>
