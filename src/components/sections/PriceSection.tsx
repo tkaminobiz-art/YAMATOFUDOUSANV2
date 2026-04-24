@@ -35,7 +35,7 @@ const PLANS: readonly Plan[] = [
     price: "2,480",
     tsubo: "33坪（109㎡）",
     layout: "4LDK",
-    bgImage: "/images/works/case2-ext.webp",
+    bgImage: "/images/fv/hero-01-exterior-miyamaki.webp",
     alt: "花モデルの邸宅外観イメージ",
   },
   {
@@ -57,8 +57,8 @@ const PLANS: readonly Plan[] = [
     price: "2,280",
     tsubo: "28坪",
     layout: "3LDK",
-    bgImage: "/images/works/case3-ext.webp",
-    alt: "京モデルの邸宅外観イメージ",
+    bgImage: "/images/newsozai/exterior-entrance-01.webp",
+    alt: "京モデルの端正な玄関まわり",
   },
 ] as const;
 
