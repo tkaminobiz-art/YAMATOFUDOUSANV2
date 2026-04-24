@@ -30,12 +30,12 @@
   --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (装飾用) */
   --color-border: #E5E5E0;
 
-  /* === Display scale(3層)===
-     主役 L(120) / 主力 M(80) / 補助 S(56) の2倍弱差でリズムを作る
-     既存 8vw/120px レイアウトと両立させるため L は既存値を保持 */
-  --display-lg: clamp(44px, 8vw, 120px);
-  --display-md: clamp(32px, 5.5vw, 80px);
-  --display-sm: clamp(24px, 3.8vw, 56px);
+  /* === Display scale(3層)=== 2026-04-24 v2: shukobuild型にダイアルダウン
+     デカタイポ完全廃盤。見出しは一言・商品/数字が主役になるスケールへ。
+     主役 L(56px) / 主力 M(40px) / 補助 S(28px) */
+  --display-lg: clamp(28px, 4vw, 56px);
+  --display-md: clamp(22px, 3vw, 40px);
+  --display-sm: clamp(18px, 2.4vw, 28px);
 
   /* === Fonts ===
      Tailwind v4: @theme の --font-* が font-* ユーティリティを生成

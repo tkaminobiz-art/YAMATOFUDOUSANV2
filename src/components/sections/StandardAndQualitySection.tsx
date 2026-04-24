@@ -2,169 +2,51 @@
 
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
-import type { LucideIcon } from "lucide-react";
-import { Shield, Bug, Wrench, Phone, ShieldCheck } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  【品質と保証】セクション ─ 2026-04-16 リニューアル
-  方向C「事実のタイル」型（カタログ積層型の完成形）
+  【What You Get】— 2026-04-24 v4 (案A カタログ + 時間軸ストリップ)
+  ---------------------------------------------------------------------------
+  v3 で残した "Bento 3タイル + 保証5タイル" に対し、ユーザーより
+  「Bentoに限界を感じる」との指摘。v4 は後半を丸ごと時間軸チャートに置換。
 
-  設計原則:
-  - 語らない。並べる。
-  - 同じ粒で刻む。（S-Tile / N-Tile の2種のみ）
-  - 時間軸だけ通す。（建てるとき → 住み始めてから → 10年後・その先）
+  v3→v4 変更:
+  - 削除: QTile ×3(塗布量/自社施工/外壁節目)
+  - 削除: HakkiTile + WTile ×4(瑕疵担保 + 4保証)
+  - 追加: TimelineStrip(引渡し→20年の横軸に 5 保証の帯/ドット/ダッシュ)
+  - 品質3ファクトは subtitle の散文(Lime太字数字)に溶かす
 
-  グリッドシステム: 8列モジュール
-  - PC  (lg): grid-cols-8
-  - MD  (md): grid-cols-4
-  - SP  (sm): grid-cols-2
+  セクション全体の構造:
+  [Block1] 12商品 1:1 均質グリッド(据置)
+  [Block2] 時間軸ストリップ(品質subtitle + 5保証visual)
 */
 
 // ────────────────────────────────────────────────
-// データ（時間軸タグ付き）
+// Block1: STANDARDS データ
 // ────────────────────────────────────────────────
-
-type TileSize = "1x1" | "2x1" | "2x2" | "4x2";
 
 type StandardItem = {
   category: string;
   brand: string;
   image: string;
-  size: TileSize;
 };
 
-// 時間軸①「建てるとき」— 12カテゴリの標準仕様
-// lg(8列)で綺麗に2行で並ぶよう: 1 × 2x2(=4cells) + 1 × 2x1(=2cells) + 10 × 1x1(=10cells) = 16cells
 const STANDARDS: readonly StandardItem[] = [
-  { category: "外壁", brand: "ニチハ", image: "/images/standard/facility_img_04.webp", size: "2x2" },
-  { category: "キッチン", brand: "クリナップ", image: "/images/standard/facility_img_01.webp", size: "2x1" },
-  { category: "屋根", brand: "ガルバリウム", image: "/images/standard/facility_img_07.webp", size: "1x1" },
-  { category: "窓サッシ", brand: "YKK AP", image: "/images/standard/facility_img_06.webp", size: "1x1" },
-  { category: "玄関ドア", brand: "YKK AP", image: "/images/standard/facility_img_05.webp", size: "1x1" },
-  { category: "床材", brand: "無垢調フローリング", image: "/images/standard/facility_img_09.webp", size: "1x1" },
-  { category: "室内ドア", brand: "ハイドア", image: "/images/standard/facility_img_08.webp", size: "1x1" },
-  { category: "浴室", brand: "TOTO", image: "/images/standard/facility_img_02.webp", size: "1x1" },
-  { category: "洗面台", brand: "TOTO", image: "/images/standard/facility_img_03.webp", size: "1x1" },
-  { category: "外構", brand: "石畳アプローチ", image: "/images/standard/facility_img_10.webp", size: "1x1" },
-  { category: "制震装置", brand: "住友ゴム MIRAIE", image: "/images/standard/facility_img_12.webp", size: "1x1" },
-  { category: "照明", brand: "LED ダウンライト", image: "/images/standard/facility_img_13.webp", size: "1x1" },
+  { category: "外壁", brand: "ニチハ", image: "/images/standard/facility_img_04.webp" },
+  { category: "キッチン", brand: "クリナップ", image: "/images/standard/facility_img_01.webp" },
+  { category: "屋根", brand: "ガルバリウム", image: "/images/standard/facility_img_07.webp" },
+  { category: "窓サッシ", brand: "YKK AP", image: "/images/standard/facility_img_06.webp" },
+  { category: "玄関ドア", brand: "YKK AP", image: "/images/standard/facility_img_05.webp" },
+  { category: "床材", brand: "無垢調フローリング", image: "/images/standard/facility_img_09.webp" },
+  { category: "室内ドア", brand: "ハイドア", image: "/images/standard/facility_img_08.webp" },
+  { category: "浴室", brand: "TOTO", image: "/images/standard/facility_img_02.webp" },
+  { category: "洗面台", brand: "TOTO", image: "/images/standard/facility_img_03.webp" },
+  { category: "外構", brand: "石畳アプローチ", image: "/images/standard/facility_img_10.webp" },
+  { category: "制震装置", brand: "住友ゴム MIRAIE", image: "/images/standard/facility_img_12.webp" },
+  { category: "照明", brand: "LED ダウンライト", image: "/images/standard/facility_img_13.webp" },
 ] as const;
 
-// 時間軸②「住み始めてから」— 品質の数字タイル × 3
-type NumberTile = {
-  num: string;
-  unit: string;
-  title: string;
-  desc: string;
-  size: TileSize;
-  icon?: LucideIcon;
-  chip?: string;
-};
-
-const QUALITY_TILES: readonly NumberTile[] = [
-  {
-    num: "1.2",
-    unit: "倍",
-    title: "塗布量",
-    desc: "推奨量の1.2倍で塗っています。",
-    size: "2x1",
-  },
-  {
-    num: "100",
-    unit: "%",
-    title: "自社施工",
-    desc: "設計から現場まで、外に投げません。",
-    size: "2x1",
-  },
-  {
-    num: "10",
-    unit: "年",
-    title: "外壁の節目",
-    desc: "塗り替えを考える人が多い年数です。",
-    size: "2x1",
-  },
-] as const;
-
-// 時間軸③「10年後・その先」— 保証タイル × 5
-const HAKKI_TILE: NumberTile = {
-  num: "10",
-  unit: "年",
-  title: "建物瑕疵担保責任保険",
-  desc: "国土交通大臣指定の第三者機関が引き継ぐ、法定の保険です。構造の不具合と雨水の浸入を、10年保証します。",
-  size: "4x2",
-  icon: ShieldCheck,
-  chip: "国交省指定 · 第三者機関",
-};
-
-const WARRANTY_TILES: readonly NumberTile[] = [
-  {
-    icon: Shield,
-    num: "20",
-    unit: "年",
-    title: "地盤保証",
-    desc: "第三者機関が調査から保証まで担当します。",
-    size: "2x1",
-  },
-  {
-    icon: Bug,
-    num: "10",
-    unit: "年",
-    title: "しろあり保証",
-    desc: "引き渡し後10年。延長もできます。",
-    size: "2x1",
-  },
-  {
-    icon: Wrench,
-    num: "5",
-    unit: "回",
-    title: "定期点検",
-    desc: "半年・1年・2年・5年・10年に伺います。",
-    size: "2x1",
-  },
-  {
-    icon: Phone,
-    num: "1",
-    unit: "本",
-    title: "電話対応",
-    desc: "不具合も相談も、電話一本で担当が伺います。",
-    size: "2x1",
-  },
-] as const;
-
-// ────────────────────────────────────────────────
-// タイルのサイズ → Tailwind クラス変換
-// ────────────────────────────────────────────────
-
-// 画像タイル用: 写真のフレーミングを優先
-const IMAGE_TILE_SPAN: Record<TileSize, string> = {
-  "1x1": "col-span-1 row-span-1 aspect-square",
-  "2x1": "col-span-2 row-span-1 aspect-[2/1]",
-  "2x2": "col-span-2 row-span-2 aspect-square",
-  "4x2": "col-span-2 sm:col-span-4 row-span-2 aspect-[2/1]",
-} as const;
-
-// 数字タイル用
-// モバイル: aspect-[5/3] でコンパクトに。lg: aspect-[4/3] で本文余白確保
-const NUMBER_TILE_SPAN: Record<TileSize, string> = {
-  "1x1": "col-span-1 row-span-1 aspect-[5/3] lg:aspect-[4/3]",
-  "2x1": "col-span-2 row-span-1 aspect-[5/3] lg:aspect-[4/3]",
-  "2x2": "col-span-2 row-span-2 aspect-[5/3] lg:aspect-[4/3]",
-  "4x2": "col-span-2 sm:col-span-4 row-span-2 aspect-[5/3] lg:aspect-[4/3]",
-} as const;
-
-const IMAGE_SIZES: Record<TileSize, string> = {
-  "1x1": "(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12.5vw",
-  "2x1": "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
-  "2x2": "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
-  "4x2": "(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw",
-} as const;
-
-// ────────────────────────────────────────────────
-// S-Tile（画像タイル）
-// ────────────────────────────────────────────────
-
-function SImageTile({
+function StandardTile({
   item,
   priority = false,
 }: {
@@ -172,180 +54,220 @@ function SImageTile({
   priority?: boolean;
 }) {
   return (
-    <div
-      className={`scroll-in relative group overflow-hidden border border-text-primary/10 bg-white ${IMAGE_TILE_SPAN[item.size]}`}
-    >
-      <Image
-        src={item.image}
-        alt={`${item.category}の標準仕様 - ${item.brand} | やまと不動産`}
-        fill
-        priority={priority}
-        className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.08]"
-        sizes={IMAGE_SIZES[item.size]}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/15 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-3 md:p-4 lg:p-5">
-        {/* 設備名を主役に反転(Shippori Black 大) */}
-        <h3
-          className="font-shippori text-white leading-[1.15] tracking-[0.02em]"
-          style={{
-            fontWeight: 900,
-            fontSize:
-              item.size === "2x2"
-                ? "clamp(22px, 2.4vw, 34px)"
-                : item.size === "2x1"
-                  ? "clamp(18px, 1.8vw, 24px)"
-                  : "clamp(16px, 1.4vw, 20px)",
-          }}
-        >
+    <article className="scroll-in group">
+      <div className="relative aspect-square overflow-hidden bg-bg-secondary">
+        <Image
+          src={item.image}
+          alt={`${item.category}の標準仕様 - ${item.brand} | やまと不動産`}
+          fill
+          priority={priority}
+          className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        />
+      </div>
+      <div className="mt-3 md:mt-4">
+        <h3 className="font-sans font-bold text-text-primary text-[14px] md:text-[15px] tracking-[0.02em] leading-[1.4]">
           {item.category}
         </h3>
-        {/* ブランド名はサブ(Inter 小・tracking大) */}
-        <p className="font-inter text-white/80 text-[10px] md:text-[11px] tracking-[0.22em] uppercase mt-2 font-bold">
+        <p className="mt-0.5 font-inter text-text-secondary text-[10.5px] md:text-[11px] tracking-[0.12em] uppercase">
           {item.brand}
         </p>
       </div>
-    </div>
+    </article>
   );
 }
 
 // ────────────────────────────────────────────────
-// N-Tile（数字タイル）
+// Block2: 時間軸ストリップ データ
 // ────────────────────────────────────────────────
 
-function SNumberTile({ tile, isLime = false }: { tile: NumberTile; isLime?: boolean }) {
-  const isLarge = tile.size === "4x2";
-  const Icon = tile.icon;
+const MAX_YEAR = 20;
+const AXIS_TICKS_DESKTOP = [0, 1, 2, 5, 10, 15, 20] as const;
+const AXIS_TICKS_MOBILE = [0, 10, 20] as const;
+
+type Warranty =
+  | {
+      id: string;
+      type: "bar";
+      label: string;
+      chip?: string;
+      end: number;
+      tone: "hero" | "primary";
+    }
+  | {
+      id: string;
+      type: "dots";
+      label: string;
+      points: number[];
+      pointLabels: string[];
+    }
+  | {
+      id: string;
+      type: "dashed";
+      label: string;
+      note: string;
+    };
+
+const WARRANTIES: readonly Warranty[] = [
+  {
+    id: "hakki",
+    type: "bar",
+    label: "建物瑕疵担保責任保険",
+    chip: "国交省指定 · 第三者機関",
+    end: 10,
+    tone: "hero",
+  },
+  { id: "jiban", type: "bar", label: "地盤保証", end: 20, tone: "primary" },
+  { id: "shiroari", type: "bar", label: "しろあり保証", end: 10, tone: "primary" },
+  {
+    id: "checkup",
+    type: "dots",
+    label: "定期点検",
+    points: [0.5, 1, 2, 5, 10],
+    pointLabels: ["半年", "1年", "2年", "5年", "10年"],
+  },
+  { id: "phone", type: "dashed", label: "電話対応", note: "常時" },
+] as const;
+
+// ────────────────────────────────────────────────
+// Timeline — 時間軸 + 5保証
+// ────────────────────────────────────────────────
+
+function toPct(year: number) {
+  return (year / MAX_YEAR) * 100;
+}
+
+function Axis({ ticks }: { ticks: readonly number[] }) {
+  return (
+    <div className="relative h-10 border-b border-text-primary/25">
+      {ticks.map((y) => {
+        const pct = toPct(y);
+        return (
+          <div
+            key={y}
+            className="absolute bottom-0"
+            style={{ left: `${pct}%`, transform: "translateX(-50%)" }}
+          >
+            <span className="block w-px h-2.5 bg-text-primary/30 mx-auto" />
+            <span className="block mt-1.5 font-oswald font-light text-[11px] md:text-[12px] text-text-secondary tabular-nums tracking-[0.02em] whitespace-nowrap">
+              {y === 0 ? "引渡し" : y === MAX_YEAR ? `${y}年` : `${y}`}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function WarrantyRow({ warranty }: { warranty: Warranty }) {
+  const isHero = warranty.type === "bar" && warranty.tone === "hero";
 
   return (
     <div
-      className={`scroll-in group relative flex flex-col justify-between overflow-hidden border p-5 md:p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
-        isLime
-          ? "bg-[#A2C523] border-[#2E4600]/15 hover:border-[#2E4600]/45 hover:shadow-[0_20px_44px_-24px_rgba(46,70,0,0.3)]"
-          : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_20px_44px_-24px_rgba(0,0,0,0.12)]"
-      } ${NUMBER_TILE_SPAN[tile.size]}`}
+      className={`py-5 md:py-6 border-b border-text-primary/10 ${
+        isHero ? "bg-bg-secondary/40 -mx-4 px-4 md:-mx-6 md:px-6" : ""
+      }`}
     >
-      {/* 上段: アイコン or 余白 */}
-      <div className="flex items-start justify-between">
-        {Icon ? (
-          <Icon
-            className={`${isLarge ? "w-7 h-7" : "w-5 h-5"}`}
-            style={{ color: isLime ? "#2E4600" : "var(--color-main)" }}
-            strokeWidth={1.4}
-          />
-        ) : (
-          <span />
-        )}
-        {tile.chip ? (
+      {/* 上段: ラベル + 終年/備考 */}
+      <div className="flex items-baseline justify-between gap-3 mb-2.5 md:mb-3">
+        <div className="flex items-baseline gap-2 md:gap-3 flex-wrap">
           <span
-            className={`font-inter text-[10px] md:text-[11px] tracking-[0.14em] ${
-              isLime ? "text-[#2E4600]/80" : "text-text-secondary"
+            className={`font-sans font-bold text-text-primary ${
+              isHero ? "text-[15px] md:text-[17px]" : "text-[14px] md:text-[15px]"
             }`}
           >
-            {tile.chip}
+            {warranty.label}
           </span>
-        ) : null}
-      </div>
-
-      {/* 中段: 巨大数字(Oswald Light)
-          - 白カード: 数字 LIME(Zero 統一)
-          - LIMEカード: 数字 forest(Zero 統一) */}
-      <div className="flex items-baseline gap-1.5 md:gap-2">
+          {warranty.type === "bar" && warranty.chip ? (
+            <span className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep font-bold">
+              {warranty.chip}
+            </span>
+          ) : null}
+        </div>
         <span
-          className={`font-oswald leading-[0.85] tabular-nums ${
-            isLarge
-              ? "text-[clamp(72px,10vw,140px)]"
-              : "text-[clamp(48px,6vw,88px)]"
+          className={`font-oswald font-light tabular-nums shrink-0 ${
+            isHero
+              ? "text-[22px] md:text-[26px] text-lime-deep"
+              : "text-[18px] md:text-[22px] text-text-primary/70"
           }`}
-          style={{
-            fontWeight: 300,
-            letterSpacing: "-0.02em",
-            color: isLime ? "rgba(46,70,0,0.45)" : "rgba(162,197,35,0.7)",
-          }}
+          style={{ letterSpacing: "-0.02em" }}
         >
-          {tile.num}
-        </span>
-        <span
-          className={`font-shippori ${isLarge ? "text-xl md:text-2xl" : "text-base md:text-lg"}`}
-          style={{
-            fontWeight: 500,
-            color: isLime ? "#2E4600" : undefined,
-            opacity: isLime ? 0.8 : undefined,
-          }}
-        >
-          {tile.unit}
+          {warranty.type === "bar"
+            ? `${warranty.end}年`
+            : warranty.type === "dashed"
+              ? warranty.note
+              : ""}
         </span>
       </div>
 
-      {/* 下段: 項目名と説明 */}
-      <div>
-        <h3
-          className={`font-shippori ${isLarge ? "text-lg md:text-xl" : "text-sm md:text-base"}`}
-          style={{
-            fontWeight: 700,
-            color: isLime ? "#2E4600" : undefined,
-          }}
-        >
-          {tile.title}
-        </h3>
-        <p
-          className={`font-shippori mt-1.5 leading-[1.85] ${isLarge ? "text-sm md:text-base" : "text-[12px] md:text-[13px]"} ${
-            isLime ? "text-[#2E4600]/85" : "text-text-primary/70"
-          }`}
-        >
-          {tile.desc}
-        </p>
+      {/* 下段: 可視化 */}
+      <div className="relative h-3.5 md:h-4">
+        {warranty.type === "bar" ? (
+          <div
+            className={`h-full ${
+              isHero ? "bg-lime-deep" : "bg-lime"
+            } transition-[width] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
+            style={{ width: `${toPct(warranty.end)}%` }}
+            aria-label={`引渡しから${warranty.end}年までの保証`}
+          />
+        ) : warranty.type === "dots" ? (
+          <>
+            {/* うっすら ground line */}
+            <span
+              aria-hidden
+              className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-text-primary/10"
+            />
+            {warranty.points.map((p, i) => {
+              const pct = toPct(p);
+              return (
+                <span
+                  key={p}
+                  className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+                  style={{ left: `${pct}%` }}
+                >
+                  <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-lime-deep ring-2 ring-white" />
+                  <span className="mt-1 hidden md:block font-inter text-[10px] text-text-secondary whitespace-nowrap">
+                    {warranty.pointLabels[i]}
+                  </span>
+                </span>
+              );
+            })}
+          </>
+        ) : (
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-1/2 h-0 -translate-y-1/2 border-t border-dashed border-lime-deep/70"
+          />
+        )}
       </div>
     </div>
   );
 }
 
-// ────────────────────────────────────────────────
-// 時間軸ラベル
-// ────────────────────────────────────────────────
-
-function ChapterHeading({
-  step,
-  title,
-  caption,
-}: {
-  step: string;
-  title: string;
-  caption: string;
-}) {
+function TimelineStrip() {
   return (
-    <div className="col-span-2 sm:col-span-4 lg:col-span-8 mt-16 md:mt-24 mb-6 md:mb-8">
-      <div className="flex items-baseline gap-5 mb-4 md:mb-5">
-        <span
-          className="font-oswald text-text-primary leading-none tabular-nums"
-          style={{
-            fontWeight: 300,
-            fontSize: "clamp(36px, 4vw, 60px)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {step}
-        </span>
-        <span className="flex-1 h-px bg-text-primary/15" />
+    <div className="relative">
+      {/* Desktop 軸 */}
+      <div className="hidden md:block mb-6">
+        <Axis ticks={AXIS_TICKS_DESKTOP} />
       </div>
-      <h3
-        className="font-shippori text-text-primary leading-[1.2] tracking-[-0.01em]"
-        style={{
-          fontWeight: 900,
-          fontSize: "clamp(28px, 4vw, 52px)",
-        }}
-      >
-        {title}
-      </h3>
-      <p className="mt-3 md:mt-4 font-shippori text-text-primary/75 text-[clamp(14px,1.1vw,17px)] leading-[1.9] max-w-[44rem]">
-        {caption}
-      </p>
+      {/* Mobile 軸(3ティックのみ) */}
+      <div className="md:hidden mb-6">
+        <Axis ticks={AXIS_TICKS_MOBILE} />
+      </div>
+
+      {/* 5 rows */}
+      <div>
+        {WARRANTIES.map((w) => (
+          <WarrantyRow key={w.id} warranty={w} />
+        ))}
+      </div>
     </div>
   );
 }
 
 // ────────────────────────────────────────────────
-// メインセクション
+// メイン
 // ────────────────────────────────────────────────
 
 export default function StandardAndQualitySection() {
@@ -354,138 +276,72 @@ export default function StandardAndQualitySection() {
   return (
     <section
       id="standard-quality"
-      className="relative overflow-hidden bg-lime-light py-[var(--section-py)]"
+      className="relative overflow-hidden bg-white py-[var(--section-py)]"
     >
       <div
         ref={ref}
         className="relative max-w-[1400px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* ================= HEADER (非対称・Mechanism/Zero/Price 継承) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
-          <div>
-            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-              What You Get
-            </p>
-            <h2
-              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
-              style={{
-                fontWeight: 900,
-                fontSize: "var(--display-md)",
-              }}
-            >
-              中身は、
-              <br />
-              大手と<span style={{ color: "var(--color-lime-deep)" }}>同じ</span>です。
-            </h2>
-          </div>
-          <aside className="lg:pt-4">
-            <div className="border-t-[3px] border-text-primary pt-6">
-              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                旭化成・TOTO・住友ゴムを、<br />標準にしています。
-              </p>
-              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                追加費用なしで、
-                <br />
-                すべて標準装備です。
-              </p>
-            </div>
-          </aside>
-        </div>
-
-        {/* ============= BLEED PHOTO 21:9 — "中身"のビジュアル証明 ============= */}
-        <div className="relative w-full aspect-[21/9] overflow-hidden bg-text-primary mb-10 md:mb-14 -mx-[var(--page-px)] md:mx-0">
-          <Image
-            src="/images/newsozai/interior-kitchen-01.webp"
-            alt="標準で揃うキッチン"
-            fill
-            className="object-cover"
-            sizes="100vw"
-            style={{ filter: "saturate(0.9) contrast(1.02) brightness(0.95)" }}
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30"
-          />
-          <div className="absolute inset-x-0 bottom-0 px-6 md:px-10 lg:px-14 pb-8 md:pb-12 lg:pb-16 pointer-events-none">
-            <p
-              className="font-shippori text-white leading-[1.25] tracking-[-0.01em] max-w-[720px]"
-              style={{
-                fontWeight: 900,
-                fontSize: "clamp(26px, 3.6vw, 52px)",
-                textShadow: "0 3px 18px rgba(0,0,0,0.45)",
-              }}
-            >
-              大手で<span style={{ color: "var(--color-lime)" }}>オプション</span>になるものが、
-              <br />
-              やまとでは標準です。
-            </p>
-          </div>
-        </div>
-
-        {/* タイルグリッド（時間軸ラベルで区切るためdense packingは使わない） */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4">
-          {/* 時間軸① 建てるとき */}
-          <ChapterHeading
-            step="01"
-            title="建てる日から、12の素材が標準です。"
-            caption="12の素材が、標準で揃います。大手でオプションになるものも、やまとでは追加費用なしで入ります。"
-          />
-          {STANDARDS.map((item, idx) => (
-            <SImageTile key={item.category} item={item} priority={idx === 0} />
-          ))}
-
-          {/* 注記（標準仕様） */}
-          <p className="col-span-2 sm:col-span-4 lg:col-span-8 text-text-secondary text-[11px] md:text-[12px] mt-2">
-            ※ 花モデル（2,480万円）の標準仕様です。風・京は一部異なります。
+        {/* ========== BLOCK 1: 標準仕様 12 ========== */}
+        <header className="mb-12 md:mb-16 max-w-[860px]">
+          <h2
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+            style={{ fontSize: "clamp(28px, 4vw, 56px)" }}
+          >
+            これが、全部、標準です。
+          </h2>
+          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
+            12の素材・設備を、追加費用なしで入れています。
+            <br className="hidden md:inline" />
+            大手がオプションにしているものも、やまとでは最初から。
           </p>
+        </header>
 
-          {/* 時間軸② 住み始めてから (チェス盤: 白-LIME-白) */}
-          <ChapterHeading
-            step="02"
-            title="1.2倍の塗布量が、10年後に効いてきます。"
-            caption="塗布量は、推奨の1.2倍です。設計から現場まで、自社で施工しています。10年が、外壁の節目になります。"
-          />
-          {QUALITY_TILES.map((tile, i) => (
-            <SNumberTile
-              key={tile.title}
-              tile={tile}
-              isLime={i % 2 === 1}
-            />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-4 gap-y-8 md:gap-y-10">
+          {STANDARDS.map((item, idx) => (
+            <StandardTile key={item.category} item={item} priority={idx === 0} />
           ))}
+        </div>
 
-          {/* 時間軸③ 10年後・その先 (チェス盤:
-              HAKKI(大)=LIME 主役、周囲W1-W4でチェス盤
-              Row1: [HAKKI LIME][W1 白][W2 LIME]
-              Row2: [HAKKI LIME][W3 LIME][W4 白]) */}
-          <ChapterHeading
-            step="03"
-            title="10年後も、やまとが点検に伺います。"
-            caption="3つの保証が、10年から20年続きます。電話一本で、担当者が伺います。"
-          />
+        <p className="mt-6 md:mt-8 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.8]">
+          ※ 花モデル(2,480万円)の標準仕様です。風・京は一部異なります。
+        </p>
 
-          {/* 瑕疵担保（大タイル 4x2 / LIME 主役） */}
-          <SNumberTile tile={HAKKI_TILE} isLime />
+        {/* ========== BLOCK 2: 時間軸ストリップ(品質 + 5保証) ========== */}
+        <div className="mt-28 md:mt-40">
+          <header className="mb-10 md:mb-14 max-w-[960px]">
+            <h3
+              className="font-sans font-black text-text-primary leading-[1.25] tracking-[0.01em]"
+              style={{ fontSize: "clamp(28px, 4vw, 56px)" }}
+            >
+              20年、続きます。
+            </h3>
+            {/* 品質 3 ファクトをインラインに溶かす(Lime太字数字) */}
+            <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[720px]">
+              推奨量の
+              <span className="font-bold text-lime-deep">1.2倍</span>
+              で塗る、設計から施工まで
+              <span className="font-bold text-lime-deep">100%自社</span>
+              、外壁の節目は
+              <span className="font-bold text-lime-deep">10年</span>
+              。
+              <br className="hidden md:inline" />
+              建てた後に効く 5 つの約束を、時間軸でお見せします。
+            </p>
+          </header>
 
-          {/* 保証4タイル: W1=白, W2=LIME, W3=LIME, W4=白 */}
-          {WARRANTY_TILES.map((tile, i) => (
-            <SNumberTile
-              key={tile.title}
-              tile={tile}
-              isLime={i === 1 || i === 2}
-            />
-          ))}
+          <TimelineStrip />
 
-          {/* 注記（保証） */}
-          <div className="col-span-2 sm:col-span-4 lg:col-span-8 mt-2 text-[11px] md:text-[12px] leading-[1.9] text-text-secondary">
+          <div className="mt-6 md:mt-8 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.9]">
             <p>※ 保証の内容は制度・条件により変わる場合があります。詳細は来場時にご案内します。</p>
             <p>※ 立地や日当たりなどの環境条件で、劣化のスピードは変わります。</p>
           </div>
         </div>
 
-        {/* CTA */}
+        {/* ========== CTA ========== */}
         <div
           id="guarantee"
-          className="mt-14 md:mt-20 flex flex-col gap-3 sm:flex-row sm:justify-end"
+          className="mt-24 md:mt-32 flex flex-col gap-3 sm:flex-row sm:justify-end"
         >
           <CtaButton
             href="/reserve"

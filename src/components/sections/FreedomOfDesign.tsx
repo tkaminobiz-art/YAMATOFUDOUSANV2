@@ -5,21 +5,16 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  FreedomOfDesign — 2026-04-21 再リニューアル v2
-  -----------------------------------------------------------------
-  v1(40点評価): プロセス語り(4 STEPS 大判)に偏って"自由"の結果が見えない
-                + 暗写真4枚で前セクションのダーク連続を助長
+  FreedomOfDesign — 2026-04-24 v3 (案A shukobuild型 カタログ)
+  ---------------------------------------------------------------
+  v2(v1+) で残っていた:
+  - Shippori Mincho (明朝) 見出し + 軸タイトル
+  - "Freedom of Design" 英字kicker 大判
+  - 非対称 1.4fr:1fr ヘッダー
+  - 「01/02/03」章立てで軸/ギャラリー/ステップ分割
+  を撤去。カードの並列構造は維持。
 
-  v2: 「プロセス語り → 結果見せ」へ方向転換
-  1. ヘッダー(非対称) — 継承
-  2. 自由度マップ(4軸: 窓/収納/光/素材) — テキストBento新設
-  3. 実例ギャラリー(6枚写真Bento 3×2) — 明るい写真で自由の幅を可視化
-  4. STEPS 圧縮(4行テキスト) — プロセスは簡素に添える
-  5. 注記 + CTA — 継承
-
-  VP-6 コピー適用:
-  - 軸の caption は体言止め / 1文40字以内
-  - 実例の caption はミニマル宣言文
+  v3: 一言 heading + 4軸カード + 6ギャラリー + 4ステップ(同じ平面で並列)
 */
 
 const AXES = [
@@ -55,42 +50,36 @@ const GALLERIES = [
     alt: "折下天井+間接照明のリビング",
     tag: "光",
     caption: "折下天井に、間接照明を仕込みます。",
-    aspect: "aspect-[4/3]",
   },
   {
     src: "/images/newsozai/interior-window-detail-01.webp",
     alt: "窓のディテール",
     tag: "窓",
     caption: "窓の位置で、見える景色が変わります。",
-    aspect: "aspect-[4/3]",
   },
   {
     src: "/images/design/example-storage.webp",
     alt: "大空間収納",
     tag: "収納",
     caption: "家族の服が、すべて収まります。",
-    aspect: "aspect-[4/3]",
   },
   {
     src: "/images/design/example-balcony.webp",
     alt: "2階バルコニー",
     tag: "間取り",
     caption: "2階に、もうひと部屋つくれます。",
-    aspect: "aspect-[4/3]",
   },
   {
     src: "/images/newsozai/interior-ldk-01.webp",
     alt: "LDK",
     tag: "LDK",
     caption: "LDKは、家族が集まる場所です。",
-    aspect: "aspect-[4/3]",
   },
   {
     src: "/images/newsozai/exterior-texture-detail-01.webp",
     alt: "素材のディテール",
     tag: "素材",
     caption: "素材は、手触りで決められます。",
-    aspect: "aspect-[4/3]",
   },
 ] as const;
 
@@ -106,13 +95,13 @@ type Gallery = (typeof GALLERIES)[number];
 
 function AxisCard({ axis }: { axis: Axis }) {
   return (
-    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-6 md:p-7 min-h-[220px] md:min-h-[240px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
+    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-6 md:p-7 min-h-[220px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
       <div className="flex items-baseline gap-3 mb-5">
         <span
-          className="font-oswald text-text-primary/25 leading-none tabular-nums"
+          className="font-oswald leading-none tabular-nums text-lime-deep"
           style={{
             fontWeight: 300,
-            fontSize: "clamp(32px, 3.2vw, 48px)",
+            fontSize: "clamp(24px, 2.2vw, 34px)",
             letterSpacing: "-0.02em",
           }}
         >
@@ -122,23 +111,22 @@ function AxisCard({ axis }: { axis: Axis }) {
       </div>
 
       <h3
-        className="font-shippori text-text-primary leading-[1.15] tracking-[-0.01em]"
+        className="font-sans text-text-primary leading-[1.3] tracking-[0.02em]"
         style={{
           fontWeight: 900,
-          fontSize: "clamp(28px, 3vw, 44px)",
+          fontSize: "clamp(22px, 2.2vw, 32px)",
         }}
       >
         {axis.title}
       </h3>
 
       <p
-        className="font-inter mt-4 md:mt-5 text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-bold"
-        style={{ color: "var(--color-lime-deep)" }}
+        className="font-inter mt-4 text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-bold text-lime-deep"
       >
         {axis.degree}
       </p>
 
-      <p className="font-shippori mt-auto pt-4 text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.85]">
+      <p className="font-sans mt-auto pt-4 text-text-primary/80 text-[clamp(12px,0.95vw,14px)] leading-[1.95]">
         {axis.body}
       </p>
     </article>
@@ -148,7 +136,7 @@ function AxisCard({ axis }: { axis: Axis }) {
 function GalleryCard({ gallery }: { gallery: Gallery }) {
   return (
     <article className="group relative overflow-hidden bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
-      <div className={`relative ${gallery.aspect} overflow-hidden bg-text-primary/5`}>
+      <div className="relative aspect-[4/3] overflow-hidden bg-bg-secondary">
         <Image
           src={gallery.src}
           alt={gallery.alt}
@@ -158,14 +146,14 @@ function GalleryCard({ gallery }: { gallery: Gallery }) {
         />
       </div>
       <div className="p-5 md:p-6">
-        <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-text-secondary font-bold mb-2">
+        <p className="font-inter text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep font-bold mb-2">
           {gallery.tag}
         </p>
         <p
-          className="font-shippori text-text-primary leading-[1.35]"
+          className="font-sans text-text-primary leading-[1.5]"
           style={{
             fontWeight: 700,
-            fontSize: "clamp(15px, 1.1vw, 17px)",
+            fontSize: "clamp(14px, 1.05vw, 16px)",
           }}
         >
           {gallery.caption}
@@ -185,139 +173,80 @@ export default function FreedomOfDesign() {
       className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-        {/* ================= HEADER (非対称) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
-          <div>
-            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-              Freedom of Design
-            </p>
-            <h2
-              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
-              style={{
-                fontWeight: 900,
-                fontSize: "var(--display-md)",
-              }}
-            >
-              間取りも設備も、
-              <br />
-              自由に決められます。
-            </h2>
-          </div>
-          <aside className="lg:pt-4">
-            <div className="border-t-[3px] border-text-primary pt-6">
-              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                できる・できないを、<br />先にお伝えします。
-              </p>
-              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                条件を並べてから、
-                <br />
-                設計は、ちゃんと自由になります。
-              </p>
-            </div>
-          </aside>
-        </div>
+        {/* ========== Heading ========== */}
+        <header className="mb-12 md:mb-16 max-w-[860px]">
+          <h2
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+            style={{ fontSize: "var(--display-lg)" }}
+          >
+            間取りも設備も、自由に決められます。
+          </h2>
+          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
+            できる・できないを、先にお伝えします。
+            <br className="hidden md:inline" />
+            条件を並べてから、設計は、ちゃんと自由になります。
+          </p>
+        </header>
 
-        {/* ================= 自由度マップ(4軸) ================= */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex items-baseline gap-5">
-            <span
-              className="font-oswald text-text-primary/80 leading-none"
-              style={{
-                fontWeight: 300,
-                fontSize: "clamp(28px, 3vw, 44px)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              01
-            </span>
-            <span className="flex-1 h-px bg-text-primary/15" />
-            <span
-              className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
-              style={{ fontWeight: 500 }}
-            >
-              自由になるのは、4つの要素です。
-            </span>
+        {/* ========== 4 軸カード ========== */}
+        <div className="mb-16 md:mb-24">
+          <h3
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em] mb-8 md:mb-10"
+            style={{ fontSize: "var(--display-md)" }}
+          >
+            自由になるのは、4 つの要素。
+          </h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {AXES.map((axis) => (
+              <AxisCard key={axis.num} axis={axis} />
+            ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-16 md:mb-24">
-          {AXES.map((axis) => (
-            <AxisCard key={axis.num} axis={axis} />
-          ))}
-        </div>
-
-        {/* ================= 実例ギャラリー ================= */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex items-baseline gap-5">
-            <span
-              className="font-oswald text-text-primary/80 leading-none"
-              style={{
-                fontWeight: 300,
-                fontSize: "clamp(28px, 3vw, 44px)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              02
-            </span>
-            <span className="flex-1 h-px bg-text-primary/15" />
-            <span
-              className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
-              style={{ fontWeight: 500 }}
-            >
-              こだわりは、ここまで実現できます。
-            </span>
+        {/* ========== 6 ギャラリー ========== */}
+        <div className="mb-16 md:mb-24">
+          <h3
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em] mb-8 md:mb-10"
+            style={{ fontSize: "var(--display-md)" }}
+          >
+            こだわりは、ここまで実現できます。
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {GALLERIES.map((g) => (
+              <GalleryCard key={g.src} gallery={g} />
+            ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 mb-16 md:mb-24">
-          {GALLERIES.map((g) => (
-            <GalleryCard key={g.src} gallery={g} />
-          ))}
-        </div>
-
-        {/* ================= STEPS 圧縮(4行テキスト) ================= */}
+        {/* ========== 4 ステップ ========== */}
         <div className="mb-14 md:mb-20">
-          <div className="flex items-baseline gap-5 mb-8 md:mb-10">
-            <span
-              className="font-oswald text-text-primary/80 leading-none"
-              style={{
-                fontWeight: 300,
-                fontSize: "clamp(28px, 3vw, 44px)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              03
-            </span>
-            <span className="flex-1 h-px bg-text-primary/15" />
-            <span
-              className="font-shippori text-text-primary text-base md:text-lg tracking-[0.04em]"
-              style={{ fontWeight: 500 }}
-            >
-              4回の打合せで、図面が固まります。
-            </span>
-          </div>
-
+          <h3
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em] mb-8 md:mb-10"
+            style={{ fontSize: "var(--display-md)" }}
+          >
+            4 回の打合せで、図面が固まります。
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 md:gap-x-8">
             {STEPS.map((s) => (
               <div
                 key={s.num}
-                className="flex items-baseline gap-3 py-3 border-t border-text-primary/15"
+                className="flex items-baseline gap-3 py-4 border-t border-text-primary/15"
               >
                 <span
-                  className="font-oswald text-text-primary/35 leading-none shrink-0 tabular-nums"
+                  className="font-oswald text-lime-deep leading-none shrink-0 tabular-nums"
                   style={{
                     fontWeight: 300,
-                    fontSize: "clamp(20px, 1.6vw, 24px)",
+                    fontSize: "clamp(20px, 1.6vw, 26px)",
                     letterSpacing: "-0.02em",
                   }}
                 >
                   {s.num}
                 </span>
                 <p
-                  className="font-shippori text-text-primary leading-[1.5]"
+                  className="font-sans text-text-primary leading-[1.6]"
                   style={{
                     fontWeight: 500,
-                    fontSize: "clamp(14px, 1.05vw, 16px)",
+                    fontSize: "clamp(13px, 1vw, 15px)",
                   }}
                 >
                   {s.text}
@@ -327,9 +256,9 @@ export default function FreedomOfDesign() {
           </div>
         </div>
 
-        {/* ================= 注記 + CTA ================= */}
-        <div className="mt-14 md:mt-20 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
-          <p className="font-shippori max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
+        {/* ========== 注記 + CTA ========== */}
+        <div className="mt-12 md:mt-16 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
+          <p className="font-sans max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
             ※ 仕様やメーカーは、プランや敷地条件により変わります。
             <br />
             詳細は来場時に一覧でご案内します。

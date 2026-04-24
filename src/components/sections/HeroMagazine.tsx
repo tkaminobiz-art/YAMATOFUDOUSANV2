@@ -146,14 +146,17 @@ export default function HeroMagazine({
                 lineHeight: 1.15,
               }}
             >
-              {/* PC/SP共に2行想定(はみ出し防止・Mag表紙として落ち着き) */}
+              {/* 2026-04-24 v2: デカタイポ廃盤・Noto Sans に変更。
+                  見出しは shukobuild 型の控えめなスケールに(96→68px) */}
               <span
                 className="block text-white/90"
                 style={{
-                  fontSize: "clamp(22px, 3.2vw, 44px)",
+                  fontSize: "clamp(13px, 1.3vw, 16px)",
                   fontWeight: variant.weightSubLines,
                   textShadow: "0 2px 16px rgba(0,0,0,0.5)",
-                  lineHeight: 1.35,
+                  lineHeight: 1.6,
+                  letterSpacing: "0.08em",
+                  textTransform: "none",
                 }}
               >
                 素材も性能も、大手と同じです。
@@ -161,26 +164,27 @@ export default function HeroMagazine({
               <span
                 className="block text-white"
                 style={{
-                  fontSize: "clamp(40px, 6vw, 96px)",
+                  fontSize: "clamp(26px, 4.2vw, 60px)",
                   fontWeight: variant.weightBigLine,
                   textShadow: "0 3px 22px rgba(0,0,0,0.6)",
-                  marginTop: "0.18em",
-                  lineHeight: 1.18,
+                  marginTop: "0.5em",
+                  lineHeight: 1.35,
+                  letterSpacing: "0.02em",
                 }}
               >
                 家そのものを、<br className="md:hidden" />届けています。
               </span>
             </h1>
 
-            {/* 価格(右寄せ) — 2026-04-24 design-critic: 300→200px に引き下げ
-                "万円〜" 側を底上げしてペア比率 4:1 に(ワイドで暴走しない) */}
-            <div className="flex items-end gap-2 md:gap-4 leading-none justify-end">
+            {/* 価格(右寄せ) — 2026-04-24 v2: デカタイポ廃盤で 200→120px
+                商品が主役・価格は静かに据える */}
+            <div className="flex items-end gap-2 md:gap-3 leading-none justify-end">
               <span
                 className="text-white font-light whitespace-nowrap"
                 style={{
                   fontFamily: bodyVariant.numberFontFamily,
                   fontWeight: bodyVariant.numberWeight,
-                  fontSize: "clamp(64px, 14vw, 200px)",
+                  fontSize: "clamp(44px, 8vw, 120px)",
                   letterSpacing: bodyVariant.numberLetterSpacing,
                   lineHeight: 0.85,
                   textShadow: "0 2px 20px rgba(0,0,0,0.5)",
@@ -188,9 +192,9 @@ export default function HeroMagazine({
               >
                 2,280
               </span>
-              <div className="flex flex-col gap-1 pb-2 md:pb-3 lg:pb-4 text-left">
+              <div className="flex flex-col gap-1 pb-1.5 md:pb-2.5 lg:pb-3 text-left">
                 <span
-                  className="text-white/90 text-2xl md:text-4xl lg:text-5xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]"
+                  className="text-white/90 text-lg md:text-2xl lg:text-3xl font-normal leading-none [text-shadow:_0_1px_10px_rgba(0,0,0,0.5)]"
                   style={{
                     fontFamily: bodyVariant.jaFontFamily,
                     fontWeight: bodyVariant.jaWeight,
@@ -318,17 +322,18 @@ export default function HeroMagazine({
           </p>
         </aside>
 
-        {/* 縦組キャプション — ブランドマーク(ページ内LIME唯一の装飾色) */}
+        {/* 縦組キャプション — ブランドマーク(ページ内Lime唯一の装飾色)
+            2026-04-24 v2: Noto Sans(ゴシック)に変更、サイズも縮小 */}
         <aside
           aria-hidden="false"
           className="hidden md:flex absolute left-6 lg:left-12 top-[42%] -translate-y-1/2 z-20 flex-col items-center gap-5"
         >
-          <span aria-hidden className="block w-px h-20 bg-white/60" />
+          <span aria-hidden className="block w-px h-14 bg-white/55" />
           <p
-            className="text-[38px] lg:text-[42px] tracking-[0.12em] [writing-mode:vertical-rl]"
+            className="text-[20px] lg:text-[24px] tracking-[0.22em] [writing-mode:vertical-rl]"
             style={{
-              fontFamily: variant.fontFamily,
-              fontWeight: 500,
+              fontFamily: "var(--font-noto), 'Noto Sans JP', sans-serif",
+              fontWeight: 700,
               color: ACCENT_LIME,
               textShadow:
                 "0 2px 14px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.55)",

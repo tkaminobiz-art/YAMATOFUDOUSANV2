@@ -1,22 +1,17 @@
-import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
 
 /*
-  PriceSection — 2026-04-21 全面リニューアル(Plan A 継承: カタログ 3プラン)
-  -----------------------------------------------------------------
-  旧: 389行 / ダークスラブ(#252623)価格ロックアップ / 2280ウォーターマーク /
-       gridline + radial-gradient 背景 / 花プラン全幅 + 風京2列の非対称 /
-       BUILDING・TAX IN・SCOPE・INCLUDED・NOT IN BUILDING・PLANS の英字ラベル
+  PriceSection — 2026-04-24 v3 (案A shukobuild型 カタログ)
+  ---------------------------------------------------------------
+  v2(v1は明朝+非対称) で残っていた:
+  - Shippori Mincho (明朝) 見出し "三タイプ、ご用意しています。"
+  - Shippori 900 漢字 花/風/京
+  - "Pricing" 英字kicker
+  - 非対称 1.4fr:1fr ヘッダー
+  - 背景画像(exterior-terrace)ウォーターマーク
+  を撤去。3プランの"並列フラット"原則は維持。
 
-  新: 約200行 / 暖白 #FAF8F3 (Mechanism + Zero と連続) /
-       非対称ヘッダー(1.4fr:1fr / border-t-[3px]) /
-       3プラン完全フラット同粒子 / 含む・別途の罫線のみ2列
-
-  設計哲学:
-  - ZeroDeclaration と同じ「同粒子で刻む」カタログ思想
-  - 「軸となる一つのプラン」等の編集フレーズを排し、3プランを並列に
-  - LIME不使用(Zero と統一)
-  - 漢字1文字(花/風/京)を Shippori 900 で主役級に
+  v3 本実装: 一言 heading + 3プラン横並びフラット + 含む/別途 2列
 */
 
 type Plan = {
@@ -33,7 +28,7 @@ const PLANS: readonly Plan[] = [
   {
     id: "hana",
     name: "花",
-    reading: "hana",
+    reading: "HANA",
     tagline: "4LDK・33坪、ゆとりのある間取りです。",
     price: "2,480",
     tsubo: "33坪（109㎡）",
@@ -42,7 +37,7 @@ const PLANS: readonly Plan[] = [
   {
     id: "kaze",
     name: "風",
-    reading: "kaze",
+    reading: "KAZE",
     tagline: "30坪で、家事動線を整えています。",
     price: "2,480",
     tsubo: "30坪",
@@ -51,7 +46,7 @@ const PLANS: readonly Plan[] = [
   {
     id: "miyako",
     name: "京",
-    reading: "miyako",
+    reading: "MIYAKO",
     tagline: "3LDK・28坪、必要な広さに絞りました。",
     price: "2,280",
     tsubo: "28坪",
@@ -74,30 +69,29 @@ const EXCLUDED = [
 ] as const;
 
 function PlanCard({ plan }: { plan: Plan }) {
-  // Hero のメインメッセージ「2,280万円〜」と呼応する最安プラン(京)の
-  // 価格数字のみ LIME で着色。ブランド色の継承で視線を誘導。
   const isHeadliner = plan.price === "2,280";
 
   return (
-    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-7 md:p-9 min-h-[520px] md:min-h-[560px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
-      {/* 漢字 — Shippori Black 主役(lime-deepで記憶要素に昇格) */}
-      <div className="flex items-end gap-3 md:gap-4">
+    <article className="group relative flex flex-col bg-white border border-text-primary/10 p-7 md:p-9 min-h-[440px] md:min-h-[480px] transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]">
+      {/* 漢字 1 文字(Noto Sans 900, lime-deep) + ローマ字 */}
+      <div className="flex items-end gap-3">
         <span
-          className="font-shippori leading-[0.85] tracking-[0.02em]"
+          className="font-sans leading-[0.85]"
           style={{
             fontWeight: 900,
-            fontSize: "clamp(80px, 9vw, 140px)",
+            fontSize: "clamp(52px, 5.5vw, 84px)",
             color: "var(--color-lime-deep)",
+            letterSpacing: "0.02em",
           }}
         >
           {plan.name}
         </span>
         <span
-          className="font-oswald text-text-secondary pb-2 md:pb-3 uppercase"
+          className="font-inter text-text-secondary pb-2 md:pb-2.5"
           style={{
-            fontWeight: 300,
-            fontSize: "clamp(13px, 1vw, 15px)",
-            letterSpacing: "0.18em",
+            fontWeight: 600,
+            fontSize: "clamp(11px, 0.85vw, 13px)",
+            letterSpacing: "0.22em",
           }}
         >
           {plan.reading}
@@ -105,7 +99,7 @@ function PlanCard({ plan }: { plan: Plan }) {
       </div>
 
       {/* 仕様 — Inter tabular */}
-      <dl className="font-inter flex items-center gap-3 mt-8 md:mt-10 text-[12px] md:text-[13px] tracking-[0.08em] text-text-secondary font-medium">
+      <dl className="font-inter flex items-center gap-3 mt-6 md:mt-7 text-[11px] md:text-[12px] tracking-[0.12em] text-text-secondary font-bold">
         <dt className="sr-only">間取り</dt>
         <dd>{plan.layout}</dd>
         <span aria-hidden className="w-px h-3 bg-text-primary/20" />
@@ -113,30 +107,30 @@ function PlanCard({ plan }: { plan: Plan }) {
         <dd>{plan.tsubo}</dd>
       </dl>
 
-      {/* タグライン */}
-      <p className="font-shippori text-text-primary/80 text-[clamp(14px,1.05vw,16px)] leading-[1.95] mt-4 max-w-[20rem]">
+      {/* タグライン — Noto Sans 400 */}
+      <p className="font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] mt-4 max-w-[22rem]">
         {plan.tagline}
       </p>
 
-      {/* 価格(底) — 京(2,280)のみ LIME で Hero 連動 */}
-      <div className="mt-auto pt-10 md:pt-12 border-t border-text-primary/10">
+      {/* 価格(底) */}
+      <div className="mt-auto pt-8 md:pt-10 border-t border-text-primary/10">
         <div className="flex items-baseline gap-2 md:gap-3">
           <span
             className="font-oswald tabular-nums leading-[0.85]"
             style={{
               fontWeight: 300,
-              fontSize: "clamp(64px, 8vw, 112px)",
+              fontSize: "clamp(48px, 6vw, 84px)",
               letterSpacing: "-0.03em",
               color: isHeadliner ? "var(--color-lime-deep)" : undefined,
             }}
           >
             {plan.price}
           </span>
-          <span className="font-shippori text-text-primary/70 text-[clamp(14px,1.1vw,18px)] font-medium pb-2 md:pb-3">
+          <span className="font-sans text-text-primary/70 text-[clamp(13px,1vw,16px)] font-medium pb-1.5 md:pb-2">
             万円〜
           </span>
         </div>
-        <p className="font-inter text-[10px] md:text-[11px] tracking-[0.12em] text-text-secondary mt-3">
+        <p className="font-inter text-[10px] md:text-[11px] tracking-[0.14em] text-text-secondary mt-3">
           税込・建物本体と付帯工事まで含む
         </p>
       </div>
@@ -148,87 +142,49 @@ export default function PriceSection() {
   return (
     <section
       id="product"
-      className="relative scroll-mt-20 overflow-hidden bg-[#FAF8F3] text-text-primary py-[var(--section-py)] md:scroll-mt-24"
+      className="relative scroll-mt-20 bg-bg-secondary text-text-primary py-[var(--section-py)] md:scroll-mt-24"
     >
-      {/* ========== 背景画像レイヤー ==========
-          外観テラス(exterior-terrace-01)を薄く透かして「紙の下で写真が呼吸する」誌面感。
-          - 画像 opacity 0.22 + 編集誌フィルター(低彩度/低コントラスト/微セピア)
-          - 暖白オーバーレイ /55 で本文視認性を確保
-          - 上下グラデ(中央透明→端 /40)で本文域を優先
-          - カード(bg-white)は画像を完全に隠す → カード間のgap と余白に写真がうっすら透ける */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <Image
-          src="/images/newsozai/exterior-terrace-01.webp"
-          alt=""
-          fill
-          className="object-cover"
-          sizes="100vw"
-          style={{
-            opacity: 0.22,
-            filter: "saturate(0.82) contrast(0.98) sepia(0.08) brightness(1.06)",
-          }}
-        />
-        <div className="absolute inset-0 bg-[#FAF8F3]/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F3]/40 via-transparent to-[#FAF8F3]/55" />
-      </div>
-
       <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)]">
-        {/* ================= HEADER (非対称) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
-          {/* Left: 看板 */}
-          <div>
-            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-              Pricing
-            </p>
-            <h2
-              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
-              style={{
-                fontWeight: 900,
-                fontSize: "var(--display-lg)",
-              }}
-            >
-              三タイプ、<br />ご用意しています。
-            </h2>
-          </div>
+        {/* ========== Heading ========== */}
+        <header className="mb-12 md:mb-16 max-w-[860px]">
+          <h2
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+            style={{ fontSize: "var(--display-lg)" }}
+          >
+            三タイプ、ご用意しています。
+          </h2>
+          <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
+            京モデルは、
+            <span className="font-bold text-lime-deep">2,280万円</span>
+            から始まります。
+            <br className="hidden md:inline" />
+            税込で、建物本体と付帯工事まで含みます。土地や登記は別途です。
+          </p>
+        </header>
 
-          {/* Right: LEAD */}
-          <aside className="lg:pt-4">
-            <div className="border-t-[3px] border-text-primary pt-6">
-              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                京モデルは、<span style={{ color: "var(--color-lime-deep)" }}>2,280</span>万円から始まります。
-              </p>
-              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                税込で、建物本体と付帯工事まで含みます。
-                <br />
-                土地や登記は別途です。
-              </p>
-            </div>
-          </aside>
-        </div>
-
-        {/* ================= 3プランカード ================= */}
+        {/* ========== 3 プラン ========== */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {PLANS.map((p) => (
             <PlanCard key={p.id} plan={p} />
           ))}
         </div>
 
-        {/* ================= 含むもの / 別途 ================= */}
-        <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 pt-10 md:pt-14 border-t border-text-primary/15">
+        {/* ========== 含む / 別途 ========== */}
+        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 lg:gap-20 pt-10 md:pt-14 border-t border-text-primary/15">
           <div>
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary mb-6">
-              含まれるもの
+            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.26em] uppercase text-lime-deep mb-5">
+              Included · 含まれるもの
             </p>
-            <ul className="space-y-3.5">
+            <ul className="space-y-3">
               {INCLUDED.map((t) => (
                 <li
                   key={t}
-                  className="font-shippori flex items-baseline gap-3 text-text-primary text-[clamp(14px,1.05vw,16px)] leading-[1.75]"
+                  className="font-sans flex items-baseline gap-3 text-text-primary text-[clamp(13px,1vw,15px)] leading-[1.75]"
                 >
                   <span
                     aria-hidden
-                    className="font-oswald shrink-0 pt-[2px]"
-                    style={{ fontWeight: 500, fontSize: "14px", color: "var(--color-lime-deep)" }}
+                    className="font-oswald shrink-0 pt-[2px] text-lime-deep"
+                    style={{ fontWeight: 500, fontSize: "14px" }}
                   >
                     +
                   </span>
@@ -237,15 +193,15 @@ export default function PriceSection() {
               ))}
             </ul>
           </div>
-          <div className="md:border-l md:border-text-primary/15 md:pl-10 lg:pl-16">
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary mb-6">
-              別途となるもの
+          <div className="md:border-l md:border-text-primary/15 md:pl-10 lg:pl-14">
+            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.26em] uppercase text-text-secondary mb-5">
+              Excluded · 別途となるもの
             </p>
-            <ul className="space-y-3.5">
+            <ul className="space-y-3">
               {EXCLUDED.map((t) => (
                 <li
                   key={t}
-                  className="font-shippori flex items-baseline gap-3 text-text-primary/85 text-[clamp(14px,1.05vw,16px)] leading-[1.75]"
+                  className="font-sans flex items-baseline gap-3 text-text-primary/85 text-[clamp(13px,1vw,15px)] leading-[1.75]"
                 >
                   <span
                     aria-hidden
@@ -261,9 +217,9 @@ export default function PriceSection() {
           </div>
         </div>
 
-        {/* ================= 注記 + CTA ================= */}
-        <div className="mt-14 md:mt-20 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
-          <p className="font-shippori max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
+        {/* ========== 注記 + CTA ========== */}
+        <div className="mt-12 md:mt-16 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
+          <p className="font-sans max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
             ※ 広さ・間取り・価格帯の目安です。間取り・坪数・設備はご家族に合わせて設計します。
             <br />
             ※ 表示価格は建物本体(税込)に付帯工事まで含む目安です。土地・登記等は別途です。

@@ -3,21 +3,15 @@
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
-  ZeroDeclaration — 2026-04-21 全面リニューアル(Plan A: カタログ8タイル)
-  -----------------------------------------------------------------
-  旧: 418行 / ダーク背景 / Hero画像 / 3章分割 / BigProofCard + ReceiptRow
-       / PROOF BOARD・EVIDENCE・DECLARATION・CHAPTER Ⅰ・OTHER PROOFS・
-         WHY WE CAN PROMISE THIS の英字ラベル6種(雑誌ごっこ)
+  ZeroDeclaration — 2026-04-24 v5 (案A shukobuild型 カタログ)
+  ---------------------------------------------------------------
+  v4(v3まで) で残っていた:
+  - Shippori Mincho (明朝) のタイル/見出し
+  - "Zero Declaration" 英字kicker
+  - 非対称 1.4fr:1fr ヘッダー
+  を撤去。8 タイルの chess pattern はカタログ原則に合うので維持。
 
-  新: 約160行 / 暖白背景 #FAF8F3 (Mechanism と連続) /
-       非対称ヘッダー(1.4fr:1fr 継承) / 8タイル 4×2 完全フラット /
-       1タイル = 番号 + 時期タグ + 項目名 + 1行説明 + ¥0バッジ(右上)
-
-  設計哲学:
-  - StandardAndQualitySection と同じ「同粒子で刻む」
-  - Mechanism と同じ明朝 + 非対称 + border-top-[3px] のリズム
-  - LIME不使用(ページ全体 7箇所ルール遵守)
-  - "チャプター" や "PROOF" 等の英字装飾を排し、項目の固有名詞を主役に
+  v5: 一言 heading + 8タイル(Lime/白交互) + 締め
 */
 
 type Zero = {
@@ -27,35 +21,22 @@ type Zero = {
   phase: "Before" | "During" | "After";
 };
 
-/*
-  カード色のチェス盤パターン(2026-04-21 更新):
-  PC 4列グリッドで対角線に同色が並ぶよう配置
-  ┌──┬──┬──┬──┐
-  │01白│02🟢│03白│04🟢│  1行目
-  ├──┼──┼──┼──┤
-  │05🟢│06白│07🟢│08白│  2行目(反転)
-  └──┴──┴──┴──┘
-  判定式: (index + Math.floor(index / 4)) % 2 === 1
-  - LIMEカード: bg-LIME + forest-green テキスト
-  - 白カード: bg-white + LIME番号 + 黒テキスト
-  forest green = --color-main-dark #2E4600 (ブランドパレット自然系4色の1つ)
-*/
 const LIME = "#A2C523";
 const FOREST = "#2E4600";
 
 function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
-  // チェス盤パターン: 4列で1行目→2行目の色が反転
+  // 4列グリッドで対角線に同色が並ぶチェス盤
   const isLime = (index + Math.floor(index / 4)) % 2 === 1;
 
   return (
     <article
-      className={`group relative flex flex-col p-6 md:p-7 min-h-[280px] md:min-h-[300px] border transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
+      className={`group relative flex flex-col p-6 md:p-7 min-h-[260px] md:min-h-[280px] border transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 ${
         isLime
           ? "bg-[#A2C523] border-[#2E4600]/15 hover:border-[#2E4600]/45 hover:shadow-[0_24px_48px_-24px_rgba(46,70,0,0.35)]"
           : "bg-white border-text-primary/10 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
       }`}
     >
-      {/* ¥0 バッジ — ゼロ連呼というテーマの主役級に昇格(WCAG: 白地Limeはlime-deepに) */}
+      {/* ¥0 バッジ(右上) */}
       <span
         className={`font-oswald absolute top-4 right-4 md:top-5 md:right-5 leading-none inline-flex items-center justify-center px-3 py-1.5 md:px-3.5 md:py-2 border-[1.5px] tabular-nums ${
           isLime
@@ -64,19 +45,19 @@ function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
         }`}
         style={{
           fontWeight: 500,
-          fontSize: "clamp(15px, 1.35vw, 19px)",
+          fontSize: "clamp(14px, 1.2vw, 17px)",
           letterSpacing: "-0.01em",
         }}
       >
         ¥0
       </span>
 
-      {/* 番号 — 奇数: LIME / 偶数: forest green */}
+      {/* 番号 — 大きな数字(Oswald Light) */}
       <span
-        className="font-oswald leading-[0.85] transition-colors duration-500 tabular-nums"
+        className="font-oswald leading-[0.85] tabular-nums"
         style={{
           fontWeight: 300,
-          fontSize: "clamp(56px, 6vw, 96px)",
+          fontSize: "clamp(48px, 5.2vw, 84px)",
           letterSpacing: "-0.02em",
           color: isLime ? `${FOREST}40` : `${LIME}8C`,
         }}
@@ -84,30 +65,30 @@ function ZeroCard({ zero, index }: { zero: Zero; index: number }) {
         {zero.num}
       </span>
 
-      {/* 時期タグ */}
+      {/* 時期タグ(Inter uppercase) */}
       <p
-        className={`font-inter text-[10px] tracking-[0.28em] uppercase font-bold mt-auto pt-6 md:pt-8 ${
-          isLime ? "text-[#2E4600]/70" : "text-text-secondary"
+        className={`font-inter text-[10px] tracking-[0.24em] uppercase font-bold mt-auto pt-6 md:pt-8 ${
+          isLime ? "text-[#2E4600]/75" : "text-text-secondary"
         }`}
       >
         {zero.phase}
       </p>
 
-      {/* 項目名 */}
+      {/* 項目名 — Noto Sans 700 */}
       <h3
-        className="font-shippori leading-[1.3] tracking-[0.01em] mt-3"
+        className="font-sans leading-[1.4] tracking-[0.01em] mt-3"
         style={{
           fontWeight: 700,
-          fontSize: "clamp(18px, 1.6vw, 24px)",
+          fontSize: "clamp(15px, 1.2vw, 18px)",
           color: isLime ? FOREST : undefined,
         }}
       >
         {zero.title}
       </h3>
 
-      {/* 1行説明 */}
+      {/* 1行説明 — Noto Sans 400 */}
       <p
-        className={`font-shippori text-[clamp(13px,1vw,15px)] leading-[2.0] mt-3 ${
+        className={`font-sans text-[clamp(12px,0.95vw,14px)] leading-[1.9] mt-2.5 ${
           isLime ? "text-[#2E4600]/85" : "text-text-primary/70"
         }`}
       >
@@ -177,63 +158,45 @@ export default function ZeroDeclaration() {
       className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-        {/* ================= HEADER (非対称・Mechanism 継承) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
-          {/* Left: 看板 */}
-          <div>
-            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-              Zero Declaration
-            </p>
-            <h2
-              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
+        {/* ========== Heading ========== */}
+        <header className="mb-12 md:mb-16 max-w-[860px]">
+          <h2
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+            style={{ fontSize: "var(--display-lg)" }}
+          >
+            <span
+              className="font-oswald inline-block"
               style={{
-                fontWeight: 900,
-                fontSize: "var(--display-md)",
+                fontWeight: 300,
+                letterSpacing: "-0.04em",
+                color: "var(--color-lime-deep)",
+                marginRight: "0.12em",
               }}
             >
-              <span
-                className="font-oswald"
-                style={{
-                  fontWeight: 300,
-                  letterSpacing: "-0.04em",
-                  color: "var(--color-lime-deep)",
-                  marginRight: "0.08em",
-                }}
-              >
-                8
-              </span>
-              つが、ゼロです。
-            </h2>
-          </div>
+              8
+            </span>
+            つが、ゼロです。
+          </h2>
+          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
+            契約前から引渡し後まで、費用は動きません。
+            <br className="hidden md:inline" />
+            家づくりで増えがちな費用を、やまとは八つゼロにしています。
+          </p>
+        </header>
 
-          {/* Right: LEAD(Mechanism と同じ border-t-[3px] リズム) */}
-          <aside className="lg:pt-4">
-            <div className="border-t-[3px] border-text-primary pt-6">
-              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                契約前から引渡し後まで、<br />費用は動きません。
-              </p>
-              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                家づくりで増えがちな費用を、
-                <br />
-                やまとは八つゼロにしています。
-              </p>
-            </div>
-          </aside>
-        </div>
-
-        {/* ================= 8 タイル(白 × LIME 交互) ================= */}
+        {/* ========== 8 タイル(白 × Lime 交互) ========== */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {ZEROS.map((z, i) => (
             <ZeroCard key={z.num} zero={z} index={i} />
           ))}
         </div>
 
-        {/* ================= 締め ================= */}
+        {/* ========== 締め ========== */}
         <div className="mt-14 md:mt-20 max-w-[800px]">
           <div className="flex items-start gap-4 md:gap-6 pt-8 border-t border-text-primary/15">
             <span
               aria-hidden
-              className="font-oswald shrink-0 leading-none pt-1 text-[#5C7A10]"
+              className="font-oswald shrink-0 leading-none pt-1 text-lime-deep"
               style={{
                 fontWeight: 300,
                 fontSize: "clamp(20px, 1.6vw, 24px)",
@@ -241,7 +204,7 @@ export default function ZeroDeclaration() {
             >
               ¥0
             </span>
-            <p className="font-shippori text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[1.95]">
+            <p className="font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[1.95]">
               お見積もりは、最終価格です。
               <br className="sm:hidden" />
               追加請求は、いたしません。

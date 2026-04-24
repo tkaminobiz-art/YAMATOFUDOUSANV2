@@ -10,22 +10,15 @@ import {
 } from "@/data/works";
 
 /*
-  WorksSection — 2026-04-21 再リニューアル v2
-  -----------------------------------------------------------------
-  ユーザー懸念: 「Lots→Voice→Works で写真カードが連続、飽きてないか」
-
-  解決: 写真カード連打から脱却
-  - Voice(直前) = 言葉主役の Bento 見開き
-  - Works(本節) = 大判1件 + テキストリスト(網羅感)
-
-  構造:
-  1. ヘッダー(非対称 + 全件数 8)
-  2. Featured Work 1件: 16:9 大判写真 + 詳細(番号/地域/モデル/コメント)
-  3. 他の事例 テキストリスト(7件): 番号/地域/モデル/仕様の罫線行
-  4. CTA: /works へ
+  WorksSection — 2026-04-24 v3 (案A shukobuild型 カタログ)
+  ---------------------------------------------------------------
+  v2 で残っていた:
+  - Shippori Mincho (明朝) 見出し/邸名/引用
+  - "Works" 英字kicker
+  - 非対称 1.4fr:1fr ヘッダー + 件数別アイキャッチ + border-t-[3px] LEAD
+  - PHOTO_FILTER saturate/contrast(編集誌の色調)
+  を撤去。Featured 1件 + テキストリストの構造は維持。
 */
-
-const PHOTO_FILTER = "saturate(0.92) contrast(1.02)";
 
 export default function WorksSection() {
   const ref = useScrollIn<HTMLDivElement>(true);
@@ -37,91 +30,51 @@ export default function WorksSection() {
     <section
       id="works"
       ref={ref}
-      className="bg-[#FAF8F3] text-text-primary py-[var(--section-py)] scroll-in"
+      className="bg-bg-secondary text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-        {/* ================= HEADER (非対称) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-end mb-16 md:mb-24">
-          {/* Left: 看板 */}
-          <div>
-            <p className="font-inter text-[11px] md:text-[12px] tracking-[0.3em] uppercase text-text-secondary mb-6 md:mb-10 font-bold">
-              Works
-            </p>
-            <h2
-              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
-              style={{
-                fontWeight: 900,
-                fontSize: "var(--display-sm)",
-              }}
-            >
-              やまとが建てた、
-              <br />
-              実際の家です。
-            </h2>
-          </div>
+        {/* ========== Heading ========== */}
+        <header className="mb-12 md:mb-16 max-w-[860px]">
+          <h2
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+            style={{ fontSize: "var(--display-lg)" }}
+          >
+            やまとが建てた、実際の家です。
+          </h2>
+          <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
+            <span className="font-bold text-lime-deep">{TOTAL_WORKS_COUNT}件</span>
+            の完成事例を、写真で紹介しています。
+            <br className="hidden md:inline" />
+            価格はすべて、付帯工事まで込みです。
+          </p>
+        </header>
 
-          {/* Right: 件数 + LEAD */}
-          <aside className="lg:pt-4">
-            {/* 件数アイキャッチ */}
-            <div className="flex items-baseline gap-3 mb-7 md:mb-9">
-              <span
-                className="font-oswald text-text-primary leading-[0.85] tabular-nums"
-                style={{
-                  fontWeight: 300,
-                  fontSize: "clamp(56px, 7vw, 100px)",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                {TOTAL_WORKS_COUNT}
-              </span>
-              <span
-                className="font-shippori text-text-primary/75 pb-2"
-                style={{ fontWeight: 500, fontSize: "clamp(14px, 1.1vw, 17px)" }}
-              >
-                件の事例
-              </span>
-            </div>
-
-            <div className="border-t-[3px] border-text-primary pt-6">
-              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                8件の完成事例を、<br />写真で紹介しています。
-              </p>
-              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] max-w-[480px] text-text-primary/90">
-                価格はすべて、
-                <br />
-                付帯工事まで込みです。
-              </p>
-            </div>
-          </aside>
-        </div>
-
-        {/* ================= Featured Work (大判1件) ================= */}
+        {/* ========== Featured Work (大判1件) ========== */}
         <Link
           href="/works"
-          className="scroll-in group block overflow-hidden bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_32px_64px_-28px_rgba(0,0,0,0.14)] mb-5 md:mb-6"
+          className="scroll-in group block overflow-hidden bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_32px_64px_-28px_rgba(0,0,0,0.14)] mb-4 md:mb-5"
         >
           {/* 大判写真 */}
-          <div className="relative aspect-[16/9] overflow-hidden bg-text-primary/5">
+          <div className="relative aspect-[16/9] overflow-hidden bg-bg-secondary">
             <Image
               src={featured.main}
               alt={`${featured.title} 外観`}
               fill
               className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
               sizes="(max-width: 1400px) 100vw, 1400px"
-              style={{ filter: PHOTO_FILTER }}
             />
           </div>
 
           {/* 詳細(下部) */}
-          <div className="p-8 md:p-10 lg:p-12">
-            <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-6 lg:gap-12 items-start">
-              {/* 番号 + 地域・邸名 */}
+          <div className="p-7 md:p-9 lg:p-10">
+            <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-6 lg:gap-10 items-start">
+              {/* 番号 + 邸名 */}
               <div className="flex items-start gap-5">
                 <span
-                  className="font-oswald text-text-primary leading-none tabular-nums shrink-0"
+                  className="font-oswald text-lime-deep leading-none tabular-nums shrink-0"
                   style={{
                     fontWeight: 300,
-                    fontSize: "clamp(40px, 4vw, 64px)",
+                    fontSize: "clamp(32px, 3vw, 48px)",
                     letterSpacing: "-0.02em",
                   }}
                 >
@@ -132,28 +85,28 @@ export default function WorksSection() {
                     {featured.model}
                   </p>
                   <h3
-                    className="font-shippori text-text-primary leading-[1.25] tracking-[0.01em]"
+                    className="font-sans text-text-primary leading-[1.4] tracking-[0.01em]"
                     style={{
                       fontWeight: 900,
-                      fontSize: "clamp(24px, 2.4vw, 36px)",
+                      fontSize: "clamp(20px, 2vw, 28px)",
                     }}
                   >
                     {featured.title}
                   </h3>
-                  <p className="font-shippori mt-3 text-text-primary/75 text-[clamp(13px,1vw,15px)] leading-[1.85]">
+                  <p className="font-sans mt-3 text-text-primary/75 text-[clamp(13px,1vw,15px)] leading-[1.85]">
                     {featured.spec} / {featured.family}
                   </p>
                 </div>
               </div>
 
               {/* コメント引用(中央) */}
-              <blockquote className="font-shippori lg:border-l lg:border-text-primary/15 lg:pl-12 text-text-primary/80 text-[clamp(14px,1.1vw,16px)] leading-[2.0] max-w-[28em]">
+              <blockquote className="font-sans lg:border-l lg:border-text-primary/15 lg:pl-10 text-text-primary/80 text-[clamp(13px,1.05vw,15px)] leading-[2.0] max-w-[28em]">
                 「{featured.comment}」
               </blockquote>
 
               {/* 詳しく読む */}
               <div className="lg:pt-2">
-                <span className="font-inter text-[11px] md:text-[12px] tracking-[0.24em] uppercase text-text-primary font-bold group-hover:text-[#A2C523] transition-colors whitespace-nowrap">
+                <span className="font-inter text-[11px] md:text-[12px] tracking-[0.24em] uppercase text-text-primary font-bold group-hover:text-lime-deep transition-colors whitespace-nowrap">
                   詳しく見る →
                 </span>
               </div>
@@ -161,17 +114,13 @@ export default function WorksSection() {
           </div>
         </Link>
 
-        {/* ================= 他の事例 テキストリスト ================= */}
+        {/* ========== 他の事例 テキストリスト ========== */}
         <div className="border-t border-text-primary/15">
           {/* 章見出し */}
           <div className="flex items-baseline gap-5 py-6 md:py-8">
             <span
-              className="font-oswald text-text-primary/80 leading-none"
-              style={{
-                fontWeight: 300,
-                fontSize: "clamp(22px, 2vw, 28px)",
-                letterSpacing: "-0.02em",
-              }}
+              className="font-sans font-bold text-text-primary leading-none"
+              style={{ fontSize: "clamp(15px, 1.15vw, 18px)" }}
             >
               他の事例
             </span>
@@ -186,13 +135,13 @@ export default function WorksSection() {
             <Link
               key={work.id}
               href="/works"
-              className="group grid grid-cols-[auto_1fr_auto] gap-5 md:gap-8 items-baseline py-5 md:py-6 border-t border-text-primary/10 hover:bg-white/50 transition-colors px-2"
+              className="group grid grid-cols-[auto_1fr_auto] gap-5 md:gap-8 items-baseline py-5 md:py-6 border-t border-text-primary/10 hover:bg-white/60 transition-colors px-2"
             >
               <span
-                className="font-oswald text-text-primary/40 leading-none tabular-nums group-hover:text-text-primary transition-colors shrink-0"
+                className="font-oswald text-text-primary/45 leading-none tabular-nums group-hover:text-lime-deep transition-colors shrink-0"
                 style={{
                   fontWeight: 300,
-                  fontSize: "clamp(20px, 1.8vw, 26px)",
+                  fontSize: "clamp(18px, 1.5vw, 22px)",
                   letterSpacing: "-0.02em",
                 }}
               >
@@ -200,15 +149,15 @@ export default function WorksSection() {
               </span>
               <div>
                 <p
-                  className="font-shippori text-text-primary leading-[1.35]"
+                  className="font-sans text-text-primary leading-[1.5]"
                   style={{
                     fontWeight: 700,
-                    fontSize: "clamp(16px, 1.2vw, 19px)",
+                    fontSize: "clamp(15px, 1.1vw, 17px)",
                   }}
                 >
                   {work.title}
                 </p>
-                <p className="font-shippori mt-1.5 text-text-primary/70 text-[clamp(12px,0.9vw,14px)] leading-[1.85]">
+                <p className="font-sans mt-1.5 text-text-primary/70 text-[clamp(12px,0.9vw,14px)] leading-[1.85]">
                   {work.model} / {work.spec} / {work.family}
                 </p>
               </div>
@@ -225,23 +174,23 @@ export default function WorksSection() {
               <Link
                 key={`grid-${i}`}
                 href="/works"
-                className="group grid grid-cols-[auto_1fr_auto] gap-5 md:gap-8 items-baseline py-4 md:py-5 border-t border-text-primary/10 hover:bg-white/50 transition-colors px-2"
+                className="group grid grid-cols-[auto_1fr_auto] gap-5 md:gap-8 items-baseline py-4 md:py-5 border-t border-text-primary/10 hover:bg-white/60 transition-colors px-2"
               >
                 <span
-                  className="font-oswald text-text-primary/35 leading-none tabular-nums group-hover:text-text-primary/80 transition-colors shrink-0"
+                  className="font-oswald text-text-primary/40 leading-none tabular-nums group-hover:text-lime-deep transition-colors shrink-0"
                   style={{
                     fontWeight: 300,
-                    fontSize: "clamp(18px, 1.5vw, 22px)",
+                    fontSize: "clamp(16px, 1.3vw, 20px)",
                     letterSpacing: "-0.02em",
                   }}
                 >
                   {String(indexNum).padStart(2, "0")}
                 </span>
                 <p
-                  className="font-shippori text-text-primary/85 leading-[1.4]"
+                  className="font-sans text-text-primary/85 leading-[1.5]"
                   style={{
                     fontWeight: 500,
-                    fontSize: "clamp(14px, 1vw, 16px)",
+                    fontSize: "clamp(13px, 1vw, 15px)",
                   }}
                 >
                   {work.area}
@@ -254,9 +203,9 @@ export default function WorksSection() {
           })}
         </div>
 
-        {/* ================= CTA ================= */}
-        <div className="mt-14 md:mt-20 pt-10 border-t border-text-primary/15 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-          <p className="font-shippori max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
+        {/* ========== CTA ========== */}
+        <div className="mt-12 md:mt-16 pt-10 border-t border-text-primary/15 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          <p className="font-sans max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
             ※ 掲載の事例は、実際にやまとが建築した家です。
             <br />
             価格は目安であり、土地条件・仕様により変動します。

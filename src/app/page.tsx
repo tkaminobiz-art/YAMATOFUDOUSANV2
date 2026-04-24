@@ -20,9 +20,10 @@ import StandardAndQualitySection from "@/components/sections/StandardAndQualityS
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
-// 確定組合せ: B(Shippori Mincho) + IV(Industrial: Oswald + Noto Sans JP 500)
+// 2026-04-24 確定: Z(Noto Sans JP catalog) + IV(Industrial: Oswald + Noto Sans JP 500)
+// 明朝(Shippori)は退役、shukobuild型カタログ方針に統一
 const HERO_HEADLINE_VARIANT =
-  FONT_VARIANTS.find((v) => v.id === "shippori") ?? FONT_VARIANTS[0];
+  FONT_VARIANTS.find((v) => v.id === "noto-sans") ?? FONT_VARIANTS[0];
 const HERO_BODY_VARIANT =
   BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
 

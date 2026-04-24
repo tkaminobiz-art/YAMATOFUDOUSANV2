@@ -1,41 +1,184 @@
 "use client";
 
-import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
-  MechanismEnhanced — 価格メカニズム
-  -----------------------------------------------------------------
-  2026-04-21 design-critic 指摘 #1 反映:
-  - 「雑誌ごっこ」(ISSUE/MECHANISM kicker/Yamato Editorial/Founder's Note/
-     END OF MECHANISM/◉記号) を全削除
-  - 残すのは版面(21:9ブリード/非対称グリッド/pull quote/sidecar)のみ
-  - ACCENT_LIME は主見出し1ワード × 4 + 金額(-1,720) の 5箇所に制限
+  MechanismEnhanced — 2026-04-24 v2 (案A shukobuild型 カタログ)
+  ---------------------------------------------------------------
+  v1(編集誌)で使っていた要素 = 全て撤去:
+  - BLEED 21:9 中扉 + 明朝大判「違うのは〜費用です」
+  - 非対称 1.4fr:1fr 看板「やまとは安い？」(8vw 明朝)
+  - 別背景 manifesto block (#F0EBE0) + pull quote + 4/5 sidecar
 
-  2026-04-21 design-critic 指摘 #4 反映:
-  - inline fontFamily の繰り返し(13回)を Tailwind v4 の font-shippori / font-inter
-    ユーティリティに置換
-
-  構造:
-  1. 非対称グリッド (1.4fr:1fr / 1.3fr:1fr)
-  2. 写真統合: 21:9 ブリード / 4:5 sidecar / 16:10 detail
-  3. 密疎リズム: opening疎 → manifesto密 → closing疎
-  4. サイドカー: photo + data + notes の stretch分散
+  v2 本実装: "価格の仕組みを、帯で見せる"
+  - Heading 一言「やまとは、安くない。」
+  - 価格比較の横帯(大手 vs やまと = 1,720万の差)
+  - 3つの仕組みを横3列のフラットカード(展示場二重利用/自社一貫/広告最小限)
+  - 明朝ゼロ、BLEEDなし、pull quoteなし、非対称なし
 */
 
-// 全写真共通フィルター(編集誌の印刷感)
-const PHOTO_FILTER = "saturate(0.95) contrast(1.05) sepia(0.04)";
+// ────────────────────────────────────────────────
+// データ
+// ────────────────────────────────────────────────
 
-const PHOTOS = {
-  opening: {
-    src: "/images/newsozai/hero-day-green-exterior.webp",
-    alt: "外観 — 緑と空気の重み",
+const COMPARE_MAX = 4000; // 大手の参考値(万円)。ここを軸に幅を決める
+
+const COMPARISON = [
+  {
+    id: "majors",
+    label: "大手の場合",
+    sub: "広告費・展示場維持費・仲介マージンを含む",
+    amount: 4000,
+    tone: "muted" as const,
   },
-  sidecar: {
-    src: "/images/newsozai/interior-ldk-01.webp",
-    alt: "現場の素材ひとつ、削らない",
+  {
+    id: "yamato",
+    label: "やまとの場合",
+    sub: "家そのものと、付帯工事まで",
+    amount: 2280,
+    tone: "hero" as const,
   },
-} as const;
+] as const;
+
+type Mechanism = {
+  num: string;
+  title: string;
+  summary: string;
+  body: string;
+};
+
+const MECHANISMS: readonly Mechanism[] = [
+  {
+    num: "01",
+    title: "展示場を、二重利用しています。",
+    summary: "分譲地に建てた家をそのままモデルハウスにし、いずれ販売します。",
+    body: "専用の展示場は持ちません。維持費が、家の価格に乗りません。",
+  },
+  {
+    num: "02",
+    title: "設計から施工まで、自社で進めます。",
+    summary: "土地の分譲・設計・施工・アフターを、外に投げていません。",
+    body: "間に入る会社がないので、仲介マージンも乗りません。",
+  },
+  {
+    num: "03",
+    title: "広告は、地元だけ。",
+    summary: "全国TVCM、全国紙、折込広告の全国展開は行っていません。",
+    body: "届けるべき人に届く範囲だけで出しています。",
+  },
+] as const;
+
+// ────────────────────────────────────────────────
+// Compare Bar
+// ────────────────────────────────────────────────
+
+function CompareBar() {
+  return (
+    <div className="relative">
+      <div className="space-y-7 md:space-y-9">
+        {COMPARISON.map((c) => {
+          const pct = (c.amount / COMPARE_MAX) * 100;
+          const isHero = c.tone === "hero";
+          return (
+            <div key={c.id}>
+              {/* ラベル行 */}
+              <div className="flex items-baseline justify-between gap-3 mb-2.5">
+                <div className="flex items-baseline gap-2 md:gap-3 flex-wrap">
+                  <span
+                    className={`font-sans font-bold ${
+                      isHero
+                        ? "text-text-primary text-[15px] md:text-[17px]"
+                        : "text-text-primary/80 text-[14px] md:text-[15px]"
+                    }`}
+                  >
+                    {c.label}
+                  </span>
+                  <span className="font-sans text-text-secondary text-[11px] md:text-[12px]">
+                    {c.sub}
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-1 shrink-0">
+                  <span
+                    className={`font-oswald font-light tabular-nums ${
+                      isHero
+                        ? "text-[28px] md:text-[40px] text-lime-deep"
+                        : "text-[22px] md:text-[30px] text-text-primary/60"
+                    }`}
+                    style={{ letterSpacing: "-0.02em", lineHeight: 0.9 }}
+                  >
+                    {c.amount.toLocaleString()}
+                  </span>
+                  <span className="font-sans text-text-primary/70 text-xs md:text-sm">万円〜</span>
+                </div>
+              </div>
+              {/* 帯 */}
+              <div className="relative h-3.5 md:h-4 bg-text-primary/5">
+                <div
+                  className={`h-full ${
+                    isHero ? "bg-lime-deep" : "bg-text-primary/35"
+                  } transition-[width] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                  style={{ width: `${pct}%` }}
+                  aria-label={`${c.label} ${c.amount}万円`}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* 差額 */}
+      <div className="mt-10 md:mt-12 pt-8 md:pt-10 border-t border-text-primary/15 flex items-baseline justify-end gap-2 md:gap-3">
+        <span className="font-sans text-text-secondary text-xs md:text-sm pr-3 md:pr-4">差額</span>
+        <span
+          className="font-oswald font-light tabular-nums text-lime-deep"
+          style={{
+            fontSize: "clamp(36px, 5vw, 72px)",
+            letterSpacing: "-0.02em",
+            lineHeight: 0.9,
+          }}
+        >
+          −1,720
+        </span>
+        <span className="font-sans font-bold text-text-primary text-lg md:text-2xl">
+          万円
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────
+// Mechanism Card
+// ────────────────────────────────────────────────
+
+function MechanismCard({ m }: { m: Mechanism }) {
+  return (
+    <article className="scroll-in group flex flex-col p-7 md:p-8 bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.12)]">
+      <span
+        className="font-oswald font-light leading-none tabular-nums text-lime-deep"
+        style={{
+          fontSize: "clamp(24px, 2.2vw, 34px)",
+          letterSpacing: "-0.02em",
+        }}
+      >
+        {m.num}
+      </span>
+      <h3 className="mt-5 md:mt-6 font-sans font-bold text-text-primary text-[16px] md:text-[18px] leading-[1.55] tracking-[0.01em]">
+        {m.title}
+      </h3>
+      <p className="mt-4 font-sans text-text-primary/80 text-[13px] md:text-[14px] leading-[1.95]">
+        {m.summary}
+      </p>
+      <p className="mt-3 font-sans text-text-secondary text-[12px] md:text-[13px] leading-[1.95]">
+        {m.body}
+      </p>
+    </article>
+  );
+}
+
+// ────────────────────────────────────────────────
+// メイン
+// ────────────────────────────────────────────────
 
 export default function MechanismEnhanced() {
   const ref = useScrollIn<HTMLDivElement>();
@@ -43,262 +186,59 @@ export default function MechanismEnhanced() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#FAF8F3] text-text-primary scroll-in"
+      className="relative overflow-hidden bg-bg-secondary text-text-primary py-[var(--section-py)] scroll-in"
     >
-      {/* ============= OPENING — 21:9 BLEED PHOTO(案A: "中扉"としてキャッチを重ねる) ============= */}
-      <div className="relative w-full aspect-[21/9] overflow-hidden bg-text-primary">
-        <Image
-          src={PHOTOS.opening.src}
-          alt={PHOTOS.opening.alt}
-          fill
-          className="object-cover"
-          sizes="100vw"
-          style={{ filter: `${PHOTO_FILTER} brightness(0.78)` }}
-        />
-        {/* 下部を濃いめに落として白明朝の視認性を確保 */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/60 pointer-events-none"
-        />
-
-        {/* Page 02 ノンブル — Hero の Page 01 と対で見開きを成立 */}
-        <div className="hidden md:block absolute top-8 right-10 lg:right-14 z-10">
-          <p
-            className="font-inter text-white/75 text-[10px] lg:text-[11px] tracking-[0.32em] uppercase"
-            style={{ textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}
+      <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
+        {/* ========== Heading ========== */}
+        <header className="mb-12 md:mb-16 max-w-[860px]">
+          <h2
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+            style={{ fontSize: "var(--display-lg)" }}
           >
-            Page 02 / 02
+            やまとは、安くない。
+          </h2>
+          <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
+            大手と同じ素材、同じ性能です。
+            違うのは、<span className="font-bold">届けるまでの費用</span>だけ。
+            <br className="hidden md:inline" />
+            京モデル30坪で、その差は
+            <span className="font-bold text-lime-deep">1,720万円</span>
+            になります。
           </p>
+        </header>
+
+        {/* ========== 比較バー ========== */}
+        <div className="mt-6">
+          <CompareBar />
         </div>
 
-        {/* 中扉キャッチ — Hero からの"問いの転換" */}
-        <div className="absolute inset-0 flex items-end">
-          <div className="w-full max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-16 lg:pb-20">
-            <p
-              className="font-shippori text-white leading-[1.25] tracking-[0.01em] max-w-[900px]"
-              style={{
-                fontWeight: 700,
-                fontSize: "clamp(26px, 4vw, 60px)",
-                textShadow: "0 3px 22px rgba(0,0,0,0.55)",
-              }}
-            >
-              違うのは、家を届けるまでの
-              <br />
-              費用です。
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ============= OPENING BODY — Asymmetric ============= */}
-      <div className="max-w-[1400px] mx-auto px-[var(--page-px)] pt-16 md:pt-24 pb-20 md:pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-24 items-start">
-          {/* Left: 看板タイトル */}
-          <div>
-            <h2
-              className="font-shippori text-text-primary leading-[1.05] tracking-[-0.02em]"
-              style={{
-                fontWeight: 900,
-                fontSize: "var(--display-lg)",
-              }}
-            >
-              やまとは<span style={{ color: "var(--color-lime-deep)" }}>安い</span>？
-              <br />
-              いいえ、違います。
-            </h2>
-          </div>
-
-          {/* Right: LEAD with top border — 看板の「問い」に対する「答え」なので、
-              1文目は太字大きめで強調。左の看板(8vw/120px)に対し、
-              LEAD 1文目 2.2vw/32px、2文目 1.5vw/22px のリズムに調整。 */}
-          <aside className="lg:pt-4">
-            <div className="border-t-[3px] border-text-primary pt-6">
-              <p className="font-shippori font-bold text-[clamp(22px,2.2vw,32px)] leading-[1.55] tracking-[0.02em] max-w-[480px] text-text-primary">
-                大手が使う素材を、<br />うちも使っています。
-              </p>
-              <p className="mt-5 md:mt-6 font-shippori font-medium text-[clamp(17px,1.5vw,22px)] leading-[1.8] tracking-[0.02em] max-w-[480px] text-text-primary/90">
-                中間マージンも、
-                <br />
-                乗せていません。
-              </p>
-            </div>
-          </aside>
-        </div>
-      </div>
-
-      {/* ============= MANIFESTO — 編集記事 (paper-alt 背景・密) ============= */}
-      <div className="bg-[#F0EBE0] border-y border-[#CFC5B5] py-20 md:py-32 px-[var(--page-px)]">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-24 items-stretch">
-          {/* === LEFT: Article === */}
-          <div>
-            {/* Manifesto title */}
+        {/* ========== 3つの仕組み ========== */}
+        <div className="mt-24 md:mt-32">
+          <header className="mb-10 md:mb-14 max-w-[860px]">
             <h3
-              className="font-shippori text-text-primary leading-[1.18] tracking-[-0.01em] mb-12 md:mb-16"
-              style={{
-                fontWeight: 900,
-                fontSize: "clamp(28px, 5vw, 64px)",
-              }}
+              className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+              style={{ fontSize: "var(--display-md)" }}
             >
-              だから、やまとの価格は
-              <br />
-              <span style={{ color: "var(--color-lime-deep)" }}>家そのものの価格</span>です。
+              この差は、3 つの仕組みから。
             </h3>
+            <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[580px]">
+              後から削るのではなく、最初から、家そのもの以外を乗せていません。
+            </p>
+          </header>
 
-            {/* Article body */}
-            <div className="text-[14px] md:text-[15px] leading-[2.0] tracking-[0.03em] text-text-primary">
-              {/* Evidence statement(太字) */}
-              <p
-                className="font-shippori font-bold mb-8 md:mb-10 max-w-[54ch] text-[clamp(15px,1.1vw,17px)] leading-[1.95]"
-              >
-                広告費も、展示場の維持費も、仲介マージンも、乗せる会社があります。合計で、見積もりの三〜四割
-                <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
-                  ※1
-                </sup>
-                にのぼります。
-              </p>
-
-              <p className="font-shippori mb-6 max-w-[54ch]">
-                やまとは、専用の展示場を持ちません
-                <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
-                  ※2
-                </sup>
-                。分譲地に建てた家を、そのままモデルハウスにしています。いずれ、販売します。一軒が、二つの役割を果たします。
-              </p>
-
-              <p className="font-shippori mb-6 max-w-[54ch]">
-                土地の分譲から設計、施工まで、自社で進めます。間に入る会社がないので、仲介マージンも乗りません。
-              </p>
-
-              {/* Pull quote with hang */}
-              <aside className="relative my-10 md:my-14 py-7 md:py-10 border-y-[3px] border-text-primary lg:-ml-12 lg:pl-12">
-                <span
-                  aria-hidden
-                  className="font-shippori absolute left-1 top-2 leading-none font-black select-none pointer-events-none text-text-primary/20"
-                  style={{ fontSize: "clamp(72px, 9vw, 120px)" }}
-                >
-                  『
-                </span>
-                <blockquote
-                  className="font-shippori pl-14 md:pl-20 text-text-primary leading-[1.5] tracking-[0.01em]"
-                  style={{
-                    fontWeight: 900,
-                    fontSize: "clamp(20px, 3vw, 38px)",
-                  }}
-                >
-                  後から削るのではなく、
-                  <br />
-                  最初から<span style={{ color: "var(--color-lime-deep)" }}>含めていません</span>。
-                </blockquote>
-              </aside>
-
-              <p className="font-shippori mb-6 max-w-[54ch]">
-                だから、同じ素材・同じ性能でも、価格は違って見えます
-                <sup className="font-inter text-[0.7em] align-super font-bold inline-block mx-0.5 text-text-secondary">
-                  ※3
-                </sup>
-                。家そのものの品質は、変えていません。届けるまでの費用だけを、絞りました。結果が、2,280万円〜です。
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+            {MECHANISMS.map((m) => (
+              <MechanismCard key={m.num} m={m} />
+            ))}
           </div>
+        </div>
 
-          {/* === RIGHT: Sidecar — stretch分散(photo + data + notes) === */}
-          <aside className="flex flex-col justify-between gap-10 md:gap-14 min-h-full">
-            {/* Top: photo with caption overlay */}
-            <figure className="relative aspect-[4/5] overflow-hidden">
-              <Image
-                src={PHOTOS.sidecar.src}
-                alt={PHOTOS.sidecar.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 30vw"
-                style={{ filter: PHOTO_FILTER }}
-              />
-              <figcaption className="font-inter absolute left-0 bottom-0 max-w-[75%] px-4 py-3 bg-[#FAF8F3] border-t border-r border-text-primary text-[10px] tracking-[0.16em] uppercase text-text-secondary font-medium">
-                現場の素材は、ひとつも削りません
-              </figcaption>
-            </figure>
-
-            {/* Middle: data box */}
-            <div
-              className="bg-[#FAF8F3] p-6 md:p-7"
-              style={{ border: "1.5px solid #1A1411" }}
-            >
-              <p className="font-inter text-[10px] tracking-[0.28em] uppercase font-black mb-4 pb-3 border-b border-[#CFC5B5] text-text-secondary">
-                大手との差
-              </p>
-              <dl className="font-inter grid grid-cols-[auto_1fr] gap-x-5 gap-y-3 text-sm tabular-nums">
-                <dt className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary">
-                  参考・大手
-                </dt>
-                <dd
-                  className="font-shippori font-bold text-text-primary"
-                  style={{ fontSize: "16px" }}
-                >
-                  4,000<span className="text-[11px] ml-1 text-text-secondary">万円〜</span>
-                </dd>
-
-                <dt className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary">
-                  やまと
-                </dt>
-                <dd
-                  className="font-shippori font-bold text-text-primary"
-                  style={{ fontSize: "16px" }}
-                >
-                  2,280<span className="text-[11px] ml-1 text-text-secondary">万円〜</span>
-                </dd>
-
-                <dt className="text-[10px] tracking-[0.16em] uppercase pt-1.5 font-bold text-text-secondary">
-                  差額
-                </dt>
-                <dd>
-                  <span
-                    className="font-inter font-black"
-                    style={{
-                      color: "var(--color-lime-deep)",
-                      fontSize: "20px",
-                    }}
-                  >
-                    -1,720
-                  </span>
-                  <span className="text-[11px] ml-1 text-text-secondary">万円</span>
-                </dd>
-              </dl>
-            </div>
-
-            {/* Bottom: margin notes */}
-            <div className="font-inter bg-[#FAF8F3] px-6 py-5 md:px-7 md:py-6 border-t-2 border-text-primary border-b border-dashed border-[#CFC5B5] grid gap-3.5 text-[12px] leading-[1.8] text-text-secondary">
-              <div className="pl-6 relative">
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-0.5 text-[11px] font-bold text-text-secondary"
-                >
-                  ※1
-                </span>
-                業界平均の費用構造試算による
-              </div>
-              <div className="pl-6 relative">
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-0.5 text-[11px] font-bold text-text-secondary"
-                >
-                  ※2
-                </span>
-                分譲地のモデルハウスを、販売まで回しています
-              </div>
-              <div className="pl-6 relative">
-                <span
-                  aria-hidden
-                  className="absolute left-0 top-0.5 text-[11px] font-bold text-text-secondary"
-                >
-                  ※3
-                </span>
-                京モデル30坪・4LDKの場合です
-              </div>
-            </div>
-          </aside>
+        {/* ========== 注記 ========== */}
+        <div className="mt-10 md:mt-14 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.9]">
+          <p>※ 大手 4,000万円は業界平均の費用構造試算による参考値です。</p>
+          <p>※ やまと 2,280万円は京モデル30坪・4LDKの税込・建物本体 + 付帯工事価格です。</p>
         </div>
       </div>
-
     </section>
   );
 }

@@ -15,6 +15,15 @@ export type HeroFontVariant = {
 
 export const FONT_VARIANTS: HeroFontVariant[] = [
   {
+    id: "noto-sans",
+    label: "Z. Noto Sans JP (catalog)",
+    description: "shukobuild型カタログ / ゴシック太字 / 明朝退役後の本番",
+    fontFamily: "var(--font-noto), 'Noto Sans JP', 'Hiragino Sans', sans-serif",
+    weightSubLines: 500,
+    weightBigLine: 900,
+    letterSpacing: "0.01em",
+  },
+  {
     id: "noto-serif",
     label: "A. Noto Serif JP",
     description: "現行baseline / Web普及型・無難で読みやすい",
