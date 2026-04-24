@@ -295,9 +295,9 @@ export default function StandardAndQualitySection() {
             モデルごとに標準仕様を、<br className="sm:hidden" />明確にしています。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[620px]">
-            12の素材・設備を、追加費用なしで入れています。
+            12の素材・設備を、プランの標準仕様としてご用意しています。
             <br />
-            大手がオプションにしているものも、やまとでは最初から。
+            他社ではオプション扱いになりやすい項目も、プランに含めました。
           </p>
         </header>
 

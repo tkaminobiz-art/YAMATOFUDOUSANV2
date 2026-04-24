@@ -295,7 +295,7 @@ export default function HeroMagazine({
                 variant="dark-bg-primary"
                 size="md"
                 label="モデルハウス見学"
-                sublabel="予約不要・無料でOK"
+                sublabel="ご予約なしでも見学可・無料"
                 className="flex-1 sm:min-w-[200px] px-8 py-4"
               />
               <CtaButton

@@ -33,7 +33,7 @@ export default function FinalCta() {
             variant="primary"
             size="lg"
             label="モデルハウス見学"
-            sublabel="予約不要・無料でOK"
+            sublabel="ご予約なしでも見学可・無料"
           />
           <CtaButton
             href="/contact"

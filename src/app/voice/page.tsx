@@ -132,7 +132,7 @@ export default function VoiceIndexPage() {
                 variant="primary"
                 size="md"
                 label="モデルハウス見学"
-                sublabel="予約不要・無料でOK"
+                sublabel="ご予約なしでも見学可・無料"
               />
               <CtaButton
                 href="/contact"
