@@ -28,22 +28,23 @@ import CtaButton from "@/components/ui/CtaButton";
 type StandardItem = {
   category: string;
   brand: string;
+  benefit: string;
   image: string;
 };
 
 const STANDARDS: readonly StandardItem[] = [
-  { category: "外壁", brand: "ニチハ", image: "/images/standard/facility_img_04.webp" },
-  { category: "キッチン", brand: "クリナップ", image: "/images/standard/facility_img_01.webp" },
-  { category: "屋根", brand: "ガルバリウム", image: "/images/standard/facility_img_07.webp" },
-  { category: "窓サッシ", brand: "YKK AP", image: "/images/standard/facility_img_06.webp" },
-  { category: "玄関ドア", brand: "YKK AP", image: "/images/standard/facility_img_05.webp" },
-  { category: "床材", brand: "無垢調フローリング", image: "/images/standard/facility_img_09.webp" },
-  { category: "室内ドア", brand: "ハイドア", image: "/images/standard/facility_img_08.webp" },
-  { category: "浴室", brand: "TOTO", image: "/images/standard/facility_img_02.webp" },
-  { category: "洗面台", brand: "TOTO", image: "/images/standard/facility_img_03.webp" },
-  { category: "外構", brand: "石畳アプローチ", image: "/images/standard/facility_img_10.webp" },
-  { category: "制震装置", brand: "住友ゴム MIRAIE", image: "/images/standard/facility_img_12.webp" },
-  { category: "照明", brand: "LED ダウンライト", image: "/images/standard/facility_img_13.webp" },
+  { category: "外壁", brand: "ニチハ", benefit: "雨や紫外線に強く、塗替えの頻度を抑えます。", image: "/images/standard/facility_img_04.webp" },
+  { category: "キッチン", brand: "クリナップ", benefit: "油汚れがさっと落ちる、毎日の手入れが楽な天板。", image: "/images/standard/facility_img_01.webp" },
+  { category: "屋根", brand: "ガルバリウム", benefit: "軽量で地震に強く、錆びにくい金属屋根。", image: "/images/standard/facility_img_07.webp" },
+  { category: "窓サッシ", brand: "YKK AP", benefit: "冷暖房効率を高め、冬の寒さと夏の暑さを抑えます。", image: "/images/standard/facility_img_06.webp" },
+  { category: "玄関ドア", brand: "YKK AP", benefit: "断熱と防犯に配慮した、ご家族の顔となるドア。", image: "/images/standard/facility_img_05.webp" },
+  { category: "床材", brand: "無垢調フローリング", benefit: "傷や汚れが目立ちにくく、素足で暮らしても心地いい。", image: "/images/standard/facility_img_09.webp" },
+  { category: "室内ドア", brand: "ハイドア", benefit: "天井まで伸びる高さで、部屋を広く見せます。", image: "/images/standard/facility_img_08.webp" },
+  { category: "浴室", brand: "TOTO", benefit: "お湯が冷めにくく、掃除がしやすい造り。", image: "/images/standard/facility_img_02.webp" },
+  { category: "洗面台", brand: "TOTO", benefit: "朝の身支度がスムーズな、使い勝手のよい洗面。", image: "/images/standard/facility_img_03.webp" },
+  { category: "外構", brand: "石畳アプローチ", benefit: "玄関までのアプローチに、静かな表情を持たせます。", image: "/images/standard/facility_img_10.webp" },
+  { category: "制震装置", brand: "住友ゴム MIRAIE", benefit: "繰り返す揺れから、家の骨組みを守ります。", image: "/images/standard/facility_img_12.webp" },
+  { category: "照明", brand: "LED ダウンライト", benefit: "電気代と交換の手間を、長く抑えます。", image: "/images/standard/facility_img_13.webp" },
 ] as const;
 
 function StandardTile({
@@ -71,6 +72,9 @@ function StandardTile({
         </h3>
         <p className="mt-0.5 font-inter text-text-secondary text-[10.5px] md:text-[11px] tracking-[0.12em] uppercase">
           {item.brand}
+        </p>
+        <p className="mt-2 font-sans text-text-primary/75 text-[11.5px] md:text-[12px] leading-[1.7]">
+          {item.benefit}
         </p>
       </div>
     </article>

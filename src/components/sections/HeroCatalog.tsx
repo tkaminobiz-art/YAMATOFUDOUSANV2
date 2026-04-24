@@ -148,8 +148,8 @@ export default function HeroCatalog() {
                   href="/reserve"
                   variant="dark-bg-primary"
                   size="md"
-                  label="来場予約"
-                  sublabel="ご予約不要・無料"
+                  label="モデルハウス見学"
+                  sublabel="予約不要・無料でOK"
                   className="flex-1 sm:min-w-[200px] px-8 py-4"
                 />
                 <CtaButton

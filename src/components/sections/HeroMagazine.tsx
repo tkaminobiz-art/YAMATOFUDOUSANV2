@@ -241,7 +241,7 @@ export default function HeroMagazine({
                     fontWeight: bodyVariant.jaWeight,
                   }}
                 >
-                  区画以上の分譲実績
+                  区画以上の累計分譲実績
                 </span>
               </span>
               <span aria-hidden className="w-px h-3.5 bg-white/30" />
@@ -294,8 +294,8 @@ export default function HeroMagazine({
                 href="/reserve"
                 variant="dark-bg-primary"
                 size="md"
-                label="来場予約"
-                sublabel="ご予約不要・無料"
+                label="モデルハウス見学"
+                sublabel="予約不要・無料でOK"
                 className="flex-1 sm:min-w-[200px] px-8 py-4"
               />
               <CtaButton

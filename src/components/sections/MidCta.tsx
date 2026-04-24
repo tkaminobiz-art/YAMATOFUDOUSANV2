@@ -54,8 +54,8 @@ export default function MidCta() {
             href="/reserve"
             variant="dark-bg-primary"
             size="md"
-            label="来場予約"
-            sublabel="ご予約不要・無料"
+            label="モデルハウス見学"
+            sublabel="予約不要・無料でOK"
           />
           <CtaButton
             href="/contact"

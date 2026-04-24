@@ -171,6 +171,122 @@ export default function PriceSection() {
           ))}
         </div>
 
+        {/* ========== 土地込み 総額モデルケース（2026-04-24 追加） ========== */}
+        <div className="mt-16 md:mt-24">
+          <header className="mb-8 md:mb-10 max-w-[860px]">
+            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
+              Model Case · 土地込みの総額目安
+            </p>
+            <h3
+              className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+              style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}
+            >
+              土地＋建物で、<br className="sm:hidden" />いくらになるのか。
+            </h3>
+            <p className="mt-4 md:mt-5 font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
+              建物だけでなく、土地も含めた目安を出します。実際のお見積りは、ご来場時にエリアとご希望に合わせてお出しします。
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            {/* ケースA: お手頃エリア */}
+            <article className="bg-white border border-text-primary/10 p-6 md:p-8">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-oswald font-light text-lime-deep tabular-nums" style={{ fontSize: "clamp(22px, 2vw, 26px)" }}>
+                  A
+                </span>
+                <span className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-text-secondary">
+                  Affordable Area
+                </span>
+              </div>
+              <h4 className="mt-3 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
+                大和郡山市矢田町 ＋ 京モデル
+              </h4>
+              <p className="mt-2 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.7]">
+                やまと自社分譲地（矢田町エリア）＋3LDK・28坪の京モデル。
+              </p>
+              <dl className="mt-5 pt-4 border-t border-text-primary/10 space-y-2.5 font-sans text-[12px] md:text-[13px] leading-[1.7]">
+                <div className="flex items-baseline justify-between gap-3">
+                  <dt className="text-text-secondary">土地（自社分譲）</dt>
+                  <dd className="font-oswald tabular-nums text-text-primary">500<span className="font-sans text-[11px] ml-1">万円台〜</span></dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <dt className="text-text-secondary">建物（京モデル）</dt>
+                  <dd className="font-oswald tabular-nums text-text-primary">2,280<span className="font-sans text-[11px] ml-1">万円〜</span></dd>
+                </div>
+              </dl>
+              <div className="mt-4 pt-4 border-t border-text-primary/10">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="font-sans font-bold text-text-primary text-[12px] md:text-[13px]">合計目安</span>
+                  <span className="font-oswald font-light text-lime-deep tabular-nums" style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-0.02em" }}>
+                    2,800
+                    <span className="font-sans text-[12px] md:text-[14px] ml-1 text-text-primary/70">万円台〜</span>
+                  </span>
+                </div>
+                <p className="mt-3 font-sans text-text-secondary text-[11px] leading-[1.7]">
+                  月々のご返済目安：<span className="font-bold text-text-primary">7万円台〜</span>（頭金ゼロ・金利1.0%・35年で試算）
+                </p>
+              </div>
+            </article>
+
+            {/* ケースB: 利便性重視 */}
+            <article className="bg-white border border-text-primary/10 p-6 md:p-8">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-oswald font-light text-text-primary/70 tabular-nums" style={{ fontSize: "clamp(22px, 2vw, 26px)" }}>
+                  B
+                </span>
+                <span className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-text-secondary">
+                  Convenient Area
+                </span>
+              </div>
+              <h4 className="mt-3 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
+                奈良市内 ＋ 花モデル
+              </h4>
+              <p className="mt-2 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.7]">
+                奈良市内の駅近・利便性重視エリア＋4LDK・33坪の花モデルを想定。
+              </p>
+              <dl className="mt-5 pt-4 border-t border-text-primary/10 space-y-2.5 font-sans text-[12px] md:text-[13px] leading-[1.7]">
+                <div className="flex items-baseline justify-between gap-3">
+                  <dt className="text-text-secondary">土地（エリアにより）</dt>
+                  <dd className="font-oswald tabular-nums text-text-primary">1,500<span className="font-sans text-[11px] ml-1">万円台〜</span></dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <dt className="text-text-secondary">建物（花モデル）</dt>
+                  <dd className="font-oswald tabular-nums text-text-primary">2,480<span className="font-sans text-[11px] ml-1">万円〜</span></dd>
+                </div>
+              </dl>
+              <div className="mt-4 pt-4 border-t border-text-primary/10">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="font-sans font-bold text-text-primary text-[12px] md:text-[13px]">合計目安</span>
+                  <span className="font-oswald font-light text-text-primary tabular-nums" style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-0.02em" }}>
+                    4,000
+                    <span className="font-sans text-[12px] md:text-[14px] ml-1 text-text-primary/70">万円台〜</span>
+                  </span>
+                </div>
+                <p className="mt-3 font-sans text-text-secondary text-[11px] leading-[1.7]">
+                  月々のご返済目安：<span className="font-bold text-text-primary">11万円台〜</span>（頭金ゼロ・金利1.0%・35年で試算）
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.85]">
+            ※ 土地代は自社分譲地の参考レンジ、建物は各プランの最低価格（税込・建物本体＋付帯工事）。登記・外構・引越し等の諸費用は別途です。
+            <br />
+            ※ 月々のご返済は、頭金なし・金利1.0%・35年・元利均等で機械的に試算した目安です。実際の金利・借入額・返済額はご相談時にご案内します。
+          </p>
+
+          <div className="mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 sm:justify-end">
+            <CtaButton
+              href="/money"
+              variant="secondary"
+              size="md"
+              label="他のモデルケースを見る"
+              sublabel="土地込み・月々のお支払いまで"
+            />
+          </div>
+        </div>
+
         {/* ========== 含む / 別途 ========== */}
         <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 lg:gap-20 pt-10 md:pt-14 border-t border-text-primary/15">
           <div>

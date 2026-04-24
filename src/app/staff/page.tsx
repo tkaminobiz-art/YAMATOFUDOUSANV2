@@ -69,8 +69,8 @@ export default function StaffIndexPage() {
                 href="/reserve"
                 variant="primary"
                 size="md"
-                label="来場予約"
-                sublabel="ご予約不要・無料"
+                label="モデルハウス見学"
+                sublabel="予約不要・無料でOK"
               />
               <CtaButton
                 href="/contact"
