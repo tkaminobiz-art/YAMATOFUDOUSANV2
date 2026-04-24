@@ -8,17 +8,28 @@ import CtaButton from "@/components/ui/CtaButton";
 import { LOTS, getCities } from "@/data/lots";
 
 /*
-  LotsSection — 2026-04-24 v3 (案A shukobuild型 カタログ)
+  LotsSection — 2026-04-24 v4 (TOP 限定ブランディング画像)
   ---------------------------------------------------------------
-  v2 で残っていた:
-  - Shippori Mincho (明朝) 見出し/タイトル/本文
-  - "Lots" 英字kicker
-  - 非対称 1.4fr:1fr ヘッダー + 90区画の数字アイキャッチ別エリア
-  - border-t-[3px] LEAD
-  を撤去。6カードの並列は維持、対応エリアは注記へ。
+  v3 までは lots.json の実物件写真 lot.photos[0] を TOP カードにそのまま使用。
+  実物件写真は生活感が強く、TOP の見栄えがばらつく課題があった。
 
-  v3: 一言 heading + 90区画数字をインライン + 6カード + エリア注記
+  v4: TOP の 6 カードのみ、専用のブランディング画像 HERO_PHOTOS に差し替え。
+  - /lots 一覧ページ / /lots/[id] 詳細ページは従来の実物件写真を維持
+  - 画像は /public/images/lots-hero/lot-hero-01〜06.webp (1200×900 WebP / 4:3)
+  - city ラベルと link 先は従来通り実物件データから生成
 */
+
+// TOP セクション専用のブランディング画像 (6 枚、4:3 固定)
+// 各画像の alt は画面内の city ラベルと補完関係。誇大表記を避けるため
+// "分譲地イメージ" と明示して、実物件写真と区別する
+const HERO_PHOTOS: readonly string[] = [
+  "/images/lots-hero/lot-hero-01.webp",
+  "/images/lots-hero/lot-hero-02.webp",
+  "/images/lots-hero/lot-hero-03.webp",
+  "/images/lots-hero/lot-hero-04.webp",
+  "/images/lots-hero/lot-hero-05.webp",
+  "/images/lots-hero/lot-hero-06.webp",
+] as const;
 
 export default function LotsSection() {
   const ref = useScrollIn<HTMLDivElement>(true);
@@ -49,20 +60,22 @@ export default function LotsSection() {
           </p>
         </header>
 
-        {/* ========== 6カード 写真ドミナント 3×2 ========== */}
+        {/* ========== 6カード 写真ドミナント 3×2
+            画像は HERO_PHOTOS(TOPブランディング専用)、テキストは lot データから */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
-          {featured.map((lot) => (
+          {featured.map((lot, i) => (
             <Link
               key={lot.id}
               href={`/lots/${lot.id}`}
               className="group relative aspect-[4/3] overflow-hidden border border-text-primary/10 bg-text-primary transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.15)]"
             >
               <Image
-                src={lot.photos[0]}
-                alt={lot.title}
+                src={HERO_PHOTOS[i % HERO_PHOTOS.length]}
+                alt={`${lot.city}の分譲地イメージ`}
                 fill
                 className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                 sizes="(max-width: 640px) 50vw, 33vw"
+                priority={i < 2}
               />
               <div
                 aria-hidden
