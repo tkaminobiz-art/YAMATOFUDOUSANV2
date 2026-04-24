@@ -42,7 +42,7 @@ export default function LoanSimulator() {
   const ratioColor =
     ratioStatus === "safe" ? FOREST : ratioStatus === "caution" ? "#B8860B" : "#C8463A";
   const ratioLabel =
-    ratioStatus === "safe" ? "無理のない範囲" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
+    ratioStatus === "safe" ? "無理を抑えやすい水準" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
 
   return (
     <div className="bg-white border border-text-primary/15 p-6 md:p-8">

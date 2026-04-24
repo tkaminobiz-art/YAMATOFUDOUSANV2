@@ -149,7 +149,7 @@ export default function ContactPage() {
                   </li>
                   <li className="flex gap-2">
                     <span className="text-main">•</span>
-                    コミコミ価格の内訳（隠れた費用なしの証明）
+                    コミコミ価格の内訳（追加になりやすい費用の考え方が分かります）
                   </li>
                   <li className="flex gap-2">
                     <span className="text-main">•</span>

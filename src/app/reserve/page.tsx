@@ -101,7 +101,7 @@ export default function ReservePage() {
             来場予約
           </h1>
           <p className="text-text-secondary text-sm mb-8">
-            無料・1分で完了します。強引な勧誘は一切いたしません。
+            見学予約は無料です。ご希望日時とご連絡先をご入力ください。ご希望のない営業訪問や強引なご案内は行いません。
           </p>
 
           {/* プログレスバー */}
@@ -170,7 +170,7 @@ export default function ReservePage() {
                   style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
                 />
                 <p className="text-text-secondary text-xs mt-1">
-                  ご予約確認のご連絡にのみ使用します
+                  日程確認のため、必要な場合のみご連絡します。
                 </p>
               </div>
 

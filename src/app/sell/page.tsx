@@ -44,9 +44,9 @@ const METHODS = [
   },
   {
     num: "02",
-    title: "買取り保証付き売却",
-    desc: "まずは仲介で探し、期限までに売れなかった場合、当社が買い取ります。保険付きで安心。",
-    tag: "保険つき",
+    title: "一定期間売れなかった場合の買取保証つき売却",
+    desc: "まずは仲介で探し、期限までに売れなかった場合、当社が買い取ります。期限の安心をご用意します。",
+    tag: "期限の安心",
   },
   {
     num: "03",
@@ -65,11 +65,11 @@ const BENEFITS = [
   {
     icon: CircleDollarSign,
     title: "仲介手数料は、ゼロ円",
-    body: "当社が直接買い取るため、仲介手数料が発生しません。査定価格がそのまま受取額になります。",
+    body: "当社買取の場合、仲介手数料は不要です。諸費用を確認したうえで、手取り額を分かりやすくご案内します。",
   },
   {
     icon: FileText,
-    title: "売却後の保証で、手取額を確定",
+    title: "売却後の不安を減らし、手取り額を見通しやすく",
     body: "瑕疵担保の不安を残しません。売却したあとも、当社が責任を引き継ぎます。",
   },
   {
@@ -103,7 +103,7 @@ const FLOW = [
   {
     num: "04",
     title: "お引渡し・残金",
-    desc: "対象不動産のお引渡しと同時に、残金をお支払いします。これで売却完了です。",
+    desc: "お引渡しと残代金の受領をもって、売却手続きが完了します。",
   },
 ] as const;
 
@@ -155,12 +155,12 @@ export default function SellPage() {
               className="text-[clamp(32px,5vw,64px)] mb-6 leading-[1.4]"
               style={{ fontFamily: "var(--font-sans)" }}
             >
-              家・土地の売却、
+              売る事情まで考えて、
               <br className="md:hidden" />
-              お任せください。
+              納得できる方法をご提案します。
             </h1>
             <p className="text-white/80 text-[clamp(15px,1.2vw,18px)] leading-relaxed max-w-[640px] mb-2">
-              奈良・京都で14年、地元密着の売却サポート。
+              奈良・京都の土地勘を活かし、売却理由に合わせた進め方をご提案します。
             </p>
             <p className="text-white/65 text-[clamp(13px,1vw,15px)] leading-relaxed max-w-[640px] mb-10">
               仲介売却・買取り保証付き売却・即時買取の3つの選択肢から、あなたに合った方法をご提案します。

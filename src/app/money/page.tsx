@@ -72,10 +72,10 @@ export default function MoneyIndexPage() {
               className="mt-3 text-text-primary leading-[1.3] tracking-[-0.01em] max-w-[860px]"
               style={{ fontWeight: 500, fontSize: "clamp(22px, 2.6vw, 36px)" }}
             >
-              心配は、軽く。家のお金は、ご一緒に。
+              家づくりに必要なお金を、最初に見える化します。
             </h1>
             <p className="mt-3 max-w-[680px] text-text-secondary text-[13px] md:text-[14px] leading-[1.85]">
-              中立な提携FPがご家族の心配を軽くし、やまとは暮らしに合わせて、ご一緒に考えます。
+              月々の支払い・諸費用・将来の負担まで、無理のない計画を一緒に確認します。
             </p>
           </div>
         </section>
@@ -106,7 +106,7 @@ export default function MoneyIndexPage() {
                     textShadow: "0 2px 16px rgba(0,0,0,0.5)",
                   }}
                 >
-                  数字の前に、暮らしから。
+                  月々の支払い・諸費用・将来の負担まで、無理のない計画を一緒に確認します。
                 </p>
               </div>
             </div>
@@ -158,12 +158,12 @@ export default function MoneyIndexPage() {
                 },
                 {
                   no: "03",
-                  label: "45年後の累計差",
+                  label: "30〜35年で見る住居費の違い",
                   prefix: "約",
                   num: "700",
                   unit: "万円",
                   suffix: "",
-                  body: "同じ月8.5万円で45年。賃貸は払い続け、持家は完済済み。家計が軽くなります。",
+                  body: "同じ月8.5万円で試算。持家は完済後、住居費の負担を抑えやすくなります。",
                   highlight: false,
                 },
               ].map((n) => (

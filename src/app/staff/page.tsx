@@ -9,7 +9,7 @@ import { TOTAL_PEOPLE } from "@/data/staff";
 export const metadata: Metadata = {
   title: "スタッフ紹介 | やまと不動産 花鳥風月",
   description:
-    "家を建てるのは、この十九人です。営業・設計・工務・経営の各担当者が、それぞれの想いとともに家づくりをお供します。",
+    "家づくりを支える、19人のスタッフです。営業・設計・工務・経営の各担当者が、それぞれの想いとともに家づくりを支えます。",
 };
 
 export default function StaffIndexPage() {
@@ -26,14 +26,14 @@ export default function StaffIndexPage() {
             <div className="flex items-end justify-between flex-wrap gap-4">
               <div className="max-w-[720px]">
                 <h1 className="text-[clamp(28px,4vw,56px)] text-text-primary mb-4 font-light leading-[1.4]">
-                  家を建てるのは、
+                  家づくりを支える、
                   <br className="md:hidden" />
-                  この十九人です。
+                  19人のスタッフです。
                 </h1>
                 <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
                   営業・設計・工務・経営。それぞれの手が重なって、一軒の家になります。
                   <br />
-                  一人ひとりが、家とは何か、お客様にどう向き合うか、自分の信条は何か。その三つを言葉にしました。
+                  家づくりで大切にしていること、そしてお客様への向き合い方を一人ひとりの言葉で紹介します。
                 </p>
               </div>
               <div
@@ -44,7 +44,7 @@ export default function StaffIndexPage() {
                   {TOTAL_PEOPLE}
                 </span>
                 <span className="text-text-secondary text-xs md:text-sm">
-                  人で、お供します
+                  人で、家づくりを支えます
                 </span>
               </div>
             </div>

@@ -39,7 +39,7 @@ export default function VoiceIndexPage() {
                   お客様の声
                 </h1>
                 <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-                  花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、そのままの言葉で掲載しています。
+                  花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。読みやすさのため、一部表記を整えています。
                 </p>
               </div>
               <div

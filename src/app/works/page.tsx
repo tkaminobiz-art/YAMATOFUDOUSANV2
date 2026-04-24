@@ -9,7 +9,7 @@ import { TOTAL_WORKS_COUNT } from "@/data/works";
 export const metadata: Metadata = {
   title: "施工事例 | やまと不動産 花鳥風月",
   description:
-    "奈良・京都で建てた花鳥風月の施工事例。各ご家族の課題と、設計での工夫、お住まいの感想までそのまま掲載しています。",
+    "奈良・京都で建てた花鳥風月の施工事例。ご家族ごとの課題と、設計で工夫したポイントをご紹介しています。",
 };
 
 export default function WorksIndexPage() {
@@ -26,12 +26,12 @@ export default function WorksIndexPage() {
             <div className="flex items-end justify-between flex-wrap gap-4">
               <div className="max-w-[720px]">
                 <h1 className="text-[clamp(28px,4vw,56px)] text-text-primary mb-4 font-light leading-[1.4]">
-                  実際にお建てしたお家を、
+                  やまとが実際に建てた家を、
                   <br className="md:hidden" />
-                  ご覧ください。
+                  ご紹介します。
                 </h1>
                 <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-                  各ご家族の暮らしから生まれた家づくりです。お悩み、設計の工夫、お住まいいただいた感想までそのまま掲載しています。
+                  ご家族ごとの課題と、設計で工夫したポイントをご紹介しています。
                 </p>
               </div>
               <div

@@ -68,7 +68,7 @@ export default function SellingPointsStrip() {
             className="text-[12px] md:text-[13px] tracking-[0.06em] font-bold"
             style={{ color: FOREST }}
           >
-            やまとが、できること。お金の売りは3つ。
+            やまとが資金計画で大切にしている3つのこと。
           </p>
           <p className="font-oswald text-[10px] md:text-[11px] tracking-[0.18em] text-text-secondary uppercase">
             03 Edges

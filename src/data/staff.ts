@@ -58,7 +58,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "一生で、一番大きな買い物です。",
           customer: "数字の話も、遠慮せず聞いてください。",
-          policy: "良い家より、納得できる家を。",
+          policy: "良い家を、納得して建てていただくために。",
         },
         signature: "policy",
       },
@@ -70,7 +70,7 @@ export const PHASES: Phase[] = [
         career: "14年",
         thoughts: {
           house: "土地選びから、もう始まっています。",
-          customer: "京都の土地は、足で歩いて探します。",
+          customer: "地図だけでは分からない土地の空気まで、現地で確認します。",
           policy: "いい土地は、お客様と見に行く。",
         },
         signature: "customer",

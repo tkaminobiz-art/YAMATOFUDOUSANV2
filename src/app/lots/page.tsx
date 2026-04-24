@@ -34,7 +34,7 @@ export default function LotsIndexPage() {
                   自社分譲地
                 </h1>
                 <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-                  奈良・京都エリアで、当社が開発・分譲した土地の実績です。土地と建物をセットでご提案できるため、条件次第でつなぎ融資のコストを抑えられるケースがあります。
+                  奈良・京都エリアでご提案できる自社分譲地です。販売中区画と過去の分譲実績を掲載しています。販売状況はお問い合わせください。土地と建物をまとめて進めることで、余計な金融コストを抑えやすくなります。
                 </p>
               </div>
               <div
@@ -61,7 +61,7 @@ export default function LotsIndexPage() {
                   MAP
                 </p>
                 <h2 className="text-text-primary text-lg md:text-xl leading-[1.5]">
-                  地図で見る、分譲地の場所。
+                  地図から分譲地を探す
                 </h2>
               </div>
               <p className="text-text-secondary text-xs">
