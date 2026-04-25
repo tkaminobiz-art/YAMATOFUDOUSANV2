@@ -1,0 +1,222 @@
+{
+  "categories": [
+    {
+      "slug": "exterior",
+      "title": "外観",
+      "copy": "家族の暮らしをかたち創る洗練されたフォルム。\nずっと暮らす家だから、\n理想のデザインも、安心・安全の設計も、\nすべて叶えるやまとの家。",
+      "sourceEntryId": 342610,
+      "coverImage": "/images/works-parts/exterior/exterior-01.webp",
+      "gallery": [
+        "/images/works-parts/exterior/exterior-01.webp",
+        "/images/works-parts/exterior/exterior-02.webp",
+        "/images/works-parts/exterior/exterior-03.webp",
+        "/images/works-parts/exterior/exterior-04.webp",
+        "/images/works-parts/exterior/exterior-05.webp",
+        "/images/works-parts/exterior/exterior-06.webp",
+        "/images/works-parts/exterior/exterior-07.webp",
+        "/images/works-parts/exterior/exterior-08.webp",
+        "/images/works-parts/exterior/exterior-09.webp",
+        "/images/works-parts/exterior/exterior-10.webp",
+        "/images/works-parts/exterior/exterior-11.webp",
+        "/images/works-parts/exterior/exterior-12.webp",
+        "/images/works-parts/exterior/exterior-13.webp",
+        "/images/works-parts/exterior/exterior-14.webp",
+        "/images/works-parts/exterior/exterior-15.webp",
+        "/images/works-parts/exterior/exterior-16.webp",
+        "/images/works-parts/exterior/exterior-17.webp"
+      ],
+      "count": 17
+    },
+    {
+      "slug": "entrance",
+      "title": "玄関",
+      "copy": "最初に家族やゲストを迎える場所、玄関。\n広々とした玄関にたっぷりの収納など、\n暮らしに寄り添う快適な空間を\nまずはここから創り上げます。",
+      "sourceEntryId": 231803,
+      "coverImage": "/images/works-parts/entrance/entrance-01.webp",
+      "gallery": [
+        "/images/works-parts/entrance/entrance-01.webp",
+        "/images/works-parts/entrance/entrance-02.webp",
+        "/images/works-parts/entrance/entrance-03.webp",
+        "/images/works-parts/entrance/entrance-04.webp",
+        "/images/works-parts/entrance/entrance-05.webp",
+        "/images/works-parts/entrance/entrance-06.webp",
+        "/images/works-parts/entrance/entrance-07.webp",
+        "/images/works-parts/entrance/entrance-08.webp",
+        "/images/works-parts/entrance/entrance-09.webp",
+        "/images/works-parts/entrance/entrance-10.webp"
+      ],
+      "count": 10
+    },
+    {
+      "slug": "living",
+      "title": "リビング",
+      "copy": "家族が集い、ゲストをおもてなしする場所、リビング。\nすべての人が落ち着ける空間を創り上げます。",
+      "sourceEntryId": 231786,
+      "coverImage": "/images/works-parts/living/living-01.webp",
+      "gallery": [
+        "/images/works-parts/living/living-01.webp",
+        "/images/works-parts/living/living-02.webp",
+        "/images/works-parts/living/living-03.webp",
+        "/images/works-parts/living/living-04.webp",
+        "/images/works-parts/living/living-05.webp",
+        "/images/works-parts/living/living-06.webp",
+        "/images/works-parts/living/living-07.webp",
+        "/images/works-parts/living/living-08.webp",
+        "/images/works-parts/living/living-09.webp",
+        "/images/works-parts/living/living-10.webp",
+        "/images/works-parts/living/living-11.webp",
+        "/images/works-parts/living/living-12.webp",
+        "/images/works-parts/living/living-13.webp",
+        "/images/works-parts/living/living-14.webp",
+        "/images/works-parts/living/living-15.webp",
+        "/images/works-parts/living/living-16.webp"
+      ],
+      "count": 16
+    },
+    {
+      "slug": "kitchen",
+      "title": "キッチン",
+      "copy": "日々の生活に欠かせない、キッチン。\n家族の声に包まれながら、快適に家事を担えるような\n住まいを創り上げます。",
+      "sourceEntryId": 231794,
+      "coverImage": "/images/works-parts/kitchen/kitchen-01.webp",
+      "gallery": [
+        "/images/works-parts/kitchen/kitchen-01.webp",
+        "/images/works-parts/kitchen/kitchen-02.webp",
+        "/images/works-parts/kitchen/kitchen-03.webp",
+        "/images/works-parts/kitchen/kitchen-04.webp",
+        "/images/works-parts/kitchen/kitchen-05.webp",
+        "/images/works-parts/kitchen/kitchen-06.webp",
+        "/images/works-parts/kitchen/kitchen-07.webp",
+        "/images/works-parts/kitchen/kitchen-08.webp",
+        "/images/works-parts/kitchen/kitchen-09.webp",
+        "/images/works-parts/kitchen/kitchen-10.webp",
+        "/images/works-parts/kitchen/kitchen-11.webp",
+        "/images/works-parts/kitchen/kitchen-12.webp",
+        "/images/works-parts/kitchen/kitchen-13.webp",
+        "/images/works-parts/kitchen/kitchen-14.webp",
+        "/images/works-parts/kitchen/kitchen-15.webp",
+        "/images/works-parts/kitchen/kitchen-16.webp"
+      ],
+      "count": 16
+    },
+    {
+      "slug": "bath",
+      "title": "浴室",
+      "copy": "一日の疲れを癒すバスタイム。\nこだわりの空間で、癒しのひとときを。",
+      "sourceEntryId": 232642,
+      "coverImage": "/images/works-parts/bath/bath-01.webp",
+      "gallery": [
+        "/images/works-parts/bath/bath-01.webp",
+        "/images/works-parts/bath/bath-02.webp",
+        "/images/works-parts/bath/bath-03.webp",
+        "/images/works-parts/bath/bath-04.webp",
+        "/images/works-parts/bath/bath-05.webp",
+        "/images/works-parts/bath/bath-06.webp",
+        "/images/works-parts/bath/bath-07.webp",
+        "/images/works-parts/bath/bath-08.webp"
+      ],
+      "count": 8
+    },
+    {
+      "slug": "washroom",
+      "title": "洗面所",
+      "copy": "家族みんなが毎日使う洗面所。\nライフスタイルに合わせたデザインで快適な住まいへ。",
+      "sourceEntryId": 238399,
+      "coverImage": "/images/works-parts/washroom/washroom-01.webp",
+      "gallery": [
+        "/images/works-parts/washroom/washroom-01.webp",
+        "/images/works-parts/washroom/washroom-02.webp",
+        "/images/works-parts/washroom/washroom-03.webp",
+        "/images/works-parts/washroom/washroom-04.webp",
+        "/images/works-parts/washroom/washroom-05.webp",
+        "/images/works-parts/washroom/washroom-06.webp",
+        "/images/works-parts/washroom/washroom-07.webp",
+        "/images/works-parts/washroom/washroom-08.webp"
+      ],
+      "count": 8
+    },
+    {
+      "slug": "stairs",
+      "title": "階段",
+      "copy": "住まいの空間を結ぶ、階段。\n日々の暮らしを、ワンランク上の暮らしへ。",
+      "sourceEntryId": 231805,
+      "coverImage": "/images/works-parts/stairs/stairs-01.webp",
+      "gallery": [
+        "/images/works-parts/stairs/stairs-01.webp",
+        "/images/works-parts/stairs/stairs-02.webp",
+        "/images/works-parts/stairs/stairs-03.webp",
+        "/images/works-parts/stairs/stairs-04.webp",
+        "/images/works-parts/stairs/stairs-05.webp",
+        "/images/works-parts/stairs/stairs-06.webp",
+        "/images/works-parts/stairs/stairs-07.webp",
+        "/images/works-parts/stairs/stairs-08.webp"
+      ],
+      "count": 8
+    },
+    {
+      "slug": "storage",
+      "title": "収納",
+      "copy": "すっきりとした住まいを創る、収納。\nライフラインに合わせた収納を創ることで、\n快適な住まいを実現します。",
+      "sourceEntryId": 232640,
+      "coverImage": "/images/works-parts/storage/storage-01.webp",
+      "gallery": [
+        "/images/works-parts/storage/storage-01.webp",
+        "/images/works-parts/storage/storage-02.webp",
+        "/images/works-parts/storage/storage-03.webp",
+        "/images/works-parts/storage/storage-04.webp",
+        "/images/works-parts/storage/storage-05.webp",
+        "/images/works-parts/storage/storage-06.webp",
+        "/images/works-parts/storage/storage-07.webp",
+        "/images/works-parts/storage/storage-08.webp",
+        "/images/works-parts/storage/storage-09.webp",
+        "/images/works-parts/storage/storage-10.webp",
+        "/images/works-parts/storage/storage-11.webp",
+        "/images/works-parts/storage/storage-12.webp",
+        "/images/works-parts/storage/storage-13.webp",
+        "/images/works-parts/storage/storage-14.webp",
+        "/images/works-parts/storage/storage-15.webp",
+        "/images/works-parts/storage/storage-16.webp",
+        "/images/works-parts/storage/storage-17.webp",
+        "/images/works-parts/storage/storage-18.webp",
+        "/images/works-parts/storage/storage-19.webp"
+      ],
+      "count": 19
+    },
+    {
+      "slug": "washitsu",
+      "title": "和室",
+      "copy": "寛ぎの場、和室。\n客間、寝室等汎用性の高い\nこだわりの空間を創り上げます。",
+      "sourceEntryId": 232638,
+      "coverImage": "/images/works-parts/washitsu/washitsu-01.webp",
+      "gallery": [
+        "/images/works-parts/washitsu/washitsu-01.webp",
+        "/images/works-parts/washitsu/washitsu-02.webp",
+        "/images/works-parts/washitsu/washitsu-03.webp",
+        "/images/works-parts/washitsu/washitsu-04.webp",
+        "/images/works-parts/washitsu/washitsu-05.webp",
+        "/images/works-parts/washitsu/washitsu-06.webp",
+        "/images/works-parts/washitsu/washitsu-07.webp",
+        "/images/works-parts/washitsu/washitsu-08.webp"
+      ],
+      "count": 8
+    },
+    {
+      "slug": "toilet",
+      "title": "トイレ",
+      "copy": "家を建てるうえで欠かせないもののひとつ、トイレ。\nトイレの快適さは住宅の過ごしやすさにかかわります。\n上質な暮らしをやまとの家で。",
+      "sourceEntryId": 232644,
+      "coverImage": "/images/works-parts/toilet/toilet-01.webp",
+      "gallery": [
+        "/images/works-parts/toilet/toilet-01.webp",
+        "/images/works-parts/toilet/toilet-02.webp",
+        "/images/works-parts/toilet/toilet-03.webp",
+        "/images/works-parts/toilet/toilet-04.webp",
+        "/images/works-parts/toilet/toilet-05.webp",
+        "/images/works-parts/toilet/toilet-06.webp"
+      ],
+      "count": 6
+    }
+  ],
+  "totalCategories": 10,
+  "totalGalleryImages": 116
+}
