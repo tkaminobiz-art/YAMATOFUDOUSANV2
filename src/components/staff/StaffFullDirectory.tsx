@@ -5,222 +5,73 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 import {
   PHASES,
   REPRESENTATIVES,
-  THOUGHT_LABELS,
   type Staff,
   type Representative,
-  type SignatureKey,
 } from "@/data/staff";
 
 /*
-  StaffFullDirectory — 2026-04-25 v2 Editorial Magazine Spread
+  StaffFullDirectory — 2026-04-25 v3 Quiet Editorial Chapter
   ----------------------------------------------------------------
-  旧 v1: 4-col 均等カード × 縦リスト thoughts × font-light h2
-  → 2020年頃のコーポレートテンプレ感が強く「2026年とは思えない」指摘
+  v2 (Editorial Magazine Spread) でも単調と指摘 → 全員均等扱いの構造を捨てる。
+  design-scout の研究結果を反映:
+    - Stripe式: 大型引用 + 書体混植
+    - ShukoBuild式: 章番号巨大 + 英日混合タイトル
+    - PFN式: Alternating layout + Banner Break
+    - 編集誌系: Mixed scale rhythm + 縦書きSpotlight
 
-  v2 構造:
-  1. PhaseHero: ゴースト巨大数字(180-320px) + 部門英字 + 大判タイトル
-  2. Featured Staff: 各部門の1人目を 7:5 マガジンスプレッド型で大判扱い
-  3. Other Staff: 残りを Asymmetric 2-col(写真2:5 + テキスト3:5)で編集誌風
-  4. Phase間: 横線ではなく "next phase →" の編集誌記号
-  5. Representatives: 全幅見開きスプレッド × 2、Lime左罫
-  6. Photo: warm duotone(sepia 0.06 + saturate 0.85)、hover時に色復帰
+  v3 構造 (1人1人を"章"扱いする"余白勝負"):
+  1. PhaseHero: ゴースト数字 + 部門カラー kicker + 大判タイトル
+  2. FeaturedChapter: 各部門1人目 — フルブリード章扱い、portrait巨大、quote大型Mincho
+  3. StandardSpread: 2人目 — 写真左右alternating、中スケール
+  4. CompactCard: 残り — 3-col grid 圧縮、最小情報のみ
+  5. VerticalSpotlight: 全社1人だけ縦書き引用ブロック (栗野 = 設計2人目を置換)
+  6. PhaseBanner: 部門間に full-width 写真1枚 (呼吸帯)
+  7. Representatives: 全幅見開きスプレッド
+  8. 部門カラー: 罫線・kicker・番号バッジにのみ反映 (写真は不変)
 
-  タイポ階層:
-  - 漢字氏名: Noto Sans Black, 大判
-  - 英字: Inter, kicker扱い
-  - signature thought: 引用ブロックで大型
-  - その他 thoughts: 控えめにgrid配置
+  Decisions:
+  - 名前 = Noto Sans Black, 引用 = Noto Serif JP (書体混植で重みを出す)
+  - 縦書き = writing-mode: vertical-rl のみ (text-orientation 触らず日本語自然)
+  - 番号 01..19 通し
 */
 
-// 写真フィルター: warm duotone(やまと=奈良の温度感)
+// ────────────────────────────────────────────────
+// Constants
+// ────────────────────────────────────────────────
+
+// 部門ごとのアクセントカラー(kicker / 罫線 / 番号バッジに使用、写真には不適用)
+const PHASE_ACCENT: Record<string, string> = {
+  "01": "#486B00", // SALES = lime-deep
+  "02": "#A2C523", // DESIGN = lime
+  "03": "#7D4427", // CONSTRUCTION = earth
+  "04": "#5A6B5A", // MANAGEMENT = moss
+};
+
+// 全社で1人だけ縦書きSpotlight扱い(栗野 佑也 / 設計責任者)
+const SPOTLIGHT_STAFF_ID = "126646";
+
+// 部門間の Banner Break (3枚)
+const PHASE_BANNERS: Record<string, { src: string; alt: string }> = {
+  "01-02": {
+    src: "/images/fv/hero-03-living.webp",
+    alt: "やまとが建てた家のリビング",
+  },
+  "02-03": {
+    src: "/images/newsozai/exterior-texture-detail-01.webp",
+    alt: "外壁の素材ディテール",
+  },
+  "03-04": {
+    src: "/images/fv/hero-05-washitsu.webp",
+    alt: "やまとが建てた家の和室",
+  },
+};
+
+// 写真フィルター: warm duotone
 const PHOTO_BASE = "saturate(0.82) contrast(1.06) sepia(0.05) brightness(0.97)";
 const PHOTO_HOVER = "saturate(1.05) contrast(1.04) sepia(0) brightness(1.02)";
 
 // ────────────────────────────────────────────────
-// Featured Staff Card (各 phase の 1 人目)
-// ────────────────────────────────────────────────
-
-function FeaturedStaff({
-  staff,
-  deptEn,
-  num,
-}: {
-  staff: Staff;
-  deptEn: string;
-  num: string;
-}) {
-  return (
-    <article className="scroll-in group grid grid-cols-12 gap-5 md:gap-8 lg:gap-12 items-end">
-      <figure className="col-span-12 md:col-span-7 relative aspect-[4/5] overflow-hidden bg-bg-secondary">
-        <Image
-          src={`/images/staff/${staff.id}.webp`}
-          alt={`${staff.name} | ${staff.role} | やまと不動産`}
-          fill
-          className="object-cover transition-[filter,transform] duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-          sizes="(max-width: 768px) 100vw, 60vw"
-          style={{ filter: PHOTO_BASE }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_HOVER;
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_BASE;
-          }}
-        />
-        {/* 番号バッジ: 写真の左上に大きく */}
-        <span
-          className="absolute top-4 left-4 md:top-6 md:left-6 font-oswald tabular-nums leading-none text-white"
-          style={{
-            fontWeight: 300,
-            fontSize: "clamp(28px, 2.4vw, 40px)",
-            letterSpacing: "-0.02em",
-            textShadow: "0 4px 20px rgba(0,0,0,0.5)",
-          }}
-        >
-          {num}
-        </span>
-      </figure>
-
-      <div className="col-span-12 md:col-span-5">
-        <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.26em] uppercase text-lime-deep mb-3">
-          {deptEn} · Lead
-        </p>
-
-        <h3
-          className="font-sans font-black text-text-primary leading-[1.1] tracking-[-0.005em]"
-          style={{ fontSize: "clamp(28px, 3.6vw, 52px)" }}
-        >
-          {staff.name}
-        </h3>
-
-        <p
-          className="mt-2 md:mt-3 font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.18em] uppercase"
-        >
-          {staff.nameEn}
-        </p>
-
-        <div className="mt-4 md:mt-5 flex items-center gap-3 text-[12px] md:text-[13px] text-text-primary/85">
-          <span className="font-sans">{staff.role}</span>
-          {staff.career ? (
-            <>
-              <span aria-hidden className="w-px h-3 bg-text-primary/20" />
-              <span className="font-inter font-bold text-lime-deep tracking-[0.06em]">
-                経験 {staff.career}
-              </span>
-            </>
-          ) : null}
-        </div>
-
-        {/* signature thought = 引用ブロック大型 */}
-        <blockquote
-          className="mt-7 md:mt-9 pl-5 md:pl-6 border-l-2 border-lime-deep font-sans text-text-primary leading-[1.85]"
-          style={{ fontSize: "clamp(17px, 1.6vw, 22px)", fontWeight: 500 }}
-        >
-          {staff.thoughts[staff.signature]}
-        </blockquote>
-
-        {/* 残り 2 thoughts = control + grid */}
-        <dl className="mt-7 md:mt-8 pt-6 border-t border-text-primary/12 grid grid-cols-2 gap-x-6 gap-y-4">
-          {(Object.keys(THOUGHT_LABELS) as SignatureKey[])
-            .filter((k) => k !== staff.signature)
-            .map((key) => (
-              <div key={key}>
-                <dt className="font-inter font-bold text-[9.5px] md:text-[10px] tracking-[0.2em] uppercase text-text-secondary mb-1.5">
-                  {THOUGHT_LABELS[key]}
-                </dt>
-                <dd className="font-sans text-text-primary/75 text-[12px] md:text-[13px] leading-[1.7]">
-                  {staff.thoughts[key]}
-                </dd>
-              </div>
-            ))}
-        </dl>
-      </div>
-    </article>
-  );
-}
-
-// ────────────────────────────────────────────────
-// Standard Staff Card (Featured 以外)
-// ────────────────────────────────────────────────
-
-function StaffSpread({
-  staff,
-  deptEn,
-  num,
-}: {
-  staff: Staff;
-  deptEn: string;
-  num: string;
-}) {
-  return (
-    <article className="scroll-in group grid grid-cols-[2fr_3fr] gap-4 md:gap-6 items-start">
-      <figure className="relative aspect-[3/4] overflow-hidden bg-bg-secondary">
-        <Image
-          src={`/images/staff/${staff.id}.webp`}
-          alt={`${staff.name} | ${staff.role} | やまと不動産`}
-          fill
-          className="object-cover transition-[filter,transform] duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-          sizes="(max-width: 768px) 40vw, 25vw"
-          style={{ filter: PHOTO_BASE }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_HOVER;
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_BASE;
-          }}
-        />
-        <span
-          className="absolute top-2.5 left-2.5 md:top-3 md:left-3 font-oswald tabular-nums leading-none text-white"
-          style={{
-            fontWeight: 300,
-            fontSize: "clamp(22px, 1.8vw, 32px)",
-            letterSpacing: "-0.02em",
-            textShadow: "0 2px 12px rgba(0,0,0,0.5)",
-          }}
-        >
-          {num}
-        </span>
-      </figure>
-
-      <div className="min-w-0">
-        <p className="font-inter font-bold text-[9.5px] md:text-[10px] tracking-[0.22em] uppercase text-text-secondary mb-1.5">
-          {deptEn}
-        </p>
-
-        <h3
-          className="font-sans font-black text-text-primary leading-[1.2] tracking-[0.005em]"
-          style={{ fontSize: "clamp(17px, 1.6vw, 24px)" }}
-        >
-          {staff.name}
-        </h3>
-
-        <p className="mt-1 font-inter text-text-secondary text-[10px] md:text-[11px] tracking-[0.16em] uppercase">
-          {staff.nameEn}
-        </p>
-
-        <p className="mt-2 text-text-primary/85 text-[12px] md:text-[13px] flex items-center gap-2">
-          <span>{staff.role}</span>
-          {staff.career ? (
-            <>
-              <span aria-hidden className="w-px h-3 bg-text-primary/20" />
-              <span className="font-inter font-bold text-lime-deep">{staff.career}</span>
-            </>
-          ) : null}
-        </p>
-
-        {/* signature thought のみ表示 */}
-        <blockquote
-          className="mt-4 pt-4 border-t border-text-primary/12 font-sans text-text-primary leading-[1.8] text-[13px] md:text-[14.5px]"
-          style={{ fontWeight: 500 }}
-        >
-          {staff.thoughts[staff.signature]}
-        </blockquote>
-      </div>
-    </article>
-  );
-}
-
-// ────────────────────────────────────────────────
-// Phase Hero (部門ヘッダー)
+// PhaseHero
 // ────────────────────────────────────────────────
 
 function PhaseHero({
@@ -228,23 +79,25 @@ function PhaseHero({
   deptEn,
   title,
   subtitle,
+  accent,
 }: {
   num: string;
   deptEn: string;
   title: string;
   subtitle: string;
+  accent: string;
 }) {
   return (
-    <header className="relative mb-14 md:mb-20">
+    <header className="relative mb-20 md:mb-28">
       {/* Ghost 巨大数字 */}
       <span
         aria-hidden
-        className="absolute -top-6 md:-top-12 right-0 md:right-2 font-oswald tabular-nums leading-[0.8] select-none pointer-events-none"
+        className="absolute -top-8 md:-top-16 right-0 md:right-2 font-oswald tabular-nums leading-[0.78] select-none pointer-events-none"
         style={{
           fontWeight: 200,
-          fontSize: "clamp(160px, 22vw, 320px)",
+          fontSize: "clamp(180px, 24vw, 360px)",
           letterSpacing: "-0.05em",
-          color: "rgba(43,43,43,0.06)",
+          color: "rgba(43,43,43,0.05)",
           zIndex: 0,
         }}
       >
@@ -252,17 +105,24 @@ function PhaseHero({
       </span>
 
       <div className="relative z-[1] grid grid-cols-12 gap-4 md:gap-6 items-end">
-        <div className="col-span-12 md:col-span-8 lg:col-span-7">
-          <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-lime-deep mb-3 md:mb-4">
-            Phase {num} · {deptEn}
-          </p>
+        <div className="col-span-12 md:col-span-9">
+          {/* 英日混合 kicker */}
+          <div className="flex items-baseline gap-3 mb-4 md:mb-5">
+            <p
+              className="font-inter font-bold text-[10px] md:text-[12px] tracking-[0.3em] uppercase"
+              style={{ color: accent }}
+            >
+              Phase {num} · {deptEn}
+            </p>
+            <span aria-hidden className="w-12 md:w-20 h-px" style={{ background: accent, opacity: 0.5 }} />
+          </div>
           <h2
-            className="font-sans font-black text-text-primary leading-[1.1] tracking-[-0.005em]"
-            style={{ fontSize: "clamp(34px, 5.4vw, 76px)" }}
+            className="font-sans font-black text-text-primary leading-[1.08] tracking-[-0.01em]"
+            style={{ fontSize: "clamp(38px, 6vw, 88px)" }}
           >
             {title}
           </h2>
-          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[520px]">
+          <p className="mt-6 md:mt-8 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[2.0] max-w-[540px]">
             {subtitle}
           </p>
         </div>
@@ -272,17 +132,454 @@ function PhaseHero({
 }
 
 // ────────────────────────────────────────────────
-// Representative Spread (全幅見開き)
+// Featured Chapter (各 phase の 1 人目 — フルブリード章扱い)
 // ────────────────────────────────────────────────
 
-function RepresentativeSpread({ rep, idx }: { rep: Representative; idx: number }) {
-  // 偶数: 写真左 / 奇数: 写真右(交互)
-  const photoRight = idx % 2 === 1;
+function FeaturedChapter({
+  staff,
+  deptEn,
+  num,
+  accent,
+}: {
+  staff: Staff;
+  deptEn: string;
+  num: string;
+  accent: string;
+}) {
+  return (
+    <article className="scroll-in group relative grid grid-cols-12 gap-6 md:gap-12 lg:gap-20 items-end py-12 md:py-20">
+      {/* 写真 — 大判 portrait */}
+      <figure className="col-span-12 md:col-span-7 relative aspect-[4/5] overflow-hidden bg-bg-secondary">
+        <Image
+          src={`/images/staff/${staff.id}.webp`}
+          alt={`${staff.name} | ${staff.role} | やまと不動産`}
+          fill
+          className="object-cover transition-[filter,transform] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+          sizes="(max-width: 768px) 100vw, 60vw"
+          style={{ filter: PHOTO_BASE }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_HOVER;
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_BASE;
+          }}
+        />
+        {/* 番号バッジ — 写真の上に巨大 */}
+        <span
+          className="absolute top-5 left-5 md:top-7 md:left-7 font-oswald tabular-nums leading-none text-white"
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(40px, 4vw, 64px)",
+            letterSpacing: "-0.03em",
+            textShadow: "0 4px 24px rgba(0,0,0,0.5)",
+          }}
+        >
+          {num}
+        </span>
+      </figure>
 
+      {/* テキスト */}
+      <div className="col-span-12 md:col-span-5 md:pb-2 lg:pb-4">
+        <p
+          className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase mb-4 md:mb-5"
+          style={{ color: accent }}
+        >
+          {deptEn} · Lead
+        </p>
+
+        <h3
+          className="font-sans font-black text-text-primary leading-[1.08] tracking-[-0.005em]"
+          style={{ fontSize: "clamp(32px, 4vw, 56px)" }}
+        >
+          {staff.name}
+        </h3>
+
+        <p className="mt-3 md:mt-4 font-inter text-text-secondary text-[12px] md:text-[13px] tracking-[0.2em] uppercase">
+          {staff.nameEn}
+        </p>
+
+        <div className="mt-5 md:mt-6 flex items-center gap-3 text-[13px] md:text-[14px] text-text-primary/85">
+          <span className="font-sans">{staff.role}</span>
+          {staff.career ? (
+            <>
+              <span aria-hidden className="w-px h-3 bg-text-primary/20" />
+              <span
+                className="font-inter font-bold tracking-[0.06em]"
+                style={{ color: accent }}
+              >
+                経験 {staff.career}
+              </span>
+            </>
+          ) : null}
+        </div>
+
+        {/* signature thought = 大型 Mincho 引用 */}
+        <blockquote
+          className="mt-9 md:mt-12 pl-5 md:pl-7 leading-[1.85]"
+          style={{
+            borderLeft: `2px solid ${accent}`,
+            fontFamily: "var(--font-serif), 'Noto Serif JP', serif",
+            fontSize: "clamp(19px, 2vw, 28px)",
+            fontWeight: 500,
+            color: "var(--color-text-primary, #2B2B2B)",
+          }}
+        >
+          {staff.thoughts[staff.signature]}
+        </blockquote>
+      </div>
+    </article>
+  );
+}
+
+// ────────────────────────────────────────────────
+// Standard Spread (2人目 — 写真左右 alternating、中スケール)
+// ────────────────────────────────────────────────
+
+function StandardSpread({
+  staff,
+  deptEn,
+  num,
+  accent,
+  photoRight,
+}: {
+  staff: Staff;
+  deptEn: string;
+  num: string;
+  accent: string;
+  photoRight: boolean;
+}) {
   return (
     <article
-      className={`scroll-in group grid grid-cols-12 gap-5 md:gap-10 lg:gap-16 items-stretch py-12 md:py-20 border-b border-text-primary/15 last:border-b-0`}
+      className={`scroll-in group grid grid-cols-12 gap-5 md:gap-10 lg:gap-14 items-center py-10 md:py-16`}
     >
+      <figure
+        className={`col-span-12 md:col-span-5 relative aspect-[3/4] overflow-hidden bg-bg-secondary ${
+          photoRight ? "md:order-2" : ""
+        }`}
+      >
+        <Image
+          src={`/images/staff/${staff.id}.webp`}
+          alt={`${staff.name} | ${staff.role} | やまと不動産`}
+          fill
+          className="object-cover transition-[filter,transform] duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+          sizes="(max-width: 768px) 100vw, 40vw"
+          style={{ filter: PHOTO_BASE }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_HOVER;
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_BASE;
+          }}
+        />
+        <span
+          className="absolute top-4 left-4 md:top-5 md:left-5 font-oswald tabular-nums leading-none text-white"
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(28px, 2.4vw, 44px)",
+            letterSpacing: "-0.02em",
+            textShadow: "0 2px 16px rgba(0,0,0,0.5)",
+          }}
+        >
+          {num}
+        </span>
+      </figure>
+
+      <div
+        className={`col-span-12 md:col-span-7 ${
+          photoRight ? "md:order-1 md:pr-4" : "md:pl-4"
+        }`}
+      >
+        <p
+          className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.26em] uppercase mb-3"
+          style={{ color: accent }}
+        >
+          {deptEn}
+        </p>
+
+        <h3
+          className="font-sans font-black text-text-primary leading-[1.15] tracking-[-0.005em]"
+          style={{ fontSize: "clamp(24px, 2.6vw, 38px)" }}
+        >
+          {staff.name}
+        </h3>
+
+        <p className="mt-2 md:mt-2.5 font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.18em] uppercase">
+          {staff.nameEn}
+        </p>
+
+        <div className="mt-4 md:mt-5 flex items-center gap-3 text-[12px] md:text-[13px] text-text-primary/85">
+          <span>{staff.role}</span>
+          {staff.career ? (
+            <>
+              <span aria-hidden className="w-px h-3 bg-text-primary/20" />
+              <span className="font-inter font-bold" style={{ color: accent }}>
+                {staff.career}
+              </span>
+            </>
+          ) : null}
+        </div>
+
+        <blockquote
+          className="mt-6 md:mt-8 pl-5 md:pl-6 leading-[1.85]"
+          style={{
+            borderLeft: `2px solid ${accent}`,
+            fontFamily: "var(--font-serif), 'Noto Serif JP', serif",
+            fontSize: "clamp(15px, 1.5vw, 20px)",
+            fontWeight: 500,
+          }}
+        >
+          {staff.thoughts[staff.signature]}
+        </blockquote>
+      </div>
+    </article>
+  );
+}
+
+// ────────────────────────────────────────────────
+// Vertical Spotlight (全社1人だけ — 縦書き引用)
+// ────────────────────────────────────────────────
+
+function VerticalSpotlight({
+  staff,
+  deptEn,
+  num,
+  accent,
+}: {
+  staff: Staff;
+  deptEn: string;
+  num: string;
+  accent: string;
+}) {
+  return (
+    <article className="scroll-in group relative grid grid-cols-12 gap-5 md:gap-10 lg:gap-16 items-stretch py-16 md:py-24 my-4 md:my-8 bg-bg-secondary/40">
+      {/* 写真 */}
+      <figure className="col-span-12 md:col-span-5 md:col-start-2 relative aspect-[3/4] overflow-hidden bg-bg-secondary">
+        <Image
+          src={`/images/staff/${staff.id}.webp`}
+          alt={`${staff.name} | ${staff.role} | やまと不動産`}
+          fill
+          className="object-cover transition-[filter,transform] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+          sizes="(max-width: 768px) 100vw, 40vw"
+          style={{ filter: PHOTO_BASE }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_HOVER;
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_BASE;
+          }}
+        />
+        <span
+          className="absolute top-5 left-5 font-oswald tabular-nums leading-none text-white"
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(32px, 3vw, 50px)",
+            letterSpacing: "-0.02em",
+            textShadow: "0 2px 18px rgba(0,0,0,0.5)",
+          }}
+        >
+          {num}
+        </span>
+        <span
+          className="absolute top-5 right-5 font-inter font-bold text-[9px] md:text-[10px] tracking-[0.24em] uppercase px-2.5 py-1 border"
+          style={{
+            color: "white",
+            borderColor: "rgba(255,255,255,0.5)",
+            background: "rgba(0,0,0,0.35)",
+            backdropFilter: "blur(4px)",
+          }}
+        >
+          Spotlight
+        </span>
+      </figure>
+
+      {/* 縦書き引用 + メタ情報 */}
+      <div className="col-span-12 md:col-span-5 flex flex-col md:flex-row items-start md:items-stretch gap-8 md:gap-12 md:py-4">
+        {/* 縦書きquote — Spotlight の主役 */}
+        <blockquote
+          className="font-serif text-text-primary"
+          style={{
+            writingMode: "vertical-rl",
+            fontFamily: "var(--font-serif), 'Noto Serif JP', serif",
+            fontSize: "clamp(28px, 3vw, 48px)",
+            fontWeight: 500,
+            lineHeight: "1.6",
+            letterSpacing: "0.08em",
+            maxHeight: "min(60vh, 480px)",
+          }}
+        >
+          {staff.thoughts[staff.signature]}
+        </blockquote>
+
+        {/* メタ情報 */}
+        <div className="md:pt-2">
+          <p
+            className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase mb-3"
+            style={{ color: accent }}
+          >
+            {deptEn} · Spotlight
+          </p>
+          <h3
+            className="font-sans font-black text-text-primary leading-[1.15] tracking-[-0.005em]"
+            style={{ fontSize: "clamp(22px, 2.4vw, 36px)" }}
+          >
+            {staff.name}
+          </h3>
+          <p className="mt-2 font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.18em] uppercase">
+            {staff.nameEn}
+          </p>
+          <div className="mt-4 text-[12px] md:text-[13px] text-text-primary/85 space-y-1">
+            <p>{staff.role}</p>
+            {staff.career ? (
+              <p className="font-inter font-bold" style={{ color: accent }}>
+                経験 {staff.career}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+// ────────────────────────────────────────────────
+// Compact Card (3-col grid 圧縮、最小情報のみ)
+// ────────────────────────────────────────────────
+
+function CompactCard({
+  staff,
+  deptEn,
+  num,
+  accent,
+}: {
+  staff: Staff;
+  deptEn: string;
+  num: string;
+  accent: string;
+}) {
+  return (
+    <article className="scroll-in group">
+      <figure className="relative aspect-[3/4] overflow-hidden bg-bg-secondary mb-4 md:mb-5">
+        <Image
+          src={`/images/staff/${staff.id}.webp`}
+          alt={`${staff.name} | ${staff.role} | やまと不動産`}
+          fill
+          className="object-cover transition-[filter,transform] duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+          sizes="(max-width: 768px) 100vw, 30vw"
+          style={{ filter: PHOTO_BASE }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_HOVER;
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLImageElement).style.filter = PHOTO_BASE;
+          }}
+        />
+        <span
+          className="absolute top-3 left-3 font-oswald tabular-nums leading-none text-white"
+          style={{
+            fontWeight: 300,
+            fontSize: "clamp(20px, 1.8vw, 28px)",
+            letterSpacing: "-0.02em",
+            textShadow: "0 2px 12px rgba(0,0,0,0.5)",
+          }}
+        >
+          {num}
+        </span>
+      </figure>
+
+      <p
+        className="font-inter font-bold text-[9.5px] md:text-[10px] tracking-[0.22em] uppercase mb-1.5"
+        style={{ color: accent }}
+      >
+        {deptEn}
+      </p>
+
+      <h3
+        className="font-sans font-black text-text-primary leading-[1.2] tracking-[0.005em]"
+        style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
+      >
+        {staff.name}
+      </h3>
+
+      <p className="mt-1 font-inter text-text-secondary text-[10px] tracking-[0.16em] uppercase">
+        {staff.nameEn}
+      </p>
+
+      <p className="mt-2 text-text-primary/85 text-[12px] md:text-[13px] flex items-center gap-2">
+        <span>{staff.role}</span>
+        {staff.career ? (
+          <>
+            <span aria-hidden className="w-px h-2.5 bg-text-primary/20" />
+            <span className="font-inter font-bold" style={{ color: accent }}>
+              {staff.career}
+            </span>
+          </>
+        ) : null}
+      </p>
+
+      <blockquote
+        className="mt-3 pt-3 leading-[1.8]"
+        style={{
+          borderTop: "1px solid rgba(43,43,43,0.12)",
+          fontFamily: "var(--font-serif), 'Noto Serif JP', serif",
+          fontSize: "13px",
+          fontWeight: 500,
+          color: "rgba(43,43,43,0.85)",
+        }}
+      >
+        {staff.thoughts[staff.signature]}
+      </blockquote>
+    </article>
+  );
+}
+
+// ────────────────────────────────────────────────
+// Phase Banner (部門間の呼吸帯)
+// ────────────────────────────────────────────────
+
+function PhaseBanner({
+  src,
+  alt,
+  nextNum,
+}: {
+  src: string;
+  alt: string;
+  nextNum: string;
+}) {
+  return (
+    <div className="relative my-20 md:my-32">
+      <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-bg-secondary">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="100vw"
+          style={{ filter: PHOTO_BASE }}
+        />
+      </div>
+      <p className="mt-5 md:mt-7 text-right font-inter font-bold text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-text-secondary">
+        Next · Phase {nextNum}
+      </p>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────
+// Representative Spread
+// ────────────────────────────────────────────────
+
+function RepresentativeSpread({
+  rep,
+  idx,
+}: {
+  rep: Representative;
+  idx: number;
+}) {
+  const photoRight = idx % 2 === 1;
+  const accent = "#486B00"; // Representatives 共通 lime-deep
+
+  return (
+    <article className="scroll-in group grid grid-cols-12 gap-5 md:gap-12 lg:gap-20 items-stretch py-14 md:py-24 border-b border-text-primary/15 last:border-b-0">
       <figure
         className={`col-span-12 md:col-span-5 relative aspect-[3/4] overflow-hidden bg-bg-secondary ${
           photoRight ? "md:order-2" : ""
@@ -292,7 +589,7 @@ function RepresentativeSpread({ rep, idx }: { rep: Representative; idx: number }
           src={`/images/staff/${rep.id}.webp`}
           alt={`${rep.role} ${rep.name} | やまと不動産`}
           fill
-          className="object-cover transition-[filter,transform] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025]"
+          className="object-cover transition-[filter,transform] duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
           sizes="(max-width: 768px) 100vw, 40vw"
           style={{ filter: PHOTO_BASE }}
           onMouseEnter={(e) => {
@@ -305,21 +602,24 @@ function RepresentativeSpread({ rep, idx }: { rep: Representative; idx: number }
       </figure>
 
       <div
-        className={`col-span-12 md:col-span-7 flex flex-col justify-between gap-8 md:gap-10 ${
-          photoRight ? "md:order-1 md:pr-2" : "md:pl-2"
+        className={`col-span-12 md:col-span-7 flex flex-col justify-between gap-8 md:gap-12 ${
+          photoRight ? "md:order-1" : ""
         }`}
       >
         <div>
-          <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-lime-deep mb-3 md:mb-4">
+          <p
+            className="font-inter font-bold text-[10px] md:text-[12px] tracking-[0.3em] uppercase mb-4 md:mb-5"
+            style={{ color: accent }}
+          >
             Representative · 経験 {rep.career}
           </p>
           <h3
-            className="font-sans font-black text-text-primary leading-[1.1] tracking-[-0.005em]"
-            style={{ fontSize: "clamp(34px, 4.4vw, 64px)" }}
+            className="font-sans font-black text-text-primary leading-[1.08] tracking-[-0.01em]"
+            style={{ fontSize: "clamp(36px, 4.8vw, 72px)" }}
           >
             {rep.name}
           </h3>
-          <p className="mt-3 md:mt-4 font-inter text-text-secondary text-[12px] md:text-[13px] tracking-[0.2em] uppercase">
+          <p className="mt-3 md:mt-4 font-inter text-text-secondary text-[12px] md:text-[13px] tracking-[0.22em] uppercase">
             {rep.nameEn}
           </p>
           <p className="mt-2 font-sans text-text-primary/85 text-[14px] md:text-[15px]">
@@ -328,8 +628,14 @@ function RepresentativeSpread({ rep, idx }: { rep: Representative; idx: number }
         </div>
 
         <blockquote
-          className="font-sans text-text-primary leading-[2.0] whitespace-pre-line border-l-2 border-lime-deep pl-5 md:pl-7"
-          style={{ fontSize: "clamp(15px, 1.4vw, 19px)", fontWeight: 500 }}
+          className="leading-[2.0] whitespace-pre-line pl-6 md:pl-8"
+          style={{
+            borderLeft: `2px solid ${accent}`,
+            fontFamily: "var(--font-serif), 'Noto Serif JP', serif",
+            fontSize: "clamp(15px, 1.5vw, 20px)",
+            fontWeight: 500,
+            color: "var(--color-text-primary, #2B2B2B)",
+          }}
         >
           {rep.quote}
         </blockquote>
@@ -345,70 +651,120 @@ function RepresentativeSpread({ rep, idx }: { rep: Representative; idx: number }
 export default function StaffFullDirectory() {
   const sectionRef = useScrollIn<HTMLDivElement>(true);
 
-  // 通し番号(01〜)を割り振る
+  // 通し番号 01〜
   let counter = 0;
 
   return (
     <div ref={sectionRef}>
       <div className="mx-auto max-w-[1400px] bg-bg-primary px-[var(--page-px)] py-[var(--section-py)]">
-        <div className="space-y-28 md:space-y-40">
-          {PHASES.map((phase, phaseIndex) => {
-            const [featured, ...rest] = phase.staff;
-            const featuredNum = String(++counter).padStart(2, "0");
+        {PHASES.map((phase, phaseIndex) => {
+          const accent = PHASE_ACCENT[phase.num] ?? "#486B00";
+          const [featured, ...rest] = phase.staff;
+          const featuredNum = String(++counter).padStart(2, "0");
 
-            return (
-              <section key={phase.num} className="scroll-in relative">
-                <PhaseHero
-                  num={phase.num}
-                  deptEn={phase.deptEn}
-                  title={phase.title}
-                  subtitle={phase.subtitle}
-                />
+          // Standard 候補(2人目): featured 以外で SPOTLIGHT_STAFF_ID でない最初の人
+          const standardIdx = rest.findIndex((s) => s.id !== SPOTLIGHT_STAFF_ID);
+          const standard = standardIdx >= 0 ? rest[standardIdx] : null;
+          // Spotlight: rest の中に SPOTLIGHT_STAFF_ID がいれば抽出
+          const spotlight = rest.find((s) => s.id === SPOTLIGHT_STAFF_ID) ?? null;
+          // Compact: featured / standard / spotlight 以外
+          const compactStaff = rest.filter(
+            (s) => s.id !== (standard?.id ?? "") && s.id !== SPOTLIGHT_STAFF_ID,
+          );
 
-                {/* Featured: 1人目 */}
-                <div className="mb-16 md:mb-24">
-                  <FeaturedStaff
-                    staff={featured}
-                    deptEn={phase.deptEn}
-                    num={featuredNum}
-                  />
+          // Standard を交互配置するため、phase index で photoRight を決める
+          const standardPhotoRight = phaseIndex % 2 === 0;
+
+          // banner key
+          const nextPhaseNum = String(phaseIndex + 2).padStart(2, "0");
+          const bannerKey = `${phase.num}-${nextPhaseNum}` as keyof typeof PHASE_BANNERS;
+          const banner = PHASE_BANNERS[bannerKey] ?? null;
+
+          return (
+            <section key={phase.num} className="scroll-in relative">
+              <PhaseHero
+                num={phase.num}
+                deptEn={phase.deptEn}
+                title={phase.title}
+                subtitle={phase.subtitle}
+                accent={accent}
+              />
+
+              {/* Featured */}
+              <FeaturedChapter
+                staff={featured}
+                deptEn={phase.deptEn}
+                num={featuredNum}
+                accent={accent}
+              />
+
+              {/* Standard (任意) */}
+              {standard ? (
+                <>
+                  {(() => {
+                    const n = String(++counter).padStart(2, "0");
+                    return (
+                      <StandardSpread
+                        staff={standard}
+                        deptEn={phase.deptEn}
+                        num={n}
+                        accent={accent}
+                        photoRight={standardPhotoRight}
+                      />
+                    );
+                  })()}
+                </>
+              ) : null}
+
+              {/* Vertical Spotlight (栗野のみ) */}
+              {spotlight ? (
+                <>
+                  {(() => {
+                    const n = String(++counter).padStart(2, "0");
+                    return (
+                      <VerticalSpotlight
+                        staff={spotlight}
+                        deptEn={phase.deptEn}
+                        num={n}
+                        accent={accent}
+                      />
+                    );
+                  })()}
+                </>
+              ) : null}
+
+              {/* Compact (残り) */}
+              {compactStaff.length > 0 ? (
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 md:gap-x-8 gap-y-10 md:gap-y-14 mt-10 md:mt-14">
+                  {compactStaff.map((s) => {
+                    const n = String(++counter).padStart(2, "0");
+                    return (
+                      <CompactCard
+                        key={s.id}
+                        staff={s}
+                        deptEn={phase.deptEn}
+                        num={n}
+                        accent={accent}
+                      />
+                    );
+                  })}
                 </div>
+              ) : null}
 
-                {/* Rest: 2-col asymmetric */}
-                {rest.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-14 gap-y-12 md:gap-y-16">
-                    {rest.map((s) => {
-                      const n = String(++counter).padStart(2, "0");
-                      return (
-                        <StaffSpread
-                          key={s.id}
-                          staff={s}
-                          deptEn={phase.deptEn}
-                          num={n}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : null}
+              {/* Banner Break (Phase 末尾) */}
+              {phaseIndex < PHASES.length - 1 && banner ? (
+                <PhaseBanner
+                  src={banner.src}
+                  alt={banner.alt}
+                  nextNum={nextPhaseNum}
+                />
+              ) : null}
+            </section>
+          );
+        })}
 
-                {/* Phase Divider — 編集誌の "次へ" 記号 */}
-                {phaseIndex < PHASES.length - 1 ? (
-                  <div className="mt-20 md:mt-28 flex items-center gap-4 md:gap-6">
-                    <span aria-hidden className="flex-1 h-px bg-text-primary/15" />
-                    <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-text-secondary">
-                      Next · Phase {String(phaseIndex + 2).padStart(2, "0")}
-                    </p>
-                    <span aria-hidden className="flex-1 h-px bg-text-primary/15" />
-                  </div>
-                ) : null}
-              </section>
-            );
-          })}
-        </div>
-
-        {/* === Representatives Section === */}
+        {/* === Representatives === */}
         <div className="mt-32 md:mt-48 pt-20 md:pt-28 border-t border-text-primary/15 relative">
-          {/* Ghost text "REP" */}
           <span
             aria-hidden
             className="absolute -top-6 md:-top-14 right-0 font-oswald leading-none select-none pointer-events-none"
@@ -423,13 +779,16 @@ export default function StaffFullDirectory() {
           </span>
 
           <header className="relative z-[1] mb-16 md:mb-24 grid grid-cols-12 gap-4 md:gap-6 items-end">
-            <div className="col-span-12 md:col-span-8">
-              <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-lime-deep mb-3 md:mb-4">
+            <div className="col-span-12 md:col-span-9">
+              <p
+                className="font-inter font-bold text-[10px] md:text-[12px] tracking-[0.3em] uppercase mb-4 md:mb-5"
+                style={{ color: "#486B00" }}
+              >
                 Representatives · 2 People
               </p>
               <h3
-                className="font-sans font-black text-text-primary leading-[1.1] tracking-[-0.005em]"
-                style={{ fontSize: "clamp(30px, 4.6vw, 64px)" }}
+                className="font-sans font-black text-text-primary leading-[1.08] tracking-[-0.01em]"
+                style={{ fontSize: "clamp(34px, 5.4vw, 76px)" }}
               >
                 そして、この二人で<br className="md:hidden" />会社を背負っています。
               </h3>
@@ -447,7 +806,7 @@ export default function StaffFullDirectory() {
         <div className="mt-24 md:mt-32 pt-12 md:pt-16 border-t border-text-primary/15">
           <p
             className="font-sans font-black text-text-primary leading-[1.4] max-w-[820px]"
-            style={{ fontSize: "clamp(20px, 2.2vw, 32px)" }}
+            style={{ fontSize: "clamp(20px, 2.4vw, 36px)" }}
           >
             ご契約からお引き渡しまで、そしてその先も。<br />
             この十九人で、お供いたします。
