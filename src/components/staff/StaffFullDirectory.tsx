@@ -143,10 +143,10 @@ function RepresentativeCard({ rep }: { rep: Representative }) {
       </p>
 
       <blockquote
-        className="text-text-primary text-[clamp(16px,1.6vw,20px)] leading-[1.8]"
+        className="text-text-primary text-[clamp(15px,1.4vw,18px)] leading-[1.95] whitespace-pre-line"
         style={{ fontFamily: "var(--font-serif)" }}
       >
-        「{rep.quote}」
+        {rep.quote}
       </blockquote>
     </article>
   );

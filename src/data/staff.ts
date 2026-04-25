@@ -311,7 +311,7 @@ export const REPRESENTATIVES: readonly Representative[] = [
     roleEn: "Representative Director, President",
     career: "38年",
     quote:
-      "ご家族の人生で一番大きいお買い物に、僕らは関わらせていただいています。そのお金の重みを、社内の誰よりも忘れない会社でいたい。それだけです。",
+      "家づくりで一番大切なのは、価格を分かりやすくし、お客様が納得して前に進めることです。\nその納得を守るために、私たちは土地、設計、施工、そして現場で働く人の力まで、ひとつずつ丁寧に整えてきました。",
   },
   {
     id: "92290",
@@ -321,7 +321,7 @@ export const REPRESENTATIVES: readonly Representative[] = [
     roleEn: "Representative Director, Executive",
     career: "25年",
     quote:
-      "家ができた日が、ご家族との本当のお付き合いの始まりだと思っています。住んでからの何十年に、僕らはついていきます。",
+      "図面や仕様書に書かれた内容を、現場で確かな形にする。\nその積み重ねが、住んでからの安心につながると考えています。",
   },
 ] as const;
 
