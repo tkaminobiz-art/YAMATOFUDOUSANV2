@@ -1,5 +1,14 @@
 import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
+import { FLOORPLANS } from "@/data/floorplans";
+
+// 各プランに対応する間取り例(旧サイト /blog 間取り事例 から)
+// 実邸宅の設計例で、各プランに合わせた目安
+const PLAN_FLOORPLAN_MAP: Record<"hana" | "kaze" | "miyako", number> = {
+  hana: 472977,    // entry-05: LDK20+吹抜+和室4.5+4寝室 = 花(4LDK/33坪/ゆとり)
+  kaze: 472979,    // entry-07: LDK18.7+土間収納+4寝室 = 風(4LDK/30坪/家事動線)
+  miyako: 472975,  // entry-03: 平屋+ロフト+LDK24.5+3寝室+書庫 = 京(3LDK/28坪/コンパクト)
+};
 
 /*
   PriceSection — 2026-04-25 v4 (Full-bleed Cover Card)
@@ -220,6 +229,72 @@ export default function PriceSection() {
           {PLANS.map((p, i) => (
             <PlanCard key={p.id} plan={p} priority={i === 0} />
           ))}
+        </div>
+
+        {/* ========== 間取り例(2026-04-25 追加): 3プランに対応する実設計図 ========== */}
+        <div className="mt-14 md:mt-20">
+          <header className="mb-8 md:mb-10 max-w-[860px]">
+            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
+              Floor Plan · 間取り例
+            </p>
+            <h3
+              className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+              style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}
+            >
+              この価格で、<br className="sm:hidden" />こんな間取りが実現できます。
+            </h3>
+            <p className="mt-4 md:mt-5 font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
+              過去の設計事例から、各プランに近い間取りをご紹介します。実際の間取りはご家族の暮らし方・敷地条件に合わせて、一から設計します。
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+            {PLANS.map((plan) => {
+              const entryId = PLAN_FLOORPLAN_MAP[plan.id];
+              const floorplan = FLOORPLANS.entryExamples.find((e) => e.sourceEntryId === entryId);
+              if (!floorplan) return null;
+              return (
+                <article
+                  key={plan.id}
+                  className="bg-white border border-text-primary/10 overflow-hidden"
+                >
+                  {/* 間取り図本体(portrait) */}
+                  <div className="relative aspect-[4/5] bg-bg-secondary/50">
+                    <Image
+                      src={floorplan.image}
+                      alt={`${plan.name}モデルに近い間取り例(${plan.layout}・${plan.tsubo})`}
+                      fill
+                      className="object-contain p-3 md:p-4"
+                      sizes="(max-width: 640px) 100vw, 33vw"
+                    />
+                  </div>
+                  {/* ラベル */}
+                  <div className="px-5 py-4 md:px-6 md:py-5 border-t border-text-primary/10">
+                    <div className="flex items-baseline gap-3">
+                      <span
+                        className="font-sans leading-none text-lime-deep"
+                        style={{ fontWeight: 900, fontSize: "clamp(24px, 2vw, 30px)" }}
+                      >
+                        {plan.name}
+                      </span>
+                      <span className="font-inter text-text-secondary text-[10px] md:text-[11px] tracking-[0.2em] font-bold">
+                        {plan.reading}
+                      </span>
+                      <span className="ml-auto font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.08em]">
+                        {plan.layout} · {plan.tsubo}
+                      </span>
+                    </div>
+                    <p className="mt-2 font-sans text-text-primary/70 text-[11px] md:text-[12px] leading-[1.7]">
+                      {plan.tagline}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.8]">
+            ※ 間取りはご家族の暮らし・敷地条件により、一から設計します。掲載は過去事例の一例です。
+          </p>
         </div>
 
         {/* ========== 土地込み 総額モデルケース（2026-04-24 追加） ========== */}

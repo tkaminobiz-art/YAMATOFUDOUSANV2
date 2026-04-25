@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import CtaButton from "@/components/ui/CtaButton";
+import { FLOORPLANS } from "@/data/floorplans";
 
 /*
   FreedomOfDesign — 2026-04-24 v3 (案A shukobuild型 カタログ)
@@ -199,6 +200,58 @@ export default function FreedomOfDesign() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             {AXES.map((axis) => (
               <AxisCard key={axis.num} axis={axis} />
+            ))}
+          </div>
+        </div>
+
+        {/* ========== 間取り事例(2026-04-25 追加): 4 Featured Samples ========== */}
+        <div className="mb-16 md:mb-24">
+          <h3
+            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em] mb-3"
+            style={{ fontSize: "var(--display-md)" }}
+          >
+            こんな間取りが、設計できます。
+          </h3>
+          <p className="font-sans text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px] mb-8 md:mb-10">
+            過去の設計事例から、吹き抜け・土間収納・パントリー・大空間収納など、ご家族の暮らしに合わせた工夫をご紹介します。
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {FLOORPLANS.featuredSamples.map((sample) => (
+              <article
+                key={sample.id}
+                className="scroll-in group flex flex-col bg-white border border-text-primary/10 overflow-hidden transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.12)]"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-bg-secondary">
+                  <Image
+                    src={sample.images[0]}
+                    alt={sample.title}
+                    fill
+                    className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
+                <div className="flex flex-col flex-1 p-5 md:p-6">
+                  <h4
+                    className="font-sans text-text-primary leading-[1.45] tracking-[0.01em]"
+                    style={{ fontWeight: 700, fontSize: "clamp(14px, 1.05vw, 16px)" }}
+                  >
+                    {sample.title}
+                  </h4>
+                  <p className="mt-2.5 font-sans text-text-primary/75 text-[11.5px] md:text-[12px] leading-[1.85]">
+                    {sample.desc}
+                  </p>
+                  <div className="mt-auto pt-4 flex flex-wrap gap-1.5">
+                    {sample.features.slice(0, 3).map((f) => (
+                      <span
+                        key={f}
+                        className="font-inter text-[9px] md:text-[10px] tracking-[0.1em] px-2 py-1 bg-lime-light text-lime-deep font-bold whitespace-nowrap"
+                      >
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </div>
