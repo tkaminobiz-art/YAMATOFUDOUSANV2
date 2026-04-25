@@ -310,7 +310,8 @@ export const REPRESENTATIVES: readonly Representative[] = [
     role: "代表取締役社長",
     roleEn: "Representative Director, President",
     career: "38年",
-    quote: "値段を守ることは、職人を守ること。この順番は、変えません。",
+    quote:
+      "ご家族の人生で一番大きいお買い物に、僕らは関わらせていただいています。そのお金の重みを、社内の誰よりも忘れない会社でいたい。それだけです。",
   },
   {
     id: "92290",
@@ -319,7 +320,8 @@ export const REPRESENTATIVES: readonly Representative[] = [
     role: "代表取締役専務",
     roleEn: "Representative Director, Executive",
     career: "25年",
-    quote: "仕様書に書ける品質は、半分だけ。残り半分は、現場で作る。",
+    quote:
+      "家ができた日が、ご家族との本当のお付き合いの始まりだと思っています。住んでからの何十年に、僕らはついていきます。",
   },
 ] as const;
 
