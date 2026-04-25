@@ -270,7 +270,7 @@ export default function StaffFullDirectory() {
           <PhaseDivider
             num=""
             deptEn="Representatives"
-            title="会社を背負う、同格の二人。"
+            title="会社を背負う、二人。"
             subtitle="REPRESENTATIVE DIRECTORS"
           />
 
