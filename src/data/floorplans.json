@@ -1,0 +1,65 @@
+{
+  "featuredSamples": [
+    {
+      "id": "sample-1",
+      "section": "colonnade",
+      "sectionLabel": "空間と調和した吹き抜けのある家",
+      "title": "家族の絆を深めるリビング",
+      "desc": "玄関横の土間収納、20帖LDK、吹き抜けのある空間、和室(押入+物入)、広い洗面・浴室。",
+      "features": ["吹き抜け", "土間収納", "20帖LDK", "和室"],
+      "images": [
+        "/images/floorplans/samples/sample_01.webp",
+        "/images/floorplans/samples/sample_01-2.webp"
+      ]
+    },
+    {
+      "id": "sample-2",
+      "section": "colonnade",
+      "sectionLabel": "空間と調和した吹き抜けのある家",
+      "title": "ゆとりとくつろぎの場",
+      "desc": "2階に5.2帖洋室、6帖洋室(CL+バルコニー)、8帖主寝室(バルコニー+4帖大空間収納)。",
+      "features": ["バルコニー", "4帖大空間収納", "主寝室8帖"],
+      "images": [
+        "/images/floorplans/samples/sample_02.webp",
+        "/images/floorplans/samples/sample_02-2.webp"
+      ]
+    },
+    {
+      "id": "sample-3",
+      "section": "storage",
+      "sectionLabel": "広々団らん空間と収納が沢山な家",
+      "title": "家族団らん、笑顔があふれるリビング",
+      "desc": "23.5帖LDK、パントリー含む5つの収納、縁側。",
+      "features": ["23.5帖LDK", "パントリー", "5つの収納", "縁側"],
+      "images": [
+        "/images/floorplans/samples/sample_06.webp",
+        "/images/floorplans/samples/sample_01-3.webp"
+      ]
+    },
+    {
+      "id": "sample-4",
+      "section": "storage",
+      "sectionLabel": "広々団らん空間と収納が沢山な家",
+      "title": "心地よい眠りを実現し、プライベートを保つ空間",
+      "desc": "2階8帖主寝室(バルコニー+大収納)、6帖洋室×2(各CL、バルコニー共用)。",
+      "features": ["主寝室8帖", "バルコニー共用", "クローゼット各室"],
+      "images": [
+        "/images/floorplans/samples/sample_07.webp",
+        "/images/floorplans/samples/sample_02-4.webp"
+      ]
+    }
+  ],
+  "entryExamples": [
+    { "id": "entry-1", "title": "間取り事例①", "sourceEntryId": 472973, "image": "/images/floorplans/entries/entry-01.webp" },
+    { "id": "entry-2", "title": "間取り事例②", "sourceEntryId": 472974, "image": "/images/floorplans/entries/entry-02.webp" },
+    { "id": "entry-3", "title": "間取り事例③", "sourceEntryId": 472975, "image": "/images/floorplans/entries/entry-03.webp" },
+    { "id": "entry-4", "title": "間取り事例④", "sourceEntryId": 472976, "image": "/images/floorplans/entries/entry-04.webp" },
+    { "id": "entry-5", "title": "間取り事例⑤", "sourceEntryId": 472977, "image": "/images/floorplans/entries/entry-05.webp" },
+    { "id": "entry-6", "title": "間取り事例⑥", "sourceEntryId": 472978, "image": "/images/floorplans/entries/entry-06.webp" },
+    { "id": "entry-7", "title": "間取り事例⑦", "sourceEntryId": 472979, "image": "/images/floorplans/entries/entry-07.webp" },
+    { "id": "entry-8", "title": "間取り事例⑧", "sourceEntryId": 472980, "image": "/images/floorplans/entries/entry-08.webp" }
+  ],
+  "totalFeaturedSamples": 4,
+  "totalEntryExamples": 8,
+  "totalImages": 16
+}
