@@ -291,40 +291,21 @@ export default function VoiceSection() {
           </p>
         </header>
 
-        {/* ========== 暮らしの気配 — シネマグラフ
-             50組の家族が"暮らしている"風景を、無音の微小モーションで挟む。
-             人物は出さず、光・植物・カーテンの動きだけで時間の流れを示す。 */}
-        <figure className="relative mb-10 md:mb-14 overflow-hidden bg-text-primary">
-          <div className="relative aspect-[16/9]">
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              src="/videos/voice-cinemagraph-ldk.mp4"
-              poster="/images/design/example-coveceiling.webp"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              aria-label="やまとが建てた家のリビングダイニング — 暮らしの気配"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 p-6 md:p-8 lg:p-10">
-              <p
-                className="font-sans text-white tracking-[0.02em]"
-                style={{
-                  fontWeight: 500,
-                  fontSize: "clamp(14px, 1.1vw, 17px)",
-                  textShadow: "0 2px 14px rgba(0,0,0,0.6)",
-                }}
-              >
-                ここで、暮らしている。
-              </p>
-            </figcaption>
-          </div>
-        </figure>
+        {/* ========== シネマグラフ — やまとが建てた家のLDK
+             無音の微小モーションのみ。コピーは置かず、映像だけで導入する。 */}
+        <div className="relative mb-10 md:mb-14 overflow-hidden bg-text-primary aspect-[16/9]">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/videos/voice-cinemagraph-ldk.mp4"
+            poster="/images/design/example-coveceiling.webp"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-label="やまとが建てた家のリビングダイニング"
+          />
+        </div>
 
         {/* ========== Featured 見開き ========== */}
         <div className="mb-4 md:mb-5">
