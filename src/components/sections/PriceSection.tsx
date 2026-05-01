@@ -44,8 +44,8 @@ const PLANS: readonly Plan[] = [
     price: "2,480",
     tsubo: "33坪（109㎡）",
     layout: "4LDK",
-    bgImage: "/images/fv/hero-01-exterior-miyamaki.webp",
-    alt: "花モデルの邸宅外観イメージ",
+    bgImage: "/images/fv/plan-hana.webp",
+    alt: "花モデルの邸宅外観イメージ — 山並みと整った前庭",
   },
   {
     id: "kaze",
@@ -55,8 +55,8 @@ const PLANS: readonly Plan[] = [
     price: "2,480",
     tsubo: "30坪",
     layout: "4LDK",
-    bgImage: "/images/works/case1-ext.webp",
-    alt: "風モデルの邸宅外観イメージ",
+    bgImage: "/images/fv/plan-kaze.webp",
+    alt: "風モデルの邸宅外観イメージ — 整った正面と芝生のアプローチ",
   },
   {
     id: "miyako",
@@ -66,8 +66,8 @@ const PLANS: readonly Plan[] = [
     price: "2,280",
     tsubo: "28坪",
     layout: "3LDK",
-    bgImage: "/images/newsozai/exterior-entrance-01.webp",
-    alt: "京モデルの端正な玄関まわり",
+    bgImage: "/images/fv/plan-miyako.webp",
+    alt: "京モデルの端正な玄関まわり — 木目スリットと石畳のアプローチ",
   },
 ] as const;
 
