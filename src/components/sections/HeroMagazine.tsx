@@ -29,6 +29,10 @@ type HeroSlide = {
   category: SlideCategory; // exterior=外観(写真主役・オーバーレイ薄く) / interior=室内(雰囲気重視・オーバーレイ厚く)
 };
 
+// 2026-05-01 GPT IMG2 でブラッシュアップ済みの外観を slide2/3 に投入
+//   - slide2: 三山木フロント(電線・隣家除去/植栽整地)
+//   - slide3: 左京フロント(電線・隣家除去/芝生整地)
+// slide1(山並み広角)と slide4(内観LDK)は温存
 const HERO_SLIDES: HeroSlide[] = [
   {
     src: "/images/newsozai/hero-miyamaki-mountain.webp",
@@ -36,13 +40,13 @@ const HERO_SLIDES: HeroSlide[] = [
     category: "exterior",
   },
   {
-    src: "/images/newsozai/interior-kitchen-01.webp",
-    alt: "内観 キッチン",
-    category: "interior",
+    src: "/images/newsozai/exterior-miyamaki-front.webp",
+    alt: "三山木モデルハウス 黒い切妻屋根と赤い玄関ドアの正面外観",
+    category: "exterior",
   },
   {
-    src: "/images/newsozai/hero-day-green-exterior.webp",
-    alt: "外観 緑と青空",
+    src: "/images/newsozai/exterior-sakyo-clean.webp",
+    alt: "左京モデルハウス 黒外観とガラス手すりバルコニー",
     category: "exterior",
   },
   {
