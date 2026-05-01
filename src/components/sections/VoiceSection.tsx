@@ -277,7 +277,7 @@ export default function VoiceSection() {
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ========== Heading ========== */}
-        <header className="mb-12 md:mb-16 max-w-[860px]">
+        <header className="mb-10 md:mb-12 max-w-[860px]">
           <h2
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
@@ -290,6 +290,41 @@ export default function VoiceSection() {
             奈良・京都から、50組の本音が届きました。
           </p>
         </header>
+
+        {/* ========== 暮らしの気配 — シネマグラフ
+             50組の家族が"暮らしている"風景を、無音の微小モーションで挟む。
+             人物は出さず、光・植物・カーテンの動きだけで時間の流れを示す。 */}
+        <figure className="relative mb-10 md:mb-14 overflow-hidden bg-text-primary">
+          <div className="relative aspect-[16/9]">
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              src="/videos/voice-cinemagraph-ldk.mp4"
+              poster="/images/design/example-coveceiling.webp"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              aria-label="やまとが建てた家のリビングダイニング — 暮らしの気配"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6 md:p-8 lg:p-10">
+              <p
+                className="font-sans text-white tracking-[0.02em]"
+                style={{
+                  fontWeight: 500,
+                  fontSize: "clamp(14px, 1.1vw, 17px)",
+                  textShadow: "0 2px 14px rgba(0,0,0,0.6)",
+                }}
+              >
+                ここで、暮らしている。
+              </p>
+            </figcaption>
+          </div>
+        </figure>
 
         {/* ========== Featured 見開き ========== */}
         <div className="mb-4 md:mb-5">
