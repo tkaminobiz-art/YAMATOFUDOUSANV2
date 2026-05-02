@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Users } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { FEATURED_WORKS, GRID_WORKS } from "@/data/works";
+import RoomTourPlayer from "@/components/works/RoomTourPlayer";
 
 /*
   WorksFullList — /works ページ用の完全版
@@ -70,6 +71,9 @@ export default function WorksFullList() {
                   </div>
                 ))}
               </div>
+              {work.roomTour && (
+                <RoomTourPlayer video={work.roomTour} title={work.title} />
+              )}
               <div className="bg-bg-secondary rounded p-4">
                 <p className="text-text-secondary text-[11px] mb-1 tracking-wider">
                   お悩み
@@ -171,6 +175,10 @@ export default function WorksFullList() {
                     </div>
                   ))}
                 </div>
+
+                {work.roomTour && (
+                  <RoomTourPlayer video={work.roomTour} title={work.title} />
+                )}
 
                 <blockquote className="border-l-2 border-accent/40 pl-4 py-1">
                   <p className="text-text-primary text-sm leading-[1.9]">

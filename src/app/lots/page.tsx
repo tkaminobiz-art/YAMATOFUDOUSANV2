@@ -1,64 +1,154 @@
-import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import LotsMapWrapper from "@/components/LotsMapWrapper";
-import { LOTS, getCities, getMappableLots } from "@/data/lots";
-import { MapPin } from "lucide-react";
+import LotsBrowser from "@/components/LotsBrowser";
+import {
+  getActiveLots,
+  getArchivedLots,
+  getMappableLots,
+} from "@/data/lots";
+import { Archive } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "分譲地一覧 | やまと不動産",
   description:
-    "やまと不動産が奈良・京都エリアで展開する自社分譲地の一覧。土地と建物をセットでご提案します。",
+    "やまと不動産が奈良・京都エリアで展開する自社分譲地の一覧。価格・駅徒歩・学校・スーパーまで一画面で検討できます。",
 };
 
 export default function LotsIndexPage() {
-  const cities = getCities();
-  const mappableLots = getMappableLots();
+  const activeLots = getActiveLots();
+  const archivedLots = getArchivedLots();
+  const mappableLots = getMappableLots().filter((l) => Boolean(l.price));
 
   return (
     <>
       <Header />
-      <main>
-        <section className="bg-bg-warm py-[clamp(64px,calc(32px+5vw),160px)]">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-              LOTS
-            </p>
-            <div className="flex items-end justify-between flex-wrap gap-4">
-              <div className="max-w-[640px]">
-                <h1 className="text-[clamp(28px,4vw,56px)] text-text-primary mb-4">
-                  自社分譲地
-                </h1>
-                <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-                  奈良・京都エリアでご提案できる自社分譲地です。販売中区画と過去の分譲実績を掲載しています。販売状況はお問い合わせください。土地と建物をまとめて進めることで、余計な金融コストを抑えやすくなります。
+      <main className="bg-white">
+        {/* === Editorial Black Hero ===
+            2026-04-30 design-scout AT-001 (JP クラフト小ブランドテンプレ) 回避:
+            ベージュ背景 + 二段ラベル + earth色巨大数字 を全面廃棄。
+            黒背景 + Oswald 280px super-thin Lime + メタタグ群で
+            "実績を静かに、しかし確実に見せる" ヒーローへ。 */}
+        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
+          {/* 背景の極細グリッド線(現代的アクセント、AT-006 Swiss テンプレを破る) */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
+
+          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(80px,12vw,200px)]">
+            {/* 上部メタ行 — Linear系の極細キャプション */}
+            <div className="flex items-center gap-3 mb-12 md:mb-20 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#A2C523" }}
+              />
+              <span style={{ color: "#A2C523", fontWeight: 600 }}>
+                Lots / for sale
+              </span>
+              <span className="text-white/30">·</span>
+              <span className="text-white/60">奈良 · 京都南部</span>
+            </div>
+
+            {/* メイン: 巨大数字 + メタ */}
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
+              <div>
+                <span
+                  className="block tabular-nums leading-[0.85]"
+                  style={{
+                    fontFamily: "var(--font-oswald)",
+                    fontWeight: 200,
+                    fontSize: "clamp(140px, 22vw, 320px)",
+                    color: "#A2C523",
+                    letterSpacing: "-0.04em",
+                  }}
+                >
+                  {activeLots.length}
+                </span>
+                <p
+                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
+                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+                >
+                  Active Listings · 販売中
                 </p>
               </div>
-              <div
-                className="text-right"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                <span className="text-accent font-light text-6xl md:text-8xl block leading-none">
-                  {LOTS.length}
-                </span>
-                <span className="text-text-secondary text-xs md:text-sm">
-                  区画の実績
-                </span>
+
+              <div className="md:pb-8">
+                <h1
+                  className="text-white leading-[1.15] tracking-[-0.005em] max-w-[680px]"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "clamp(22px, 2.6vw, 36px)",
+                  }}
+                >
+                  土地のかたち、価格、最寄駅。
+                  <br />
+                  暮らしの距離を、一画面で。
+                </h1>
+                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
+                  価格・駅徒歩・小学校・スーパーまで、ご家族の暮らしに合わせて絞り込めます。
+                  土地と建物をまとめれば、余計な金融コストも抑えられます。
+                </p>
+
+                {/* 過去実績への動線 — ヒーロー内に統合 */}
+                <Link
+                  href="/lots/archive"
+                  className="group inline-flex items-center gap-3 mt-8 text-white/70 hover:text-white transition-colors text-[12px] md:text-[13px]"
+                >
+                  <Archive className="w-4 h-4" strokeWidth={1.4} />
+                  <span>
+                    過去の分譲実績{" "}
+                    <span
+                      className="tabular-nums"
+                      style={{
+                        fontFamily: "var(--font-oswald)",
+                        fontWeight: 500,
+                        color: "#A2C523",
+                      }}
+                    >
+                      {archivedLots.length}
+                    </span>
+                    <span className="ml-0.5">区画</span>
+                  </span>
+                  <span className="group-hover:translate-x-1 transition-transform">
+                    →
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
+
+          {/* 下端: 細い ライム ライン(ヒーローの "終わり" を明示) */}
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: "#A2C523" }}
+          />
         </section>
 
-        {/* インタラクティブマップ */}
-        <section className="py-[clamp(32px,4vw,64px)] bg-bg-primary border-b border-border">
+        {/* === Map (純白背景に切替) === */}
+        <section className="bg-white py-[clamp(40px,5vw,80px)] border-b border-border">
           <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
             <div className="mb-6 flex items-end justify-between flex-wrap gap-3">
               <div>
-                <p className="font-section-label text-main text-xs md:text-sm mb-2 tracking-[0.15em]">
-                  MAP
+                <p
+                  className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-2"
+                  style={{
+                    color: "#486B00",
+                    fontFamily: "var(--font-inter)",
+                    fontWeight: 600,
+                  }}
+                >
+                  Map
                 </p>
                 <h2 className="text-text-primary text-lg md:text-xl leading-[1.5]">
                   地図から分譲地を探す
@@ -69,108 +159,35 @@ export default function LotsIndexPage() {
               </p>
             </div>
             <LotsMapWrapper lots={mappableLots} />
-            {mappableLots.length < LOTS.length && (
+            {mappableLots.length < activeLots.length && (
               <p className="text-text-secondary text-[11px] mt-3">
-                ※ 地図上に表示されるのは座標取得できた {mappableLots.length} 区画です。全 {LOTS.length} 区画は下の一覧をご覧ください。
+                ※ 地図上に表示されるのは座標取得できた {mappableLots.length} 区画です。販売中 {activeLots.length} 区画の全件は下の一覧をご覧ください。
               </p>
             )}
           </div>
         </section>
 
-        {/* 市町村別カウンター */}
-        <section className="py-[clamp(32px,4vw,64px)] bg-bg-primary border-b border-border">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <p className="text-text-secondary text-xs md:text-sm mb-4">
-              対応エリア
-            </p>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {cities.map((c) => (
-                <span
-                  key={c.city}
-                  className="inline-flex items-baseline gap-1.5 text-sm"
-                >
-                  <span className="text-text-primary font-medium">
-                    {c.city}
-                  </span>
-                  <span
-                    className="text-main text-xs"
-                    style={{
-                      fontFamily: "var(--font-inter), Inter, sans-serif",
-                    }}
-                  >
-                    {c.count}
-                  </span>
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* === 一覧 (純白背景) === */}
+        <LotsBrowser lots={activeLots} />
 
-        {/* 一覧グリッド */}
-        <section className="py-[var(--section-py)] bg-bg-primary">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[var(--card-gap)]">
-              {LOTS.map((lot) => (
-                <Link
-                  key={lot.id}
-                  href={`/lots/${lot.id}`}
-                  className="group block bg-bg-primary rounded-lg overflow-hidden card-shadow transition-all hover:-translate-y-1"
-                >
-                  <div className="relative aspect-[4/3] bg-bg-secondary overflow-hidden">
-                    {lot.photos[0] ? (
-                      <Image
-                        src={lot.photos[0]}
-                        alt={lot.title}
-                        fill
-                        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-text-secondary">
-                        <MapPin className="w-8 h-8" strokeWidth={1.5} />
-                      </div>
-                    )}
-                    <div className="absolute top-3 left-3 bg-bg-primary/95 backdrop-blur-sm rounded px-2.5 py-1">
-                      <span className="text-main text-[10px] font-medium tracking-wider">
-                        {lot.city}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-5 md:p-6">
-                    <h2
-                      className="text-text-primary text-base md:text-lg mb-2 group-hover:text-main transition-colors line-clamp-2"
-                      style={{ fontFamily: "var(--font-sans)" }}
-                    >
-                      {lot.title}
-                    </h2>
-                    {lot.fields["所在地"] && (
-                      <p className="text-text-secondary text-xs leading-relaxed mb-2 line-clamp-1">
-                        {lot.fields["所在地"]}
-                      </p>
-                    )}
-                    {lot.fields["交通"] && (
-                      <p className="text-text-secondary text-xs leading-relaxed line-clamp-1">
-                        {lot.fields["交通"]}
-                      </p>
-                    )}
-                    <p className="text-main text-xs font-medium mt-3">
-                      詳細を見る →
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-bg-warm py-[clamp(48px,6vw,120px)]">
+        {/* === 締めCTA === */}
+        <section className="bg-white py-[clamp(64px,7vw,140px)] border-t border-border">
           <div className="max-w-[640px] mx-auto px-[var(--page-px)] text-center">
-            <h2 className="text-[clamp(20px,2.5vw,32px)] text-text-primary mb-4">
-              気になる分譲地はありましたか。
+            <p
+              className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-4"
+              style={{
+                color: "#486B00",
+                fontFamily: "var(--font-inter)",
+                fontWeight: 600,
+              }}
+            >
+              Get in touch
+            </p>
+            <h2 className="text-[clamp(22px,2.8vw,36px)] text-text-primary mb-4 leading-[1.4]">
+              気になる分譲地は、ありましたか。
             </h2>
-            <p className="text-text-secondary text-sm md:text-base leading-[1.9] mb-8">
-              現在販売中の分譲地については、お問い合わせください。非公開物件のご案内もあります。
+            <p className="text-text-secondary text-sm md:text-base leading-[1.9] mb-10">
+              非公開でご案内できる物件もございます。お気軽にお問い合わせください。
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <CtaButton

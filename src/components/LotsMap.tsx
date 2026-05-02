@@ -3,6 +3,11 @@
 import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import type { Lot, Coord } from "@/data/lots";
+import {
+  CITY_ACCESS,
+  extractWalkMinutes,
+  inferLifestyleTags,
+} from "@/data/cityAccess";
 
 /*
   LotsMap — 純粋 Leaflet 実装（React 19 + Next.js 16 安定動作）
@@ -25,8 +30,39 @@ const YAMATO_PIN_SVG = `
 function popupHtml(lot: MappableLot): string {
   const photo = lot.photos[0];
   const cleanTitle = lot.title.replace(/[〜～].*$/, "");
+  const walk = extractWalkMinutes(lot.fields["交通"]);
+  const tags = inferLifestyleTags(lot.city, lot.fields["交通"]);
+  const access = CITY_ACCESS[lot.city];
+
+  const tagsHtml =
+    tags.length > 0
+      ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin:0 0 8px;">${tags
+          .map(
+            (t) =>
+              `<span style="font-size:10px;background:#A2C523;color:#1A2600;font-weight:500;padding:2px 6px;border-radius:3px;letter-spacing:0.04em;">${t}</span>`
+          )
+          .join("")}</div>`
+      : "";
+
+  const accessLines: string[] = [];
+  if (walk !== null) {
+    accessLines.push(`徒歩 <strong>${walk}</strong> 分`);
+  }
+  if (access?.toOsaka) {
+    accessLines.push(`大阪 <strong>${access.toOsaka.minutes}</strong> 分`);
+  }
+  if (access?.toKyoto) {
+    accessLines.push(`京都 <strong>${access.toKyoto.minutes}</strong> 分`);
+  }
+  const accessHtml =
+    accessLines.length > 0
+      ? `<p style="font-size:11px;color:#6B6B6B;margin:0 0 8px;line-height:1.6;">${accessLines.join(
+          " ・ "
+        )}</p>`
+      : "";
+
   return `
-    <div style="width:220px;padding:4px 2px;font-family:var(--font-sans),sans-serif;">
+    <div style="width:240px;padding:4px 2px;font-family:var(--font-sans),sans-serif;">
       ${
         photo
           ? `<div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:4px;overflow:hidden;margin-bottom:8px;background:#F5F5F2;">
@@ -36,6 +72,8 @@ function popupHtml(lot: MappableLot): string {
       }
       <p style="font-size:10px;color:#486B00;font-weight:600;letter-spacing:0.05em;margin:0 0 2px;">${lot.city}</p>
       <p style="font-size:13px;font-weight:500;color:#2B2B2B;margin:0 0 8px;line-height:1.4;">${cleanTitle}</p>
+      ${tagsHtml}
+      ${accessHtml}
       <a href="/lots/${lot.id}" style="display:inline-block;font-size:12px;color:#486B00;font-weight:500;text-decoration:none;">詳しく見る →</a>
     </div>
   `;

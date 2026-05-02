@@ -224,74 +224,9 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 下段: 権威バッジ + CTA */}
+        {/* 下段: CTA(権威バッジは ScaleBanner セクションに集約 / 2026-04-30 専務レビュー反映) */}
         <div className="pb-8 md:pb-14 px-[var(--page-px)]">
           <div className="max-w-[1400px] mx-auto">
-            <div className="flex flex-wrap items-baseline gap-x-5 md:gap-x-6 gap-y-2 mb-6 md:mb-8 text-white/90 [text-shadow:_0_1px_6px_rgba(0,0,0,0.5)] justify-end">
-              <span className="flex items-baseline gap-1.5">
-                <span
-                  className="text-white text-xl md:text-2xl tabular-nums"
-                  style={{
-                    fontFamily: bodyVariant.numberFontFamily,
-                    fontWeight: bodyVariant.numberWeight,
-                  }}
-                >
-                  90
-                </span>
-                <span
-                  className="text-white/80 text-[11px] md:text-sm"
-                  style={{
-                    fontFamily: bodyVariant.jaFontFamily,
-                    fontWeight: bodyVariant.jaWeight,
-                  }}
-                >
-                  区画以上の累計分譲実績
-                </span>
-              </span>
-              <span aria-hidden className="w-px h-3.5 bg-white/30" />
-              <span className="flex items-baseline gap-1.5">
-                <span
-                  className="text-white text-xl md:text-2xl tabular-nums"
-                  style={{
-                    fontFamily: bodyVariant.numberFontFamily,
-                    fontWeight: bodyVariant.numberWeight,
-                  }}
-                >
-                  50
-                </span>
-                <span
-                  className="text-white/80 text-[11px] md:text-sm"
-                  style={{
-                    fontFamily: bodyVariant.jaFontFamily,
-                    fontWeight: bodyVariant.jaWeight,
-                  }}
-                >
-                  組以上のお客様の声
-                </span>
-              </span>
-              <span aria-hidden className="w-px h-3.5 bg-white/30" />
-              <span className="flex items-baseline gap-1.5">
-                <span
-                  className="text-white text-xl md:text-2xl tabular-nums"
-                  style={{
-                    fontFamily: bodyVariant.numberFontFamily,
-                    fontWeight: bodyVariant.numberWeight,
-                  }}
-                >
-                  14
-                </span>
-                <span
-                  className="text-white/80 text-[11px] md:text-sm"
-                  style={{
-                    fontFamily: bodyVariant.jaFontFamily,
-                    fontWeight: bodyVariant.jaWeight,
-                  }}
-                >
-                  年の実績(2011年創立)
-                </span>
-              </span>
-            </div>
-
             {/* CTA — フォント切替範囲外(CtaButton側で固定)・右寄せ */}
             <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch max-w-2xl ml-auto">
               <CtaButton

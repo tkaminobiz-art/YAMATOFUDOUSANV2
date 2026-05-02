@@ -1,0 +1,1019 @@
+{
+  "48169016": {
+    "primarySchool": {
+      "name": "天理市立丹波市小学校",
+      "walkMin": 9,
+      "meters": 706
+    },
+    "juniorHighSchool": {
+      "name": "天理市立北中学校",
+      "walkMin": 18,
+      "meters": 1474
+    },
+    "supermarket": {
+      "name": "プライスカット天理北店",
+      "walkMin": 12,
+      "meters": 942
+    }
+  },
+  "50894368": {
+    "primarySchool": {
+      "name": "田原本町立平野小学校",
+      "walkMin": 11,
+      "meters": 856
+    },
+    "juniorHighSchool": {
+      "name": "町立田原本中学校",
+      "walkMin": 12,
+      "meters": 949
+    },
+    "supermarket": {
+      "name": "万代",
+      "walkMin": 6,
+      "meters": 490
+    }
+  },
+  "50918636": {
+    "primarySchool": {
+      "name": "天理市立丹波市小学校",
+      "walkMin": 10,
+      "meters": 827
+    },
+    "juniorHighSchool": null,
+    "supermarket": {
+      "name": "ザ・ビッグエクストラ 天理店",
+      "walkMin": 2,
+      "meters": 192
+    }
+  },
+  "51037674": {
+    "primarySchool": {
+      "name": "市立生駒小学校",
+      "walkMin": 13,
+      "meters": 1069
+    },
+    "juniorHighSchool": {
+      "name": "市立緑ケ丘中学校",
+      "walkMin": 1,
+      "meters": 51
+    },
+    "supermarket": {
+      "name": "万代",
+      "walkMin": 8,
+      "meters": 606
+    }
+  },
+  "53153639": {
+    "primarySchool": {
+      "name": "市立朱雀小学校",
+      "walkMin": 2,
+      "meters": 169
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立平城東中学校",
+      "walkMin": 4,
+      "meters": 324
+    },
+    "supermarket": {
+      "name": "ならコープ コープ朱雀",
+      "walkMin": 2,
+      "meters": 144
+    }
+  },
+  "58198961": {
+    "primarySchool": {
+      "name": "奈良市立都跡小学校",
+      "walkMin": 5,
+      "meters": 390
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立都跡中学校",
+      "walkMin": 6,
+      "meters": 493
+    },
+    "supermarket": {
+      "name": "オークワ",
+      "walkMin": 2,
+      "meters": 187
+    }
+  },
+  "61402761": {
+    "primarySchool": {
+      "name": "市立生駒小学校",
+      "walkMin": 6,
+      "meters": 475
+    },
+    "juniorHighSchool": {
+      "name": "市立生駒中学校",
+      "walkMin": 18,
+      "meters": 1427
+    },
+    "supermarket": {
+      "name": "Harves",
+      "walkMin": 5,
+      "meters": 385
+    }
+  },
+  "61465181": {
+    "primarySchool": {
+      "name": "大和郡山市立郡山西小学校",
+      "walkMin": 5,
+      "meters": 398
+    },
+    "juniorHighSchool": {
+      "name": "大和郡山市立郡山中学校",
+      "walkMin": 9,
+      "meters": 680
+    },
+    "supermarket": {
+      "name": "業務スーパー",
+      "walkMin": 5,
+      "meters": 380
+    }
+  },
+  "63122043": {
+    "primarySchool": {
+      "name": "奈良市立佐保小学校",
+      "walkMin": 5,
+      "meters": 392
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 8,
+      "meters": 646
+    },
+    "supermarket": {
+      "name": "プライスカット",
+      "walkMin": 4,
+      "meters": 326
+    }
+  },
+  "65744643": {
+    "primarySchool": {
+      "name": "市立田辺東小学校",
+      "walkMin": 6,
+      "meters": 499
+    },
+    "juniorHighSchool": {
+      "name": "京田辺市立培良中学校",
+      "walkMin": 14,
+      "meters": 1158
+    },
+    "supermarket": {
+      "name": "スーパー山田屋",
+      "walkMin": 8,
+      "meters": 655
+    }
+  },
+  "66581053": {
+    "primarySchool": {
+      "name": "市立仁和小学校",
+      "walkMin": 3,
+      "meters": 269
+    },
+    "juniorHighSchool": {
+      "name": "市立嘉楽中学校",
+      "walkMin": 7,
+      "meters": 593
+    },
+    "supermarket": {
+      "name": "Kohyo",
+      "walkMin": 4,
+      "meters": 289
+    }
+  },
+  "66855689": {
+    "primarySchool": {
+      "name": "町立斑鳩小学校",
+      "walkMin": 12,
+      "meters": 995
+    },
+    "juniorHighSchool": {
+      "name": "斑鳩町立斑鳩南中学校",
+      "walkMin": 5,
+      "meters": 389
+    },
+    "supermarket": {
+      "name": "マンダイ",
+      "walkMin": 10,
+      "meters": 833
+    }
+  },
+  "67382842": {
+    "primarySchool": {
+      "name": "市立伏見小学校",
+      "walkMin": 7,
+      "meters": 571
+    },
+    "juniorHighSchool": {
+      "name": "市立伏見中学校",
+      "walkMin": 9,
+      "meters": 725
+    },
+    "supermarket": {
+      "name": "サンディ",
+      "walkMin": 11,
+      "meters": 902
+    }
+  },
+  "67383131": {
+    "primarySchool": {
+      "name": "奈良市立 西大寺北小学校",
+      "walkMin": 3,
+      "meters": 229
+    },
+    "juniorHighSchool": {
+      "name": "市立伏見中学校",
+      "walkMin": 1,
+      "meters": 99
+    },
+    "supermarket": {
+      "name": "成城石井",
+      "walkMin": 11,
+      "meters": 844
+    }
+  },
+  "68526080": {
+    "primarySchool": {
+      "name": "斑鳩町立斑鳩東小学校",
+      "walkMin": 10,
+      "meters": 767
+    },
+    "juniorHighSchool": null,
+    "supermarket": {
+      "name": "マンダイ",
+      "walkMin": 17,
+      "meters": 1344
+    }
+  },
+  "69044948": {
+    "primarySchool": {
+      "name": "桜井市立桜井西小学校",
+      "walkMin": 9,
+      "meters": 712
+    },
+    "juniorHighSchool": {
+      "name": "桜井市立桜井西中学校",
+      "walkMin": 18,
+      "meters": 1406
+    },
+    "supermarket": {
+      "name": "トライアル",
+      "walkMin": 2,
+      "meters": 123
+    }
+  },
+  "69069722": {
+    "primarySchool": {
+      "name": "橿原市立晩成小学校",
+      "walkMin": 9,
+      "meters": 731
+    },
+    "juniorHighSchool": {
+      "name": "橿原市立八木中学校",
+      "walkMin": 14,
+      "meters": 1118
+    },
+    "supermarket": {
+      "name": "成城石井 大和八木店",
+      "walkMin": 6,
+      "meters": 488
+    }
+  },
+  "69127877": {
+    "primarySchool": {
+      "name": "奈良市立大安寺小学校",
+      "walkMin": 1,
+      "meters": 79
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立春日中学校",
+      "walkMin": 12,
+      "meters": 922
+    },
+    "supermarket": {
+      "name": "ザ・ビッグエクストラ",
+      "walkMin": 10,
+      "meters": 787
+    }
+  },
+  "69128521": {
+    "primarySchool": {
+      "name": "奈良市立佐保川小学校",
+      "walkMin": 4,
+      "meters": 321
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 13,
+      "meters": 1073
+    },
+    "supermarket": {
+      "name": "サンディ",
+      "walkMin": 5,
+      "meters": 367
+    }
+  },
+  "69128750": {
+    "primarySchool": {
+      "name": "奈良市立 西大寺北小学校",
+      "walkMin": 8,
+      "meters": 607
+    },
+    "juniorHighSchool": {
+      "name": "市立伏見中学校",
+      "walkMin": 8,
+      "meters": 632
+    },
+    "supermarket": {
+      "name": "shop ウエダ",
+      "walkMin": 6,
+      "meters": 469
+    }
+  },
+  "70236294": {
+    "primarySchool": {
+      "name": "市立あすか野小学校",
+      "walkMin": 6,
+      "meters": 455
+    },
+    "juniorHighSchool": {
+      "name": "市立光明中学校",
+      "walkMin": 9,
+      "meters": 759
+    },
+    "supermarket": {
+      "name": "スーパーセンター オークワ",
+      "walkMin": 14,
+      "meters": 1122
+    }
+  },
+  "70419094": {
+    "primarySchool": {
+      "name": "市立新町小学校",
+      "walkMin": 2,
+      "meters": 144
+    },
+    "juniorHighSchool": {
+      "name": "市立上京中学校",
+      "walkMin": 4,
+      "meters": 282
+    },
+    "supermarket": {
+      "name": "八百 さる",
+      "walkMin": 4,
+      "meters": 303
+    }
+  },
+  "70593324": {
+    "primarySchool": {
+      "name": "斑鳩町立斑鳩東小学校",
+      "walkMin": 8,
+      "meters": 674
+    },
+    "juniorHighSchool": {
+      "name": "斑鳩町立斑鳩南中学校",
+      "walkMin": 13,
+      "meters": 1059
+    },
+    "supermarket": {
+      "name": "マンダイ",
+      "walkMin": 6,
+      "meters": 454
+    }
+  },
+  "70595305": {
+    "primarySchool": {
+      "name": "市立朱雀小学校",
+      "walkMin": 7,
+      "meters": 579
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立平城東中学校",
+      "walkMin": 6,
+      "meters": 448
+    },
+    "supermarket": {
+      "name": "ならコープ コープ朱雀",
+      "walkMin": 9,
+      "meters": 693
+    }
+  },
+  "70595909": {
+    "primarySchool": {
+      "name": "市立あやめ池小学校",
+      "walkMin": 4,
+      "meters": 303
+    },
+    "juniorHighSchool": {
+      "name": "帝塚山中学校・高等学校",
+      "walkMin": 9,
+      "meters": 702
+    },
+    "supermarket": {
+      "name": "サンドラック",
+      "walkMin": 9,
+      "meters": 731
+    }
+  },
+  "71247717": {
+    "primarySchool": {
+      "name": "市立伏見住吉小学校",
+      "walkMin": 5,
+      "meters": 404
+    },
+    "juniorHighSchool": {
+      "name": "市立桃山中学校",
+      "walkMin": 5,
+      "meters": 382
+    },
+    "supermarket": {
+      "name": "業務スーパー",
+      "walkMin": 4,
+      "meters": 283
+    }
+  },
+  "73171066": {
+    "primarySchool": {
+      "name": "奈良市立大安寺西小学校",
+      "walkMin": 10,
+      "meters": 772
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立三笠中学校",
+      "walkMin": 8,
+      "meters": 650
+    },
+    "supermarket": {
+      "name": "関西スーパー",
+      "walkMin": 3,
+      "meters": 228
+    }
+  },
+  "73176268": {
+    "primarySchool": {
+      "name": "奈良市立大安寺西小学校",
+      "walkMin": 10,
+      "meters": 772
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立三笠中学校",
+      "walkMin": 8,
+      "meters": 650
+    },
+    "supermarket": {
+      "name": "関西スーパー",
+      "walkMin": 3,
+      "meters": 228
+    }
+  },
+  "76342569": {
+    "primarySchool": {
+      "name": "市立生駒台小学校",
+      "walkMin": 6,
+      "meters": 467
+    },
+    "juniorHighSchool": {
+      "name": "市立光明中学校",
+      "walkMin": 10,
+      "meters": 834
+    },
+    "supermarket": {
+      "name": "業務スーパー",
+      "walkMin": 6,
+      "meters": 464
+    }
+  },
+  "76343052": {
+    "primarySchool": {
+      "name": "市立帯解小学校",
+      "walkMin": 8,
+      "meters": 645
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立都南中学校",
+      "walkMin": 4,
+      "meters": 281
+    },
+    "supermarket": {
+      "name": "プライスカット",
+      "walkMin": 11,
+      "meters": 908
+    }
+  },
+  "79368439": {
+    "primarySchool": {
+      "name": "奈良市立佐保小学校",
+      "walkMin": 5,
+      "meters": 392
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 8,
+      "meters": 646
+    },
+    "supermarket": {
+      "name": "プライスカット",
+      "walkMin": 4,
+      "meters": 326
+    }
+  },
+  "79368710": {
+    "primarySchool": {
+      "name": "市立朱雀小学校",
+      "walkMin": 7,
+      "meters": 579
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立平城東中学校",
+      "walkMin": 6,
+      "meters": 448
+    },
+    "supermarket": {
+      "name": "ならコープ コープ朱雀",
+      "walkMin": 9,
+      "meters": 693
+    }
+  },
+  "79797606": {
+    "primarySchool": {
+      "name": "旧市立新洞小学校",
+      "walkMin": 8,
+      "meters": 632
+    },
+    "juniorHighSchool": {
+      "name": "京都市立京都御池中学校",
+      "walkMin": 4,
+      "meters": 356
+    },
+    "supermarket": {
+      "name": "明治屋",
+      "walkMin": 3,
+      "meters": 241
+    }
+  },
+  "81790262": {
+    "primarySchool": {
+      "name": "大和郡山市立平和小学校",
+      "walkMin": 12,
+      "meters": 929
+    },
+    "juniorHighSchool": {
+      "name": "大和郡山市立郡山東中学校",
+      "walkMin": 18,
+      "meters": 1434
+    },
+    "supermarket": {
+      "name": "イオンモール大和郡山",
+      "walkMin": 5,
+      "meters": 377
+    }
+  },
+  "83116512": {
+    "primarySchool": {
+      "name": "市立生駒東小学校",
+      "walkMin": 10,
+      "meters": 794
+    },
+    "juniorHighSchool": {
+      "name": "市立緑ケ丘中学校",
+      "walkMin": 9,
+      "meters": 744
+    },
+    "supermarket": {
+      "name": "オークワ",
+      "walkMin": 1,
+      "meters": 113
+    }
+  },
+  "83117765": {
+    "primarySchool": {
+      "name": "奈良市立大安寺西小学校",
+      "walkMin": 7,
+      "meters": 584
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立三笠中学校",
+      "walkMin": 4,
+      "meters": 310
+    },
+    "supermarket": {
+      "name": "デイリーカナートイズミヤ",
+      "walkMin": 5,
+      "meters": 403
+    }
+  },
+  "84376680": {
+    "primarySchool": {
+      "name": "市立朱雀小学校",
+      "walkMin": 2,
+      "meters": 169
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立平城東中学校",
+      "walkMin": 4,
+      "meters": 324
+    },
+    "supermarket": {
+      "name": "ならコープ コープ朱雀",
+      "walkMin": 2,
+      "meters": 144
+    }
+  },
+  "85368374": {
+    "primarySchool": {
+      "name": "市立伏見小学校",
+      "walkMin": 9,
+      "meters": 732
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立京西中学校",
+      "walkMin": 12,
+      "meters": 923
+    },
+    "supermarket": {
+      "name": "スーパーいそかわ",
+      "walkMin": 3,
+      "meters": 227
+    }
+  },
+  "85368854": {
+    "primarySchool": {
+      "name": "奈良市立辰市小学校",
+      "walkMin": 8,
+      "meters": 679
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立春日中学校",
+      "walkMin": 20,
+      "meters": 1578
+    },
+    "supermarket": {
+      "name": "ラ・ムー",
+      "walkMin": 9,
+      "meters": 698
+    }
+  },
+  "87978875": {
+    "primarySchool": {
+      "name": "市立平城西小学校",
+      "walkMin": 7,
+      "meters": 527
+    },
+    "juniorHighSchool": {
+      "name": "市立登美ケ丘中学校",
+      "walkMin": 4,
+      "meters": 343
+    },
+    "supermarket": {
+      "name": "コープ",
+      "walkMin": 10,
+      "meters": 820
+    }
+  },
+  "87980610": {
+    "primarySchool": {
+      "name": "橿原市立耳成南小学校",
+      "walkMin": 10,
+      "meters": 768
+    },
+    "juniorHighSchool": {
+      "name": "橿原市立八木中学校",
+      "walkMin": 14,
+      "meters": 1133
+    },
+    "supermarket": {
+      "name": "耳成デパート",
+      "walkMin": 1,
+      "meters": 56
+    }
+  },
+  "87981029": {
+    "primarySchool": {
+      "name": "市立白橿北小学校",
+      "walkMin": 4,
+      "meters": 352
+    },
+    "juniorHighSchool": {
+      "name": "市立畝傍中学校",
+      "walkMin": 15,
+      "meters": 1215
+    },
+    "supermarket": {
+      "name": "サンディ",
+      "walkMin": 10,
+      "meters": 761
+    }
+  },
+  "88347349": {
+    "primarySchool": {
+      "name": "市立伏見小学校",
+      "walkMin": 4,
+      "meters": 351
+    },
+    "juniorHighSchool": {
+      "name": "市立伏見中学校",
+      "walkMin": 9,
+      "meters": 732
+    },
+    "supermarket": {
+      "name": "サンディ",
+      "walkMin": 9,
+      "meters": 738
+    }
+  },
+  "88347360": {
+    "primarySchool": {
+      "name": "旧市立新洞小学校",
+      "walkMin": 8,
+      "meters": 628
+    },
+    "juniorHighSchool": {
+      "name": "京都市立京都御池中学校",
+      "walkMin": 5,
+      "meters": 385
+    },
+    "supermarket": {
+      "name": "明治屋",
+      "walkMin": 2,
+      "meters": 196
+    }
+  },
+  "91371550": {
+    "primarySchool": {
+      "name": "市立朱雀小学校",
+      "walkMin": 7,
+      "meters": 579
+    },
+    "juniorHighSchool": {
+      "name": "奈良市立平城東中学校",
+      "walkMin": 6,
+      "meters": 448
+    },
+    "supermarket": {
+      "name": "ならコープ コープ朱雀",
+      "walkMin": 9,
+      "meters": 693
+    }
+  },
+  "91372717": {
+    "primarySchool": {
+      "name": "奈良市立佐保川小学校",
+      "walkMin": 14,
+      "meters": 1155
+    },
+    "juniorHighSchool": null,
+    "supermarket": {
+      "name": "生鮮 & 業務 スーパー",
+      "walkMin": 11,
+      "meters": 843
+    }
+  },
+  "91373110": {
+    "primarySchool": {
+      "name": "市立新町小学校",
+      "walkMin": 5,
+      "meters": 407
+    },
+    "juniorHighSchool": {
+      "name": "市立上京中学校",
+      "walkMin": 7,
+      "meters": 546
+    },
+    "supermarket": {
+      "name": "八百 さる",
+      "walkMin": 1,
+      "meters": 87
+    }
+  },
+  "91375630": {
+    "primarySchool": {
+      "name": "市立矢田小学校",
+      "walkMin": 4,
+      "meters": 338
+    },
+    "juniorHighSchool": null,
+    "supermarket": null
+  },
+  "91375861": {
+    "primarySchool": {
+      "name": "市立桜ケ丘小学校",
+      "walkMin": 7,
+      "meters": 569
+    },
+    "juniorHighSchool": {
+      "name": "市立生駒中学校",
+      "walkMin": 12,
+      "meters": 929
+    },
+    "supermarket": {
+      "name": "いそかわ",
+      "walkMin": 6,
+      "meters": 468
+    }
+  },
+  "91376054": {
+    "primarySchool": {
+      "name": "市立桜ケ丘小学校",
+      "walkMin": 7,
+      "meters": 569
+    },
+    "juniorHighSchool": {
+      "name": "市立生駒中学校",
+      "walkMin": 12,
+      "meters": 929
+    },
+    "supermarket": {
+      "name": "いそかわ",
+      "walkMin": 6,
+      "meters": 468
+    }
+  },
+  "91376697": {
+    "primarySchool": {
+      "name": "市立桃山小学校",
+      "walkMin": 8,
+      "meters": 651
+    },
+    "juniorHighSchool": {
+      "name": "京都橘中学校高等学校",
+      "walkMin": 5,
+      "meters": 388
+    },
+    "supermarket": {
+      "name": "スーパーフレスコ",
+      "walkMin": 12,
+      "meters": 966
+    }
+  },
+  "92867316": {
+    "primarySchool": {
+      "name": "京都市立待賢小学校",
+      "walkMin": 7,
+      "meters": 561
+    },
+    "juniorHighSchool": {
+      "name": "平安女学院中学校",
+      "walkMin": 4,
+      "meters": 308
+    },
+    "supermarket": {
+      "name": "スーパーフレスコ",
+      "walkMin": 4,
+      "meters": 320
+    }
+  },
+  "92869438": {
+    "primarySchool": {
+      "name": "奈良市立佐保小学校",
+      "walkMin": 4,
+      "meters": 341
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 6,
+      "meters": 460
+    },
+    "supermarket": {
+      "name": "自然農の店 五ふしの草",
+      "walkMin": 2,
+      "meters": 128
+    }
+  },
+  "92872267": {
+    "primarySchool": {
+      "name": "橿原市立今井小学校",
+      "walkMin": 5,
+      "meters": 412
+    },
+    "juniorHighSchool": {
+      "name": "橿原市立畝傍中学校2部",
+      "walkMin": 10,
+      "meters": 822
+    },
+    "supermarket": {
+      "name": "オークワ",
+      "walkMin": 12,
+      "meters": 985
+    }
+  },
+  "98218036": {
+    "primarySchool": {
+      "name": "市立生駒台小学校",
+      "walkMin": 9,
+      "meters": 690
+    },
+    "juniorHighSchool": {
+      "name": "市立光明中学校",
+      "walkMin": 8,
+      "meters": 673
+    },
+    "supermarket": {
+      "name": "いそかわ",
+      "walkMin": 4,
+      "meters": 291
+    }
+  },
+  "98218444": {
+    "primarySchool": {
+      "name": "天理市立前栽小学校",
+      "walkMin": 6,
+      "meters": 500
+    },
+    "juniorHighSchool": {
+      "name": "天理市立西中学校",
+      "walkMin": 18,
+      "meters": 1446
+    },
+    "supermarket": {
+      "name": "万代 天理指柳店",
+      "walkMin": 7,
+      "meters": 533
+    }
+  },
+  "98219444": {
+    "primarySchool": {
+      "name": "奈良市立佐保小学校",
+      "walkMin": 4,
+      "meters": 341
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 6,
+      "meters": 460
+    },
+    "supermarket": {
+      "name": "自然農の店 五ふしの草",
+      "walkMin": 2,
+      "meters": 128
+    }
+  },
+  "98219727": {
+    "primarySchool": {
+      "name": "奈良市立佐保小学校",
+      "walkMin": 5,
+      "meters": 392
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 8,
+      "meters": 646
+    },
+    "supermarket": {
+      "name": "プライスカット",
+      "walkMin": 4,
+      "meters": 326
+    }
+  },
+  "98219942": {
+    "primarySchool": {
+      "name": "奈良市立佐保小学校",
+      "walkMin": 5,
+      "meters": 392
+    },
+    "juniorHighSchool": {
+      "name": "奈良育英中学校",
+      "walkMin": 8,
+      "meters": 646
+    },
+    "supermarket": {
+      "name": "プライスカット",
+      "walkMin": 4,
+      "meters": 326
+    }
+  },
+  "98220464": {
+    "primarySchool": {
+      "name": "町立斑鳩小学校",
+      "walkMin": 6,
+      "meters": 480
+    },
+    "juniorHighSchool": {
+      "name": "斑鳩町立斑鳩中学校",
+      "walkMin": 5,
+      "meters": 416
+    },
+    "supermarket": {
+      "name": "マンダイ",
+      "walkMin": 12,
+      "meters": 977
+    }
+  },
+  "98221832": {
+    "primarySchool": {
+      "name": "田原本町立平野小学校",
+      "walkMin": 11,
+      "meters": 856
+    },
+    "juniorHighSchool": {
+      "name": "町立田原本中学校",
+      "walkMin": 12,
+      "meters": 949
+    },
+    "supermarket": {
+      "name": "万代",
+      "walkMin": 6,
+      "meters": 490
+    }
+  }
+}

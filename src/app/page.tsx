@@ -4,6 +4,7 @@ import {
   FONT_VARIANTS,
   BODY_VARIANTS,
 } from "@/components/sections/HeroMagazine.fonts";
+import ScaleBanner from "@/components/sections/ScaleBanner";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
@@ -91,6 +92,7 @@ export default function Home() {
           variant={HERO_HEADLINE_VARIANT}
           bodyVariant={HERO_BODY_VARIANT}
         />
+        <ScaleBanner />
         <MechanismEnhanced />
         <PhotoBreath
           src="/images/fv/hero-02-exterior-sakyo.webp"

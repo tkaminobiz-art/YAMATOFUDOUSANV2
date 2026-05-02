@@ -1,5 +1,23 @@
 // 施工事例データ。トップページの teaser と /works 詳細ページの両方から参照する。
 // [要確認] 家族構成・課題・解決・コメント・担当スタッフは仮データ。後日実データに差し替え。
+//
+// 2026-04-30 専務レビュー反映:
+// 「お客さんごとの良い間取りを載せて、ルームツアー動画を流せたり」
+// → roomTour フィールドを追加。動画(YouTube/直接URL)があれば各事例に埋め込み可能に。
+//   現時点で動画素材が無い場合は省略可(オプショナル)。
+
+export type RoomTourVideo = {
+  /** YouTube動画ID(例: "dQw4w9WgXcQ") または 動画ファイルURL(例: "/videos/case1-tour.mp4") */
+  src: string;
+  /** "youtube" | "mp4" */
+  kind: "youtube" | "mp4";
+  /** ポスター画像(任意) */
+  poster?: string;
+  /** 動画尺(秒・任意) */
+  durationSec?: number;
+  /** 一行説明(任意) */
+  caption?: string;
+};
 
 export type FeaturedWork = {
   id: string;
@@ -14,6 +32,7 @@ export type FeaturedWork = {
   staffDesign: string;
   main: string;
   subs: readonly string[];
+  roomTour?: RoomTourVideo;
 };
 
 export type GridWork = {

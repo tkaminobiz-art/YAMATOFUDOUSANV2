@@ -158,12 +158,12 @@ export default function MoneyIndexPage() {
                 },
                 {
                   no: "03",
-                  label: "30〜35年で見る住居費の違い",
+                  label: "75歳完済時に、手元に残る資産",
                   prefix: "約",
-                  num: "700",
+                  num: "4,500",
                   unit: "万円",
-                  suffix: "",
-                  body: "同じ月8.5万円で試算。持家は完済後、住居費の負担を抑えやすくなります。",
+                  suffix: "相当",
+                  body: "40歳ご契約・35年ローンで試算。75歳で完済後、土地と建物が資産として手元に残ります。",
                   highlight: false,
                 },
               ].map((n) => (

@@ -98,18 +98,21 @@ const FAQS = [
 ] as const;
 
 // ─────────────────────────────────────────────
-// 30年で残るもの — メイン図解(常に見える)
+// 75歳完済シナリオ — 資産として残る図解(常に見える)
+// 2026-04-30 専務レビュー反映:
+//   旧「30〜45年で残るもの・差700万」→ 新「75歳完済時に資産として残る・約4,500万相当」
+//   45年後の支払い差ではなく、"完済後に手元に残るもの" を主役にする
 // ─────────────────────────────────────────────
 
 function ThirtyYearAnswer() {
   const ref = useScrollIn<HTMLDivElement>();
-  const MAX = 4590;
+  const MAX = 4900;
   const ROWS = [
-    { years: "10", rent: 1020, own: 1016, note: "ほぼ同じ" },
-    { years: "20", rent: 2040, own: 2032, note: "ほぼ同じ" },
-    { years: "30", rent: 3060, own: 3049, note: "ほぼ同じ" },
-    { years: "35", rent: 3570, own: 3556, note: "持家が完済 ✓" },
-    { years: "45", rent: 4590, own: 3900, note: "賃貸はずっと家賃が続きます" },
+    { age: "40", years: 0, rent: 0, own: 0, note: "ご契約・建築開始" },
+    { age: "55", years: 15, rent: 1530, own: 1530, note: "ほぼ同じ" },
+    { age: "65", years: 25, rent: 2550, own: 2550, note: "ほぼ同じ" },
+    { age: "75", years: 35, rent: 3570, own: 3570, note: "75歳・完済 ✓ 月々の支払いゼロへ" },
+    { age: "85", years: 45, rent: 4590, own: 3700, note: "賃貸はそのまま家賃。持家は固定資産税と修繕のみ" },
   ] as const;
 
   return (
@@ -117,18 +120,20 @@ function ThirtyYearAnswer() {
       <div ref={ref} className="mx-auto max-w-[1180px] px-[var(--page-px)] scroll-in">
         <div className="text-center mb-12 md:mb-16">
           <p className="text-[12px] md:text-[13px] tracking-[0.06em] font-bold mb-4" style={{ color: FOREST }}>
-            賃貸と持家、30年で残るもの
+            75歳に、家は資産として残る。
           </p>
           <h2
             className="text-text-primary leading-[1.2] tracking-[-0.01em]"
             style={{ fontWeight: 500, fontSize: "clamp(28px, 3.6vw, 52px)" }}
           >
-            払うお金は、ほぼ同じ。
+            支払うお金は、ほぼ同じ。
             <br className="md:hidden" />
             残るものが、違います。
           </h2>
-          <p className="mt-5 max-w-[640px] mx-auto text-[14px] md:text-[15px] leading-[1.95] text-text-secondary">
-            月8.5万円の家賃 vs 月8.5万円の住宅ローン(借入3,000万円・1.0%・35年)を、年数ごとに並べました。
+          <p className="mt-5 max-w-[680px] mx-auto text-[14px] md:text-[15px] leading-[1.95] text-text-secondary">
+            40歳でご契約、35年ローン(借入3,000万円・1.0%)・月8.5万円。
+            同じ月8.5万円の家賃と並べてみると、
+            <strong className="text-text-primary">75歳の節目で景色が変わります。</strong>
           </p>
         </div>
 
@@ -144,22 +149,27 @@ function ThirtyYearAnswer() {
           </span>
         </div>
 
-        {/* バーグラフ */}
+        {/* バーグラフ — X軸を「年齢」に */}
         <div className="bg-white border border-text-primary/15 p-6 md:p-10 space-y-4">
           {ROWS.map((r) => {
             const rentPct = (r.rent / MAX) * 100;
             const ownPct = (r.own / MAX) * 100;
-            const isPivot = r.years === "35" || r.years === "45";
+            const isPivot = r.age === "75" || r.age === "85";
             return (
-              <div key={r.years} className="grid grid-cols-[44px_1fr] md:grid-cols-[60px_1fr] gap-3 md:gap-5 items-start">
+              <div key={r.age} className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_1fr] gap-3 md:gap-5 items-start">
                 <div className="pt-1">
-                  <span
-                    className="font-oswald tabular-nums leading-none text-text-primary"
-                    style={{ fontWeight: 400, fontSize: "clamp(20px, 2vw, 28px)" }}
-                  >
-                    {r.years}
-                  </span>
-                  <span className="text-text-secondary text-[11px] ml-0.5">年</span>
+                  <div className="flex items-baseline gap-1">
+                    <span
+                      className="font-oswald tabular-nums leading-none text-text-primary"
+                      style={{ fontWeight: 400, fontSize: "clamp(20px, 2vw, 28px)" }}
+                    >
+                      {r.age}
+                    </span>
+                    <span className="text-text-secondary text-[11px]">歳</span>
+                  </div>
+                  {r.years > 0 && (
+                    <p className="text-text-secondary text-[10px] mt-0.5">{r.years}年目</p>
+                  )}
                 </div>
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
@@ -196,36 +206,127 @@ function ThirtyYearAnswer() {
           })}
         </div>
 
-        {/* 結論ハイライト */}
+        {/* 結論ハイライト — 75歳完済時に手元に残る資産 */}
         <div
-          className="mt-6 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-8 items-center px-6 md:px-8 py-6 md:py-8 border-2"
+          className="mt-6 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-8 items-center px-6 md:px-8 py-7 md:py-9 border-2"
           style={{ background: "#EDF2D5", borderColor: FOREST }}
         >
           <div>
             <p className="text-[11px] md:text-[12px] tracking-[0.06em] font-bold mb-2" style={{ color: FOREST }}>
-              45年後の差
+              75歳完済時、手元に残るもの
             </p>
             <p
               className="text-text-primary leading-[1.4] tracking-[-0.01em]"
-              style={{ fontWeight: 500, fontSize: "clamp(18px, 1.9vw, 26px)" }}
+              style={{ fontWeight: 500, fontSize: "clamp(18px, 2vw, 28px)" }}
             >
-              老後の家計が、ぐっと軽くなります。
+              月々の支払いはゼロへ。
+              <br className="md:hidden" />
+              土地と建物が、資産として残ります。
             </p>
           </div>
-          <div className="md:border-l md:pl-8 md:min-w-[180px]" style={{ borderColor: "rgba(72,107,0,0.3)" }}>
-            <div className="flex items-baseline gap-2">
+          <div className="md:border-l md:pl-8 md:min-w-[200px]" style={{ borderColor: "rgba(72,107,0,0.3)" }}>
+            <div className="flex items-baseline gap-2 whitespace-nowrap">
+              <span className="text-text-primary text-[13px] md:text-[14px] font-medium">約</span>
               <span
                 className="font-oswald tabular-nums leading-[0.85]"
-                style={{ fontWeight: 300, fontSize: "clamp(48px, 5.5vw, 80px)", letterSpacing: "-0.04em", color: FOREST }}
+                style={{ fontWeight: 300, fontSize: "clamp(44px, 5vw, 72px)", letterSpacing: "-0.04em", color: FOREST }}
               >
-                約700
+                4,500
               </span>
-              <span className="text-text-primary text-base font-medium">万円の差</span>
+              <span className="text-text-primary text-base font-medium">万円相当</span>
             </div>
+            <p className="mt-2 text-text-secondary text-[11px] leading-[1.6]">
+              土地2,500万 + 建物2,000万を想定
+            </p>
           </div>
         </div>
         <p className="mt-4 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
-          ※ 持家は固定資産税(年10〜15万円)・修繕費(10〜15年で50〜100万円)を含めた概算です。
+          ※ 持家は固定資産税(年10〜15万円)・修繕費(10〜15年で50〜100万円)を含めた概算です。資産価値はエリア・建物の状態・市況により変動します。
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────
+// 住宅ローンの、もうひとつの見方(エッセンスとしての金融視点)
+// 2026-04-30 専務発言「家買うって投資。住宅ローンはNISAみたいなもん。
+//   そのエッセンスを加えてくれたらなお良し」を反映。
+//   NISA直接比喩は避け、「長期低金利で借りられる家計設計の手段」という
+//   控えめだが芯のあるトーンに。
+// ─────────────────────────────────────────────
+
+function LoanAsFinancialTool() {
+  const ref = useScrollIn<HTMLDivElement>();
+
+  const POINTS = [
+    {
+      n: "01",
+      title: "金利が、低い。",
+      body: "住宅ローンは、低い金利(変動0.4〜0.7% / 全期間固定1.7〜2.0%)で組める、最も身近な長期借入です。同じ金額を別の用途で借りる選択肢は、現実にはほぼありません。",
+    },
+    {
+      n: "02",
+      title: "長く、借りられる。",
+      body: "35年という長期の返済期間が組めるのは、住居が「暮らしの基盤」だから。月々のご負担を抑えながら、生活の柱を整える設計ができます。",
+    },
+    {
+      n: "03",
+      title: "完済の先に、残る。",
+      body: "返済が終わった先に、土地と建物が手元に残ります。住居費の負担が軽くなる老後と、将来の家族にも引き継げる資産という、二つの意味があります。",
+    },
+  ] as const;
+
+  return (
+    <section className="relative bg-[#FAF8F3] py-[clamp(64px,7vw,140px)]">
+      <div ref={ref} className="mx-auto max-w-[1180px] px-[var(--page-px)] scroll-in">
+        <div className="mb-10 md:mb-14 max-w-[760px]">
+          <p
+            className="text-[12px] md:text-[13px] tracking-[0.06em] font-bold mb-4"
+            style={{ color: FOREST }}
+          >
+            住宅ローンの、もうひとつの見方
+          </p>
+          <h2
+            className="text-text-primary leading-[1.3] tracking-[-0.01em]"
+            style={{ fontWeight: 500, fontSize: "clamp(22px, 2.8vw, 36px)" }}
+          >
+            家のお金は、ご家族の家計設計を支える、長期の手段でもあります。
+          </h2>
+          <p className="mt-5 text-text-secondary text-[14px] md:text-[15px] leading-[1.95]">
+            やまとは「払えなくなる家」をお売りしません。だからこそ、
+            <br className="hidden md:block" />
+            住宅ローンを「重い借金」としてではなく、
+            <strong className="text-text-primary">長期で計画的に整えられる家計の手段</strong>
+            として、ご一緒に考えます。
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15">
+          {POINTS.map((p) => (
+            <div key={p.n} className="bg-white p-6 md:p-7">
+              <span
+                className="font-oswald tabular-nums leading-none block mb-3"
+                style={{
+                  fontWeight: 300,
+                  fontSize: "clamp(28px, 2.6vw, 40px)",
+                  color: FOREST,
+                }}
+              >
+                {p.n}
+              </span>
+              <p className="text-text-primary text-[15px] md:text-[16px] font-medium leading-[1.5] mb-3">
+                {p.title}
+              </p>
+              <p className="text-[12px] md:text-[13px] leading-[1.95] text-text-secondary">
+                {p.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-6 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary max-w-[760px]">
+          ※ 金利は2026年4月時点の参考値で、金融機関・お申込時期により変わります。借入は無理のない範囲(返済比率20〜25%以内)で組むのが原則です。
         </p>
       </div>
     </section>
@@ -771,6 +872,7 @@ export default function MoneyFullSection() {
   return (
     <>
       <ThirtyYearAnswer />
+      <LoanAsFinancialTool />
       <QuestionsAccordion />
     </>
   );
