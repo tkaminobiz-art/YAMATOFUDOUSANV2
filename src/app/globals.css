@@ -140,13 +140,15 @@ p, blockquote, dd, li {
   animation: heroFade 28s linear infinite;
 }
 
-/* Ken Burns: スライドと同じ28秒周期でスケール */
+/* Ken Burns: スライドと同じ28秒周期 / より体感しやすい振幅へ
+   2026-05-04: 1→1.08(28s linear)では体感が弱かったため、
+   1→1.14(28s ease-out)に拡大。スライド可視窓7秒で約 1→1.05 まで動く。 */
 @keyframes kenBurns {
   from { transform: scale(1); }
-  to   { transform: scale(1.08); }
+  to   { transform: scale(1.14); }
 }
 .hero-ken-burns {
-  animation: kenBurns 28s linear infinite;
+  animation: kenBurns 28s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   will-change: transform;
 }
 

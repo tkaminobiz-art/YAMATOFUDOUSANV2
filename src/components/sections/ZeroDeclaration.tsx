@@ -274,8 +274,30 @@ export default function ZeroDeclaration() {
   return (
     <section
       id="zero"
-      className="relative bg-bg-primary text-text-primary py-[var(--section-py)]"
+      className="relative overflow-hidden bg-bg-primary text-text-primary py-[var(--section-py)]"
     >
+      {/* === 装飾: 葉影 + 淡いグラデーション === */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 100% 0%, rgba(162,197,35,0.06) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 0% 100%, rgba(125,68,39,0.04) 0%, transparent 55%)",
+        }}
+      />
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute -top-20 -right-32 w-[420px] h-[420px] opacity-[0.06] hidden md:block"
+        viewBox="0 0 200 200"
+        fill="none"
+      >
+        <path
+          d="M100 30 C 60 30, 30 60, 30 100 C 30 140, 60 170, 100 170 C 80 140, 70 110, 100 30 Z"
+          fill="#486B00"
+        />
+        <path d="M100 30 C 95 80, 90 130, 100 170" stroke="#486B00" strokeWidth="1.5" />
+      </svg>
+
       <div
         ref={ref}
         className="relative max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"

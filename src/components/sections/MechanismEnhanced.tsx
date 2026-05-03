@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 
 /*
@@ -96,8 +97,33 @@ const EXCLUDED_ITEMS = [
 // ────────────────────────────────────────────────
 
 function ComparisonDashboard() {
+  // 画面入域でバーを 0% → pct% にイージングで伸ばす
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setAnimate(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.25) {
+          setAnimate(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: [0, 0.25, 1] },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="bg-white border border-text-primary/10 rounded-lg p-6 md:p-10 shadow-[0_8px_24px_-16px_rgba(0,0,0,0.08)]">
+    <div ref={containerRef} className="bg-white border border-text-primary/10 rounded-lg p-6 md:p-10 shadow-[0_8px_24px_-16px_rgba(0,0,0,0.08)]">
       {/* 条件ラベル */}
       <p className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-text-secondary font-bold mb-5 md:mb-6">
         同条件30坪・4LDKで比較(建物本体＋標準付帯工事)
@@ -105,7 +131,7 @@ function ComparisonDashboard() {
 
       {/* 横棒2本 */}
       <div className="space-y-5 md:space-y-7 mb-8 md:mb-10">
-        {COMPARISON.map((c) => {
+        {COMPARISON.map((c, i) => {
           const pct = (c.amount / COMPARE_MAX) * 100;
           const isHero = c.tone === "hero";
           return (
@@ -149,8 +175,11 @@ function ComparisonDashboard() {
                 <div
                   className={`h-full rounded-full ${
                     isHero ? "bg-lime-deep" : "bg-text-primary/30"
-                  } transition-[width] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
-                  style={{ width: `${pct}%` }}
+                  } transition-[width] duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
+                  style={{
+                    width: animate ? `${pct}%` : "0%",
+                    transitionDelay: `${i * 200 + 200}ms`,
+                  }}
                   aria-label={`${c.label} ${c.amount}万円`}
                 />
               </div>

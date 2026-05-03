@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
+import { useCountUp } from "@/hooks/useCountUp";
 import { Building2, MapPin, Users, Calendar, type LucideIcon } from "lucide-react";
 
 /*
@@ -68,6 +69,27 @@ const STATS: readonly Stat[] = [
   },
 ];
 
+function CountUpNumber({ value }: { value: string }) {
+  // value は "600" 等の数値文字列を想定。3桁ごとカンマ区切りで表示。
+  const target = Number(value.replace(/[,\s]/g, ""));
+  const { value: current, ref } = useCountUp(target, { duration: 1800 });
+  return (
+    <span
+      ref={ref}
+      className="text-text-primary tabular-nums"
+      style={{
+        fontFamily: "var(--font-oswald)",
+        fontWeight: 500,
+        fontSize: "clamp(64px, 9vw, 132px)",
+        letterSpacing: "-0.02em",
+        lineHeight: 0.85,
+      }}
+    >
+      {current.toLocaleString()}
+    </span>
+  );
+}
+
 export default function ScaleBanner() {
   const sectionRef = useScrollIn<HTMLDivElement>(true);
 
@@ -118,20 +140,9 @@ export default function ScaleBanner() {
                   </span>
                 )}
 
-                {/* 巨大数字 — Oswald で立たせる */}
+                {/* 巨大数字 — Oswald で立たせる + 画面入域でカウントアップ */}
                 <div className="flex items-baseline gap-2 leading-none mb-3">
-                  <span
-                    className="text-text-primary tabular-nums"
-                    style={{
-                      fontFamily: "var(--font-oswald)",
-                      fontWeight: 500,
-                      fontSize: "clamp(64px, 9vw, 132px)",
-                      letterSpacing: "-0.02em",
-                      lineHeight: 0.85,
-                    }}
-                  >
-                    {stat.value}
-                  </span>
+                  <CountUpNumber value={stat.value} />
                   <span
                     className="text-text-primary"
                     style={{

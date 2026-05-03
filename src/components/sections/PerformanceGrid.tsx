@@ -136,7 +136,7 @@ const PERFORMANCE_ITEMS: readonly Item[] = [
 function ItemCard({ item }: { item: Item }) {
   const Icon = item.Icon;
   return (
-    <li className="bg-white p-5 md:p-6 lg:p-7 flex flex-col">
+    <li className="scroll-in bg-white p-5 md:p-6 lg:p-7 flex flex-col">
       <span
         aria-hidden
         className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full mb-4"
@@ -161,10 +161,33 @@ export default function PerformanceGrid() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
-    <section className="bg-bg-secondary/40 py-[var(--section-py)]">
+    <section className="relative overflow-hidden bg-bg-secondary/40 py-[var(--section-py)]">
+      {/* === 装飾: 図面線グリッド + 上部の暖色グラデーション === */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.045]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #486B00 1px, transparent 1px), linear-gradient(to bottom, #486B00 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+          maskImage:
+            "radial-gradient(ellipse 80% 60% at 50% 30%, black 0%, transparent 75%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 80% 60% at 50% 30%, black 0%, transparent 75%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 35% at 50% 0%, rgba(162,197,35,0.08) 0%, transparent 70%)",
+        }}
+      />
+
       <div
         ref={ref}
-        className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
+        className="relative max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
         <div className="mb-10 md:mb-14 max-w-[860px]">
           <p
