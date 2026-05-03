@@ -48,24 +48,24 @@ function FaqItem({
   a: string;
   index: number;
 }) {
-  const [open, setOpen] = useState(index === 0);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-border">
+    <div className="border border-border rounded transition-colors hover:border-main/40 bg-white">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-4 py-5 md:py-6 text-left hover:bg-bg-secondary/50 transition-colors px-2"
+        className="w-full flex items-center justify-between gap-3 p-4 md:p-5 text-left transition-colors"
       >
-        <span className="flex items-start gap-4 flex-1">
+        <span className="flex items-start gap-3 flex-1 min-w-0">
           <span
-            className="text-main text-sm md:text-base font-medium mt-0.5 shrink-0"
+            className="text-main text-[11px] md:text-[12px] font-medium mt-1 shrink-0 tabular-nums"
             style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
           >
             Q.{String(index + 1).padStart(2, "0")}
           </span>
           <span
-            className="text-text-primary text-sm md:text-base font-medium"
+            className="text-text-primary text-[13px] md:text-[14px] font-medium leading-[1.55]"
             style={{ fontFamily: "var(--font-sans)" }}
           >
             {q}
@@ -73,15 +73,15 @@ function FaqItem({
         </span>
         <span className="shrink-0 text-main">
           {open ? (
-            <Minus className="w-5 h-5" strokeWidth={1.5} />
+            <Minus className="w-4 h-4" strokeWidth={1.5} />
           ) : (
-            <Plus className="w-5 h-5" strokeWidth={1.5} />
+            <Plus className="w-4 h-4" strokeWidth={1.5} />
           )}
         </span>
       </button>
       {open && (
-        <div className="pl-[calc(1rem+3.5em)] pr-2 pb-6 -mt-1">
-          <p className="text-text-secondary text-sm leading-[1.9] max-w-[640px]">
+        <div className="px-4 md:px-5 pb-5 -mt-1 pl-[calc(1rem+3em)] md:pl-[calc(1.25rem+3em)]">
+          <p className="text-text-secondary text-[12px] md:text-[13px] leading-[1.9]">
             {a}
           </p>
         </div>
@@ -94,28 +94,32 @@ export default function FaqSection() {
   const sectionRef = useScrollIn<HTMLDivElement>();
 
   return (
-    <section id="faq" className="bg-bg-primary py-[var(--section-py)]">
+    <section id="faq" className="bg-white py-[var(--section-py)]">
       <div
         ref={sectionRef}
-        className="max-w-[1000px] mx-auto px-[var(--page-px)] scroll-in"
+        className="max-w-[1100px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        <p className="font-section-label text-lime-deep text-xs md:text-sm mb-3 tracking-[0.15em]">
+        <p
+          className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
+          style={{ color: "#486B00", fontWeight: 600 }}
+        >
           FAQ
         </p>
         <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
           よくある質問。
         </h2>
-        <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
-          よくお寄せいただく質問を、まとめて。
+        <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
+          家づくりに関する疑問にお答えします。気になる項目をクリック(タップ)してご覧ください。
         </p>
 
-        <div>
+        {/* 2列折りたたみ */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {FAQS.map((faq, i) => (
             <FaqItem key={i} q={faq.q} a={faq.a} index={i} />
           ))}
         </div>
 
-        <p className="text-text-secondary text-xs mt-8 text-center">
+        <p className="text-text-secondary text-xs mt-10 text-center">
           その他のご質問は、
           <a href="/contact" className="text-main underline mx-1">資料請求</a>
           または

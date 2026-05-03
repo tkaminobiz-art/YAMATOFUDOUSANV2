@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
+import { Building2, MapPin, Users, Calendar, type LucideIcon } from "lucide-react";
 
 /*
   ScaleBanner — 2026-04-30
@@ -24,6 +25,7 @@ import { useScrollIn } from "@/hooks/useScrollIn";
 */
 
 type Stat = {
+  Icon: LucideIcon;
   value: string;
   unit: string;
   prefix?: string;
@@ -33,6 +35,7 @@ type Stat = {
 
 const STATS: readonly Stat[] = [
   {
+    Icon: Building2,
     value: "600",
     unit: "棟",
     prefix: "累計",
@@ -40,6 +43,7 @@ const STATS: readonly Stat[] = [
     sub: "奈良・京都南部で積み重ねた家づくり",
   },
   {
+    Icon: MapPin,
     value: "90",
     unit: "区画",
     prefix: "累計分譲",
@@ -47,6 +51,7 @@ const STATS: readonly Stat[] = [
     sub: "土地の仕入れから、自社で。",
   },
   {
+    Icon: Users,
     value: "50",
     unit: "組",
     prefix: "",
@@ -54,6 +59,7 @@ const STATS: readonly Stat[] = [
     sub: "本音のまま、99.9%そのまま掲載。",
   },
   {
+    Icon: Calendar,
     value: "14",
     unit: "年",
     prefix: "",
@@ -85,60 +91,75 @@ export default function ScaleBanner() {
           </p>
         </div>
 
-        {/* 4つの数字 — バーン配置 */}
+        {/* 4つの数字 — アイコン付きカード */}
         <ul className="grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-6 md:gap-x-8 lg:gap-x-10">
-          {STATS.map((stat) => (
-            <li
-              key={stat.label}
-              className="flex flex-col items-start scroll-in"
-            >
-              {stat.prefix && (
-                <span className="text-text-secondary text-[10px] md:text-xs tracking-[0.12em] mb-2">
-                  {stat.prefix}
-                </span>
-              )}
-
-              {/* 巨大数字 — Oswald で立たせる */}
-              <div className="flex items-baseline gap-2 leading-none mb-3">
-                <span
-                  className="text-text-primary tabular-nums"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontWeight: 500,
-                    fontSize: "clamp(64px, 9vw, 132px)",
-                    letterSpacing: "-0.02em",
-                    lineHeight: 0.85,
-                  }}
-                >
-                  {stat.value}
-                </span>
-                <span
-                  className="text-text-primary"
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontWeight: 500,
-                    fontSize: "clamp(18px, 2vw, 26px)",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {stat.unit}
-                </span>
-              </div>
-
-              {/* 説明 */}
-              <p
-                className="text-text-primary text-[13px] md:text-sm leading-relaxed mb-1.5"
-                style={{ fontWeight: 500 }}
+          {STATS.map((stat) => {
+            const Icon = stat.Icon;
+            return (
+              <li
+                key={stat.label}
+                className="flex flex-col items-start scroll-in"
               >
-                {stat.label}
-              </p>
-              {stat.sub && (
-                <p className="text-text-secondary text-[11px] md:text-xs leading-relaxed">
-                  {stat.sub}
+                {/* アイコン — 小さく、タイトル前に */}
+                <span
+                  aria-hidden
+                  className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full mb-4"
+                  style={{
+                    background: "rgba(162, 197, 35, 0.12)",
+                    color: "#486B00",
+                  }}
+                >
+                  <Icon className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.6} />
+                </span>
+
+                {stat.prefix && (
+                  <span className="text-text-secondary text-[10px] md:text-xs tracking-[0.12em] mb-2">
+                    {stat.prefix}
+                  </span>
+                )}
+
+                {/* 巨大数字 — Oswald で立たせる */}
+                <div className="flex items-baseline gap-2 leading-none mb-3">
+                  <span
+                    className="text-text-primary tabular-nums"
+                    style={{
+                      fontFamily: "var(--font-oswald)",
+                      fontWeight: 500,
+                      fontSize: "clamp(64px, 9vw, 132px)",
+                      letterSpacing: "-0.02em",
+                      lineHeight: 0.85,
+                    }}
+                  >
+                    {stat.value}
+                  </span>
+                  <span
+                    className="text-text-primary"
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontWeight: 500,
+                      fontSize: "clamp(18px, 2vw, 26px)",
+                      letterSpacing: "0.02em",
+                    }}
+                  >
+                    {stat.unit}
+                  </span>
+                </div>
+
+                {/* 説明 */}
+                <p
+                  className="text-text-primary text-[13px] md:text-sm leading-relaxed mb-1.5"
+                  style={{ fontWeight: 500 }}
+                >
+                  {stat.label}
                 </p>
-              )}
-            </li>
-          ))}
+                {stat.sub && (
+                  <p className="text-text-secondary text-[11px] md:text-xs leading-relaxed">
+                    {stat.sub}
+                  </p>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* 締めの一行 — 「会社案内じゃなく、実績で語る」トーン */}

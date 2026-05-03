@@ -5,114 +5,93 @@ import {
   BODY_VARIANTS,
 } from "@/components/sections/HeroMagazine.fonts";
 import ScaleBanner from "@/components/sections/ScaleBanner";
-import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
-import FreedomOfDesign from "@/components/sections/FreedomOfDesign";
+import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import PriceSection from "@/components/sections/PriceSection";
-import MidCta from "@/components/sections/MidCta";
-import VoiceSection from "@/components/sections/VoiceSection";
-import WorksSection from "@/components/sections/WorksSection";
-import FlowSection from "@/components/sections/FlowSection";
+import PerformanceGrid from "@/components/sections/PerformanceGrid";
+import MiniSimulator from "@/components/sections/MiniSimulator";
 import LotsSection from "@/components/sections/LotsSection";
+import WorksSection from "@/components/sections/WorksSection";
+import VoiceSection from "@/components/sections/VoiceSection";
+import MidCta from "@/components/sections/MidCta";
 import FaqSection from "@/components/sections/FaqSection";
-import AccessSection from "@/components/sections/AccessSection";
 import FinalCta from "@/components/sections/FinalCta";
-import StandardAndQualitySection from "@/components/sections/StandardAndQualitySection";
-import PhotoBreath from "@/components/sections/PhotoBreath";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
 // 2026-04-24 確定: Z(Noto Sans JP catalog) + IV(Industrial: Oswald + Noto Sans JP 500)
-// 明朝(Shippori)は退役、shukobuild型カタログ方針に統一
 const HERO_HEADLINE_VARIANT =
   FONT_VARIANTS.find((v) => v.id === "noto-sans") ?? FONT_VARIANTS[0];
 const HERO_BODY_VARIANT =
   BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
 
 /*
-  18セクション構成 — 2026-04-20 情報整理(audit) reorder
+  TOP 構成 — 2026-05-03 v3 (参考画像準拠・Progressive Disclosure 適用)
 
-  読者像: ① 他社見積もりで諦めかけ ② 「ハウスメーカー奈良」検索流入
-  目的: 来場予約 / 資料請求 / LINE の問い合わせ獲得
+  v2(17セクション・線形展開) → v3(12セクション・段階的開示)
+  ユーザー方針: 「全部見せず、興味あるものだけ引き出せる構成」
 
-  【①フック】
-  1. HeroMagazine        C-2 Magazine Editorial「諦めたもの…標準になる家。」+ 2,280万〜
+  【フック・権威】
+  1. HeroMagazine          写真主役 + 価格 + CTA
+  2. ScaleBanner           4実績(アイコン付き) — バーン
 
-  【②理屈】
-  2. MechanismEnhanced   なぜ安いか(ASAGIRI/C-2 Magazine Editorial + ConceptSection吸収)
-                         2026-04-20: strong catch「やまとは安い？いいえ、違います。」
+  【理屈・証拠】
+  3. MechanismEnhanced     坪単価比較 + 3つの仕組み
+  4. ZeroDeclaration       8項目¥0テーブル(既に整理済み)
+  5. PriceSection          3プラン価格
 
-  【③証拠】
-  3. ZeroDeclaration     追加費用ゼロ
-  4. PriceSection        3プラン価格(三つの、家。)
+  【商品魅力(縮減・能動性)】
+  6. PerformanceGrid       8項目アイコングリッド(新規・MATERIALS型)
+  7. MiniSimulator         3項目入力で概算建築費(新規・自分ごと化)
+  8. LotsSection           AREAマップ+チップ(刷新・対応エリア訴求)
 
-  【④商品の魅力】
-     2026-04-21 reorder: 商品(ラインナップ) → 中身 → 可変性 → 置く場所
-     の論理順に整理(従来: 土地→自由→標準で商品魅力の流れが途切れていた)
-  5. StandardAndQualitySection  標準仕様(商品の中身)
-  6. FreedomOfDesign     完全自由設計(商品の可変性)
-  7. LotsSection         土地6件 teaser → /lots (商品を置く場所)
+  【社会的証明(カルーセル化)】
+  9. WorksSection          施工事例カルーセル
+  10. VoiceSection         お客様の声カルーセル(シネマグラフ含む)
 
-  【⑤社会的証明(信頼)】
-  2026-04-21: StaffStory をトップから撤去(/staff へ完全移譲)
-              "人"の存在感は Voice(50組の声) + Works(施工事例)で担保
-  9. VoiceSection        3件 teaser → /voice
-  10. WorksSection       3件 teaser → /works
+  【行動】
+  11. MidCta               中間CTA
+  12. FaqSection           2列折りたたみFAQ
+  13. FinalCta             3カード締め(来場/資料/電話)
 
-  【⑥行動喚起①】
-  13. MidCta             ここまで読んで
-
-  【⑦行動直前】
-  14. FlowSection        家づくりの流れ
-  15. FaqSection         残不安
-  ※ 2026-04-22: MoneyTalk teaser を撤去。資金計画は独立ページ /money に集約。
-                ヘッダーNAVに「資金計画」を追加し、TOPでは PriceSection + ZeroDeclaration
-                でお金は2回触れている(三度目は dilution)ため。
-
-  【⑧クロージング】
-  17. AccessSection      会社概要
-  18. FinalCta           決断
-
-  --- 削除済 ---
-  - HeroVoiceMagazine: Hero直後の二度打ちで dilution(声は Voice で見せる)
-  - EditorialPhotoGallery(前): PostPricing と同種で重複
-  - PostPricingEditorialGallery (2026-04-21 design-critic #7):
-    周囲の白基調と暗背景マーキーが断絶し呼吸帯として機能せず
-  - StaffStory (2026-04-21 ユーザー判断): 別ページ /staff で詳細を読ませる構造に
-    (ファイル自体は保持し再利用可能)
+  --- 削除済(段階3で整理) ---
+  - PhotoBreath ×2: 呼吸帯、現状のスクロール量を考えると過剰
+  - StandardAndQualitySection: PerformanceGrid に役割吸収(12商品グリッドは
+    別途別ページに移管予定 or 将来の /standards ページ)
+  - FreedomOfDesign: PerformanceGrid に統合
+  - FlowSection: /money の Q.08 に同等情報あり、TOPからは外す
+  - AccessSection: フッターに本社住所があり、TOPでの再掲は dilution
 */
 
 export default function Home() {
   return (
     <>
       <Header />
-      {/* pb-[72px] md:pb-0 : モバイルの FloatingCta(h≈64px)下敷き防止 */}
       <main className="pb-[72px] md:pb-0">
+        {/* フック・権威 */}
         <HeroMagazine
           variant={HERO_HEADLINE_VARIANT}
           bodyVariant={HERO_BODY_VARIANT}
         />
         <ScaleBanner />
+
+        {/* 理屈・証拠 */}
         <MechanismEnhanced />
-        <PhotoBreath
-          src="/images/fv/hero-02-exterior-sakyo.webp"
-          alt="やまとが建てた邸宅の外観（左京）"
-        />
         <ZeroDeclaration />
-        <PhotoBreath
-          src="/images/newsozai/interior-ldk-01.webp"
-          alt="やまとが建てた家のLDK"
-        />
         <PriceSection />
-        <StandardAndQualitySection />
-        <FreedomOfDesign />
+
+        {/* 商品魅力(能動性) */}
+        <PerformanceGrid />
+        <MiniSimulator />
         <LotsSection />
-        <VoiceSection />
+
+        {/* 社会的証明(カルーセル) */}
         <WorksSection />
+        <VoiceSection />
+
+        {/* 行動 */}
         <MidCta />
-        <FlowSection />
         <FaqSection />
-        <AccessSection />
         <FinalCta />
       </main>
       <Footer />
