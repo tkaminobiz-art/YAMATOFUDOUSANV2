@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 const NAV_GROUPS = [
@@ -30,28 +32,85 @@ const NAV_GROUPS = [
   },
 ];
 
+const SNS = [
+  {
+    label: "Instagram",
+    href: "https://instagram.com/yamatonoie",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="w-[18px] h-[18px]">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.3" cy="6.7" r="0.9" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@yamatofudosan",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]">
+        <path d="M16.5 3h-2.7v12.2c0 1.6-1.3 2.9-2.9 2.9s-2.9-1.3-2.9-2.9 1.3-2.9 2.9-2.9c.3 0 .6 0 .9.1V9.6c-.3 0-.6-.1-.9-.1-3.2 0-5.7 2.6-5.7 5.7s2.6 5.7 5.7 5.7 5.7-2.6 5.7-5.7V9.5c1.1.7 2.4 1.1 3.8 1.1V7.9c-2.1 0-3.9-1.7-3.9-3.9V3z" />
+      </svg>
+    ),
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@user-ed2cw4tx9o",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-[20px] h-[20px]">
+        <path d="M21.6 7.2c-.2-.9-.9-1.6-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8c.2.9.9 1.6 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3-5.2 3z" />
+      </svg>
+    ),
+  },
+];
+
 export default function Footer() {
+  const handleScrollTop = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   return (
-    <footer className="bg-text-primary text-white">
-      <div className="max-w-[1200px] mx-auto px-[var(--page-px)] py-12 md:py-16">
-        {/* ===== ナビグループ ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12 md:mb-16">
+    <footer
+      className="relative overflow-hidden text-[#D9CFB7]"
+      style={{ backgroundColor: "#1A1714", fontFamily: "var(--font-shippori)" }}
+    >
+      {/* ===== 木目（年輪）テクスチャ - 右側 ===== */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-[-20%] w-[80%] opacity-[0.12]"
+        style={{
+          backgroundImage: [
+            "radial-gradient(ellipse 60% 110% at 100% 50%, transparent 0 18%, rgba(212,189,168,0.55) 18.4% 18.6%, transparent 19% 24%, rgba(212,189,168,0.45) 24.4% 24.6%, transparent 25% 31%, rgba(212,189,168,0.5) 31.4% 31.6%, transparent 32% 39%, rgba(212,189,168,0.45) 39.4% 39.6%, transparent 40% 48%, rgba(212,189,168,0.4) 48.4% 48.6%, transparent 49% 58%, rgba(212,189,168,0.35) 58.4% 58.6%, transparent 59% 68%, rgba(212,189,168,0.3) 68.4% 68.6%, transparent 69%)",
+            "radial-gradient(ellipse 55% 100% at 95% 50%, transparent 0 14%, rgba(212,189,168,0.3) 14.3% 14.5%, transparent 15% 22%, rgba(212,189,168,0.25) 22.3% 22.5%, transparent 23% 33%, rgba(212,189,168,0.22) 33.3% 33.5%, transparent 34% 45%, rgba(212,189,168,0.2) 45.3% 45.5%, transparent 46%)",
+          ].join(","),
+        }}
+      />
+
+      <div className="relative max-w-[1200px] mx-auto px-[var(--page-px)] pt-20 md:pt-24 pb-10">
+        {/* ===== ナビグループ（3列） ===== */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-10 mb-20 md:mb-24">
           {NAV_GROUPS.map((group) => (
             <div key={group.title}>
-              <p
-                className="text-white/50 text-[11px] tracking-[0.15em] mb-4 font-medium uppercase"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
+              <p className="flex items-center gap-3 text-[12px] tracking-[0.2em] mb-7 text-[#9C927B]">
+                <span aria-hidden className="inline-block w-5 h-px bg-[#9C927B]" />
                 {group.title}
               </p>
-              <ul className="space-y-2.5">
+              <ul className="space-y-5">
                 {group.items.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-white/80 text-sm hover:text-white transition-colors"
+                      className="group inline-flex items-center gap-2 text-[15px] tracking-[0.12em] text-[#E0D6BE] hover:text-white transition-colors"
                     >
-                      {item.label}
+                      <span>{item.label}</span>
+                      <span
+                        aria-hidden
+                        className="text-[#9C927B] text-[13px] translate-y-[-1px] group-hover:text-white transition-colors"
+                      >
+                        ›
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -60,59 +119,99 @@ export default function Footer() {
           ))}
         </div>
 
+        {/* ===== 区切り線 ===== */}
+        <div className="h-px bg-[#3A342B]" />
+
         {/* ===== 会社情報 + SNS ===== */}
-        <div className="border-t border-white/10 pt-8 md:pt-10 grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 pt-10 md:pt-12 pb-10">
+          {/* 左: ロゴ + 会社情報 */}
           <div>
-            <p className="text-white font-medium text-sm mb-2">
-              株式会社やまと不動産
-            </p>
-            <p className="text-white/60 text-xs leading-[1.8]">
-              〒630-8115 奈良県奈良市大宮町1丁目6番21<br />
-              TEL: 0742-36-1123 / FAX: 0742-36-1888<br />
+            <div className="flex items-center gap-4 mb-5">
+              {/* ダイヤ型ロゴ */}
+              <svg viewBox="0 0 40 40" className="w-[38px] h-[38px] text-[#D6C9A8]" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <rect x="6" y="6" width="28" height="28" transform="rotate(45 20 20)" />
+                <line x1="11" y1="11" x2="29" y2="29" />
+                <line x1="29" y1="11" x2="11" y2="29" />
+              </svg>
+              <p className="text-[17px] tracking-[0.12em] text-[#E0D6BE]">
+                株式会社やまと不動産
+              </p>
+            </div>
+            <p className="text-[12.5px] leading-[2] tracking-[0.06em] text-[#A89E85]">
+              〒630-8115 奈良県奈良市大宮町1丁目6番21
+              <br />
+              TEL: 0742-36-1123 / FAX: 0742-36-1888
+              <br />
               営業時間 9:00〜19:00（火・水定休）
             </p>
           </div>
-          <div className="md:text-right">
-            <p className="text-white/50 text-[11px] tracking-[0.15em] mb-3 font-medium uppercase">
-              Follow
+
+          {/* 右: FOLLOW US + SNSアイコン（縦線で左にセパレート） */}
+          <div className="md:pl-12 md:border-l md:border-[#3A342B]">
+            <p
+              className="text-[11px] tracking-[0.3em] mb-5 text-[#9C927B]"
+              style={{ fontFamily: "var(--font-inter)" }}
+            >
+              FOLLOW US
             </p>
-            <div className="flex md:justify-end gap-5">
-              <a
-                href="https://instagram.com/yamatonoie"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 text-xs hover:text-white transition-colors"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://www.tiktok.com/@yamatofudosan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 text-xs hover:text-white transition-colors"
-              >
-                TikTok
-              </a>
-              <a
-                href="https://www.youtube.com/@user-ed2cw4tx9o"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 text-xs hover:text-white transition-colors"
-              >
-                YouTube
-              </a>
+            <div className="flex flex-wrap gap-x-10 gap-y-4">
+              {SNS.map((sns) => (
+                <a
+                  key={sns.label}
+                  href={sns.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 text-[#E0D6BE] hover:text-white transition-colors"
+                >
+                  <span className="text-[#D6C9A8] group-hover:text-white transition-colors">
+                    {sns.icon}
+                  </span>
+                  <span
+                    className="text-[13px] tracking-[0.15em]"
+                    style={{ fontFamily: "var(--font-inter)" }}
+                  >
+                    {sns.label}
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* ===== コピーライト ===== */}
-        <p
-          className="text-white/40 text-xs tracking-wider text-center md:text-left border-t border-white/10 pt-6"
-          style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-        >
-          &copy; {new Date().getFullYear()} Yamato Fudousan Co., Ltd.
-        </p>
+        {/* ===== 区切り線 ===== */}
+        <div className="h-px bg-[#3A342B]" />
+
+        {/* ===== 最下段: コピーライト + 規約リンク ===== */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-7">
+          <p
+            className="text-[12px] tracking-[0.12em] text-[#7E7460]"
+            style={{ fontFamily: "var(--font-inter)" }}
+          >
+            &copy; {new Date().getFullYear()} Yamato Fudousan Co., Ltd.
+          </p>
+          <div className="flex items-center gap-6 text-[12px] tracking-[0.12em] text-[#A89E85]">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              プライバシーポリシー
+            </Link>
+            <span aria-hidden className="text-[#3A342B]">|</span>
+            <Link href="/sitemap" className="hover:text-white transition-colors">
+              サイトマップ
+            </Link>
+          </div>
+        </div>
       </div>
+
+      {/* ===== スクロールトップ ボタン（右下フロート） ===== */}
+      <button
+        type="button"
+        onClick={handleScrollTop}
+        aria-label="ページトップへ戻る"
+        className="absolute right-6 md:right-10 bottom-6 md:bottom-8 w-12 h-12 rounded-full border border-[#5C5444] flex items-center justify-center text-[#D6C9A8] hover:border-[#D6C9A8] hover:text-white transition-colors"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
+          <path d="M6 14l6-6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </footer>
   );
 }
