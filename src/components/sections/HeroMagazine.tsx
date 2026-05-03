@@ -224,7 +224,8 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 下段: CTA(権威バッジは ScaleBanner セクションに集約 / 2026-04-30 専務レビュー反映) */}
+        {/* 下段: CTA(2026-05-03 v6: 権威バッジは別aside で右上に再導入。
+            ScaleBanner の数字訴求とは別に "金のエンブレム" でFV単体の権威を立てる) */}
         <div className="pb-8 md:pb-14 px-[var(--page-px)]">
           <div className="max-w-[1400px] mx-auto">
             {/* CTA — フォント切替範囲外(CtaButton側で固定)・右寄せ */}
@@ -281,6 +282,34 @@ export default function HeroMagazine({
           >
             花鳥風月の家
           </p>
+        </aside>
+
+        {/* === 権威バッジ === 2026-05-03: 600棟以上の実績(MCP生成)
+            FV 右上に配置。AI 生成のゴージャスな金エンブレム。
+            黒背景はFV写真と自然に溶け、放射状ハロウで浮き上がる構成。
+            sm 以下では小さく表示, md 以上で本サイズ */}
+        <aside
+          aria-label="累計600棟以上の建築実績"
+          className="absolute right-4 sm:right-6 md:right-10 lg:right-14 top-20 sm:top-24 md:top-[18%] z-20 pointer-events-none"
+        >
+          <div
+            className="relative"
+            style={{
+              width: "clamp(96px, 13vw, 168px)",
+              aspectRatio: "1 / 1",
+              filter:
+                "drop-shadow(0 18px 40px rgba(0,0,0,0.55)) drop-shadow(0 4px 12px rgba(180,140,40,0.18))",
+            }}
+          >
+            <Image
+              src="/images/badges/yamato-600-badge.webp"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 640px) 96px, (max-width: 1024px) 130px, 168px"
+              className="object-contain"
+            />
+          </div>
         </aside>
       </div>
     </section>
