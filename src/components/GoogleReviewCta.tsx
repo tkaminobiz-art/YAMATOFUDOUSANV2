@@ -102,11 +102,11 @@ export default function GoogleReviewCta({
             Google Reviews
           </p>
           <h3 className="text-text-primary text-[17px] md:text-[19px] font-medium leading-[1.4] mb-2">
-            {headline || "Googleで口コミを書いていただけませんか。"}
+            {headline || "Googleで口コミを書きませんか。"}
           </h3>
           <p className="text-text-secondary text-[13px] md:text-[14px] leading-[1.85] mb-4">
             {description ||
-              "やまとで建てたご家族の体験を、これから検討される方の参考にさせてください。短い一言でも構いません。"}
+              "これから検討される方への参考に、やまとで建てた感想をひと言。短くて構いません。"}
           </p>
           <div className="flex flex-wrap gap-3">
             <a

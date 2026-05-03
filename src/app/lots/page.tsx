@@ -99,7 +99,7 @@ export default function LotsIndexPage() {
                   </div>
 
                   <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
-                    価格・駅徒歩・小学校・スーパーまで、ご家族の暮らしに合わせて絞り込めます。土地と建物をまとめれば、余計な金融コストも抑えられます。
+                    価格・駅徒歩・小学校・スーパーまで、暮らしの条件で絞り込み。土地と建物をまとめれば、余計な金融コストも抑えられます。
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">

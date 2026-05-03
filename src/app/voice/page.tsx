@@ -168,8 +168,8 @@ export default function VoiceIndexPage() {
         <section className="bg-white py-[clamp(40px,5vw,80px)]">
           <div className="max-w-[960px] mx-auto px-[var(--page-px)]">
             <GoogleReviewCta
-              headline="やまとで建てた方へ。Googleで口コミを書いていただけませんか。"
-              description="ご家族の率直な体験は、これから家を考える方にとって何よりの参考になります。短い一言でも、率直なご感想で構いません。"
+              headline="やまとで建てた方へ、Googleで口コミを書きませんか。"
+              description="これから家を考える方にとって、率直な感想ほど参考になります。短いひと言で構いません。"
             />
           </div>
         </section>

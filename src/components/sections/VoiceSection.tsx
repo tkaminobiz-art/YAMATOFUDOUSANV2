@@ -222,7 +222,7 @@ export default function VoiceSection() {
               50組の家族が、本音で答えています。
             </h2>
             <p className="mt-3 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-              装飾も、誇張もありません。奈良・京都から届いた、率直な声です。
+              装飾も、誇張もなし。奈良・京都の50組から届いた、率直な声です。
             </p>
           </div>
 

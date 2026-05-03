@@ -81,7 +81,7 @@ export default function MiniSimulator() {
               費用をシミュレーション。
             </h2>
             <p className="mt-5 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]">
-              ご希望の条件を入力すると、おおよその建築費が分かります。月々の返済目安や、土地込みの総予算は <Link href="/money" className="text-main hover:underline">資金計画ページ</Link> で詳しくご相談ください。
+              条件を入れるだけで、おおよその建築費がすぐ出ます。月々の返済目安や土地込みの総予算は <Link href="/money" className="text-main hover:underline">資金計画ページ</Link> で詳しく。
             </p>
 
             <Link

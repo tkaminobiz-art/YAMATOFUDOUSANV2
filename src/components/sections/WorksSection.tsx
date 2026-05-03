@@ -104,7 +104,7 @@ export default function WorksSection() {
               実際の建築事例。
             </h2>
             <p className="mt-3 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-              やまとが実際に建てた{TOTAL_WORKS_COUNT}件のご家族の家。横にスワイプしてご覧ください。
+              やまとが建てた、{TOTAL_WORKS_COUNT}件のお家。横にスワイプして見られます。
             </p>
           </div>
 

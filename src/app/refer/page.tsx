@@ -77,7 +77,7 @@ export default function ReferPage() {
                   </h1>
 
                   <p className="text-text-primary/85 text-[14px] md:text-[16px] leading-[1.95] mb-8 max-w-[560px]">
-                    やまとで建てたご家族からの「うちでも建てて良かった」というひと言は、これから家づくりを考える方にとって、何よりの後押しになります。ご紹介の輪を、丁寧に受けとめさせてください。
+                    やまとで建てた方の「うちでも良かった」のひと言は、これから家を考える方にとって、何よりの後押しになります。ご紹介、ありがたく受けとめます。
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
@@ -122,7 +122,7 @@ export default function ReferPage() {
                   Icon: MessageCircle,
                   title: "下のフォームから、ご一報ください。",
                   body:
-                    "ご紹介者様のお名前と、ご紹介先のご様子を簡単にお知らせください。先方には、無理のないタイミングでこちらからご挨拶差し上げます。",
+                    "お名前と、ご紹介先のご様子をひと言。先方の都合に合わせて、こちらからご挨拶します。",
                 },
                 {
                   no: "03",
@@ -227,7 +227,7 @@ export default function ReferPage() {
                   style={{ background: FOREST }}
                 />
                 <span>
-                  <strong className="font-medium">無理な営業はいたしません。</strong>
+                  <strong className="font-medium">無理な営業はしません。</strong>
                   ご紹介先の方が「今は建てない」とお決めになっても、それで構いません。
                 </span>
               </li>
@@ -238,7 +238,7 @@ export default function ReferPage() {
                 />
                 <span>
                   <strong className="font-medium">ご紹介者様のお名前は、ご了承いただいた範囲のみ</strong>
-                  でお伝えします。匿名でのご紹介も可能です。
+                  でお伝えします。匿名のご紹介もできます。
                 </span>
               </li>
               <li className="flex gap-3">
@@ -248,7 +248,7 @@ export default function ReferPage() {
                 />
                 <span>
                   <strong className="font-medium">お礼の品は、ご来場時とご成約時の2段階</strong>
-                  でお渡しします。具体的な品目はご案内時に明示します。
+                  でお渡しします。具体的な品目はご案内時にお伝えします。
                 </span>
               </li>
               <li className="flex gap-3">
@@ -257,8 +257,8 @@ export default function ReferPage() {
                   style={{ background: FOREST }}
                 />
                 <span>
-                  <strong className="font-medium">ご紹介の輪は、ゆっくりで構いません。</strong>
-                  「ちょうど家のお話が出た」というタイミングで、思い出していただければ十分です。
+                  <strong className="font-medium">焦らず、ゆっくりで構いません。</strong>
+                  「家の話が出た」というタイミングで、思い出してもらえれば。
                 </span>
               </li>
             </ul>

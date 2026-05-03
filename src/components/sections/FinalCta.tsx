@@ -66,8 +66,8 @@ export default function FinalCta() {
           ご相談・資料請求はこちらから。
         </h2>
         <p className="text-text-secondary text-sm md:text-base leading-[1.9] text-center max-w-[640px] mx-auto mb-12 md:mb-14">
-          土地探しや資金計画のご相談もあります。お気軽にお問い合わせください。
-          強引な勧誘はいたしません。
+          土地探しや資金計画も、まとめてご相談ください。
+          強引な勧誘はしません。
         </p>
 
         {/* 3カード */}
@@ -151,7 +151,7 @@ export default function FinalCta() {
         </ul>
 
         <p className="text-text-secondary text-[11px] md:text-[12px] mt-10 text-center">
-          ご相談・お問い合わせは無料です。お気軽にどうぞ。
+          ご相談・お問い合わせは無料です。
         </p>
       </div>
     </section>

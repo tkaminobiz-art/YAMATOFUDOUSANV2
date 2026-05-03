@@ -34,17 +34,17 @@ const ITEMS: readonly Item[] = [
   {
     Icon: Wind,
     title: "高気密・高断熱",
-    body: "一年中過ごしやすい室内環境を実現。冷暖房効率も高めます。",
+    body: "一年中、室温が安定。冷暖房効率も上がります。",
   },
   {
     Icon: Shield,
     title: "耐震等級3",
-    body: "最高等級の耐震性能で家族を守ります。長期にわたり安心。",
+    body: "最高等級の耐震性能。地震に強い構造で建てます。",
   },
   {
     Icon: Award,
     title: "長期優良住宅対応",
-    body: "税制優遇やローン優遇を受けられる、国認定の住宅基準。",
+    body: "税制優遇やローン優遇が受けられる、国認定の住宅基準。",
   },
   {
     Icon: Leaf,
@@ -59,17 +59,17 @@ const ITEMS: readonly Item[] = [
   {
     Icon: Fan,
     title: "第一種換気システム",
-    body: "きれいな空気を保ち、健康的な暮らしへ。",
+    body: "きれいな空気を、24時間。",
   },
   {
     Icon: HardHat,
     title: "施工品質",
-    body: "自社施工と厳しい管理で、高品質な家づくりを。",
+    body: "自社施工と現場管理で、品質を一定に。",
   },
   {
     Icon: HeartHandshake,
     title: "アフターサポート",
-    body: "引き渡し後も安心の長期サポート体制。",
+    body: "引き渡し後も、長く点検とサポート。",
   },
 ];
 
@@ -101,7 +101,7 @@ export default function PerformanceGrid() {
             妥協しない家づくり。
           </h2>
           <p className="mt-4 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-            長く快適に暮らすため、厳選した素材と高い住宅性能で安心の住まいを実現します。
+            長く快適に暮らせるよう、素材も住宅性能も妥協せずに選んでいます。
           </p>
         </div>
 

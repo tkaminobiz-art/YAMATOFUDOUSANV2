@@ -68,7 +68,7 @@ export default function LotsSection() {
               幅広いエリアで対応。
             </h2>
             <p className="mt-5 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[480px]">
-              地域を知り尽くした家づくりで、安心・快適な暮らしをお届けします。土地探しから建物まで、ご家族の暮らしに合わせてご相談に乗ります。
+              地域を知り尽くした家づくり。土地探しから建物まで、まとめてご相談ください。
             </p>
 
             <div className="flex items-baseline gap-2 mt-8 mb-6">

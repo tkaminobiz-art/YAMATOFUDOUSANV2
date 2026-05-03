@@ -55,11 +55,11 @@ export default function LineLandFeedCta({ variant = "default" }: Props) {
               >
                 公開前の分譲地を、
                 <br />
-                LINEで先にお届けします。
+                LINEで先にお届け。
               </h2>
               <p className="mt-5 text-text-primary/80 text-[14px] md:text-[15px] leading-[1.95] max-w-[560px]">
-                SUUMO・HOME&apos;S への掲載前に、ご登録の方へお先にご案内します。
-                配信は月に数通まで、煽りや催促はいたしません。
+                SUUMO・HOME&apos;S 掲載前の分譲地を、登録の方へ先にお届けします。
+                配信は月に数通、催促はしません。
               </p>
             </div>
             <a
@@ -102,11 +102,11 @@ export default function LineLandFeedCta({ variant = "default" }: Props) {
                 </span>
               </div>
               <h3 className="text-text-primary text-[18px] md:text-[22px] font-medium leading-[1.5] mb-3">
-                公開前の分譲地を、LINEで先にお届けします。
+                公開前の分譲地を、LINEで先にお届け。
               </h3>
               <p className="text-text-primary/80 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
-                SUUMO・HOME&apos;S への掲載前に、ご登録の方へお先にご案内します。
-                配信は月に数通まで、煽りや催促はいたしません。
+                SUUMO・HOME&apos;S 掲載前の分譲地を、登録の方へ先にお届けします。
+                配信は月に数通、催促はしません。
               </p>
             </div>
             <a

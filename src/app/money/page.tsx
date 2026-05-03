@@ -129,8 +129,8 @@ export default function MoneyIndexPage() {
 
                   {/* サブコピー */}
                   <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[480px]">
-                    月々の支払い・諸費用・将来の負担まで。
-                    無理のない計画を、ご家族の暮らしに合わせてご一緒に確認します。
+                    月々の支払いも、将来の負担も。
+                    最初に整理してから進めます。
                   </p>
 
                   {/* CTA */}
@@ -314,7 +314,7 @@ export default function MoneyIndexPage() {
               className="text-[12px] md:text-[13px] tracking-[0.18em] mb-8 font-bold"
               style={{ color: FOREST }}
             >
-              はじめの一歩を、ご一緒に。
+              気になる点から、ひとつずつ。
             </p>
             <p
               className="text-text-primary text-[clamp(24px,3.4vw,44px)] leading-[1.4] tracking-[-0.01em]"
