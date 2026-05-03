@@ -262,26 +262,23 @@ export default function PriceSection() {
                   <div className="relative aspect-[4/5] bg-bg-secondary/50">
                     <Image
                       src={floorplan.image}
-                      alt={`${plan.name}モデルに近い間取り例(${plan.layout}・${plan.tsubo})`}
+                      alt={`過去の設計事例(${plan.layout}・${plan.tsubo})`}
                       fill
                       className="object-contain p-3 md:p-4"
                       sizes="(max-width: 640px) 100vw, 33vw"
                     />
                   </div>
-                  {/* ラベル */}
+                  {/* ラベル(ブランド表記なし — 過去事例で仕様が異なるため) */}
                   <div className="px-5 py-4 md:px-6 md:py-5 border-t border-text-primary/10">
                     <div className="flex items-baseline gap-3">
                       <span
-                        className="font-sans leading-none text-lime-deep"
-                        style={{ fontWeight: 900, fontSize: "clamp(24px, 2vw, 30px)" }}
+                        className="font-sans font-bold text-text-primary leading-none"
+                        style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
                       >
-                        {plan.name}
+                        {plan.layout}
                       </span>
-                      <span className="font-inter text-text-secondary text-[10px] md:text-[11px] tracking-[0.2em] font-bold">
-                        {plan.reading}
-                      </span>
-                      <span className="ml-auto font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.08em]">
-                        {plan.layout} · {plan.tsubo}
+                      <span className="font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.08em]">
+                        {plan.tsubo}
                       </span>
                     </div>
                     <p className="mt-2 font-sans text-text-primary/70 text-[11px] md:text-[12px] leading-[1.7]">

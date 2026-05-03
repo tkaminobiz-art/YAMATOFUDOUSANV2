@@ -26,14 +26,14 @@ import { useScrollIn } from "@/hooks/useScrollIn";
       右側に LDK 写真+実績フローティングカード、最下部に信頼ストリップ。
       参考画像準拠の構成で「ここから動くべき理由」が一目で伝わる導線へ。
 
-  数字スワップゾーン:
-    STAT_FACTS の値はやまと公式データ(reference_yamato_official_data.md)から引用。
-    資金計画の実数(◯◯件作成 / 満足度 ◯%)が確認でき次第、ここを差し替えること。
+  STAT_FACTS は 2026-05-03 専務確認済みの実数:
+    - 引渡し件数 600件以上
+    - 資金計画作成実績 1,000件以上
 */
 
 const STAT_FACTS = [
-  { label: "創業からの歩み", value: "14", unit: "年" },
-  { label: "お客様の声", value: "50", unit: "件" },
+  { label: "引渡し件数", value: "600", unit: "件以上" },
+  { label: "資金計画作成実績", value: "1,000", unit: "件以上" },
 ] as const;
 
 const DIAGNOSIS_FEATURES = [
