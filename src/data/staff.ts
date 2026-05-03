@@ -47,7 +47,7 @@ export type Representative = {
 export const PHASES: Phase[] = [
   {
     num: "01",
-    deptEn: "SALES",
+    deptEn: "営業スタッフ",
     title: "最初に、お話を伺う。",
     subtitle: "営業 — ご相談からご契約まで",
     staff: [
@@ -60,7 +60,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "契約後の追加で予算が崩れやすい。最初に全部出します。",
           customer: "数字の話も、遠慮せず聞いてください。",
-          policy: "曖昧な見積もりは、出さない。",
+          policy: "迷いや不安を一つずつ整理し、納得して進められる家づくりをお手伝いします。",
         },
         signature: "policy",
       },
@@ -72,7 +72,7 @@ export const PHASES: Phase[] = [
         career: "14年",
         thoughts: {
           house: "「土地で7割決まる」と毎回お話しします。",
-          customer: "地図だけでは分からない土地の空気まで、現地で確認します。",
+          customer: "周辺環境や日当たり、道路の使いやすさまで現地で確認し、安心できる土地選びをお手伝いします。",
           policy: "いい土地は、お客様と見に行く。",
         },
         signature: "customer",
@@ -84,7 +84,7 @@ export const PHASES: Phase[] = [
         role: "営業課長",
         career: "12年",
         thoughts: {
-          house: "同じ間取りでも、家族ごとに住み方が違う。",
+          house: "ご家族の暮らし方を伺いながら、土地・間取り・ご予算のバランスを一緒に整理します。",
           customer: "ご要望は、初回で全部書き出します。",
           policy: "提案は、お客様の数だけ変える。",
         },
@@ -98,7 +98,7 @@ export const PHASES: Phase[] = [
         career: "7年",
         thoughts: {
           house: "30年後も飽きない設備を、最初に決めます。",
-          customer: "LINEで聞いてください。すぐ返します。",
+          customer: "小さな疑問も気軽に聞いていただけるよう、分かりやすく丁寧な返信を心がけています。",
           policy: "わからないことは、わからないと答える。",
         },
         signature: "customer",
@@ -112,7 +112,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "30代のご家族の悩みは、だいたい似ています。",
           customer: "ベテランに何度も確認してから、お返事します。",
-          policy: "ひとつ質問されたら、三つ答える。",
+          policy: "初めての家づくりでも安心して進められるよう、疑問を一つずつ丁寧に解消します。",
         },
         signature: "policy",
       },
@@ -120,7 +120,7 @@ export const PHASES: Phase[] = [
   },
   {
     num: "02",
-    deptEn: "DESIGN",
+    deptEn: "設計スタッフ",
     title: "理想を、図面にする。",
     subtitle: "設計 — 初回の打ち合わせから同席する、自社設計士",
     staff: [
@@ -133,7 +133,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "奈良の土地と、三十年向き合ってきました。",
           customer: "30年後も陳腐化しない素材を、最初に選びます。",
-          policy: "外観は控えめに、骨組みは丈夫に。",
+          policy: "流行だけに左右されず、長く安心して暮らせる住まいの土台を大切に設計します。",
         },
         signature: "policy",
       },
@@ -146,7 +146,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "夕食の時間と、朝の動線。先に決めます。",
           customer: "間取りは、一緒に考えます。",
-          policy: "線一本、20年後の暮らしを想像して引く。",
+          policy: "図面の一つひとつに、ご家族の暮らしやすさを込めてご提案します。",
         },
         signature: "policy",
       },
@@ -157,7 +157,7 @@ export const PHASES: Phase[] = [
         role: "建築設計部",
         career: "13年",
         thoughts: {
-          house: "朝の動線、夜の動線。別々に図面を引きます。",
+          house: "朝の支度や夜のくつろぎまで想像しながら、毎日使いやすい間取りを考えます。",
           customer: "ご要望は3回聞いてから、図面に起こします。",
           policy: "模型を作ってから、線を引く。",
         },
@@ -167,7 +167,7 @@ export const PHASES: Phase[] = [
   },
   {
     num: "03",
-    deptEn: "CONSTRUCTION",
+    deptEn: "工務・土木スタッフ",
     title: "現場で、形にする。",
     subtitle: "土木・工務 — 土地造成から竣工まで",
     staff: [
@@ -179,7 +179,7 @@ export const PHASES: Phase[] = [
         career: "37年",
         thoughts: {
           house: "家を建てる前に、まず地面を読む。",
-          customer: "地盤のことで、後悔させません。",
+          customer: "見えない地盤こそ丁寧に。安心して暮らせる家づくりの土台を支えます。",
           policy: "土壌は手で握って判断します。37年やってます。",
         },
         signature: "customer",
@@ -193,7 +193,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "現場で素材に触らない日は、ほぼありません。",
           customer: "見えない部分ほど、丁寧にやります。",
-          policy: "現場で木の温度を、手で確かめる。",
+          policy: "現場の小さな変化にも目を配り、安心してお引き渡しできる品質を守ります。",
         },
         signature: "policy",
       },
@@ -206,7 +206,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "30年後の点検で、恥ずかしくない仕事を。",
           customer: "工事中も、気軽に声をかけてください。",
-          policy: "ミリ単位で、合わせる。",
+          policy: "細かな納まりまで丁寧に確認し、きれいで安心できる仕上がりを目指します。",
         },
         signature: "policy",
       },
@@ -219,7 +219,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "毎日、先輩の手元を見て覚えています。",
           customer: "お名前を覚えて、現場でお会いします。",
-          policy: "わからないことは、その日のうちに聞く。",
+          policy: "先輩スタッフと連携しながら、一つひとつの確認を丁寧に行っています。",
         },
         signature: "policy",
       },
@@ -231,7 +231,7 @@ export const PHASES: Phase[] = [
         career: "2年",
         thoughts: {
           house: "お引き渡し後、何十年も住み続ける場所。",
-          customer: "工期は、きっちり守ります。",
+          customer: "進捗を分かりやすく共有し、安心して完成を待っていただける現場管理を心がけています。",
           policy: "新しい工法は、自分で試してから現場に持ち込む。",
         },
         signature: "customer",
@@ -244,7 +244,7 @@ export const PHASES: Phase[] = [
         career: "",
         thoughts: {
           house: "スリランカで学んだ手仕事を、奈良の現場で。",
-          customer: "言葉より、仕事で応えます。",
+          customer: "一つひとつの作業を大切にし、住まいの品質を現場から支えます。",
           policy: "目立たない場所こそ、丁寧に。",
         },
         signature: "customer",
@@ -253,7 +253,7 @@ export const PHASES: Phase[] = [
   },
   {
     num: "04",
-    deptEn: "MANAGEMENT",
+    deptEn: "管理スタッフ",
     title: "全体を、支える。",
     subtitle: "経営・管理 — 会社の土台",
     staff: [
@@ -266,7 +266,7 @@ export const PHASES: Phase[] = [
         thoughts: {
           house: "契約書の数字一つに、ご家族の生活がある。",
           customer: "ご相談時の見積もりと、契約書は一致します。",
-          policy: "数字に、嘘をつかせない。",
+          policy: "見積もりやご契約に関わる数字を丁寧に確認し、分かりやすく誠実な家づくりを支えます。",
         },
         signature: "policy",
       },
@@ -278,7 +278,7 @@ export const PHASES: Phase[] = [
         career: "1年",
         thoughts: {
           house: "見積もり一枚、お客様の貯金の重みがあります。",
-          customer: "見積もり一枚一枚、丁寧に処理します。",
+          customer: "見積もりや書類を一つひとつ丁寧に確認し、安心して進められるよう支えます。",
           policy: "わからないことは、必ず聞く。",
         },
         signature: "customer",
@@ -291,7 +291,7 @@ export const PHASES: Phase[] = [
         career: "",
         thoughts: {
           house: "30年保証は、会社が30年続く前提です。",
-          customer: "会社が健全でなければ、保証は守れません。",
+          customer: "会社としての健全な運営を大切にし、安心して任せていただける体制を支えます。",
           policy: "若手に、経験を渡す。",
         },
         signature: "customer",

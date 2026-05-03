@@ -9,7 +9,7 @@ import { TOTAL_PEOPLE } from "@/data/staff";
 export const metadata: Metadata = {
   title: "スタッフ紹介 | やまと不動産 花鳥風月",
   description:
-    "家づくりを支える、19人のスタッフです。営業・設計・工務・経営の各担当者が、それぞれの想いとともに家づくりを支えます。",
+    "家づくりを支えるスタッフをご紹介します。営業・設計・工務・管理が連携し、ご相談からお引き渡し後までサポートします。",
 };
 
 export default function StaffIndexPage() {
@@ -43,12 +43,12 @@ export default function StaffIndexPage() {
           <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)]">
             {/* Top kicker */}
             <div className="flex items-baseline justify-between gap-6 mb-12 md:mb-16">
-              <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-lime">
-                The Team · 19 People
+              <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.08em] text-lime">
+                やまと不動産のスタッフ
               </p>
               <span aria-hidden className="hidden md:block flex-1 h-px bg-white/15" />
-              <p className="hidden md:block font-inter text-[10px] tracking-[0.22em] uppercase text-white/40">
-                Sales / Design / Construction / Management
+              <p className="hidden md:block font-sans text-[11px] tracking-[0.06em] text-white/45">
+                営業 / 設計 / 工務 / 管理
               </p>
             </div>
 
@@ -69,10 +69,10 @@ export default function StaffIndexPage() {
                 </span>
                 <div className="pb-4 md:pb-6">
                   <p className="font-sans font-bold text-white text-[clamp(15px,1.3vw,20px)] leading-[1.5] whitespace-nowrap">
-                    人で
+                    人のスタッフが、
                   </p>
                   <p className="font-sans font-bold text-white text-[clamp(15px,1.3vw,20px)] leading-[1.5] whitespace-nowrap">
-                    家を建てます。
+                    家づくりを支えます。
                   </p>
                 </div>
               </div>
@@ -82,8 +82,8 @@ export default function StaffIndexPage() {
                 <h1
                   className="font-sans font-black text-white text-[clamp(22px,2.4vw,34px)] leading-[1.5] tracking-[0.01em] mb-5 md:mb-6"
                 >
-                  営業、設計、工務、経営。<br className="hidden md:inline" />
-                  四つの手が、一軒の家になります。
+                  営業、設計、工務、管理が連携して、<br className="hidden md:inline" />
+                  ご家族の家づくりを支えます。
                 </h1>
                 <p className="font-sans text-white/75 text-[clamp(13px,1vw,15px)] leading-[2.0] max-w-[600px]">
                   家づくりで大切にしていること、お客様への向き合い方を、一人ひとりの言葉でご紹介します。
@@ -132,9 +132,9 @@ export default function StaffIndexPage() {
         <section className="bg-bg-warm py-[clamp(48px,6vw,120px)]">
           <div className="max-w-[640px] mx-auto px-[var(--page-px)] text-center">
             <p className="text-text-primary text-base md:text-lg leading-[1.9] mb-8">
-              この十九人に、まず会いに来てください。
+              まだ建てるか決まっていない段階でも、大丈夫です。
               <br />
-              話を聞くだけでも、構いません。
+              土地のこと、費用のこと、間取りのことから、お気軽にご相談ください。
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <CtaButton

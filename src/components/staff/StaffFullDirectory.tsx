@@ -61,7 +61,7 @@ function UnifiedCard({ item, num }: { item: UnifiedItem; num: string }) {
       {/* 上段: 番号 + 部門ラベル */}
       <div className="flex items-baseline justify-between gap-3 mb-5 md:mb-6">
         <p
-          className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase"
+          className="font-sans font-bold text-[12px] md:text-[13px] tracking-[0.04em]"
           style={{ color: ACCENT }}
         >
           {item.deptEn}
@@ -152,7 +152,7 @@ function PhaseDivider({
   subtitle,
   isFirst = false,
 }: {
-  num: string; // 空文字なら "Phase XX" は表示しない
+  num: string; // 表示は和文deptEnに統一。numは空でも可。
   deptEn: string;
   title: string;
   subtitle: string;
@@ -167,15 +167,20 @@ function PhaseDivider({
       <div className="col-span-12 md:col-span-3 lg:col-span-2">
         {num ? (
           <p
-            className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.32em] uppercase"
-            style={{ color: ACCENT }}
+            className="font-oswald tabular-nums leading-none"
+            style={{
+              color: ACCENT,
+              fontWeight: 400,
+              fontSize: "clamp(22px, 1.8vw, 30px)",
+              letterSpacing: "-0.02em",
+            }}
           >
-            Phase {num}
+            {num}
           </p>
         ) : null}
         <p
-          className={`font-inter font-bold text-[10px] md:text-[11px] tracking-[0.28em] uppercase ${
-            num ? "mt-1 md:mt-1.5 text-text-secondary" : ""
+          className={`font-sans font-bold text-[12px] md:text-[13px] tracking-[0.04em] ${
+            num ? "mt-2 md:mt-2.5 text-text-secondary" : ""
           }`}
           style={!num ? { color: ACCENT } : undefined}
         >
@@ -221,7 +226,7 @@ function repToItem(rep: Representative): UnifiedItem {
     id: rep.id,
     name: rep.name,
     nameEn: rep.nameEn,
-    deptEn: "Representative",
+    deptEn: "代表者",
     role: rep.role,
     career: rep.career ? `経験 ${rep.career}` : "",
     quote: rep.quote,
@@ -269,9 +274,9 @@ export default function StaffFullDirectory() {
         <section>
           <PhaseDivider
             num=""
-            deptEn="Representatives"
+            deptEn="代表者"
             title="会社を背負う、二人。"
-            subtitle="REPRESENTATIVE DIRECTORS"
+            subtitle="代表取締役"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-14 lg:gap-x-20 gap-y-16 md:gap-y-24">
@@ -289,7 +294,7 @@ export default function StaffFullDirectory() {
             style={{ fontSize: "clamp(20px, 2.2vw, 32px)" }}
           >
             ご契約からお引き渡しまで、そしてその先も。<br />
-            この十九人で、お供いたします。
+            スタッフ一同で、安心できる家づくりを支えます。
           </p>
         </div>
       </div>
