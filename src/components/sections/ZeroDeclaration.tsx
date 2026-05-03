@@ -205,11 +205,13 @@ function FeeColumn({
   Icon,
   title,
   total,
+  unit,
   items,
 }: {
   Icon: LucideIcon;
   title: string;
   total: string;
+  unit: string;
   items: readonly FeeItem[];
 }) {
   return (
@@ -236,7 +238,7 @@ function FeeColumn({
             className="font-oswald tabular-nums leading-none"
             style={{
               fontWeight: 400,
-              fontSize: "clamp(20px, 2vw, 26px)",
+              fontSize: "clamp(22px, 2.4vw, 30px)",
               color: FOREST,
               letterSpacing: "-0.01em",
             }}
@@ -246,7 +248,7 @@ function FeeColumn({
               className="ml-1 text-[12px] sm:text-[13px] font-medium"
               style={{ color: FOREST, fontFamily: "var(--font-sans)" }}
             >
-              円
+              {unit}
             </span>
           </p>
         </div>
@@ -287,18 +289,21 @@ export default function ZeroDeclaration() {
               style={{ fontSize: "clamp(26px, 3.4vw, 44px)" }}
             >
               後から増えやすい費用を、<br className="md:hidden" />
-              最初から抑える仕組み。
+              契約前に見える化します。
             </h2>
             <p className="mt-5 md:mt-6 text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95]">
-              家づくりでは、建物価格以外にもさまざまな費用がかかります。
+              家づくりでは、建物価格以外にも費用が増えることがあります。
               <br />
-              やまと不動産では、よくある追加費用を見える化し、
+              やまと不動産では、土地・建物・付帯工事に関わる費用を事前に整理し、
               <br />
-              最初から抑えることで、安心できる家づくりを実現します。
+              「後から思ったより増えた」を防ぎやすい資金計画を大切にしています。
             </p>
-            <p className="mt-5 text-text-secondary text-[11px] md:text-[12px] leading-[1.85]">
-              ※当社試算による参考金額です。土地条件・仕様・工法により異なります。
-            </p>
+            <aside className="mt-5 pl-3 border-l-2 border-text-primary/15 text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95]">
+              <span className="block font-bold text-text-secondary/80 text-[10px] md:text-[11px] tracking-[0.18em] uppercase mb-1">
+                Note
+              </span>
+              当社試算による参考金額です。土地条件・仕様・工法・エリアにより異なります。
+            </aside>
           </header>
 
           {/* 右: 結論カード */}
@@ -313,9 +318,12 @@ export default function ZeroDeclaration() {
               </p>
               <span aria-hidden className="flex-1 h-px" style={{ background: FOREST }} />
             </div>
-            <div className="flex items-baseline justify-center gap-2 mb-2 flex-wrap">
-              <span className="text-text-primary text-[14px] md:text-[16px] font-medium">
-                およそ
+            <div className="flex items-baseline justify-center gap-2 mb-1 flex-wrap">
+              <span
+                className="text-text-primary text-[14px] md:text-[16px] font-bold"
+                style={{ color: FOREST }}
+              >
+                最大 約
               </span>
               <span
                 className="font-oswald tabular-nums leading-none"
@@ -326,12 +334,15 @@ export default function ZeroDeclaration() {
                   color: FOREST,
                 }}
               >
-                4,300,000
+                430
               </span>
-              <span className="text-text-primary text-[14px] md:text-[16px] font-medium">
-                円分を事前に確認・負担軽減
+              <span className="text-text-primary text-[14px] md:text-[16px] font-bold">
+                万円分
               </span>
             </div>
+            <p className="text-center text-text-primary/85 text-[13px] md:text-[14px] leading-[1.7] font-medium">
+              を、契約前に見える化します。
+            </p>
 
             {/* 3 trust pills */}
             <ul className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
@@ -376,20 +387,22 @@ export default function ZeroDeclaration() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
             <FeeColumn
               Icon={ClipboardList}
-              title="契約前によく発生する費用"
-              total="3,300,000"
+              title="契約前に増えやすい費用"
+              total="330"
+              unit="万円"
               items={FEES_BEFORE}
             />
             <FeeColumn
               Icon={Truck}
-              title="工事中によく発生する費用"
-              total="1,000,000"
+              title="工事中に増えやすい費用"
+              total="100"
+              unit="万円"
               items={FEES_DURING}
             />
           </div>
 
-          <p className="mt-5 text-text-secondary text-[11px] md:text-[12px] text-center leading-[1.85]">
-            ※上記は一例です。敷地条件やご計画内容により金額は異なります。
+          <p className="mt-6 text-text-secondary text-[12px] md:text-[12.5px] text-center leading-[1.95]">
+            ※ 上記は一例です。敷地条件やご計画の内容により、金額は変わります。
           </p>
         </div>
 

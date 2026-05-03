@@ -203,8 +203,8 @@ export default function MiniSimulator() {
                   万円〜
                 </span>
               </div>
-              <p className="text-text-secondary text-[11px] md:text-[12px] mt-3 leading-[1.85]">
-                ※ 建物本体＋標準付帯工事を含む目安です。土地代・登記費用・外構工事・引越し費用等は別途です。プラン・敷地条件により変動します。
+              <p className="text-text-secondary text-[12px] md:text-[12.5px] mt-4 leading-[1.95] pl-3 border-l-2 border-text-primary/15">
+                ※ 建物本体＋標準付帯工事を含む目安です。土地代・登記費用・外構工事・引越し費用等は別途となります。プラン・敷地条件により変動します。
               </p>
             </div>
           </div>

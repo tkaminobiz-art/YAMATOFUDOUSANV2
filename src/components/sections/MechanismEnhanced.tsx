@@ -254,9 +254,8 @@ function ConditionLists() {
           </ul>
         </div>
       </div>
-      <p className="font-sans text-text-secondary text-[11px] md:text-[12px] mt-6 pt-5 border-t border-text-primary/10 leading-[1.85]">
-        大手側の4,000万円は、積水ハウス・ヘーベルハウス・パナソニックホームズ・大和ハウス・住友林業の5社平均公表坪単価から試算した参考値です。
-        各社の仕様・地域・商品ラインにより異なります。
+      <p className="font-sans text-text-secondary text-[12px] md:text-[12.5px] mt-6 pt-5 border-t border-text-primary/10 leading-[1.95]">
+        ※ 大手の4,000万円は、大手ハウスメーカー数社の公表坪単価から試算した参考値です。各社の仕様・地域・商品ラインにより異なります。
       </p>
     </div>
   );
@@ -358,9 +357,9 @@ export default function MechanismEnhanced() {
         </div>
 
         {/* ========== 注記 ========== */}
-        <div className="mt-12 md:mt-16 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.9]">
-          <p>※ やまとの2,280万円は、京モデル30坪・4LDKの税込・建物本体＋付帯工事価格です。</p>
-          <p>※ 比較条件と含まれるもの／別途費用は、上の比較条件ブロックをご参照ください。</p>
+        <div className="mt-12 md:mt-16 pl-3 border-l-2 border-text-primary/15 font-sans text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] space-y-1.5">
+          <p>※ やまとの2,280万円は、京モデル30坪・4LDKの税込・建物本体＋付帯工事の価格です。</p>
+          <p>※ 比較条件と「含まれるもの／別途費用」は、上の比較条件ブロックをご参照ください。</p>
         </div>
       </div>
     </section>

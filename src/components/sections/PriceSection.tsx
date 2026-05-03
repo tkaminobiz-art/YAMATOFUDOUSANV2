@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Users } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import { FLOORPLANS } from "@/data/floorplans";
 
@@ -170,11 +171,31 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
           </dl>
         </div>
 
-        {/* Bottom: 誰向けコピー + 価格 */}
+        {/* Bottom: 誰向けコピー(視認性アップ) + 価格 */}
         <div>
-          <p className="font-sans text-white/85 text-[clamp(13px,1vw,15px)] leading-[1.85] max-w-[22rem] mb-6 md:mb-7" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>
-            {plan.audience}
-          </p>
+          {/* 「こんなご家族へ」ラベル付きパネル */}
+          <div
+            className="mb-6 md:mb-7 inline-flex items-start gap-3 rounded-lg bg-white/12 border border-white/25 backdrop-blur-[2px] px-4 py-3 max-w-[22rem]"
+            style={{ boxShadow: "0 6px 18px rgba(0,0,0,0.18)" }}
+          >
+            <span
+              aria-hidden
+              className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/20 shrink-0 mt-0.5"
+            >
+              <Users className="w-3.5 h-3.5 text-white" strokeWidth={1.8} />
+            </span>
+            <div className="min-w-0">
+              <p className="font-inter text-[9.5px] md:text-[10.5px] tracking-[0.18em] uppercase text-white/75 font-bold mb-1">
+                Recommended for
+              </p>
+              <p
+                className="font-sans text-white text-[clamp(13px,1vw,15px)] leading-[1.6] font-medium"
+                style={{ textShadow: "0 2px 6px rgba(0,0,0,0.4)" }}
+              >
+                {plan.audience}
+              </p>
+            </div>
+          </div>
 
           <div className="pt-5 md:pt-6 border-t border-white/25">
             <div className="flex items-baseline gap-2 md:gap-3">
@@ -295,8 +316,8 @@ export default function PriceSection() {
               );
             })}
           </div>
-          <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.8]">
-            ※ 間取りはご家族の暮らし・敷地条件により、一から設計します。掲載は過去事例の一例です。
+          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] pl-3 border-l-2 border-text-primary/15">
+            ※ 間取りはご家族の暮らし・敷地条件に合わせて、一から設計します。掲載は過去事例の一例です。
           </p>
         </div>
 
@@ -399,11 +420,10 @@ export default function PriceSection() {
             </article>
           </div>
 
-          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.85]">
-            ※ 土地代は自社分譲地の参考レンジ、建物は各プランの最低価格（税込・建物本体＋付帯工事）。登記・外構・引越し等の諸費用は別途です。
-            <br />
-            ※ 月々のご返済は、頭金なし・金利1.0%・35年・元利均等で機械的に試算した目安です。実際の金利・借入額・返済額はご相談時にご案内します。
-          </p>
+          <div className="mt-6 md:mt-8 pl-3 border-l-2 border-text-primary/15 font-sans text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] space-y-1.5">
+            <p>※ 土地代は自社分譲地の参考レンジ、建物は各プランの最低価格(税込・建物本体＋付帯工事)です。登記・外構・引越し等の諸費用は別途となります。</p>
+            <p>※ 月々のご返済額は、頭金なし・金利1.0%・35年・元利均等で機械的に試算した目安です。実際の金利・借入額・返済額はご相談時にご案内します。</p>
+          </div>
 
           <div className="mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 sm:justify-end">
             <CtaButton
@@ -468,11 +488,10 @@ export default function PriceSection() {
 
         {/* ========== 注記 + CTA ========== */}
         <div className="mt-12 md:mt-16 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
-          <p className="font-sans max-w-[44rem] text-[11px] md:text-[12px] leading-[1.95] text-text-secondary">
-            ※ 広さ・間取り・価格帯の目安です。間取り・坪数・設備はご家族に合わせて設計します。
-            <br />
-            ※ 表示価格は建物本体(税込)に付帯工事まで含む目安です。土地・登記等は別途です。
-          </p>
+          <div className="font-sans max-w-[44rem] pl-3 border-l-2 border-text-primary/15 text-[12px] md:text-[12.5px] leading-[1.95] text-text-secondary space-y-1.5">
+            <p>※ 広さ・間取り・価格帯の目安です。間取り・坪数・設備は、ご家族に合わせて設計します。</p>
+            <p>※ 表示価格は、建物本体(税込)に標準付帯工事まで含む目安です。土地代・登記費用等は別途となります。</p>
+          </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end shrink-0">
             <CtaButton
               href="/money"
