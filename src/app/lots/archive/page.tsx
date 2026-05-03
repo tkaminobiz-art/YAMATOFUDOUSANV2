@@ -28,45 +28,90 @@ export default function LotsArchivePage() {
   return (
     <>
       <Header />
-      <main>
-        <section className="bg-bg-warm py-[clamp(48px,calc(28px+4vw),120px)]">
-          <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
+      <main className="bg-white">
+        {/* === Editorial Black Hero (Archive版・少しサイズを抑える) === */}
+        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
+
+          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(60px,9vw,140px)]">
             <Link
               href="/lots"
-              className="inline-flex items-center gap-1.5 text-text-secondary hover:text-main text-[12px] md:text-[13px] mb-5 transition-colors"
+              className="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-[12px] md:text-[13px] mb-10 transition-colors"
             >
               <ChevronLeft className="w-4 h-4" strokeWidth={1.6} />
               販売中の分譲地一覧へ戻る
             </Link>
-            <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-              ARCHIVE
-            </p>
-            <div className="flex items-end justify-between flex-wrap gap-4">
-              <div className="max-w-[640px]">
-                <h1 className="text-[clamp(24px,3.5vw,44px)] text-text-primary mb-3">
-                  過去の分譲実績
-                </h1>
-                <p className="text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.9]">
-                  やまと不動産が奈良・京都南部で過去にお引渡しを完了した分譲地です。販売は終了していますが、累計実績として、エリア・規模感の参考にどうぞ。販売中の分譲地は <Link href="/lots" className="text-main hover:underline">こちら</Link> から。
-                </p>
-              </div>
-              <div
-                className="text-right"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                <span className="text-accent font-light text-5xl md:text-7xl block leading-none">
+            <div className="flex items-center gap-3 mb-10 md:mb-14 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#A2C523" }}
+              />
+              <span style={{ color: "#A2C523", fontWeight: 600 }}>
+                Archive / 過去の分譲実績
+              </span>
+              <span className="text-white/30">·</span>
+              <span className="text-white/60">引渡し完了</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
+              <div>
+                <span
+                  className="block tabular-nums leading-[0.85]"
+                  style={{
+                    fontFamily: "var(--font-oswald)",
+                    fontWeight: 200,
+                    fontSize: "clamp(120px, 18vw, 260px)",
+                    color: "#A2C523",
+                    letterSpacing: "-0.04em",
+                  }}
+                >
                   {archived.length}
                 </span>
-                <span className="text-text-secondary text-xs md:text-sm">
-                  区画の累計実績
-                </span>
+                <p
+                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
+                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+                >
+                  Past Lots · 区画の累計実績
+                </p>
+              </div>
+
+              <div className="md:pb-8">
+                <h1
+                  className="text-white leading-[1.25] tracking-[-0.005em] max-w-[680px]"
+                  style={{ fontWeight: 400, fontSize: "clamp(22px, 2.4vw, 32px)" }}
+                >
+                  過去の分譲実績。
+                </h1>
+                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
+                  やまと不動産が奈良・京都南部で過去にお引渡しを完了した分譲地です。販売は終了していますが、累計実績として、エリア・規模感の参考にどうぞ。
+                  <br />
+                  販売中の分譲地は{" "}
+                  <Link href="/lots" className="text-white hover:opacity-70 underline underline-offset-2">
+                    こちら
+                  </Link>{" "}
+                  から。
+                </p>
               </div>
             </div>
           </div>
+
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: "#A2C523" }}
+          />
         </section>
 
         {/* 市町村別カウンター */}
-        <section className="py-[clamp(24px,3vw,48px)] bg-bg-primary border-b border-border">
+        <section className="py-[clamp(24px,3vw,48px)] bg-white border-b border-border">
           <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
             <p className="text-text-secondary text-xs md:text-sm mb-3">
               対応エリア
@@ -91,7 +136,7 @@ export default function LotsArchivePage() {
         </section>
 
         {/* 過去物件グリッド(コンパクト) */}
-        <section className="py-[clamp(40px,5vw,96px)] bg-bg-primary">
+        <section className="py-[clamp(40px,5vw,96px)] bg-white">
           <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {archived.map((lot) => (
@@ -143,7 +188,7 @@ export default function LotsArchivePage() {
           </div>
         </section>
 
-        <section className="bg-bg-warm py-[clamp(48px,6vw,120px)]">
+        <section className="bg-white border-t border-border py-[clamp(64px,7vw,140px)]">
           <div className="max-w-[640px] mx-auto px-[var(--page-px)] text-center">
             <h2 className="text-[clamp(20px,2.5vw,32px)] text-text-primary mb-4">
               似たエリアの新しい分譲地を探しています。

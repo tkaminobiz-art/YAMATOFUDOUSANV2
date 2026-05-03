@@ -45,39 +45,87 @@ export default function MoneyIndexPage() {
       <Header />
       {/* font-sans で和文ゴシックをルートロック(明朝禁止) */}
       <main className="font-sans">
-        {/* === 1. ページヘッダー(ミニマル + ghost text) === */}
-        <section className="relative overflow-hidden bg-bg-primary border-b border-text-primary/10">
-          {/* ghost text — 背景に薄く "MONEY" を巨大に */}
-          <span
+        {/* === 1. Editorial Black Hero (2026-05-03 /lots と統一) === */}
+        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
+          {/* 極細グリッド線(モダン質感、AT-006 Swiss テンプレ回避) */}
+          <div
             aria-hidden
-            className="pointer-events-none absolute -top-2 right-2 md:-top-4 md:right-6 select-none font-oswald uppercase whitespace-nowrap"
+            className="absolute inset-0 pointer-events-none opacity-[0.06]"
             style={{
-              fontWeight: 200,
-              fontSize: "clamp(80px, 14vw, 220px)",
-              letterSpacing: "0.04em",
-              color: "rgba(43,43,43,0.04)",
-              lineHeight: 1,
+              backgroundImage:
+                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
             }}
-          >
-            Money
-          </span>
-          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pt-10 md:pt-14 pb-6 md:pb-8">
-            <p
-              className="text-[12px] md:text-[13px] tracking-[0.18em] font-bold"
-              style={{ color: FOREST }}
-            >
-              資金計画
-            </p>
-            <h1
-              className="mt-3 text-text-primary leading-[1.3] tracking-[-0.01em] max-w-[860px]"
-              style={{ fontWeight: 500, fontSize: "clamp(22px, 2.6vw, 36px)" }}
-            >
-              家づくりに必要なお金を、最初に見える化します。
-            </h1>
-            <p className="mt-3 max-w-[680px] text-text-secondary text-[13px] md:text-[14px] leading-[1.85]">
-              月々の支払い・諸費用・将来の負担まで、無理のない計画を一緒に確認します。
-            </p>
+          />
+
+          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(80px,12vw,200px)]">
+            {/* メタ行 */}
+            <div className="flex items-center gap-3 mb-12 md:mb-20 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: ACCENT }}
+              />
+              <span style={{ color: ACCENT, fontWeight: 600 }}>
+                Money / 資金計画
+              </span>
+              <span className="text-white/30">·</span>
+              <span className="text-white/60">75歳完済モデル</span>
+            </div>
+
+            {/* メイン: 巨大数字 + メタ */}
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
+              <div>
+                <div className="flex items-baseline gap-3">
+                  <span
+                    className="block tabular-nums leading-[0.85]"
+                    style={{
+                      fontFamily: "var(--font-oswald)",
+                      fontWeight: 200,
+                      fontSize: "clamp(120px, 18vw, 280px)",
+                      color: ACCENT,
+                      letterSpacing: "-0.04em",
+                    }}
+                  >
+                    4,500
+                  </span>
+                  <span
+                    className="text-white text-[14px] md:text-[18px] font-medium pb-2 md:pb-4 whitespace-nowrap"
+                    style={{ fontFamily: "var(--font-sans)" }}
+                  >
+                    万円相当
+                  </span>
+                </div>
+                <p
+                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
+                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+                >
+                  Asset at 75 · 75歳完済時に、手元に残る資産
+                </p>
+              </div>
+
+              <div className="md:pb-8">
+                <h1
+                  className="text-white leading-[1.25] tracking-[-0.005em] max-w-[680px]"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "clamp(22px, 2.6vw, 36px)",
+                  }}
+                >
+                  家のお金を、最初に見える化します。
+                </h1>
+                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
+                  月々の支払い・諸費用・将来の負担まで。
+                  賃貸との総コスト、完済後に残る資産まで。家計設計の手段としての住宅ローンを、ご家族の暮らしに合わせて、ご一緒に整えます。
+                </p>
+              </div>
+            </div>
           </div>
+
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: ACCENT }}
+          />
         </section>
 
         {/* === 2. 暮らしの写真ブリージング — 数字の前に温度 === */}

@@ -27,39 +27,80 @@ export default function VoiceIndexPage() {
   return (
     <>
       <Header />
-      <main>
-        {/* === ヘッダー === */}
-        <section className="bg-bg-warm py-[clamp(64px,calc(32px+5vw),160px)]">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <p className="font-section-label text-main text-xs md:text-sm mb-3 tracking-[0.15em]">
-              VOICE
-            </p>
-            <div className="flex items-end justify-between flex-wrap gap-4">
-              <div className="max-w-[640px]">
-                <h1 className="text-[clamp(28px,4vw,56px)] text-text-primary mb-4">
-                  お客様の声
-                </h1>
-                <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-[1.9]">
-                  花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。読みやすさのため、一部表記を整えています。
-                </p>
-              </div>
-              <div
-                className="text-right"
-                style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-              >
-                <span className="text-accent font-light text-6xl md:text-8xl block leading-none">
+      <main className="bg-white">
+        {/* === Editorial Black Hero (2026-05-03 /lots /money /works と統一) === */}
+        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
+
+          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(80px,12vw,200px)]">
+            <div className="flex items-center gap-3 mb-12 md:mb-20 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#A2C523" }}
+              />
+              <span style={{ color: "#A2C523", fontWeight: 600 }}>
+                Voice / お客様の声
+              </span>
+              <span className="text-white/30">·</span>
+              <span className="text-white/60">99.9%、そのまま</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
+              <div>
+                <span
+                  className="block tabular-nums leading-[0.85]"
+                  style={{
+                    fontFamily: "var(--font-oswald)",
+                    fontWeight: 200,
+                    fontSize: "clamp(140px, 22vw, 320px)",
+                    color: "#A2C523",
+                    letterSpacing: "-0.04em",
+                  }}
+                >
                   {VOICES.length}
                 </span>
-                <span className="text-text-secondary text-xs md:text-sm">
-                  組のご家族
-                </span>
+                <p
+                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
+                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+                >
+                  Families · 組のご家族
+                </p>
+              </div>
+
+              <div className="md:pb-8">
+                <h1
+                  className="text-white leading-[1.25] tracking-[-0.005em] max-w-[680px]"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "clamp(24px, 2.8vw, 40px)",
+                  }}
+                >
+                  本音のまま、お聞きください。
+                </h1>
+                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
+                  花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。読みやすさのため、一部表記のみ整えています。
+                </p>
               </div>
             </div>
           </div>
+
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: "#A2C523" }}
+          />
         </section>
 
         {/* === 一覧 === */}
-        <section className="py-[var(--section-py)] bg-bg-primary">
+        <section className="py-[var(--section-py)] bg-white">
           <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[var(--card-gap)]">
               {voicesWithExcerpt.map((v) => (
@@ -121,7 +162,7 @@ export default function VoiceIndexPage() {
         </section>
 
         {/* === OB向け Google 口コミ動線 (2026-05-03 GBP整備 - 12棟達成の3欠落動線①) === */}
-        <section className="bg-bg-primary py-[clamp(40px,5vw,80px)]">
+        <section className="bg-white py-[clamp(40px,5vw,80px)]">
           <div className="max-w-[960px] mx-auto px-[var(--page-px)]">
             <GoogleReviewCta
               headline="やまとで建てた方へ。Googleで口コミを書いていただけませんか。"
@@ -131,7 +172,7 @@ export default function VoiceIndexPage() {
         </section>
 
         {/* === 締めCTA === */}
-        <section className="bg-bg-warm py-[clamp(48px,6vw,120px)]">
+        <section className="bg-white border-t border-border py-[clamp(64px,7vw,140px)]">
           <div className="max-w-[640px] mx-auto px-[var(--page-px)] text-center">
             <p className="text-text-primary text-base md:text-lg leading-[1.9] mb-8">
               一人でも多くの方に、同じ感想を持っていただきたい。<br />
