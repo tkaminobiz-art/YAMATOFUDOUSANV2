@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 const NAV_GROUPS = [
@@ -126,18 +127,35 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 pt-10 md:pt-12 pb-10">
           {/* 左: ロゴ + 会社情報 */}
           <div>
-            <div className="flex items-center gap-4 mb-5">
-              {/* ダイヤ型ロゴ */}
-              <svg viewBox="0 0 40 40" className="w-[38px] h-[38px] text-[#D6C9A8]" fill="none" stroke="currentColor" strokeWidth="1.2">
-                <rect x="6" y="6" width="28" height="28" transform="rotate(45 20 20)" />
-                <line x1="11" y1="11" x2="29" y2="29" />
-                <line x1="29" y1="11" x2="11" y2="29" />
-              </svg>
-              <p className="text-[17px] tracking-[0.12em] text-[#E0D6BE]">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-3 mb-5 group"
+              aria-label="やまと不動産 トップ"
+            >
+              {/* やまと不動産 公式ロゴ(ヘッダーと統一・ダーク背景に白プレートで載せる) */}
+              <span
+                aria-hidden
+                className="inline-flex items-center justify-center px-3 py-2 rounded bg-white/95 transition-colors group-hover:bg-white"
+              >
+                <Image
+                  src="/images/logo.png"
+                  alt="やまと不動産"
+                  width={293}
+                  height={65}
+                  className="h-7 md:h-8 w-auto"
+                />
+              </span>
+              <span
+                className="text-[15px] md:text-[16px] tracking-[0.08em] text-[#E0D6BE] group-hover:text-white transition-colors"
+                style={{ fontFamily: "var(--font-sans)" }}
+              >
                 株式会社やまと不動産
-              </p>
-            </div>
-            <p className="text-[12.5px] leading-[2] tracking-[0.06em] text-[#A89E85]">
+              </span>
+            </Link>
+            <p
+              className="text-[12.5px] leading-[2] tracking-[0.06em] text-[#A89E85]"
+              style={{ fontFamily: "var(--font-sans)" }}
+            >
               〒630-8115 奈良県奈良市大宮町1丁目6番21
               <br />
               TEL: 0742-36-1123 / FAX: 0742-36-1888
