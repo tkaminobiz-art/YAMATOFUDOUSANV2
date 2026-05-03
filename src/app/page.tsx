@@ -4,6 +4,7 @@ import {
   FONT_VARIANTS,
   BODY_VARIANTS,
 } from "@/components/sections/HeroMagazine.fonts";
+import TrustStrip from "@/components/sections/TrustStrip";
 import ScaleBanner from "@/components/sections/ScaleBanner";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
@@ -73,6 +74,7 @@ export default function Home() {
           variant={HERO_HEADLINE_VARIANT}
           bodyVariant={HERO_BODY_VARIANT}
         />
+        <TrustStrip />
         <ScaleBanner />
 
         {/* 理屈・証拠 */}
