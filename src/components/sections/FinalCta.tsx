@@ -11,7 +11,6 @@ import {
   PencilLine,
   Zap,
   ArrowRight,
-  Phone,
   ShieldCheck,
   HandHeart,
   Lock,
@@ -233,66 +232,68 @@ export default function FinalCta() {
           </div>
         </div>
 
-        {/* === セカンダリ2カード === モデルハウス / 電話 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mt-5">
-          <Link
-            href="/reserve"
-            className="group flex items-center gap-4 sm:gap-5 bg-bg-secondary/60 hover:bg-bg-secondary border border-border rounded-xl p-5 sm:p-6 transition-colors"
-          >
-            <span
-              aria-hidden
-              className="shrink-0 inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white"
-            >
-              <Home className="w-6 h-6 sm:w-7 sm:h-7 text-main" strokeWidth={1.5} />
-            </span>
-            <div className="flex-1 min-w-0">
-              <p className="text-[14px] sm:text-[15px] font-semibold text-text-primary mb-1">
-                モデルハウスを見てみる
-              </p>
-              <p className="text-[11px] sm:text-[12px] text-text-secondary leading-[1.7] mb-2.5">
-                実際の建物を見ながら、家づくりのイメージを具体的にしてみませんか？
-              </p>
-              <span className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-main font-semibold border border-main/30 rounded-full px-3 py-1.5 group-hover:bg-main group-hover:text-white group-hover:border-main transition-colors">
-                モデルハウスの空き枠を見る
-                <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
-              </span>
-            </div>
-          </Link>
+        {/* === セカンダリCTA === 電話特大ブロック */}
+        <div className="mt-5 sm:mt-6 bg-bg-secondary/60 border border-border rounded-2xl px-6 sm:px-10 py-10 sm:py-12 lg:py-14">
+          <div className="max-w-[680px] mx-auto text-center">
+            <h3 className="text-[clamp(22px,2.6vw,30px)] text-text-primary leading-[1.5] tracking-[0.04em] mb-3">
+              気になる点を、まずはひとつ。
+            </h3>
+            <p className="text-text-secondary text-[13px] sm:text-sm leading-[1.95] mb-8 sm:mb-10">
+              見学・資料・お電話、いずれもご相談は無料です。
+            </p>
 
-          <a
-            href="tel:0742361123"
-            className="group flex items-center gap-4 sm:gap-5 bg-bg-secondary/60 hover:bg-bg-secondary border border-border rounded-xl p-5 sm:p-6 transition-colors"
-          >
-            <span
-              aria-hidden
-              className="shrink-0 inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white"
+            {/* ボタン2つ */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 sm:mb-12">
+              <Link
+                href="/reserve"
+                className="group inline-flex items-center justify-center gap-2 bg-lime text-lime-darker rounded-full border-b-[3px] border-lime-hover min-h-[56px] px-6 transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-hover hover:border-lime-deep hover:shadow-[0_14px_32px_-12px_rgba(162,197,35,0.5)]"
+              >
+                <Home className="w-4 h-4" strokeWidth={2} />
+                <span className="font-bold text-[14px] sm:text-[15px] tracking-[0.04em]">
+                  モデルハウス見学を予約する
+                </span>
+              </Link>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center justify-center gap-2 bg-white text-text-primary border border-text-primary/25 rounded-full min-h-[56px] px-6 transition-colors duration-300 hover:bg-text-primary hover:text-white hover:border-text-primary"
+              >
+                <PencilLine className="w-4 h-4" strokeWidth={2} />
+                <span className="font-bold text-[14px] sm:text-[15px] tracking-[0.04em]">
+                  資料請求する
+                </span>
+              </Link>
+            </div>
+
+            {/* 「電話はこちら」の区切り線つきラベル */}
+            <div className="flex items-center gap-4 mb-5 sm:mb-6 text-text-secondary/70">
+              <span aria-hidden className="flex-1 h-px bg-border" />
+              <span className="text-[11px] sm:text-[12px] tracking-[0.18em] whitespace-nowrap">
+                お電話でのお問い合わせはこちら
+              </span>
+              <span aria-hidden className="flex-1 h-px bg-border" />
+            </div>
+
+            {/* 電話特大 */}
+            <a
+              href="tel:0742361123"
+              className="group inline-block transition-colors hover:text-main"
             >
-              <Phone className="w-6 h-6 sm:w-7 sm:h-7 text-main" strokeWidth={1.5} />
-            </span>
-            <div className="flex-1 min-w-0">
-              <p className="text-[14px] sm:text-[15px] font-semibold text-text-primary mb-1">
-                お電話でのご相談はこちら
-              </p>
-              <p className="text-[11px] sm:text-[12px] text-text-secondary leading-[1.7] mb-1.5">
-                急ぎの方や直接相談したい方は、お気軽にお電話ください。
-              </p>
-              <p
-                className="text-text-primary tabular-nums"
+              <span
+                className="block text-text-primary group-hover:text-main tabular-nums leading-none transition-colors"
                 style={{
                   fontFamily: "var(--font-oswald)",
                   fontWeight: 500,
-                  fontSize: "clamp(22px, 2.4vw, 30px)",
+                  fontSize: "clamp(38px, 6vw, 64px)",
                   letterSpacing: "-0.01em",
-                  lineHeight: 1,
                 }}
               >
                 0742-36-1123
-              </p>
-              <p className="text-[10px] sm:text-[11px] text-text-secondary mt-1">
-                営業時間 9:00〜19:00（火・水定休）
-              </p>
-            </div>
-          </a>
+              </span>
+            </a>
+            <p className="text-text-secondary text-[11px] sm:text-[12px] mt-4 tracking-[0.06em]">
+              【受付】9:00〜19:00 ／ 火・水定休
+            </p>
+          </div>
         </div>
 
         {/* === 信頼ストリップ === */}
