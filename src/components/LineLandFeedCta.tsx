@@ -27,36 +27,29 @@ type Props = {
 
 export default function LineLandFeedCta({ variant = "default" }: Props) {
   if (variant === "editorial") {
+    // 全ページ統一の Photo-led Soft 路線(緑ソフト背景)
     return (
-      <section className="relative bg-[#0A0A0A] text-white py-[clamp(56px,7vw,120px)] overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-        />
+      <section
+        className="relative py-[clamp(56px,7vw,120px)]"
+        style={{ background: "#F0F6D8" }}
+      >
         <div className="relative max-w-[1100px] mx-auto px-[var(--page-px)]">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-center">
             <div>
               <div className="flex items-center gap-3 mb-5 text-[11px] tracking-[0.22em] uppercase">
                 <Lock
                   className="w-3.5 h-3.5"
-                  style={{ color: "#A2C523" }}
+                  style={{ color: "#486B00" }}
                   strokeWidth={1.8}
                 />
-                <span
-                  style={{ color: "#A2C523", fontWeight: 600 }}
-                >
+                <span style={{ color: "#486B00", fontWeight: 600 }}>
                   LINE限定 / 未公開土地
                 </span>
               </div>
               <h2
-                className="text-white leading-[1.3] tracking-[-0.005em]"
+                className="text-text-primary leading-[1.3] tracking-[-0.005em]"
                 style={{
-                  fontWeight: 400,
+                  fontWeight: 500,
                   fontSize: "clamp(22px, 2.6vw, 36px)",
                 }}
               >
@@ -64,7 +57,7 @@ export default function LineLandFeedCta({ variant = "default" }: Props) {
                 <br />
                 LINEで先にお届けします。
               </h2>
-              <p className="mt-5 text-white/65 text-[14px] md:text-[15px] leading-[1.95] max-w-[560px]">
+              <p className="mt-5 text-text-primary/80 text-[14px] md:text-[15px] leading-[1.95] max-w-[560px]">
                 SUUMO・HOME&apos;S への掲載前に、ご登録の方へお先にご案内します。
                 配信は月に数通まで、煽りや催促はいたしません。
               </p>

@@ -8,6 +8,9 @@ import CtaButton from "@/components/ui/CtaButton";
 import GoogleReviewCta from "@/components/GoogleReviewCta";
 import { VOICES } from "@/data/voices";
 
+const FOREST = "#486B00";
+const ACCENT = "#A2C523";
+
 export const metadata: Metadata = {
   title: "お客様の声 | やまと不動産 花鳥風月",
   description:
@@ -28,75 +31,75 @@ export default function VoiceIndexPage() {
     <>
       <Header />
       <main className="bg-white">
-        {/* === Editorial Black Hero (2026-05-03 /lots /money /works と統一) === */}
-        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
+        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一) === */}
+        <section className="relative w-full overflow-hidden bg-white">
+          <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
+            <Image
+              src="/images/works/case1-living.webp"
+              alt="お客様の暮らし"
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+              style={{ filter: "saturate(0.96) contrast(1.02)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 35%, rgba(255,255,255,0.20) 65%, transparent 95%)",
+              }}
+            />
 
-          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(80px,12vw,200px)]">
-            <div className="flex items-center gap-3 mb-12 md:mb-20 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: "#A2C523" }}
-              />
-              <span style={{ color: "#A2C523", fontWeight: 600 }}>
-                Voice / お客様の声
-              </span>
-              <span className="text-white/30">·</span>
-              <span className="text-white/60">99.9%、そのまま</span>
-            </div>
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
+                <div className="max-w-[640px]">
+                  <p
+                    className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
+                    style={{ color: FOREST, fontWeight: 600 }}
+                  >
+                    お客様の声 · Voice
+                  </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
-              <div>
-                <span
-                  className="block tabular-nums leading-[0.85]"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontWeight: 200,
-                    fontSize: "clamp(140px, 22vw, 320px)",
-                    color: "#A2C523",
-                    letterSpacing: "-0.04em",
-                  }}
-                >
-                  {VOICES.length}
-                </span>
-                <p
-                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
-                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
-                >
-                  Families · 組のご家族
-                </p>
-              </div>
+                  <h1
+                    className="text-text-primary leading-[1.25] tracking-[-0.005em] mb-7"
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "clamp(28px, 4vw, 52px)",
+                    }}
+                  >
+                    本音のまま、お聞きください。
+                  </h1>
 
-              <div className="md:pb-8">
-                <h1
-                  className="text-white leading-[1.25] tracking-[-0.005em] max-w-[680px]"
-                  style={{
-                    fontWeight: 400,
-                    fontSize: "clamp(24px, 2.8vw, 40px)",
-                  }}
-                >
-                  本音のまま、お聞きください。
-                </h1>
-                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
-                  花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。読みやすさのため、一部表記のみ整えています。
-                </p>
+                  <div className="flex items-baseline gap-2 mb-6">
+                    <span
+                      className="tabular-nums leading-none"
+                      style={{
+                        fontFamily: "var(--font-oswald)",
+                        fontWeight: 300,
+                        fontSize: "clamp(64px, 9vw, 128px)",
+                        color: ACCENT,
+                        letterSpacing: "-0.03em",
+                      }}
+                    >
+                      {VOICES.length}
+                    </span>
+                    <span
+                      className="text-text-primary text-[14px] md:text-[18px] font-medium leading-none ml-1.5 self-end pb-1 md:pb-2.5"
+                      style={{ fontFamily: "var(--font-sans)" }}
+                    >
+                      組のご家族
+                    </span>
+                  </div>
+
+                  <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
+                    花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{ background: "#A2C523" }}
-          />
         </section>
 
         {/* === 一覧 === */}

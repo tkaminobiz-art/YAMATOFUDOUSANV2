@@ -45,104 +45,11 @@ export default function MoneyIndexPage() {
       <Header />
       {/* font-sans で和文ゴシックをルートロック(明朝禁止) */}
       <main className="font-sans">
-        {/* === 1. Editorial Black Hero (2026-05-03 /lots と統一) === */}
-        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
-          {/* 極細グリッド線(モダン質感、AT-006 Swiss テンプレ回避) */}
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
-
-          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(80px,12vw,200px)]">
-            {/* メタ行 */}
-            <div className="flex items-center gap-3 mb-12 md:mb-20 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: ACCENT }}
-              />
-              <span style={{ color: ACCENT, fontWeight: 600 }}>
-                Money / 資金計画
-              </span>
-              <span className="text-white/30">·</span>
-              <span className="text-white/60">75歳完済モデル</span>
-            </div>
-
-            {/* メイン: 巨大数字 + メタ */}
-            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
-              <div>
-                <div className="flex items-baseline gap-2 md:gap-3">
-                  <span
-                    className="block tabular-nums leading-[0.85]"
-                    style={{
-                      fontFamily: "var(--font-oswald)",
-                      fontWeight: 200,
-                      fontSize: "clamp(80px, 11vw, 180px)",
-                      color: ACCENT,
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    〜
-                  </span>
-                  <span
-                    className="block tabular-nums leading-[0.85]"
-                    style={{
-                      fontFamily: "var(--font-oswald)",
-                      fontWeight: 200,
-                      fontSize: "clamp(120px, 18vw, 280px)",
-                      color: ACCENT,
-                      letterSpacing: "-0.04em",
-                    }}
-                  >
-                    4,500
-                  </span>
-                  <span
-                    className="text-white text-[14px] md:text-[18px] font-medium pb-2 md:pb-4 whitespace-nowrap"
-                    style={{ fontFamily: "var(--font-sans)" }}
-                  >
-                    万円相当
-                  </span>
-                </div>
-                <p
-                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
-                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
-                >
-                  Asset at 75 · 75歳完済時に、手元に残ることがある資産の目安
-                </p>
-              </div>
-
-              <div className="md:pb-8">
-                <h1
-                  className="text-white leading-[1.25] tracking-[-0.005em] max-w-[680px]"
-                  style={{
-                    fontWeight: 400,
-                    fontSize: "clamp(22px, 2.6vw, 36px)",
-                  }}
-                >
-                  家のお金を、最初に見える化します。
-                </h1>
-                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
-                  月々の支払い・諸費用・将来の負担まで。
-                  賃貸との総コスト、完済後に残る資産まで。家計設計の手段としての住宅ローンを、ご家族の暮らしに合わせて、ご一緒に整えます。
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{ background: ACCENT }}
-          />
-        </section>
-
-        {/* === 2. 暮らしの写真ブリージング — 数字の前に温度 === */}
-        <section className="relative overflow-hidden">
-          <div className="relative aspect-[21/9] md:aspect-[21/8] w-full bg-text-primary">
+        {/* === 1. Photo-led Editorial Soft Hero (2026-05-03 /money 専用、参考画像準拠) ===
+            キッチン写真フルブリード + 左に半透明白オーバーレイ + コピーオーバーレイ。
+            数字主役を維持しつつ、Editorial Black の硬質さを和らげた「温かみのある編集誌」調。 */}
+        <section className="relative w-full overflow-hidden bg-white">
+          <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
             <Image
               src="/images/newsozai/interior-kitchen-01.webp"
               alt="ご家族の暮らし — キッチンの朝"
@@ -150,33 +57,110 @@ export default function MoneyIndexPage() {
               priority
               className="object-cover"
               sizes="100vw"
-              style={{ filter: "saturate(0.94) contrast(1.04)" }}
+              style={{ filter: "saturate(0.96) contrast(1.02)" }}
             />
+            {/* 左から白へのグラデーション(コピー視認性) */}
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 35%, rgba(255,255,255,0.20) 65%, transparent 95%)",
+              }}
             />
-            <div className="absolute inset-0 flex items-end">
-              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-8 md:pb-14 w-full">
-                <p
-                  className="text-white max-w-[640px] leading-[1.55] tracking-[0.04em]"
-                  style={{
-                    fontWeight: 500,
-                    fontSize: "clamp(16px, 2vw, 26px)",
-                    textShadow: "0 2px 16px rgba(0,0,0,0.5)",
-                  }}
-                >
-                  月々の支払い・諸費用・将来の負担まで、無理のない計画を一緒に確認します。
-                </p>
+
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
+                <div className="max-w-[600px]">
+                  {/* 上部メタ */}
+                  <p
+                    className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
+                    style={{ color: FOREST, fontWeight: 600 }}
+                  >
+                    総予算の目安 · Money
+                  </p>
+
+                  {/* H1 */}
+                  <h1
+                    className="text-text-primary leading-[1.25] tracking-[-0.005em] mb-7"
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "clamp(26px, 3.6vw, 48px)",
+                    }}
+                  >
+                    家のお金を、最初に
+                    <br />
+                    見える化します。
+                  </h1>
+
+                  {/* 数字 — 4,500 上限表記 */}
+                  <div className="flex items-baseline gap-1.5 mb-6">
+                    <span
+                      className="tabular-nums leading-none"
+                      style={{
+                        fontFamily: "var(--font-oswald)",
+                        fontWeight: 200,
+                        fontSize: "clamp(36px, 5vw, 60px)",
+                        color: ACCENT,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      〜
+                    </span>
+                    <span
+                      className="tabular-nums leading-none"
+                      style={{
+                        fontFamily: "var(--font-oswald)",
+                        fontWeight: 300,
+                        fontSize: "clamp(64px, 9vw, 128px)",
+                        color: ACCENT,
+                        letterSpacing: "-0.03em",
+                      }}
+                    >
+                      4,500
+                    </span>
+                    <span
+                      className="text-text-primary text-[14px] md:text-[18px] font-medium leading-none ml-1.5 self-end pb-1 md:pb-2.5"
+                      style={{ fontFamily: "var(--font-sans)" }}
+                    >
+                      万円相当
+                    </span>
+                  </div>
+
+                  {/* サブコピー */}
+                  <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[480px]">
+                    月々の支払い・諸費用・将来の負担まで。
+                    無理のない計画を、ご家族の暮らしに合わせてご一緒に確認します。
+                  </p>
+
+                  {/* CTA */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
+                    <a
+                      href="/reserve"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] md:text-[15px] font-medium rounded transition-opacity hover:opacity-90"
+                      style={{ background: FOREST, color: "#fff" }}
+                    >
+                      無料相談を予約する
+                    </a>
+                    <a
+                      href="#big-numbers"
+                      className="inline-flex items-center gap-1.5 text-text-primary text-[13px] md:text-[14px] font-medium hover:opacity-70 transition-opacity"
+                      style={{ borderBottom: `1px solid ${FOREST}`, paddingBottom: "2px" }}
+                    >
+                      数字でかんたんに見る
+                      <span aria-hidden>↓</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* === 3. BIG NUMBERS — 3つの数字 === */}
+        {/* === 2. BIG NUMBERS — 3つの数字 === */}
         <section
           id="big-numbers"
-          className="relative bg-[#FAF8F3] py-[clamp(48px,6vw,120px)] scroll-mt-20"
+          className="relative bg-bg-secondary/40 py-[clamp(48px,6vw,120px)] scroll-mt-20"
         >
           <div className="max-w-[1320px] mx-auto px-[var(--page-px)]">
             <div className="text-center mb-12 md:mb-16">
@@ -320,8 +304,11 @@ export default function MoneyIndexPage() {
         {/* === 4. 30年で残るもの + 5. 9つの質問アコーディオン === */}
         <MoneyFullSection />
 
-        {/* === 6. 締めCTA === */}
-        <section className="relative bg-bg-primary py-[clamp(80px,8vw,160px)]">
+        {/* === 6. 締めCTA — 緑ソフト背景(画像2準拠) === */}
+        <section
+          className="relative py-[clamp(80px,8vw,160px)]"
+          style={{ background: "#F0F6D8" }}
+        >
           <div className="max-w-[840px] mx-auto px-[var(--page-px)] text-center">
             <p
               className="text-[12px] md:text-[13px] tracking-[0.18em] mb-8 font-bold"

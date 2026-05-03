@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,6 +14,9 @@ import {
   getMappableLots,
 } from "@/data/lots";
 import { Archive } from "lucide-react";
+
+const FOREST = "#486B00";
+const ACCENT = "#A2C523";
 
 export const metadata: Metadata = {
   title: "分譲地一覧 | やまと不動産",
@@ -29,115 +33,111 @@ export default function LotsIndexPage() {
     <>
       <Header />
       <main className="bg-white">
-        {/* === Editorial Black Hero ===
-            2026-04-30 design-scout AT-001 (JP クラフト小ブランドテンプレ) 回避:
-            ベージュ背景 + 二段ラベル + earth色巨大数字 を全面廃棄。
-            黒背景 + Oswald 280px super-thin Lime + メタタグ群で
-            "実績を静かに、しかし確実に見せる" ヒーローへ。 */}
-        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
-          {/* 背景の極細グリッド線(現代的アクセント、AT-006 Swiss テンプレを破る) */}
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
+        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一・参考画像準拠) === */}
+        <section className="relative w-full overflow-hidden bg-white">
+          <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
+            <Image
+              src="/images/lots-hero/lot-hero-01.webp"
+              alt="やまと不動産の自社分譲地"
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+              style={{ filter: "saturate(0.96) contrast(1.02)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 35%, rgba(255,255,255,0.20) 65%, transparent 95%)",
+              }}
+            />
 
-          <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] py-[clamp(80px,12vw,200px)]">
-            {/* 上部メタ行 — Linear系の極細キャプション */}
-            <div className="flex items-center gap-3 mb-12 md:mb-20 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: "#A2C523" }}
-              />
-              <span style={{ color: "#A2C523", fontWeight: 600 }}>
-                Lots / for sale
-              </span>
-              <span className="text-white/30">·</span>
-              <span className="text-white/60">奈良 · 京都南部</span>
-            </div>
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
+                <div className="max-w-[640px]">
+                  <p
+                    className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
+                    style={{ color: FOREST, fontWeight: 600 }}
+                  >
+                    分譲地 · Lots
+                  </p>
 
-            {/* メイン: 巨大数字 + メタ */}
-            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
-              <div>
-                <span
-                  className="block tabular-nums leading-[0.85]"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontWeight: 200,
-                    fontSize: "clamp(140px, 22vw, 320px)",
-                    color: "#A2C523",
-                    letterSpacing: "-0.04em",
-                  }}
-                >
-                  {activeLots.length}
-                </span>
-                <p
-                  className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
-                  style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
-                >
-                  Active Listings · 販売中
-                </p>
-              </div>
+                  <h1
+                    className="text-text-primary leading-[1.25] tracking-[-0.005em] mb-7"
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "clamp(26px, 3.6vw, 48px)",
+                    }}
+                  >
+                    土地のかたち、価格、最寄駅。
+                    <br />
+                    暮らしの距離を、一画面で。
+                  </h1>
 
-              <div className="md:pb-8">
-                <h1
-                  className="text-white leading-[1.15] tracking-[-0.005em] max-w-[680px]"
-                  style={{
-                    fontWeight: 400,
-                    fontSize: "clamp(22px, 2.6vw, 36px)",
-                  }}
-                >
-                  土地のかたち、価格、最寄駅。
-                  <br />
-                  暮らしの距離を、一画面で。
-                </h1>
-                <p className="mt-5 text-white/65 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
-                  価格・駅徒歩・小学校・スーパーまで、ご家族の暮らしに合わせて絞り込めます。
-                  土地と建物をまとめれば、余計な金融コストも抑えられます。
-                </p>
-
-                {/* 過去実績への動線 — ヒーロー内に統合 */}
-                <Link
-                  href="/lots/archive"
-                  className="group inline-flex items-center gap-3 mt-8 text-white/70 hover:text-white transition-colors text-[12px] md:text-[13px]"
-                >
-                  <Archive className="w-4 h-4" strokeWidth={1.4} />
-                  <span>
-                    過去の分譲実績{" "}
+                  {/* 数字 */}
+                  <div className="flex items-baseline gap-2 mb-6">
                     <span
-                      className="tabular-nums"
+                      className="tabular-nums leading-none"
                       style={{
                         fontFamily: "var(--font-oswald)",
-                        fontWeight: 500,
-                        color: "#A2C523",
+                        fontWeight: 300,
+                        fontSize: "clamp(64px, 9vw, 128px)",
+                        color: ACCENT,
+                        letterSpacing: "-0.03em",
                       }}
                     >
-                      {archivedLots.length}
+                      {activeLots.length}
                     </span>
-                    <span className="ml-0.5">区画</span>
-                  </span>
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    →
-                  </span>
-                </Link>
+                    <span
+                      className="text-text-primary text-[14px] md:text-[18px] font-medium leading-none ml-1.5 self-end pb-1 md:pb-2.5"
+                      style={{ fontFamily: "var(--font-sans)" }}
+                    >
+                      区画 販売中
+                    </span>
+                  </div>
+
+                  <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
+                    価格・駅徒歩・小学校・スーパーまで、ご家族の暮らしに合わせて絞り込めます。土地と建物をまとめれば、余計な金融コストも抑えられます。
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
+                    <a
+                      href="#map"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] md:text-[15px] font-medium rounded transition-opacity hover:opacity-90"
+                      style={{ background: FOREST, color: "#fff" }}
+                    >
+                      地図から探す
+                    </a>
+                    <Link
+                      href="/lots/archive"
+                      className="inline-flex items-center gap-1.5 text-text-primary text-[13px] md:text-[14px] font-medium hover:opacity-70 transition-opacity"
+                    >
+                      <Archive className="w-3.5 h-3.5" strokeWidth={1.6} />
+                      過去の分譲実績{" "}
+                      <span
+                        className="tabular-nums"
+                        style={{
+                          fontFamily: "var(--font-oswald)",
+                          fontWeight: 500,
+                          color: FOREST,
+                        }}
+                      >
+                        {archivedLots.length}
+                      </span>
+                      <span className="ml-0.5">区画</span>
+                      <span aria-hidden>→</span>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* 下端: 細い ライム ライン(ヒーローの "終わり" を明示) */}
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{ background: "#A2C523" }}
-          />
         </section>
 
         {/* === Map (純白背景に切替) === */}
-        <section className="bg-white py-[clamp(40px,5vw,80px)] border-b border-border">
+        <section id="map" className="bg-white py-[clamp(40px,5vw,80px)] border-b border-border scroll-mt-20">
           <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
             <div className="mb-6 flex items-end justify-between flex-wrap gap-3">
               <div>

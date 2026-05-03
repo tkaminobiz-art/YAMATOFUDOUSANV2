@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -26,67 +27,76 @@ export const metadata: Metadata = {
 */
 
 const FOREST = "#486B00";
-const LIME = "#A2C523";
 
 export default function ReferPage() {
   return (
     <>
       <Header />
       <main className="bg-white">
-        {/* === Editorial Black Hero === */}
-        <section className="relative bg-[#0A0A0A] text-white overflow-hidden">
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
-
-          <div className="relative max-w-[1200px] mx-auto px-[var(--page-px)] py-[clamp(80px,11vw,180px)]">
-            <div className="flex items-center gap-3 mb-12 md:mb-16 text-[11px] md:text-[12px] tracking-[0.22em] uppercase">
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: LIME }}
-              />
-              <span style={{ color: LIME, fontWeight: 600 }}>
-                Refer / ご紹介
-              </span>
-              <span className="text-white/30">·</span>
-              <span className="text-white/60">
-                やまとで建てた方へ
-              </span>
-            </div>
-
-            <h1
-              className="text-white leading-[1.25] tracking-[-0.005em] max-w-[820px]"
+        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一) === */}
+        <section className="relative w-full overflow-hidden bg-white">
+          <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
+            <Image
+              src="/images/newsozai/interior-ldk-01.webp"
+              alt="やまとで建てたご家族の暮らし"
+              fill
+              priority
+              className="object-cover"
+              sizes="100vw"
+              style={{ filter: "saturate(0.96) contrast(1.02)" }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0"
               style={{
-                fontWeight: 400,
-                fontSize: "clamp(28px, 4vw, 56px)",
+                background:
+                  "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 35%, rgba(255,255,255,0.20) 65%, transparent 95%)",
               }}
-            >
-              ご紹介、
-              <br className="hidden md:block" />
-              ありがとうございます。
-            </h1>
-            <p className="mt-8 text-white/65 text-[14px] md:text-[16px] leading-[1.95] max-w-[640px]">
-              やまとで建てたご家族からの「うちでも建てて良かった」というひと言は、これから家づくりを考える方にとって、何よりの後押しになります。
-              <br className="hidden md:block" />
-              ご紹介の輪を、丁寧に受けとめさせてください。
-            </p>
-          </div>
+            />
 
-          <div
-            aria-hidden
-            className="absolute bottom-0 left-0 right-0 h-px"
-            style={{ background: LIME }}
-          />
+            <div className="absolute inset-0 flex items-end md:items-center">
+              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
+                <div className="max-w-[640px]">
+                  <p
+                    className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
+                    style={{ color: FOREST, fontWeight: 600 }}
+                  >
+                    ご紹介 · Refer
+                  </p>
+
+                  <h1
+                    className="text-text-primary leading-[1.25] tracking-[-0.005em] mb-8"
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "clamp(28px, 4vw, 56px)",
+                    }}
+                  >
+                    ご紹介、
+                    <br />
+                    ありがとうございます。
+                  </h1>
+
+                  <p className="text-text-primary/85 text-[14px] md:text-[16px] leading-[1.95] mb-8 max-w-[560px]">
+                    やまとで建てたご家族からの「うちでも建てて良かった」というひと言は、これから家づくりを考える方にとって、何よりの後押しになります。ご紹介の輪を、丁寧に受けとめさせてください。
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
+                    <a
+                      href="#how-it-works"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] md:text-[15px] font-medium rounded transition-opacity hover:opacity-90"
+                      style={{ background: FOREST, color: "#fff" }}
+                    >
+                      ご紹介の流れを見る
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* === ご紹介の流れ === */}
-        <section className="bg-white py-[clamp(64px,7vw,140px)]">
+        <section id="how-it-works" className="bg-white py-[clamp(64px,7vw,140px)] scroll-mt-20">
           <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
             <p
               className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
