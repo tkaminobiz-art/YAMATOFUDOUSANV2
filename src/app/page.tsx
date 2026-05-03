@@ -7,6 +7,7 @@ import {
 import TrustStrip from "@/components/sections/TrustStrip";
 import ScaleBanner from "@/components/sections/ScaleBanner";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
+import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import PriceSection from "@/components/sections/PriceSection";
 import PerformanceGrid from "@/components/sections/PerformanceGrid";
@@ -79,6 +80,7 @@ export default function Home() {
 
         {/* 理屈・証拠 */}
         <MechanismEnhanced />
+        <StandardEquipment />
         <ZeroDeclaration />
         <PriceSection />
 
