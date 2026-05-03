@@ -196,16 +196,23 @@ export default function MechanismEnhanced() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            安さではなく、<br className="sm:hidden" />費用のかけ方を見直しました。
+            価格だけでなく、<br className="sm:hidden" />標準仕様まで比べてください。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
-            大手と同じ素材、同じ性能です。
+            キッチン、浴室、窓、外壁、断熱、耐震性能まで。
             <br />
-            違うのは、<span className="font-bold">届けるまでの費用</span>だけ。
+            やまと不動産では、暮らしの快適さと安心に関わる部分を
+            <span className="font-bold">標準仕様</span>
+            として大切にしています。
             <br />
-            <span className="nowrap">京モデル30坪</span>で、その差は
-            <span className="font-bold text-lime-deep nowrap">1,720万円</span>
-            になります。
+            見直しているのは、家そのものではなく、
+            <span className="font-bold">広告費・展示場維持費・中間コスト</span>
+            です。
+          </p>
+          <p className="mt-4 md:mt-5 font-sans text-text-primary/65 text-[clamp(12px,0.95vw,14px)] leading-[1.85] max-w-[680px]">
+            <span className="nowrap">京モデル30坪</span>の場合、当社試算では大手ハウスメーカー参考価格と比べて、
+            <span className="font-bold text-lime-deep nowrap">約1,720万円</span>
+            の差が出るケースがあります。
           </p>
         </header>
 
