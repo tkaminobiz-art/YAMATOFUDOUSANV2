@@ -27,6 +27,9 @@ type Plan = {
   id: "hana" | "kaze" | "miyako";
   name: string;
   reading: string;
+  /** プランカード(価格カード)で表示する「誰向け」コピー */
+  audience: string;
+  /** 間取り例カードで表示する技術的な特徴説明 */
   tagline: string;
   price: string;
   tsubo: string;
@@ -40,6 +43,7 @@ const PLANS: readonly Plan[] = [
     id: "hana",
     name: "花",
     reading: "HANA",
+    audience: "広さと仕様にゆとりを持たせたいご家族へ。",
     tagline: "4LDK・33坪、ゆとりのある間取りです。",
     price: "2,480",
     tsubo: "33坪（109㎡）",
@@ -51,6 +55,7 @@ const PLANS: readonly Plan[] = [
     id: "kaze",
     name: "風",
     reading: "KAZE",
+    audience: "暮らしやすさと価格のバランスを大切にしたいご家族へ。",
     tagline: "30坪で、家事動線を整えています。",
     price: "2,480",
     tsubo: "30坪",
@@ -62,6 +67,7 @@ const PLANS: readonly Plan[] = [
     id: "miyako",
     name: "京",
     reading: "MIYAKO",
+    audience: "必要な広さに絞り、総額を抑えやすいプランです。",
     tagline: "3LDK・28坪、必要な広さに絞りました。",
     price: "2,280",
     tsubo: "28坪",
@@ -164,10 +170,10 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
           </dl>
         </div>
 
-        {/* Bottom: タグライン + 価格 */}
+        {/* Bottom: 誰向けコピー + 価格 */}
         <div>
           <p className="font-sans text-white/85 text-[clamp(13px,1vw,15px)] leading-[1.85] max-w-[22rem] mb-6 md:mb-7" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>
-            {plan.tagline}
+            {plan.audience}
           </p>
 
           <div className="pt-5 md:pt-6 border-t border-white/25">
@@ -211,7 +217,7 @@ export default function PriceSection() {
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            三タイプ、<br className="sm:hidden" />ご用意しています。
+            暮らし方に合わせて、<br className="sm:hidden" />選べる3つのプラン。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             京モデルは、
@@ -241,7 +247,7 @@ export default function PriceSection() {
               className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
               style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}
             >
-              この価格で、<br className="sm:hidden" />こんな間取りが実現できます。
+              この価格で叶う、<br className="sm:hidden" />間取りの一例をご紹介します。
             </h3>
             <p className="mt-4 md:mt-5 font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
               過去の設計事例から、各プランに近い間取りをご紹介します。実際の間取りはご家族の暮らし方・敷地条件に合わせて、一から設計します。
@@ -304,7 +310,7 @@ export default function PriceSection() {
               className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
               style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}
             >
-              土地＋建物で、<br className="sm:hidden" />いくらになるのか。
+              土地と建物を合わせた、<br className="sm:hidden" />総額の目安。
             </h3>
             <p className="mt-4 md:mt-5 font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
               建物だけでなく、土地も含めた目安を出します。実際のお見積りは、ご来場時にエリアとご希望に合わせてお出しします。

@@ -65,7 +65,7 @@ export default function MidCta() {
         </div>
 
         <p className="text-white/50 text-xs mt-6">
-          強引な勧誘は、しません。
+          ご希望のない営業はいたしません。
         </p>
       </div>
     </section>

@@ -62,7 +62,7 @@ const FOOTER_TRUST = [
   },
   {
     Icon: Lock,
-    title: "秘密は厳守します",
+    title: "個人情報は適切に管理します",
     body: "いただいた情報は\n適切に管理いたします。",
   },
 ] as const;
@@ -100,10 +100,10 @@ export default function FinalCta() {
                 style={{ letterSpacing: "0.04em" }}
               >
                 <Zap className="w-3 h-3" strokeWidth={2.5} fill="currentColor" />
-                たった30秒で完了！
+                約1分で送信できます
               </span>
               <span className="inline-flex items-center rounded-full border border-main/40 text-main text-[10px] font-bold px-2.5 py-1 tracking-[0.08em]">
-                完全無料
+                ご相談無料
               </span>
             </div>
 

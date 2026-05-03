@@ -164,7 +164,7 @@ export default function HeroMagazine({
                   textTransform: "none",
                 }}
               >
-                素材も性能も、大手と同じ。
+                標準仕様まで、しっかり比べてください。
               </span>
               <span
                 className="block text-white"
@@ -177,7 +177,7 @@ export default function HeroMagazine({
                   letterSpacing: "0.02em",
                 }}
               >
-                届けるまでの費用だけ、<br className="md:hidden" />削っています。
+                家そのものに、<br className="md:hidden" />しっかり費用をかけています。
               </span>
             </h1>
 

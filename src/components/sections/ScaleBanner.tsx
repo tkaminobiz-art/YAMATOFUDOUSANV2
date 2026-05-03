@@ -56,7 +56,7 @@ const STATS: readonly Stat[] = [
     unit: "組",
     prefix: "",
     label: "以上のお客様の声",
-    sub: "本音のまま、99.9%そのまま掲載。",
+    sub: "原文に近い形で掲載しています。",
   },
   {
     Icon: Calendar,
@@ -87,7 +87,7 @@ export default function ScaleBanner() {
           </p>
           <span aria-hidden className="flex-1 h-px bg-[var(--color-border)]" />
           <p className="text-text-secondary text-[11px] md:text-xs tracking-[0.08em]">
-            積み重ねた、事実だけを。
+            地域で積み重ねてきた実績です。
           </p>
         </div>
 
