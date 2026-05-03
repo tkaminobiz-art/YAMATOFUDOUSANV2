@@ -2,6 +2,7 @@
 
 import { useScrollIn } from "@/hooks/useScrollIn";
 import {
+  // 性能アイコン
   Wind,
   Shield,
   Award,
@@ -10,16 +11,30 @@ import {
   Fan,
   HardHat,
   HeartHandshake,
+  // 設備アイコン
+  ChefHat,
+  Bath,
+  Droplet,
+  DoorOpen,
+  Layers,
+  RectangleHorizontal,
+  Zap,
+  Lightbulb,
   type LucideIcon,
 } from "lucide-react";
 
 /*
-  PerformanceGrid — 2026-05-03 (4×2 アイコングリッド・参考画像準拠)
+  PerformanceGrid — 2026-05-04 v2 (設備+性能の統合グリッド)
   ---------------------------------------------------------------
-  「素材にも、性能にも、妥協しない家づくり。」
-  8項目を1画面に俯瞰できるアイコン+1-2行説明グリッド。
-  StandardAndQualitySection の "保証タイムライン" 段階を吸収/置換し、
-  情報密度を約2倍に。
+  v1: 性能8項目のみ
+  v2: 重複していた MechanismEnhanced 内の StandardChips を統合。
+      設備グループ(8)+ 性能グループ(8)の二段構造に。
+      見出し「この価格で、ここまで標準。」で1セクションにまとめる。
+
+  ユーザー指摘(2026-05-04):
+  - MechanismEnhanced 内のStandardChips と PerformanceGrid が重複
+  - 「断熱・耐震・サッシ」が両方に出ていた
+  → 設備系を上、性能系を下に分けて1セクションに集約。
 */
 
 const FOREST = "#486B00";
@@ -30,7 +45,52 @@ type Item = {
   body: string;
 };
 
-const ITEMS: readonly Item[] = [
+// 設備グループ — 毎日の暮らしに直結する標準装備
+const FACILITY_ITEMS: readonly Item[] = [
+  {
+    Icon: ChefHat,
+    title: "キッチン",
+    body: "毎日の家事がしやすい使いやすさと収納力。",
+  },
+  {
+    Icon: Bath,
+    title: "浴室",
+    body: "くつろぎやすさと、掃除のしやすさ。",
+  },
+  {
+    Icon: Droplet,
+    title: "洗面・トイレ",
+    body: "収納力と清掃性を考えた設備。",
+  },
+  {
+    Icon: DoorOpen,
+    title: "玄関ドア",
+    body: "断熱と防犯に配慮した、ご家族の顔となるドア。",
+  },
+  {
+    Icon: Layers,
+    title: "床材",
+    body: "傷や汚れが目立ちにくく、素足でも心地いい。",
+  },
+  {
+    Icon: RectangleHorizontal,
+    title: "室内ドア",
+    body: "天井まで伸びるハイドアで、部屋を広く見せる。",
+  },
+  {
+    Icon: Zap,
+    title: "制震装置",
+    body: "繰り返す揺れから、家の骨組みを守ります。",
+  },
+  {
+    Icon: Lightbulb,
+    title: "LED照明",
+    body: "電気代と交換の手間を、長く抑えます。",
+  },
+];
+
+// 性能グループ — 構造的な安心と長く住める家の土台
+const PERFORMANCE_ITEMS: readonly Item[] = [
   {
     Icon: Wind,
     title: "高気密・高断熱",
@@ -73,6 +133,30 @@ const ITEMS: readonly Item[] = [
   },
 ];
 
+function ItemCard({ item }: { item: Item }) {
+  const Icon = item.Icon;
+  return (
+    <li className="bg-white p-5 md:p-6 lg:p-7 flex flex-col">
+      <span
+        aria-hidden
+        className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full mb-4"
+        style={{
+          background: "rgba(162, 197, 35, 0.12)",
+          color: FOREST,
+        }}
+      >
+        <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
+      </span>
+      <h3 className="text-text-primary text-[14px] md:text-[15px] font-medium leading-[1.4] mb-2">
+        {item.title}
+      </h3>
+      <p className="text-text-secondary text-[11.5px] md:text-[12.5px] leading-[1.85]">
+        {item.body}
+      </p>
+    </li>
+  );
+}
+
 export default function PerformanceGrid() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
@@ -82,12 +166,12 @@ export default function PerformanceGrid() {
         ref={ref}
         className="max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        <div className="mb-10 md:mb-14 max-w-[760px]">
+        <div className="mb-10 md:mb-14 max-w-[860px]">
           <p
             className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
             style={{ color: FOREST, fontWeight: 600 }}
           >
-            Materials · 素材と性能
+            Standard · 標準装備
           </p>
           <h2
             className="text-text-primary leading-[1.3] tracking-[0.005em]"
@@ -96,47 +180,51 @@ export default function PerformanceGrid() {
               fontSize: "clamp(22px, 2.6vw, 36px)",
             }}
           >
-            素材にも、性能にも、
-            <br className="sm:hidden" />
-            妥協しない家づくり。
+            この価格で、ここまで標準。
           </h2>
-          <p className="mt-4 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-            長く快適に暮らせるよう、素材も住宅性能も妥協せずに選んでいます。
+          <p className="mt-4 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[640px]">
+            設備も、性能も。標準装備で、ここまで整えています。
+            毎日の使いやすさと、長く住める家の土台、両方を価格に含めています。
           </p>
         </div>
 
-        {/* 4×2 アイコングリッド */}
-        <ul className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border rounded overflow-hidden">
-          {ITEMS.map((item) => {
-            const Icon = item.Icon;
-            return (
-              <li
-                key={item.title}
-                className="bg-white p-5 md:p-6 lg:p-7 flex flex-col"
-              >
-                <span
-                  aria-hidden
-                  className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full mb-4"
-                  style={{
-                    background: "rgba(162, 197, 35, 0.12)",
-                    color: FOREST,
-                  }}
-                >
-                  <Icon
-                    className="w-5 h-5 md:w-6 md:h-6"
-                    strokeWidth={1.5}
-                  />
-                </span>
-                <h3 className="text-text-primary text-[14px] md:text-[15px] font-medium leading-[1.4] mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-text-secondary text-[11.5px] md:text-[12.5px] leading-[1.85]">
-                  {item.body}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+        {/* === 設備グループ === */}
+        <div className="mb-10 md:mb-14">
+          <div className="flex items-baseline justify-between flex-wrap gap-3 mb-5 md:mb-6">
+            <p className="font-sans font-bold text-text-primary text-[14px] md:text-[16px]">
+              設備の標準
+            </p>
+            <p className="font-sans text-text-secondary text-[11px] md:text-[12px]">
+              クリナップ・TOTO・YKK AP・ニチハ ほか、国内大手メーカー品を採用
+            </p>
+          </div>
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border rounded overflow-hidden">
+            {FACILITY_ITEMS.map((item) => (
+              <ItemCard key={item.title} item={item} />
+            ))}
+          </ul>
+        </div>
+
+        {/* === 性能グループ === */}
+        <div>
+          <div className="flex items-baseline justify-between flex-wrap gap-3 mb-5 md:mb-6">
+            <p className="font-sans font-bold text-text-primary text-[14px] md:text-[16px]">
+              性能の標準
+            </p>
+            <p className="font-sans text-text-secondary text-[11px] md:text-[12px]">
+              高断熱・耐震等級3・長期優良住宅対応で、長く住める家を
+            </p>
+          </div>
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border border border-border rounded overflow-hidden">
+            {PERFORMANCE_ITEMS.map((item) => (
+              <ItemCard key={item.title} item={item} />
+            ))}
+          </ul>
+        </div>
+
+        <p className="font-sans text-text-secondary text-[11px] md:text-[12px] mt-8 leading-[1.85]">
+          ※ 仕様・メーカーはプランや時期により変更となる場合があります。詳細はご来場時にご案内します。
+        </p>
       </div>
     </section>
   );

@@ -1,17 +1,6 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
-import {
-  ChefHat,
-  Bath,
-  Droplet,
-  Frame,
-  Home as HomeIcon,
-  Snowflake,
-  Activity,
-  Hammer,
-  type LucideIcon,
-} from "lucide-react";
 
 /*
   MechanismEnhanced — 2026-05-04 v3 (比較ダッシュボード + 標準仕様チップ)
@@ -55,23 +44,6 @@ const COMPARISON = [
     tone: "hero" as const,
   },
 ] as const;
-
-type StandardChip = {
-  Icon: LucideIcon;
-  title: string;
-  body: string;
-};
-
-const STANDARD_CHIPS: readonly StandardChip[] = [
-  { Icon: ChefHat, title: "キッチン", body: "毎日の家事がしやすい使いやすさと収納力。" },
-  { Icon: Bath, title: "浴室", body: "くつろぎやすさと、掃除のしやすさ。" },
-  { Icon: Droplet, title: "洗面・トイレ", body: "収納力と清掃性を考えた設備。" },
-  { Icon: Frame, title: "窓(サッシ)", body: "高性能サッシで断熱性・気密性を確保。" },
-  { Icon: HomeIcon, title: "外壁", body: "耐久性・断熱性・遮音性に配慮。" },
-  { Icon: Snowflake, title: "断熱", body: "夏は涼しく、冬は暖かい快適な住まい。" },
-  { Icon: Activity, title: "耐震・制震", body: "耐震等級3+制震で地震に強い安心感。" },
-  { Icon: Hammer, title: "付帯工事", body: "標準付帯工事まで含んだコミコミ価格。" },
-];
 
 type Mechanism = {
   num: string;
@@ -230,56 +202,6 @@ function ComparisonDashboard() {
 }
 
 // ────────────────────────────────────────────────
-// 標準仕様チップ
-// ────────────────────────────────────────────────
-
-function StandardChips() {
-  return (
-    <div className="bg-bg-primary border border-text-primary/10 rounded-lg p-6 md:p-8">
-      <div className="flex items-baseline justify-between flex-wrap gap-3 mb-6">
-        <p className="font-sans font-bold text-text-primary text-[15px] md:text-[17px]">
-          この価格に含まれる、標準仕様。
-        </p>
-        <p className="font-sans text-text-secondary text-[11px] md:text-[12px]">
-          クリナップ・TOTO・YKK AP・ニチハ など国内大手メーカー品を採用
-        </p>
-      </div>
-      <ul className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        {STANDARD_CHIPS.map((c) => {
-          const Icon = c.Icon;
-          return (
-            <li
-              key={c.title}
-              className="flex flex-col items-start p-3 md:p-4 rounded border border-text-primary/8 bg-white"
-            >
-              <span
-                aria-hidden
-                className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full mb-2.5"
-                style={{
-                  background: "rgba(162,197,35,0.12)",
-                  color: "#486B00",
-                }}
-              >
-                <Icon className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.6} />
-              </span>
-              <p className="font-sans text-text-primary text-[13px] md:text-[14px] font-bold mb-1.5">
-                {c.title}
-              </p>
-              <p className="font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.65]">
-                {c.body}
-              </p>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="font-sans text-text-secondary text-[11px] md:text-[12px] mt-5 leading-[1.85]">
-        ※ 仕様・メーカーはプランや時期により変更となる場合があります。
-      </p>
-    </div>
-  );
-}
-
-// ────────────────────────────────────────────────
 // 含まれるもの・別途のもの
 // ────────────────────────────────────────────────
 
@@ -407,15 +329,12 @@ export default function MechanismEnhanced() {
         {/* ========== 比較ダッシュボード(主役) ========== */}
         <ComparisonDashboard />
 
-        {/* ========== 標準仕様チップ ========== */}
-        <div className="mt-8 md:mt-10">
-          <StandardChips />
-        </div>
-
         {/* ========== 含まれるもの・別途のもの ========== */}
         <div className="mt-8 md:mt-10">
           <ConditionLists />
         </div>
+
+        {/* 標準仕様の証拠は、PerformanceGrid セクションで設備+性能を一括提示 */}
 
         {/* ========== 価格を抑えられる、3つの理由 ========== */}
         <div className="mt-20 md:mt-28">
