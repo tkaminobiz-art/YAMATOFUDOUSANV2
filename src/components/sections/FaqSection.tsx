@@ -4,6 +4,19 @@ import { useState } from "react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { Plus, Minus } from "lucide-react";
 
+/*
+  FaqSection — 2026-05-04 v3 (参考LP準拠・10件1列リスト構造へ)
+  ---------------------------------------------------------------
+  v2(8件2列カード) → v3(10件1列ライン)
+  参考: やまと家計設計LP「気になるところから、どうぞ。」の長尺FAQ。
+  目的: 不安要素を網羅的に並べ、潔さで信頼を出す。1列にすることで
+       スキャン時の読みやすさを優先(読者の網羅圧)。
+
+  追加2件:
+    Q.09 つなぎ融資 — メモリ"やまとの売り"準拠で「発生しません」断定訴求。
+    Q.10 見学・相談だけOK — 「来場ノルマなし」相当の事前回答。
+*/
+
 const FAQS = [
   {
     q: "本当にコミコミ価格ですか？後から追加が出ませんか？",
@@ -37,6 +50,14 @@ const FAQS = [
     q: "住宅ローンの相談はできますか？",
     a: "はい。住宅ローンアドバイザー資格を持つスタッフが在籍しています。複数の金融機関の中から、ご状況に合う形を一緒に整理します（大和信用金庫、奈良中央信用金庫、南都銀行、りそな銀行など）。",
   },
+  {
+    q: "つなぎ融資は、本当に発生しないのですか？",
+    a: "やまとの土地+建物セットでお建ていただく場合、つなぎ融資は発生しません。一般的にかかる30〜80万円ほどの利息・手数料が、まるごと不要になります。お持ちの土地でお建ていただく場合は、状況に応じて別途ご案内します。",
+  },
+  {
+    q: "見学だけ・ご相談だけでも、対応してもらえますか？",
+    a: "はい、ご見学だけでも、ご相談だけでも構いません。何度ご来場いただいても費用はかかりません。ご相談後に営業電話や訪問でご連絡することも、いたしません。",
+  },
 ] as const;
 
 function FaqItem({
@@ -49,39 +70,42 @@ function FaqItem({
   index: number;
 }) {
   const [open, setOpen] = useState(false);
+  const num = String(index + 1).padStart(2, "0");
 
   return (
-    <div className="border border-border rounded transition-colors hover:border-main/40 bg-white">
+    <div className="border-b border-border">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-3 p-4 md:p-5 text-left transition-colors"
+        aria-expanded={open}
+        className="group w-full flex items-center gap-4 sm:gap-6 py-5 sm:py-6 text-left transition-colors hover:bg-bg-secondary/40"
       >
-        <span className="flex items-start gap-3 flex-1 min-w-0">
-          <span
-            className="text-main text-[11px] md:text-[12px] font-medium mt-1 shrink-0 tabular-nums"
-            style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
-          >
-            Q.{String(index + 1).padStart(2, "0")}
-          </span>
-          <span
-            className="text-text-primary text-[13px] md:text-[14px] font-medium leading-[1.55]"
-            style={{ fontFamily: "var(--font-sans)" }}
-          >
-            {q}
-          </span>
+        <span
+          className="shrink-0 text-main text-[13px] sm:text-[14px] tabular-nums tracking-[0.04em] w-7 sm:w-9"
+          style={{ fontFamily: "var(--font-inter), Inter, sans-serif", fontWeight: 600 }}
+        >
+          {num}
         </span>
-        <span className="shrink-0 text-main">
+        <span
+          className="flex-1 min-w-0 text-text-primary text-[14px] sm:text-[15px] leading-[1.6]"
+          style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}
+        >
+          {q}
+        </span>
+        <span
+          aria-hidden
+          className="shrink-0 inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-main transition-colors group-hover:bg-main group-hover:text-white"
+        >
           {open ? (
-            <Minus className="w-4 h-4" strokeWidth={1.5} />
+            <Minus className="w-4 h-4" strokeWidth={1.75} />
           ) : (
-            <Plus className="w-4 h-4" strokeWidth={1.5} />
+            <Plus className="w-4 h-4" strokeWidth={1.75} />
           )}
         </span>
       </button>
       {open && (
-        <div className="px-4 md:px-5 pb-5 -mt-1 pl-[calc(1rem+3em)] md:pl-[calc(1.25rem+3em)]">
-          <p className="text-text-secondary text-[12px] md:text-[13px] leading-[1.9]">
+        <div className="pl-[calc(1.75rem+1rem)] sm:pl-[calc(2.25rem+1.5rem)] pr-4 sm:pr-12 pb-6">
+          <p className="text-text-secondary text-[13px] sm:text-[14px] leading-[1.95]">
             {a}
           </p>
         </div>
@@ -97,29 +121,39 @@ export default function FaqSection() {
     <section id="faq" className="bg-white py-[var(--section-py)]">
       <div
         ref={sectionRef}
-        className="max-w-[1100px] mx-auto px-[var(--page-px)] scroll-in"
+        className="max-w-[920px] mx-auto px-[var(--page-px)] scroll-in"
       >
+        {/* 装飾: 小さな葉ドット(参考LPの三角ドット相当) */}
+        <div
+          aria-hidden
+          className="flex items-end justify-center gap-1.5 mb-6 text-main/70"
+        >
+          <span className="block w-1 h-1 rounded-full bg-current" />
+          <span className="block w-1.5 h-1.5 rounded-full bg-current opacity-80" />
+          <span className="block w-1 h-1 rounded-full bg-current" />
+        </div>
+
         <p
-          className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
-          style={{ color: "#486B00", fontWeight: 600 }}
+          className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-center mb-3"
+          style={{ color: "#486B00", fontWeight: 600, fontFamily: "var(--font-inter)" }}
         >
           FAQ
         </p>
-        <h2 className="text-[clamp(24px,3.5vw,40px)] text-text-primary mb-4">
-          よくある質問。
+        <h2 className="text-[clamp(22px,3vw,36px)] text-text-primary text-center mb-3 leading-[1.5]">
+          気になるところから、どうぞ。
         </h2>
-        <p className="text-text-secondary text-[clamp(14px,1vw,16px)] leading-relaxed mb-10 md:mb-14 max-w-[640px]">
-          家づくりに関する疑問にお答えします。気になる項目をクリック(タップ)してご覧ください。
+        <p className="text-text-secondary text-[13px] sm:text-sm leading-[1.85] text-center max-w-[600px] mx-auto mb-12 md:mb-16">
+          家づくり・お金・土地・契約まわりのよくあるご質問をまとめました。
         </p>
 
-        {/* 2列折りたたみ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        {/* 10件1列リスト */}
+        <div className="border-t border-border">
           {FAQS.map((faq, i) => (
             <FaqItem key={i} q={faq.q} a={faq.a} index={i} />
           ))}
         </div>
 
-        <p className="text-text-secondary text-xs mt-10 text-center">
+        <p className="text-text-secondary text-xs sm:text-sm mt-10 sm:mt-14 text-center leading-[1.85]">
           その他のご質問は、
           <a href="/contact" className="text-main underline mx-1">資料請求</a>
           または
@@ -131,7 +165,7 @@ export default function FaqSection() {
           >
             LINE
           </a>
-          からお寄せください。
+          からお気軽にどうぞ。
         </p>
       </div>
     </section>
