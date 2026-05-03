@@ -1,180 +1,263 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import {
+  Search,
+  Calculator,
+  HeartHandshake,
+  Home as HomeIcon,
+  Coins,
+  Mountain,
+  ClipboardList,
+  Truck,
+  ParkingSquare,
+  PencilLine,
+  HelpCircle,
+  ArrowRight,
+  CheckCircle2,
+  Users,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 /*
-  ZeroDeclaration — 2026-04-24 v6 (案A: 二列領収書・Comparison Receipt)
-  ---------------------------------------------------------------------
-  v5 までのチェス盤 8 タイル均等グリッドを全廃。
-  理由: タイル均等 = 8項目全部が等価に見え、"¥0 連打"のインパクトが潰れる。
-  読者は「またある feature grid」で目が滑る。
-
-  v6 = "他社の見えない請求書 vs やまと" の 二列領収書:
-  - 左列(他社): 実費の目安金額を灰色で並べる → 読者は無意識に自分の見積と照合
-  - 右列(やまと): 8 回の "¥0" を Lime-deep で連打 → 繰り返しの視覚リズム
-  - 合計行で "およそ ¥4,300,000 の差"(=合計 vs 合計 ¥0)を叩き込む
-  - 全体は 1 枚の document = 領収書 / 請求書
-
-  哲学: 小林専務「事実で語る」。数字が仕事をする。装飾ゼロ。
-  数字の出典: 業界平均試算に基づく参考値(注釈で開示)。
+  ZeroDeclaration — 2026-05-04 v7 (費用リスク・ダッシュボード型)
+  ---------------------------------------------------------------
+  v6: 8項目縦並び二列領収書 + 「他社 vs やまと(¥0連打)」
+      → ユーザーレビューで離脱率/攻撃感を指摘
+        ・8項目縦長で読む前に疲れる
+        ・¥0が多すぎて広告臭/誤解リスク
+        ・「他社」比較が攻撃的
+  v7: 「契約前に見える化する会社」のポジショニングに転換
+      ・上段: 結論カード(最大約430万円分・3つの信頼ピル)
+      ・中段: 2タイミング分類(契約前 / 工事中) で4項目ずつ
+      ・各項目: 一般的な目安 → やまとは [対応]
+        全項目を「不要」にせず「当社負担/事前説明/見積提示」と分ける
+      ・下段: 3つの仕組みカード(分譲地 / ワンストップ / 標準明確化)
+      ・最下段: 写真 + 相談CTA
 */
 
-type Phase = "契約前" | "施工中" | "入居後";
+const FOREST = "#486B00";
+const ACCENT = "#A2C523";
 
-type Fee = {
-  num: string;
+type FeeItem = {
+  Icon: LucideIcon;
   label: string;
-  phase: Phase;
-  marketAmount: string;  // "¥500,000 〜 ¥1,000,000" or "最大 ¥1,500,000" or "—"
-  marketNote?: string;   // "土地 1,500万〜3,000万円の場合" 等
+  desc: string;
+  market: string;
+  yamato: string;
 };
 
-const FEES: readonly Fee[] = [
+const FEES_BEFORE: readonly FeeItem[] = [
   {
-    num: "01",
+    Icon: HomeIcon,
     label: "仲介手数料",
-    phase: "契約前",
-    marketAmount: "¥500,000 〜 ¥1,000,000",
-    marketNote: "土地 1,500万〜3,000万円の場合",
+    desc: "土地購入時にかかる手数料",
+    market: "50〜100万円",
+    yamato: "当社分譲地なら不要",
   },
   {
-    num: "02",
+    Icon: Coins,
     label: "つなぎ融資",
-    phase: "契約前",
-    marketAmount: "¥300,000 〜 ¥800,000",
-    marketNote: "土地先行融資の金利負担",
+    desc: "土地と建物の決済のタイミング差で\n必要になる融資手数料・利息",
+    market: "30〜80万円",
+    yamato: "原則不要",
   },
   {
-    num: "03",
+    Icon: Mountain,
     label: "地盤改良費",
-    phase: "契約前",
-    marketAmount: "最大 ¥1,500,000",
-    marketNote: "やまとは当社が負担",
+    desc: "地盤改良工事が必要な場合の費用",
+    market: "最大150万円",
+    yamato: "最大150万円まで\n当社負担",
   },
   {
-    num: "04",
-    label: "追加の搬入費",
-    phase: "施工中",
-    marketAmount: "¥100,000 〜 ¥300,000",
-    marketNote: "小運搬費としての計上分",
-  },
-  {
-    num: "05",
-    label: "工事車両の駐車代",
-    phase: "施工中",
-    marketAmount: "¥100,000 〜 ¥200,000",
-    marketNote: "工期中の近隣駐車場代",
-  },
-  {
-    num: "06",
-    label: "不透明な追加費用",
-    phase: "施工中",
-    marketAmount: "—",
-    marketNote: "見積書に載っていない費用",
-  },
-  {
-    num: "07",
-    label: "契約後の追加見積り",
-    phase: "施工中",
-    marketAmount: "¥200,000 〜 ¥500,000",
-    marketNote: "標準外の仕様変更分",
-  },
-  {
-    num: "08",
+    Icon: ClipboardList,
     label: "標準仕様との差額",
-    phase: "契約前",
-    marketAmount: "—",
-    marketNote: "設備ダウングレード分",
+    desc: "標準仕様から変更した場合の差額",
+    market: "数十万円〜",
+    yamato: "標準仕様を明確に提示",
   },
 ] as const;
 
-const TOTAL_MARKET_MAX = "およそ ¥4,300,000";
-const TOTAL_YAMATO = "¥0";
+const FEES_DURING: readonly FeeItem[] = [
+  {
+    Icon: Truck,
+    label: "追加の搬入費",
+    desc: "重機や資材の搬入経路による追加費用",
+    market: "10〜30万円",
+    yamato: "事前に確認・ご説明",
+  },
+  {
+    Icon: ParkingSquare,
+    label: "工事車両の駐車代",
+    desc: "近隣の駐車場を利用する場合の費用",
+    market: "10〜20万円",
+    yamato: "必要な場合も\n事前にご説明",
+  },
+  {
+    Icon: PencilLine,
+    label: "契約後の追加見積り",
+    desc: "仕様変更や追加工事による費用",
+    market: "数十万円〜",
+    yamato: "変更前に\n見積りをご提示",
+  },
+  {
+    Icon: HelpCircle,
+    label: "見積書にない費用",
+    desc: "見落としやすい細かな諸費用",
+    market: "数十万円〜",
+    yamato: "内訳を明確に提示",
+  },
+] as const;
+
+const TRUST_PILLS = [
+  { Icon: Search, label: "事前に\nしっかり説明" },
+  { Icon: Calculator, label: "契約前に\n総額を把握" },
+  { Icon: HeartHandshake, label: "あとから増えず\n安心" },
+] as const;
+
+const MECHANISMS = [
+  {
+    no: "01",
+    Icon: HomeIcon,
+    title: "当社分譲地だから\n仲介手数料が不要",
+    body: "自社で土地を仕入れ・販売することで、土地購入時の仲介手数料がかかりません。",
+  },
+  {
+    no: "02",
+    Icon: Users,
+    title: "土地と建物をまとめて\nワンストップ対応",
+    body: "土地と建物を一体でご提案・契約するため、つなぎ融資などの余計な費用を抑えます。",
+  },
+  {
+    no: "03",
+    Icon: ClipboardList,
+    title: "標準仕様と費用を\n事前に明確化",
+    body: "標準仕様を分かりやすくご提示し、追加が発生する場合も事前にご説明します。",
+  },
+] as const;
 
 // ────────────────────────────────────────────────
-// Row
+// FeeRow — 1行(横長チップ)
 // ────────────────────────────────────────────────
 
-function FeeRow({ fee }: { fee: Fee }) {
-  const hasAmount = fee.marketAmount !== "—";
-
+function FeeRow({ fee }: { fee: FeeItem }) {
+  const { Icon } = fee;
   return (
-    <div
-      role="row"
-      className="scroll-in grid grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto_auto] gap-x-4 md:gap-x-8 lg:gap-x-10 items-baseline py-6 md:py-7 border-b border-text-primary/10"
-    >
-      {/* Number */}
+    <li className="scroll-in grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto_auto] gap-x-3 sm:gap-x-5 gap-y-2 items-center px-4 sm:px-5 py-4 sm:py-5 border-b border-text-primary/10 last:border-b-0">
+      {/* Icon */}
       <span
-        role="cell"
-        className="font-oswald leading-none tabular-nums text-text-primary/40 shrink-0"
-        style={{
-          fontWeight: 300,
-          fontSize: "clamp(18px, 1.5vw, 22px)",
-          letterSpacing: "-0.02em",
-        }}
+        aria-hidden
+        className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 shrink-0"
+        style={{ color: FOREST }}
       >
-        {fee.num}
+        <Icon className="w-5 h-5 sm:w-[22px] sm:h-[22px]" strokeWidth={1.5} />
       </span>
 
-      {/* Label(+ phase tag + mobile note) */}
-      <div role="cell" className="min-w-0">
-        <div className="flex items-baseline gap-3 flex-wrap">
-          <span className="font-sans font-bold text-text-primary text-[clamp(15px,1.2vw,18px)] leading-[1.5] tracking-[0.01em]">
-            {fee.label}
-          </span>
-          <span className="font-inter text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-text-secondary font-bold">
-            {fee.phase}
-          </span>
+      {/* Label + desc */}
+      <div className="min-w-0">
+        <p className="text-text-primary text-[14px] sm:text-[15px] font-bold leading-[1.45] mb-0.5">
+          {fee.label}
+        </p>
+        <p className="text-text-secondary text-[11px] sm:text-[12px] leading-[1.7] whitespace-pre-line">
+          {fee.desc}
+        </p>
+      </div>
+
+      {/* Market amount(目安) — sm: 別行/desktop: 同一行 */}
+      <div className="col-start-2 sm:col-start-3 sm:text-right">
+        <p className="text-[10px] sm:text-[11px] text-text-secondary leading-tight mb-0.5">
+          一般的な目安
+        </p>
+        <p className="text-text-primary text-[12px] sm:text-[13px] font-medium tabular-nums">
+          {fee.market}
+        </p>
+      </div>
+
+      {/* Arrow + Yamato response */}
+      <div className="col-start-2 sm:col-start-4 flex items-start gap-2 sm:gap-3">
+        <ArrowRight
+          className="w-3.5 h-3.5 sm:w-4 sm:h-4 mt-0.5 shrink-0 text-text-secondary"
+          strokeWidth={1.5}
+        />
+        <div>
+          <p className="text-[10px] sm:text-[11px] text-text-secondary leading-tight mb-0.5">
+            やまとは
+          </p>
+          <p
+            className="text-[12px] sm:text-[13px] font-bold leading-[1.45] whitespace-pre-line"
+            style={{ color: FOREST }}
+          >
+            {fee.yamato}
+          </p>
         </div>
-        {/* mobile 用: 他社金額を label 直下に表示 */}
-        <div className="md:hidden mt-2">
-          <p className="font-sans text-[11px] text-text-secondary leading-[1.7]">
-            <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-2">他社</span>
-            <span className={`font-oswald font-medium tabular-nums text-[13px] ${hasAmount ? "text-text-primary/80" : "text-text-primary/35"}`}>
-              {fee.marketAmount}
+      </div>
+    </li>
+  );
+}
+
+// ────────────────────────────────────────────────
+// FeeColumn — タイミング別カラム
+// ────────────────────────────────────────────────
+
+function FeeColumn({
+  Icon,
+  title,
+  total,
+  items,
+}: {
+  Icon: LucideIcon;
+  title: string;
+  total: string;
+  items: readonly FeeItem[];
+}) {
+  return (
+    <div className="bg-white border border-text-primary/12 rounded-2xl overflow-hidden shadow-[0_4px_20px_-12px_rgba(43,43,43,0.08)]">
+      {/* ヘッダー */}
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 sm:px-6 py-4 sm:py-5 border-b border-text-primary/10">
+        <div className="flex items-center gap-3">
+          <span
+            className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full"
+            style={{ background: FOREST, color: "#fff" }}
+            aria-hidden
+          >
+            <Icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.7} />
+          </span>
+          <p className="text-text-primary text-[14px] sm:text-[15px] font-bold leading-tight">
+            {title}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] sm:text-[11px] text-text-secondary leading-tight mb-0.5">
+            最大およそ
+          </p>
+          <p
+            className="font-oswald tabular-nums leading-none"
+            style={{
+              fontWeight: 400,
+              fontSize: "clamp(20px, 2vw, 26px)",
+              color: FOREST,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {total}
+            <span
+              className="ml-1 text-[12px] sm:text-[13px] font-medium"
+              style={{ color: FOREST, fontFamily: "var(--font-sans)" }}
+            >
+              円
             </span>
           </p>
-          {fee.marketNote ? (
-            <p className="font-sans text-[10px] text-text-secondary/80 leading-[1.7] mt-0.5">
-              {fee.marketNote}
-            </p>
-          ) : null}
         </div>
       </div>
 
-      {/* Desktop: 他社の目安 */}
-      <div role="cell" className="hidden md:block text-right">
-        <span
-          className={`font-oswald tabular-nums whitespace-nowrap ${
-            hasAmount ? "text-text-primary/80" : "text-text-primary/35"
-          }`}
-          style={{
-            fontWeight: 400,
-            fontSize: "clamp(16px, 1.4vw, 22px)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {fee.marketAmount}
-        </span>
-        {fee.marketNote ? (
-          <p className="font-sans text-[10px] md:text-[11px] text-text-secondary/80 leading-[1.7] mt-1">
-            {fee.marketNote}
-          </p>
-        ) : null}
-      </div>
-
-      {/* やまと ¥0 — 主役 */}
-      <span
-        role="cell"
-        className="font-oswald tabular-nums text-lime-deep text-right leading-none shrink-0"
-        style={{
-          fontWeight: 300,
-          fontSize: "clamp(32px, 3.6vw, 56px)",
-          letterSpacing: "-0.03em",
-        }}
-      >
-        {TOTAL_YAMATO}
-      </span>
+      {/* 4 items */}
+      <ul>
+        {items.map((it) => (
+          <FeeRow key={it.label} fee={it} />
+        ))}
+      </ul>
     </div>
   );
 }
@@ -189,146 +272,225 @@ export default function ZeroDeclaration() {
   return (
     <section
       id="zero"
-      className="relative overflow-hidden bg-white text-text-primary py-[var(--section-py)]"
+      className="relative bg-bg-primary text-text-primary py-[var(--section-py)]"
     >
       <div
         ref={ref}
-        className="relative max-w-[1100px] mx-auto px-[var(--page-px)] scroll-in"
+        className="relative max-w-[1200px] mx-auto px-[var(--page-px)] scroll-in"
       >
-        {/* ========== Heading ========== */}
-        <header className="mb-12 md:mb-16 max-w-[900px]">
-          <h2
-            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
-            style={{ fontSize: "var(--display-lg)" }}
-          >
-            後から増えやすい費用を、<br className="sm:hidden" />最初から抑える仕組み。
-          </h2>
-          <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
-            家づくりで乗りがちな費用を並べると、
-            <br className="sm:hidden" />
-            <span className="font-bold text-lime-deep nowrap">およそ ¥4,300,000</span>
-            の差になります。
-          </p>
-        </header>
-
-        {/* ========== 領収書テーブル ========== */}
-        <div role="table" aria-label="他社とやまとの費用比較">
-          {/* ヘッダー行 */}
-          <div
-            role="row"
-            className="hidden md:grid grid-cols-[auto_1fr_auto_auto] gap-x-8 lg:gap-x-10 items-baseline pb-4 md:pb-5 border-b-2 border-text-primary/25"
-          >
-            <span role="columnheader" aria-hidden="true" />
-            <span role="columnheader" aria-hidden="true" />
-            <span
-              role="columnheader"
-              className="font-inter text-right text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-text-secondary font-bold"
+        {/* ===== 上段: ヘッダー(左) + 結論カード(右) ===== */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(0,540px)] gap-8 lg:gap-12 items-center mb-14 md:mb-20">
+          {/* 左: 見出し + サブコピー */}
+          <header className="max-w-[520px]">
+            <h2
+              className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
+              style={{ fontSize: "clamp(26px, 3.4vw, 44px)" }}
             >
-              他社の目安
-            </span>
-            <span
-              role="columnheader"
-              className="font-inter text-right text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-lime-deep font-bold"
-            >
-              やまと
-            </span>
-          </div>
-
-          {/* モバイル用ヘッダー(簡素) */}
-          <div className="md:hidden flex justify-end pb-3 border-b-2 border-text-primary/25">
-            <span className="font-inter text-right text-[10px] tracking-[0.24em] uppercase text-lime-deep font-bold">
-              やまと
-            </span>
-          </div>
-
-          {/* 8 行 */}
-          {FEES.map((fee) => (
-            <FeeRow key={fee.num} fee={fee} />
-          ))}
-
-          {/* 合計行 — 二本線で強調
-              Mobile: 合計 label + 他社合計を左側にまとめて、¥0 右に大 / Desktop: 4列 */}
-          <div
-            role="row"
-            className="scroll-in grid grid-cols-[1fr_auto] md:grid-cols-[auto_1fr_auto_auto] gap-x-4 md:gap-x-8 lg:gap-x-10 items-baseline md:items-end pt-7 md:pt-10 mt-1 border-t-2 border-text-primary/60"
-          >
-            <span role="cell" className="hidden md:block" aria-hidden="true" />
-
-            {/* 合計 label + mobile 他社合計 */}
-            <div role="cell" className="flex flex-col gap-1.5 md:gap-0">
-              <span
-                className="font-sans font-black text-text-primary leading-none tracking-[0.02em]"
-                style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
-              >
-                合計
-              </span>
-              {/* Mobile 用 他社合計 */}
-              <p className="md:hidden font-sans text-[11px] text-text-secondary leading-[1.6]">
-                <span className="font-inter text-[9px] tracking-[0.2em] uppercase mr-1.5">他社</span>
-                <span className="font-oswald font-medium tabular-nums text-[14px] text-text-primary/85">
-                  {TOTAL_MARKET_MAX}
-                </span>
-              </p>
-            </div>
-
-            {/* Desktop: 他社合計 */}
-            <span
-              role="cell"
-              className="hidden md:block text-right font-oswald tabular-nums text-text-primary/85 whitespace-nowrap"
-              style={{
-                fontWeight: 400,
-                fontSize: "clamp(22px, 2.2vw, 36px)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              {TOTAL_MARKET_MAX}
-            </span>
-
-            {/* やまと合計 ¥0 — セクションのクライマックス */}
-            <span
-              role="cell"
-              className="font-oswald tabular-nums text-lime-deep text-right leading-none"
-              style={{
-                fontWeight: 300,
-                fontSize: "clamp(44px, 5.5vw, 88px)",
-                letterSpacing: "-0.03em",
-              }}
-            >
-              {TOTAL_YAMATO}
-            </span>
-          </div>
-
-          {/* 差額強調 */}
-          <div className="mt-10 md:mt-12 pt-8 md:pt-10 border-t border-text-primary/15">
-            <div className="flex items-baseline justify-end gap-3 md:gap-4 flex-wrap">
-              <span className="font-inter text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-text-secondary font-bold">
-                差額
-              </span>
-              <div className="flex items-baseline gap-1.5">
-                <span
-                  className="font-oswald tabular-nums text-lime-deep leading-none"
-                  style={{
-                    fontWeight: 300,
-                    fontSize: "clamp(36px, 4.5vw, 72px)",
-                    letterSpacing: "-0.03em",
-                  }}
-                >
-                  −¥4,300,000
-                </span>
-              </div>
-            </div>
-            <p className="mt-3 md:mt-4 font-sans text-text-primary/70 text-[clamp(13px,1vw,15px)] leading-[1.95] text-right max-w-[44rem] ml-auto">
-              広告費も、展示場維持費も、仲介マージンも、乗せる会社があります。
-              やまとはそれを、最初から乗せていません。
+              後から増えやすい費用を、<br className="md:hidden" />
+              最初から抑える仕組み。
+            </h2>
+            <p className="mt-5 md:mt-6 text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95]">
+              家づくりでは、建物価格以外にもさまざまな費用がかかります。
+              <br />
+              やまと不動産では、よくある追加費用を見える化し、
+              <br />
+              最初から抑えることで、安心できる家づくりを実現します。
             </p>
+            <p className="mt-5 text-text-secondary text-[11px] md:text-[12px] leading-[1.85]">
+              ※当社試算による参考金額です。土地条件・仕様・工法により異なります。
+            </p>
+          </header>
+
+          {/* 右: 結論カード */}
+          <div className="bg-white border border-text-primary/12 rounded-2xl px-6 sm:px-8 py-7 sm:py-9 shadow-[0_18px_44px_-24px_rgba(72,107,0,0.18)]">
+            <div className="flex items-center gap-3 mb-4">
+              <span aria-hidden className="flex-1 h-px" style={{ background: FOREST }} />
+              <p
+                className="text-[11px] md:text-[12px] tracking-[0.12em] font-bold whitespace-nowrap"
+                style={{ color: FOREST }}
+              >
+                建物価格以外で増えやすい費用
+              </p>
+              <span aria-hidden className="flex-1 h-px" style={{ background: FOREST }} />
+            </div>
+            <div className="flex items-baseline justify-center gap-2 mb-2 flex-wrap">
+              <span className="text-text-primary text-[14px] md:text-[16px] font-medium">
+                およそ
+              </span>
+              <span
+                className="font-oswald tabular-nums leading-none"
+                style={{
+                  fontWeight: 300,
+                  fontSize: "clamp(40px, 6vw, 76px)",
+                  letterSpacing: "-0.03em",
+                  color: FOREST,
+                }}
+              >
+                4,300,000
+              </span>
+              <span className="text-text-primary text-[14px] md:text-[16px] font-medium">
+                円分を事前に確認・負担軽減
+              </span>
+            </div>
+
+            {/* 3 trust pills */}
+            <ul className="mt-6 grid grid-cols-3 gap-2 sm:gap-3">
+              {TRUST_PILLS.map(({ Icon, label }) => (
+                <li
+                  key={label}
+                  className="flex flex-col items-center text-center px-1 py-2"
+                >
+                  <span
+                    aria-hidden
+                    className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full mb-2"
+                    style={{ background: "rgba(162,197,35,0.16)" }}
+                  >
+                    <Icon className="w-4 h-4 sm:w-[18px] sm:h-[18px]" strokeWidth={1.5} style={{ color: FOREST }} />
+                  </span>
+                  <p className="text-[11px] sm:text-[12px] text-text-secondary leading-[1.45] whitespace-pre-line">
+                    {label}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* ========== 注記 ========== */}
-        <div className="mt-12 md:mt-16 pt-8 border-t border-text-primary/15 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.95] space-y-1">
-          <p>※ 他社金額は業界平均試算に基づく参考値です。土地条件・工法・エリアにより大きく変動します。</p>
-          <p>※ やまとの金額は対応エリア・仕様により異なります。詳細は来場時にご案内します。</p>
-          <p>※ 06 不透明な追加費用 / 08 標準仕様との差額 は、個別条件の差が大きいため金額表示を控えています。</p>
+        {/* ===== 中段: H3 + 2カラム(契約前 / 工事中) ===== */}
+        <div className="mb-14 md:mb-20">
+          <div className="flex items-center justify-center gap-3 mb-8 md:mb-10">
+            <span aria-hidden style={{ color: ACCENT, fontSize: 14 }}>
+              ✦
+            </span>
+            <h3
+              className="font-sans font-bold text-text-primary text-center leading-[1.5] tracking-[0.02em]"
+              style={{ fontSize: "clamp(16px, 1.6vw, 20px)" }}
+            >
+              よくある「後から増える費用」と、やまとの考え方
+            </h3>
+            <span aria-hidden style={{ color: ACCENT, fontSize: 14 }}>
+              ✦
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
+            <FeeColumn
+              Icon={ClipboardList}
+              title="契約前によく発生する費用"
+              total="3,300,000"
+              items={FEES_BEFORE}
+            />
+            <FeeColumn
+              Icon={Truck}
+              title="工事中によく発生する費用"
+              total="1,000,000"
+              items={FEES_DURING}
+            />
+          </div>
+
+          <p className="mt-5 text-text-secondary text-[11px] md:text-[12px] text-center leading-[1.85]">
+            ※上記は一例です。敷地条件やご計画内容により金額は異なります。
+          </p>
+        </div>
+
+        {/* ===== 下段: 3つの仕組み ===== */}
+        <div className="mb-12 md:mb-16">
+          <div className="flex items-center justify-center gap-3 mb-8 md:mb-10">
+            <span aria-hidden style={{ color: ACCENT, fontSize: 14 }}>
+              ✦
+            </span>
+            <h3
+              className="font-sans font-bold text-text-primary text-center leading-[1.5] tracking-[0.02em]"
+              style={{ fontSize: "clamp(16px, 1.6vw, 20px)" }}
+            >
+              やまと不動産が、余計な費用を抑えられる3つの仕組み
+            </h3>
+            <span aria-hidden style={{ color: ACCENT, fontSize: 14 }}>
+              ✦
+            </span>
+          </div>
+
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+            {MECHANISMS.map(({ no, Icon, title, body }) => (
+              <li
+                key={no}
+                className="bg-white border border-text-primary/12 rounded-2xl px-6 sm:px-7 py-6 sm:py-7"
+              >
+                <div className="flex items-start gap-4 mb-4">
+                  <span
+                    className="font-oswald tabular-nums leading-none shrink-0"
+                    style={{
+                      fontWeight: 300,
+                      fontSize: "clamp(28px, 2.6vw, 36px)",
+                      color: "rgba(43,43,43,0.30)",
+                      letterSpacing: "-0.02em",
+                    }}
+                    aria-hidden
+                  >
+                    {no}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full"
+                    style={{ background: "rgba(162,197,35,0.16)", color: FOREST }}
+                  >
+                    <Icon className="w-5 h-5" strokeWidth={1.5} />
+                  </span>
+                </div>
+                <p className="text-text-primary text-[14px] sm:text-[15px] font-bold leading-[1.55] tracking-[0.01em] mb-2.5 whitespace-pre-line">
+                  {title}
+                </p>
+                <p className="text-text-secondary text-[12px] sm:text-[13px] leading-[1.85]">
+                  {body}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ===== CTA: 写真 + 相談誘導 ===== */}
+        <div className="bg-white border border-text-primary/12 rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-[minmax(0,300px)_1fr_auto] items-stretch shadow-[0_18px_44px_-24px_rgba(43,43,43,0.12)]">
+          <div className="relative aspect-[16/9] lg:aspect-auto lg:h-full min-h-[180px]">
+            <Image
+              src="/images/sections/hope-living.webp"
+              alt="やまと不動産が手がけたモデルハウスのLDK"
+              fill
+              sizes="(max-width: 1024px) 100vw, 300px"
+              className="object-cover"
+            />
+          </div>
+          <div className="px-6 sm:px-8 py-6 sm:py-7 flex flex-col justify-center">
+            <p className="text-text-primary text-[16px] sm:text-[17px] font-bold leading-[1.55] mb-2">
+              「自分たちはいくらになる？」を一緒に整理します。
+            </p>
+            <p className="text-text-secondary text-[12px] sm:text-[13px] leading-[1.85]">
+              土地の有無やご希望エリアに合わせて、総額の目安をご案内します。
+            </p>
+            <ul className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5">
+              {["相談無料", "営業電話なし", "土地なしOK"].map((t) => (
+                <li
+                  key={t}
+                  className="inline-flex items-center gap-1.5 text-[11px] sm:text-[12px] text-text-secondary"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" strokeWidth={2} style={{ color: FOREST }} />
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="px-6 sm:px-8 pb-6 sm:pb-7 lg:py-7 flex items-center justify-start lg:justify-end lg:border-l border-text-primary/10">
+            <Link
+              href="/money"
+              className="group inline-flex items-center gap-2 text-white text-[14px] sm:text-[15px] font-bold rounded-full px-6 sm:px-7 py-3.5 sm:py-4 transition-all duration-300 hover:opacity-90 whitespace-nowrap"
+              style={{ background: FOREST }}
+            >
+              無料で総額を相談する
+              <ArrowRight
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                strokeWidth={2}
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
