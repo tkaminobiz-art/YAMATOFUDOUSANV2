@@ -1,44 +1,77 @@
 "use client";
 
 import { useScrollIn } from "@/hooks/useScrollIn";
+import {
+  ChefHat,
+  Bath,
+  Droplet,
+  Frame,
+  Home as HomeIcon,
+  Snowflake,
+  Activity,
+  Hammer,
+  type LucideIcon,
+} from "lucide-react";
 
 /*
-  MechanismEnhanced — 2026-04-24 v2 (案A shukobuild型 カタログ)
+  MechanismEnhanced — 2026-05-04 v3 (比較ダッシュボード + 標準仕様チップ)
   ---------------------------------------------------------------
-  v1(編集誌)で使っていた要素 = 全て撤去:
-  - BLEED 21:9 中扉 + 明朝大判「違うのは〜費用です」
-  - 非対称 1.4fr:1fr 看板「やまとは安い？」(8vw 明朝)
-  - 別背景 manifesto block (#F0EBE0) + pull quote + 4/5 sidecar
+  v2: 横帯比較 + 3つの仕組みカード(明朝ゼロ路線)
+  v3: 「参考差額 約1,720万円」を主役KPIに昇格、標準仕様チップを新規追加。
+      「展示場を二重利用」「外に投げていません」など硬い表現を排除。
 
-  v2 本実装: "価格の仕組みを、帯で見せる"
-  - Heading 一言「やまとは、安くない。」
-  - 価格比較の横帯(大手 vs やまと = 1,720万の差)
-  - 3つの仕組みを横3列のフラットカード(展示場二重利用/自社一貫/広告最小限)
-  - 明朝ゼロ、BLEEDなし、pull quoteなし、非対称なし
+  ユーザー指摘(2026-05-04):
+  - 価格差・標準仕様・条件・理由が同じ重さで散らばっていて瞬間理解が難しい
+  - 「価格だけでなく標準仕様まで比べてください」と言いながら標準仕様の証拠が薄い
+  - 「差額 −1,720万円」のマイナス記号は誤読の元 → 「参考差額 約1,720万円」へ
+
+  新構成:
+  1. ヘッダー
+  2. 比較ダッシュボード(横棒2本 + 大型参考差額カード)
+  3. 標準仕様チップ8項目(新規)
+  4. 比較条件(含まれるもの / 別途のもの)
+  5. 価格を抑えられる3つの理由
 */
 
 // ────────────────────────────────────────────────
 // データ
 // ────────────────────────────────────────────────
 
-const COMPARE_MAX = 4000; // 大手の参考値(万円)。ここを軸に幅を決める
+const COMPARE_MAX = 4000; // 大手の参考値(万円)
 
 const COMPARISON = [
   {
     id: "majors",
-    label: "大手の場合",
+    label: "大手ハウスメーカー参考価格",
     sub: "広告費・展示場維持費・仲介マージンを含む",
     amount: 4000,
     tone: "muted" as const,
   },
   {
     id: "yamato",
-    label: "やまとの場合",
-    sub: "家そのものと、付帯工事まで",
+    label: "やまと不動産 京モデル",
+    sub: "建物本体と、付帯工事まで",
     amount: 2280,
     tone: "hero" as const,
   },
 ] as const;
+
+type StandardChip = {
+  Icon: LucideIcon;
+  title: string;
+  body: string;
+};
+
+const STANDARD_CHIPS: readonly StandardChip[] = [
+  { Icon: ChefHat, title: "キッチン", body: "毎日の家事がしやすい使いやすさと収納力。" },
+  { Icon: Bath, title: "浴室", body: "くつろぎやすさと、掃除のしやすさ。" },
+  { Icon: Droplet, title: "洗面・トイレ", body: "収納力と清掃性を考えた設備。" },
+  { Icon: Frame, title: "窓(サッシ)", body: "高性能サッシで断熱性・気密性を確保。" },
+  { Icon: HomeIcon, title: "外壁", body: "耐久性・断熱性・遮音性に配慮。" },
+  { Icon: Snowflake, title: "断熱", body: "夏は涼しく、冬は暖かい快適な住まい。" },
+  { Icon: Activity, title: "耐震・制震", body: "耐震等級3+制震で地震に強い安心感。" },
+  { Icon: Hammer, title: "付帯工事", body: "標準付帯工事まで含んだコミコミ価格。" },
+];
 
 type Mechanism = {
   num: string;
@@ -50,72 +83,100 @@ type Mechanism = {
 const MECHANISMS: readonly Mechanism[] = [
   {
     num: "01",
-    title: "展示場を、二重利用しています。",
-    summary: "分譲地に建てた家をそのままモデルハウスにし、いずれ販売します。",
-    body: "専用の展示場は持ちません。維持費が、家の価格に乗りません。",
+    title: "モデルハウスを、販売住宅として活用",
+    summary:
+      "展示専用の建物を持たず、分譲地に建てた住宅をモデルハウスとしてご案内。",
+    body: "展示場の維持費を抑え、その分を価格に反映しています。",
   },
   {
     num: "02",
-    title: "設計から施工まで、自社で進めます。",
-    summary: "土地の分譲・設計・施工・アフターを、外に投げていません。",
-    body: "間に入る会社がないので、仲介マージンも乗りません。",
+    title: "土地・設計・施工を、自社で連携",
+    summary:
+      "土地探しから設計、施工、アフターまで自社で連携しています。",
+    body: "間に入る会社が少ない分、中間コストを抑えています。",
   },
   {
     num: "03",
-    title: "広告費は、地域に必要な範囲へ。",
-    summary: "全国TVCM、全国紙、折込広告の全国展開は行っていません。",
-    body: "奈良・京都南部のお客様に届く範囲へ絞っています。",
+    title: "広告費を、地域に必要な範囲へ",
+    summary:
+      "全国向けの大きな広告ではなく、奈良・京都南部のお客様に届く範囲で。",
+    body: "過度な広告費を抑え、適正価格を実現しています。",
   },
 ] as const;
 
+const INCLUDED_ITEMS = [
+  "建物本体(京モデル30坪・4LDK)",
+  "標準付帯工事",
+  "地盤改良費(最大150万円まで当社負担)",
+  "仲介手数料(当社分譲地の場合)",
+  "設計・申請費用／消費税",
+] as const;
+
+const EXCLUDED_ITEMS = [
+  "土地代(エリアにより500万円台〜)",
+  "登記費用・印紙税・ローン手数料",
+  "外構工事(ご要望の内容により)",
+  "引越し費用・家具家電",
+] as const;
+
 // ────────────────────────────────────────────────
-// Compare Bar
+// 比較ダッシュボード
 // ────────────────────────────────────────────────
 
-function CompareBar() {
+function ComparisonDashboard() {
   return (
-    <div className="relative">
-      <div className="space-y-7 md:space-y-9">
+    <div className="bg-white border border-text-primary/10 rounded-lg p-6 md:p-10 shadow-[0_8px_24px_-16px_rgba(0,0,0,0.08)]">
+      {/* 条件ラベル */}
+      <p className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-text-secondary font-bold mb-5 md:mb-6">
+        同条件30坪・4LDKで比較(建物本体＋標準付帯工事)
+      </p>
+
+      {/* 横棒2本 */}
+      <div className="space-y-5 md:space-y-7 mb-8 md:mb-10">
         {COMPARISON.map((c) => {
           const pct = (c.amount / COMPARE_MAX) * 100;
           const isHero = c.tone === "hero";
           return (
             <div key={c.id}>
-              {/* ラベル行 — mobile: ラベル+サブラベル縦積み、右に金額 / desktop: 1行 */}
-              <div className="flex items-start md:items-baseline justify-between gap-3 mb-2.5">
-                <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3 min-w-0">
+              <div className="flex items-baseline justify-between gap-3 mb-2">
+                <div className="flex flex-col md:flex-row md:items-baseline gap-0.5 md:gap-3 min-w-0">
                   <span
-                    className={`font-sans font-bold whitespace-nowrap ${
+                    className={`font-sans whitespace-nowrap ${
                       isHero
-                        ? "text-text-primary text-[15px] md:text-[17px]"
-                        : "text-text-primary/80 text-[14px] md:text-[15px]"
+                        ? "text-text-primary text-[14px] md:text-[16px] font-bold"
+                        : "text-text-primary/80 text-[13px] md:text-[15px] font-medium"
                     }`}
                   >
                     {c.label}
                   </span>
-                  <span className="font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.6]">
+                  <span className="font-sans text-text-secondary text-[10.5px] md:text-[11px] leading-[1.6]">
                     {c.sub}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-1 shrink-0">
                   <span
-                    className={`font-oswald font-light tabular-nums ${
+                    className={`font-oswald tabular-nums ${
                       isHero
-                        ? "text-[28px] md:text-[40px] text-lime-deep"
-                        : "text-[22px] md:text-[30px] text-text-primary/60"
+                        ? "text-[26px] md:text-[34px] text-lime-deep"
+                        : "text-[22px] md:text-[28px] text-text-primary/55"
                     }`}
-                    style={{ letterSpacing: "-0.02em", lineHeight: 0.9 }}
+                    style={{
+                      fontWeight: 400,
+                      letterSpacing: "-0.02em",
+                      lineHeight: 0.9,
+                    }}
                   >
                     {c.amount.toLocaleString()}
                   </span>
-                  <span className="font-sans text-text-primary/70 text-xs md:text-sm">万円〜</span>
+                  <span className="font-sans text-text-primary/70 text-xs md:text-sm">
+                    万円〜
+                  </span>
                 </div>
               </div>
-              {/* 帯 */}
-              <div className="relative h-3.5 md:h-4 bg-text-primary/5">
+              <div className="relative h-2.5 md:h-3 bg-text-primary/5 rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${
-                    isHero ? "bg-lime-deep" : "bg-text-primary/35"
+                  className={`h-full rounded-full ${
+                    isHero ? "bg-lime-deep" : "bg-text-primary/30"
                   } transition-[width] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
                   style={{ width: `${pct}%` }}
                   aria-label={`${c.label} ${c.amount}万円`}
@@ -126,34 +187,166 @@ function CompareBar() {
         })}
       </div>
 
-      {/* 差額 */}
-      <div className="mt-10 md:mt-12 pt-8 md:pt-10 border-t border-text-primary/15 flex items-baseline justify-end gap-2 md:gap-3">
-        <span className="font-sans text-text-secondary text-xs md:text-sm pr-3 md:pr-4">差額</span>
-        <span
-          className="font-oswald font-light tabular-nums text-lime-deep"
-          style={{
-            fontSize: "clamp(36px, 5vw, 72px)",
-            letterSpacing: "-0.02em",
-            lineHeight: 0.9,
-          }}
-        >
-          −1,720
-        </span>
-        <span className="font-sans font-bold text-text-primary text-lg md:text-2xl">
-          万円
-        </span>
+      {/* 参考差額 — 主役KPI */}
+      <div
+        className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center pt-7 md:pt-9 border-t-2"
+        style={{ borderColor: "rgba(72,107,0,0.18)" }}
+      >
+        <div className="flex items-baseline gap-2 md:gap-3">
+          <span
+            className="inline-flex items-center justify-center px-2.5 py-1 text-[10px] md:text-[11px] font-bold tracking-[0.08em] rounded shrink-0"
+            style={{
+              background: "rgba(72,107,0,0.10)",
+              color: "#486B00",
+            }}
+          >
+            参考差額
+          </span>
+          <span className="font-sans text-text-primary/80 text-[14px] md:text-[16px] font-bold">
+            約
+          </span>
+          <span
+            className="font-oswald tabular-nums text-lime-deep"
+            style={{
+              fontWeight: 400,
+              fontSize: "clamp(36px, 5.5vw, 76px)",
+              letterSpacing: "-0.02em",
+              lineHeight: 0.9,
+            }}
+          >
+            1,720
+          </span>
+          <span className="font-sans font-bold text-text-primary text-lg md:text-2xl">
+            万円
+          </span>
+        </div>
+        <p className="font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.85]">
+          京モデル30坪の場合、当社試算で大手ハウスメーカー参考価格と比べたときの差額の目安です。
+          価格は仕様・敷地条件・時期により異なります。
+        </p>
       </div>
     </div>
   );
 }
 
 // ────────────────────────────────────────────────
-// Mechanism Card
+// 標準仕様チップ
+// ────────────────────────────────────────────────
+
+function StandardChips() {
+  return (
+    <div className="bg-bg-primary border border-text-primary/10 rounded-lg p-6 md:p-8">
+      <div className="flex items-baseline justify-between flex-wrap gap-3 mb-6">
+        <p className="font-sans font-bold text-text-primary text-[15px] md:text-[17px]">
+          この価格に含まれる、標準仕様。
+        </p>
+        <p className="font-sans text-text-secondary text-[11px] md:text-[12px]">
+          クリナップ・TOTO・YKK AP・ニチハ など国内大手メーカー品を採用
+        </p>
+      </div>
+      <ul className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        {STANDARD_CHIPS.map((c) => {
+          const Icon = c.Icon;
+          return (
+            <li
+              key={c.title}
+              className="flex flex-col items-start p-3 md:p-4 rounded border border-text-primary/8 bg-white"
+            >
+              <span
+                aria-hidden
+                className="inline-flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full mb-2.5"
+                style={{
+                  background: "rgba(162,197,35,0.12)",
+                  color: "#486B00",
+                }}
+              >
+                <Icon className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.6} />
+              </span>
+              <p className="font-sans text-text-primary text-[13px] md:text-[14px] font-bold mb-1.5">
+                {c.title}
+              </p>
+              <p className="font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.65]">
+                {c.body}
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="font-sans text-text-secondary text-[11px] md:text-[12px] mt-5 leading-[1.85]">
+        ※ 仕様・メーカーはプランや時期により変更となる場合があります。
+      </p>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────
+// 含まれるもの・別途のもの
+// ────────────────────────────────────────────────
+
+function ConditionLists() {
+  return (
+    <div className="bg-bg-primary border border-text-primary/10 rounded-lg p-6 md:p-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div>
+          <p className="font-sans font-bold text-lime-deep text-[13px] md:text-[14px] mb-4">
+            2,280万円に含まれるもの
+          </p>
+          <ul className="space-y-2.5">
+            {INCLUDED_ITEMS.map((t) => (
+              <li
+                key={t}
+                className="font-sans flex items-baseline gap-2.5 text-text-primary text-[13px] md:text-[14px] leading-[1.7]"
+              >
+                <span
+                  aria-hidden
+                  className="shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-lime-deep text-white"
+                  style={{ fontSize: "10px", fontWeight: 700 }}
+                >
+                  ✓
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="md:border-l md:border-text-primary/10 md:pl-12">
+          <p className="font-sans font-bold text-text-secondary text-[13px] md:text-[14px] mb-4">
+            別途となるもの
+          </p>
+          <ul className="space-y-2.5">
+            {EXCLUDED_ITEMS.map((t) => (
+              <li
+                key={t}
+                className="font-sans flex items-baseline gap-2.5 text-text-primary/85 text-[13px] md:text-[14px] leading-[1.7]"
+              >
+                <span
+                  aria-hidden
+                  className="shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-text-primary/10 text-text-secondary"
+                  style={{ fontSize: "11px", fontWeight: 700 }}
+                >
+                  −
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p className="font-sans text-text-secondary text-[11px] md:text-[12px] mt-6 pt-5 border-t border-text-primary/10 leading-[1.85]">
+        大手側の4,000万円は、積水ハウス・ヘーベルハウス・パナソニックホームズ・大和ハウス・住友林業の5社平均公表坪単価から試算した参考値です。
+        各社の仕様・地域・商品ラインにより異なります。
+      </p>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────
+// 3つの理由カード
 // ────────────────────────────────────────────────
 
 function MechanismCard({ m }: { m: Mechanism }) {
   return (
-    <article className="scroll-in group flex flex-col p-7 md:p-8 bg-white border border-text-primary/10 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.12)]">
+    <article className="scroll-in group flex flex-col p-7 md:p-8 bg-white border border-text-primary/10 rounded-lg transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.12)]">
       <span
         className="font-oswald font-light leading-none tabular-nums text-lime-deep"
         style={{
@@ -163,7 +356,7 @@ function MechanismCard({ m }: { m: Mechanism }) {
       >
         {m.num}
       </span>
-      <h3 className="mt-5 md:mt-6 font-sans font-bold text-text-primary text-[16px] md:text-[18px] leading-[1.55] tracking-[0.01em]">
+      <h3 className="mt-5 md:mt-6 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55] tracking-[0.01em]">
         {m.title}
       </h3>
       <p className="mt-4 font-sans text-text-primary/80 text-[13px] md:text-[14px] leading-[1.95]">
@@ -181,7 +374,6 @@ function MechanismCard({ m }: { m: Mechanism }) {
 // ────────────────────────────────────────────────
 
 export default function MechanismEnhanced() {
-  // 3 つの MechanismCard に .scroll-in が付いているため stagger=true で子要素も観測
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
@@ -190,18 +382,19 @@ export default function MechanismEnhanced() {
       className="relative overflow-hidden bg-bg-secondary text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1200px] mx-auto px-[var(--page-px)]">
-        {/* ========== Heading ========== */}
-        <header className="mb-12 md:mb-16 max-w-[860px]">
+        {/* ========== ヘッダー ========== */}
+        <header className="mb-10 md:mb-14 max-w-[860px]">
           <h2
             className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
             style={{ fontSize: "var(--display-lg)" }}
           >
-            価格だけでなく、<br className="sm:hidden" />標準仕様まで比べてください。
+            価格だけでなく、
+            <br className="sm:hidden" />
+            標準仕様まで比べてください。
           </h2>
           <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             キッチン、浴室、窓、外壁、断熱、耐震性能まで。
-            <br />
-            やまと不動産では、暮らしの快適さと安心に関わる部分を
+            やまと不動産では、暮らしの快適さと安心に関わる部分を、
             <span className="font-bold">標準仕様</span>
             として大切にしています。
             <br />
@@ -209,95 +402,32 @@ export default function MechanismEnhanced() {
             <span className="font-bold">広告費・展示場維持費・中間コスト</span>
             です。
           </p>
-          <p className="mt-4 md:mt-5 font-sans text-text-primary/65 text-[clamp(12px,0.95vw,14px)] leading-[1.85] max-w-[680px]">
-            <span className="nowrap">京モデル30坪</span>の場合、当社試算では大手ハウスメーカー参考価格と比べて、
-            <span className="font-bold text-lime-deep nowrap">約1,720万円</span>
-            の差が出るケースがあります。
-          </p>
         </header>
 
-        {/* ========== 比較バー ========== */}
-        <div className="mt-6">
-          <CompareBar />
+        {/* ========== 比較ダッシュボード(主役) ========== */}
+        <ComparisonDashboard />
+
+        {/* ========== 標準仕様チップ ========== */}
+        <div className="mt-8 md:mt-10">
+          <StandardChips />
         </div>
 
-        {/* ========== 比較条件の明示（モバイルは要約1行 / デスクトップは展開） ========== */}
-        <div className="mt-10 md:mt-14 bg-white border border-text-primary/10 px-6 py-5 md:px-8 md:py-7">
-          <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3 md:mb-4">
-            Conditions · 比較の条件
-          </p>
-
-          {/* モバイル: 要約3行だけ */}
-          <div className="md:hidden">
-            <p className="font-sans text-text-primary/85 text-[13px] leading-[1.85]">
-              どちらも<span className="font-bold">30坪・4LDK</span>、<span className="font-bold">建物本体＋付帯工事</span>だけを同じものさしで並べています。土地・登記・外構は、どちらにも含めていません。
-            </p>
-            <p className="mt-3 font-sans text-text-secondary text-[11px] leading-[1.8]">
-              ※ 含まれるもの／別途費用の内訳は、<a href="#product" className="underline underline-offset-4 decoration-lime-deep/60 text-text-primary">プラン価格の章</a>に詳しくあります。
-            </p>
-          </div>
-
-          {/* デスクトップ: 詳細5+4項目 */}
-          <div className="hidden md:block">
-            <p className="font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] mb-6">
-              どちらも<span className="font-bold">30坪・4LDK・建物本体＋付帯工事</span>を、同じものさしで並べています。土地・登記・外構などは、どちらの側にも含めていません。
-            </p>
-            <div className="grid grid-cols-2 gap-10 pt-5 border-t border-text-primary/10">
-              <div>
-                <p className="font-inter font-bold text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
-                  Included · 2,280万円に含まれるもの
-                </p>
-                <ul className="space-y-2">
-                  {[
-                    "建物本体（京モデル30坪・4LDK）",
-                    "付帯工事",
-                    "地盤改良費（最大150万円まで当社負担）",
-                    "仲介手数料（当社負担）",
-                    "設計・申請費用／消費税",
-                  ].map((t) => (
-                    <li key={t} className="font-sans flex items-baseline gap-2.5 text-text-primary text-[13px] leading-[1.7]">
-                      <span aria-hidden className="font-oswald shrink-0 pt-[1px] text-lime-deep" style={{ fontWeight: 500, fontSize: "12px" }}>+</span>
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="border-l border-text-primary/10 pl-10">
-                <p className="font-inter font-bold text-[11px] tracking-[0.22em] uppercase text-text-secondary mb-3">
-                  Excluded · 別途となるもの
-                </p>
-                <ul className="space-y-2">
-                  {[
-                    "土地代（エリアにより 500万円台〜）",
-                    "登記費用・印紙税・ローン手数料",
-                    "外構工事（ご要望の内容により）",
-                    "引越し費用・家具家電",
-                  ].map((t) => (
-                    <li key={t} className="font-sans flex items-baseline gap-2.5 text-text-primary/85 text-[13px] leading-[1.7]">
-                      <span aria-hidden className="font-oswald text-text-secondary/50 shrink-0 pt-[1px]" style={{ fontWeight: 300, fontSize: "12px" }}>—</span>
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <p className="mt-5 pt-4 border-t border-text-primary/10 font-sans text-text-secondary text-[12px] leading-[1.8]">
-              大手側の4,000万円は、積水ハウス・ヘーベルハウス・パナソニックホームズ・大和ハウス・住友林業の5社平均公表坪単価から試算した参考値です。実際の金額は、各社の仕様・地域・商品ラインで動きます。
-            </p>
-          </div>
+        {/* ========== 含まれるもの・別途のもの ========== */}
+        <div className="mt-8 md:mt-10">
+          <ConditionLists />
         </div>
 
-        {/* ========== 3つの仕組み ========== */}
-        <div className="mt-24 md:mt-32">
+        {/* ========== 価格を抑えられる、3つの理由 ========== */}
+        <div className="mt-20 md:mt-28">
           <header className="mb-10 md:mb-14 max-w-[860px]">
             <h3
               className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
               style={{ fontSize: "var(--display-md)" }}
             >
-              この差は、3 つの仕組みから。
+              価格を抑えられる、3つの理由。
             </h3>
             <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[580px]">
-              家づくりに直接関係しないコストを、<br className="sm:hidden" />できる限り抑えています。
+              家づくりに直接関係しないコストを、できる限り抑えています。
             </p>
           </header>
 
@@ -308,10 +438,10 @@ export default function MechanismEnhanced() {
           </div>
         </div>
 
-        {/* ========== 注記（比較条件ボックスに詳細は移動済み） ========== */}
-        <div className="mt-10 md:mt-14 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.9]">
+        {/* ========== 注記 ========== */}
+        <div className="mt-12 md:mt-16 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.9]">
           <p>※ やまとの2,280万円は、京モデル30坪・4LDKの税込・建物本体＋付帯工事価格です。</p>
-          <p>※ 比較の条件と含まれるもの／別途費用は、上の「比較の条件」ブロックをご参照ください。</p>
+          <p>※ 比較条件と含まれるもの／別途費用は、上の比較条件ブロックをご参照ください。</p>
         </div>
       </div>
     </section>
