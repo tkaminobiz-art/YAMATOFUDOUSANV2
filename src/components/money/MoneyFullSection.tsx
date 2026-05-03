@@ -225,8 +225,13 @@ function ThirtyYearAnswer() {
             </p>
           </div>
           <div className="md:border-l md:pl-8 md:min-w-[200px]" style={{ borderColor: "rgba(72,107,0,0.3)" }}>
-            <div className="flex items-baseline gap-2 whitespace-nowrap">
-              <span className="text-text-primary text-[13px] md:text-[14px] font-medium">約</span>
+            <div className="flex items-baseline gap-1.5 whitespace-nowrap">
+              <span
+                className="font-oswald tabular-nums leading-[0.85]"
+                style={{ fontWeight: 300, fontSize: "clamp(28px, 3vw, 44px)", letterSpacing: "-0.02em", color: FOREST }}
+              >
+                〜
+              </span>
               <span
                 className="font-oswald tabular-nums leading-[0.85]"
                 style={{ fontWeight: 300, fontSize: "clamp(44px, 5vw, 72px)", letterSpacing: "-0.04em", color: FOREST }}
@@ -236,7 +241,7 @@ function ThirtyYearAnswer() {
               <span className="text-text-primary text-base font-medium">万円相当</span>
             </div>
             <p className="mt-2 text-text-secondary text-[11px] leading-[1.6]">
-              土地2,500万 + 建物2,000万を想定
+              土地2,500万 + 建物2,000万を想定した上限の目安
             </p>
           </div>
         </div>

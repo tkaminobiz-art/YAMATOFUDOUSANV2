@@ -75,7 +75,19 @@ export default function MoneyIndexPage() {
             {/* メイン: 巨大数字 + メタ */}
             <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-16 items-end">
               <div>
-                <div className="flex items-baseline gap-3">
+                <div className="flex items-baseline gap-2 md:gap-3">
+                  <span
+                    className="block tabular-nums leading-[0.85]"
+                    style={{
+                      fontFamily: "var(--font-oswald)",
+                      fontWeight: 200,
+                      fontSize: "clamp(80px, 11vw, 180px)",
+                      color: ACCENT,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    〜
+                  </span>
                   <span
                     className="block tabular-nums leading-[0.85]"
                     style={{
@@ -99,7 +111,7 @@ export default function MoneyIndexPage() {
                   className="mt-3 text-white/80 text-[12px] md:text-[13px] tracking-[0.16em] uppercase"
                   style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
                 >
-                  Asset at 75 · 75歳完済時に、手元に残る資産
+                  Asset at 75 · 75歳完済時に、手元に残ることがある資産の目安
                 </p>
               </div>
 
@@ -206,12 +218,12 @@ export default function MoneyIndexPage() {
                 },
                 {
                   no: "03",
-                  label: "75歳完済時に、手元に残る資産",
-                  prefix: "約",
+                  label: "75歳完済時に、手元に残ることがある資産",
+                  prefix: "〜",
                   num: "4,500",
                   unit: "万円",
                   suffix: "相当",
-                  body: "40歳ご契約・35年ローンで試算。75歳で完済後、土地と建物が資産として手元に残ります。",
+                  body: "40歳ご契約・35年ローンで試算した上限の目安。土地代・建物の維持状態・市況により変動するため、実際の評価は個別にご相談ください。",
                   highlight: false,
                 },
               ].map((n) => (
