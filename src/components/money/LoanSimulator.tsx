@@ -42,13 +42,13 @@ export default function LoanSimulator() {
   const ratioColor =
     ratioStatus === "safe" ? FOREST : ratioStatus === "caution" ? "#B8860B" : "#C8463A";
   const ratioLabel =
-    ratioStatus === "safe" ? "無理を抑えやすい水準" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
+    ratioStatus === "safe" ? "無理のない水準" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
 
   return (
     <div className="bg-white border border-text-primary/15 p-6 md:p-8">
       <div className="flex items-baseline justify-between gap-3 mb-6">
         <p className="text-[12px] md:text-[13px] tracking-[0.06em] text-text-secondary font-bold">
-          シミュレーター（動かしてご確認ください）
+          シミュレーター（条件を変更して試算できます）
         </p>
         <p className="text-[11px] text-text-secondary">元利均等・35年・ボーナス払いなし</p>
       </div>
@@ -197,7 +197,7 @@ export default function LoanSimulator() {
                 {isFinite(ratio) ? ratioLabel : ""}
               </p>
               <p className="mt-2 text-[10px] leading-[1.7] text-text-secondary">
-                目安: 25%以下が無理なし、30%超は要見直し
+                目安：25%以下が無理のない水準、30%を超える場合は見直しを推奨
               </p>
             </div>
           </div>

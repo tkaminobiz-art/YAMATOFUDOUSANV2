@@ -34,18 +34,18 @@ const ACCENT = "#A2C523";
 const BUCKETS = [
   { no: "01", label: "建物本体", amount: "2,280〜2,480", unit: "万円", pct: 50, color: FOREST, body: "京・風・花の3プラン。標準仕様で揃えています。", yamato: "やまと: 京 2,280万円〜（税込）" },
   { no: "02", label: "付帯工事", amount: "0", unit: "円(やまと)", pct: 5, color: ACCENT, body: "地盤改良費(最大150万円)・仲介手数料は当社が負担します。", yamato: "他社目安: 別途 100〜300万円" },
-  { no: "03", label: "土地代", amount: "500〜2,500", unit: "万円", pct: 35, color: "#7D4427", body: "やまとは奈良・京都で、現在76区画を公開中（累計90区画以上の分譲実績）。お手頃エリアから利便性重視まで、ご希望の幅でお選びいただけます。", yamato: "区画・エリアによる" },
+  { no: "03", label: "土地代", amount: "500〜2,500", unit: "万円", pct: 35, color: "#7D4427", body: "奈良・京都で、現在76区画を公開中（累計90区画以上の分譲実績）。価格を抑えやすいエリアから利便性重視まで、ご希望に合わせてお選びいただけます。", yamato: "区画・エリアによる" },
   { no: "04", label: "諸費用", amount: "200〜400", unit: "万円", pct: 8, color: "#9A8978", body: "登記・印紙税・ローン手数料・火災保険等。", yamato: "目安" },
-  { no: "05", label: "引越し・家具", amount: "50〜150", unit: "万円", pct: 2, color: "#C7B299", body: "暮らしを始めるための分。", yamato: "目安" },
+  { no: "05", label: "引越し・家具", amount: "50〜150", unit: "万円", pct: 2, color: "#C7B299", body: "新生活に必要な費用。", yamato: "目安" },
 ] as const;
 
 const MODEL_FAMILY = {
-  who: "30代ご夫婦・お子様1人",
+  who: "30代ご夫婦・お子さま1人",
   income: "世帯年収 500万円",
   borrow: "2,500万円",
   monthly: "7.1",
   rate: "金利1.0%・35年・元利均等",
-  comment: "返済比率は年収の17%前後。生活費・教育費を圧迫しない、無理しない設計の一例です。",
+  comment: "返済比率は年収の17%前後。生活費・教育費を圧迫しない、無理のない設計の一例です。",
 } as const;
 
 // RATE_HEADERS / LOAN_TABLE は v6 で LoanSimulator(動的) に置換し撤去
@@ -55,7 +55,7 @@ const COMPARE = [
   { axis: "30年後の累計支出", rent: "3,060万円", own: "約3,150万円" },
   { axis: "30年後に残るもの", rent: "なし", own: "持ち家(資産として残る)" },
   { axis: "老後の住居費", rent: "引き続き家賃", own: "完済後は固定資産税と修繕費のみ" },
-  { axis: "間取り・設備", rent: "原則そのまま", own: "家族の変化に合わせて変えられる" },
+  { axis: "間取り・設備", rent: "賃貸では大きな変更が難しい場合があります", own: "ご家族の変化に合わせて変えられます" },
 ] as const;
 
 const LOAN_TYPES = [
@@ -66,35 +66,35 @@ const LOAN_TYPES = [
 
 const SUPPORTS = [
   { name: "住宅ローン控除", body: "年末ローン残高の0.7%が、最大13年間にわたり所得税(住民税)から控除されます。" },
-  { name: "子育てエコホーム支援事業", body: "省エネ基準を満たす新築住宅で、世帯条件により最大100万円の補助。" },
-  { name: "GX志向型住宅補助", body: "高断熱・高効率設備を備えた住宅向けの補助制度。" },
+  { name: "みらいエコ住宅2026事業など、年度ごとの住宅省エネ補助", body: "省エネ基準を満たす新築住宅で、世帯条件により利用できる可能性のある補助制度。年度・予算により内容が変わります。" },
+  { name: "GX志向型住宅に関する補助制度", body: "高断熱・高効率設備を備えた住宅向けの補助制度。" },
   { name: "贈与税の非課税特例", body: "親・祖父母からの住宅取得資金の贈与に、一定額まで非課税枠があります。" },
 ] as const;
 
 const FP_PROMISES = [
-  { icon: Heart, title: "家を売る前に、家計を整えるFP相談を。", body: "住宅購入だけを前提にせず、ご家族の家計全体から考えます。やまとは社内にFPを置かず、独立した提携先のFP事務所にご相談いただけます。" },
-  { icon: Coffee, title: "ご相談料は、いただきません。", body: "ご家族から相談料はお預かりしません。やまとと提携先のFP事務所との間で取り決めをしています。" },
-  { icon: HomeIcon, title: "ご紹介の押しつけは、しません。", body: "提携FPと話したあとに「やっぱり今は建てない」とお決めになっても、それで構いません。" },
+  { icon: Heart, title: "購入を決める前に、家計全体を整理できます。", body: "住宅購入だけを前提にせず、ご家族の家計全体から考えます。やまとは社内にFPを置かず、独立した立場の提携先FP事務所にご相談いただけます。" },
+  { icon: Coffee, title: "相談料は無料です。", body: "お客様に相談料をご負担いただくことはありません。やまとと提携先のFP事務所との間で取り決めをしています。" },
+  { icon: HomeIcon, title: "無理なご提案はいたしません。", body: "提携FPと話したあとに「やっぱり今は建てない」とお決めになっても、遠慮なくご判断ください。" },
 ] as const;
 
 const LAND_AREAS = [
-  { area: "大和郡山市矢田町", price: "500", unit: "万円台〜", note: "やまとが扱うお手頃エリアの代表例(全17区画)。京プランと組み合わせて月々7万円台から。" },
+  { area: "大和郡山市矢田町", price: "500", unit: "万円台〜", note: "やまとが扱う、価格を抑えやすいエリアの代表例(全17区画)。京プランと組み合わせて月々7万円台から。" },
   { area: "奈良市内 自社分譲地", price: "—", unit: "区画により", note: "やまと本社(大宮町)を中心に、奈良市内で複数区画の分譲実績があります。" },
-  { area: "京都・宇治エリア", price: "—", unit: "区画により", note: "京都支店(宇治市小倉町)を起点に、京都南部のエリアもご相談いただけます。" },
+  { area: "京都府南部・宇治エリア", price: "—", unit: "区画により", note: "京都支店(宇治市小倉町)を起点に、京都府南部のエリアもご相談いただけます。" },
 ] as const;
 
 const FLOW_STEPS = [
   { k: "01", title: "いまの暮らしと、時期のめど", body: "ご家族の人数や引っ越し時期。金額の前に、生活の前提をそろえます。", image: "/images/works/case1-living.webp" },
-  { k: "02", title: "費用のかたちを、資料でたどる", body: "図や資料を見ながら、土地・建物・諸費用の全体像をざっくり追います。", image: "/images/works/case2-kitchen.webp" },
-  { k: "03", title: "帰るまでに、次の一手を決める", body: "持ち帰り資料、家で話し合っておきたいこと、次の面談を、はっきりさせます。", image: "/images/works/case3-living.webp" },
+  { k: "02", title: "費用の全体像を、資料で確認する", body: "図や資料を見ながら、土地・建物・諸費用の全体像を整理します。", image: "/images/works/case2-kitchen.webp" },
+  { k: "03", title: "次に確認することを整理する", body: "持ち帰り資料、ご家族で話し合っていただきたいこと、次回の面談予定を整理します。", image: "/images/works/case3-living.webp" },
 ] as const;
 
 const FAQS = [
   { q: "住宅ローンの審査、通るかどうか不安です。", a: "事前審査は無料です。複数の金融機関(大和信用金庫・奈良中央信用金庫・南都銀行・りそな銀行など)からご状況に合うものを一緒に整理します。住宅ローンアドバイザー資格を持つスタッフが在籍しています。" },
-  { q: "途中で払えなくなったら、どうなりますか。", a: "やまとは「払えなくなる家」をお売りしません。ご相談時に、月々の支払いが生活費・教育費を圧迫しない範囲を一緒に確認します。万が一に備えた団体信用生命保険も、内容を一緒に確認します。" },
+  { q: "返済が不安になった場合、どうなりますか。", a: "無理な返済計画になる家づくりはおすすめしません。ご相談時に、月々の支払いが生活費・教育費を圧迫しない範囲を一緒に確認します。万が一に備えた団体信用生命保険も、内容を一緒に確認します。" },
   { q: "金利が上がったら、月々の支払いはどうなりますか。", a: "変動金利の場合、半年ごとに金利が見直されます。一定期間は急激な上昇を抑えるルール(5年ルール・125%ルール)が一般的です。固定金利と組み合わせて、上昇に備える方も多くいらっしゃいます。" },
   { q: "頭金は、いくら必要ですか。", a: "「頭金ゼロでも借入可能」ですが、月々の返済比率(年収の2〜3割が目安)とのバランスで決めます。生活防衛費(生活費の3〜6ヶ月分)を残すこともおすすめしています。" },
-  { q: "ハウスメーカーに相談すると、家を売られそうで怖いです。", a: "やまとはご相談を「数を取りに行く場」とは考えていません。ご相談後に「やっぱり今は建てない」と判断されても、それで構いません。提携FPも、家を売る前提では話しません。" },
+  { q: "ハウスメーカーに相談すると、契約を迫られないか不安です。", a: "やまとはご相談を「契約を急かす場」とは考えていません。ご相談後に「やっぱり今は建てない」と判断されても、遠慮なくご判断ください。提携FPも、家を売る前提ではお話しいたしません。" },
 ] as const;
 
 // ─────────────────────────────────────────────
@@ -126,9 +126,9 @@ function ThirtyYearAnswer() {
             className="text-text-primary leading-[1.2] tracking-[-0.01em]"
             style={{ fontWeight: 500, fontSize: "clamp(28px, 3.6vw, 52px)" }}
           >
-            支払うお金は、ほぼ同じ。
+            月々の負担が近い場合でも、
             <br className="md:hidden" />
-            残るものが、違います。
+            将来に残るものが変わります。
           </h2>
           <p className="mt-5 max-w-[680px] mx-auto text-[14px] md:text-[15px] leading-[1.95] text-text-secondary">
             40歳でご契約、35年ローン(借入3,000万円・1.0%)・月8.5万円。
@@ -145,7 +145,7 @@ function ThirtyYearAnswer() {
           </span>
           <span className="flex items-center gap-2">
             <span className="inline-block w-3 h-3" style={{ background: FOREST }} />
-            <span style={{ color: FOREST }}>持家（ローン）</span>
+            <span style={{ color: FOREST }}>持ち家（ローン）</span>
           </span>
         </div>
 
@@ -246,7 +246,7 @@ function ThirtyYearAnswer() {
           </div>
         </div>
         <p className="mt-4 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
-          ※ 持家は固定資産税(年10〜15万円)・修繕費(10〜15年で50〜100万円)を含めた概算です。資産価値はエリア・建物の状態・市況により変動します。
+          ※ 持ち家は固定資産税(年10〜15万円)・修繕費(10〜15年で50〜100万円)を含めた概算です。資産価値はエリア・建物の状態・市況により変動します。
         </p>
       </div>
     </section>
@@ -299,7 +299,7 @@ function LoanAsFinancialTool() {
             家のお金は、ご家族の家計設計を支える、長期の手段でもあります。
           </h2>
           <p className="mt-5 text-text-secondary text-[14px] md:text-[15px] leading-[1.95]">
-            やまとは「払えなくなる家」をお売りしません。だからこそ、
+            無理な返済計画になる家づくりはおすすめしません。だからこそ、
             <br className="hidden md:block" />
             住宅ローンを「重い借金」ではなく、
             <strong className="text-text-primary">長期で計画する家計の手段</strong>
@@ -443,10 +443,10 @@ function QuestionsAccordion() {
         </div>
 
         <div className="space-y-3 md:space-y-4">
-          {/* Q1: ぜんぶでいくら? */}
-          <QItem no="01" q="家のお金、ぜんぶでいくらですか?" teaser="土地+建物+諸費用 約3,000万円〜（5つの内訳）">
+          {/* Q1: 総額でいくら? */}
+          <QItem no="01" q="家のお金、総額でいくらですか？" teaser="土地と建物と諸費用 約3,000万円〜（5つの内訳）">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              桁の見当ではなく、内訳から。やまとは「含まれるもの」と「別途になるもの」を、最初の打ち合わせで全部出します。
+              大まかな総額だけでなく、内訳からご確認いただけます。「含まれるもの」と「別途になるもの」を、最初の打ち合わせでご説明します。
             </p>
 
             {/* 比率バー */}
@@ -496,10 +496,10 @@ function QuestionsAccordion() {
                 <ShieldCheck className="h-5 w-5 mt-0.5 shrink-0" style={{ color: FOREST }} strokeWidth={1.8} />
                 <div>
                   <p className="text-text-primary text-[14px] md:text-[15px] font-medium leading-[1.55]">
-                    やまとが負担: 地盤改良費(最大150万円)・仲介手数料・契約後の追加見積。
+                    やまとが負担：地盤改良費(最大150万円)・仲介手数料・契約後の追加費用。
                   </p>
                   <p className="mt-1 text-[12px] md:text-[13px] leading-[1.85] text-text-primary/75">
-                    「最初の見積もりから変わらない」を原則にしています。
+                    原則として、契約後に大きな追加費用が出ないよう努めています。
                   </p>
                 </div>
               </div>
@@ -507,14 +507,14 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q2: 月々いくら? */}
-          <QItem no="02" q="月々のお支払いは、どれくらいですか?" teaser="想定モデル(年収500万)で月7.1万円から">
+          <QItem no="02" q="月々のお支払いは、どれくらいですか？" teaser="試算例(世帯年収500万円)で月7.1万円から">
             {/* シミュレーター(動的) */}
-            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">あなたの場合は、いくら？</p>
+            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">ご自身の場合はいくらになるか確認できます。</p>
             <LoanSimulator />
 
             {/* 想定モデル */}
             <div className="mt-8 mb-6 px-5 md:px-7 py-5 md:py-6 border" style={{ background: "#FAF8F3", borderColor: "rgba(72,107,0,0.15)" }}>
-              <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">想定モデル</p>
+              <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">試算例</p>
               <p className="text-text-primary text-[15px] md:text-[16px] font-medium">
                 {MODEL_FAMILY.who}（{MODEL_FAMILY.income}）／借入 {MODEL_FAMILY.borrow}
               </p>
@@ -534,10 +534,10 @@ function QuestionsAccordion() {
               </p>
             </div>
 
-            {/* 建てた後にもかかる費用 — ライフサイクルコスト */}
+            {/* 建築後にもかかる費用 — ライフサイクルコスト */}
             <div className="mt-8">
               <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">
-                建てた後にも、こんな費用がかかります
+                建築後にも、こんな費用がかかります
               </p>
               <p className="text-[12px] md:text-[13px] leading-[1.95] text-text-secondary mb-4 max-w-[760px]">
                 住宅ローンだけで終わりではありません。下記は標準的なご家族の年間目安です。資金計画に最初から織り込んでおくと安心です。
@@ -568,7 +568,7 @@ function QuestionsAccordion() {
                 })}
               </div>
               <p className="mt-3 text-[10px] md:text-[11px] leading-[1.85] text-text-secondary">
-                ※ 一般的な目安です。やまとは「修繕積立的な月割り換算」もご相談時に一緒に整理します。
+                ※ 一般的な目安です。将来の修繕費を月々いくら積み立てるとよいかも、ご相談時に一緒に整理します。
               </p>
             </div>
 
@@ -578,9 +578,9 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q3: 賃貸と比べて? */}
-          <QItem no="03" q="賃貸と比べて、何が違いますか?" teaser="同じ月額で、30年後の暮らしの軽さが違います">
+          <QItem no="03" q="賃貸と比べて、何が違いますか？" teaser="同じ月額で、30年後の住居費負担が変わります">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              ページ上の「30年で残るもの」グラフが、答えの全体像です。ここでは項目ごとに、もう一段詳しく並べます。
+              ページ上の「30年で残るもの」グラフで全体像をご確認いただけます。ここでは項目ごとに、詳しく比較します。
             </p>
             <div className="overflow-hidden border border-text-primary/15 bg-white">
               {COMPARE.map((row, i) => (
@@ -596,19 +596,19 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q4: つなぎ融資 */}
-          <QItem no="04" q="「つなぎ融資」って、何ですか？やまとはゼロ円って本当?" teaser="本当です。30〜80万円が、家計に戻ります">
+          <QItem no="04" q="「つなぎ融資」って、何ですか？やまとはゼロ円って本当ですか？" teaser="自社分譲地と建物をセットで進める場合、原則として不要です">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
               つなぎ融資 = 注文住宅で、土地購入から建物完成までの間に発生する一時的な借入。金利2〜4%・事務手数料・印紙代で、一般的に30〜80万円の上乗せになります。
             </p>
 
-            {/* やまとの売り結論ボックス */}
+            {/* やまとならではの仕組み 結論ボックス */}
             <div className="mb-6 px-6 md:px-8 py-6 md:py-8 border-2" style={{ background: "#EDF2D5", borderColor: FOREST }}>
-              <p className="text-[12px] tracking-[0.06em] font-bold mb-3" style={{ color: FOREST }}>やまとの売り</p>
+              <p className="text-[12px] tracking-[0.06em] font-bold mb-3" style={{ color: FOREST }}>やまとならではの仕組み</p>
               <h3 className="text-text-primary leading-[1.3] tracking-[-0.01em]" style={{ fontWeight: 500, fontSize: "clamp(22px,2.4vw,32px)" }}>
-                やまとなら、つなぎ融資は<span style={{ color: FOREST }}>発生しません</span>。
+                やまとの自社分譲地と建物をセットで進める場合、<span style={{ color: FOREST }}>つなぎ融資は不要です</span>。
               </h3>
               <p className="mt-3 text-[13px] md:text-[14px] leading-[1.95] text-text-primary/85 max-w-[560px]">
-                土地分譲と建物施工を、すべて自社で進めるから。土地購入と建物着工のタイムラグを埋める必要がなく、利息と手数料はそのまま家計に残ります。
+                土地分譲と建物施工を、すべて自社で進めるため。土地購入と建物着工のタイムラグを埋める必要がなく、利息と手数料はそのまま家計に残ります。
               </p>
             </div>
 
@@ -626,27 +626,27 @@ function QuestionsAccordion() {
               <div>
                 <p className="text-[12px] md:text-[13px] font-medium mb-2" style={{ color: FOREST }}>❷ やまと: 自社一貫</p>
                 <div className="relative h-10 md:h-12 w-full border-2 flex items-center" style={{ background: "#EDF2D5", borderColor: FOREST }}>
-                  <div className="h-full w-[40%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium" style={{ background: "#7D4427" }}>土地・建物 まとめて</div>
+                  <div className="h-full w-[40%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium" style={{ background: "#7D4427" }}>土地と建物をまとめて</div>
                   <div className="h-full w-[60%] flex items-center justify-center text-white text-[10px] md:text-xs font-medium" style={{ background: FOREST }}>建物着工 → 完成</div>
                 </div>
               </div>
             </div>
             <p className="mt-4 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
-              ※ ご自身でお持ちの土地で建てる場合や、特殊な金融機関の条件下では別途ご相談ください。
+              ※ ご自身が所有されている土地で建てる場合や、特殊な金融機関の条件下では別途ご相談ください。
             </p>
           </QItem>
 
           {/* Q5: 自社の土地は? */}
-          <QItem no="05" q="自社の土地って、どこにありますか?" teaser="矢田町ほか、奈良・京都のお手頃エリア">
+          <QItem no="05" q="自社の土地って、どこにありますか？" teaser="矢田町ほか、奈良・京都の価格を抑えやすいエリア">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              やまと不動産は、宅地分譲が事業の柱の一つです。中間業者を挟まないので、お手頃な価格で、段取りも一本にまとめられます。
+              やまと不動産は、宅地分譲も事業の柱の一つです。中間業者を挟まないため、価格を抑えながら、土地と建物のご相談をまとめてお受けできます。
             </p>
 
             {/* 3メリット */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-text-primary/10 border border-text-primary/15 mb-6">
               {[
                 { no: "01", t: "仲介手数料、ゼロ", b: "宅建会社直営の分譲地。仲介会社を挟みません。" },
-                { no: "02", t: "段取りが、一本", b: "土地と建物を同じやまとで。打ち合わせも一度で済みます。" },
+                { no: "02", t: "窓口を一本化", b: "土地と建物を、やまとでまとめてご相談いただけます。窓口をまとめられるため、打ち合わせの負担を抑えられます。" },
                 { no: "03", t: "地盤改良費、ゼロ", b: "造成済みの分譲地。地盤改良費は当社が負担します。" },
               ].map((m) => (
                 <div key={m.no} className="bg-white p-5 md:p-6">
@@ -687,8 +687,8 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q6: ローンと制度 */}
-          <QItem no="06" q="住宅ローンの種類と、使える制度は?" teaser="変動・固定・固定期間 + 4つの制度・補助金">
-            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">金利のタイプ（2026年4月時点）</p>
+          <QItem no="06" q="住宅ローンの種類と、利用できる制度は？" teaser="変動金利・全期間固定金利・固定期間選択型 + 4つの制度・補助金">
+            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">金利のタイプ（2026年5月時点）</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               {LOAN_TYPES.map((t) => (
                 <div key={t.name} className="border border-text-primary/15 bg-white p-5">
@@ -699,7 +699,7 @@ function QuestionsAccordion() {
               ))}
             </div>
 
-            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">使える制度・補助金</p>
+            <p className="text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-3">利用を検討できる制度・補助金</p>
             <div className="border-t border-text-primary/10">
               {SUPPORTS.map((s, i) => (
                 <div key={s.name} className="grid grid-cols-[auto_1fr] gap-4 border-b border-text-primary/10 py-4 items-baseline">
@@ -711,13 +711,13 @@ function QuestionsAccordion() {
                 </div>
               ))}
             </div>
-            <p className="mt-3 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">※ 各制度の要件・上限額・申請期間は年度ごとに変わります。</p>
+            <p className="mt-3 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">※ 各制度の要件・上限額・申請期間は年度・予算により変わります。最新情報をご確認の上、ご案内します。</p>
           </QItem>
 
           {/* Q7: FPって? */}
-          <QItem no="07" q="FP(ファイナンシャルプランナー)って、誰のために動く人?" teaser="やまと社内ではなく、独立した提携先のFP事務所">
+          <QItem no="07" q="FP(ファイナンシャルプランナー)って、どのような立場で相談に乗ってくれるのですか？" teaser="やまと社内ではなく、独立した立場の提携先FP事務所">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              ファイナンシャルプランナー(FP)は、家計やライフプランの整理を手伝う専門家です。やまと不動産にはFPは在籍していません。代わりに独立した提携先のFP事務所と組み、ご家族のライフプランを軸に率直にお話しいただきます。
+              ファイナンシャルプランナー(FP)は、家計やライフプランの整理を手伝う専門家です。やまと不動産にはFPは在籍していません。代わりに独立した立場の提携先FP事務所と組み、ご家族のライフプランを軸に率直にお話しいただきます。
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               {FP_PROMISES.map((p, i) => {
@@ -743,9 +743,9 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q8: はじめての相談 + 家づくり全体の流れ */}
-          <QItem no="08" q="はじめての相談、何を持っていけばいいですか?" teaser="持参不要。お電話1本でご予約いただけます">
+          <QItem no="08" q="はじめての相談、何を持っていけばいいですか？" teaser="手ぶらでお越しいただけます。お電話またはフォームからご予約を">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              資料はお揃いでなくて構いません。気がかりなことを一つずつ整理する時間です。お子様連れも歓迎です。
+              資料がお手元になくても構いません。気がかりなことを一つずつ整理する時間です。お子さま連れも歓迎です。
             </p>
 
             {/* 初回相談の3ステップ */}
@@ -787,8 +787,8 @@ function QuestionsAccordion() {
                   },
                   {
                     label: "Phase C",
-                    title: "引渡し後",
-                    duration: "ずっと",
+                    title: "お引き渡し後",
+                    duration: "お引き渡し後も継続",
                     items: ["お引き渡し・入居", "アフターメンテナンス", "固定資産税・住宅ローン控除", "10年・15年の節目点検"],
                   },
                 ].map((p) => (
@@ -816,9 +816,9 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q9: 払えなくなったら? */}
-          <QItem no="09" q="途中で払えなくなったら、どうなりますか?" teaser="代表的なご不安への答えを5つ用意しました">
+          <QItem no="09" q="返済が不安になった場合、どうなりますか？" teaser="代表的なご不安への答えを5つ用意しました">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              やまとは「払えなくなる家」をお売りしません。万が一の備えを含めて、よくお寄せいただく不安を5つまとめました。
+              無理な返済計画になる家づくりはおすすめしません。万が一の備えを含めて、よくお寄せいただく不安を5つまとめました。
             </p>
             <div>
               {FAQS.map((f, i) => (
@@ -834,9 +834,9 @@ function QuestionsAccordion() {
           </QItem>
 
           {/* Q10: お金の用語集 */}
-          <QItem no="10" q="お金の用語、わからない言葉が出てきたら?" teaser="住宅ローンの基本用語を、やさしく解説します">
+          <QItem no="10" q="お金の用語、わからない言葉が出てきたら？" teaser="住宅ローンの基本用語を、やさしく解説します">
             <p className="text-[13px] md:text-[14px] leading-[1.95] text-text-secondary mb-6 max-w-[760px]">
-              ご相談で出てきがちな言葉を、ひと言ずつ。「これってどういう意味?」のひと手間を、ここで解消できます。
+              ご相談で出てきがちな言葉を、ひと言ずつ。「これってどういう意味？」のひと手間を、ここで解消できます。
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-text-primary/10 border border-text-primary/15">
               {[
@@ -845,13 +845,13 @@ function QuestionsAccordion() {
                 { term: "変動金利", body: "半年ごとに金利が見直されるタイプ。当初の金利が低いが、上昇すると月々支払いが増える可能性。" },
                 { term: "全期間固定金利", body: "完済まで金利が変わらないタイプ。変動より金利は高めだが、家計設計が確実に立てられる。" },
                 { term: "フラット35", body: "住宅金融支援機構と民間金融機関が提供する全期間固定の代表的なローン。長期で家計を安定させたい方向け。" },
-                { term: "団信(団体信用生命保険)", body: "ローン契約者が万一亡くなった/重度障害になった際、ローン残高がゼロになる保険。多くの住宅ローンで加入が必須または推奨。" },
-                { term: "つなぎ融資", body: "土地→建物完成までの間に発生する一時借入。やまとは土地+建物セットで原則発生しません(Q.04参照)。" },
-                { term: "返済比率", body: "年収に対する年間返済額の割合。25%以下が無理のない目安。30%超は要見直し。" },
+                { term: "団信(団体信用生命保険)", body: "ローン契約者が亡くなられた場合や所定の高度障害状態になった場合に、ローン残高がゼロになる保険。多くの住宅ローンで加入が必須または推奨。" },
+                { term: "つなぎ融資", body: "土地から建物完成までの間に発生する一時的な借入。やまとは土地と建物をまとめて進める場合、原則として発生しません(上記「つなぎ融資」の項目をご覧ください)。" },
+                { term: "返済比率", body: "年収に対する年間返済額の割合。25%以下が無理のない目安です。30%を超える場合は見直しをおすすめします。" },
                 { term: "頭金 / 自己資金", body: "借入を減らす手元資金。生活防衛費(3〜6ヶ月)を残した上で充てるのが安心。" },
-                { term: "諸費用", body: "登記費用・印紙税・ローン手数料・火災保険等の総称。総額の5〜10%が目安(Q.01参照)。" },
+                { term: "諸費用", body: "登記費用・印紙税・ローン手数料・火災保険等の総称。総額の5〜10%が目安(上記「総額」の項目をご覧ください)。" },
                 { term: "住宅ローン控除", body: "年末ローン残高の0.7%が、最大13年間にわたり所得税(住民税)から控除される制度。長期優良住宅等で枠が拡大。" },
-                { term: "事前審査(仮審査)", body: "本契約前に金融機関が借入可能性を判断する審査。やまとでは無料で複数行へ並行依頼可。" },
+                { term: "事前審査(仮審査)", body: "本契約前に金融機関が借入可能性を判断する審査。やまとでは無料で、複数の金融機関に同時にご相談いただけます。" },
               ].map((t) => (
                 <div key={t.term} className="bg-white px-4 py-4 md:px-5 md:py-5">
                   <p className="text-text-primary text-[14px] md:text-[15px] font-medium mb-1.5">{t.term}</p>

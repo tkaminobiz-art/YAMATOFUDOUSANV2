@@ -36,7 +36,7 @@ const POINTS: readonly Point[] = [
     label: "つなぎ融資",
     num: "0",
     unit: "円",
-    sub: "30〜80万円が、家計に戻ります。",
+    sub: "土地と建物をまとめて進めれば、30〜80万円程度の負担を抑えられます。",
     href: "#ch-questions",
   },
   {
@@ -52,9 +52,9 @@ const POINTS: readonly Point[] = [
     no: "03",
     icon: Users,
     label: "FP相談",
-    num: "中立",
+    num: "独立",
     unit: "",
-    sub: "やまと社内ではなく、独立した提携先のFP事務所。",
+    sub: "やまと社内ではなく、独立した立場の提携先FP事務所にご相談いただけます。",
     href: "#ch-questions",
   },
 ] as const;
@@ -68,18 +68,18 @@ export default function SellingPointsStrip() {
             className="text-[12px] md:text-[13px] tracking-[0.06em] font-bold"
             style={{ color: FOREST }}
           >
-            やまとが資金計画で大切にしている3つのこと。
+            資金計画で安心いただける3つのポイント。
           </p>
           <p className="font-oswald text-[10px] md:text-[11px] tracking-[0.18em] text-text-secondary uppercase">
-            03 Edges
+            3つの強み
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {POINTS.map((p) => {
             const Icon = p.icon;
-            // 数字 vs 漢字「中立」で表示の太さ・サイズを微調整
-            const isKanjiValue = p.num === "中立";
+            // 数字 vs 漢字「独立」で表示の太さ・サイズを微調整
+            const isKanjiValue = p.num === "独立";
             return (
               <a
                 key={p.no}

@@ -10,7 +10,7 @@ import SellingPointsStrip from "@/components/money/SellingPointsStrip";
 export const metadata: Metadata = {
   title: "資金計画 | やまと不動産 花鳥風月",
   description:
-    "月々のお支払い、住宅ローン、つなぎ融資ゼロ円、提携FPまで。注文住宅の資金計画を、消費者目線でわかりやすく整理。奈良・京都の注文住宅 やまと不動産。",
+    "月々のお支払い、住宅ローン、つなぎ融資、提携FP相談まで。注文住宅の資金計画を、お客様目線でわかりやすく整理します。奈良・京都の注文住宅 やまと不動産。",
 };
 
 const FOREST = "#486B00";
@@ -19,7 +19,7 @@ const ACCENT = "#A2C523"; // LIME — やまとの売りシグナル(top stripe�
 /*
   /money — 資金計画ページ v6
   v5(9章編集誌・情報詰めすぎ) → v6: 「3スクロールで要点が伝わる」構造へ
-    1. Hero — 明るい写真 + 「心配を、軽く。家のお金は、ご一緒に。」(FP+やまと対句)
+    1. Hero — 明るい写真 + 「家のお金を、最初に見える化します。」(事実核)
     2. BigNumbers — 3つの数字をドカン(月7.1万 / 0円 / 700万)
     3. SellingPointsStrip — 3つの売り(短く)
     4. ThirtyYearAnswer — 30年で残るもの(常に見える図解)
@@ -168,7 +168,7 @@ export default function MoneyIndexPage() {
                 className="text-[12px] md:text-[13px] tracking-[0.06em] font-bold mb-4"
                 style={{ color: FOREST }}
               >
-                3つの数字で、わかります。
+                家づくりのお金を、3つの数字で見える化します。
               </p>
               <h2
                 className="text-text-primary leading-[1.2] tracking-[-0.01em]"
@@ -187,7 +187,7 @@ export default function MoneyIndexPage() {
                   num: "7.1",
                   unit: "万円",
                   suffix: "から",
-                  body: "想定モデル(30代夫婦+子1・年収500万・借入2,500万・1.0%・35年)。",
+                  body: "試算例：30代ご夫婦・お子さま1人 / 世帯年収500万円 / 借入額2,500万円 / 金利1.0% / 35年。",
                   highlight: false,
                 },
                 {
@@ -197,8 +197,8 @@ export default function MoneyIndexPage() {
                   num: "0",
                   unit: "円",
                   suffix: "",
-                  body: "やまとは土地+建物を自社一貫。一般的な30〜80万円の上乗せが、ありません。",
-                  highlight: true, // 中央=やまと最大の売り
+                  body: "土地と建物をまとめて進められるため、一般的に発生する30〜80万円程度の上乗せを抑えられます。",
+                  highlight: true, // 中央=やまとならではの仕組み
                 },
                 {
                   no: "03",
@@ -228,13 +228,13 @@ export default function MoneyIndexPage() {
                     style={{ background: ACCENT }}
                   />
 
-                  {/* やまと最大の売り バッジ */}
+                  {/* やまとならではの仕組み バッジ */}
                   {n.highlight && (
                     <span
                       className="absolute top-3 right-4 px-2.5 py-1 text-[10px] tracking-[0.12em] font-bold text-white"
                       style={{ background: FOREST }}
                     >
-                      やまと最大の売り
+                      やまとの強み
                     </span>
                   )}
 
