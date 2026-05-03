@@ -6,6 +6,7 @@ import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import LotsMapWrapper from "@/components/LotsMapWrapper";
 import LotsBrowser from "@/components/LotsBrowser";
+import LineLandFeedCta from "@/components/LineLandFeedCta";
 import {
   getActiveLots,
   getArchivedLots,
@@ -169,6 +170,9 @@ export default function LotsIndexPage() {
 
         {/* === 一覧 (純白背景) === */}
         <LotsBrowser lots={activeLots} />
+
+        {/* === LINE未公開土地配信導線 (2026-05-03 12棟達成の3欠落動線③) === */}
+        <LineLandFeedCta variant="editorial" />
 
         {/* === 締めCTA === */}
         <section className="bg-white py-[clamp(64px,7vw,140px)] border-t border-border">

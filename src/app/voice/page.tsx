@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
+import GoogleReviewCta from "@/components/GoogleReviewCta";
 import { VOICES } from "@/data/voices";
 
 export const metadata: Metadata = {
@@ -116,6 +117,16 @@ export default function VoiceIndexPage() {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* === OB向け Google 口コミ動線 (2026-05-03 GBP整備 - 12棟達成の3欠落動線①) === */}
+        <section className="bg-bg-primary py-[clamp(40px,5vw,80px)]">
+          <div className="max-w-[960px] mx-auto px-[var(--page-px)]">
+            <GoogleReviewCta
+              headline="やまとで建てた方へ。Googleで口コミを書いていただけませんか。"
+              description="ご家族の率直な体験は、これから家を考える方にとって何よりの参考になります。短い一言でも、率直なご感想で構いません。"
+            />
           </div>
         </section>
 
