@@ -88,7 +88,6 @@ export default function StickyMechanismPin() {
     if (reducedMotion) return;
     const el = sectionRef.current;
     if (!el) return;
-    // SP/Tablet では pin を発火させない(<lg = 1024px)
     const lgBreakpoint = window.matchMedia("(min-width: 1024px)");
     if (!lgBreakpoint.matches) return;
 
@@ -97,54 +96,48 @@ export default function StickyMechanismPin() {
     if (photos.length === 0 || panels.length === 0) return;
 
     const ctx = gsap.context(() => {
-      // 初期状態: 1枚目以外は opacity 0
       gsap.set(photos, { opacity: (i) => (i === 0 ? 1 : 0) });
-      gsap.set(panels, { opacity: (i) => (i === 0 ? 1 : 0), y: (i) => (i === 0 ? 0 : 12) });
+      // テキストは y で少しずらして「重なって読みにくい中間状態」を回避
+      gsap.set(panels, {
+        opacity: (i) => (i === 0 ? 1 : 0),
+        y: (i) => (i === 0 ? 0 : 28),
+      });
 
+      const N = PANELS.length;
+      // 連続 crossfade: i 番目の transition は時刻 [i, i+1] を占める。
+      // ease: "none" で linear、scrub の lerp(1.5) が滑らかさを担当。
+      // photo は完全 crossfade、text は短め(0.7)で重なり時間を最小化 +
+      // y: 28 → 0 の rise でフェードイン感を強調。
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
           pin: true,
-          scrub: 1,
+          scrub: 1.5,
           start: "top top",
-          end: () => `+=${PANELS.length * 100}%`,
+          end: () => `+=${N * 100}%`,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const i = Math.min(
-              PANELS.length - 1,
-              Math.floor(self.progress * PANELS.length),
+              N - 1,
+              Math.floor(self.progress * N),
             );
             setActiveIndex(i);
           },
         },
       });
 
-      // 各遷移: 1panel → 2panel, 2 → 3 で crossfade
-      for (let i = 1; i < PANELS.length; i++) {
-        const segment = `+=${100 / (PANELS.length - 1)}%`;
-        tl.to(
-          photos[i - 1],
-          { opacity: 0, duration: 1, ease: "power2.inOut" },
-          `>${i === 1 ? "0" : ""}`,
-        )
+      for (let i = 0; i < N - 1; i++) {
+        // 写真は full duration の crossfade
+        tl.to(photos[i], { opacity: 0, ease: "none", duration: 1 }, i)
+          .to(photos[i + 1], { opacity: 1, ease: "none", duration: 1 }, i)
+          // テキストは前半で前 panel をクリア、後半で次 panel を立ち上げ
+          .to(panels[i], { opacity: 0, y: -28, ease: "none", duration: 0.5 }, i)
           .to(
-            photos[i],
-            { opacity: 1, duration: 1, ease: "power2.inOut" },
-            "<",
-          )
-          .to(
-            panels[i - 1],
-            { opacity: 0, y: -12, duration: 0.7, ease: "power2.in" },
-            "<",
-          )
-          .to(
-            panels[i],
-            { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" },
-            "<+0.1",
-          )
-          .to({}, { duration: 0.6 }); // 各panelで読む間
-        // 上の `segment` 変数は意図的に未使用 — scrub:1 + pin range で時間を吸収
+            panels[i + 1],
+            { opacity: 1, y: 0, ease: "none", duration: 0.5 },
+            i + 0.5,
+          );
       }
     }, el);
     return () => ctx.revert();
@@ -184,20 +177,27 @@ export default function StickyMechanismPin() {
         className="relative hidden lg:block w-full h-screen overflow-hidden bg-text-primary text-white"
         aria-label="価格を抑えられる、3つの理由"
       >
-        {/* === 背景写真レイヤー(stack) === */}
+        {/* === 背景写真レイヤー(stack) ===
+            GPU layer 強制(translateZ + backface) で opacity 描画を
+            合成スレッドに乗せる(scroll 中の repaint を抑える) */}
         <div className="absolute inset-0">
           {PANELS.map((p, i) => (
             <div
               key={p.num}
               data-bg-photo
-              className="absolute inset-0 will-change-[opacity]"
-              style={{ opacity: i === 0 ? 1 : 0 }}
+              className="absolute inset-0"
+              style={{
+                opacity: i === 0 ? 1 : 0,
+                willChange: "opacity",
+                transform: "translateZ(0)",
+                backfaceVisibility: "hidden",
+              }}
             >
               <Image
                 src={p.image}
                 alt={p.alt}
                 fill
-                priority={i === 0}
+                priority
                 sizes="100vw"
                 className="object-cover"
               />
@@ -230,8 +230,13 @@ export default function StickyMechanismPin() {
               <div
                 key={p.num}
                 data-text-panel
-                className="absolute inset-0 will-change-[opacity,transform]"
-                style={{ opacity: i === 0 ? 1 : 0 }}
+                className="absolute inset-0"
+                style={{
+                  opacity: i === 0 ? 1 : 0,
+                  willChange: "opacity",
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
+                }}
               >
                 <PanelText panel={p} />
               </div>
