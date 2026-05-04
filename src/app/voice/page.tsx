@@ -1,11 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import GoogleReviewCta from "@/components/GoogleReviewCta";
+import VoiceFilterableList from "@/components/voice/VoiceFilterableList";
 import { VOICES } from "@/data/voices";
 
 const FOREST = "#486B00";
@@ -14,7 +15,7 @@ const ACCENT = "#A2C523";
 export const metadata: Metadata = {
   title: "お客様の声 | やまと不動産 花鳥風月",
   description:
-    "花鳥風月で家を建てた30組以上のお客様の声。決め手・こだわり・満足度まで、率直な感想を掲載しています。",
+    "花鳥風月で家を建てた50組のご家族の声。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。",
 };
 
 export default function VoiceIndexPage() {
@@ -102,65 +103,18 @@ export default function VoiceIndexPage() {
           </div>
         </section>
 
-        {/* === 一覧 === */}
+        {/* === タグ chip フィルタ + 一覧(Client component) === */}
         <section className="py-[var(--section-py)] bg-white">
           <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[var(--card-gap)]">
-              {voicesWithExcerpt.map((v) => (
-                <Link
-                  key={v.id}
-                  href={`/voice/${v.id}`}
-                  className="group block bg-bg-primary rounded-lg overflow-hidden card-shadow transition-all hover:-translate-y-1"
-                >
-                  {/* カバー画像 */}
-                  <div className="relative aspect-[3/2] bg-bg-secondary overflow-hidden">
-                    {v.photos[0] ? (
-                      <Image
-                        src={v.photos[0]}
-                        alt={v.title}
-                        fill
-                        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-text-secondary text-xs">
-                        写真なし
-                      </div>
-                    )}
-                    <div className="absolute top-3 left-3 bg-bg-primary/95 backdrop-blur-sm rounded px-2.5 py-1">
-                      <span className="text-main text-[10px] font-medium tracking-wider">
-                        {v.area || "—"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 本文 */}
-                  <div className="p-5 md:p-6">
-                    <h2
-                      className="text-text-primary text-base md:text-lg mb-3 group-hover:text-main transition-colors"
-                      style={{ fontFamily: "var(--font-sans)" }}
-                    >
-                      {v.title}
-                    </h2>
-                    <p className="text-text-secondary text-xs leading-[1.8] mb-4 line-clamp-3">
-                      {v.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      {v.staff ? (
-                        <span className="text-text-secondary text-[10px]">
-                          担当: {v.staff}
-                        </span>
-                      ) : (
-                        <span />
-                      )}
-                      <span className="text-main text-xs font-medium">
-                        続きを読む →
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <Suspense
+              fallback={
+                <div className="text-text-secondary text-sm py-12 text-center">
+                  読み込み中...
+                </div>
+              }
+            >
+              <VoiceFilterableList voices={voicesWithExcerpt} />
+            </Suspense>
           </div>
         </section>
 
