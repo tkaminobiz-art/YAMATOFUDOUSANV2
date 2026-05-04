@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import StickyMechanismPin from "@/components/sections/StickyMechanismPin";
 
 /*
   MechanismEnhanced — 2026-05-04 v3 (比較ダッシュボード + 標準仕様チップ)
@@ -46,36 +47,8 @@ const COMPARISON = [
   },
 ] as const;
 
-type Mechanism = {
-  num: string;
-  title: string;
-  summary: string;
-  body: string;
-};
-
-const MECHANISMS: readonly Mechanism[] = [
-  {
-    num: "01",
-    title: "モデルハウスを、販売住宅として活用",
-    summary:
-      "展示専用の建物を持たず、分譲地に建てた住宅をモデルハウスとしてご案内。",
-    body: "展示場の維持費を抑え、その分を価格に反映しています。",
-  },
-  {
-    num: "02",
-    title: "土地・設計・施工を、自社で連携",
-    summary:
-      "土地探しから設計、施工、アフターまで自社で連携しています。",
-    body: "間に入る会社が少ない分、中間コストを抑えています。",
-  },
-  {
-    num: "03",
-    title: "広告費を、地域に必要な範囲へ",
-    summary:
-      "全国向けの大きな広告ではなく、奈良・京都南部のお客様に届く範囲で。",
-    body: "過度な広告費を抑え、適正価格を実現しています。",
-  },
-] as const;
+// MECHANISMS / MechanismCard は v4(2026-05-04) で StickyMechanismPin に移管。
+// 3つの理由は背景写真クロスフェードで編集誌的に展開する。
 
 const INCLUDED_ITEMS = [
   "建物本体(京モデル30坪・4LDK)",
@@ -291,35 +264,6 @@ function ConditionLists() {
 }
 
 // ────────────────────────────────────────────────
-// 3つの理由カード
-// ────────────────────────────────────────────────
-
-function MechanismCard({ m }: { m: Mechanism }) {
-  return (
-    <article className="scroll-in group flex flex-col p-7 md:p-8 bg-white border border-text-primary/10 rounded-lg transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-text-primary/25 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.12)]">
-      <span
-        className="font-oswald font-light leading-none tabular-nums text-lime-deep"
-        style={{
-          fontSize: "clamp(24px, 2.2vw, 34px)",
-          letterSpacing: "-0.02em",
-        }}
-      >
-        {m.num}
-      </span>
-      <h3 className="mt-5 md:mt-6 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55] tracking-[0.01em]">
-        {m.title}
-      </h3>
-      <p className="mt-4 font-sans text-text-primary/80 text-[13px] md:text-[14px] leading-[1.95]">
-        {m.summary}
-      </p>
-      <p className="mt-3 font-sans text-text-secondary text-[12px] md:text-[13px] leading-[1.95]">
-        {m.body}
-      </p>
-    </article>
-  );
-}
-
-// ────────────────────────────────────────────────
 // メイン
 // ────────────────────────────────────────────────
 
@@ -327,6 +271,7 @@ export default function MechanismEnhanced() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
+    <>
     <section
       ref={ref}
       className="relative overflow-hidden bg-bg-secondary text-text-primary py-[var(--section-py)] scroll-in"
@@ -364,9 +309,9 @@ export default function MechanismEnhanced() {
 
         {/* 標準仕様の証拠は、PerformanceGrid セクションで設備+性能を一括提示 */}
 
-        {/* ========== 価格を抑えられる、3つの理由 ========== */}
+        {/* ========== 価格を抑えられる、3つの理由 へのブリッジ見出し ========== */}
         <div className="mt-20 md:mt-28">
-          <header className="mb-10 md:mb-14 max-w-[860px]">
+          <header className="max-w-[860px]">
             <h3
               className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
               style={{ fontSize: "var(--display-md)" }}
@@ -374,15 +319,9 @@ export default function MechanismEnhanced() {
               価格を抑えられる、3つの理由。
             </h3>
             <p className="mt-4 md:mt-5 font-sans text-text-secondary text-[clamp(14px,1.05vw,16px)] leading-[1.95] max-w-[580px]">
-              家づくりに直接関係しないコストを、できる限り抑えています。
+              家づくりに直接関係しないコストを、できる限り抑えています。下にスクロールすると、それぞれの理由が現れます。
             </p>
           </header>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-            {MECHANISMS.map((m) => (
-              <MechanismCard key={m.num} m={m} />
-            ))}
-          </div>
         </div>
 
         {/* ========== 注記 ========== */}
@@ -392,5 +331,9 @@ export default function MechanismEnhanced() {
         </div>
       </div>
     </section>
+
+    {/* ========== 3つの理由を sticky pin + 背景写真クロスフェードで展開 ========== */}
+    <StickyMechanismPin />
+    </>
   );
 }
