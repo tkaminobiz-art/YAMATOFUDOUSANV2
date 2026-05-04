@@ -52,8 +52,8 @@ const BUTTON_TRUST = [
 const FOOTER_TRUST = [
   {
     Icon: ShieldCheck,
-    title: "しつこい営業なし",
-    body: "ご相談後の営業電話や\n訪問は一切いたしません。",
+    title: "ご希望のない営業はいたしません",
+    body: "ご相談後の営業電話や\n訪問はいたしません。",
   },
   {
     Icon: HandHeart,
@@ -86,7 +86,7 @@ export default function FinalCta() {
         <p className="text-text-secondary text-sm md:text-[15px] leading-[1.95] text-center max-w-[720px] mx-auto mb-12 md:mb-14">
           土地探し・住宅ローン・月々の支払いまで、あなたの条件で無理のない予算を整理します。
           <br className="hidden md:inline" />
-          しつこい営業はしません。まだ何も決まっていなくても大丈夫です。
+          ご希望のない営業電話や訪問はいたしません。まだ何も決まっていなくても大丈夫です。
         </p>
 
         {/* === メインカード === 左:診断パネル / 右:写真+実績 */}

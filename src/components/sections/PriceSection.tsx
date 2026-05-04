@@ -441,8 +441,8 @@ export default function PriceSection() {
             デスクトップ: 従来の2カラム縦リスト */}
         <div className="mt-10 md:mt-20 grid grid-cols-2 gap-5 md:gap-14 lg:gap-20 pt-8 md:pt-14 border-t border-text-primary/15">
           <div>
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] md:tracking-[0.26em] uppercase text-lime-deep mb-3 md:mb-5">
-              Included · <span className="md:hidden">含むもの</span><span className="hidden md:inline">含まれるもの</span>
+            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3 md:mb-5">
+              価格に含まれるもの
             </p>
             <ul className="space-y-2 md:space-y-3">
               {INCLUDED.map((t) => (
@@ -463,8 +463,8 @@ export default function PriceSection() {
             </ul>
           </div>
           <div className="md:border-l md:border-text-primary/15 md:pl-10 lg:pl-14">
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] md:tracking-[0.26em] uppercase text-text-secondary mb-3 md:mb-5">
-              Excluded · 別途
+            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-text-secondary mb-3 md:mb-5">
+              別途となるもの
             </p>
             <ul className="space-y-2 md:space-y-3">
               {EXCLUDED.map((t) => (

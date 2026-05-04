@@ -114,7 +114,7 @@ const FEES_DURING: readonly FeeItem[] = [
 const TRUST_PILLS = [
   { Icon: Search, label: "事前に\nしっかり説明" },
   { Icon: Calculator, label: "契約前に\n総額を把握" },
-  { Icon: HeartHandshake, label: "あとから増えず\n安心" },
+  { Icon: HeartHandshake, label: "追加費用も\n事前に確認" },
 ] as const;
 
 const MECHANISMS = [
@@ -128,7 +128,7 @@ const MECHANISMS = [
     no: "02",
     Icon: Users,
     title: "土地と建物をまとめて\nワンストップ対応",
-    body: "土地と建物を一体でご提案・契約するため、つなぎ融資などの余計な費用を抑えます。",
+    body: "土地と建物を一体でご提案・契約するため、つなぎ融資などの費用負担を抑えやすくなります。",
   },
   {
     no: "03",
@@ -438,7 +438,7 @@ export default function ZeroDeclaration() {
               className="font-sans font-bold text-text-primary text-center leading-[1.5] tracking-[0.02em]"
               style={{ fontSize: "clamp(16px, 1.6vw, 20px)" }}
             >
-              やまと不動産が、余計な費用を抑えられる3つの仕組み
+              費用を抑えやすくする、3つの仕組み
             </h3>
             <span aria-hidden style={{ color: ACCENT, fontSize: 14 }}>
               ✦

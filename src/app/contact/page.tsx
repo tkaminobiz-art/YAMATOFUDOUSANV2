@@ -242,7 +242,7 @@ export default function ContactPage() {
             </button>
 
             <p className="text-text-secondary text-xs leading-relaxed text-center">
-              強引な営業電話や訪問はいたしません。ご相談のみもOKです。
+              ご希望のない営業電話や訪問はいたしません。ご相談だけでも大丈夫です。
             </p>
           </div>
         </div>

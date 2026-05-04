@@ -39,7 +39,7 @@ export default function MoneyTalkSection() {
           「払っていけるかな」「ローンは通るかな」。
           月々の支払いと全体像と段取り、3つを確認していただきます。
           <br />
-          初回のご相談は、無料です。しつこい営業は、しません。
+          初回のご相談は、無料です。ご希望のない営業電話や訪問はいたしません。
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
@@ -49,7 +49,7 @@ export default function MoneyTalkSection() {
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-bg-primary/80 px-3 py-1 text-[11px] font-semibold text-text-secondary">
             <Check className="h-4 w-4 text-main" strokeWidth={2.1} />
-            しつこい営業なし
+            ご希望のない営業
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-bg-primary/80 px-3 py-1 text-[11px] font-semibold text-text-secondary">
             <Check className="h-4 w-4 text-main" strokeWidth={2.1} />

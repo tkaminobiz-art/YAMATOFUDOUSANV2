@@ -71,9 +71,9 @@ export default function LotsIndexPage() {
                       fontSize: "clamp(26px, 3.6vw, 48px)",
                     }}
                   >
-                    土地のかたち、価格、最寄駅。
+                    土地の価格・駅距離・周辺環境を、
                     <br />
-                    暮らしの距離を、一画面で。
+                    まとめて確認できます。
                   </h1>
 
                   {/* 数字 */}
@@ -94,12 +94,12 @@ export default function LotsIndexPage() {
                       className="text-text-primary text-[14px] md:text-[18px] font-medium leading-none ml-1.5 self-end pb-1 md:pb-2.5"
                       style={{ fontFamily: "var(--font-sans)" }}
                     >
-                      区画 販売中
+                      区画 公開中
                     </span>
                   </div>
 
                   <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
-                    価格・駅徒歩・小学校・スーパーまで、暮らしの条件で絞り込み。土地と建物をまとめれば、余計な金融コストも抑えられます。
+                    価格・駅徒歩・小学校・スーパーまで、暮らしの条件で絞り込めます。土地と建物をまとめることで、費用の見通しも立てやすくなります。
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
