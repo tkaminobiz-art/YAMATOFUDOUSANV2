@@ -76,6 +76,10 @@ function CountUpNumber({ value }: { value: string }) {
   return (
     <span
       ref={ref}
+      // aria-label に target を固定 — カウント中の中間値(45, 89, ...)を
+      // 連呼せず、screen reader は target を一度だけ読む。
+      // 周囲のテキスト(prefix/unit/label)が文脈を補う。
+      aria-label={target.toLocaleString()}
       className="text-text-primary tabular-nums"
       style={{
         fontFamily: "var(--font-oswald)",
@@ -102,9 +106,12 @@ export default function ScaleBanner() {
         ref={sectionRef}
         className="max-w-[1400px] mx-auto px-[var(--page-px)] py-14 md:py-20 lg:py-24 scroll-in"
       >
-        {/* セクションラベル */}
+        {/* セクションラベル — 英語は装飾、意味は右側の日本語が持つ */}
         <div className="flex items-baseline gap-3 mb-10 md:mb-14">
-          <p className="font-section-label text-lime-deep text-xs md:text-sm tracking-[0.18em]">
+          <p
+            aria-hidden="true"
+            className="font-section-label text-lime-deep text-xs md:text-sm tracking-[0.18em]"
+          >
             TRACK RECORD
           </p>
           <span aria-hidden className="flex-1 h-px bg-[var(--color-border)]" />
@@ -140,7 +147,9 @@ export default function ScaleBanner() {
                   </span>
                 )}
 
-                {/* 巨大数字 — Oswald で立たせる + 画面入域でカウントアップ */}
+                {/* 巨大数字 — Oswald で立たせる + 画面入域でカウントアップ
+                    数字span に aria-label="600" を固定、unit は別 span として
+                    そのまま読み上げ可。screen reader は「累計 600 棟 以上のお引き渡し」と読む。 */}
                 <div className="flex items-baseline gap-2 leading-none mb-3">
                   <CountUpNumber value={stat.value} />
                   <span

@@ -77,7 +77,11 @@ export default function FinalCta() {
         className="max-w-[1180px] mx-auto px-[var(--page-px)] scroll-in"
       >
         {/* === ヘッダー === */}
-        <p className="font-section-label text-main text-xs md:text-sm text-center mb-3">
+        {/* 装飾英語 eyebrow — 意味は下の h2 が持つので AT には読ませない */}
+        <p
+          aria-hidden="true"
+          className="font-section-label text-main text-xs md:text-sm text-center mb-3"
+        >
           GET IN TOUCH
         </p>
         <h2 className="text-[clamp(24px,3.2vw,42px)] text-text-primary text-center leading-[1.45] tracking-[0.02em] mb-5">

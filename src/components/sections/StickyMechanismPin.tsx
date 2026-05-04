@@ -6,32 +6,28 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /*
-  StickyMechanismPin — 2026-05-04 v1
+  StickyMechanismPin — 2026-05-04 v3 (1-DOM 統合 + a11y 強化)
   ------------------------------------------------------------------
-  「価格を抑えられる、3つの理由」を sticky pin + 背景写真クロスフェードで
-  編集誌的に語るセクション。MechanismEnhanced 内の 3 cards を置換。
+  v2 の課題:
+    - PC sticky pin と SP static stack が別 DOM(PANELS×2)で重複
+    - SEO 上の重複コンテンツ + 保守時に同期ズレリスク
+  v3 の方針:
+    - PANELS を 1 度だけ render(<article data-panel> ×3)
+    - SP: 各 article は relative + min-h-[80vh] で自然 flow stack
+    - PC(lg+): lg:absolute lg:inset-0 で同位置に重ね、GSAP で
+      opacity crossfade(scrub:1.5)
+    - 装飾英語 eyebrow と巨大 number は aria-hidden(意味は h3 が持つ)
+    - prefers-reduced-motion: GSAP を起動せず mobile 同様の natural stack 表示
 
-  設計指針(world-class designer level):
-  - 1 panel = 100vh のスクロール幅(計300vh)— 読む時間を確保
-  - 背景3枚を crossfade(opacity 0↔1)、scrub:1 で慣性連動
-  - 前面: 巨大 Oswald number(01/02/03) + Title + Body + Progress dots
-  - 全要素が text/photo セットで同期フェード(ジャダーなし)
-  - 進行インジケータ: 縦の3点とアクティブ拡大
-  - 写真の上に左→右の暗グラデで読みやすさ確保(光は写真側に残す)
-  - prefers-reduced-motion: pin 無効化、3panel を縦に static stack 表示
-  - sm(<lg) は static stack にして mobile pin 罠を回避
-
-  Anti-pattern AT-003 回避:
-  - horizontal reveal なし(縦スクロールのみ)
-  - 3 panel = 3 viewport(過剰スクロールジャック禁止)
-  - ホバー装飾なし、追加モーションは text crossfade のみ
+  AT-003 anti-pattern 対策(v2 から継続):
+    - horizontal reveal なし、vertical scrub のみ
+    - pin 期間 3 viewport、ホバー装飾なし
 */
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const FOREST = "#486B00";
 const ACCENT = "#A2C523";
 
 type Panel = {
@@ -75,7 +71,6 @@ export default function StickyMechanismPin() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // prefers-reduced-motion 検知
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
@@ -91,23 +86,14 @@ export default function StickyMechanismPin() {
     const lgBreakpoint = window.matchMedia("(min-width: 1024px)");
     if (!lgBreakpoint.matches) return;
 
-    const photos = el.querySelectorAll<HTMLElement>("[data-bg-photo]");
-    const panels = el.querySelectorAll<HTMLElement>("[data-text-panel]");
-    if (photos.length === 0 || panels.length === 0) return;
+    const panels = el.querySelectorAll<HTMLElement>("[data-panel]");
+    if (panels.length === 0) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(photos, { opacity: (i) => (i === 0 ? 1 : 0) });
-      // テキストは y で少しずらして「重なって読みにくい中間状態」を回避
-      gsap.set(panels, {
-        opacity: (i) => (i === 0 ? 1 : 0),
-        y: (i) => (i === 0 ? 0 : 28),
-      });
+      // PC 初期: 1枚目だけ表示、他は透明
+      gsap.set(panels, { opacity: (i) => (i === 0 ? 1 : 0) });
 
       const N = PANELS.length;
-      // 連続 crossfade: i 番目の transition は時刻 [i, i+1] を占める。
-      // ease: "none" で linear、scrub の lerp(1.5) が滑らかさを担当。
-      // photo は完全 crossfade、text は短め(0.7)で重なり時間を最小化 +
-      // y: 28 → 0 の rise でフェードイン感を強調。
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
@@ -118,171 +104,102 @@ export default function StickyMechanismPin() {
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const i = Math.min(
-              N - 1,
-              Math.floor(self.progress * N),
-            );
+            const i = Math.min(N - 1, Math.floor(self.progress * N));
             setActiveIndex(i);
           },
         },
       });
 
+      // 連続 crossfade: 各 transition 1 単位、pause なし
       for (let i = 0; i < N - 1; i++) {
-        // 写真は full duration の crossfade
-        tl.to(photos[i], { opacity: 0, ease: "none", duration: 1 }, i)
-          .to(photos[i + 1], { opacity: 1, ease: "none", duration: 1 }, i)
-          // テキストは前半で前 panel をクリア、後半で次 panel を立ち上げ
-          .to(panels[i], { opacity: 0, y: -28, ease: "none", duration: 0.5 }, i)
-          .to(
-            panels[i + 1],
-            { opacity: 1, y: 0, ease: "none", duration: 0.5 },
-            i + 0.5,
-          );
+        tl.to(panels[i], { opacity: 0, ease: "none", duration: 1 }, i)
+          .to(panels[i + 1], { opacity: 1, ease: "none", duration: 1 }, i);
       }
     }, el);
     return () => ctx.revert();
   }, [reducedMotion]);
 
-  // ── reduced-motion / SP-Tablet: 縦に静的 stack ──
-  if (reducedMotion) {
-    return (
-      <section className="relative bg-text-primary text-white">
-        {PANELS.map((p) => (
-          <div
-            key={p.num}
-            className="relative min-h-[80vh] flex items-end overflow-hidden"
-          >
-            <Image
-              src={p.image}
-              alt={p.alt}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
-            <div className="relative max-w-[1200px] mx-auto w-full px-[var(--page-px)] py-14">
-              <PanelText panel={p} />
-            </div>
-          </div>
-        ))}
-      </section>
-    );
-  }
+  // PC で GSAP pin する際だけ section に h-screen + overflow-hidden を当てる。
+  // reduced-motion 時は SP と同じ natural stack を全幅で出す。
+  const enablePin = !reducedMotion;
 
   return (
-    <>
-      {/* ── Desktop (lg+): pin + crossfade ── */}
-      <section
-        ref={sectionRef}
-        className="relative hidden lg:block w-full h-screen overflow-hidden bg-text-primary text-white"
-        aria-label="価格を抑えられる、3つの理由"
-      >
-        {/* === 背景写真レイヤー(stack) ===
-            GPU layer 強制(translateZ + backface) で opacity 描画を
-            合成スレッドに乗せる(scroll 中の repaint を抑える) */}
-        <div className="absolute inset-0">
-          {PANELS.map((p, i) => (
-            <div
-              key={p.num}
-              data-bg-photo
-              className="absolute inset-0"
-              style={{
-                opacity: i === 0 ? 1 : 0,
-                willChange: "opacity",
-                transform: "translateZ(0)",
-                backfaceVisibility: "hidden",
-              }}
-            >
-              <Image
-                src={p.image}
-                alt={p.alt}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover"
-              />
-            </div>
-          ))}
-          {/* 左→右の暗グラデ(可読性) + 上→下の弱vignette */}
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(to right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.20) 65%, rgba(0,0,0,0.05) 100%), linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.25) 100%)",
-            }}
+    <section
+      ref={sectionRef}
+      aria-label="価格を抑えられる、3つの理由"
+      className={`relative bg-text-primary text-white ${
+        enablePin ? "lg:h-screen lg:overflow-hidden" : ""
+      }`}
+    >
+      {PANELS.map((p, i) => (
+        <article
+          key={p.num}
+          data-panel
+          className={`
+            relative flex items-end overflow-hidden
+            min-h-[80vh]
+            ${enablePin ? "lg:absolute lg:inset-0 lg:min-h-0" : ""}
+            ${enablePin && i !== 0 ? "lg:opacity-0" : ""}
+          `}
+          style={
+            enablePin
+              ? {
+                  willChange: "opacity",
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
+                }
+              : undefined
+          }
+        >
+          <Image
+            src={p.image}
+            alt={p.alt}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
-          {/* グレイン(編集誌のフィルム感) */}
+          {/* 暗グラデ + 弱vignette: SP は下→上、PC は左→右で読みやすく */}
           <div
             aria-hidden
-            className="absolute inset-0 mix-blend-soft-light opacity-[0.07] pointer-events-none"
+            className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/85 via-black/40 to-transparent lg:bg-[linear-gradient(to_right,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.55)_35%,rgba(0,0,0,0.20)_65%,rgba(0,0,0,0.05)_100%)]"
+          />
+          {/* グレイン(編集誌のフィルム感) — PC のみ */}
+          <div
+            aria-hidden
+            className="hidden lg:block absolute inset-0 mix-blend-soft-light opacity-[0.07] pointer-events-none"
             style={{
               backgroundImage:
                 "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>\")",
             }}
           />
-        </div>
-
-        {/* === 前面テキスト群(stack) === */}
-        <div className="relative h-full max-w-[1400px] mx-auto px-[var(--page-px)] flex items-end pb-[10vh] pt-[18vh]">
-          <div className="relative w-full max-w-[660px]">
-            {PANELS.map((p, i) => (
-              <div
-                key={p.num}
-                data-text-panel
-                className="absolute inset-0"
-                style={{
-                  opacity: i === 0 ? 1 : 0,
-                  willChange: "opacity",
-                  transform: "translateZ(0)",
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                <PanelText panel={p} />
-              </div>
-            ))}
-            {/* spacer to give the absolute children a height to fill */}
-            <div className="invisible" aria-hidden>
-              <PanelText panel={PANELS[0]} />
-            </div>
-          </div>
-
-          {/* === 進行インジケータ(右下) === */}
-          <ProgressDots activeIndex={activeIndex} />
-        </div>
-      </section>
-
-      {/* ── Mobile/Tablet (<lg): static stack(pin なし) ── */}
-      <section className="relative block lg:hidden bg-text-primary text-white">
-        {PANELS.map((p) => (
-          <div
-            key={p.num}
-            className="relative min-h-[80vh] flex items-end overflow-hidden"
-          >
-            <Image
-              src={p.image}
-              alt={p.alt}
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
-            <div className="relative max-w-[1200px] mx-auto w-full px-[var(--page-px)] py-14">
+          {/* 前面テキスト */}
+          <div className="relative z-10 w-full max-w-[1400px] mx-auto px-[var(--page-px)] py-14 lg:py-0 lg:flex lg:items-end lg:h-full lg:pb-[10vh] lg:pt-[18vh]">
+            <div className="w-full lg:max-w-[660px]">
               <PanelText panel={p} />
             </div>
           </div>
-        ))}
-      </section>
-    </>
+        </article>
+      ))}
+
+      {/* 進行インジケータ — PC pin 時のみ表示 */}
+      {enablePin && (
+        <div className="hidden lg:block">
+          <ProgressDots activeIndex={activeIndex} />
+        </div>
+      )}
+    </section>
   );
 }
 
 // ── 個別パネル本文 ──
+// 装飾英語(eyebrow / 巨大 number)は aria-hidden、意味は h3(日本語タイトル) が担う
 function PanelText({ panel }: { panel: Panel }) {
   return (
     <div className="text-white">
-      {/* eyebrow */}
+      {/* eyebrow(装飾英語) */}
       <p
+        aria-hidden="true"
         className="font-inter uppercase mb-6 md:mb-8 tracking-[0.3em]"
         style={{
           fontSize: "clamp(10px, 0.8vw, 12px)",
@@ -293,8 +210,9 @@ function PanelText({ panel }: { panel: Panel }) {
         {panel.eyebrow}
       </p>
 
-      {/* 巨大 Number(01/02/03) */}
+      {/* 巨大 Number(01/02/03) — 視覚装飾、意味は下の h3 が持つ */}
       <div
+        aria-hidden="true"
         className="font-oswald tabular-nums leading-[0.78] mb-3 md:mb-4"
         style={{
           fontWeight: 200,
@@ -314,7 +232,7 @@ function PanelText({ panel }: { panel: Panel }) {
         style={{ background: ACCENT }}
       />
 
-      {/* タイトル */}
+      {/* タイトル — 主要な heading として screen reader が読む */}
       <h3
         className="font-sans whitespace-pre-line mb-5 md:mb-6"
         style={{
@@ -347,7 +265,7 @@ function ProgressDots({ activeIndex }: { activeIndex: number }) {
   return (
     <ol
       aria-hidden
-      className="absolute right-[var(--page-px)] bottom-[12vh] flex flex-col gap-3"
+      className="absolute right-[var(--page-px)] bottom-[12vh] flex flex-col gap-3 z-20"
     >
       {PANELS.map((p, i) => {
         const isActive = i === activeIndex;
