@@ -29,9 +29,11 @@ type CardItem = {
   area: string;
   title: string;
   meta?: string;
+  priceRange?: string;
 };
 
 // 8件を1配列に正規化
+// 2026-05-04 (C15): featured には priceRange を表示してトップの価格訴求とつなぐ
 const CARDS: readonly CardItem[] = [
   ...FEATURED_WORKS.map((w): CardItem => ({
     href: `/works`,
@@ -39,6 +41,7 @@ const CARDS: readonly CardItem[] = [
     area: w.title.split(/[市町]/)[0] + (w.title.includes("市") ? "市" : "町"),
     title: w.model + ' "' + w.spec + '"',
     meta: w.family,
+    priceRange: w.meta?.priceRange,
   })),
   ...GRID_WORKS.map((w): CardItem => ({
     href: `/works`,
@@ -168,6 +171,14 @@ export default function WorksSection() {
                 {c.meta && (
                   <p className="text-text-secondary text-[11px] leading-[1.7]">
                     {c.meta}
+                  </p>
+                )}
+                {c.priceRange && (
+                  <p
+                    className="mt-1.5 inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full bg-bg-warm/70 border border-text-primary/10"
+                    style={{ color: FOREST }}
+                  >
+                    {c.priceRange}
                   </p>
                 )}
               </div>

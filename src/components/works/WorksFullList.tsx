@@ -1,16 +1,78 @@
 "use client";
 
 import Image from "next/image";
-import { Users } from "lucide-react";
+import { Users, Wallet, Home as HomeIcon, Layers } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
-import { FEATURED_WORKS, GRID_WORKS } from "@/data/works";
+import { FEATURED_WORKS, GRID_WORKS, type FeaturedWork } from "@/data/works";
 import RoomTourPlayer from "@/components/works/RoomTourPlayer";
 
 /*
   WorksFullList — /works ページ用の完全版
   Featured 3件(非対称レイアウト) + その他5件(コンパクトグリッド) を網羅。
   TOPページの WorksSection は teaser 化(Featured 3件のみ)。
+
+  2026-05-04 (C15): 価格帯/プラン/標準仕様との差分を表示する WorkMetaPanel を追加。
+  トップページの「標準仕様・総額・見える化」訴求と接続。
 */
+
+// 価格帯・プラン・仕様情報パネル — Featured 各事例カード内で使用
+function WorkMetaPanel({ work }: { work: FeaturedWork }) {
+  const meta = work.meta;
+  if (!meta) return null;
+  return (
+    <div className="bg-bg-warm/60 border border-text-primary/10 rounded-lg p-4 md:p-5">
+      <p className="text-text-secondary text-[11px] mb-3 tracking-wider">
+        この事例の概要
+      </p>
+      <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-[12px] md:text-[13px]">
+        {meta.priceRange && (
+          <div className="flex items-start gap-2">
+            <Wallet className="w-3.5 h-3.5 mt-0.5 text-main shrink-0" strokeWidth={1.6} />
+            <div>
+              <dt className="text-text-secondary text-[10.5px] mb-0.5">価格帯</dt>
+              <dd className="text-text-primary font-medium">{meta.priceRange}</dd>
+            </div>
+          </div>
+        )}
+        {meta.planType && (
+          <div className="flex items-start gap-2">
+            <HomeIcon className="w-3.5 h-3.5 mt-0.5 text-main shrink-0" strokeWidth={1.6} />
+            <div>
+              <dt className="text-text-secondary text-[10.5px] mb-0.5">プラン</dt>
+              <dd className="text-text-primary font-medium">
+                {meta.planType === "自由設計" ? "自由設計" : `${meta.planType}に近い住まい`}
+              </dd>
+            </div>
+          </div>
+        )}
+        {meta.baseSpec && (
+          <div className="flex items-start gap-2 col-span-2">
+            <Layers className="w-3.5 h-3.5 mt-0.5 text-main shrink-0" strokeWidth={1.6} />
+            <div>
+              <dt className="text-text-secondary text-[10.5px] mb-0.5">仕様</dt>
+              <dd className="text-text-primary font-medium">{meta.baseSpec}</dd>
+            </div>
+          </div>
+        )}
+        {meta.optionDiff && meta.optionDiff.length > 0 && (
+          <div className="col-span-2 pt-2 border-t border-text-primary/10">
+            <dt className="text-text-secondary text-[10.5px] mb-1.5">追加したもの</dt>
+            <dd className="flex flex-wrap gap-1.5">
+              {meta.optionDiff.map((o) => (
+                <span
+                  key={o}
+                  className="inline-flex items-center px-2 py-0.5 rounded-full bg-white border border-text-primary/15 text-text-primary text-[11px]"
+                >
+                  {o}
+                </span>
+              ))}
+            </dd>
+          </div>
+        )}
+      </dl>
+    </div>
+  );
+}
 
 export default function WorksFullList() {
   const sectionRef = useScrollIn<HTMLDivElement>(true);
@@ -74,6 +136,7 @@ export default function WorksFullList() {
               {work.roomTour && (
                 <RoomTourPlayer video={work.roomTour} title={work.title} />
               )}
+              <WorkMetaPanel work={work} />
               <div className="bg-bg-secondary rounded p-4">
                 <p className="text-text-secondary text-[11px] mb-1 tracking-wider">
                   お悩み
@@ -100,7 +163,7 @@ export default function WorksFullList() {
           ))}
         </div>
         <p className="text-center text-text-secondary text-xs mt-2 tracking-wider">
-          ← 横にスワイプできます →
+          事例をスライドしてご覧いただけます
         </p>
       </div>
 
@@ -143,6 +206,8 @@ export default function WorksFullList() {
                     <span>{work.family}</span>
                   </div>
                 </div>
+
+                <WorkMetaPanel work={work} />
 
                 <div className="bg-bg-secondary rounded-lg p-4 md:p-5">
                   <p className="text-text-secondary text-[11px] mb-1 tracking-wider">
