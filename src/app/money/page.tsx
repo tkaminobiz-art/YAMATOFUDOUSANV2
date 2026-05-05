@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import MoneyFullSection from "@/components/money/MoneyFullSection";
 import SellingPointsStrip from "@/components/money/SellingPointsStrip";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 export const metadata: Metadata = {
   title: "資金計画 | やまと不動産 花鳥風月",
@@ -133,14 +135,17 @@ export default function MoneyIndexPage() {
                     最初に整理してから進めます。
                   </p>
 
-                  {/* CTA */}
+                  {/* CTA — 2026-05-05 LINE主導線化(主=LINE / 副=スクロール / 予約は下部) */}
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
                     <a
-                      href="/reserve"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] md:text-[15px] font-medium rounded transition-opacity hover:opacity-90"
-                      style={{ background: FOREST, color: "#fff" }}
+                      href={LINE_ADD_FRIEND_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] md:text-[15px] font-medium rounded transition-all duration-300 hover:opacity-90 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(6,199,85,0.55)] text-white"
+                      style={{ background: "#06C755" }}
                     >
-                      無料相談を予約する
+                      <MessageCircle className="w-4 h-4" strokeWidth={1.75} fill="currentColor" />
+                      LINEでお金の不安を相談する
                     </a>
                     <a
                       href="#big-numbers"
@@ -304,7 +309,44 @@ export default function MoneyIndexPage() {
         {/* === 4. 30年で残るもの + 5. 9つの質問アコーディオン === */}
         <MoneyFullSection />
 
-        {/* === 6. 締めCTA — 緑ソフト背景(画像2準拠) === */}
+        {/* === 5.5 中盤LINEストリップ === 住宅ローン・資金計画の山場と締めCTAの間に
+            「読みっぱなしで離脱」を防ぐ低圧力の入口を1つ挟む。 */}
+        <section className="bg-white border-t border-border py-[clamp(40px,5vw,80px)]">
+          <div className="max-w-[1100px] mx-auto px-[var(--page-px)]">
+            <div
+              className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-center rounded-lg p-6 md:p-9 border"
+              style={{ background: "#F0F6D8", borderColor: "rgba(72,107,0,0.15)" }}
+            >
+              <div>
+                <p
+                  className="text-[11px] tracking-[0.18em] uppercase mb-3 font-semibold"
+                  style={{ color: FOREST }}
+                >
+                  Money / LINE 相談
+                </p>
+                <h3 className="text-text-primary text-[18px] md:text-[22px] font-medium leading-[1.5] mb-2">
+                  住宅ローンや月々の支払い、もやもやしたままになっていませんか。
+                </h3>
+                <p className="text-text-primary/80 text-[13px] md:text-[14px] leading-[1.95] max-w-[600px]">
+                  ご家族の状況に合わせて、無理のない目安を一緒に整理します。
+                  ご質問だけでも、もちろん大丈夫です。
+                </p>
+              </div>
+              <a
+                href={LINE_ADD_FRIEND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded text-[14px] font-medium transition-opacity hover:opacity-90 whitespace-nowrap shrink-0 text-white"
+                style={{ background: "#06C755" }}
+              >
+                <MessageCircle className="w-4 h-4" strokeWidth={1.75} fill="currentColor" />
+                LINEで気軽に相談する
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* === 6. 締めCTA — 2026-05-05 LINE主導線化(主=LINE / 副=見学 / 補助=フォーム&電話) === */}
         <section
           className="relative py-[clamp(80px,8vw,160px)]"
           style={{ background: "#F0F6D8" }}
@@ -323,26 +365,39 @@ export default function MoneyIndexPage() {
               気になる点を、まずはひとつ。
             </p>
             <p className="mt-6 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[540px] mx-auto">
-              ご来場でも、メッセージでも、どちらでも構いません。
+              LINE・ご来場・お電話、どの窓口でも構いません。
               <br className="hidden md:block" />
               「今は建てない」とお決めになっても、それで構いません。
             </p>
-            <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
-              <CtaButton
-                href="/reserve"
-                variant="primary"
-                size="md"
-                label="無料相談を予約する"
-                sublabel="ご相談・事前審査は無料"
-                icon="calendar"
-              />
-              <CtaButton
-                href="/contact"
-                variant="secondary"
-                size="md"
-                label="まずは質問だけ"
-                sublabel="メッセージで気軽にどうぞ"
-              />
+            <div className="mt-12 flex flex-col gap-4 items-center">
+              {/* 主CTA: LINE */}
+              <a
+                href={LINE_ADD_FRIEND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 min-h-[56px] px-8 py-4 rounded text-[15px] md:text-[16px] font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-10px_rgba(6,199,85,0.55)] w-full sm:w-auto sm:min-w-[320px]"
+                style={{ background: "#06C755" }}
+              >
+                <MessageCircle className="w-5 h-5" strokeWidth={1.75} fill="currentColor" />
+                LINEでお金の不安を相談する
+              </a>
+              {/* 副CTA: 見学 + 補助: フォーム */}
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <CtaButton
+                  href="/reserve"
+                  variant="secondary"
+                  size="md"
+                  label="モデルハウスを見学する"
+                  sublabel="ご予約なしでも見学可・無料"
+                />
+                <CtaButton
+                  href="/contact"
+                  variant="secondary"
+                  size="md"
+                  label="フォームで質問する"
+                  sublabel="メッセージで気軽にどうぞ"
+                />
+              </div>
             </div>
 
             {/* 電話番号CTA — 高齢層・即時相談派の方向け */}

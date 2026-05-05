@@ -136,6 +136,11 @@ export default function LotsIndexPage() {
           </div>
         </section>
 
+        {/* === LINE未公開土地配信導線(上部) ===
+            2026-05-05: 土地探しユーザーは途中離脱しやすいので、ヒーロー直下と
+            一覧後の2箇所に配置。default variant はコンパクト・editorial は主役級。 */}
+        <LineLandFeedCta variant="default" />
+
         {/* === Map (純白背景に切替) === */}
         <section id="map" className="bg-white py-[clamp(40px,5vw,80px)] border-b border-border scroll-mt-20">
           <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
