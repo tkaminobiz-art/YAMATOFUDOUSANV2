@@ -9,6 +9,7 @@ import {
   MapPin,
   CheckCircle2,
   PencilLine,
+  MessageCircle,
   Zap,
   ArrowRight,
   ShieldCheck,
@@ -16,14 +17,15 @@ import {
   Lock,
 } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /*
-  FinalCta — 2026-05-03 v4 (診断主役・参考デザイン準拠)
+  FinalCta — 2026-05-05 v5 (無料総額診断はそのまま主役・入口だけLINE化)
   ---------------------------------------------------------------
-  v3: 来場/資料/電話 の3カード並列。並列ゆえに主従がなく、CV 取れず。
-  v4: 「無料総額診断」を主役カードに格上げ、来場・電話を脇に置く。
-      右側に LDK 写真+実績フローティングカード、最下部に信頼ストリップ。
-      参考画像準拠の構成で「ここから動くべき理由」が一目で伝わる導線へ。
+  v4: 主CTA「無料で総額診断をする」→ /money(フォーム)。CV ハードルは残っていた。
+  v5: 「無料総額診断」の資産は壊さず、入口だけ LINE 相談に切り替え。
+      主CTA = LINEで無料総額診断を相談する / 副 = 見学 / 補助 = 資料請求。
+      4 つの診断特徴アイコンは "LINE で何を聞けるか" の役割で温存。
 
   STAT_FACTS は 2026-05-03 専務確認済みの実数:
     - 引渡し件数 600件以上
@@ -85,10 +87,10 @@ export default function FinalCta() {
           GET IN TOUCH
         </p>
         <h2 className="text-[clamp(24px,3.2vw,42px)] text-text-primary text-center leading-[1.45] tracking-[0.02em] mb-5">
-          家づくりの総額を、<br className="md:hidden" />無料で見える化しませんか。
+          家づくりの総額を、<br className="md:hidden" />無料で整理しませんか。
         </h2>
         <p className="text-text-secondary text-sm md:text-[15px] leading-[1.95] text-center max-w-[720px] mx-auto mb-12 md:mb-14">
-          土地探し・住宅ローン・月々の支払いまで、あなたの条件で無理のない予算を整理します。
+          土地探し、建物価格、住宅ローン、月々の支払いまで。ご家族の条件に合わせて、無理のない予算の目安をご案内します。
           <br className="hidden md:inline" />
           ご希望のない営業電話や訪問はいたしません。まだ何も決まっていなくても大丈夫です。
         </p>
@@ -146,27 +148,40 @@ export default function FinalCta() {
               ))}
             </ul>
 
-            {/* メインCTA */}
-            <Link
-              href="/money"
-              className="group relative inline-flex items-center justify-center w-full overflow-hidden bg-lime text-lime-darker rounded-full border-b-[3px] border-lime-hover min-h-[64px] px-6 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-lime-hover hover:border-lime-deep hover:shadow-[0_18px_44px_-10px_rgba(162,197,35,0.55)] mb-5"
+            {/* メインCTA — 入口をLINEに。診断ロジックは温存 */}
+            <a
+              href={LINE_ADD_FRIEND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center w-full overflow-hidden text-white rounded-full border-b-[3px] min-h-[64px] px-6 transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-10px_rgba(6,199,85,0.55)] mb-3"
+              style={{ backgroundColor: "#06C755", borderBottomColor: "#04A346" }}
             >
               <span
                 aria-hidden
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
               />
               <span className="relative inline-flex items-center gap-3">
-                <PencilLine className="w-5 h-5" strokeWidth={2} />
+                <MessageCircle className="w-5 h-5" strokeWidth={2} fill="currentColor" />
                 <span className="font-bold text-[15px] sm:text-[17px] tracking-[0.04em]">
-                  無料で総額診断をする
+                  LINEで無料総額診断を相談する
                 </span>
-                <Zap className="w-4 h-4 -ml-1" strokeWidth={2} fill="currentColor" />
               </span>
               <ArrowRight
                 className="relative w-5 h-5 ml-auto transition-transform duration-[400ms] group-hover:translate-x-1"
                 strokeWidth={1.75}
               />
-            </Link>
+            </a>
+            {/* フォーム派・LINE未利用層への補助リンク */}
+            <p className="text-center text-[12px] text-text-secondary mb-5">
+              LINEを使われない方は、
+              <Link
+                href="/money"
+                className="text-main font-medium underline decoration-main/40 underline-offset-2 hover:decoration-main"
+              >
+                フォームでも診断できます
+              </Link>
+              。
+            </p>
 
             {/* 信頼バッジ列 */}
             <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">

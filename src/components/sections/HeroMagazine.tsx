@@ -1,7 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 import {
   FONT_VARIANTS,
   BODY_VARIANTS,
@@ -224,28 +227,52 @@ export default function HeroMagazine({
           </div>
         </div>
 
-        {/* 下段: CTA(2026-05-03 v6: 権威バッジは別aside で右上に再導入。
-            ScaleBanner の数字訴求とは別に "金のエンブレム" でFV単体の権威を立てる) */}
+        {/* 下段: CTA(2026-05-05 v7: LINE主導線化)
+            主=LINEで総額相談 / 副=モデルハウス見学 / 補助=資料請求(テキストリンク)
+            LINEはサービス色(#06C755)で即認識を狙い、Lime は副CTAに譲る。 */}
         <div className="pb-8 md:pb-14 px-[var(--page-px)]">
           <div className="max-w-[1400px] mx-auto">
-            {/* CTA — フォント切替範囲外(CtaButton側で固定)・右寄せ */}
             <div className="flex flex-col sm:flex-row gap-3 sm:items-stretch max-w-2xl ml-auto">
+              {/* 主CTA: LINE — サービス色で「相談の入口」を即認識 */}
+              <a
+                href={LINE_ADD_FRIEND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex flex-1 sm:min-w-[240px] flex-col items-center justify-center overflow-hidden rounded text-white text-center font-bold min-h-[56px] px-8 py-4 border-b-[3px] transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-10px_rgba(6,199,85,0.55)]"
+                style={{ backgroundColor: "#06C755", borderBottomColor: "#04A346" }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
+                />
+                <span className="relative inline-flex items-center gap-2 leading-tight">
+                  <MessageCircle className="w-4 h-4" strokeWidth={2} />
+                  LINEで総額の目安を相談する
+                </span>
+                <span className="relative mt-0.5 text-[11px] font-medium text-white/80">
+                  友だち追加で気軽にお問い合わせ
+                </span>
+              </a>
+              {/* 副CTA: モデルハウス見学 */}
               <CtaButton
                 href="/reserve"
-                variant="dark-bg-primary"
+                variant="dark-bg-secondary"
                 size="md"
-                label="モデルハウス見学"
+                label="モデルハウスを見学する"
                 sublabel="ご予約なしでも見学可・無料"
                 className="flex-1 sm:min-w-[200px] px-8 py-4"
               />
-              <CtaButton
+            </div>
+            {/* 補助: フォーム資料請求 — 控えめなテキストリンクで残す */}
+            <div className="mt-4 text-right">
+              <Link
                 href="/contact"
-                variant="dark-bg-secondary"
-                size="md"
-                label="資料請求"
-                sublabel="無料・1分で完了"
-                className="flex-1 sm:min-w-[200px] px-8 py-4"
-              />
+                className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px] text-white/75 hover:text-white tracking-[0.04em] transition-colors"
+                style={{ borderBottom: "1px solid rgba(255,255,255,0.4)", paddingBottom: "2px" }}
+              >
+                フォームで資料請求する
+                <span aria-hidden>→</span>
+              </Link>
             </div>
           </div>
         </div>
