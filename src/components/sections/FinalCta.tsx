@@ -55,7 +55,7 @@ const FOOTER_TRUST = [
   {
     Icon: ShieldCheck,
     title: "ご希望のない営業はいたしません",
-    body: "ご相談後の営業電話や\n訪問はいたしません。",
+    body: "ご希望のない営業電話や\n訪問はいたしません。",
   },
   {
     Icon: HandHeart,
