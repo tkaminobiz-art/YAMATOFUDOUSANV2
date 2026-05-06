@@ -10,7 +10,6 @@ import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import PriceSection from "@/components/sections/PriceSection";
-import PerformanceGrid from "@/components/sections/PerformanceGrid";
 import MiniSimulator from "@/components/sections/MiniSimulator";
 import LotsSection from "@/components/sections/LotsSection";
 import WorksSection from "@/components/sections/WorksSection";
@@ -43,9 +42,11 @@ const HERO_BODY_VARIANT =
   5. PriceSection          3プラン価格
 
   【商品魅力(縮減・能動性)】
-  6. PerformanceGrid       8項目アイコングリッド(新規・MATERIALS型)
-  7. MiniSimulator         3項目入力で概算建築費(新規・自分ごと化)
-  8. LotsSection           AREAマップ+チップ(刷新・対応エリア訴求)
+  6. MiniSimulator         3項目入力で概算建築費(新規・自分ごと化)
+  7. LotsSection           AREAマップ+チップ(刷新・対応エリア訴求)
+  ---
+  ※ 2026-05-06: PerformanceGrid を撤去。同情報は StandardEquipment v2 の
+    Bento + 性能ピル行に統合(design-critic 指摘#2 「標準装備が2回出る」)。
 
   【社会的証明(カルーセル化)】
   9. WorksSection          施工事例カルーセル
@@ -85,7 +86,6 @@ export default function Home() {
         <PriceSection />
 
         {/* 商品魅力(能動性) */}
-        <PerformanceGrid />
         <MiniSimulator />
         <LotsSection />
 
