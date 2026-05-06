@@ -15,6 +15,7 @@ import PhotoBreath from "@/components/sections/PhotoBreath";
 import MiniSimulator from "@/components/sections/MiniSimulator";
 import LotsSection from "@/components/sections/LotsSection";
 import WorksSection from "@/components/sections/WorksSection";
+import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
 import VoiceSection from "@/components/sections/VoiceSection";
 import MidCta from "@/components/sections/MidCta";
 import FaqSection from "@/components/sections/FaqSection";
@@ -103,6 +104,9 @@ export default function Home() {
 
         {/* 社会的証明(カルーセル) */}
         <WorksSection />
+        {/* 信頼ブリッジ — 自社施工事例 → 第三者(Google)評価 → 自社の声 の順で
+            信頼を積み上げる(2026-05-07 design-critic 指摘#4 への対応) */}
+        <GoogleReviewBridge />
         <VoiceSection />
 
         {/* 行動 */}
