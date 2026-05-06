@@ -9,7 +9,9 @@ import ScaleBanner from "@/components/sections/ScaleBanner";
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
+import RepresentativeMessage from "@/components/sections/RepresentativeMessage";
 import PriceSection from "@/components/sections/PriceSection";
+import PhotoBreath from "@/components/sections/PhotoBreath";
 import MiniSimulator from "@/components/sections/MiniSimulator";
 import LotsSection from "@/components/sections/LotsSection";
 import WorksSection from "@/components/sections/WorksSection";
@@ -83,7 +85,17 @@ export default function Home() {
         <MechanismEnhanced />
         <StandardEquipment />
         <ZeroDeclaration />
+        {/* 代表 + 専務の顔と署名級メッセージ — 仕様/¥0 と価格の間に「これを守る人」を1呼吸 */}
+        <RepresentativeMessage />
         <PriceSection />
+
+        {/* 写真ブレイク — 価格ダッシュボードと能動UIの間に呼吸帯を1枚 */}
+        <PhotoBreath
+          src="/images/newsozai/exterior-terrace-01.webp"
+          alt="やまと不動産が手がけた住まいの外観 — テラスのある夕景"
+          aspectMobile="aspect-[4/3]"
+          aspectDesktop="md:aspect-[21/8]"
+        />
 
         {/* 商品魅力(能動性) */}
         <MiniSimulator />
