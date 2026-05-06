@@ -4,12 +4,19 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MessageCircle } from "lucide-react";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /*
   Header — 2026-04-20 ハウスメーカー王道レイアウト + スマート縮小
   - ロゴ左 / ナビ右寄せ / CTA右端(おしゃれHM/工務店の定番)
   - スクロール80px超で上段タブが消え、下段が縮小、背景に微blur
   - NavItem に children? を予約(将来のメガメニュー/アコーディオン用)
+
+  2026-05-06 LINE主導線化に合わせて CTA 構成を更新:
+    旧: [資料請求(黒線)] [来場予約(Lime)]
+    新: [LINEで相談(LINE緑)] [資料請求(テキストのみ・控えめ)] [来場予約(Lime)]
+    SP固定ヘッダーにも LINE をピル型で追加。
 */
 
 type NavChild = {
@@ -189,18 +196,27 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTA (右端) */}
-          <div className="hidden lg:flex items-center gap-2 shrink-0 ml-2 xl:ml-6">
+          {/* Desktop CTA (右端) — LINE主導線化(2026-05-06) */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0 ml-2 xl:ml-6">
+            {/* LINE: サービス色で「相談の入口」を即認識 */}
+            <a
+              href={LINE_ADD_FRIEND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 xl:px-4 py-2 text-xs xl:text-sm font-bold text-white rounded transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(6,199,85,0.45)] whitespace-nowrap"
+              style={{ backgroundColor: "#06C755" }}
+            >
+              <MessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
+              LINEで相談
+            </a>
+            {/* 資料請求: 控えめなテキストリンクへ降格 */}
             <Link
               href="/contact"
-              className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium border border-text-primary text-text-primary rounded transition-colors duration-[400ms] hover:text-white whitespace-nowrap"
+              className="inline-flex items-center justify-center min-h-[40px] px-2 py-2 text-xs xl:text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors whitespace-nowrap"
             >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full bg-text-primary transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0"
-              />
-              <span className="relative">資料請求</span>
+              資料請求
             </Link>
+            {/* 来場予約: Lime主役 */}
             <Link
               href="/reserve"
               className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover transition-all duration-[400ms] hover:-translate-y-0.5 hover:bg-lime-hover hover:shadow-[0_8px_24px_-4px_rgba(162,197,35,0.5)] whitespace-nowrap"
@@ -213,8 +229,19 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* SP 右端: 来場予約のみ */}
-          <div className="flex items-center gap-2 lg:hidden">
+          {/* SP 右端: LINE + 来場予約 */}
+          <div className="flex items-center gap-1.5 lg:hidden">
+            <a
+              href={LINE_ADD_FRIEND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1 min-h-[40px] px-2.5 py-1.5 text-[11px] font-bold text-white rounded whitespace-nowrap"
+              style={{ backgroundColor: "#06C755" }}
+              aria-label="LINEで相談"
+            >
+              <MessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
+              LINE
+            </a>
             <Link
               href="/reserve"
               className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover whitespace-nowrap"
@@ -244,19 +271,30 @@ export default function Header() {
               </li>
             ))}
             <li className="border-t border-border px-6 py-4 space-y-2">
-              <Link
-                href="/contact"
-                className="block text-center min-h-[48px] px-6 py-3 text-sm font-medium border border-text-primary text-text-primary rounded"
+              <a
+                href={LINE_ADD_FRIEND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 text-sm font-bold text-white rounded"
+                style={{ backgroundColor: "#06C755" }}
                 onClick={() => setMenuOpen(false)}
               >
-                資料請求
-              </Link>
+                <MessageCircle className="w-4 h-4" strokeWidth={2} />
+                LINEで相談
+              </a>
               <Link
                 href="/reserve"
                 className="block text-center min-h-[48px] px-6 py-3 text-sm font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover"
                 onClick={() => setMenuOpen(false)}
               >
                 来場予約
+              </Link>
+              <Link
+                href="/contact"
+                className="block text-center min-h-[48px] px-6 py-3 text-[13px] font-medium text-text-secondary"
+                onClick={() => setMenuOpen(false)}
+              >
+                資料請求はこちら
               </Link>
             </li>
             <li className="border-t border-border px-6 py-4">
