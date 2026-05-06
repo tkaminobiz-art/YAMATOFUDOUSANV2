@@ -70,9 +70,11 @@ const EXCLUDED_ITEMS = [
 // ────────────────────────────────────────────────
 
 function ComparisonDashboard() {
-  // 画面入域でバーを 0% → pct% にイージングで伸ばす
+  // 画面入域でバーを 0% → pct% にイージングで伸ばす。
+  // 参考差額 KPI はバー完了後に少し遅れて現れる(理解の順番を視覚化)。
   const containerRef = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
+  const [kpiVisible, setKpiVisible] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -80,6 +82,7 @@ function ComparisonDashboard() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       setAnimate(true);
+      setKpiVisible(true);
       return;
     }
     const observer = new IntersectionObserver(
@@ -94,6 +97,15 @@ function ComparisonDashboard() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // バーの最後(2本目)の transition: delay 400ms + duration 1200ms = 1600ms 後に完了。
+  // 参考差額 KPI はその直後(1800ms)から出す。
+  useEffect(() => {
+    if (!animate) return;
+    if (kpiVisible) return;
+    const t = setTimeout(() => setKpiVisible(true), 1800);
+    return () => clearTimeout(t);
+  }, [animate, kpiVisible]);
 
   return (
     <div ref={containerRef} className="bg-white border border-text-primary/10 rounded-lg p-6 md:p-10 shadow-[0_8px_24px_-16px_rgba(0,0,0,0.08)]">
@@ -161,10 +173,14 @@ function ComparisonDashboard() {
         })}
       </div>
 
-      {/* 参考差額 — 主役KPI */}
+      {/* 参考差額 — 主役KPI(バー完了後に遅延フェードで「最後にこれが出る」演出) */}
       <div
-        className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center pt-7 md:pt-9 border-t-2"
-        style={{ borderColor: "rgba(72,107,0,0.18)" }}
+        className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-6 items-center pt-7 md:pt-9 border-t-2 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{
+          borderColor: "rgba(72,107,0,0.18)",
+          opacity: kpiVisible ? 1 : 0,
+          transform: kpiVisible ? "translateY(0)" : "translateY(12px)",
+        }}
       >
         <div className="flex items-baseline gap-2 md:gap-3">
           <span
