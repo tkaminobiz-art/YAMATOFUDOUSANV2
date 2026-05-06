@@ -94,6 +94,38 @@ function FilterChips<T extends string>({
 }
 
 // ─────────────────────────────────────────────
+// "ここに住むと" 1行コメント生成
+// ─────────────────────────────────────────────
+// 暮らしの実感に近い1行を、最寄り施設データから自動生成する。
+// 過剰な感情断定(「楽になります」等)は避け、距離の事実+生活シーンに留める。
+// 学校 > スーパー > 駅 の優先順(/lotsの主ターゲットが子育て世帯のため)。
+
+function lifestyleComment(lot: Lot, stationWalk: number | null): string | null {
+  const ps = lot.amenities?.primarySchool;
+  const sm = lot.amenities?.supermarket;
+
+  if (ps && ps.walkMin <= 5) {
+    return `小学校徒歩${ps.walkMin}分。朝の通学を、玄関先から見守りやすい区画です。`;
+  }
+  if (sm && sm.walkMin <= 5) {
+    return `スーパー徒歩${sm.walkMin}分。日々のお買い物が、ご近所感覚で済みます。`;
+  }
+  if (ps && ps.walkMin <= 10) {
+    return `小学校徒歩${ps.walkMin}分。徒歩通学が無理なく続く距離です。`;
+  }
+  if (sm && sm.walkMin <= 10) {
+    return `スーパー徒歩${sm.walkMin}分。仕事帰りのお買い物がしやすい立地です。`;
+  }
+  if (stationWalk !== null && stationWalk <= 5) {
+    return `駅まで徒歩${stationWalk}分。朝のご通勤が無理なく続けやすい立地です。`;
+  }
+  if (stationWalk !== null && stationWalk <= 10) {
+    return `駅まで徒歩${stationWalk}分。電車通勤が現実的な距離です。`;
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────────
 // 物件カード
 // ─────────────────────────────────────────────
 
@@ -109,6 +141,7 @@ function LotCard({
   const walk = extractWalkMinutes(lot.fields["交通"]);
   const access = CITY_ACCESS[lot.city];
   const showCheapBadge = rank !== undefined && rank < 3 && lot.price;
+  const lifestyle = lifestyleComment(lot, walk);
 
   return (
     <Link
@@ -175,6 +208,21 @@ function LotCard({
         {lot.fields["交通"] && (
           <p className="text-text-secondary text-xs leading-relaxed line-clamp-1">
             {lot.fields["交通"]}
+          </p>
+        )}
+
+        {/* "ここに住むと" 1行コメント — スペック中心の中に暮らしの実感を1点だけ差す */}
+        {lifestyle && (
+          <p
+            className="mt-3 px-3 py-2 rounded text-[12px] leading-[1.65]"
+            style={{
+              background: "rgba(72,107,0,0.06)",
+              color: "#486B00",
+              borderLeft: "2px solid #A2C523",
+            }}
+          >
+            <span className="font-bold mr-1">ここに住むと、</span>
+            {lifestyle}
           </p>
         )}
 
