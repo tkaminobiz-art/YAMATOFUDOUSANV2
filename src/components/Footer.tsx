@@ -164,13 +164,13 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* 右: FOLLOW US + SNSアイコン（縦線で左にセパレート） */}
+          {/* 右: SNS公式アカウント（縦線で左にセパレート） */}
           <div className="md:pl-12 md:border-l md:border-[#3A342B]">
             <p
-              className="text-[11px] tracking-[0.3em] mb-5 text-[#9C927B]"
-              style={{ fontFamily: "var(--font-inter)" }}
+              className="text-[12px] tracking-[0.06em] mb-5 text-[#9C927B] font-bold"
+              style={{ fontFamily: "var(--font-sans)" }}
             >
-              FOLLOW US
+              SNS公式アカウント
             </p>
             <div className="flex flex-wrap gap-x-10 gap-y-4">
               {SNS.map((sns) => (

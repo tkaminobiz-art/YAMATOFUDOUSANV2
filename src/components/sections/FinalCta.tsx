@@ -12,9 +12,6 @@ import {
   MessageCircle,
   Zap,
   ArrowRight,
-  ShieldCheck,
-  HandHeart,
-  Lock,
 } from "lucide-react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
@@ -45,28 +42,10 @@ const DIAGNOSIS_FEATURES = [
 ] as const;
 
 const BUTTON_TRUST = [
-  "営業電話なし",
-  "相談無料",
+  "ご希望のない営業はいたしません",
+  "ご相談無料",
   "1分で送信",
   "土地なしOK",
-] as const;
-
-const FOOTER_TRUST = [
-  {
-    Icon: ShieldCheck,
-    title: "ご希望のない営業はいたしません",
-    body: "ご希望のない営業電話や\n訪問はいたしません。",
-  },
-  {
-    Icon: HandHeart,
-    title: "相談だけでもOK",
-    body: "まだ検討段階の方も\nお気軽にご利用ください。",
-  },
-  {
-    Icon: Lock,
-    title: "個人情報は適切に管理します",
-    body: "いただいた情報は\n適切に管理いたします。",
-  },
 ] as const;
 
 export default function FinalCta() {
@@ -246,104 +225,79 @@ export default function FinalCta() {
           </div>
         </div>
 
-        {/* === セカンダリCTA === 電話特大ブロック */}
-        <div className="mt-5 sm:mt-6 bg-bg-secondary/60 border border-border rounded-2xl px-6 sm:px-10 py-10 sm:py-12 lg:py-14">
+        {/* === セカンダリCTA === 2026-05-06 design-critic 指摘#2 整理:
+            LINE主役を立てるため、見学・フォームは控えめなアウトラインに統一。
+            電話は "特大" → "小さめ" に降格(下部の補助情報として温存)。 */}
+        <div className="mt-6 sm:mt-8">
           <div className="max-w-[680px] mx-auto text-center">
-            <h3 className="text-[clamp(22px,2.6vw,30px)] text-text-primary leading-[1.5] tracking-[0.04em] mb-3">
-              気になる点を、まずはひとつ。
-            </h3>
-            <p className="text-text-secondary text-[13px] sm:text-sm leading-[1.95] mb-8 sm:mb-10">
-              見学・資料・お電話、いずれもご相談は無料です。
+            <p className="text-text-secondary text-[13px] sm:text-sm leading-[1.95] mb-5">
+              LINE以外の窓口もご用意しています。
             </p>
 
-            {/* ボタン2つ */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 sm:mb-12">
+            {/* 見学・フォーム — 控えめなアウトラインで横並び */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-7 sm:mb-8 max-w-[560px] mx-auto">
               <Link
                 href="/reserve"
-                className="group inline-flex items-center justify-center gap-2 bg-lime text-lime-darker rounded-full border-b-[3px] border-lime-hover min-h-[56px] px-6 transition-all duration-300 hover:-translate-y-0.5 hover:bg-lime-hover hover:border-lime-deep hover:shadow-[0_14px_32px_-12px_rgba(162,197,35,0.5)]"
+                className="group inline-flex items-center justify-center gap-2 bg-white text-text-primary border border-text-primary/30 rounded-full min-h-[52px] px-6 transition-colors duration-300 hover:bg-text-primary hover:text-white hover:border-text-primary"
               >
-                <Home className="w-4 h-4" strokeWidth={2} />
-                <span className="font-bold text-[14px] sm:text-[15px] tracking-[0.04em]">
-                  モデルハウス見学を予約する
+                <Home className="w-4 h-4" strokeWidth={1.75} />
+                <span className="font-medium text-[13px] sm:text-[14px] tracking-[0.04em]">
+                  モデルハウスを見学する
                 </span>
               </Link>
               <Link
                 href="/contact"
-                className="group inline-flex items-center justify-center gap-2 bg-white text-text-primary border border-text-primary/25 rounded-full min-h-[56px] px-6 transition-colors duration-300 hover:bg-text-primary hover:text-white hover:border-text-primary"
+                className="group inline-flex items-center justify-center gap-2 bg-white text-text-primary border border-text-primary/30 rounded-full min-h-[52px] px-6 transition-colors duration-300 hover:bg-text-primary hover:text-white hover:border-text-primary"
               >
-                <PencilLine className="w-4 h-4" strokeWidth={2} />
-                <span className="font-bold text-[14px] sm:text-[15px] tracking-[0.04em]">
-                  資料請求する
+                <PencilLine className="w-4 h-4" strokeWidth={1.75} />
+                <span className="font-medium text-[13px] sm:text-[14px] tracking-[0.04em]">
+                  フォームで診断する
                 </span>
               </Link>
             </div>
 
-            {/* 「電話はこちら」の区切り線つきラベル */}
-            <div className="flex items-center gap-4 mb-5 sm:mb-6 text-text-secondary/70">
-              <span aria-hidden className="flex-1 h-px bg-border" />
-              <span className="text-[11px] sm:text-[12px] tracking-[0.18em] whitespace-nowrap">
-                お電話でのお問い合わせはこちら
-              </span>
-              <span aria-hidden className="flex-1 h-px bg-border" />
-            </div>
-
-            {/* 電話特大 */}
+            {/* 電話 — 下に小さく(高齢層・即時相談派の方向け) */}
+            <p className="text-text-secondary text-[11px] sm:text-[12px] tracking-[0.06em] mb-1">
+              お電話でも承ります
+            </p>
             <a
               href="tel:0742361123"
-              className="group inline-block transition-colors hover:text-main"
+              className="inline-flex items-baseline gap-2 text-text-primary hover:text-main transition-colors"
             >
               <span
-                className="block text-text-primary group-hover:text-main tabular-nums leading-none transition-colors"
+                className="tabular-nums leading-none"
                 style={{
                   fontFamily: "var(--font-oswald)",
                   fontWeight: 500,
-                  fontSize: "clamp(38px, 6vw, 64px)",
-                  letterSpacing: "-0.01em",
+                  fontSize: "clamp(20px, 2.4vw, 30px)",
+                  letterSpacing: "0.01em",
                 }}
               >
                 0742-36-1123
               </span>
+              <span className="text-text-secondary text-[11px] sm:text-[12px]">
+                9:00〜19:00／火・水定休
+              </span>
             </a>
-            <p className="text-text-secondary text-[11px] sm:text-[12px] mt-4 tracking-[0.06em]">
-              【受付】9:00〜19:00 ／ 火・水定休
-            </p>
           </div>
         </div>
 
-        {/* === 信頼ストリップ === */}
-        <div className="mt-8 md:mt-10 bg-lime-light/70 border border-lime-light rounded-2xl px-5 sm:px-8 lg:px-10 py-7 sm:py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-6 lg:gap-8 items-center">
-            {/* 左: 家族イラスト */}
-            <div className="hidden sm:flex shrink-0 items-end justify-center lg:w-[110px]">
+        {/* === 信頼ストリップ === 2026-05-06 整理:
+            "家づくりは人生で一度の…" 見慣れたコピーを撤去。
+            FOOTER_TRUST 3バッジは BUTTON_TRUST と重複していたため撤去。
+            家族イラスト + 引き締まった一言だけを残し、空気で締める。 */}
+        <div className="mt-8 md:mt-10 bg-lime-light/70 border border-lime-light rounded-2xl px-5 sm:px-8 lg:px-10 py-6 sm:py-7">
+          <div className="flex items-center justify-center gap-5 lg:gap-7">
+            <div className="hidden sm:flex shrink-0 items-end">
               <FamilyMark />
             </div>
-
-            {/* 中央: メインメッセージ */}
-            <div className="text-center lg:text-left">
-              <p className="text-[15px] sm:text-[17px] font-semibold text-text-primary mb-2 leading-[1.5]">
-                家づくりは、人生で一度の大きな決断。
-              </p>
-              <p className="text-[12px] sm:text-[13px] text-text-secondary leading-[1.85]">
-                だからこそ、納得いくまで一緒に考えたいと思っています。
-                <br className="hidden sm:inline" />
-                どうぞ、安心してご相談ください。
-              </p>
-            </div>
-
-            {/* 右: 3バッジ */}
-            <ul className="grid grid-cols-3 gap-3 sm:gap-4 lg:flex lg:gap-5 lg:shrink-0">
-              {FOOTER_TRUST.map(({ Icon, title, body }) => (
-                <li key={title} className="flex flex-col items-center lg:items-start text-center lg:text-left lg:max-w-[150px]">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-[12px] font-semibold text-main mb-1">
-                    <Icon className="w-3.5 h-3.5" strokeWidth={2} />
-                    {title}
-                  </span>
-                  <p className="text-[10px] sm:text-[11px] text-text-secondary leading-[1.65] whitespace-pre-line">
-                    {body}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <p className="text-text-primary text-[13px] sm:text-[15px] leading-[1.85] text-center sm:text-left">
+              迷っている段階から、ご相談ください。
+              <br className="sm:hidden" />
+              <span className="text-text-secondary text-[12px] sm:text-[13px]">
+                土地、総額、標準仕様まで、ご家族の条件に合わせて整理します。
+              </span>
+            </p>
           </div>
         </div>
       </div>

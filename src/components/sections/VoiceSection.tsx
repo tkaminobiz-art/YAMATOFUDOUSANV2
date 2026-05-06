@@ -152,7 +152,7 @@ function AllVoicesCard() {
             className="text-[11px] md:text-[12px] leading-[1.7] mb-4"
             style={{ color: "rgba(46,70,0,0.8)" }}
           >
-            装飾も誇張もありません。50組の本音をご覧ください。
+            率直な声を、できる限り原文に近い形で。50組のお声を一覧でご覧ください。
           </p>
           <p
             className="text-[11px] tracking-[0.22em] uppercase font-bold group-hover:translate-x-1 transition-transform"
@@ -219,10 +219,10 @@ export default function VoiceSection() {
                 fontSize: "clamp(22px, 2.6vw, 36px)",
               }}
             >
-              奈良・京都の50組から、本音をお預かりしました。
+              奈良・京都の50組のご家族から、率直な声をいただきました。
             </h2>
             <p className="mt-3 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-              装飾も、誇張もありません。率直な声を、そのまま掲載しています。
+              プライバシーに配慮したうえで、できる限り原文に近い形で掲載しています。
             </p>
           </div>
 
