@@ -43,3 +43,17 @@ export const GOOGLE_MAPS_URL = PLACE_ID
  * 設定済みかどうか。未設定なら UI で軽い注記を出すかどうかの判定に使う。
  */
 export const GOOGLE_PLACE_ID_CONFIGURED = Boolean(PLACE_ID);
+
+/**
+ * TOP の GoogleReviewBridge(検討者向け "Googleの口コミも見れます" 動線)を
+ * 表示するか。
+ *
+ * 2026-05-07: 現状 ★3.6 / 51件。専務承認の目標 "★4.5以上×30件超" 未達のため、
+ * 公開動線としては逆効果になる水準。env で off にしておき、★4.5を超えてから
+ * Vercel で NEXT_PUBLIC_GOOGLE_BRIDGE_ENABLED=true を入れて再開する運用。
+ *
+ * OB に対して "口コミを書く" を促す動線(GoogleReviewCta)は別物として継続稼働。
+ * 「先に集める → ★4.5+ 達成 → TOP に公開」の順序戦略。
+ */
+export const GOOGLE_BRIDGE_ENABLED =
+  process.env.NEXT_PUBLIC_GOOGLE_BRIDGE_ENABLED === "true";

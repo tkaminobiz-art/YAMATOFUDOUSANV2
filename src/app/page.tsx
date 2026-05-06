@@ -16,6 +16,7 @@ import MiniSimulator from "@/components/sections/MiniSimulator";
 import LotsSection from "@/components/sections/LotsSection";
 import WorksSection from "@/components/sections/WorksSection";
 import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
+import { GOOGLE_BRIDGE_ENABLED } from "@/data/google";
 import VoiceSection from "@/components/sections/VoiceSection";
 import MidCta from "@/components/sections/MidCta";
 import FaqSection from "@/components/sections/FaqSection";
@@ -104,9 +105,10 @@ export default function Home() {
 
         {/* 社会的証明(カルーセル) */}
         <WorksSection />
-        {/* 信頼ブリッジ — 自社施工事例 → 第三者(Google)評価 → 自社の声 の順で
-            信頼を積み上げる(2026-05-07 design-critic 指摘#4 への対応) */}
-        <GoogleReviewBridge />
+        {/* 信頼ブリッジ(★4.5+ 達成後に再公開) —
+            2026-05-07: 現状 ★3.6/51件で目標 ★4.5以上×30件超 未達のため env で off。
+            Vercel に NEXT_PUBLIC_GOOGLE_BRIDGE_ENABLED=true を入れると復活する。 */}
+        {GOOGLE_BRIDGE_ENABLED && <GoogleReviewBridge />}
         <VoiceSection />
 
         {/* 行動 */}
