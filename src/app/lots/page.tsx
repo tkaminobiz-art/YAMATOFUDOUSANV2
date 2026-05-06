@@ -182,16 +182,6 @@ export default function LotsIndexPage() {
         {/* === 締めCTA === */}
         <section className="bg-white py-[clamp(64px,7vw,140px)] border-t border-border">
           <div className="max-w-[640px] mx-auto px-[var(--page-px)] text-center">
-            <p
-              className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-4"
-              style={{
-                color: "#486B00",
-                fontFamily: "var(--font-inter)",
-                fontWeight: 600,
-              }}
-            >
-              Get in touch
-            </p>
             <h2 className="text-[clamp(22px,2.8vw,36px)] text-text-primary mb-4 leading-[1.4]">
               気になる分譲地は、ありましたか。
             </h2>

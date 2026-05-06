@@ -127,10 +127,10 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
       {/* Headliner ラベル: 右上に小さく */}
       {isHeadliner && (
         <div
-          className="absolute top-5 right-5 md:top-6 md:right-6 z-10 font-inter font-bold text-[9px] md:text-[10px] tracking-[0.22em] uppercase px-2.5 py-1 border"
+          className="absolute top-5 right-5 md:top-6 md:right-6 z-10 font-sans font-bold text-[10px] md:text-[11px] tracking-[0.06em] px-2.5 py-1 border"
           style={{ color: "#A9D159", borderColor: "rgba(169,209,89,0.5)", background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
         >
-          Best Value
+          いちばん選ばれています
         </div>
       )}
 
@@ -185,8 +185,8 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
               <Users className="w-3.5 h-3.5 text-white" strokeWidth={1.8} />
             </span>
             <div className="min-w-0">
-              <p className="font-inter text-[9.5px] md:text-[10.5px] tracking-[0.18em] uppercase text-white/75 font-bold mb-1">
-                Recommended for
+              <p className="font-sans text-[10.5px] md:text-[11.5px] tracking-[0.06em] text-white/75 font-bold mb-1">
+                こんなご家族に
               </p>
               <p
                 className="font-sans text-white text-[clamp(13px,1vw,15px)] leading-[1.6] font-medium"
@@ -261,8 +261,8 @@ export default function PriceSection() {
         {/* ========== 間取り例(2026-04-25 追加): 3プランに対応する実設計図 ========== */}
         <div className="mt-14 md:mt-20">
           <header className="mb-8 md:mb-10 max-w-[860px]">
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
-              Floor Plan · 間取り例
+            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
+              間取り例
             </p>
             <h3
               className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
@@ -324,8 +324,8 @@ export default function PriceSection() {
         {/* ========== 土地込み 総額モデルケース（2026-04-24 追加） ========== */}
         <div className="mt-16 md:mt-24">
           <header className="mb-8 md:mb-10 max-w-[860px]">
-            <p className="font-inter font-bold text-[10px] md:text-[11px] tracking-[0.22em] uppercase text-lime-deep mb-3">
-              Model Case · 土地込みの総額目安
+            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
+              土地込みの総額目安
             </p>
             <h3
               className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
@@ -342,11 +342,11 @@ export default function PriceSection() {
             {/* ケースA: お手頃エリア */}
             <article className="bg-white border border-text-primary/10 p-6 md:p-8">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-oswald font-light text-lime-deep tabular-nums" style={{ fontSize: "clamp(22px, 2vw, 26px)" }}>
-                  A
+                <span className="font-sans font-bold text-lime-deep" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
+                  ケースA
                 </span>
-                <span className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-text-secondary">
-                  Affordable Area
+                <span className="font-sans text-[11px] md:text-[12px] tracking-[0.04em] text-text-secondary">
+                  総額を抑えやすいエリア
                 </span>
               </div>
               <h4 className="mt-3 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
@@ -382,11 +382,11 @@ export default function PriceSection() {
             {/* ケースB: 利便性重視 */}
             <article className="bg-white border border-text-primary/10 p-6 md:p-8">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-oswald font-light text-text-primary/70 tabular-nums" style={{ fontSize: "clamp(22px, 2vw, 26px)" }}>
-                  B
+                <span className="font-sans font-bold text-text-primary/70" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
+                  ケースB
                 </span>
-                <span className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-text-secondary">
-                  Convenient Area
+                <span className="font-sans text-[11px] md:text-[12px] tracking-[0.04em] text-text-secondary">
+                  利便性を重視するエリア
                 </span>
               </div>
               <h4 className="mt-3 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">

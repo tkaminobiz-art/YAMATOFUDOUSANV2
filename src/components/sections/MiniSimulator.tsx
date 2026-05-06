@@ -64,10 +64,10 @@ export default function MiniSimulator() {
           {/* 左: コピー */}
           <div>
             <p
-              className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
-              style={{ color: FOREST, fontWeight: 600 }}
+              className="text-[11px] md:text-[12px] tracking-[0.06em] mb-3"
+              style={{ color: FOREST, fontWeight: 700 }}
             >
-              Simulation · かんたん試算
+              かんたん試算
             </p>
             <h2
               className="text-text-primary leading-[1.3] tracking-[0.005em]"

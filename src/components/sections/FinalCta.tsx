@@ -79,14 +79,9 @@ export default function FinalCta() {
         className="max-w-[1180px] mx-auto px-[var(--page-px)] scroll-in"
       >
         {/* === ヘッダー === */}
-        {/* 装飾英語 eyebrow — 意味は下の h2 が持つので AT には読ませない */}
-        <p
-          aria-hidden="true"
-          className="font-section-label text-main text-xs md:text-sm text-center mb-3"
-        >
-          GET IN TOUCH
-        </p>
-        <h2 className="text-[clamp(24px,3.2vw,42px)] text-text-primary text-center leading-[1.45] tracking-[0.02em] mb-5">
+        {/* 2026-05-06 design-critic: 装飾英語 "GET IN TOUCH" を撤去。
+            h2 だけで十分セクションを立てられる(テンプレ感の削除) */}
+        <h2 className="text-[clamp(24px,3.2vw,42px)] text-text-primary text-center leading-[1.45] tracking-[0.02em] mt-2 mb-5">
           家づくりの総額を、<br className="md:hidden" />無料で整理しませんか。
         </h2>
         <p className="text-text-secondary text-sm md:text-[15px] leading-[1.95] text-center max-w-[720px] mx-auto mb-12 md:mb-14">

@@ -51,10 +51,10 @@ export default function LotsSection() {
           {/* 左: コピー + 説明 + CTA */}
           <div>
             <p
-              className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
-              style={{ color: FOREST, fontWeight: 600 }}
+              className="text-[11px] md:text-[12px] tracking-[0.06em] mb-3"
+              style={{ color: FOREST, fontWeight: 700 }}
             >
-              Area · 対応エリア
+              対応エリア
             </p>
             <h2
               className="text-text-primary leading-[1.3] tracking-[0.005em]"

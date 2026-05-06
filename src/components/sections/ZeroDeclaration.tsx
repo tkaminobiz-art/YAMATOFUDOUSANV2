@@ -321,8 +321,8 @@ export default function ZeroDeclaration() {
               「後から思ったより増えた」を防ぎやすい資金計画を大切にしています。
             </p>
             <aside className="mt-5 pl-3 border-l-2 border-text-primary/15 text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95]">
-              <span className="block font-bold text-text-secondary/80 text-[10px] md:text-[11px] tracking-[0.18em] uppercase mb-1">
-                Note
+              <span className="block font-bold text-text-secondary/80 text-[10px] md:text-[11px] tracking-[0.06em] mb-1">
+                補足
               </span>
               当社試算による参考金額です。土地条件・仕様・工法・エリアにより異なります。
             </aside>

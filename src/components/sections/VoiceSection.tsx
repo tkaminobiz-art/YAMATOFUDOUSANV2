@@ -107,10 +107,10 @@ function AllVoicesCard() {
       <div className="p-6 md:p-7 flex flex-col h-full min-h-[300px] md:min-h-[340px]">
         <div className="flex items-center gap-3 mb-auto">
           <span
-            className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase"
-            style={{ color: LIME_DARK, fontWeight: 600 }}
+            className="text-[11px] md:text-[12px] tracking-[0.06em]"
+            style={{ color: LIME_DARK, fontWeight: 700 }}
           >
-            All Voices
+            すべての声
           </span>
           <span className="flex-1 h-px" style={{ background: `${LIME_DARK}30` }} />
         </div>
@@ -207,10 +207,10 @@ export default function VoiceSection() {
         <div className="flex items-end justify-between gap-6 mb-8 md:mb-10 flex-wrap">
           <div>
             <p
-              className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-3"
-              style={{ color: FOREST, fontWeight: 600 }}
+              className="text-[11px] md:text-[12px] tracking-[0.06em] mb-3"
+              style={{ color: FOREST, fontWeight: 700 }}
             >
-              Voice · お客様の声
+              お客様の声
             </p>
             <h2
               className="text-text-primary leading-[1.3] tracking-[0.005em]"
@@ -219,10 +219,10 @@ export default function VoiceSection() {
                 fontSize: "clamp(22px, 2.6vw, 36px)",
               }}
             >
-              50組の家族が、本音で答えています。
+              奈良・京都の50組から、本音をお預かりしました。
             </h2>
             <p className="mt-3 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-              装飾も、誇張もなし。奈良・京都の50組から届いた、率直な声です。
+              装飾も、誇張もありません。率直な声を、そのまま掲載しています。
             </p>
           </div>
 

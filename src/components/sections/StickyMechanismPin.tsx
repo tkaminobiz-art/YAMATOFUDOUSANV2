@@ -32,7 +32,6 @@ const ACCENT = "#A2C523";
 
 type Panel = {
   num: string;
-  eyebrow: string;
   title: string;
   body: string;
   image: string;
@@ -42,7 +41,6 @@ type Panel = {
 const PANELS: readonly Panel[] = [
   {
     num: "01",
-    eyebrow: "Mechanism One",
     title: "モデルハウスを、\n販売住宅として活用",
     body: "展示専用の建物を持たず、分譲地に建てた住宅をそのままご案内します。展示場の維持費を抱えない分を、価格に反映しています。",
     image: "/images/newsozai/exterior-miyamaki-front.webp",
@@ -50,7 +48,6 @@ const PANELS: readonly Panel[] = [
   },
   {
     num: "02",
-    eyebrow: "Mechanism Two",
     title: "土地・設計・施工を、\n自社で連携",
     body: "土地探しから設計、施工、アフターまで自社で連携しています。間に入る会社が少ない分、中間コストを抑えています。",
     image: "/images/newsozai/exterior-texture-detail-01.webp",
@@ -58,7 +55,6 @@ const PANELS: readonly Panel[] = [
   },
   {
     num: "03",
-    eyebrow: "Mechanism Three",
     title: "広告費を、\n地域に必要な範囲へ",
     body: "全国向けの大きな広告ではなく、奈良・京都南部のお客様に届く範囲で。過度な広告費を抑え、適正価格でご提供しています。",
     image: "/images/newsozai/hero-miyamaki-mountain.webp",
@@ -193,23 +189,11 @@ export default function StickyMechanismPin() {
 }
 
 // ── 個別パネル本文 ──
-// 装飾英語(eyebrow / 巨大 number)は aria-hidden、意味は h3(日本語タイトル) が担う
+// 2026-05-06 装飾英語 eyebrow(Mechanism One/Two/Three)は撤去。
+// 巨大 number 01/02/03 + 日本語タイトルだけで構成し、テンプレ感を抜く。
 function PanelText({ panel }: { panel: Panel }) {
   return (
     <div className="text-white">
-      {/* eyebrow(装飾英語) */}
-      <p
-        aria-hidden="true"
-        className="font-inter uppercase mb-6 md:mb-8 tracking-[0.3em]"
-        style={{
-          fontSize: "clamp(10px, 0.8vw, 12px)",
-          fontWeight: 600,
-          color: ACCENT,
-        }}
-      >
-        {panel.eyebrow}
-      </p>
-
       {/* 巨大 Number(01/02/03) — 視覚装飾、意味は下の h3 が持つ */}
       <div
         aria-hidden="true"
