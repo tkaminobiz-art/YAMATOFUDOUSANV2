@@ -120,6 +120,10 @@ export default function StyleTilesPage() {
             <a href="#B" className="hover:text-white">B プロフェッショナル</a>
             <a href="#C" className="hover:text-white">C クラフト</a>
             <span className="text-white/20">/</span>
+            <a href="#hero-compare" className="text-[#A9D159] hover:text-white">
+              ★ Hero 比較
+            </a>
+            <span className="text-white/20">/</span>
             <Link href="/hero-review" className="hover:text-white">
               Hero NGサンプル ↗
             </Link>
@@ -276,6 +280,139 @@ export default function StyleTilesPage() {
         </section>
       ))}
 
+      {/* Hero視覚化 — A vs B 比較 */}
+      <section
+        id="hero-compare"
+        className="border-t border-white/10 bg-white/[0.02] px-6 py-16"
+      >
+        <div className="mx-auto max-w-[1400px]">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-[#A9D159]/85">
+            Hero Visualization — A vs B
+          </p>
+          <h3 className="mt-2 text-2xl font-semibold">
+            A 案 と B 案、Hero として見比べる
+          </h3>
+          <p className="mt-4 max-w-[820px] text-sm leading-relaxed text-white/75">
+            スタイルタイルだけだと判断しづらいので、A / B それぞれを Hero として
+            生成しました。各方向 2 バリエーション。実ロゴ ＋ 実外観写真
+            （A は三山木モデル、B は左京モデル）を Higgsfield に media reference
+            として渡しているため、ロゴ捏造・写真捏造はゼロ。NG リストは画像生成
+            プロンプトに毎回明示しています。
+          </p>
+
+          <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-2">
+            {/* A 列 */}
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
+                Direction A
+              </p>
+              <h4 className="mt-1.5 text-lg font-semibold">
+                建築誌・エディトリアル
+              </h4>
+              <p className="mt-2 text-[12.5px] leading-relaxed text-white/65">
+                ペーパー白 / 余白広い / 明朝大見出し / 単一の控えめCTA /
+                LINE は右上テキストリンクのみ。雑誌の表紙のような静けさ。
+              </p>
+              <div className="mt-5 space-y-5">
+                <figure className="overflow-hidden rounded border border-white/10 bg-white/[0.02]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/style-tiles/hero_A_v1_a.png"
+                    alt="A 建築誌・エディトリアル — Hero v1-a"
+                    className="block h-auto w-full"
+                  />
+                  <figcaption className="border-t border-white/10 px-4 py-3 text-[11.5px] leading-relaxed text-white/65">
+                    <span className="text-white/85">A-a</span>　見出し「建築と、
+                    静謐な暮らしの提案。/ 奈良・京南部の美学を求めて。」 ＋
+                    三山木モデル外観。「総額を相談する →」を1つだけ。
+                  </figcaption>
+                </figure>
+                <figure className="overflow-hidden rounded border border-white/10 bg-white/[0.02]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/style-tiles/hero_A_v1_b.png"
+                    alt="A 建築誌・エディトリアル — Hero v1-b"
+                    className="block h-auto w-full"
+                  />
+                  <figcaption className="border-t border-white/10 px-4 py-3 text-[11.5px] leading-relaxed text-white/65">
+                    <span className="text-white/85">A-b</span>　見出し「静謐なる邸宅、
+                    奈良の光景へ。」よりコンパクトで磨きが強い別バリエーション。
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
+            {/* B 列 */}
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
+                Direction B
+              </p>
+              <h4 className="mt-1.5 text-lg font-semibold">
+                不動産×建築プロフェッショナル
+              </h4>
+              <p className="mt-2 text-[12.5px] leading-relaxed text-white/65">
+                純白 / シャープなグリッド / スペック表組 / 直角コーナー2CTA /
+                右上は「資料請求」。建築事務所のポートフォリオに近い構造的密度。
+              </p>
+              <div className="mt-5 space-y-5">
+                <figure className="overflow-hidden rounded border border-white/10 bg-white/[0.02]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/style-tiles/hero_B_v1_a.png"
+                    alt="B 不動産×建築プロフェッショナル — Hero v1-a"
+                    className="block h-auto w-full"
+                  />
+                  <figcaption className="border-t border-white/10 px-4 py-3 text-[11.5px] leading-relaxed text-white/65">
+                    <span className="text-white/85">B-a</span>　見出し「建築家の視点と、
+                    奈良・南京都の土地勘が交差する、唯一無二の邸宅づくり。」 ＋
+                    引渡し / 業歴 / 保証 / 京モデル価格 のスペック表組。
+                  </figcaption>
+                </figure>
+                <figure className="overflow-hidden rounded border border-white/10 bg-white/[0.02]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/style-tiles/hero_B_v1_b.png"
+                    alt="B 不動産×建築プロフェッショナル — Hero v1-b"
+                    className="block h-auto w-full"
+                  />
+                  <figcaption className="border-t border-white/10 px-4 py-3 text-[11.5px] leading-relaxed text-white/65">
+                    <span className="text-white/85">B-b</span>　見出し「日本の気候風土に
+                    根ざした、確かな建築の設計。」より構造的で、写真の比率がやや
+                    抑えめ。スペック表組とCTAが揃って見える。
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          {/* 判断軸 */}
+          <div className="mt-10 grid grid-cols-1 gap-4 text-[12.5px] leading-relaxed md:grid-cols-2">
+            <div className="rounded border border-white/10 bg-white/[0.03] p-5">
+              <p className="text-white/40 text-[11px] uppercase tracking-[0.18em]">
+                A を選ぶ判断軸
+              </p>
+              <ul className="mt-3 space-y-1.5 text-white/85">
+                <li className="flex gap-2"><span className="text-white/30">・</span>「整理された住宅会社」より「価値観のあるブランド」に見せたい</li>
+                <li className="flex gap-2"><span className="text-white/30">・</span>第一印象で『この会社、品がある』と思わせたい</li>
+                <li className="flex gap-2"><span className="text-white/30">・</span>情報密度より、写真と短い言葉で勝負したい</li>
+                <li className="flex gap-2"><span className="text-white/30">・</span>外観写真の質に自信がある</li>
+              </ul>
+            </div>
+            <div className="rounded border border-white/10 bg-white/[0.03] p-5">
+              <p className="text-white/40 text-[11px] uppercase tracking-[0.18em]">
+                B を選ぶ判断軸
+              </p>
+              <ul className="mt-3 space-y-1.5 text-white/85">
+                <li className="flex gap-2"><span className="text-white/30">・</span>「土地・建物・資金まで一社で扱える」総合力を最初に伝えたい</li>
+                <li className="flex gap-2"><span className="text-white/30">・</span>数字（600棟・90区画・50組・14年・1,000件資金計画）を美しく見せたい</li>
+                <li className="flex gap-2"><span className="text-white/30">・</span>専務に「この会社、ちゃんとしている」と感じさせたい</li>
+                <li className="flex gap-2"><span className="text-white/30">・</span>クライアント年齢層が温度感より構造を好む傾向にある</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 次の一手 */}
       <section className="border-t border-white/10 px-6 py-16">
         <div className="mx-auto max-w-[1100px]">
@@ -283,13 +420,15 @@ export default function StyleTilesPage() {
             次の一手
           </p>
           <h3 className="mt-2 text-2xl font-semibold">
-            A / B / C のうち、どれが「自信を持ってクライアントに出せる」方向か
+            A-a / A-b / B-a / B-b のどれを採用するか
           </h3>
-          <p className="mt-4 max-w-[760px] text-sm leading-relaxed text-white/75">
-            選んだ方向でだけ Hero を 1 案生成し、その上で Claude Code が実装に進みます。
-            複数選ぶ・ハイブリッドにする・もう 1 方向追加する、いずれもアリ。
-            「全部ピンと来ない」ならスタイルタイル側をもう一段振り直しますので、
-            そう言ってください。
+          <p className="mt-4 max-w-[820px] text-sm leading-relaxed text-white/75">
+            選んだ 1 案でだけ Hero を Claude Code 実装に進めます (実装時はコピーを
+            BRAND-TRUTH §6 起点に再確定し、CTA は LINE 主導線方針へ揃え、
+            実績数値は §2 の正規値に置換)。「ハイブリッドで、A の余白に B の
+            スペック表を一部入れたい」のような寄せ方も可能です。
+            「もう一段違う方向を試したい」「A をさらに削りたい / B をさらに
+            柔らかくしたい」もアリ。決まればその方向だけで磨き続けます。
           </p>
         </div>
       </section>
