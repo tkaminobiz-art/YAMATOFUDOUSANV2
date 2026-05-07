@@ -2,10 +2,12 @@ import Link from "next/link";
 import { LabDisclaimer } from "@/components/lab/LabDisclaimer";
 
 // 納品前に削除する検証用ページ。
-// /hero-review : Hero リニューアル A/B/C/E 案の比較ビュー
-// 2026-05-08 GPT Image 2 (Nano Banana Pro) で生成した4案 + 現状FV を縦に並べる。
-// E 案は「価格訴求型 → 住宅ブランド好感型」への方向転換版（2026-05-08 専務違和感反映）。
-// 採用後はこのディレクトリごと削除する。
+// /hero-review : Hero リニューアル試作案 (A/B/C/E) のNGサンプル・アーカイブ
+// 2026-05-08 朝 GPT Image 2 (Nano Banana Pro) で生成した4案 + 現状FV。
+// 同日午後、ユーザー判断で「全案ともAI生成っぽい無難な住宅サイト平均値」とNG化。
+// アートディレクション再設計フェーズ (/style-tiles) に移行したため、このページは
+// 再発防止のための「NGサンプル参考保存」として残す。磨かない。Hero に戻らない。
+// 採用後 (= /style-tiles で方向決定後の最終Hero採用後) にディレクトリごと削除する。
 // Reference-only バナーは <LabDisclaimer /> を最上部に必須表示(BRAND-TRUTH.md §9)。
 
 const PROPOSALS = [
@@ -44,7 +46,7 @@ const PROPOSALS = [
   },
   {
     id: "B",
-    label: "B 案 ★ 推奨",
+    label: "B 案 (NG)",
     eyebrow: "Direction B",
     title: "価格透明性型",
     summary:
@@ -78,7 +80,7 @@ const PROPOSALS = [
   },
   {
     id: "E-a",
-    label: "E-a 案 ★ 新方向",
+    label: "E-a 案 (NG)",
     eyebrow: "Direction E (a)",
     title: "住宅ブランド・エディトリアル型",
     summary:
@@ -119,21 +121,23 @@ export default function HeroReviewPage() {
       <header className="sticky top-0 z-10 border-b border-white/10 bg-[#1a1a1a]/90 backdrop-blur">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/50">
-              Hero Review
+            <p className="text-[11px] uppercase tracking-[0.2em] text-red-300/85">
+              Hero Review — NG Sample Archive
             </p>
             <h1 className="mt-1 text-lg font-semibold">
-              Hero リニューアル A / B / C / E 案比較
+              Hero リニューアル試作 (A / B / C / E) — 全案不採用
             </h1>
           </div>
           <nav className="flex items-center gap-3 text-xs text-white/70">
-            <a href="#current" className="hover:text-white">現状</a>
+            <Link href="/style-tiles" className="text-[#A9D159] hover:text-white">
+              ★ /style-tiles へ
+            </Link>
             <span className="text-white/20">/</span>
+            <a href="#current" className="hover:text-white">現状</a>
             <a href="#A" className="hover:text-white">A</a>
             <a href="#B" className="hover:text-white">B</a>
             <a href="#C" className="hover:text-white">C</a>
-            <span className="text-white/20">/</span>
-            <a href="#E-a" className="text-[#A9D159] hover:text-white">E-a ★</a>
+            <a href="#E-a" className="hover:text-white">E-a</a>
             <a href="#E-b" className="hover:text-white">E-b</a>
             <span className="text-white/20">/</span>
             <Link href="/" className="hover:text-white">本番TOP →</Link>
@@ -143,48 +147,37 @@ export default function HeroReviewPage() {
 
       {/* イントロ */}
       <section className="mx-auto max-w-[1100px] px-6 py-12">
-        <p className="max-w-[760px] text-sm leading-relaxed text-white/70">
-          2026-05-08 のリニューアル方針に沿って、Hero（ファーストビュー）を複数方向で
-          試作しています。GPT Image 2 で生成したデザインリファレンスで、最終UIは
-          コードで実装するため、画像内の文字や写真はあくまで方向性の確認用です。
-        </p>
-        <p className="mt-3 max-w-[760px] text-[12px] leading-relaxed text-white/50">
-          v2 更新: 各案を{" "}
+        <div className="rounded border border-red-400/40 bg-red-400/[0.07] p-5 text-[13px] leading-relaxed text-white/85">
+          <p className="text-red-300 text-[11px] uppercase tracking-[0.2em]">
+            2026-05-08 18:00 — 全案不採用 / NGサンプル化
+          </p>
+          <p className="mt-3">
+            このページに並ぶ A / B / C / E 案はすべて「整っているが、AI が考える
+            品のいいナチュラル住宅サイトの平均値」に着地しており、不採用となりました。
+            個別のボタン・コピー・余白を直しても、アートディレクションが合っていない
+            限り「なんか違う」が残るため、磨きません。
+          </p>
+          <p className="mt-3">
+            次フェーズは <Link href="/style-tiles" className="text-[#A9D159] underline-offset-4 hover:underline">/style-tiles</Link>{" "}
+            ですすめます。色 / タイポ / 写真トーン / ボタン / 罫線 / 余白だけを 3 方向
+            （建築誌・エディトリアル / 不動産×建築プロフェッショナル / 暮らしの実在感クラフト）
+            で出し、好きな方向を 1 つ選んでから Hero を作り直します。
+          </p>
+          <p className="mt-3 text-white/55">
+            このページは消さず、再発防止の参考に保存しています。次回以降の生成
+            プロンプトには、このページの 4 案で出た失敗パターン（生成り×深緑×明朝
+            ×LDK写真の住宅サイト平均値・葉アイコン・大きい価格カード・営業資料風
+            実績帯・「心地よい暮らし」抽象コピー等）を NG として明示します。
+          </p>
+        </div>
+        <p className="mt-6 max-w-[760px] text-[12px] leading-relaxed text-white/50">
+          補足: 各案の生成は{" "}
           <span className="text-white/75">正規ロゴ（/images/logo.png）</span>＋{" "}
           <span className="text-white/75">実写LDK（exterior/interior の元素材）</span>
-          を Higgsfield に media reference として渡して再生成しています。ロゴが偽
-          YAMATO に変わったり、写真がAI捏造されたりする失敗を構造的に防いでいます
-          （BRAND-TRUTH §7.1）。
+          を Higgsfield に media reference として渡しており、ロゴ捏造・写真捏造の
+          事故は防げています（BRAND-TRUTH §7.1）。ただしそれだけではアート
+          ディレクションの方向性は救えませんでした。
         </p>
-        <p className="mt-3 max-w-[760px] rounded border border-[#A9D159]/30 bg-[#A9D159]/[0.06] p-4 text-[12px] leading-relaxed text-white/80">
-          <span className="text-[#A9D159]/90">★ 方向転換（2026-05-08）</span>{" "}
-          A/B/C は「価格がわかる住宅LP」としては合っているが、専務が違和感を示した通り
-          「おしゃれで好印象なハウスメーカーのHero」としては販促LP感が強い。E 案では
-          価格を主役から降ろし、暮らしの空気感とブランド好感を先に伝え、価格は安心材料
-          として静かに添える方向へ修正。E-a / E-b はその試作。
-        </p>
-        <div className="mt-6 grid grid-cols-2 gap-3 text-xs text-white/60 md:grid-cols-5">
-          <div className="rounded border border-white/10 bg-white/[0.03] p-3">
-            <p className="text-white/40">A 住宅カタログ</p>
-            <p className="mt-1 text-white/75">余白・写真・上品さ</p>
-          </div>
-          <div className="rounded border border-white/10 bg-white/[0.03] p-3">
-            <p className="text-white/40">B 価格透明性</p>
-            <p className="mt-1 text-white/75">価格カード主軸</p>
-          </div>
-          <div className="rounded border border-white/10 bg-white/[0.03] p-3">
-            <p className="text-white/40">C 地域密着相談</p>
-            <p className="mt-1 text-white/75">相談カード＋地域マップ</p>
-          </div>
-          <div className="rounded border border-[#A9D159]/40 bg-[#A9D159]/[0.08] p-3">
-            <p className="text-[#A9D159]/85">E-a ★ 新方向</p>
-            <p className="mt-1 text-white/85">編集誌調・暮らし主役</p>
-          </div>
-          <div className="rounded border border-[#A9D159]/20 bg-[#A9D159]/[0.04] p-3">
-            <p className="text-[#A9D159]/70">E-b コピー違い</p>
-            <p className="mt-1 text-white/75">心を紡ぐトーン</p>
-          </div>
-        </div>
       </section>
 
       {/* 各案 */}
