@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
+import BlueprintMorphVideo from "./BlueprintMorphVideo";
 
 /*
   StandardComparisonBlueprint — 2026-05-08
@@ -365,26 +366,19 @@ export default function StandardComparisonBlueprint() {
             </dl>
           </header>
 
-          {/* 右: 立面図ビジュアル */}
+          {/* 右: 立面図 → 3D ビジュアライズの morph 動画
+              poster は静止 PNG、視認時のみ再生、reduced-motion 時は静止画のみ */}
           <figure className="relative lg:-mr-2 xl:-mr-4">
-            <div
-              className="relative aspect-[16/9] w-full overflow-hidden"
-              style={{ background: CREAM }}
-            >
-              <Image
-                src="/images/sections/blueprint-elevation.png"
-                alt="やまと不動産が手がける住まいの立面図イメージ"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-contain"
-                priority={false}
-              />
-            </div>
+            <BlueprintMorphVideo
+              videoSrc="/videos/blueprint-to-render.mp4"
+              posterSrc="/images/sections/blueprint-elevation.png"
+              alt="設計図から、やまと不動産の住まいになるまで — 立面図のモーフィング"
+            />
             <figcaption
               className="mt-2 font-inter text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-right"
               style={{ color: "rgba(28,27,24,0.4)" }}
             >
-              ELEVATION — REFERENCE DRAWING
+              ELEVATION — DESIGN TO BUILD
             </figcaption>
           </figure>
         </div>
