@@ -317,7 +317,7 @@ export default function StandardComparisonBlueprint() {
             </p>
             <h2
               id="comparison-heading"
-              className="font-shippori text-[clamp(28px,4.4vw,56px)] leading-[1.32] tracking-[0.02em]"
+              className="font-zen-old text-[clamp(28px,4.4vw,56px)] leading-[1.32] tracking-[0.02em]"
               style={{ color: INK, fontWeight: 700 }}
             >
               価格だけでなく、
@@ -325,7 +325,7 @@ export default function StandardComparisonBlueprint() {
               標準仕様まで比べてください。
             </h2>
             <p
-              className="mt-6 md:mt-8 font-sans text-[14px] md:text-[15.5px] leading-[2.0]"
+              className="mt-6 md:mt-8 font-murecho text-[14px] md:text-[15.5px] leading-[2.0]"
               style={{ color: "rgba(28,27,24,0.78)" }}
             >
               キッチン・浴室・窓・外壁・断熱・耐震性能まで、
@@ -333,7 +333,7 @@ export default function StandardComparisonBlueprint() {
               暮らしの快適さと安心に関わる部分を、標準仕様として大切にしています。
             </p>
             <p
-              className="mt-4 md:mt-5 font-sans text-[14px] md:text-[15.5px] leading-[2.0]"
+              className="mt-4 md:mt-5 font-murecho text-[14px] md:text-[15.5px] leading-[2.0]"
               style={{ color: "rgba(28,27,24,0.78)" }}
             >
               見直しているのは、家そのものではなく、
@@ -415,14 +415,14 @@ export default function StandardComparisonBlueprint() {
                 </span>
                 <span aria-hidden className="w-3 h-px" style={{ background: "rgba(28,27,24,0.3)" }} />
                 <span
-                  className="font-sans font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
+                  className="font-murecho font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
                   style={{ color: "rgba(28,27,24,0.65)" }}
                 >
                   大手ハウスメーカー
                 </span>
               </div>
               <p
-                className="font-sans text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
+                className="font-murecho text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
                 style={{ color: "rgba(28,27,24,0.55)" }}
               >
                 参考価格
@@ -441,7 +441,7 @@ export default function StandardComparisonBlueprint() {
                   {other.toLocaleString()}
                 </span>
                 <span
-                  className="font-sans font-medium pb-1.5"
+                  className="font-murecho font-medium pb-1.5"
                   style={{ color: "rgba(28,27,24,0.6)", fontSize: "clamp(13px,1.1vw,16px)" }}
                 >
                   万円〜
@@ -457,7 +457,7 @@ export default function StandardComparisonBlueprint() {
                 />
               </div>
               <p
-                className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+                className="mt-3 font-murecho text-[10.5px] md:text-[11px] leading-[1.7]"
                 style={{ color: "rgba(28,27,24,0.5)" }}
               >
                 ※ 大手ハウスメーカーの坪単価をもとにした参考価格です。
@@ -488,14 +488,14 @@ export default function StandardComparisonBlueprint() {
                 </span>
                 <span aria-hidden className="w-3 h-px" style={{ background: DEEP_GREEN, opacity: 0.5 }} />
                 <span
-                  className="font-sans font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
+                  className="font-murecho font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
                   style={{ color: DEEP_GREEN }}
                 >
                   やまと不動産・京モデル
                 </span>
               </div>
               <p
-                className="font-sans font-bold text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
+                className="font-murecho font-bold text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
                 style={{ color: DEEP_GREEN }}
               >
                 建物本体 ＋ 標準付帯工事 込み・税込
@@ -514,7 +514,7 @@ export default function StandardComparisonBlueprint() {
                   {yamato.toLocaleString()}
                 </span>
                 <span
-                  className="font-sans font-bold pb-1.5"
+                  className="font-murecho font-bold pb-1.5"
                   style={{ color: DEEP_GREEN, fontSize: "clamp(13px,1.2vw,17px)" }}
                 >
                   万円〜
@@ -530,7 +530,7 @@ export default function StandardComparisonBlueprint() {
                 />
               </div>
               <p
-                className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+                className="mt-3 font-murecho text-[10.5px] md:text-[11px] leading-[1.7]"
                 style={{ color: "rgba(28,27,24,0.55)" }}
               >
                 ※ 京モデル30坪・4LDKの目安です。仕様・敷地により異なります。
@@ -564,21 +564,25 @@ export default function StandardComparisonBlueprint() {
                     </span>
                     <span aria-hidden className="w-3 h-px" style={{ background: "rgba(28,27,24,0.3)" }} />
                     <span
-                      className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
-                      style={{ color: "rgba(28,27,24,0.7)" }}
+                      className="font-fraunces italic text-[14px] md:text-[15px] tracking-[0.01em]"
+                      style={{
+                        color: "rgba(28,27,24,0.7)",
+                        fontWeight: 400,
+                        fontVariationSettings: "'opsz' 144",
+                      }}
                     >
                       Difference
                     </span>
                   </div>
                   <p
-                    className="font-sans text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
+                    className="font-murecho text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
                     style={{ color: "rgba(28,27,24,0.6)" }}
                   >
                     参考差額
                   </p>
                   <div className="flex items-baseline gap-2 mb-1">
                     <span
-                      className="font-sans font-bold pb-2"
+                      className="font-murecho font-bold pb-2"
                       style={{ color: INK, fontSize: "clamp(13px,1.1vw,16px)" }}
                     >
                       約
@@ -595,7 +599,7 @@ export default function StandardComparisonBlueprint() {
                       {diff.toLocaleString()}
                     </span>
                     <span
-                      className="font-sans font-bold pb-2"
+                      className="font-murecho font-bold pb-2"
                       style={{ color: INK, fontSize: "clamp(14px,1.2vw,18px)" }}
                     >
                       万円
@@ -609,7 +613,7 @@ export default function StandardComparisonBlueprint() {
                     style={{ background: "rgba(47,74,44,0.4)" }}
                   />
                   <p
-                    className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+                    className="mt-3 font-murecho text-[10.5px] md:text-[11px] leading-[1.7]"
                     style={{ color: "rgba(28,27,24,0.55)" }}
                   >
                     同条件30坪・4LDKでの当社試算による参考差額です。
@@ -676,7 +680,7 @@ export default function StandardComparisonBlueprint() {
               </header>
               <h3
                 id="fig-01-included"
-                className="mt-4 md:mt-5 font-sans font-bold leading-[1.55]"
+                className="mt-4 md:mt-5 font-murecho font-bold leading-[1.55]"
                 style={{ color: DEEP_GREEN, fontSize: "clamp(15px,1.35vw,18px)" }}
               >
                 京モデル{" "}
@@ -715,7 +719,7 @@ export default function StandardComparisonBlueprint() {
                       <div className="min-w-0">
                         <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1">
                           <span
-                            className="font-sans font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
+                            className="font-murecho font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
                             style={{ color: INK }}
                           >
                             {item.title}
@@ -734,7 +738,7 @@ export default function StandardComparisonBlueprint() {
                           )}
                         </div>
                         <p
-                          className="mt-1.5 font-sans text-[12px] md:text-[12.5px] leading-[1.7]"
+                          className="mt-1.5 font-murecho text-[12px] md:text-[12.5px] leading-[1.7]"
                           style={{ color: "rgba(28,27,24,0.62)" }}
                         >
                           {item.desc}
@@ -792,7 +796,7 @@ export default function StandardComparisonBlueprint() {
               </header>
               <h3
                 id="fig-02-others"
-                className="mt-4 md:mt-5 font-sans font-bold leading-[1.55]"
+                className="mt-4 md:mt-5 font-murecho font-bold leading-[1.55]"
                 style={{ color: INK, fontSize: "clamp(15px,1.35vw,18px)" }}
               >
                 この価格には含まれず、
@@ -824,13 +828,13 @@ export default function StandardComparisonBlueprint() {
                       </span>
                       <div className="min-w-0">
                         <span
-                          className="block font-sans font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
+                          className="block font-murecho font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
                           style={{ color: INK }}
                         >
                           {item.title}
                         </span>
                         <p
-                          className="mt-1.5 font-sans text-[12px] md:text-[12.5px] leading-[1.7]"
+                          className="mt-1.5 font-murecho text-[12px] md:text-[12.5px] leading-[1.7]"
                           style={{ color: "rgba(28,27,24,0.62)" }}
                         >
                           {item.desc}
@@ -860,7 +864,7 @@ export default function StandardComparisonBlueprint() {
               Note
             </span>
             <p
-              className="font-sans text-[11px] md:text-[12px] leading-[1.85]"
+              className="font-murecho text-[11px] md:text-[12px] leading-[1.85]"
               style={{ color: "rgba(28,27,24,0.55)" }}
             >
               上記は一般的な内容です。詳細は資金計画時にご案内します。
@@ -882,7 +886,7 @@ export default function StandardComparisonBlueprint() {
             }}
           >
             <p
-              className="font-sans text-[13px] md:text-[14px] leading-[1.85] font-medium"
+              className="font-murecho text-[13px] md:text-[14px] leading-[1.85] font-medium"
               style={{ color: INK }}
             >
               標準仕様の詳細や、暮らし方に合わせた
@@ -907,11 +911,11 @@ export default function StandardComparisonBlueprint() {
               <MessageCircle className="w-[20px] h-[20px]" strokeWidth={1.6} />
             </span>
             <span className="flex-1 min-w-0">
-              <span className="block font-sans font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
+              <span className="block font-murecho font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
                 LINEで相談する
               </span>
               <span
-                className="block mt-1 font-sans text-[11px] md:text-[12px] leading-[1.55]"
+                className="block mt-1 font-murecho text-[11px] md:text-[12px] leading-[1.55]"
                 style={{ color: "rgba(28,27,24,0.6)" }}
               >
                 気軽にご相談いただけます
@@ -942,11 +946,11 @@ export default function StandardComparisonBlueprint() {
               <Calendar className="w-[20px] h-[20px]" strokeWidth={1.6} />
             </span>
             <span className="flex-1 min-w-0">
-              <span className="block font-sans font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
+              <span className="block font-murecho font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
                 モデルハウスを見学する
               </span>
               <span
-                className="block mt-1 font-sans text-[11px] md:text-[12px] leading-[1.55]"
+                className="block mt-1 font-murecho text-[11px] md:text-[12px] leading-[1.55]"
                 style={{ color: "rgba(28,27,24,0.6)" }}
               >
                 実際のサイズ感や仕様を体感できます
@@ -979,11 +983,11 @@ export default function StandardComparisonBlueprint() {
               />
             </span>
             <span className="flex-1 min-w-0">
-              <span className="block font-sans font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
+              <span className="block font-murecho font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
                 標準仕様・設備カタログ
               </span>
               <span
-                className="block mt-1 font-sans text-[11px] md:text-[12px] leading-[1.55]"
+                className="block mt-1 font-murecho text-[11px] md:text-[12px] leading-[1.55]"
                 style={{ color: "rgba(28,27,24,0.6)" }}
               >
                 無料プレゼント中

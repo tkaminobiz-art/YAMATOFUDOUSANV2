@@ -10,6 +10,8 @@ import {
   Bodoni_Moda,
   Playfair_Display,
   Oswald,
+  Murecho,
+  Fraunces,
 } from "next/font/google";
 import "./globals.css";
 // Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
@@ -43,8 +45,8 @@ const shipporiMincho = Shippori_Mincho({
 
 const zenOldMincho = Zen_Old_Mincho({
   subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-zen-old",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-zen-old-var",
   display: "swap",
 });
 
@@ -91,6 +93,25 @@ const inter = Inter({
   display: "swap",
 });
 
+// === B. Editorial Mincho 採用 (2026-05-08) ===
+// 見出し: Zen_Old_Mincho 700 (既存 zenOldMincho を使用)
+// 小見出し/本文: Murecho 400/500 (Noto Sans JP の置換役)
+// 欧文 display / italic アクセント: Fraunces (variable optical-size)
+const murecho = Murecho({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-murecho-var",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces-var",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "やまと不動産 | 奈良の注文住宅 花鳥風月",
   description:
@@ -103,7 +124,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable}`}
+      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable} ${murecho.variable} ${fraunces.variable}`}
     >
       <body className="relative min-h-svh">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>

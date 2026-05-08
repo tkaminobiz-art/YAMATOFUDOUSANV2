@@ -52,6 +52,10 @@
   --font-inter: var(--font-inter-var), "Inter", sans-serif;
   --font-shippori: var(--font-shippori-var), "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --font-oswald: var(--font-oswald-var), "Oswald", "Helvetica Neue", Arial, sans-serif;
+  /* B. Editorial Mincho 採用 (2026-05-08) — /font-lab で B 案を確定したため正規ロード */
+  --font-zen-old: var(--font-zen-old-var), "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-murecho: var(--font-murecho-var), "Murecho", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-fraunces: var(--font-fraunces-var), "Fraunces", "Times New Roman", Georgia, serif;
 
   /* === Spacing tokens ===（Phase 2: 余白 1.5〜2倍 — ラグジュアリーな呼吸） */
   --section-py: clamp(96px, calc(48px + 7.5vw), 320px);
