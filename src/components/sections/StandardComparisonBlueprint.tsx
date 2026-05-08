@@ -40,7 +40,6 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
 const INK = "#1D1D18";
 const CREAM = "#F7F4EC";
 const DEEP_GREEN = "#2F4A2C";
-const SAND = "#E8DDC4";
 const RULE = "rgba(28,27,24,0.16)";
 const RULE_FAINT = "rgba(28,27,24,0.08)";
 
@@ -208,77 +207,6 @@ function RulerEdge({ position }: { position: "top" | "bottom" }) {
         ))}
       </svg>
     </div>
-  );
-}
-
-// ────────────────────────────────────────────────
-// 1 行アイテム(含まれる/別途)
-// ────────────────────────────────────────────────
-function ItemRow({
-  icon,
-  title,
-  desc,
-  badge,
-  tone,
-}: {
-  icon: IconKind;
-  title: string;
-  desc: string;
-  badge?: string;
-  tone: "included" | "excluded";
-}) {
-  const Icon = ICON_MAP[icon];
-  const iconColor = tone === "included" ? DEEP_GREEN : "rgba(28,27,24,0.55)";
-
-  return (
-    <li
-      className="grid grid-cols-[44px_1fr] gap-3 md:gap-4 items-start py-4 md:py-5"
-      style={{ borderTop: `1px solid ${RULE_FAINT}` }}
-    >
-      <span
-        aria-hidden
-        className="shrink-0 inline-flex items-center justify-center w-11 h-11 mt-0.5"
-        style={{
-          border: `1px solid ${tone === "included" ? "rgba(47,74,44,0.22)" : "rgba(28,27,24,0.18)"}`,
-          borderRadius: 2,
-          background: tone === "included" ? "rgba(47,74,44,0.04)" : "rgba(28,27,24,0.02)",
-        }}
-      >
-        <Icon
-          className="w-[22px] h-[22px]"
-          strokeWidth={1.4}
-          color={iconColor}
-        />
-      </span>
-      <div className="min-w-0">
-        <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
-          <span
-            className="font-sans font-bold tracking-[0.02em] text-[14.5px] md:text-[15.5px] leading-[1.45]"
-            style={{ color: INK }}
-          >
-            {title}
-          </span>
-          {badge && (
-            <span
-              className="font-inter shrink-0 inline-flex items-center px-2 py-[2px] text-[10px] md:text-[10.5px] font-semibold tracking-[0.04em]"
-              style={{
-                color: DEEP_GREEN,
-                background: "rgba(47,74,44,0.10)",
-                borderRadius: 2,
-              }}
-            >
-              {badge}
-            </span>
-          )}
-        </div>
-        <p
-          className="mt-1 font-sans text-[12px] md:text-[12.5px] leading-[1.7]"
-          style={{ color: "rgba(28,27,24,0.62)" }}
-        >
-          {desc}
-        </p>
-      </div>
-    </li>
   );
 }
 
@@ -619,82 +547,233 @@ export default function StandardComparisonBlueprint() {
           </article>
         </div>
 
-        {/* ============ 3. 含まれるもの / 別途となるもの の二大カード ============ */}
-        <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          {/* 含まれるもの — deep green ヘッダー */}
-          <article
-            className="relative bg-white"
-            style={{ border: `1px solid ${RULE}`, borderRadius: 2 }}
-          >
-            <header
-              className="flex items-baseline gap-2.5 px-5 md:px-7 py-4 md:py-5"
-              style={{ background: DEEP_GREEN, color: "#FFFFFF" }}
-            >
-              <span
-                className="font-oswald tabular-nums"
-                style={{ fontWeight: 400, fontSize: "clamp(22px,2.4vw,32px)", letterSpacing: "-0.02em" }}
+        {/* ============ 3. 含まれるもの / 別途となるもの — 建築ノーテーション ============
+            旧: 緑/サンドヘッダ + bg-white カードの二段重ね(Tailwind の card 量産で AI 臭が抜けない)
+            新: カード矩形を撤廃 → FIG.01 / FIG.02 の細罫線見出し + 番号レール + 破線セパレータで
+                上の立面図と同じ「建築図面 marginalia」の世界観に統一する。
+        */}
+        <div className="mt-16 md:mt-24">
+          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] gap-x-8 lg:gap-x-14 gap-y-14 md:gap-y-0">
+            {/* ─── 列 1: 含まれるもの ─── */}
+            <section aria-labelledby="fig-01-included" className="md:pr-2">
+              <header
+                className="flex items-baseline gap-3 md:gap-4 pb-3"
+                style={{ borderBottom: `1px solid rgba(47,74,44,0.45)` }}
               >
-                2,280
-              </span>
-              <span className="font-sans text-[12px] md:text-[13px] font-medium pb-0.5" style={{ opacity: 0.9 }}>
-                万円
-              </span>
-              <span className="font-sans font-bold tracking-[0.04em] text-[14px] md:text-[15.5px] ml-1">
-                に含まれるもの
-              </span>
-            </header>
-            <ul className="px-5 md:px-7 py-1 md:py-2">
-              {INCLUDED.map((item) => (
-                <ItemRow
-                  key={item.title}
-                  icon={item.icon}
-                  title={item.title}
-                  desc={item.desc}
-                  badge={item.badge}
-                  tone="included"
+                <span
+                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
+                  style={{ color: DEEP_GREEN }}
+                >
+                  Fig. 01
+                </span>
+                <span
+                  className="font-inter font-semibold tracking-[0.16em] uppercase text-[10px] md:text-[10.5px]"
+                  style={{ color: "rgba(47,74,44,0.65)" }}
+                >
+                  Included
+                </span>
+                <span
+                  aria-hidden
+                  className="flex-1 h-px"
+                  style={{ background: "rgba(47,74,44,0.22)" }}
                 />
-              ))}
-            </ul>
-          </article>
+                <span
+                  className="font-inter tabular-nums tracking-[0.12em] text-[10px] md:text-[10.5px]"
+                  style={{ color: "rgba(47,74,44,0.55)" }}
+                >
+                  06 ITEMS
+                </span>
+              </header>
+              <h3
+                id="fig-01-included"
+                className="mt-4 md:mt-5 font-sans font-bold leading-[1.55]"
+                style={{ color: DEEP_GREEN, fontSize: "clamp(15px,1.35vw,18px)" }}
+              >
+                京モデル{" "}
+                <span
+                  className="font-oswald tabular-nums mx-0.5"
+                  style={{ fontWeight: 500, fontSize: "clamp(20px,1.8vw,26px)", letterSpacing: "-0.01em" }}
+                >
+                  2,280
+                </span>
+                <span className="text-[12px] md:text-[13px] font-medium">万円</span>
+                に、すでに入っているもの。
+              </h3>
 
-          {/* 別途となるもの — sand ヘッダー */}
-          <article
-            className="relative bg-white"
-            style={{ border: `1px solid ${RULE}`, borderRadius: 2 }}
-          >
-            <header
-              className="flex items-baseline gap-2 px-5 md:px-7 py-4 md:py-5"
-              style={{ background: SAND, color: INK }}
-            >
-              <span className="font-sans font-bold tracking-[0.04em] text-[14px] md:text-[15.5px]">
-                別途となるもの
-              </span>
-              <span className="font-inter ml-2 text-[10.5px] md:text-[11px] tracking-[0.16em] uppercase font-semibold" style={{ color: "rgba(28,27,24,0.55)" }}>
-                Other Costs
-              </span>
-            </header>
-            <ul className="px-5 md:px-7 py-1 md:py-2">
-              {EXCLUDED.map((item) => (
-                <ItemRow
-                  key={item.title}
-                  icon={item.icon}
-                  title={item.title}
-                  desc={item.desc}
-                  tone="excluded"
+              <ol className="mt-3 md:mt-4">
+                {INCLUDED.map((item, i) => {
+                  const Icon = ICON_MAP[item.icon];
+                  return (
+                    <li
+                      key={item.title}
+                      className="grid grid-cols-[34px_minmax(0,1fr)_28px] md:grid-cols-[44px_minmax(0,1fr)_32px] gap-3 md:gap-5 py-5 md:py-6"
+                      style={{
+                        borderTop: i === 0 ? "none" : `1px dashed rgba(28,27,24,0.16)`,
+                      }}
+                    >
+                      <span
+                        className="font-oswald tabular-nums leading-none mt-[2px]"
+                        style={{
+                          color: DEEP_GREEN,
+                          fontWeight: 400,
+                          fontSize: "clamp(18px,1.6vw,22px)",
+                          letterSpacing: "0.02em",
+                        }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1">
+                          <span
+                            className="font-sans font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
+                            style={{ color: INK }}
+                          >
+                            {item.title}
+                          </span>
+                          {item.badge && (
+                            <span
+                              className="font-inter inline-flex items-center px-2 py-[2px] text-[10px] md:text-[10.5px] font-semibold tracking-[0.04em]"
+                              style={{
+                                color: DEEP_GREEN,
+                                background: "rgba(47,74,44,0.10)",
+                                borderRadius: 2,
+                              }}
+                            >
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
+                        <p
+                          className="mt-1.5 font-sans text-[12px] md:text-[12.5px] leading-[1.7]"
+                          style={{ color: "rgba(28,27,24,0.62)" }}
+                        >
+                          {item.desc}
+                        </p>
+                      </div>
+                      <Icon
+                        className="w-[22px] h-[22px] mt-[2px] justify-self-end"
+                        strokeWidth={1.2}
+                        color={DEEP_GREEN}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+
+            {/* ─── 縦罫線(PC のみ) ─── */}
+            <div
+              aria-hidden
+              className="hidden md:block w-px self-stretch"
+              style={{ background: "rgba(28,27,24,0.16)" }}
+            />
+
+            {/* ─── 列 2: 別途となるもの ─── */}
+            <section aria-labelledby="fig-02-others" className="md:pl-2">
+              <header
+                className="flex items-baseline gap-3 md:gap-4 pb-3"
+                style={{ borderBottom: `1px solid rgba(28,27,24,0.40)` }}
+              >
+                <span
+                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
+                  style={{ color: "rgba(28,27,24,0.7)" }}
+                >
+                  Fig. 02
+                </span>
+                <span
+                  className="font-inter font-semibold tracking-[0.16em] uppercase text-[10px] md:text-[10.5px]"
+                  style={{ color: "rgba(28,27,24,0.55)" }}
+                >
+                  Other Costs
+                </span>
+                <span
+                  aria-hidden
+                  className="flex-1 h-px"
+                  style={{ background: "rgba(28,27,24,0.18)" }}
                 />
-              ))}
-            </ul>
-            <p
-              className="px-5 md:px-7 pt-3 pb-5 md:pb-6 font-sans text-[11px] md:text-[12px] leading-[1.85]"
-              style={{
-                color: "rgba(28,27,24,0.55)",
-                borderTop: `1px solid ${RULE_FAINT}`,
-                marginTop: "8px",
-              }}
+                <span
+                  className="font-inter tabular-nums tracking-[0.12em] text-[10px] md:text-[10.5px]"
+                  style={{ color: "rgba(28,27,24,0.5)" }}
+                >
+                  04 ITEMS
+                </span>
+              </header>
+              <h3
+                id="fig-02-others"
+                className="mt-4 md:mt-5 font-sans font-bold leading-[1.55]"
+                style={{ color: INK, fontSize: "clamp(15px,1.35vw,18px)" }}
+              >
+                この価格には含まれず、
+                <br className="hidden md:block" />
+                別途となるもの。
+              </h3>
+
+              <ol className="mt-3 md:mt-4">
+                {EXCLUDED.map((item, i) => {
+                  const Icon = ICON_MAP[item.icon];
+                  return (
+                    <li
+                      key={item.title}
+                      className="grid grid-cols-[34px_minmax(0,1fr)_28px] md:grid-cols-[44px_minmax(0,1fr)_32px] gap-3 md:gap-5 py-5 md:py-6"
+                      style={{
+                        borderTop: i === 0 ? "none" : `1px dashed rgba(28,27,24,0.16)`,
+                      }}
+                    >
+                      <span
+                        className="font-oswald tabular-nums leading-none mt-[2px]"
+                        style={{
+                          color: "rgba(28,27,24,0.5)",
+                          fontWeight: 400,
+                          fontSize: "clamp(18px,1.6vw,22px)",
+                          letterSpacing: "0.02em",
+                        }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div className="min-w-0">
+                        <span
+                          className="block font-sans font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
+                          style={{ color: INK }}
+                        >
+                          {item.title}
+                        </span>
+                        <p
+                          className="mt-1.5 font-sans text-[12px] md:text-[12.5px] leading-[1.7]"
+                          style={{ color: "rgba(28,27,24,0.62)" }}
+                        >
+                          {item.desc}
+                        </p>
+                      </div>
+                      <Icon
+                        className="w-[22px] h-[22px] mt-[2px] justify-self-end"
+                        strokeWidth={1.2}
+                        color="rgba(28,27,24,0.55)"
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          </div>
+
+          {/* 共通フッター(両列下) */}
+          <div
+            className="mt-2 md:mt-4 pt-4 flex items-baseline gap-3"
+            style={{ borderTop: `1px solid rgba(28,27,24,0.18)` }}
+          >
+            <span
+              className="font-inter tracking-[0.16em] uppercase text-[10px] font-semibold shrink-0"
+              style={{ color: "rgba(28,27,24,0.45)" }}
             >
-              ※ 上記は一般的な内容です。詳細は資金計画時にご案内します。
+              Note
+            </span>
+            <p
+              className="font-sans text-[11px] md:text-[12px] leading-[1.85]"
+              style={{ color: "rgba(28,27,24,0.55)" }}
+            >
+              上記は一般的な内容です。詳細は資金計画時にご案内します。
             </p>
-          </article>
+          </div>
         </div>
 
         {/* ============ 4. アクションストリップ(CTA) ============ */}
