@@ -33,8 +33,8 @@ import BlueprintMorphVideo from "./BlueprintMorphVideo";
 
   画像は Higgsfield Nano Banana Pro で生成済(public/images/sections/):
     - blueprint-elevation.png   立面図(右上のメインビジュアル)
-    - house-generic.png          大手プレースホルダー
-    - house-yamato.png           やまと京モデル(refined)
+    - house-generic.webp         大手プレースホルダー(generic builder elevation, ink line)
+    - house-yamato.webp          やまと左京モデル(PDF 立面図ベース, ink line)
     - catalog-booklet.png        無料カタログのサムネ
 */
 
@@ -447,14 +447,13 @@ export default function StandardComparisonBlueprint() {
                   万円〜
                 </span>
               </div>
-              <div className="relative aspect-[5/3] w-full max-w-[280px]">
+              <div className="relative aspect-square w-full max-w-[260px]">
                 <Image
-                  src="/images/sections/house-generic.png"
-                  alt="大手ハウスメーカーの参考イメージ"
+                  src="/images/sections/house-generic.webp"
+                  alt="大手ハウスメーカーの参考立面イメージ — 没個性な総二階の建売タイプ"
                   fill
                   sizes="(max-width: 768px) 60vw, 240px"
                   className="object-contain"
-                  style={{ opacity: 0.78 }}
                 />
               </div>
               <p
@@ -521,10 +520,10 @@ export default function StandardComparisonBlueprint() {
                   万円〜
                 </span>
               </div>
-              <div className="relative aspect-[5/3] w-full max-w-[280px]">
+              <div className="relative aspect-square w-full max-w-[260px]">
                 <Image
-                  src="/images/sections/house-yamato.png"
-                  alt="やまと不動産・京モデルの立面イメージ"
+                  src="/images/sections/house-yamato.webp"
+                  alt="やまと不動産・京モデルの立面イメージ — 左京モデル南側立面図ベース"
                   fill
                   sizes="(max-width: 768px) 60vw, 240px"
                   className="object-contain"
