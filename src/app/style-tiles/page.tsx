@@ -132,10 +132,27 @@ export default function StyleTilesPage() {
         </div>
       </header>
 
+      {/* 決定バナー */}
+      <section className="mx-auto max-w-[1100px] px-6 pt-12">
+        <div className="rounded border border-[#A9D159]/40 bg-[#A9D159]/[0.07] p-5 text-[13px] leading-relaxed text-white/85">
+          <p className="text-[#A9D159] text-[11px] uppercase tracking-[0.2em]">
+            2026-05-08 夕 / Decision: A direction adopted
+          </p>
+          <p className="mt-3">
+            このページは方向決めフェーズの記録として残します。最新フェーズは{" "}
+            <Link href="/hero-a" className="text-[#A9D159] underline-offset-4 hover:underline">
+              /hero-a
+            </Link>{" "}
+            (A 建築誌・エディトリアル / 確定コピー反映 / 精度UP) です。B は価格・
+            標準仕様セクションで、C は質感補助として後続セクションで使います。
+          </p>
+        </div>
+      </section>
+
       {/* イントロ */}
       <section className="mx-auto max-w-[1100px] px-6 py-12">
         <p className="text-[11px] uppercase tracking-[0.2em] text-[#A9D159]/80">
-          2026-05-08 / Phase: Art Direction Reset
+          2026-05-08 / Phase: Art Direction Reset (archived)
         </p>
         <h2 className="mt-3 text-2xl font-semibold">
           Hero に戻る前に、まず方向性を選ぶ
