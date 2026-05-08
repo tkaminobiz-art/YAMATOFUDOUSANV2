@@ -683,7 +683,7 @@ const WIREFRAMES = [
   },
   {
     id: "W2",
-    label: "W2 — 建築図面",
+    label: "W2 — 建築図面 ★ 採用",
     direction: "建築の精度 / The Drawing-frame",
     rationale:
       "写真を「elevation frame」として中央に配置し、ダブルヘアラインの図面枠 + スケールチックで囲む。コンテンツは下に配置し、価格・実績・CTA は建築タイトルブロック表組として整理する。",

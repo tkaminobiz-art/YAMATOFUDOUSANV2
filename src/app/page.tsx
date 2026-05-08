@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 import HeroEditorial from "@/components/sections/HeroEditorial";
-import TrustMetricsEditorial from "@/components/sections/TrustMetricsEditorial";
 import TrustStrip from "@/components/sections/TrustStrip";
-// 2026-05-08: HeroMagazine / ScaleBanner / HeroMagazine.fonts は HeroEditorial +
-//   TrustMetricsEditorial に置き換えのため import から外した。コンポーネントは
-//   復旧用に残置 (削除しない)。
+// 2026-05-08 v4: HeroEditorial v2 (W2 建築図面) で実績を Hero 内 TITLE BLOCK の
+//   RECORDS 行に統合したため、TrustMetricsEditorial は撤去。HeroMagazine /
+//   ScaleBanner / HeroMagazine.fonts / TrustMetricsEditorial も同様に import 不要。
+//   各コンポーネント本体は復旧用に残置。
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
@@ -27,13 +27,13 @@ import FloatingCta from "@/components/FloatingCta";
   TOP 構成 — 2026-05-08 v4 (HeroEditorial 移行)
 
   v3 (HeroMagazine 全画面オーバーレイ + ScaleBanner)
-    → v4 (HeroEditorial 写真主役エディトリアル + TrustMetricsEditorial 静か実績帯)
-  方向: 価格訴求 LP から外して "建築誌的住宅ブランド第一印象" に寄せる
-       (memory: feedback_hero_photo_led_editorial_evolution.md)
+   → v4-a (HeroEditorial v1 写真主役 + TrustMetricsEditorial 静か実績帯)
+   → v4 (HeroEditorial v2 建築図面 / FIG.01 + TITLE BLOCK 内 RECORDS で実績統合)
+  方向: 写真依存の LP 構造を脱し、写真ゼロでも成立する建築図面型 design language
+       (memory: feedback_design_first_photo_last_grey_box_test.md / W2 採用)
 
   【フック・権威】
-  1. HeroEditorial         写真主役 + 短いコピー + 価格 + 控えめ 2CTA
-  2. TrustMetricsEditorial Hero 直下の 4 実績の静かな帯 (営業資料風NG)
+  1. HeroEditorial v2     ELEVATION FRAME + TITLE BLOCK (PROJECT/PRICE/RECORDS/ACTION)
 
   【理屈・証拠】
   3. MechanismEnhanced     坪単価比較 + 3つの仕組み
@@ -72,7 +72,6 @@ export default function Home() {
       <main className="pb-[72px] md:pb-0">
         {/* フック・権威 */}
         <HeroEditorial />
-        <TrustMetricsEditorial />
         <TrustStrip />
 
         {/* 理屈・証拠 */}
