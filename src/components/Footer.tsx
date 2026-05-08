@@ -75,7 +75,7 @@ export default function Footer() {
   return (
     <footer
       className="relative overflow-hidden text-[#D9CFB7]"
-      style={{ backgroundColor: "#1A1714", fontFamily: "var(--font-shippori)" }}
+      style={{ backgroundColor: "#1A1714", fontFamily: "var(--font-zen-old-var)" }}
     >
       {/* ===== 木目（年輪）テクスチャ - 右側 ===== */}
       <div
@@ -147,14 +147,14 @@ export default function Footer() {
               </span>
               <span
                 className="text-[15px] md:text-[16px] tracking-[0.08em] text-[#E0D6BE] group-hover:text-white transition-colors"
-                style={{ fontFamily: "var(--font-sans)" }}
+                style={{ fontFamily: "var(--font-murecho-var)" }}
               >
                 株式会社やまと不動産
               </span>
             </Link>
             <p
               className="text-[12.5px] leading-[2] tracking-[0.06em] text-[#A89E85]"
-              style={{ fontFamily: "var(--font-sans)" }}
+              style={{ fontFamily: "var(--font-murecho-var)" }}
             >
               〒630-8115 奈良県奈良市大宮町1丁目6番21
               <br />
@@ -168,7 +168,7 @@ export default function Footer() {
           <div className="md:pl-12 md:border-l md:border-[#3A342B]">
             <p
               className="text-[12px] tracking-[0.06em] mb-5 text-[#9C927B] font-bold"
-              style={{ fontFamily: "var(--font-sans)" }}
+              style={{ fontFamily: "var(--font-murecho-var)" }}
             >
               SNS公式アカウント
             </p>

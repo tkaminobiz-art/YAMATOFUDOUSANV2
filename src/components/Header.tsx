@@ -103,7 +103,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-[backdrop-filter,background-color] duration-300 ${
+      className={`font-murecho sticky top-0 z-50 w-full transition-[backdrop-filter,background-color] duration-300 ${
         scrolled ? "bg-bg-primary/90 backdrop-blur-md" : "bg-bg-primary"
       }`}
     >

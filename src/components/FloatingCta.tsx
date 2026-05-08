@@ -24,7 +24,7 @@ export default function FloatingCta() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-bg-primary/95 backdrop-blur-md border-t border-border py-2 px-[var(--page-px)] md:hidden">
+    <div className="font-murecho fixed bottom-0 left-0 right-0 z-40 bg-bg-primary/95 backdrop-blur-md border-t border-border py-2 px-[var(--page-px)] md:hidden">
       <div className="flex items-center justify-center gap-2 max-w-md mx-auto">
         <a
           href={LINE_ADD_FRIEND_URL}
