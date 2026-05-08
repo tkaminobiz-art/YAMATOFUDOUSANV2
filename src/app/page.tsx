@@ -7,7 +7,12 @@ import TrustStrip from "@/components/sections/TrustStrip";
 //   - HeroMagazine.tsx / ScaleBanner.tsx は残置(納品時削除候補、戻す可能性のため保持)
 //   memory: project_next_fv_plan_video_overlay.md / project_video_assets_archive.md
 import StandardComparisonBlueprint from "@/components/sections/StandardComparisonBlueprint";
-import StickyMechanismPin from "@/components/sections/StickyMechanismPin";
+// 2026-05-09: StickyMechanismPin (3 photo + text panels) を撤去し、
+//   CostPride (実写ブランドフィルム + キネティックタイポ) に差し替え。
+//   理由: FIG.01 cross-section / FIG.02 ZeroDecl の手描き ink との同型反復回避、
+//   かつ「同品質を、適正価格で」のストーリーを 1 本の動画で物語る。
+//   StickyMechanismPin.tsx ファイル本体は撤去候補メモリで保持 (戻す可能性のため)。
+import CostPride from "@/components/sections/CostPride";
 import StandardCrossSection from "@/components/sections/StandardCrossSection";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
@@ -77,7 +82,7 @@ export default function Home() {
             刷新。立面図 + ink-line house illustration + 緑/サンドの二大カードで再構成。
             旧 MechanismEnhanced の bridge + 3 reasons は StickyMechanismPin に直結。 */}
         <StandardComparisonBlueprint />
-        <StickyMechanismPin />
+        <CostPride />
         <StandardCrossSection />
         <StandardEquipment />
         <ZeroDeclaration />
