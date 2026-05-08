@@ -127,7 +127,7 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
       {/* Headliner ラベル: 右上に小さく */}
       {isHeadliner && (
         <div
-          className="absolute top-5 right-5 md:top-6 md:right-6 z-10 font-sans font-bold text-[10px] md:text-[11px] tracking-[0.06em] px-2.5 py-1 border"
+          className="absolute top-5 right-5 md:top-6 md:right-6 z-10 font-murecho font-bold text-[10px] md:text-[11px] tracking-[0.06em] px-2.5 py-1 border"
           style={{ color: "#A9D159", borderColor: "rgba(169,209,89,0.5)", background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
         >
           いちばん選ばれています
@@ -140,7 +140,7 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
         <div>
           <div className="flex items-end gap-3">
             <span
-              className="font-sans leading-[0.82] text-white"
+              className="font-murecho leading-[0.82] text-white"
               style={{
                 fontWeight: 900,
                 fontSize: "clamp(68px, 7.2vw, 116px)",
@@ -185,11 +185,11 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
               <Users className="w-3.5 h-3.5 text-white" strokeWidth={1.8} />
             </span>
             <div className="min-w-0">
-              <p className="font-sans text-[10.5px] md:text-[11.5px] tracking-[0.06em] text-white/75 font-bold mb-1">
+              <p className="font-murecho text-[10.5px] md:text-[11.5px] tracking-[0.06em] text-white/75 font-bold mb-1">
                 こんなご家族に
               </p>
               <p
-                className="font-sans text-white text-[clamp(13px,1vw,15px)] leading-[1.6] font-medium"
+                className="font-murecho text-white text-[clamp(13px,1vw,15px)] leading-[1.6] font-medium"
                 style={{ textShadow: "0 2px 6px rgba(0,0,0,0.4)" }}
               >
                 {plan.audience}
@@ -211,7 +211,7 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
               >
                 {plan.price}
               </span>
-              <span className="font-sans text-white/85 text-[clamp(13px,1vw,16px)] font-medium pb-1.5 md:pb-2">
+              <span className="font-murecho text-white/85 text-[clamp(13px,1vw,16px)] font-medium pb-1.5 md:pb-2">
                 万円〜
               </span>
             </div>
@@ -235,12 +235,12 @@ export default function PriceSection() {
         {/* ========== Heading ========== */}
         <header className="mb-12 md:mb-16 max-w-[860px]">
           <h2
-            className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
-            style={{ fontSize: "var(--display-lg)" }}
+            className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
+            style={{ fontWeight: 700, fontSize: "var(--display-lg)" }}
           >
             暮らし方に合わせて、<br className="sm:hidden" />選べる3つのプラン。
           </h2>
-          <p className="mt-5 md:mt-6 font-sans text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
+          <p className="mt-5 md:mt-6 font-murecho text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
             京モデルは、
             <span className="font-bold text-lime-deep nowrap">2,280万円</span>
             から始まります。
@@ -261,16 +261,16 @@ export default function PriceSection() {
         {/* ========== 間取り例(2026-04-25 追加): 3プランに対応する実設計図 ========== */}
         <div className="mt-14 md:mt-20">
           <header className="mb-8 md:mb-10 max-w-[860px]">
-            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
+            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
               間取り例
             </p>
             <h3
-              className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
-              style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}
+              className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
+              style={{ fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 34px)" }}
             >
               この価格で叶う、<br className="sm:hidden" />間取りの一例をご紹介します。
             </h3>
-            <p className="mt-4 md:mt-5 font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
+            <p className="mt-4 md:mt-5 font-murecho text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
               過去の設計事例から、各プランに近い間取りをご紹介します。実際の間取りはご家族の暮らし方・敷地条件に合わせて、一から設計します。
             </p>
           </header>
@@ -299,7 +299,7 @@ export default function PriceSection() {
                   <div className="px-5 py-4 md:px-6 md:py-5 border-t border-text-primary/10">
                     <div className="flex items-baseline gap-3">
                       <span
-                        className="font-sans font-bold text-text-primary leading-none"
+                        className="font-murecho font-bold text-text-primary leading-none"
                         style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
                       >
                         {plan.layout}
@@ -308,7 +308,7 @@ export default function PriceSection() {
                         {plan.tsubo}
                       </span>
                     </div>
-                    <p className="mt-2 font-sans text-text-primary/70 text-[11px] md:text-[12px] leading-[1.7]">
+                    <p className="mt-2 font-murecho text-text-primary/70 text-[11px] md:text-[12px] leading-[1.7]">
                       {plan.tagline}
                     </p>
                   </div>
@@ -316,7 +316,7 @@ export default function PriceSection() {
               );
             })}
           </div>
-          <p className="mt-5 md:mt-6 font-sans text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] pl-3 border-l-2 border-text-primary/15">
+          <p className="mt-5 md:mt-6 font-murecho text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] pl-3 border-l-2 border-text-primary/15">
             ※ 間取りはご家族の暮らし・敷地条件に合わせて、一から設計します。掲載は過去事例の一例です。
           </p>
         </div>
@@ -324,16 +324,16 @@ export default function PriceSection() {
         {/* ========== 土地込み 総額モデルケース（2026-04-24 追加） ========== */}
         <div className="mt-16 md:mt-24">
           <header className="mb-8 md:mb-10 max-w-[860px]">
-            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
+            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
               土地込みの総額目安
             </p>
             <h3
-              className="font-sans font-black text-text-primary leading-[1.3] tracking-[0.01em]"
-              style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}
+              className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
+              style={{ fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 34px)" }}
             >
               土地と建物を合わせた、<br className="sm:hidden" />総額の目安。
             </h3>
-            <p className="mt-4 md:mt-5 font-sans text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
+            <p className="mt-4 md:mt-5 font-murecho text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
               建物だけでなく、土地も含めた目安を出します。実際のお見積りは、ご来場時にエリアとご希望に合わせてお出しします。
             </p>
           </header>
@@ -342,38 +342,38 @@ export default function PriceSection() {
             {/* ケースA: お手頃エリア */}
             <article className="bg-white border border-text-primary/10 p-6 md:p-8">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-sans font-bold text-lime-deep" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
+                <span className="font-murecho font-bold text-lime-deep" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
                   ケースA
                 </span>
-                <span className="font-sans text-[11px] md:text-[12px] tracking-[0.04em] text-text-secondary">
+                <span className="font-murecho text-[11px] md:text-[12px] tracking-[0.04em] text-text-secondary">
                   総額を抑えやすいエリア
                 </span>
               </div>
-              <h4 className="mt-3 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
+              <h4 className="mt-3 font-murecho font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
                 大和郡山市矢田町 ＋ 京モデル
               </h4>
-              <p className="mt-2 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.7]">
+              <p className="mt-2 font-murecho text-text-secondary text-[11px] md:text-[12px] leading-[1.7]">
                 やまと自社分譲地（矢田町エリア）＋3LDK・28坪の京モデル。
               </p>
-              <dl className="mt-5 pt-4 border-t border-text-primary/10 space-y-2.5 font-sans text-[12px] md:text-[13px] leading-[1.7]">
+              <dl className="mt-5 pt-4 border-t border-text-primary/10 space-y-2.5 font-murecho text-[12px] md:text-[13px] leading-[1.7]">
                 <div className="flex items-baseline justify-between gap-3">
                   <dt className="text-text-secondary">土地（自社分譲）</dt>
-                  <dd className="font-oswald tabular-nums text-text-primary">500<span className="font-sans text-[11px] ml-1">万円台〜</span></dd>
+                  <dd className="font-oswald tabular-nums text-text-primary">500<span className="font-murecho text-[11px] ml-1">万円台〜</span></dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
                   <dt className="text-text-secondary">建物（京モデル）</dt>
-                  <dd className="font-oswald tabular-nums text-text-primary">2,280<span className="font-sans text-[11px] ml-1">万円〜</span></dd>
+                  <dd className="font-oswald tabular-nums text-text-primary">2,280<span className="font-murecho text-[11px] ml-1">万円〜</span></dd>
                 </div>
               </dl>
               <div className="mt-4 pt-4 border-t border-text-primary/10">
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="font-sans font-bold text-text-primary text-[12px] md:text-[13px]">合計目安</span>
+                  <span className="font-murecho font-bold text-text-primary text-[12px] md:text-[13px]">合計目安</span>
                   <span className="font-oswald font-light text-lime-deep tabular-nums" style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-0.02em" }}>
                     2,800
-                    <span className="font-sans text-[12px] md:text-[14px] ml-1 text-text-primary/70">万円台〜</span>
+                    <span className="font-murecho text-[12px] md:text-[14px] ml-1 text-text-primary/70">万円台〜</span>
                   </span>
                 </div>
-                <p className="mt-3 font-sans text-text-secondary text-[11px] leading-[1.7]">
+                <p className="mt-3 font-murecho text-text-secondary text-[11px] leading-[1.7]">
                   月々のご返済目安：<span className="font-bold text-text-primary">7万円台〜</span>（頭金ゼロ・金利1.0%・35年で試算）
                 </p>
               </div>
@@ -382,45 +382,45 @@ export default function PriceSection() {
             {/* ケースB: 利便性重視 */}
             <article className="bg-white border border-text-primary/10 p-6 md:p-8">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="font-sans font-bold text-text-primary/70" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
+                <span className="font-murecho font-bold text-text-primary/70" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
                   ケースB
                 </span>
-                <span className="font-sans text-[11px] md:text-[12px] tracking-[0.04em] text-text-secondary">
+                <span className="font-murecho text-[11px] md:text-[12px] tracking-[0.04em] text-text-secondary">
                   利便性を重視するエリア
                 </span>
               </div>
-              <h4 className="mt-3 font-sans font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
+              <h4 className="mt-3 font-murecho font-bold text-text-primary text-[15px] md:text-[17px] leading-[1.55]">
                 奈良市内 ＋ 花モデル
               </h4>
-              <p className="mt-2 font-sans text-text-secondary text-[11px] md:text-[12px] leading-[1.7]">
+              <p className="mt-2 font-murecho text-text-secondary text-[11px] md:text-[12px] leading-[1.7]">
                 奈良市内の駅近・利便性重視エリア＋4LDK・33坪の花モデルを想定。
               </p>
-              <dl className="mt-5 pt-4 border-t border-text-primary/10 space-y-2.5 font-sans text-[12px] md:text-[13px] leading-[1.7]">
+              <dl className="mt-5 pt-4 border-t border-text-primary/10 space-y-2.5 font-murecho text-[12px] md:text-[13px] leading-[1.7]">
                 <div className="flex items-baseline justify-between gap-3">
                   <dt className="text-text-secondary">土地（エリアにより）</dt>
-                  <dd className="font-oswald tabular-nums text-text-primary">1,500<span className="font-sans text-[11px] ml-1">万円台〜</span></dd>
+                  <dd className="font-oswald tabular-nums text-text-primary">1,500<span className="font-murecho text-[11px] ml-1">万円台〜</span></dd>
                 </div>
                 <div className="flex items-baseline justify-between gap-3">
                   <dt className="text-text-secondary">建物（花モデル）</dt>
-                  <dd className="font-oswald tabular-nums text-text-primary">2,480<span className="font-sans text-[11px] ml-1">万円〜</span></dd>
+                  <dd className="font-oswald tabular-nums text-text-primary">2,480<span className="font-murecho text-[11px] ml-1">万円〜</span></dd>
                 </div>
               </dl>
               <div className="mt-4 pt-4 border-t border-text-primary/10">
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="font-sans font-bold text-text-primary text-[12px] md:text-[13px]">合計目安</span>
+                  <span className="font-murecho font-bold text-text-primary text-[12px] md:text-[13px]">合計目安</span>
                   <span className="font-oswald font-light text-text-primary tabular-nums" style={{ fontSize: "clamp(28px, 3vw, 40px)", letterSpacing: "-0.02em" }}>
                     4,000
-                    <span className="font-sans text-[12px] md:text-[14px] ml-1 text-text-primary/70">万円台〜</span>
+                    <span className="font-murecho text-[12px] md:text-[14px] ml-1 text-text-primary/70">万円台〜</span>
                   </span>
                 </div>
-                <p className="mt-3 font-sans text-text-secondary text-[11px] leading-[1.7]">
+                <p className="mt-3 font-murecho text-text-secondary text-[11px] leading-[1.7]">
                   月々のご返済目安：<span className="font-bold text-text-primary">11万円台〜</span>（頭金ゼロ・金利1.0%・35年で試算）
                 </p>
               </div>
             </article>
           </div>
 
-          <div className="mt-6 md:mt-8 pl-3 border-l-2 border-text-primary/15 font-sans text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] space-y-1.5">
+          <div className="mt-6 md:mt-8 pl-3 border-l-2 border-text-primary/15 font-murecho text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] space-y-1.5">
             <p>※ 土地代は自社分譲地の参考レンジ、建物は各プランの最低価格(税込・建物本体＋付帯工事)です。登記・外構・引越し等の諸費用は別途となります。</p>
             <p>※ 月々のご返済額は、頭金なし・金利1.0%・35年・元利均等で機械的に試算した目安です。実際の金利・借入額・返済額はご相談時にご案内します。</p>
           </div>
@@ -441,14 +441,14 @@ export default function PriceSection() {
             デスクトップ: 従来の2カラム縦リスト */}
         <div className="mt-10 md:mt-20 grid grid-cols-2 gap-5 md:gap-14 lg:gap-20 pt-8 md:pt-14 border-t border-text-primary/15">
           <div>
-            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3 md:mb-5">
+            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3 md:mb-5">
               価格に含まれるもの
             </p>
             <ul className="space-y-2 md:space-y-3">
               {INCLUDED.map((t) => (
                 <li
                   key={t}
-                  className="font-sans flex items-baseline gap-2 md:gap-3 text-text-primary text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
+                  className="font-murecho flex items-baseline gap-2 md:gap-3 text-text-primary text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
                 >
                   <span
                     aria-hidden
@@ -463,14 +463,14 @@ export default function PriceSection() {
             </ul>
           </div>
           <div className="md:border-l md:border-text-primary/15 md:pl-10 lg:pl-14">
-            <p className="font-sans font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-text-secondary mb-3 md:mb-5">
+            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-text-secondary mb-3 md:mb-5">
               別途となるもの
             </p>
             <ul className="space-y-2 md:space-y-3">
               {EXCLUDED.map((t) => (
                 <li
                   key={t}
-                  className="font-sans flex items-baseline gap-2 md:gap-3 text-text-primary/85 text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
+                  className="font-murecho flex items-baseline gap-2 md:gap-3 text-text-primary/85 text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
                 >
                   <span
                     aria-hidden
@@ -488,7 +488,7 @@ export default function PriceSection() {
 
         {/* ========== 注記 + CTA ========== */}
         <div className="mt-12 md:mt-16 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
-          <div className="font-sans max-w-[44rem] pl-3 border-l-2 border-text-primary/15 text-[12px] md:text-[12.5px] leading-[1.95] text-text-secondary space-y-1.5">
+          <div className="font-murecho max-w-[44rem] pl-3 border-l-2 border-text-primary/15 text-[12px] md:text-[12.5px] leading-[1.95] text-text-secondary space-y-1.5">
             <p>※ 広さ・間取り・価格帯の目安です。間取り・坪数・設備は、ご家族に合わせて設計します。</p>
             <p>※ 表示価格は、建物本体(税込)に標準付帯工事まで含む目安です。土地代・登記費用等は別途となります。</p>
           </div>

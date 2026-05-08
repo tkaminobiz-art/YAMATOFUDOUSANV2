@@ -24,7 +24,7 @@ export default function RepresentativeMessage() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
-    <section className="bg-white py-[var(--section-py)]">
+    <section className="font-murecho bg-white py-[var(--section-py)]">
       <div
         ref={ref}
         className="max-w-[1180px] mx-auto px-[var(--page-px)] scroll-in"
@@ -38,9 +38,9 @@ export default function RepresentativeMessage() {
             代表からのご挨拶
           </p>
           <h2
-            className="text-text-primary leading-[1.35] tracking-[0.005em]"
+            className="font-zen-old text-text-primary leading-[1.4] tracking-[0.02em]"
             style={{
-              fontWeight: 500,
+              fontWeight: 600,
               fontSize: "clamp(22px, 2.6vw, 36px)",
             }}
           >
@@ -74,7 +74,7 @@ export default function RepresentativeMessage() {
                   style={{
                     fontWeight: 600,
                     fontSize: "clamp(18px, 1.8vw, 22px)",
-                    fontFamily: "var(--font-sans)",
+                    fontFamily: "var(--font-murecho-var)",
                   }}
                 >
                   {rep.name}
