@@ -16,3 +16,9 @@ fabricates them. Never copy them into implementation.
 When a comp conflicts with BRAND-TRUTH.md, BRAND-TRUTH.md wins.
 
 Run the §8 implementation checklist in BRAND-TRUTH.md before every section PR.
+
+# Design Guardrails — also read [`DESIGN_GUARDRAILS.md`](./DESIGN_GUARDRAILS.md)
+
+W2 系 (建築図面アートディレクション) のセクションでは、generic な table/card に
+逃げず、`PriceSpec` / `MetricRail` / `ActionLine` 等の役割別コンポーネントで
+組む。`DESIGN_GUARDRAILS.md` の AI smell check 10 項目を毎 PR 前に通すこと。

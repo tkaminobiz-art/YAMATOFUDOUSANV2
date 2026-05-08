@@ -30,6 +30,13 @@
   --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (装飾用) */
   --color-border: #E5E5E0;
 
+  /* === W2 (建築図面) 系セクション用の薄い罫線トークン =====================
+     2026-05-08: AI smell check 対策。表/カードの強い枠ではなく、図面の薄い
+     hairline でしか情報を区切らないために専用色を切り出す (DESIGN_GUARDRAILS.md)。 */
+  --color-rule:        rgba(28, 27, 24, 0.16);  /* 標準: 開いた罫線・スペック区切り */
+  --color-rule-strong: rgba(28, 27, 24, 0.32);  /* 強調: ELEVATION FRAME の枠等 */
+  --color-rule-faint:  rgba(28, 27, 24, 0.08);  /* 微弱: Metric Rail の下線 */
+
   /* === Display scale(3層)=== 2026-04-24 v2: shukobuild型にダイアルダウン
      デカタイポ完全廃盤。見出しは一言・商品/数字が主役になるスケールへ。
      主役 L(56px) / 主力 M(40px) / 補助 S(28px) */

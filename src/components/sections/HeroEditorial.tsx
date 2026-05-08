@@ -3,34 +3,39 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /*
-  HeroEditorial — 2026-05-08 v2 (W2 採用版 / Architectural Drawing-frame)
+  HeroEditorial — 2026-05-08 v3 (W2 採用版 / 表 UI 撤去)
   ---------------------------------------------------------------
-  /hero-wireframes 比較で W2 (建築図面) が選定された後の実装。
+  v2 で TITLE BLOCK を 4 行均等表として実装したところ「Web 管理画面風カクカク
+  = AI 臭い」と判断されたため、価格 / 実績 / CTA を役割別に分離した v3。
+  詳細は DESIGN_GUARDRAILS.md / memory: feedback_w2_no_uniform_table_ai_smell_check.md
 
-  方針:
-  - 写真を「FIG.01 LIVING & DINING」の elevation frame として中央に置く
-  - frame の上下に scale ticks (定規目盛)
-  - 見出し・コピーは frame の下に置き、編集誌の図版+キャプション構造を再現
-  - 価格・実績・CTA は建築タイトルブロック表組として整理
-    (PROJECT / PRICE / RECORDS / ACTION の 4 行)
-  - 数字や仕様が「営業実績」でなく「建築仕様」として読める
+  構造:
+  - META STRIP (上部メタデータ)
+  - ELEVATION FRAME + scale ticks (写真は建築図面の elevation 風)
+  - HEADLINE + SUBCOPY (図版キャプション扱い)
+  - PriceSpec   — Open Spec パターン (上下線だけ・PRICE 強)
+  - MetricRail  — 実績は箱に入れず横一列の静かなレール
+  - ActionLine  — CTA は表に閉じ込めず独立配置
 
-  実装手順 (memory: feedback_design_first_photo_last_grey_box_test.md 準拠):
-  1. グレーボックステストでワイヤフレームを実装 (済 /hero-wireframes W2)
-  2. 採用案に実写を入れる (本コミット)
-  3. 違和感があれば W2 の中で構造を磨く (3 案比較・別構造には戻らない)
+  禁止 (DESIGN_GUARDRAILS §3):
+  - 価格 / 実績 / CTA を同じ表に入れる
+  - 四辺すべて border の枠
+  - rounded-lg 以上
+  - 強い border / shadow
+  - bg-white card 量産
 
   写真:
   - FIG.01 LIVING & DINING = /images/newsozai/interior-ldk-01.webp (2400x1600)
-    → 自然光のあるLDK。BRAND-TRUTH §1 Photo allowlist 内
 */
 
 const PALETTE = {
   paper: "#FFFFFF",
   paperWarm: "#F8F7F4",
   sumi: "#1A1815",
-  hairline: "#DED8C8",
   muted: "#5E5A50",
+  rule: "rgba(28, 27, 24, 0.16)",
+  ruleStrong: "rgba(28, 27, 24, 0.32)",
+  ruleFaint: "rgba(28, 27, 24, 0.08)",
 } as const;
 
 const HERO = {
@@ -40,7 +45,7 @@ const HERO = {
 
 const COPY = {
   brand: "株式会社やまと不動産　─　奈良・京都南部の家づくり",
-  fig: "FIG. 01",
+  fig: "FIG. 01",
   figCaption: "LIVING & DINING",
   scale: "SCALE 1 : 50",
   region: "NARA · KYOTO",
@@ -50,11 +55,13 @@ const COPY = {
     "総額で見える家づくりを、地域密着で支えます。",
   ],
   price: {
+    eyebrow: "STARTING PRICE",
     label: "京モデル",
     value: "2,280",
     unit: "万円〜",
     footnote: "税込・建物本体＋標準付帯工事込み",
   },
+  metricsEyebrow: "RECORDS",
   metrics: [
     { value: "600", unit: "棟以上", label: "施工実績" },
     { value: "90", unit: "区画以上", label: "分譲・土地" },
@@ -72,8 +79,8 @@ export default function HeroEditorial() {
       className="relative w-full"
       style={{ background: PALETTE.paper }}
     >
-      {/* TOP META STRIP — 図面の上部 metadata */}
-      <div className="border-b" style={{ borderColor: PALETTE.hairline }}>
+      {/* META STRIP — 図面の上部 metadata */}
+      <div className="border-b" style={{ borderColor: PALETTE.rule }}>
         <div
           className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-x-6 gap-y-1.5 px-[var(--page-px)] py-3 text-[10px] tracking-[0.22em]"
           style={{ fontFamily: "var(--font-inter)", color: PALETTE.muted }}
@@ -91,12 +98,11 @@ export default function HeroEditorial() {
         </div>
       </div>
 
-      {/* MAIN BODY */}
-      <div className="mx-auto max-w-[1240px] px-[var(--page-px)] pt-10 md:pt-14 lg:pt-16 pb-12 md:pb-16">
+      <div className="mx-auto max-w-[1240px] px-[var(--page-px)] pt-10 md:pt-14 lg:pt-16 pb-16 md:pb-20">
         {/* Scale ticks (top) */}
         <ScaleRuler position="top" />
 
-        {/* ELEVATION FRAME — double hairline */}
+        {/* ELEVATION FRAME — double hairline, FIG.01 黒タグ overhang */}
         <figure
           className="relative"
           style={{
@@ -104,7 +110,6 @@ export default function HeroEditorial() {
             padding: 7,
           }}
         >
-          {/* FIG tag — drawing convention */}
           <span
             className="absolute z-10 inline-block px-2 py-0.5 text-[9.5px] tracking-[0.32em] uppercase text-white"
             style={{
@@ -135,8 +140,16 @@ export default function HeroEditorial() {
         {/* Scale ticks (bottom) */}
         <ScaleRuler position="bottom" />
 
+        {/* 図版下の小さい architectural caption (Annotation Note 風) */}
+        <p
+          className="mt-3 text-right text-[10.5px] tracking-[0.18em]"
+          style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
+        >
+          ─── {COPY.figCaption} &nbsp;/&nbsp; INTERIOR &nbsp;/&nbsp; YAMATO HOUSE
+        </p>
+
         {/* HEADLINE + SUBCOPY (図版キャプション扱い) */}
-        <div className="mt-12 md:mt-16 max-w-[820px]">
+        <div className="mt-14 md:mt-20 max-w-[820px]">
           <h1
             id="hero-editorial-heading"
             style={{
@@ -162,112 +175,18 @@ export default function HeroEditorial() {
           </p>
         </div>
 
-        {/* TITLE BLOCK */}
-        <div
-          className="mt-10 md:mt-14"
-          style={{ border: `1px solid ${PALETTE.sumi}` }}
-        >
-          <Row label="PROJECT">
-            <span
-              style={{ color: PALETTE.sumi }}
-              className="text-[13px] tracking-[0.04em]"
-            >
-              株式会社やまと不動産 &nbsp;·&nbsp; 奈良・京都南部
-            </span>
-          </Row>
-
-          <Row label="PRICE">
-            <span
-              className="inline-flex items-baseline flex-wrap gap-x-2 gap-y-1"
-              style={{ color: PALETTE.sumi }}
-            >
-              <span className="text-[12.5px] tracking-[0.04em]">
-                {COPY.price.label}
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-oswald)",
-                  fontSize: 22,
-                  fontWeight: 300,
-                  letterSpacing: "0.02em",
-                }}
-              >
-                {COPY.price.value}
-              </span>
-              <span className="text-[13px]">{COPY.price.unit}</span>
-              <span
-                className="ml-1 text-[11px]"
-                style={{ color: PALETTE.muted }}
-              >
-                {COPY.price.footnote}
-              </span>
-            </span>
-          </Row>
-
-          <Row label="RECORDS">
-            <span className="inline-flex flex-wrap gap-x-6 gap-y-1.5">
-              {COPY.metrics.map((m) => (
-                <span
-                  key={m.label}
-                  className="inline-flex items-baseline gap-1.5"
-                  style={{ color: PALETTE.sumi }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "var(--font-oswald)",
-                      fontSize: 18,
-                      fontWeight: 300,
-                    }}
-                  >
-                    {m.value}
-                  </span>
-                  <span className="text-[11.5px]">{m.unit}</span>
-                  <span
-                    className="text-[10.5px] tracking-[0.06em]"
-                    style={{ color: PALETTE.muted }}
-                  >
-                    / {m.label}
-                  </span>
-                </span>
-              ))}
-            </span>
-          </Row>
-
-          <Row label="ACTION" last>
-            <div className="flex flex-col sm:flex-row gap-2.5">
-              <Link
-                href={COPY.primaryCta.href}
-                className="group inline-flex min-h-[44px] items-center justify-center gap-2 px-5 text-[12.5px] tracking-[0.04em] font-medium text-white transition-colors hover:bg-black"
-                style={{ background: PALETTE.sumi }}
-              >
-                {COPY.primaryCta.label}
-                <ArrowRight
-                  className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1"
-                  strokeWidth={1.5}
-                />
-              </Link>
-              <Link
-                href={COPY.secondaryCta.href}
-                className="group inline-flex min-h-[44px] items-center justify-center gap-2 px-5 border text-[12.5px] tracking-[0.04em] font-medium transition-colors hover:bg-[#1A1815] hover:text-white"
-                style={{ borderColor: PALETTE.sumi, color: PALETTE.sumi }}
-              >
-                {COPY.secondaryCta.label}
-                <ArrowRight
-                  className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1"
-                  strokeWidth={1.5}
-                />
-              </Link>
-            </div>
-          </Row>
-        </div>
+        {/* ─── 役割別の3ブロック (表 UI で囲わない) ─── */}
+        <PriceSpec />
+        <MetricRail />
+        <ActionLine />
       </div>
     </section>
   );
 }
 
-// ─── ScaleRuler: 定規目盛 (md+ のみ) ──────────────────────────
+/* ─── ScaleRuler: 定規目盛 (md+ のみ) ─────────────────────── */
 function ScaleRuler({ position }: { position: "top" | "bottom" }) {
-  const ticks = 25; // 5 メジャー × 5
+  const ticks = 25;
   return (
     <div
       aria-hidden
@@ -291,39 +210,144 @@ function ScaleRuler({ position }: { position: "top" | "bottom" }) {
   );
 }
 
-// ─── Row: TITLE BLOCK の 1 行 ───────────────────────────────
-function Row({
-  label,
-  children,
-  last,
-}: {
-  label: string;
-  children: React.ReactNode;
-  last?: boolean;
-}) {
+/* ─── PriceSpec: Pattern A (Open Spec) ───────────────────
+   上下線だけ。中身に視覚重みを集中させる (PRICE 強)。
+   左右は閉じない。max-width で幅を抑え、左寄せで読ませる。 */
+function PriceSpec() {
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-[120px_1fr]"
+    <section
+      aria-labelledby="hero-price-eyebrow"
+      className="mt-14 md:mt-16 max-w-[680px] py-7 md:py-8"
       style={{
-        borderBottom: last ? undefined : `1px solid ${PALETTE.hairline}`,
+        borderTop: `1px solid ${PALETTE.rule}`,
+        borderBottom: `1px solid ${PALETTE.rule}`,
       }}
     >
-      <div
-        className="px-4 py-3 text-[10px] tracking-[0.22em]"
-        style={{
-          background: PALETTE.paperWarm,
-          color: PALETTE.muted,
-          fontFamily: "var(--font-inter)",
-        }}
+      <p
+        id="hero-price-eyebrow"
+        className="text-[10px] tracking-[0.32em] uppercase"
+        style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
       >
-        {label}
+        {COPY.price.eyebrow}
+      </p>
+      <div className="mt-4 flex items-baseline flex-wrap gap-x-3 gap-y-1">
+        <span
+          className="text-[14px] tracking-[0.04em]"
+          style={{ color: PALETTE.sumi }}
+        >
+          {COPY.price.label}
+        </span>
+        <span
+          style={{
+            fontFamily: "var(--font-oswald)",
+            fontSize: "clamp(48px, 7vw, 80px)",
+            fontWeight: 300,
+            lineHeight: 0.95,
+            letterSpacing: "0.02em",
+            color: PALETTE.sumi,
+          }}
+        >
+          {COPY.price.value}
+        </span>
+        <span className="text-[16px]" style={{ color: PALETTE.sumi }}>
+          {COPY.price.unit}
+        </span>
       </div>
-      <div
-        className="px-4 py-3 border-t md:border-t-0 md:border-l"
-        style={{ borderColor: PALETTE.hairline }}
+      <p
+        className="mt-3 text-[11.5px] tracking-[0.04em]"
+        style={{ color: PALETTE.muted }}
       >
-        {children}
-      </div>
+        {COPY.price.footnote}
+      </p>
+    </section>
+  );
+}
+
+/* ─── MetricRail: Pattern B (Quiet Rail) ────────────────
+   箱なし。横一列に静かに並べ、下に微弱な hairline 一本だけ。
+   数字は visible だが PriceSpec より控えめ (重みを差をつける)。 */
+function MetricRail() {
+  return (
+    <section
+      aria-labelledby="hero-records-eyebrow"
+      className="mt-12 md:mt-14 max-w-[940px]"
+    >
+      <p
+        id="hero-records-eyebrow"
+        className="text-[10px] tracking-[0.32em] uppercase"
+        style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
+      >
+        {COPY.metricsEyebrow}
+      </p>
+      <ul className="mt-4 flex flex-wrap items-baseline gap-x-7 gap-y-3 list-none">
+        {COPY.metrics.map((m) => (
+          <li
+            key={m.label}
+            className="inline-flex items-baseline gap-1.5"
+          >
+            <span
+              style={{
+                fontFamily: "var(--font-oswald)",
+                fontSize: 26,
+                fontWeight: 300,
+                lineHeight: 1,
+                color: PALETTE.sumi,
+              }}
+            >
+              {m.value}
+            </span>
+            <span className="text-[12px]" style={{ color: PALETTE.sumi }}>
+              {m.unit}
+            </span>
+            <span
+              className="text-[10px] tracking-[0.08em] ml-1"
+              style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
+            >
+              / {m.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div
+        aria-hidden
+        className="mt-4 h-px w-full"
+        style={{ background: PALETTE.ruleFaint }}
+      />
+    </section>
+  );
+}
+
+/* ─── ActionLine: 独立した行動導線 ────────────────────
+   表/カードに閉じ込めない。breathing space を多めに取り、
+   建築図面の "ACTION" としてではなく、独立したナビゲーション要素として配置。 */
+function ActionLine() {
+  return (
+    <div
+      aria-label="主要 CTA"
+      className="mt-12 md:mt-14 flex flex-col sm:flex-row gap-3"
+    >
+      <Link
+        href={COPY.primaryCta.href}
+        className="group inline-flex min-h-[52px] items-center justify-center gap-2 px-7 text-[13px] tracking-[0.04em] font-medium text-white transition-colors hover:bg-black"
+        style={{ background: PALETTE.sumi }}
+      >
+        {COPY.primaryCta.label}
+        <ArrowRight
+          className="w-4 h-4 transition-transform group-hover:translate-x-1"
+          strokeWidth={1.5}
+        />
+      </Link>
+      <Link
+        href={COPY.secondaryCta.href}
+        className="group inline-flex min-h-[52px] items-center justify-center gap-2 px-7 border text-[13px] tracking-[0.04em] font-medium transition-colors hover:bg-[#1A1815] hover:text-white"
+        style={{ borderColor: PALETTE.sumi, color: PALETTE.sumi }}
+      >
+        {COPY.secondaryCta.label}
+        <ArrowRight
+          className="w-4 h-4 transition-transform group-hover:translate-x-1"
+          strokeWidth={1.5}
+        />
+      </Link>
     </div>
   );
 }
