@@ -367,8 +367,10 @@ export default function StandardComparisonBlueprint() {
           </header>
 
           {/* 右: 立面図 → 3D ビジュアライズの morph 動画
-              poster は静止 PNG、視認時のみ再生、reduced-motion 時は静止画のみ */}
-          <figure className="relative lg:-mr-2 xl:-mr-4">
+              poster は静止 PNG、視認時のみ再生、reduced-motion 時は静止画のみ
+              lg+ では eyebrow + 見出し1行目分を pt で押し下げ、見出し2行目
+              「標準仕様まで〜」と動画の上端を揃える(eyebrow ≈ 44px + 1行目 ≈ 80px) */}
+          <figure className="relative lg:-mr-2 xl:-mr-4 lg:pt-[clamp(100px,8.5vw,132px)]">
             <BlueprintMorphVideo
               videoSrc="/videos/blueprint-to-render.mp4"
               posterSrc="/images/sections/blueprint-elevation.webp"
