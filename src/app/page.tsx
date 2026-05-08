@@ -1,15 +1,11 @@
 import Header from "@/components/Header";
-import HeroMagazine from "@/components/sections/HeroMagazine";
-import {
-  FONT_VARIANTS,
-  BODY_VARIANTS,
-} from "@/components/sections/HeroMagazine.fonts";
+import HeroVideo from "@/components/sections/HeroVideo";
 import TrustStrip from "@/components/sections/TrustStrip";
-import ScaleBanner from "@/components/sections/ScaleBanner";
-// 2026-05-08 (revert): Hero リニューアル試行 (HeroEditorial v1-v4 / W2) は
-//   全没の判断 → 現行 HeroMagazine + ScaleBanner に戻す。
-//   memory: project_hero_renewal_all_rejected_20260508.md
-//   HeroEditorial.tsx / TrustMetricsEditorial.tsx / 各 lab pages は残置 (納品時削除)
+// 2026-05-08 v4: Hero を動画ブランドフィルム + TRACK RECORD オーバーレイ に刷新。
+//   - HeroMagazine(写真スライドショー + 価格 + CTA)を HeroVideo に差し替え
+//   - ScaleBanner(4実績バーン)は HeroVideo の overlay に統合済み → 撤去
+//   - HeroMagazine.tsx / ScaleBanner.tsx は残置(納品時削除候補、戻す可能性のため保持)
+//   memory: project_next_fv_plan_video_overlay.md / project_video_assets_archive.md
 import StandardComparisonBlueprint from "@/components/sections/StandardComparisonBlueprint";
 import StickyMechanismPin from "@/components/sections/StickyMechanismPin";
 import StandardEquipment from "@/components/sections/StandardEquipment";
@@ -29,19 +25,12 @@ import FinalCta from "@/components/sections/FinalCta";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
-// 2026-04-24 確定: Z(Noto Sans JP catalog) + IV(Industrial: Oswald + Noto Sans JP 500)
-const HERO_HEADLINE_VARIANT =
-  FONT_VARIANTS.find((v) => v.id === "noto-sans") ?? FONT_VARIANTS[0];
-const HERO_BODY_VARIANT =
-  BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
-
 /*
-  TOP 構成 — 2026-05-03 v3 (参考画像準拠・Progressive Disclosure 適用)
-  2026-05-08: HeroEditorial 試行 (v1-v4) は全没 → v3 HeroMagazine に revert
+  TOP 構成 — 2026-05-08 v4 (動画FV + TrackRecord overlay)
 
   【フック・権威】
-  1. HeroMagazine          写真主役 + 価格 + CTA
-  2. ScaleBanner           4実績(アイコン付き) — バーン
+  1. HeroVideo             21秒のブランドフィルム + TRACK RECORD overlay + CTA
+  ※ ScaleBanner は HeroVideo の overlay に統合済みのため撤去
 
   【理屈・証拠】
   3. MechanismEnhanced     坪単価比較 + 3つの仕組み
@@ -79,12 +68,8 @@ export default function Home() {
       <Header />
       <main className="pb-[72px] md:pb-0">
         {/* フック・権威 */}
-        <HeroMagazine
-          variant={HERO_HEADLINE_VARIANT}
-          bodyVariant={HERO_BODY_VARIANT}
-        />
+        <HeroVideo />
         <TrustStrip />
-        <ScaleBanner />
 
         {/* 理屈・証拠 */}
         {/* 2026-05-08: 比較セクションを建築図面エディトリアル(StandardComparisonBlueprint) に
