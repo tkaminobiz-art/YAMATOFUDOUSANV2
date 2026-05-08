@@ -11,7 +11,7 @@ const OPTIONS = [
     name: "Printed Receipt",
     intent:
       "紙の領収書 / 紙レシート風。strikethrough red + green 注釈、最後に hanko 印。AI生成感ゼロで一番 honest に見える。",
-    src: "/zero-declaration-lab/01-receipt.png",
+    src: "/zero-declaration-lab/01-receipt-gpt2.png",
     pros: [
       "「契約前見える化」のメタファーとして領収書はド直球",
       "cream paper + 紙感で住宅 LP テンプレ感を完全回避",
@@ -28,7 +28,7 @@ const OPTIONS = [
     name: "Two-Column Comparison",
     intent:
       "「一般の相場 / GENERAL MARKET」 vs 「やまと不動産 / YAMATO」の 2 列。strikethrough red + 緑¥0 / 不要 / 事前説明 で対比を最大化。",
-    src: "/zero-declaration-lab/02-comparison.png",
+    src: "/zero-declaration-lab/02-comparison-gpt2.png",
     pros: [
       "対比が最も明快、誰が見ても 2 秒で理解できる",
       "実装が容易 (table + strike-through CSS のみ)",
@@ -45,7 +45,7 @@ const OPTIONS = [
     name: "Traditional Ledger",
     intent:
       "古紙テクスチャ + 「土地購入時 / BEFORE BUILD」「建築工事中 / DURING BUILD」の 2 セクション帳簿。右下に「透明保証」hanko 印。フォーマルで温度感が最も高い。",
-    src: "/zero-declaration-lab/03-ledger.png",
+    src: "/zero-declaration-lab/03-ledger-gpt2.png",
     pros: [
       "8項目を BEFORE/DURING の 2 セクション分割で構造的に表現",
       "古紙 + 印鑑で誠実さ・伝統的な信頼感が立つ",
@@ -62,7 +62,7 @@ const OPTIONS = [
     name: "Bento Editorial",
     intent:
       "8 項目を asymmetric Bento で配置。仲介手数料 (¥50万〜100万 → 不要) を最大カードに、残り 7 項目を中小カードで散らす。",
-    src: "/zero-declaration-lab/04-bento.png",
+    src: "/zero-declaration-lab/04-bento-gpt2.png",
     pros: [
       "8 項目を視覚的に強弱つけて見せられる",
       "仲介手数料の最大インパクトを大カードで主役化",
@@ -79,7 +79,7 @@ const OPTIONS = [
     name: "Bold Editorial Poster",
     intent:
       "巨大 ¥500,000 / ¥1,500,000 のストライク背景 + 小さい Mincho 見出しオーバーレイ。右側に 8 項目のサイドバーリスト。最もポスター的インパクト。",
-    src: "/zero-declaration-lab/05-poster.png",
+    src: "/zero-declaration-lab/05-poster-gpt2.png",
     pros: [
       "視線誘導力が最も強い。スクロール中で目に止まる",
       "「払わなくていい金額の総量」を巨大ビジュアルで体感させる",
@@ -97,7 +97,7 @@ const OPTIONS = [
     name: "Mechanism Diagram",
     intent:
       "「当社分譲地 → ワンストップ → 事前明確化」の 3 メカニズム ダイアグラム + 下に 8 項目の薄いフッター。なぜ費用が抑えられるかの『理屈』を視覚化。",
-    src: "/zero-declaration-lab/06-diagram.png",
+    src: "/zero-declaration-lab/06-diagram-gpt2.png",
     pros: [
       "金額のインパクトより理屈・誠実さで説得 (memory: feedback_mechanism_fact_core 準拠)",
       "前セクション StickyMechanismPin との連動性が高い",
