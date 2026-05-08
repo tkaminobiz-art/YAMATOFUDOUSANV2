@@ -1,103 +1,66 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, MessageCircle, Calendar } from "lucide-react";
+import { ArrowRight, MessageCircle, Calendar } from "lucide-react";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /*
-  StandardEquipment — 2026-05-08 v3 (Apple 比較ページ調・StandardComparisonBlueprint と統一)
+  StandardEquipment — 2026-05-08 v4 (Architectural Specification Schedule)
   ---------------------------------------------------------------
-  ユーザー判断: 旧 v2 (Bento + 性能ピル + 設備チップ) は重く、
-  StandardComparisonBlueprint (新版) との視覚的整合がない。
-  本セクションも同じ Apple 比較ページ調 (#F7F5F0 paper / #143426 dark green /
-  hairline 罫線 / Hiragino + Inter) に揃えて、
-
-    「この価格で、ここまで標準」を 4 カテゴリのチェックリストで見せる
+  ユーザー判断: /standard-equipment-lab で **Option 03 Architectural
+  Specification Schedule** を採用。建築事務所のスペック・スケジュール書類調。
 
   方針:
-  - 上部に eyebrow + 大見出し + リード + 1 枚の hero photo
-  - 下に 4 カテゴリ (設備 / 性能 / 構造 / サポート) のリスト
-    各カテゴリ: 番号 eyebrow + カテゴリ名 + hairline + アイテム行 (✓ + 名称 + 詳細)
-  - CTA バー: モデルハウス見学 + LINE
-  - 注意書き: 仕様変更可能性
+  - 純白 #FFFFFF 背景、写真ゼロ
+  - 上部メタストリップ (mono): SCHEDULE / FIG.01 / SCALE 1:50 / NARA·KYOTO
+  - 左 ~40%: Mincho 大見出し「この価格で、ここまで標準。」+ 短いリード
+  - 右 ~60%: 4 列スペック表 (NO. / 区分 / 仕様 / STANDARD)
+    各行 hairline 区切り、メーカー名は bold、詳細は muted slate
 
-  カラー / フォントは StandardComparisonBlueprint と同一 (PALETTE / fontFamily)。
+  整合性 (memory: reference_yamato_standard_spec_canonical.md):
+  - 17 項目すべて旧サイト (yamatogroup.net/standardplan/) と
+    プロジェクト文書 指示書/15_standard_quality.md の canonical を反映
+  - LIXIL系は誤り → クリナップ / TOTO / YKK AP / 旭化成 / MIRAIE 等
+  - 「80+ items」誇張は撤回。17 項目を honest に表示
+  - 花モデル基準である旨を Disclaimer に明示
 */
 
 const PALETTE = {
-  bg: "#F7F5F0",
-  card: "#FBFAF7",
-  text: "#111111",
-  textSub: "#6E6A63",
-  green: "#183528",
-  greenDeep: "#143426",
+  bg: "#FFFFFF",
+  paperWarm: "#F8F7F4",
+  text: "#0E0E0D",
+  textSub: "#4F4F4D",
+  textMuted: "#8B8780",
+  green: "#143426",
   rule: "#D8D2C8",
-  ruleStrong: "#BDB7AB",
+  ruleFaint: "#ECE8DF",
 } as const;
 
-const HERO_PHOTO = {
-  src: "/images/standard/facility_img_01.webp",
-  alt: "やまと不動産の標準装備 — システムキッチン",
-  caption: "FIG. 01 — KITCHEN & DINING / STANDARD",
-};
-
-type Item = { name: string; detail?: string };
-type Category = {
+type Spec = {
   no: string;
-  en: string;
-  ja: string;
-  items: Item[];
+  category: string;
+  vendor?: string; // 太字メーカー名
+  detail: string;
+  note?: string;
 };
 
-const CATEGORIES: Category[] = [
-  {
-    no: "01",
-    en: "KITCHEN & BATH",
-    ja: "毎日使う設備",
-    items: [
-      { name: "システムキッチン", detail: "LIXIL シエラS / カップボード標準付属" },
-      { name: "システムバス", detail: "LIXIL リデア / ゆとりサイズ・浴室乾燥機付" },
-      { name: "洗面化粧台", detail: "LIXIL ベーシアハーモL / 三面鏡・引き出し収納" },
-      { name: "タンクレストイレ", detail: "LIXIL ベーシア / 手洗い・温水洗浄便座付" },
-      { name: "給湯設備", detail: "エコキュート (オール電化対応)" },
-    ],
-  },
-  {
-    no: "02",
-    en: "PERFORMANCE",
-    ja: "見えない性能",
-    items: [
-      { name: "耐震等級3", detail: "建築基準法の1.5倍 / 最高等級" },
-      { name: "高気密・高断熱", detail: "UA値 0.42 W/㎡·K (風モデル相当)" },
-      { name: "第一種換気システム", detail: "全熱交換型 / 省エネと空気質を両立" },
-      { name: "Low-E トリプルガラス", detail: "樹脂サッシ / 結露と熱損失を抑制" },
-      { name: "長期優良住宅対応", detail: "標準仕様で認定基準をクリア" },
-    ],
-  },
-  {
-    no: "03",
-    en: "STRUCTURE & SAFETY",
-    ja: "構造と安心",
-    items: [
-      { name: "制震ダンパー MIRAIE", detail: "余震を含む繰返し地震に強い構造補強" },
-      { name: "ベタ基礎", detail: "鉄筋コンクリート / シロアリ・湿気対策" },
-      { name: "防蟻処理", detail: "ホウ酸系 / 10年保証" },
-      { name: "JAS 構造材", detail: "規格適合材を使用" },
-      { name: "外壁材", detail: "サイディング / 30年メンテナンスフリー対応品" },
-    ],
-  },
-  {
-    no: "04",
-    en: "SUPPORT",
-    ja: "アフターサポート",
-    items: [
-      { name: "60年長期保証", detail: "構造・防水 30年 / 設備 10年" },
-      { name: "定期点検", detail: "3ヶ月・1年・2年・5年・10年・以降5年毎" },
-      { name: "24時間対応", detail: "水漏れ・設備トラブルの初動対応" },
-      { name: "資金計画相談", detail: "土地探し・住宅ローンまでワンストップ" },
-    ],
-  },
+// 17 項目 — memory: reference_yamato_standard_spec_canonical.md
+const SPECS: Spec[] = [
+  { no: "01", category: "キッチン",     vendor: "クリナップ",  detail: "システムキッチン",                          note: "食洗機・IH3口 含む" },
+  { no: "02", category: "食洗機",       vendor: "Miele / Panasonic", detail: "ビルトイン" },
+  { no: "03", category: "浴室",         vendor: "TOTO",        detail: "ユニットバス 1616 / 保温浴槽 / 浴室暖房乾燥機" },
+  { no: "04", category: "洗面台",       vendor: "TOTO",        detail: "750mm 三面鏡仕様" },
+  { no: "05", category: "トイレ",       vendor: "TOTO",        detail: "ウォシュレット" },
+  { no: "06", category: "玄関ドア",     vendor: "YKK AP",      detail: "Venato K4 親子ドア",                       note: "花モデルのみ顔認証付" },
+  { no: "07", category: "窓サッシ",     vendor: "YKK AP",      detail: "APW330 Low-E複層ガラス / 樹脂サッシ" },
+  { no: "08", category: "外壁",         vendor: "旭化成",      detail: "ヘーベルパワーボード + 窯業系サイディング 16mm" },
+  { no: "09", category: "屋根",         detail: "軽量瓦 全6色 / 遮音・遮熱対応" },
+  { no: "10", category: "断熱",         detail: "クレタン吹付 / 外断熱 85mm + 屋根硬質ウレタン 95mm" },
+  { no: "11", category: "構造",         detail: "木造軸組 + 金物ハイブリッド工法",                                  note: "在来比 約1.5倍強度" },
+  { no: "12", category: "制震",         vendor: "MIRAIE",      detail: "制震ダンパー (住友ゴム製)" },
+  { no: "13", category: "給湯",         detail: "エコキュート 460L / オール電化" },
+  { no: "14", category: "空調・照明",   detail: "リビング1台標準 / LED照明 / カーテン付" },
+  { no: "15", category: "外構",         detail: "門柱・ポスト・表札一式 / 網戸標準" },
+  { no: "16", category: "地盤保証",     detail: "20年保証" },
+  { no: "17", category: "しろあり保証", detail: "10年保証" },
 ];
 
 export default function StandardEquipment() {
@@ -112,26 +75,41 @@ export default function StandardEquipment() {
         fontFeatureSettings: '"palt"',
       }}
     >
-      <div className="relative mx-auto max-w-[1320px] px-[var(--page-px)] py-[clamp(72px,10vw,140px)]">
-        {/* ─── ヘッダー ─── */}
-        <header className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-x-12 lg:gap-x-16 gap-y-10 items-end">
-          <div className="max-w-[640px]">
-            <p
-              className="text-[10.5px] tracking-[0.32em] uppercase"
-              style={{
-                color: PALETTE.textSub,
-                fontFamily: '"Inter", system-ui, sans-serif',
-                fontWeight: 500,
-              }}
-            >
-              Standard Equipment
-            </p>
+      <div className="mx-auto max-w-[1320px] px-[var(--page-px)] py-[clamp(72px,10vw,140px)]">
+        {/* ─── META STRIP ─── */}
+        <div
+          className="border-b"
+          style={{ borderColor: PALETTE.rule }}
+        >
+          <div
+            className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1.5 py-3 text-[10px] tracking-[0.22em]"
+            style={{
+              fontFamily: '"Inter", system-ui, sans-serif',
+              color: PALETTE.textSub,
+              fontWeight: 500,
+            }}
+          >
+            <span style={{ color: PALETTE.text }}>
+              やまと不動産 ─ STANDARD SPECIFICATION SCHEDULE
+            </span>
+            <span className="hidden md:inline">FIG. 01 &nbsp;·&nbsp; FACILITY</span>
+            <span className="hidden lg:inline" style={{ color: PALETTE.text }}>
+              SCALE 1 : 50
+            </span>
+            <span>NARA &nbsp;·&nbsp; KYOTO</span>
+          </div>
+        </div>
+
+        {/* ─── 本体: 左ヘッダー + 右テーブル ─── */}
+        <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-x-12 lg:gap-x-16 gap-y-12 items-start">
+          {/* LEFT: 見出し + リード */}
+          <div className="lg:sticky lg:top-24">
             <h2
               id="standard-equipment-heading"
-              className="mt-5"
               style={{
+                fontFamily: '"Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif',
                 fontSize: "clamp(28px, 3.6vw, 46px)",
-                fontWeight: 500,
+                fontWeight: 600,
                 lineHeight: 1.45,
                 letterSpacing: "0.04em",
                 color: PALETTE.text,
@@ -142,7 +120,7 @@ export default function StandardEquipment() {
               ここまで標準。
             </h2>
             <p
-              className="mt-6"
+              className="mt-7 max-w-[460px]"
               style={{
                 color: PALETTE.textSub,
                 fontSize: "clamp(14px, 1vw, 15px)",
@@ -150,64 +128,198 @@ export default function StandardEquipment() {
               }}
             >
               毎日使う設備から、見えない部分の性能まで。
+              <br />
               住んでからの快適さを支える項目を、価格に含めています。
             </p>
-            <p
-              className="mt-5 inline-flex items-center gap-2 text-[12px]"
-              style={{
-                color: PALETTE.green,
-                fontFamily: '"Inter", system-ui, sans-serif',
-                fontWeight: 500,
-                letterSpacing: "0.06em",
-              }}
-            >
-              <span
-                className="inline-block w-3 h-px"
-                style={{ background: PALETTE.green }}
-                aria-hidden
-              />
-              INCLUDED &nbsp;·&nbsp; 80+ ITEMS
-            </p>
-          </div>
 
-          {/* hero photo (右) */}
-          <figure className="relative w-full">
+            {/* 凡例 */}
             <div
-              className="relative w-full"
-              style={{ aspectRatio: "16 / 10", background: PALETTE.rule }}
-            >
-              <Image
-                src={HERO_PHOTO.src}
-                alt={HERO_PHOTO.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 700px"
-                className="object-cover"
-              />
-            </div>
-            <figcaption
-              className="mt-3 text-right text-[10.5px] tracking-[0.22em] uppercase"
+              className="mt-10 pt-5 inline-flex items-center gap-2.5 text-[11px]"
               style={{
                 color: PALETTE.textSub,
                 fontFamily: '"Inter", system-ui, sans-serif',
+                letterSpacing: "0.18em",
+                borderTop: `1px solid ${PALETTE.rule}`,
               }}
             >
-              ─── {HERO_PHOTO.caption}
-            </figcaption>
-          </figure>
-        </header>
+              <span
+                aria-hidden
+                className="inline-block w-1.5 h-1.5 rounded-full"
+                style={{ background: PALETTE.green }}
+              />
+              <span style={{ color: PALETTE.text, fontWeight: 500 }}>STANDARD</span>
+              <span>—</span>
+              <span>標準仕様に含まれる</span>
+            </div>
+          </div>
 
-        {/* ─── 4 カテゴリ・チェックリスト ─── */}
-        <div className="mt-16 md:mt-20" style={{ borderTop: `1px solid ${PALETTE.rule}` }}>
-          {CATEGORIES.map((cat) => (
-            <CategoryBlock key={cat.no} category={cat} />
-          ))}
+          {/* RIGHT: スペック表 */}
+          <div>
+            <table
+              className="w-full"
+              style={{
+                borderCollapse: "collapse",
+                fontFamily: '"Hiragino Sans", "Noto Sans JP", system-ui, sans-serif',
+              }}
+            >
+              <caption className="sr-only">
+                やまと不動産 標準仕様スケジュール (花モデル基準・17項目)
+              </caption>
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    className="text-left pb-3 pr-3"
+                    style={{
+                      fontFamily: '"Inter", system-ui, sans-serif',
+                      fontSize: "10px",
+                      letterSpacing: "0.24em",
+                      color: PALETTE.textMuted,
+                      fontWeight: 500,
+                      width: "44px",
+                      borderBottom: `1px solid ${PALETTE.text}`,
+                    }}
+                  >
+                    NO.
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-left pb-3 pr-3"
+                    style={{
+                      fontFamily: '"Inter", system-ui, sans-serif',
+                      fontSize: "10px",
+                      letterSpacing: "0.24em",
+                      color: PALETTE.textMuted,
+                      fontWeight: 500,
+                      width: "120px",
+                      borderBottom: `1px solid ${PALETTE.text}`,
+                    }}
+                  >
+                    区分 / CATEGORY
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-left pb-3 pr-3"
+                    style={{
+                      fontFamily: '"Inter", system-ui, sans-serif',
+                      fontSize: "10px",
+                      letterSpacing: "0.24em",
+                      color: PALETTE.textMuted,
+                      fontWeight: 500,
+                      borderBottom: `1px solid ${PALETTE.text}`,
+                    }}
+                  >
+                    仕様 / SPEC
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-right pb-3"
+                    style={{
+                      fontFamily: '"Inter", system-ui, sans-serif',
+                      fontSize: "10px",
+                      letterSpacing: "0.24em",
+                      color: PALETTE.textMuted,
+                      fontWeight: 500,
+                      width: "80px",
+                      borderBottom: `1px solid ${PALETTE.text}`,
+                    }}
+                  >
+                    STANDARD
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {SPECS.map((spec, i) => (
+                  <tr
+                    key={spec.no}
+                    style={{
+                      borderBottom: `1px solid ${i === SPECS.length - 1 ? PALETTE.text : PALETTE.rule}`,
+                    }}
+                  >
+                    <td
+                      className="py-4 pr-3 align-top"
+                      style={{
+                        fontFamily: '"Inter", system-ui, sans-serif',
+                        fontSize: "12px",
+                        color: PALETTE.textMuted,
+                        fontWeight: 400,
+                        letterSpacing: "0.06em",
+                      }}
+                    >
+                      {spec.no}
+                    </td>
+                    <td
+                      className="py-4 pr-3 align-top"
+                      style={{
+                        fontSize: "13px",
+                        color: PALETTE.text,
+                        fontWeight: 500,
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {spec.category}
+                    </td>
+                    <td
+                      className="py-4 pr-3 align-top"
+                      style={{
+                        fontSize: "13px",
+                        color: PALETTE.textSub,
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {spec.vendor && (
+                        <span
+                          className="inline-block mr-1.5"
+                          style={{ color: PALETTE.text, fontWeight: 600 }}
+                        >
+                          {spec.vendor}
+                        </span>
+                      )}
+                      <span>{spec.detail}</span>
+                      {spec.note && (
+                        <span
+                          className="block mt-1 text-[11.5px]"
+                          style={{ color: PALETTE.textMuted, letterSpacing: "0.02em" }}
+                        >
+                          ({spec.note})
+                        </span>
+                      )}
+                    </td>
+                    <td
+                      className="py-4 text-right align-top"
+                      style={{ color: PALETTE.green }}
+                    >
+                      <span
+                        aria-hidden
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{ background: PALETTE.green }}
+                      />
+                      <span className="sr-only">標準仕様に含まれる</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* 表フッター */}
+            <p
+              className="mt-6 text-center text-[10.5px] tracking-[0.32em] uppercase"
+              style={{
+                color: PALETTE.textMuted,
+                fontFamily: '"Inter", system-ui, sans-serif',
+                fontWeight: 500,
+              }}
+            >
+              ─── End of schedule &nbsp;·&nbsp; 17 items ───
+            </p>
+          </div>
         </div>
 
-        {/* ─── CTA バー (StandardComparisonBlueprint と同型) ─── */}
+        {/* ─── CTA バー (StandardComparisonBlueprint と同型・縦リズム維持) ─── */}
         <div
-          className="mt-12 md:mt-14"
+          className="mt-14 md:mt-16"
           style={{
-            background: PALETTE.card,
+            background: PALETTE.paperWarm,
             border: `1px solid ${PALETTE.rule}`,
           }}
         >
@@ -215,7 +327,10 @@ export default function StandardEquipment() {
             className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-px"
             style={{ background: PALETTE.rule }}
           >
-            <div className="p-6 md:p-8" style={{ background: PALETTE.card }}>
+            <div
+              className="p-6 md:p-8"
+              style={{ background: PALETTE.paperWarm }}
+            >
               <p
                 className="text-[10.5px] tracking-[0.32em] uppercase"
                 style={{
@@ -250,78 +365,15 @@ export default function StandardEquipment() {
         </div>
 
         {/* ─── 注意書き ─── */}
-        <p
-          className="mt-7 md:mt-9 text-[11px] md:text-[11.5px]"
+        <div
+          className="mt-7 md:mt-9 text-[11px] md:text-[11.5px] space-y-1"
           style={{ color: PALETTE.textSub, lineHeight: 1.85 }}
         >
-          ※ 仕様・メーカーはプランや時期により変更となる場合があります。詳細はご来場時にご案内します。
-        </p>
+          <p>※ 上記は花モデル (2,480万円〜) を基準とした標準仕様です。風・京モデルは一部仕様が異なります。</p>
+          <p>※ 仕様・メーカー・型番はプランや時期により変更となる場合があります。詳細はご来場時にご案内します。</p>
+        </div>
       </div>
     </section>
-  );
-}
-
-// ───────────────────────────────────────────
-// CategoryBlock — 番号 eyebrow + カテゴリ名 + チェックリスト
-// ───────────────────────────────────────────
-function CategoryBlock({ category }: { category: Category }) {
-  return (
-    <article
-      className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-x-10 gap-y-5 py-7 md:py-9"
-      style={{ borderBottom: `1px solid ${PALETTE.rule}` }}
-    >
-      {/* 左: 番号 + カテゴリ名 */}
-      <header>
-        <p
-          className="text-[10.5px] tracking-[0.32em] uppercase"
-          style={{
-            color: PALETTE.green,
-            fontFamily: '"Inter", system-ui, sans-serif',
-            fontWeight: 500,
-          }}
-        >
-          {category.no} &nbsp;—&nbsp; {category.en}
-        </p>
-        <h3
-          className="mt-2 text-[16px] md:text-[17px]"
-          style={{ color: PALETTE.text, fontWeight: 500, letterSpacing: "0.02em" }}
-        >
-          {category.ja}
-        </h3>
-      </header>
-
-      {/* 右: チェックリスト */}
-      <ul className="space-y-3.5">
-        {category.items.map((item) => (
-          <li
-            key={item.name}
-            className="grid grid-cols-[20px_minmax(140px,1fr)_2fr] sm:grid-cols-[20px_180px_1fr] gap-x-4 gap-y-1 items-baseline"
-          >
-            <span
-              className="inline-flex items-center justify-center w-[18px] h-[18px] mt-0.5"
-              style={{ color: PALETTE.green }}
-              aria-hidden
-            >
-              <Check className="w-4 h-4" strokeWidth={2} />
-            </span>
-            <span
-              className="text-[13.5px] md:text-[14px]"
-              style={{ color: PALETTE.text, fontWeight: 500 }}
-            >
-              {item.name}
-            </span>
-            {item.detail && (
-              <span
-                className="text-[12.5px] md:text-[13px] col-span-2 sm:col-span-1 ml-[34px] sm:ml-0"
-                style={{ color: PALETTE.textSub, lineHeight: 1.7 }}
-              >
-                {item.detail}
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </article>
   );
 }
 
@@ -373,7 +425,7 @@ function CtaCard({
   );
 
   const className = "group flex items-center gap-4 p-6 md:p-7 transition-colors";
-  const style = { background: PALETTE.card };
+  const style = { background: PALETTE.paperWarm };
 
   if (external) {
     return (
