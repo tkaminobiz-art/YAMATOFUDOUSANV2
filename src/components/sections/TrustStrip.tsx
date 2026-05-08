@@ -27,7 +27,7 @@ export default function TrustStrip() {
   return (
     <section
       aria-label="ご相談時のお約束"
-      className="bg-bg-primary border-b border-[var(--color-border)]"
+      className="font-murecho bg-bg-primary border-b border-[var(--color-border)]"
     >
       <div className="max-w-[1180px] mx-auto px-[var(--page-px)] py-4 md:py-5">
         <ul className="flex flex-wrap items-center justify-center gap-x-7 sm:gap-x-12 lg:gap-x-20 gap-y-2.5">

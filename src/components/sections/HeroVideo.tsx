@@ -53,7 +53,9 @@ const METRICS: readonly Metric[] = [
   },
 ];
 
-const NOTO = "var(--font-noto), 'Noto Sans JP', sans-serif";
+// 2026-05-08 v5: B案(Editorial Mincho) Phase 2 — 和文を Murecho に切替え
+const MURECHO =
+  "var(--font-murecho-var), 'Murecho', 'Hiragino Sans', 'Yu Gothic', sans-serif";
 const INTER = "var(--font-inter), var(--font-inter-var), Inter, sans-serif";
 const OSWALD =
   "var(--font-oswald-var), var(--font-oswald), 'Oswald', sans-serif";
@@ -156,7 +158,7 @@ export default function HeroVideo() {
               <div className="h-px flex-1 bg-white/30" />
               <span
                 className="hidden text-[11px] tracking-[0.04em] text-white/70 md:inline"
-                style={{ fontFamily: NOTO }}
+                style={{ fontFamily: MURECHO }}
               >
                 地域で積み重ねてきた実績です。
               </span>
@@ -168,7 +170,7 @@ export default function HeroVideo() {
                   {m.eyebrow ? (
                     <span
                       className="block text-[10px] tracking-[0.18em] text-white/60 md:text-[11px]"
-                      style={{ fontFamily: NOTO }}
+                      style={{ fontFamily: MURECHO }}
                     >
                       {m.eyebrow}
                     </span>
@@ -192,20 +194,20 @@ export default function HeroVideo() {
                     </span>
                     <span
                       className="text-[14px] font-medium md:text-[18px]"
-                      style={{ fontFamily: NOTO }}
+                      style={{ fontFamily: MURECHO }}
                     >
                       {m.unit}
                     </span>
                   </div>
                   <p
                     className="mt-1 text-[12px] tracking-[0.02em] text-white/95 md:text-[14px]"
-                    style={{ fontFamily: NOTO, fontWeight: 500 }}
+                    style={{ fontFamily: MURECHO, fontWeight: 500 }}
                   >
                     {m.label}
                   </p>
                   <p
                     className="mt-1 text-[10.5px] leading-relaxed text-white/65 md:text-[12px]"
-                    style={{ fontFamily: NOTO }}
+                    style={{ fontFamily: MURECHO }}
                   >
                     {m.caption}
                   </p>
@@ -215,7 +217,7 @@ export default function HeroVideo() {
 
             <p
               className="mt-4 text-right text-[9.5px] leading-relaxed text-white/55 md:mt-5 md:text-[11px]"
-              style={{ fontFamily: NOTO }}
+              style={{ fontFamily: MURECHO }}
             >
               ※ 公開時点の累計実績です。お引き渡し棟数は関連会社・前身を含む累計値の場合があります。
             </p>
