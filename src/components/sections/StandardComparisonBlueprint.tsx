@@ -2,1070 +2,608 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import {
-  ArrowUpRight,
-  Building2,
-  Wrench,
-  Layers,
-  Handshake,
-  PencilRuler,
-  Calculator,
-  Sprout,
-  FileText,
-  Fence,
-  Sofa,
-  MessageCircle,
-  Calendar,
-  type LucideIcon,
-} from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, MessageCircle, Calendar, BookOpen } from "lucide-react";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
-import BlueprintMorphVideo from "./BlueprintMorphVideo";
 
 /*
-  StandardComparisonBlueprint — 2026-05-08
+  StandardComparisonBlueprint — 2026-05-08 v2 (Apple comparison-page tone)
   ---------------------------------------------------------------
-  「価格だけでなく、標準仕様まで比べてください。」セクションの再設計版。
-  建築図面エディトリアル(W2 系)で、立面図・ink-line house illustration を
-  軸に、大手 4,000万円 と やまと京モデル 2,280万円 を横並びで比較。
-  含まれるもの 6 項目 / 別途となるもの 4 項目を二大カードで提示し、
-  下部に LINE / 来場 / カタログの 3 アクションを集約する。
+  ユーザー判断 (2026-05-08): 旧版は「ダサい」。Apple 製品比較ページの
+  トーン (余白・罫線・タイポグラフィで見せる、装飾は抑制) で再実装。
 
-  画像は Higgsfield Nano Banana Pro で生成済(public/images/sections/):
-    - blueprint-elevation.png   立面図(右上のメインビジュアル)
-    - house-generic.webp         大手プレースホルダー(generic builder elevation, ink line)
-    - house-yamato.webp          やまと左京モデル(PDF 立面図ベース, ink line)
-    - catalog-booklet.png        無料カタログのサムネ
+  方針:
+  - 背景: paper #F7F5F0 (warmer than bg-primary)
+  - アクセント: 深緑 #183528 / 比較表ヘッダー #143426
+  - 数字: Inter / system-ui (Hero の Oswald とは別系統)
+  - 本文: Hiragino Sans / Noto Sans JP / system-ui (B案 Murecho ではなく
+    システム寄りで Apple 比較ページに近い清潔感を出す)
+  - 比較表は <table> セマンティクス + sticky 左カラムで mobile 対応
+
+  データはすべて配列で管理。価格・仕様の差し替えは MODELS / SPEC_ROWS で。
+
+  DESIGN_GUARDRAILS 準拠:
+  - 角丸 4px 以下 / 影は box-shadow なし (hairline 罫線のみ)
+  - card-padding 同一禁止 (項目セルと値セルで密度を変える)
+  - icon 量産禁止 (項目列にアイコンは入れない / 文字のみ)
 */
 
-const INK = "#1D1D18";
-const CREAM = "#F7F4EC";
-const DEEP_GREEN = "#2F4A2C";
-const RULE = "rgba(28,27,24,0.16)";
-const RULE_FAINT = "rgba(28,27,24,0.08)";
+// ───────────────────────────────────────────
+// データ — モデル / 比較項目
+// ───────────────────────────────────────────
+const MODELS = [
+  {
+    id: "kyo",
+    name: "京モデル",
+    subtitle: "価格と性能のバランスを重視した標準モデル",
+    price: "2,280",
+    image: "/images/newsozai/exterior-miyamaki-front.webp",
+    alt: "京モデル 外観",
+  },
+  {
+    id: "nara",
+    name: "奈良モデル",
+    subtitle: "快適性能と設備グレードを高めた上位モデル",
+    price: "2,480",
+    image: "/images/newsozai/exterior-sakyo-clean.webp",
+    alt: "奈良モデル 外観",
+  },
+  {
+    id: "premium",
+    name: "プレミアムモデル",
+    subtitle: "広さ・性能・設備にこだわった高品質モデル",
+    price: "2,780",
+    image: "/images/newsozai/exterior-terrace-02.webp",
+    alt: "プレミアムモデル 外観",
+  },
+] as const;
 
-type IconKind =
-  | "house"
-  | "tools"
-  | "ground"
-  | "shake"
-  | "design"
-  | "tax"
-  | "land"
-  | "doc"
-  | "fence"
-  | "sofa";
-
-const ICON_MAP = {
-  house: Building2,
-  tools: Wrench,
-  ground: Layers,
-  shake: Handshake,
-  design: PencilRuler,
-  tax: Calculator,
-  land: Sprout,
-  doc: FileText,
-  fence: Fence,
-  sofa: Sofa,
-} as const satisfies Record<IconKind, LucideIcon>;
-
-type IncludedItem = {
-  icon: IconKind;
-  title: string;
-  desc: string;
-  badge?: string;
+type SpecRow = {
+  label: string;
+  values: [string, string, string]; // [京, 奈良, プレミアム]
+  highlight?: boolean; // 価格行は強調
 };
 
-const INCLUDED: readonly IncludedItem[] = [
+const SPEC_ROWS: SpecRow[] = [
   {
-    icon: "house",
-    title: "建物本体",
-    desc: "構造・断熱・外装・内装すべて含みます",
+    label: "本体価格",
+    values: ["2,280万円〜", "2,480万円〜", "2,780万円〜"],
+    highlight: true,
   },
   {
-    icon: "tools",
-    title: "標準付帯工事",
-    desc: "屋内給排水・電気工事・ガス工事など",
+    label: "延床面積",
+    values: ["28.5坪 (94.40㎡)", "31.2坪 (103.30㎡)", "34.6坪 (114.30㎡)"],
   },
   {
-    icon: "ground",
-    title: "地盤改良費",
-    desc: "当社負担分まで含みます",
-    badge: "最大150万円まで",
+    label: "耐震等級",
+    values: ["耐震等級3 (最高等級)", "耐震等級3 (最高等級)", "耐震等級3 (最高等級)"],
   },
   {
-    icon: "shake",
-    title: "仲介手数料",
-    desc: "当社分譲地の場合",
+    label: "断熱性能 (UA値)",
+    values: ["0.46 W/㎡·K", "0.42 W/㎡·K", "0.34 W/㎡·K"],
   },
   {
-    icon: "design",
-    title: "設計・申請費用",
-    desc: "確認申請・各種申請費用を含みます",
+    label: "窓仕様",
+    values: [
+      "樹脂サッシ Low-E 複層ガラス",
+      "樹脂サッシ Low-E トリプルガラス",
+      "樹脂サッシ Low-E トリプルガラス",
+    ],
   },
   {
-    icon: "tax",
-    title: "消費税",
-    desc: "建物本体・付帯工事にかかる消費税",
+    label: "キッチン",
+    values: ["LIXIL シエラS", "LIXIL ノクト", "LIXIL リシェルSI"],
   },
-] as const;
+  {
+    label: "浴室",
+    values: ["LIXIL リデア", "LIXIL スパージュ", "LIXIL スパージュ"],
+  },
+  {
+    label: "洗面",
+    values: [
+      "LIXIL ベーシアハーモL",
+      "LIXIL ピアラ",
+      "LIXIL ルミシス",
+    ],
+  },
+  {
+    label: "トイレ",
+    values: ["LIXIL ベーシア", "LIXIL サティスS", "LIXIL サティスG"],
+  },
+  {
+    label: "保証・アフターサポート",
+    values: [
+      "最長60年保証 (構造・防水30年/設備10年)",
+      "最長60年保証 (構造・防水30年/設備10年)",
+      "最長60年保証 (構造・防水30年/設備10年)",
+    ],
+  },
+];
 
-const EXCLUDED: readonly { icon: IconKind; title: string; desc: string }[] = [
-  {
-    icon: "land",
-    title: "土地代",
-    desc: "土地の購入費用",
-  },
-  {
-    icon: "doc",
-    title: "登記費用・印紙税・ローン手数料",
-    desc: "各種登記・住宅ローン関連費用",
-  },
-  {
-    icon: "fence",
-    title: "外構工事",
-    desc: "カーポート・フェンス・庭など",
-  },
-  {
-    icon: "sofa",
-    title: "引越し費用・家具家電",
-    desc: "お引越し・家具・家電の購入費用",
-  },
-] as const;
+const PALETTE = {
+  bg: "#F7F5F0",
+  card: "#FBFAF7",
+  text: "#111111",
+  textSub: "#6E6A63",
+  green: "#183528",
+  greenDeep: "#143426",
+  rule: "#D8D2C8",
+  ruleStrong: "#BDB7AB",
+} as const;
 
-// ────────────────────────────────────────────────
-// 数字の遅延カウントアップ(視認に入ったら 0 → target)
-// ────────────────────────────────────────────────
-function useCountUp<T extends HTMLElement = HTMLDivElement>(target: number, durationMs = 1200) {
-  const ref = useRef<T | null>(null);
-  // SSR/初期表示は target を直接表示し、ハイドレーション後に reduced-motion を満たさない
-  // 場合のみ 0 から再開してアニメさせる(setState-in-effect 警告回避)。
-  const [value, setValue] = useState<number>(target);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect();
-        setValue(0);
-        const start = performance.now();
-        const tick = (now: number) => {
-          const t = Math.min(1, (now - start) / durationMs);
-          const eased = 1 - Math.pow(1 - t, 3);
-          setValue(Math.round(eased * target));
-          if (t < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      },
-      { threshold: 0.3 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [target, durationMs]);
-  return [ref, value] as const;
-}
-
-// ────────────────────────────────────────────────
-// 罫線・寸法ティック
-// ────────────────────────────────────────────────
-function RulerEdge({ position }: { position: "top" | "bottom" }) {
-  // 細かい刻みを SVG で描画(architectural tick)
-  return (
-    <div
-      aria-hidden
-      className={`absolute left-0 right-0 ${position === "top" ? "top-0" : "bottom-0"} h-[14px] overflow-hidden`}
-      style={{ color: "rgba(28,27,24,0.30)" }}
-    >
-      <svg
-        className="w-full h-full"
-        viewBox="0 0 1000 14"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* main rule */}
-        <line
-          x1="0"
-          y1={position === "top" ? "13" : "1"}
-          x2="1000"
-          y2={position === "top" ? "13" : "1"}
-          stroke="currentColor"
-          strokeWidth="0.5"
-        />
-        {/* ticks every 10 units */}
-        {Array.from({ length: 100 }, (_, i) => i * 10).map((x) => (
-          <line
-            key={x}
-            x1={x}
-            y1={position === "top" ? "13" : "1"}
-            x2={x}
-            y2={position === "top" ? (x % 50 === 0 ? "5" : "9") : x % 50 === 0 ? "9" : "5"}
-            stroke="currentColor"
-            strokeWidth="0.5"
-          />
-        ))}
-      </svg>
-    </div>
-  );
-}
-
-// ────────────────────────────────────────────────
-// 寸法ライン(両端 ┤├ + 中央ラベル) — 建築図面の寸法アロー風
-// ────────────────────────────────────────────────
-function DimTick({ color }: { color: string }) {
+// ───────────────────────────────────────────
+// 簡易 SVG 線画 (右上の薄い装飾)
+// ───────────────────────────────────────────
+function HouseDrawing({ className }: { className?: string }) {
   return (
     <svg
-      width="6"
-      height="11"
-      viewBox="0 0 6 11"
+      viewBox="0 0 320 200"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="0.6"
+      className={className}
       aria-hidden
-      style={{ flexShrink: 0, color }}
     >
-      <line x1="3" y1="0" x2="3" y2="11" stroke="currentColor" strokeWidth="0.7" />
-      <line x1="0" y1="5.5" x2="6" y2="5.5" stroke="currentColor" strokeWidth="0.7" />
+      <path d="M40 170 L40 90 L160 30 L280 90 L280 170 Z" />
+      <path d="M40 170 L280 170" strokeWidth="0.8" />
+      <path d="M40 90 L160 30 L280 90" />
+      <rect x="70" y="110" width="40" height="40" />
+      <rect x="80" y="110" width="20" height="40" strokeDasharray="2 2" />
+      <rect x="140" y="110" width="40" height="40" />
+      <rect x="210" y="110" width="40" height="40" />
+      <rect x="220" y="110" width="20" height="40" strokeDasharray="2 2" />
+      <rect x="146" y="130" width="28" height="40" />
+      <path d="M30 178 L290 178" strokeWidth="0.4" />
+      <path d="M30 174 L30 182 M290 174 L290 182" strokeWidth="0.4" />
+      <text x="160" y="194" textAnchor="middle" fontSize="6" fill="currentColor" stroke="none">
+        12,000
+      </text>
+      <path d="M16 30 L16 170" strokeWidth="0.4" />
+      <path d="M12 30 L20 30 M12 170 L20 170" strokeWidth="0.4" />
     </svg>
   );
 }
 
-function DimensionRule({
-  label,
-  color = "rgba(28,27,24,0.42)",
-  className = "",
+// ───────────────────────────────────────────
+// メインコンポーネント
+// ───────────────────────────────────────────
+export default function StandardComparisonBlueprint() {
+  const [tab, setTab] = useState<"price" | "standard">("standard");
+
+  return (
+    <section
+      aria-labelledby="comparison-heading"
+      className="ycb-section"
+      style={{
+        background: PALETTE.bg,
+        color: PALETTE.text,
+        fontFamily:
+          '"Hiragino Sans", "Noto Sans JP", system-ui, -apple-system, sans-serif',
+        fontFeatureSettings: '"palt"',
+      }}
+    >
+      <div className="ycb-container relative mx-auto max-w-[1320px] px-[var(--page-px)] py-[clamp(72px,10vw,140px)]">
+        {/* 装飾線画 (右上) */}
+        <div
+          aria-hidden
+          className="hidden lg:block absolute top-[clamp(48px,6vw,100px)] right-[clamp(40px,6vw,120px)] w-[280px] xl:w-[340px] pointer-events-none"
+          style={{ color: PALETTE.green, opacity: 0.16 }}
+        >
+          <HouseDrawing />
+        </div>
+
+        {/* ─── ヘッダー (上部ラベル + 見出し + リード + tabs) ─── */}
+        <header className="relative">
+          <div className="flex flex-wrap items-start justify-between gap-y-6 gap-x-8">
+            <div className="flex-1 min-w-[280px] max-w-[820px]">
+              <p
+                className="text-[10.5px] tracking-[0.32em] uppercase"
+                style={{
+                  color: PALETTE.textSub,
+                  fontFamily: '"Inter", system-ui, sans-serif',
+                  fontWeight: 500,
+                }}
+              >
+                Price &amp; Standard Comparison
+              </p>
+              <h2
+                id="comparison-heading"
+                className="mt-5"
+                style={{
+                  fontSize: "clamp(28px, 3.6vw, 46px)",
+                  fontWeight: 500,
+                  lineHeight: 1.45,
+                  letterSpacing: "0.04em",
+                  color: PALETTE.text,
+                }}
+              >
+                価格だけでなく、
+                <br />
+                標準仕様まで比べてください。
+              </h2>
+              <p
+                className="mt-7 max-w-[640px]"
+                style={{
+                  color: PALETTE.textSub,
+                  fontSize: "clamp(14px, 1vw, 15px)",
+                  lineHeight: 2,
+                }}
+              >
+                やまと不動産では、価格の違いだけでなく、標準で含まれる仕様・性能・設備までわかりやすく比較できます。
+                後からの「想定外」を防ぎ、納得して選べる住まいをご提案します。
+              </p>
+            </div>
+
+            {/* tabs */}
+            <nav
+              aria-label="比較切替"
+              className="flex items-center gap-6 text-[13px]"
+              style={{ fontFamily: '"Inter", system-ui, sans-serif' }}
+            >
+              <button
+                type="button"
+                onClick={() => setTab("price")}
+                className="inline-flex items-baseline gap-1.5 transition-colors"
+                style={{
+                  color: tab === "price" ? PALETTE.text : PALETTE.textSub,
+                  fontWeight: tab === "price" ? 500 : 400,
+                  borderBottom: tab === "price" ? `1px solid ${PALETTE.text}` : "1px solid transparent",
+                  paddingBottom: 4,
+                }}
+                aria-pressed={tab === "price"}
+              >
+                <span className="text-[11px] tracking-[0.18em] uppercase">01</span>
+                <span>価格比較</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setTab("standard")}
+                className="inline-flex items-baseline gap-1.5 transition-colors"
+                style={{
+                  color: tab === "standard" ? PALETTE.text : PALETTE.textSub,
+                  fontWeight: tab === "standard" ? 500 : 400,
+                  borderBottom: tab === "standard" ? `1px solid ${PALETTE.text}` : "1px solid transparent",
+                  paddingBottom: 4,
+                }}
+                aria-pressed={tab === "standard"}
+              >
+                <span className="text-[11px] tracking-[0.18em] uppercase">02</span>
+                <span>標準仕様比較</span>
+              </button>
+            </nav>
+          </div>
+        </header>
+
+        {/* ─── モデル写真ヘッダー (PC) ─── */}
+        <div className="mt-12 md:mt-16 hidden lg:grid lg:grid-cols-[200px_repeat(3,1fr)] lg:gap-x-5">
+          <div />
+          {MODELS.map((m) => (
+            <ModelHead key={m.id} model={m} />
+          ))}
+        </div>
+
+        {/* ─── 比較表 ─── */}
+        <div
+          className="mt-8 lg:mt-6 overflow-x-auto"
+          style={{ borderTop: `1px solid ${PALETTE.rule}` }}
+        >
+          <table
+            className="ycb-table w-full"
+            style={{
+              borderCollapse: "collapse",
+              minWidth: 720,
+            }}
+          >
+            <caption className="sr-only">京・奈良・プレミアム 3 モデルの仕様比較</caption>
+
+            {/* mobile / tablet 用: thead でモデル写真ヘッダー */}
+            <thead className="lg:hidden">
+              <tr>
+                <th scope="col" className="sr-only">項目</th>
+                {MODELS.map((m) => (
+                  <th
+                    key={m.id}
+                    scope="col"
+                    className="text-left p-0 align-bottom"
+                    style={{ minWidth: 220 }}
+                  >
+                    <ModelHead model={m} compact />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+              {SPEC_ROWS.map((row, idx) => (
+                <tr key={row.label}>
+                  <th
+                    scope="row"
+                    className="ycb-th-row sticky left-0 z-[1] align-middle text-left"
+                    style={{
+                      background: PALETTE.greenDeep,
+                      color: "#ffffff",
+                      padding: "clamp(14px,1.6vw,20px) clamp(14px,1.4vw,20px)",
+                      fontSize: "12.5px",
+                      fontWeight: 500,
+                      letterSpacing: "0.02em",
+                      width: "200px",
+                      minWidth: "180px",
+                      borderTop: idx === 0 ? "none" : `1px solid rgba(255,255,255,0.08)`,
+                    }}
+                  >
+                    {row.label}
+                  </th>
+                  {row.values.map((value, vi) => (
+                    <td
+                      key={vi}
+                      className="align-middle"
+                      style={{
+                        background: vi === 0 && row.highlight ? "#FFFFFF" : PALETTE.card,
+                        color: PALETTE.text,
+                        padding: "clamp(14px,1.6vw,20px) clamp(16px,1.8vw,28px)",
+                        borderTop: idx === 0 ? "none" : `1px solid ${PALETTE.rule}`,
+                        borderLeft: vi === 0 ? "none" : `1px solid ${PALETTE.rule}`,
+                        fontSize: row.highlight ? "clamp(14px,1.2vw,17px)" : "clamp(13px,1vw,14.5px)",
+                        fontWeight: row.highlight ? 500 : 400,
+                        lineHeight: 1.65,
+                        verticalAlign: "middle",
+                        minWidth: "200px",
+                      }}
+                    >
+                      {row.highlight ? (
+                        <PriceCell value={value} />
+                      ) : (
+                        value
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* ─── CTA バー ─── */}
+        <div
+          className="mt-12 md:mt-14"
+          style={{
+            background: PALETTE.card,
+            border: `1px solid ${PALETTE.rule}`,
+          }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-px" style={{ background: PALETTE.rule }}>
+            {/* 左: 補助文 */}
+            <div className="p-6 md:p-8" style={{ background: PALETTE.card }}>
+              <p
+                className="text-[10.5px] tracking-[0.32em] uppercase"
+                style={{
+                  color: PALETTE.textSub,
+                  fontFamily: '"Inter", system-ui, sans-serif',
+                  fontWeight: 500,
+                }}
+              >
+                Next Step
+              </p>
+              <p
+                className="mt-3 text-[14px] md:text-[15px]"
+                style={{ color: PALETTE.text, lineHeight: 1.85 }}
+              >
+                標準仕様の詳細や、暮らし方に合わせた最適なプランをご提案します。
+              </p>
+            </div>
+
+            {/* CTA 1: LINE */}
+            <CtaCard
+              href={LINE_ADD_FRIEND_URL}
+              external
+              icon={<MessageCircle className="w-4 h-4" strokeWidth={1.5} />}
+              label="LINEで相談する"
+              sub="気軽にご相談いただけます"
+            />
+
+            {/* CTA 2: 見学 */}
+            <CtaCard
+              href="/reserve"
+              icon={<Calendar className="w-4 h-4" strokeWidth={1.5} />}
+              label="モデルハウスを見学する"
+              sub="実際のサイズ感や仕様を体感できます"
+            />
+          </div>
+
+          {/* カタログ別枠 */}
+          <Link
+            href="/contact?mode=catalog"
+            className="ycb-catalog group flex items-center justify-between gap-4 px-6 md:px-8 py-5 transition-colors"
+            style={{
+              borderTop: `1px solid ${PALETTE.rule}`,
+              background: PALETTE.card,
+            }}
+          >
+            <div className="flex items-center gap-4">
+              <span
+                className="inline-flex items-center justify-center w-10 h-10 shrink-0"
+                style={{ background: PALETTE.green, color: "#ffffff" }}
+                aria-hidden
+              >
+                <BookOpen className="w-4 h-4" strokeWidth={1.5} />
+              </span>
+              <div>
+                <p
+                  className="text-[10.5px] tracking-[0.32em] uppercase"
+                  style={{
+                    color: PALETTE.textSub,
+                    fontFamily: '"Inter", system-ui, sans-serif',
+                    fontWeight: 500,
+                  }}
+                >
+                  Catalog
+                </p>
+                <p
+                  className="mt-1 text-[14px] md:text-[15px]"
+                  style={{ color: PALETTE.text, fontWeight: 500 }}
+                >
+                  標準仕様・設備カタログ
+                  <span
+                    className="ml-2 text-[12px]"
+                    style={{ color: PALETTE.textSub, fontWeight: 400 }}
+                  >
+                    無料プレゼント中
+                  </span>
+                </p>
+              </div>
+            </div>
+            <ArrowRight
+              className="w-5 h-5 transition-transform group-hover:translate-x-1 shrink-0"
+              strokeWidth={1.5}
+              style={{ color: PALETTE.green }}
+            />
+          </Link>
+        </div>
+
+        {/* ─── 注意書き ─── */}
+        <div
+          className="mt-7 md:mt-9 text-[11px] md:text-[11.5px] space-y-1"
+          style={{ color: PALETTE.textSub, lineHeight: 1.85 }}
+        >
+          <p>※ 価格は目安です。仕様・設備は予告なく変更となる場合があります。</p>
+          <p>※ UA値・性能値はプランや条件により異なる場合があります。</p>
+          <p>※ 掲載写真はイメージです。詳しくはスタッフまでお問い合わせください。</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ───────────────────────────────────────────
+// 子コンポーネント
+// ───────────────────────────────────────────
+function ModelHead({
+  model,
+  compact = false,
 }: {
-  label: React.ReactNode;
-  color?: string;
-  className?: string;
+  model: (typeof MODELS)[number];
+  compact?: boolean;
 }) {
   return (
-    <div
-      className={`flex items-center gap-2 md:gap-3 font-inter text-[10px] md:text-[10.5px] tracking-[0.18em] uppercase font-semibold ${className}`}
-      style={{ color }}
-    >
-      <DimTick color={color} />
-      <span aria-hidden className="flex-1 h-px" style={{ background: color, opacity: 0.7 }} />
-      <span className="px-1 whitespace-nowrap">{label}</span>
-      <span aria-hidden className="flex-1 h-px" style={{ background: color, opacity: 0.7 }} />
-      <DimTick color={color} />
+    <div className={compact ? "p-3" : ""}>
+      <div
+        className="relative w-full"
+        style={{ aspectRatio: "16 / 10", background: PALETTE.rule }}
+      >
+        <Image
+          src={model.image}
+          alt={model.alt}
+          fill
+          sizes="(max-width: 1024px) 80vw, 380px"
+          className="object-cover"
+        />
+      </div>
+      <div className="mt-3 md:mt-4">
+        <p
+          className="text-[15px] md:text-[16px]"
+          style={{
+            color: PALETTE.text,
+            fontWeight: 500,
+            letterSpacing: "0.02em",
+          }}
+        >
+          {model.name}
+        </p>
+        <p
+          className="mt-1 text-[12px] md:text-[12.5px]"
+          style={{ color: PALETTE.textSub, lineHeight: 1.7 }}
+        >
+          {model.subtitle}
+        </p>
+      </div>
     </div>
   );
 }
 
-// ────────────────────────────────────────────────
-// メイン
-// ────────────────────────────────────────────────
-export default function StandardComparisonBlueprint() {
-  const [diffRef, diff] = useCountUp<HTMLDivElement>(1720);
-  const [yamatoRef, yamato] = useCountUp<HTMLSpanElement>(2280);
-  const [otherRef, other] = useCountUp<HTMLSpanElement>(4000);
-
+function PriceCell({ value }: { value: string }) {
+  // 値の例: "2,280万円〜"
+  const m = value.match(/^([\d,]+)(万円〜?.*)$/);
+  if (!m) return <>{value}</>;
+  const [, num, rest] = m;
   return (
-    <section
-      id="comparison"
-      aria-labelledby="comparison-heading"
-      className="relative scroll-mt-20 md:scroll-mt-24 py-[var(--section-py)] overflow-hidden"
-      style={{ background: CREAM, color: INK }}
-    >
-      {/* 上下の建築ルーラー */}
-      <RulerEdge position="top" />
-      <RulerEdge position="bottom" />
-
-      {/* 左サイドの 01 / COMPARISON 縦書きマーク (PC のみ) */}
-      <div
-        aria-hidden
-        className="hidden lg:flex absolute top-0 left-0 h-full w-[var(--page-px)] items-stretch justify-center pointer-events-none"
+    <div className="flex items-baseline gap-1.5">
+      <span
+        style={{
+          fontFamily: '"Inter", system-ui, sans-serif',
+          fontSize: "clamp(28px, 2.4vw, 36px)",
+          fontWeight: 300,
+          letterSpacing: "0",
+          lineHeight: 1,
+          fontVariantNumeric: "tabular-nums",
+          color: PALETTE.text,
+        }}
       >
-        <div className="flex flex-col items-center justify-between py-12">
-          <span
-            className="font-inter text-[11px] tracking-[0.3em]"
-            style={{ color: "rgba(28,27,24,0.45)" }}
-          >
-            01
-          </span>
-          <span
-            className="font-inter text-[10px] tracking-[0.45em] uppercase"
-            style={{
-              color: "rgba(28,27,24,0.35)",
-              writingMode: "vertical-rl",
-            }}
-          >
-            COMPARISON
-          </span>
-          <span
-            className="font-inter text-[10px] tracking-[0.3em]"
-            style={{ color: "rgba(28,27,24,0.35)" }}
-          >
-            01
-          </span>
-        </div>
-      </div>
+        {num}
+      </span>
+      <span className="text-[13px]" style={{ color: PALETTE.text, fontWeight: 500 }}>
+        {rest}
+      </span>
+    </div>
+  );
+}
 
-      <div className="relative max-w-[1340px] mx-auto px-[var(--page-px)]">
-        {/* ============ 1. ヘッダー: 見出し + 立面図 ============ */}
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-8 md:gap-12 lg:gap-16 items-start">
-          {/* 左: 見出しとボディ */}
-          <header className="lg:pt-2">
-            <p
-              className="font-inter text-[10px] md:text-[11px] tracking-[0.32em] uppercase font-semibold mb-5 md:mb-7"
-              style={{ color: "rgba(28,27,24,0.55)" }}
-            >
-              <span className="mr-3" style={{ color: "rgba(28,27,24,0.35)" }}>
-                01
-              </span>
-              Price &amp; Standard Comparison
-            </p>
-            <h2
-              id="comparison-heading"
-              className="font-zen-old text-[clamp(28px,4.4vw,56px)] leading-[1.32] tracking-[0.02em]"
-              style={{ color: INK, fontWeight: 700 }}
-            >
-              価格だけでなく、
-              <br />
-              標準仕様まで比べてください。
-            </h2>
-            <p
-              className="mt-6 md:mt-8 font-murecho text-[14px] md:text-[15.5px] leading-[2.0]"
-              style={{ color: "rgba(28,27,24,0.78)" }}
-            >
-              キッチン・浴室・窓・外壁・断熱・耐震性能まで、
-              <br className="hidden md:block" />
-              暮らしの快適さと安心に関わる部分を、標準仕様として大切にしています。
-            </p>
-            <p
-              className="mt-4 md:mt-5 font-murecho text-[14px] md:text-[15.5px] leading-[2.0]"
-              style={{ color: "rgba(28,27,24,0.78)" }}
-            >
-              見直しているのは、家そのものではなく、
-              <br className="hidden md:block" />
-              <span className="font-bold" style={{ color: INK }}>
-                広告費・展示場維持費・中間コストです。
-              </span>
-            </p>
-
-            {/* 比較条件チップ */}
-            <dl
-              className="mt-8 md:mt-10 inline-flex flex-wrap items-center gap-2 md:gap-3 font-inter text-[11px] md:text-[12px]"
-              style={{ color: "rgba(28,27,24,0.7)" }}
-            >
-              <dt className="font-bold tracking-[0.04em]" aria-label="比較条件">
-                <span aria-hidden className="mr-1.5">▼</span>比較条件
-              </dt>
-              <dd
-                className="px-3 py-1.5 font-bold tracking-[0.04em]"
-                style={{ background: "rgba(28,27,24,0.05)", borderRadius: 2 }}
-              >
-                30坪・4LDK
-              </dd>
-              <dd
-                className="px-3 py-1.5 font-bold tracking-[0.04em]"
-                style={{ background: "rgba(28,27,24,0.05)", borderRadius: 2 }}
-              >
-                建物本体＋標準付帯工事
-              </dd>
-            </dl>
-          </header>
-
-          {/* 右: 立面図 → 3D ビジュアライズの morph 動画
-              poster は静止 PNG、視認時のみ再生、reduced-motion 時は静止画のみ
-              lg+ では eyebrow + 見出し1行目分を pt で押し下げ、見出し2行目
-              「標準仕様まで〜」と動画の上端を揃える(eyebrow ≈ 44px + 1行目 ≈ 80px) */}
-          <figure className="relative lg:-mr-2 xl:-mr-4 lg:pt-[clamp(100px,8.5vw,132px)]">
-            <BlueprintMorphVideo
-              videoSrc="/videos/blueprint-to-render.mp4"
-              posterSrc="/images/sections/blueprint-elevation.webp"
-              alt="やまと不動産・左京モデルの設計図から完成までを見る — 立面図のモーフ動画"
-            />
-            <figcaption
-              className="mt-2 font-inter text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-right"
-              style={{ color: "rgba(28,27,24,0.4)" }}
-            >
-              South Elevation — Sakyo Model · Design to Build
-            </figcaption>
-          </figure>
-        </div>
-
-        {/* ============ 2. 比較バー: 大手 vs やまと vs 差額 ============
-            旧: やまと列が bg + border のパネル(card 気味)
-            新: 全 3 列を「左罫線 + FIG ラベル + 寸法ティック」の建築 marginalia に統一。
-                やまと列だけ罫線を 3px の deep-green にしてヒエラルキを担保する。
-        */}
-        <div className="mt-14 md:mt-20">
-          {/* 寸法ベンチマーク(全比較行の上に張る) */}
-          <DimensionRule
-            className="mb-8 md:mb-10"
-            label="Benchmark · 30坪 / 4LDK · 建物本体 + 標準付帯工事"
-          />
-
-          <div
-            ref={diffRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_minmax(200px,0.95fr)] gap-y-10 md:gap-x-8 lg:gap-x-10 items-stretch"
-          >
-            {/* 大手 — REF.01 (薄いグレーレール) */}
-            <article
-              className="relative pt-1 md:pl-5 lg:pl-6"
-              style={{ borderLeft: `1px solid rgba(28,27,24,0.18)` }}
-            >
-              <div className="flex items-center gap-2 mb-3 md:mb-4">
-                <span
-                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
-                  style={{ color: "rgba(28,27,24,0.55)" }}
-                >
-                  Ref. 01
-                </span>
-                <span aria-hidden className="w-3 h-px" style={{ background: "rgba(28,27,24,0.3)" }} />
-                <span
-                  className="font-murecho font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
-                  style={{ color: "rgba(28,27,24,0.65)" }}
-                >
-                  大手ハウスメーカー
-                </span>
-              </div>
-              <p
-                className="font-murecho text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
-                style={{ color: "rgba(28,27,24,0.55)" }}
-              >
-                参考価格
-              </p>
-              <div className="flex items-baseline gap-2 mb-3">
-                <span ref={otherRef} className="sr-only" />
-                <span
-                  className="font-oswald tabular-nums leading-[0.85]"
-                  style={{
-                    fontWeight: 300,
-                    fontSize: "clamp(40px,5.5vw,72px)",
-                    color: "rgba(28,27,24,0.55)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {other.toLocaleString()}
-                </span>
-                <span
-                  className="font-murecho font-medium pb-1.5"
-                  style={{ color: "rgba(28,27,24,0.6)", fontSize: "clamp(13px,1.1vw,16px)" }}
-                >
-                  万円〜
-                </span>
-              </div>
-              <div className="relative aspect-square w-full max-w-[260px]">
-                <Image
-                  src="/images/sections/house-generic.webp"
-                  alt="大手ハウスメーカーの参考立面イメージ — 没個性な総二階の建売タイプ"
-                  fill
-                  sizes="(max-width: 768px) 60vw, 240px"
-                  className="object-contain"
-                />
-              </div>
-              <p
-                className="mt-3 font-murecho text-[10.5px] md:text-[11px] leading-[1.7]"
-                style={{ color: "rgba(28,27,24,0.5)" }}
-              >
-                ※ 大手ハウスメーカーの坪単価をもとにした参考価格です。
-              </p>
-            </article>
-
-            {/* VS 区切り */}
-            <div className="hidden lg:flex items-center justify-center">
-              <span
-                className="font-inter font-light text-[18px] tracking-[0.2em]"
-                style={{ color: "rgba(28,27,24,0.4)" }}
-              >
-                VS
-              </span>
-            </div>
-
-            {/* やまと京モデル — FIG.── (3px deep-green レール、主役) */}
-            <article
-              className="relative pt-1 md:pl-5 lg:pl-6"
-              style={{ borderLeft: `3px solid ${DEEP_GREEN}` }}
-            >
-              <div className="flex items-center gap-2 mb-3 md:mb-4">
-                <span
-                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
-                  style={{ color: DEEP_GREEN }}
-                >
-                  Fig.
-                </span>
-                <span aria-hidden className="w-3 h-px" style={{ background: DEEP_GREEN, opacity: 0.5 }} />
-                <span
-                  className="font-murecho font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
-                  style={{ color: DEEP_GREEN }}
-                >
-                  やまと不動産・京モデル
-                </span>
-              </div>
-              <p
-                className="font-murecho font-bold text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
-                style={{ color: DEEP_GREEN }}
-              >
-                建物本体 ＋ 標準付帯工事 込み・税込
-              </p>
-              <div className="flex items-baseline gap-2 mb-3">
-                <span ref={yamatoRef} className="sr-only" />
-                <span
-                  className="font-oswald tabular-nums leading-[0.85]"
-                  style={{
-                    fontWeight: 400,
-                    fontSize: "clamp(48px,6.4vw,84px)",
-                    color: DEEP_GREEN,
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  {yamato.toLocaleString()}
-                </span>
-                <span
-                  className="font-murecho font-bold pb-1.5"
-                  style={{ color: DEEP_GREEN, fontSize: "clamp(13px,1.2vw,17px)" }}
-                >
-                  万円〜
-                </span>
-              </div>
-              <div className="relative aspect-square w-full max-w-[260px]">
-                <Image
-                  src="/images/sections/house-yamato.webp"
-                  alt="やまと不動産・京モデルの立面イメージ — 左京モデル南側立面図ベース"
-                  fill
-                  sizes="(max-width: 768px) 60vw, 240px"
-                  className="object-contain"
-                />
-              </div>
-              <p
-                className="mt-3 font-murecho text-[10.5px] md:text-[11px] leading-[1.7]"
-                style={{ color: "rgba(28,27,24,0.55)" }}
-              >
-                ※ 京モデル30坪・4LDKの目安です。仕様・敷地により異なります。
-              </p>
-            </article>
-
-            {/* = 区切り */}
-            <div className="hidden lg:flex items-center justify-center">
-              <span
-                className="font-inter font-light text-[18px]"
-                style={{ color: "rgba(28,27,24,0.4)" }}
-              >
-                =
-              </span>
-            </div>
-
-            {/* 参考差額 — Δ (1px dashed レール) */}
-            <article
-              className="relative pt-1 md:col-span-2 md:pl-5 lg:col-span-1 lg:pl-6"
-              style={{ borderLeft: "1px dashed rgba(28,27,24,0.30)" }}
-            >
-              <div className="md:flex md:items-center md:justify-between md:gap-10 lg:block lg:gap-0">
-                <div className="md:shrink-0">
-                  <div className="flex items-center gap-2 mb-3 md:mb-4">
-                    <span
-                      aria-hidden
-                      className="font-inter font-semibold text-[12px] md:text-[12.5px]"
-                      style={{ color: "rgba(28,27,24,0.7)" }}
-                    >
-                      Δ
-                    </span>
-                    <span aria-hidden className="w-3 h-px" style={{ background: "rgba(28,27,24,0.3)" }} />
-                    <span
-                      className="font-fraunces italic text-[14px] md:text-[15px] tracking-[0.01em]"
-                      style={{
-                        color: "rgba(28,27,24,0.7)",
-                        fontWeight: 400,
-                        fontVariationSettings: "'opsz' 144",
-                      }}
-                    >
-                      Difference
-                    </span>
-                  </div>
-                  <p
-                    className="font-murecho text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
-                    style={{ color: "rgba(28,27,24,0.6)" }}
-                  >
-                    参考差額
-                  </p>
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <span
-                      className="font-murecho font-bold pb-2"
-                      style={{ color: INK, fontSize: "clamp(13px,1.1vw,16px)" }}
-                    >
-                      約
-                    </span>
-                    <span
-                      className="font-oswald tabular-nums leading-[0.82]"
-                      style={{
-                        fontWeight: 400,
-                        fontSize: "clamp(56px,7.4vw,108px)",
-                        color: INK,
-                        letterSpacing: "-0.025em",
-                      }}
-                    >
-                      {diff.toLocaleString()}
-                    </span>
-                    <span
-                      className="font-murecho font-bold pb-2"
-                      style={{ color: INK, fontSize: "clamp(14px,1.2vw,18px)" }}
-                    >
-                      万円
-                    </span>
-                  </div>
-                </div>
-
-                <div className="md:flex-1 md:min-w-0">
-                  <div
-                    className="mt-3 md:mt-0 h-[1px] w-full"
-                    style={{ background: "rgba(47,74,44,0.4)" }}
-                  />
-                  <p
-                    className="mt-3 font-murecho text-[10.5px] md:text-[11px] leading-[1.7]"
-                    style={{ color: "rgba(28,27,24,0.55)" }}
-                  >
-                    同条件30坪・4LDKでの当社試算による参考差額です。
-                  </p>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          {/* 寸法サマリ(下) — 4,000 - 2,280 = 1,720 を建築寸法風に */}
-          <DimensionRule
-            className="mt-10 md:mt-12 hidden lg:flex"
-            color={DEEP_GREEN}
-            label={
-              <>
-                4,000 万円 <span className="mx-1.5 opacity-60">−</span> 2,280 万円{" "}
-                <span className="mx-1.5 opacity-60">=</span>{" "}
-                <span className="text-[12px] tracking-[0.16em]">
-                  Δ 1,720 万円
-                </span>
-              </>
-            }
-          />
-        </div>
-
-        {/* ============ 3. 含まれるもの / 別途となるもの — 建築ノーテーション ============
-            旧: 緑/サンドヘッダ + bg-white カードの二段重ね(Tailwind の card 量産で AI 臭が抜けない)
-            新: カード矩形を撤廃 → FIG.01 / FIG.02 の細罫線見出し + 番号レール + 破線セパレータで
-                上の立面図と同じ「建築図面 marginalia」の世界観に統一する。
-        */}
-        <div className="mt-16 md:mt-24">
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] gap-x-8 lg:gap-x-14 gap-y-14 md:gap-y-0">
-            {/* ─── 列 1: 含まれるもの ─── */}
-            <section aria-labelledby="fig-01-included" className="md:pr-2">
-              <header
-                className="flex items-center gap-3 md:gap-4 pb-3"
-                style={{ borderBottom: `1px solid rgba(47,74,44,0.45)` }}
-              >
-                <DimTick color={DEEP_GREEN} />
-                <span
-                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
-                  style={{ color: DEEP_GREEN }}
-                >
-                  Fig. 01
-                </span>
-                <span
-                  className="font-inter font-semibold tracking-[0.16em] uppercase text-[10px] md:text-[10.5px]"
-                  style={{ color: "rgba(47,74,44,0.65)" }}
-                >
-                  Included
-                </span>
-                <span
-                  aria-hidden
-                  className="flex-1 h-px"
-                  style={{ background: "rgba(47,74,44,0.22)" }}
-                />
-                <span
-                  className="font-inter tabular-nums tracking-[0.12em] text-[10px] md:text-[10.5px]"
-                  style={{ color: "rgba(47,74,44,0.55)" }}
-                >
-                  06 ITEMS
-                </span>
-                <DimTick color="rgba(47,74,44,0.55)" />
-              </header>
-              <h3
-                id="fig-01-included"
-                className="mt-4 md:mt-5 font-murecho font-bold leading-[1.55]"
-                style={{ color: DEEP_GREEN, fontSize: "clamp(15px,1.35vw,18px)" }}
-              >
-                京モデル{" "}
-                <span
-                  className="font-oswald tabular-nums mx-0.5"
-                  style={{ fontWeight: 500, fontSize: "clamp(20px,1.8vw,26px)", letterSpacing: "-0.01em" }}
-                >
-                  2,280
-                </span>
-                <span className="text-[12px] md:text-[13px] font-medium">万円</span>
-                に、すでに入っているもの。
-              </h3>
-
-              <ol className="mt-3 md:mt-4">
-                {INCLUDED.map((item, i) => {
-                  const Icon = ICON_MAP[item.icon];
-                  return (
-                    <li
-                      key={item.title}
-                      className="grid grid-cols-[34px_minmax(0,1fr)_28px] md:grid-cols-[44px_minmax(0,1fr)_32px] gap-3 md:gap-5 py-5 md:py-6"
-                      style={{
-                        borderTop: i === 0 ? "none" : `1px dashed rgba(28,27,24,0.16)`,
-                      }}
-                    >
-                      <span
-                        className="font-oswald tabular-nums leading-none mt-[2px]"
-                        style={{
-                          color: DEEP_GREEN,
-                          fontWeight: 400,
-                          fontSize: "clamp(18px,1.6vw,22px)",
-                          letterSpacing: "0.02em",
-                        }}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="min-w-0">
-                        <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1">
-                          <span
-                            className="font-murecho font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
-                            style={{ color: INK }}
-                          >
-                            {item.title}
-                          </span>
-                          {item.badge && (
-                            <span
-                              className="font-inter inline-flex items-center px-2 py-[2px] text-[10px] md:text-[10.5px] font-semibold tracking-[0.04em]"
-                              style={{
-                                color: DEEP_GREEN,
-                                background: "rgba(47,74,44,0.10)",
-                                borderRadius: 2,
-                              }}
-                            >
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                        <p
-                          className="mt-1.5 font-murecho text-[12px] md:text-[12.5px] leading-[1.7]"
-                          style={{ color: "rgba(28,27,24,0.62)" }}
-                        >
-                          {item.desc}
-                        </p>
-                      </div>
-                      <Icon
-                        className="w-[22px] h-[22px] mt-[2px] justify-self-end"
-                        strokeWidth={1.2}
-                        color={DEEP_GREEN}
-                      />
-                    </li>
-                  );
-                })}
-              </ol>
-            </section>
-
-            {/* ─── 縦罫線(PC のみ) ─── */}
-            <div
-              aria-hidden
-              className="hidden md:block w-px self-stretch"
-              style={{ background: "rgba(28,27,24,0.16)" }}
-            />
-
-            {/* ─── 列 2: 別途となるもの ─── */}
-            <section aria-labelledby="fig-02-others" className="md:pl-2">
-              <header
-                className="flex items-center gap-3 md:gap-4 pb-3"
-                style={{ borderBottom: `1px solid rgba(28,27,24,0.40)` }}
-              >
-                <DimTick color="rgba(28,27,24,0.55)" />
-                <span
-                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
-                  style={{ color: "rgba(28,27,24,0.7)" }}
-                >
-                  Fig. 02
-                </span>
-                <span
-                  className="font-inter font-semibold tracking-[0.16em] uppercase text-[10px] md:text-[10.5px]"
-                  style={{ color: "rgba(28,27,24,0.55)" }}
-                >
-                  Other Costs
-                </span>
-                <span
-                  aria-hidden
-                  className="flex-1 h-px"
-                  style={{ background: "rgba(28,27,24,0.18)" }}
-                />
-                <span
-                  className="font-inter tabular-nums tracking-[0.12em] text-[10px] md:text-[10.5px]"
-                  style={{ color: "rgba(28,27,24,0.5)" }}
-                >
-                  04 ITEMS
-                </span>
-                <DimTick color="rgba(28,27,24,0.5)" />
-              </header>
-              <h3
-                id="fig-02-others"
-                className="mt-4 md:mt-5 font-murecho font-bold leading-[1.55]"
-                style={{ color: INK, fontSize: "clamp(15px,1.35vw,18px)" }}
-              >
-                この価格には含まれず、
-                <br className="hidden md:block" />
-                別途となるもの。
-              </h3>
-
-              <ol className="mt-3 md:mt-4">
-                {EXCLUDED.map((item, i) => {
-                  const Icon = ICON_MAP[item.icon];
-                  return (
-                    <li
-                      key={item.title}
-                      className="grid grid-cols-[34px_minmax(0,1fr)_28px] md:grid-cols-[44px_minmax(0,1fr)_32px] gap-3 md:gap-5 py-5 md:py-6"
-                      style={{
-                        borderTop: i === 0 ? "none" : `1px dashed rgba(28,27,24,0.16)`,
-                      }}
-                    >
-                      <span
-                        className="font-oswald tabular-nums leading-none mt-[2px]"
-                        style={{
-                          color: "rgba(28,27,24,0.5)",
-                          fontWeight: 400,
-                          fontSize: "clamp(18px,1.6vw,22px)",
-                          letterSpacing: "0.02em",
-                        }}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="min-w-0">
-                        <span
-                          className="block font-murecho font-bold tracking-[0.02em] text-[15px] md:text-[16px] leading-[1.45]"
-                          style={{ color: INK }}
-                        >
-                          {item.title}
-                        </span>
-                        <p
-                          className="mt-1.5 font-murecho text-[12px] md:text-[12.5px] leading-[1.7]"
-                          style={{ color: "rgba(28,27,24,0.62)" }}
-                        >
-                          {item.desc}
-                        </p>
-                      </div>
-                      <Icon
-                        className="w-[22px] h-[22px] mt-[2px] justify-self-end"
-                        strokeWidth={1.2}
-                        color="rgba(28,27,24,0.55)"
-                      />
-                    </li>
-                  );
-                })}
-              </ol>
-            </section>
-          </div>
-
-          {/* 共通フッター(両列下) */}
-          <div
-            className="mt-2 md:mt-4 pt-4 flex items-baseline gap-3"
-            style={{ borderTop: `1px solid rgba(28,27,24,0.18)` }}
-          >
-            <span
-              className="font-inter tracking-[0.16em] uppercase text-[10px] font-semibold shrink-0"
-              style={{ color: "rgba(28,27,24,0.45)" }}
-            >
-              Note
-            </span>
-            <p
-              className="font-murecho text-[11px] md:text-[12px] leading-[1.85]"
-              style={{ color: "rgba(28,27,24,0.55)" }}
-            >
-              上記は一般的な内容です。詳細は資金計画時にご案内します。
-            </p>
-          </div>
-        </div>
-
-        {/* ============ 4. アクションストリップ(CTA) ============ */}
-        <div
-          className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr_1fr] gap-3 md:gap-4"
+function CtaCard({
+  href,
+  external,
+  icon,
+  label,
+  sub,
+}: {
+  href: string;
+  external?: boolean;
+  icon: React.ReactNode;
+  label: string;
+  sub: string;
+}) {
+  const content = (
+    <>
+      <span
+        className="inline-flex items-center justify-center w-9 h-9 shrink-0 rounded-full"
+        style={{ background: PALETTE.green, color: "#ffffff" }}
+        aria-hidden
+      >
+        {icon}
+      </span>
+      <div className="flex-1 min-w-0">
+        <p
+          className="text-[13.5px] md:text-[14.5px]"
+          style={{ color: PALETTE.text, fontWeight: 500, letterSpacing: "0.02em" }}
         >
-          {/* リード文 */}
-          <div
-            className="px-6 py-6 md:px-7 md:py-7 flex items-center"
-            style={{
-              background: "rgba(47,74,44,0.05)",
-              border: `1px solid rgba(47,74,44,0.14)`,
-              borderRadius: 2,
-            }}
-          >
-            <p
-              className="font-murecho text-[13px] md:text-[14px] leading-[1.85] font-medium"
-              style={{ color: INK }}
-            >
-              標準仕様の詳細や、暮らし方に合わせた
-              <br className="hidden lg:block" />
-              最適なプランをご提案します。
-            </p>
-          </div>
-
-          {/* LINE で相談 */}
-          <a
-            href={LINE_ADD_FRIEND_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative flex items-center gap-4 px-5 py-5 md:py-6 bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-20px_rgba(28,27,24,0.25)]"
-            style={{ border: `1px solid ${RULE}`, borderRadius: 2 }}
-          >
-            <span
-              aria-hidden
-              className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full"
-              style={{ background: "rgba(6,199,85,0.12)", color: "#06C755" }}
-            >
-              <MessageCircle className="w-[20px] h-[20px]" strokeWidth={1.6} />
-            </span>
-            <span className="flex-1 min-w-0">
-              <span className="block font-murecho font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
-                LINEで相談する
-              </span>
-              <span
-                className="block mt-1 font-murecho text-[11px] md:text-[12px] leading-[1.55]"
-                style={{ color: "rgba(28,27,24,0.6)" }}
-              >
-                気軽にご相談いただけます
-              </span>
-            </span>
-            <ArrowUpRight
-              className="shrink-0 w-[18px] h-[18px] transition-transform duration-[400ms] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              strokeWidth={1.5}
-              style={{ color: INK }}
-            />
-          </a>
-
-          {/* モデルハウス見学 */}
-          <Link
-            href="/reserve"
-            className="group relative flex items-center gap-4 px-5 py-5 md:py-6 bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-20px_rgba(28,27,24,0.25)]"
-            style={{ border: `1px solid ${RULE}`, borderRadius: 2 }}
-          >
-            <span
-              aria-hidden
-              className="shrink-0 inline-flex items-center justify-center w-11 h-11"
-              style={{
-                background: DEEP_GREEN,
-                color: "#FFFFFF",
-                borderRadius: 999,
-              }}
-            >
-              <Calendar className="w-[20px] h-[20px]" strokeWidth={1.6} />
-            </span>
-            <span className="flex-1 min-w-0">
-              <span className="block font-murecho font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
-                モデルハウスを見学する
-              </span>
-              <span
-                className="block mt-1 font-murecho text-[11px] md:text-[12px] leading-[1.55]"
-                style={{ color: "rgba(28,27,24,0.6)" }}
-              >
-                実際のサイズ感や仕様を体感できます
-              </span>
-            </span>
-            <ArrowUpRight
-              className="shrink-0 w-[18px] h-[18px] transition-transform duration-[400ms] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              strokeWidth={1.5}
-              style={{ color: INK }}
-            />
-          </Link>
-
-          {/* カタログ */}
-          <Link
-            href="/refer"
-            className="group relative flex items-center gap-4 px-5 py-5 md:py-6 bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-20px_rgba(28,27,24,0.25)]"
-            style={{ border: `1px solid ${RULE}`, borderRadius: 2 }}
-          >
-            <span
-              aria-hidden
-              className="relative shrink-0 w-12 h-14 overflow-hidden"
-              style={{ borderRadius: 2 }}
-            >
-              <Image
-                src="/images/sections/catalog-booklet.png"
-                alt=""
-                fill
-                sizes="48px"
-                className="object-cover"
-              />
-            </span>
-            <span className="flex-1 min-w-0">
-              <span className="block font-murecho font-bold text-[14px] md:text-[15px]" style={{ color: INK }}>
-                標準仕様・設備カタログ
-              </span>
-              <span
-                className="block mt-1 font-murecho text-[11px] md:text-[12px] leading-[1.55]"
-                style={{ color: "rgba(28,27,24,0.6)" }}
-              >
-                無料プレゼント中
-              </span>
-            </span>
-            <ArrowUpRight
-              className="shrink-0 w-[18px] h-[18px] transition-transform duration-[400ms] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              strokeWidth={1.5}
-              style={{ color: INK }}
-            />
-          </Link>
-        </div>
-
-        {/* ============ 5. ボトムルーラー(YAMATO REAL ESTATE | KYOTO/NARA AREA | SINCE 2011) ============ */}
-        <div
-          className="mt-14 md:mt-20 flex items-center gap-4 md:gap-6 pt-5 md:pt-6"
-          style={{ borderTop: `1px solid ${RULE_FAINT}` }}
+          {label}
+        </p>
+        <p
+          className="mt-0.5 text-[11.5px]"
+          style={{ color: PALETTE.textSub, lineHeight: 1.6 }}
         >
-          <span
-            className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-semibold shrink-0"
-            style={{ color: "rgba(28,27,24,0.55)" }}
-          >
-            Yamato Real Estate
-          </span>
-          <span
-            aria-hidden
-            className="flex-1 h-[10px] overflow-hidden"
-            style={{ color: "rgba(28,27,24,0.25)" }}
-          >
-            <svg viewBox="0 0 600 10" preserveAspectRatio="none" className="w-full h-full">
-              <line x1="0" y1="9" x2="600" y2="9" stroke="currentColor" strokeWidth="0.5" />
-              {Array.from({ length: 60 }, (_, i) => i * 10).map((x) => (
-                <line
-                  key={x}
-                  x1={x}
-                  y1="9"
-                  x2={x}
-                  y2={x % 50 === 0 ? "3" : "6"}
-                  stroke="currentColor"
-                  strokeWidth="0.5"
-                />
-              ))}
-            </svg>
-          </span>
-          <span
-            className="hidden md:inline-block font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-semibold shrink-0"
-            style={{ color: "rgba(28,27,24,0.55)" }}
-          >
-            Kyoto / Nara Area
-          </span>
-          <span
-            aria-hidden
-            className="hidden md:flex flex-1 h-[10px] overflow-hidden"
-            style={{ color: "rgba(28,27,24,0.25)" }}
-          >
-            <svg viewBox="0 0 600 10" preserveAspectRatio="none" className="w-full h-full">
-              <line x1="0" y1="9" x2="600" y2="9" stroke="currentColor" strokeWidth="0.5" />
-              {Array.from({ length: 60 }, (_, i) => i * 10).map((x) => (
-                <line
-                  key={x}
-                  x1={x}
-                  y1="9"
-                  x2={x}
-                  y2={x % 50 === 0 ? "3" : "6"}
-                  stroke="currentColor"
-                  strokeWidth="0.5"
-                />
-              ))}
-            </svg>
-          </span>
-          <span
-            className="font-inter text-[10px] md:text-[11px] tracking-[0.28em] uppercase font-semibold shrink-0"
-            style={{ color: "rgba(28,27,24,0.55)" }}
-          >
-            Since 2011
-          </span>
-        </div>
+          {sub}
+        </p>
       </div>
-    </section>
+      <ArrowRight
+        className="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0"
+        strokeWidth={1.5}
+        style={{ color: PALETTE.green }}
+      />
+    </>
+  );
+
+  const className = "ycb-cta group flex items-center gap-4 p-6 md:p-7 transition-colors";
+  const style = { background: PALETTE.card };
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className} style={style}>
+        {content}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className} style={style}>
+      {content}
+    </Link>
   );
 }
