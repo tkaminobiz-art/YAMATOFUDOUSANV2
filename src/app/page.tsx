@@ -10,7 +10,8 @@ import ScaleBanner from "@/components/sections/ScaleBanner";
 //   全没の判断 → 現行 HeroMagazine + ScaleBanner に戻す。
 //   memory: project_hero_renewal_all_rejected_20260508.md
 //   HeroEditorial.tsx / TrustMetricsEditorial.tsx / 各 lab pages は残置 (納品時削除)
-import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
+import StandardComparisonBlueprint from "@/components/sections/StandardComparisonBlueprint";
+import StickyMechanismPin from "@/components/sections/StickyMechanismPin";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import RepresentativeMessage from "@/components/sections/RepresentativeMessage";
@@ -86,7 +87,11 @@ export default function Home() {
         <ScaleBanner />
 
         {/* 理屈・証拠 */}
-        <MechanismEnhanced />
+        {/* 2026-05-08: 比較セクションを建築図面エディトリアル(StandardComparisonBlueprint) に
+            刷新。立面図 + ink-line house illustration + 緑/サンドの二大カードで再構成。
+            旧 MechanismEnhanced の bridge + 3 reasons は StickyMechanismPin に直結。 */}
+        <StandardComparisonBlueprint />
+        <StickyMechanismPin />
         <StandardEquipment />
         <ZeroDeclaration />
         {/* 代表 + 専務の顔と署名級メッセージ — 仕様/¥0 と価格の間に「これを守る人」を1呼吸 */}
