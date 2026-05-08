@@ -3,29 +3,23 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /*
-  HeroEditorial — 2026-05-08 v3 (W2 採用版 / 表 UI 撤去)
+  HeroEditorial — 2026-05-08 v4 (W2 採用版 / 2カラム統合レイアウト)
   ---------------------------------------------------------------
-  v2 で TITLE BLOCK を 4 行均等表として実装したところ「Web 管理画面風カクカク
-  = AI 臭い」と判断されたため、価格 / 実績 / CTA を役割別に分離した v3。
-  詳細は DESIGN_GUARDRAILS.md / memory: feedback_w2_no_uniform_table_ai_smell_check.md
+  v3 で表 UI 撤去後も「Hero が上下分離している / 写真がファーストビュー外」と
+  ユーザー判断。v4 で 2 カラム (左テキスト 42% + 右 ELEVATION FRAME 58%) に
+  統合し、ファーストビュー内で写真とコピーが対話する構成へ。
 
-  構造:
-  - META STRIP (上部メタデータ)
-  - ELEVATION FRAME + scale ticks (写真は建築図面の elevation 風)
-  - HEADLINE + SUBCOPY (図版キャプション扱い)
-  - PriceSpec   — Open Spec パターン (上下線だけ・PRICE 強)
-  - MetricRail  — 実績は箱に入れず横一列の静かなレール
-  - ActionLine  — CTA は表に閉じ込めず独立配置
+  主要変更点:
+  - 左カラム (lg+): H1 + subcopy + PriceSpec + ActionLine
+  - 右カラム (lg+): ELEVATION FRAME + scale ticks + 図版キャプション
+  - 下部: MetricRail を full-width thin band として独立配置
+  - mobile: 写真 → テキスト の順で stack (写真を最初に見せる)
+  - ELEVATION FRAME のラインを softer (rgba 0.28 / 0.16) に
+  - scale ticks 半減 (25 → 13)
+  - FIG.01 タグを小さく
+  - META STRIP は brand + scale + region のみ (FIG/LIVING は右カラムキャプションに移動)
 
-  禁止 (DESIGN_GUARDRAILS §3):
-  - 価格 / 実績 / CTA を同じ表に入れる
-  - 四辺すべて border の枠
-  - rounded-lg 以上
-  - 強い border / shadow
-  - bg-white card 量産
-
-  写真:
-  - FIG.01 LIVING & DINING = /images/newsozai/interior-ldk-01.webp (2400x1600)
+  詳細: DESIGN_GUARDRAILS.md / memory: feedback_w2_no_uniform_table_ai_smell_check.md
 */
 
 const PALETTE = {
@@ -33,9 +27,9 @@ const PALETTE = {
   paperWarm: "#F8F7F4",
   sumi: "#1A1815",
   muted: "#5E5A50",
-  rule: "rgba(28, 27, 24, 0.16)",
-  ruleStrong: "rgba(28, 27, 24, 0.32)",
-  ruleFaint: "rgba(28, 27, 24, 0.08)",
+  rule: "rgba(20, 20, 20, 0.16)",
+  ruleStrong: "rgba(20, 20, 20, 0.28)",
+  ruleFaint: "rgba(20, 20, 20, 0.08)",
 } as const;
 
 const HERO = {
@@ -79,121 +73,172 @@ export default function HeroEditorial() {
       className="relative w-full"
       style={{ background: PALETTE.paper }}
     >
-      {/* META STRIP — 図面の上部 metadata */}
+      {/* ─── META STRIP ──────────────────────────────────────── */}
       <div className="border-b" style={{ borderColor: PALETTE.rule }}>
         <div
-          className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-x-6 gap-y-1.5 px-[var(--page-px)] py-3 text-[10px] tracking-[0.22em]"
+          className="mx-auto flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-1.5 px-[var(--page-px)] py-3 text-[10px] tracking-[0.22em]"
           style={{ fontFamily: "var(--font-inter)", color: PALETTE.muted }}
         >
           <span style={{ color: PALETTE.sumi }} className="tracking-[0.16em]">
             {COPY.brand}
           </span>
-          <span className="hidden md:inline">
-            {COPY.fig} &nbsp;·&nbsp; {COPY.figCaption}
-          </span>
           <span className="hidden lg:inline" style={{ color: PALETTE.sumi }}>
             {COPY.scale}
           </span>
-          <span>{COPY.region}</span>
+          <span className="hidden md:inline">{COPY.region}</span>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1240px] px-[var(--page-px)] pt-10 md:pt-14 lg:pt-16 pb-16 md:pb-20">
-        {/* Scale ticks (top) */}
-        <ScaleRuler position="top" />
+      {/* ─── HERO BODY: 2 カラム統合 ─────────────────────────── */}
+      <div className="mx-auto max-w-[1320px] px-[var(--page-px)] py-10 md:py-14 lg:py-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[42fr_58fr] lg:gap-12 xl:gap-16 lg:items-center lg:min-h-[640px]">
+          {/* RIGHT (lg+): ELEVATION FRAME / mobile はここが先頭 */}
+          <div className="order-1 lg:order-2">
+            <ScaleRuler position="top" />
 
-        {/* ELEVATION FRAME — double hairline, FIG.01 黒タグ overhang */}
-        <figure
-          className="relative"
-          style={{
-            border: `1px solid ${PALETTE.sumi}`,
-            padding: 7,
-          }}
-        >
-          <span
-            className="absolute z-10 inline-block px-2 py-0.5 text-[9.5px] tracking-[0.32em] uppercase text-white"
-            style={{
-              top: -1,
-              left: -1,
-              background: PALETTE.sumi,
-              fontFamily: "var(--font-inter)",
-            }}
-            aria-hidden
-          >
-            {COPY.fig}
-          </span>
-          <div
-            className="relative aspect-[16/9]"
-            style={{ outline: `1px solid ${PALETTE.sumi}` }}
-          >
-            <Image
-              src={HERO.src}
-              alt={HERO.alt}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 92vw, 1200px"
-              className="object-cover"
-            />
+            <figure
+              className="relative"
+              style={{
+                border: `1px solid ${PALETTE.ruleStrong}`,
+                padding: 6,
+              }}
+            >
+              <span
+                className="absolute z-10 inline-block px-1.5 py-0.5 text-[8.5px] tracking-[0.32em] uppercase text-white"
+                style={{
+                  top: -1,
+                  left: -1,
+                  background: PALETTE.sumi,
+                  fontFamily: "var(--font-inter)",
+                }}
+                aria-hidden
+              >
+                {COPY.fig}
+              </span>
+              <div
+                className="relative aspect-[3/2]"
+                style={{ outline: `1px solid ${PALETTE.rule}` }}
+              >
+                <Image
+                  src={HERO.src}
+                  alt={HERO.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 720px"
+                  className="object-cover"
+                />
+              </div>
+            </figure>
+
+            <ScaleRuler position="bottom" />
+
+            {/* 図版キャプション — 右寄せの架空寸法引き出し */}
+            <p
+              className="mt-3 text-right text-[10px] tracking-[0.22em] uppercase"
+              style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
+            >
+              ─── {COPY.figCaption} &nbsp;/&nbsp; INTERIOR &nbsp;/&nbsp; YAMATO HOUSE
+            </p>
           </div>
-        </figure>
 
-        {/* Scale ticks (bottom) */}
-        <ScaleRuler position="bottom" />
+          {/* LEFT (lg+): COPY + PRICE + CTAs / mobile では下に来る */}
+          <div className="order-2 lg:order-1 lg:pr-2 xl:pr-4">
+            <h1
+              id="hero-editorial-heading"
+              style={{
+                fontFamily: "var(--font-shippori)",
+                fontSize: "clamp(34px, 4.6vw, 56px)",
+                fontWeight: 500,
+                lineHeight: 1.4,
+                letterSpacing: "0.02em",
+                color: PALETTE.sumi,
+              }}
+            >
+              {COPY.h1[0]}
+              <br />
+              {COPY.h1[1]}
+            </h1>
+            <p
+              className="mt-5 text-[14px] md:text-[15px]"
+              style={{ color: PALETTE.muted, lineHeight: 1.95 }}
+            >
+              {COPY.subcopy[0]}
+              <br />
+              {COPY.subcopy[1]}
+            </p>
 
-        {/* 図版下の小さい architectural caption (Annotation Note 風) */}
-        <p
-          className="mt-3 text-right text-[10.5px] tracking-[0.18em]"
-          style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
-        >
-          ─── {COPY.figCaption} &nbsp;/&nbsp; INTERIOR &nbsp;/&nbsp; YAMATO HOUSE
-        </p>
-
-        {/* HEADLINE + SUBCOPY (図版キャプション扱い) */}
-        <div className="mt-14 md:mt-20 max-w-[820px]">
-          <h1
-            id="hero-editorial-heading"
-            style={{
-              fontFamily: "var(--font-shippori)",
-              fontSize: "clamp(36px, 5vw, 60px)",
-              fontWeight: 500,
-              lineHeight: 1.4,
-              letterSpacing: "0.02em",
-              color: PALETTE.sumi,
-            }}
-          >
-            {COPY.h1[0]}
-            <br className="md:hidden" />
-            {COPY.h1[1]}
-          </h1>
-          <p
-            className="mt-5 text-[14px] md:text-[15px]"
-            style={{ color: PALETTE.muted, lineHeight: 1.95 }}
-          >
-            {COPY.subcopy[0]}
-            <br />
-            {COPY.subcopy[1]}
-          </p>
+            <PriceSpec />
+            <ActionLine />
+          </div>
         </div>
+      </div>
 
-        {/* ─── 役割別の3ブロック (表 UI で囲わない) ─── */}
-        <PriceSpec />
-        <MetricRail />
-        <ActionLine />
+      {/* ─── METRIC RAIL: full-width thin band ───────────────── */}
+      <div className="border-t" style={{ borderColor: PALETTE.rule }}>
+        <div
+          className="mx-auto max-w-[1320px] px-[var(--page-px)] py-6 md:py-7"
+        >
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2.5">
+            <span
+              className="text-[9.5px] tracking-[0.32em] uppercase mr-3"
+              style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
+            >
+              {COPY.metricsEyebrow}
+            </span>
+            {COPY.metrics.map((m, i) => (
+              <span
+                key={m.label}
+                className="inline-flex items-baseline gap-1.5"
+              >
+                {i > 0 && (
+                  <span
+                    aria-hidden
+                    className="mx-3 inline-block w-px h-3 self-center"
+                    style={{ background: PALETTE.ruleFaint }}
+                  />
+                )}
+                <span
+                  style={{
+                    fontFamily: "var(--font-oswald)",
+                    fontSize: 22,
+                    fontWeight: 300,
+                    lineHeight: 1,
+                    color: PALETTE.sumi,
+                  }}
+                >
+                  {m.value}
+                </span>
+                <span className="text-[11.5px]" style={{ color: PALETTE.sumi }}>
+                  {m.unit}
+                </span>
+                <span
+                  className="text-[10px] tracking-[0.06em] ml-0.5"
+                  style={{
+                    color: PALETTE.muted,
+                    fontFamily: "var(--font-inter)",
+                  }}
+                >
+                  / {m.label}
+                </span>
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ─── ScaleRuler: 定規目盛 (md+ のみ) ─────────────────────── */
+/* ─── ScaleRuler: ticks 半減 (25 → 13) / 透明度ダウン ─── */
 function ScaleRuler({ position }: { position: "top" | "bottom" }) {
-  const ticks = 25;
+  const ticks = 13;
   return (
     <div
       aria-hidden
       className={`hidden md:flex justify-between ${
         position === "top" ? "items-end mb-1.5" : "items-start mt-1.5"
       }`}
-      style={{ height: 12 }}
+      style={{ height: 10 }}
     >
       {Array.from({ length: ticks }).map((_, i) => (
         <span
@@ -201,8 +246,8 @@ function ScaleRuler({ position }: { position: "top" | "bottom" }) {
           className="block w-px"
           style={{
             background: PALETTE.sumi,
-            height: i % 5 === 0 ? 12 : 5,
-            opacity: i % 5 === 0 ? 0.85 : 0.4,
+            height: i % 4 === 0 ? 10 : 4,
+            opacity: i % 4 === 0 ? 0.55 : 0.25,
           }}
         />
       ))}
@@ -210,14 +255,12 @@ function ScaleRuler({ position }: { position: "top" | "bottom" }) {
   );
 }
 
-/* ─── PriceSpec: Pattern A (Open Spec) ───────────────────
-   上下線だけ。中身に視覚重みを集中させる (PRICE 強)。
-   左右は閉じない。max-width で幅を抑え、左寄せで読ませる。 */
+/* ─── PriceSpec: Pattern A (Open Spec) ─── */
 function PriceSpec() {
   return (
     <section
       aria-labelledby="hero-price-eyebrow"
-      className="mt-14 md:mt-16 max-w-[680px] py-7 md:py-8"
+      className="mt-9 md:mt-10 py-6 md:py-7"
       style={{
         borderTop: `1px solid ${PALETTE.rule}`,
         borderBottom: `1px solid ${PALETTE.rule}`,
@@ -230,17 +273,14 @@ function PriceSpec() {
       >
         {COPY.price.eyebrow}
       </p>
-      <div className="mt-4 flex items-baseline flex-wrap gap-x-3 gap-y-1">
-        <span
-          className="text-[14px] tracking-[0.04em]"
-          style={{ color: PALETTE.sumi }}
-        >
+      <div className="mt-3 flex items-baseline flex-wrap gap-x-3 gap-y-1">
+        <span className="text-[14px] tracking-[0.04em]" style={{ color: PALETTE.sumi }}>
           {COPY.price.label}
         </span>
         <span
           style={{
             fontFamily: "var(--font-oswald)",
-            fontSize: "clamp(48px, 7vw, 80px)",
+            fontSize: "clamp(44px, 5.2vw, 68px)",
             fontWeight: 300,
             lineHeight: 0.95,
             letterSpacing: "0.02em",
@@ -249,12 +289,12 @@ function PriceSpec() {
         >
           {COPY.price.value}
         </span>
-        <span className="text-[16px]" style={{ color: PALETTE.sumi }}>
+        <span className="text-[15px]" style={{ color: PALETTE.sumi }}>
           {COPY.price.unit}
         </span>
       </div>
       <p
-        className="mt-3 text-[11.5px] tracking-[0.04em]"
+        className="mt-2.5 text-[11.5px] tracking-[0.04em]"
         style={{ color: PALETTE.muted }}
       >
         {COPY.price.footnote}
@@ -263,72 +303,16 @@ function PriceSpec() {
   );
 }
 
-/* ─── MetricRail: Pattern B (Quiet Rail) ────────────────
-   箱なし。横一列に静かに並べ、下に微弱な hairline 一本だけ。
-   数字は visible だが PriceSpec より控えめ (重みを差をつける)。 */
-function MetricRail() {
-  return (
-    <section
-      aria-labelledby="hero-records-eyebrow"
-      className="mt-12 md:mt-14 max-w-[940px]"
-    >
-      <p
-        id="hero-records-eyebrow"
-        className="text-[10px] tracking-[0.32em] uppercase"
-        style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
-      >
-        {COPY.metricsEyebrow}
-      </p>
-      <ul className="mt-4 flex flex-wrap items-baseline gap-x-7 gap-y-3 list-none">
-        {COPY.metrics.map((m) => (
-          <li
-            key={m.label}
-            className="inline-flex items-baseline gap-1.5"
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-oswald)",
-                fontSize: 26,
-                fontWeight: 300,
-                lineHeight: 1,
-                color: PALETTE.sumi,
-              }}
-            >
-              {m.value}
-            </span>
-            <span className="text-[12px]" style={{ color: PALETTE.sumi }}>
-              {m.unit}
-            </span>
-            <span
-              className="text-[10px] tracking-[0.08em] ml-1"
-              style={{ color: PALETTE.muted, fontFamily: "var(--font-inter)" }}
-            >
-              / {m.label}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <div
-        aria-hidden
-        className="mt-4 h-px w-full"
-        style={{ background: PALETTE.ruleFaint }}
-      />
-    </section>
-  );
-}
-
-/* ─── ActionLine: 独立した行動導線 ────────────────────
-   表/カードに閉じ込めない。breathing space を多めに取り、
-   建築図面の "ACTION" としてではなく、独立したナビゲーション要素として配置。 */
+/* ─── ActionLine: 独立配置 ─── */
 function ActionLine() {
   return (
     <div
       aria-label="主要 CTA"
-      className="mt-12 md:mt-14 flex flex-col sm:flex-row gap-3"
+      className="mt-7 md:mt-8 flex flex-col sm:flex-row gap-3"
     >
       <Link
         href={COPY.primaryCta.href}
-        className="group inline-flex min-h-[52px] items-center justify-center gap-2 px-7 text-[13px] tracking-[0.04em] font-medium text-white transition-colors hover:bg-black"
+        className="group inline-flex min-h-[50px] items-center justify-center gap-2 px-6 text-[13px] tracking-[0.04em] font-medium text-white transition-colors hover:bg-black"
         style={{ background: PALETTE.sumi }}
       >
         {COPY.primaryCta.label}
@@ -339,7 +323,7 @@ function ActionLine() {
       </Link>
       <Link
         href={COPY.secondaryCta.href}
-        className="group inline-flex min-h-[52px] items-center justify-center gap-2 px-7 border text-[13px] tracking-[0.04em] font-medium transition-colors hover:bg-[#1A1815] hover:text-white"
+        className="group inline-flex min-h-[50px] items-center justify-center gap-2 px-6 border text-[13px] tracking-[0.04em] font-medium transition-colors hover:bg-[#1A1815] hover:text-white"
         style={{ borderColor: PALETTE.sumi, color: PALETTE.sumi }}
       >
         {COPY.secondaryCta.label}

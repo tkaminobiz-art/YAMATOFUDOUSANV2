@@ -196,47 +196,47 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTA (右端) — LINE主導線化(2026-05-06) */}
+          {/* Desktop CTA (右端) — 2026-05-08 W2 (建築図面) 採用後トーンダウン
+              旧: LINE鮮緑 #06C755 + Lime来場予約 → W2の paper-white Hero と喧嘩
+              新: LINE深緑 #2F4A2C / 来場予約 白地+sumi細線アウトライン
+              LINE主導線方針は維持 (LINEは塗り、来場予約はoutline で階層は崩さない) */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0 ml-2 xl:ml-6">
-            {/* LINE: サービス色で「相談の入口」を即認識 */}
+            {/* LINE: 深緑塗り (彩度を落として W2 と整合) */}
             <a
               href={LINE_ADD_FRIEND_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 xl:px-4 py-2 text-xs xl:text-sm font-bold text-white rounded transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-4px_rgba(6,199,85,0.45)] whitespace-nowrap"
-              style={{ backgroundColor: "#06C755" }}
+              className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 xl:px-4 py-2 text-xs xl:text-sm font-medium text-white transition-colors duration-300 hover:bg-black whitespace-nowrap"
+              style={{ backgroundColor: "#2F4A2C" }}
             >
               <MessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
               LINEで相談
             </a>
-            {/* 資料請求: 控えめなテキストリンクへ降格 */}
+            {/* 資料請求: 控えめなテキストリンク (維持) */}
             <Link
               href="/contact"
               className="inline-flex items-center justify-center min-h-[40px] px-2 py-2 text-xs xl:text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors whitespace-nowrap"
             >
               資料請求
             </Link>
-            {/* 来場予約: Lime主役 */}
+            {/* 来場予約: 白地 + sumi 細線アウトライン (Lime撤去) */}
             <Link
               href="/reserve"
-              className="group relative inline-flex items-center justify-center overflow-hidden min-h-[40px] px-4 py-2 text-xs xl:text-sm font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover transition-all duration-[400ms] hover:-translate-y-0.5 hover:bg-lime-hover hover:shadow-[0_8px_24px_-4px_rgba(162,197,35,0.5)] whitespace-nowrap"
+              className="inline-flex items-center justify-center min-h-[40px] px-4 py-2 text-xs xl:text-sm font-medium border transition-colors duration-300 hover:bg-[#1A1815] hover:text-white hover:border-[#1A1815] whitespace-nowrap"
+              style={{ borderColor: "#1A1815", color: "#1A1815" }}
             >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
-              />
-              <span className="relative">来場予約</span>
+              来場予約
             </Link>
           </div>
 
-          {/* SP 右端: LINE + 来場予約 */}
+          {/* SP 右端: LINE + 来場予約 (W2 トーンダウン版) */}
           <div className="flex items-center gap-1.5 lg:hidden">
             <a
               href={LINE_ADD_FRIEND_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1 min-h-[40px] px-2.5 py-1.5 text-[11px] font-bold text-white rounded whitespace-nowrap"
-              style={{ backgroundColor: "#06C755" }}
+              className="inline-flex items-center justify-center gap-1 min-h-[40px] px-2.5 py-1.5 text-[11px] font-medium text-white whitespace-nowrap"
+              style={{ backgroundColor: "#2F4A2C" }}
               aria-label="LINEで相談"
             >
               <MessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
@@ -244,7 +244,8 @@ export default function Header() {
             </a>
             <Link
               href="/reserve"
-              className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-bold bg-lime text-lime-darker rounded border-b-[2px] border-lime-hover whitespace-nowrap"
+              className="inline-flex items-center justify-center min-h-[40px] px-3 py-1.5 text-xs font-medium border whitespace-nowrap"
+              style={{ borderColor: "#1A1815", color: "#1A1815" }}
             >
               来場予約
             </Link>
