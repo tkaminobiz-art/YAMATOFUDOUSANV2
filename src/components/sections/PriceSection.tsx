@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Users } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import { FLOORPLANS } from "@/data/floorplans";
 
@@ -171,30 +170,23 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
           </dl>
         </div>
 
-        {/* Bottom: 誰向けコピー(視認性アップ) + 価格 */}
+        {/* Bottom: 誰向けコピー (caption + mincho 本文・panel なし) + 価格 */}
         <div>
-          {/* 「こんなご家族へ」ラベル付きパネル */}
-          <div
-            className="mb-6 md:mb-7 inline-flex items-start gap-3 rounded-lg bg-white/12 border border-white/25 backdrop-blur-[2px] px-4 py-3 max-w-[22rem]"
-            style={{ boxShadow: "0 6px 18px rgba(0,0,0,0.18)" }}
-          >
-            <span
-              aria-hidden
-              className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/20 shrink-0 mt-0.5"
+          {/* 「こんなご家族に」 — clean caption + mincho 本文 */}
+          <div className="mb-7 md:mb-8 max-w-[26rem]">
+            <p className="font-murecho text-[10.5px] md:text-[11px] tracking-[0.18em] text-white/65 font-bold mb-2.5">
+              こんなご家族に
+            </p>
+            <p
+              className="font-zen-old text-white leading-[1.7] tracking-[0.02em]"
+              style={{
+                fontSize: "clamp(13.5px, 1.05vw, 16.5px)",
+                fontWeight: 500,
+                textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+              }}
             >
-              <Users className="w-3.5 h-3.5 text-white" strokeWidth={1.8} />
-            </span>
-            <div className="min-w-0">
-              <p className="font-murecho text-[10.5px] md:text-[11.5px] tracking-[0.06em] text-white/75 font-bold mb-1">
-                こんなご家族に
-              </p>
-              <p
-                className="font-murecho text-white text-[clamp(13px,1vw,15px)] leading-[1.6] font-medium"
-                style={{ textShadow: "0 2px 6px rgba(0,0,0,0.4)" }}
-              >
-                {plan.audience}
-              </p>
-            </div>
+              {plan.audience}
+            </p>
           </div>
 
           <div className="pt-5 md:pt-6 border-t border-white/25">
@@ -229,11 +221,17 @@ export default function PriceSection() {
   return (
     <section
       id="product"
-      className="relative scroll-mt-20 bg-bg-secondary text-text-primary py-[var(--section-py)] md:scroll-mt-24"
+      className="relative scroll-mt-20 bg-[#F7F5F0] text-text-primary py-[var(--section-py)] md:scroll-mt-24"
     >
       <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ========== Heading ========== */}
         <header className="mb-12 md:mb-16 max-w-[860px]">
+          {/* eyebrow — クラスタ統一 (FIG.01 / FIG.02 と並列の編集誌マーカー) */}
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-text-primary/55 font-mono mb-5">
+            <span>Plans</span>
+            <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
+            <span>HANA / KAZE / MIYAKO</span>
+          </div>
           <h2
             className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
             style={{ fontWeight: 700, fontSize: "var(--display-lg)" }}

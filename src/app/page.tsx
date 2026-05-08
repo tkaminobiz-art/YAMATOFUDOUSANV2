@@ -6,7 +6,11 @@ import TrustStrip from "@/components/sections/TrustStrip";
 //   - ScaleBanner(4実績バーン)は HeroVideo の overlay に統合済み → 撤去
 //   - HeroMagazine.tsx / ScaleBanner.tsx は残置(納品時削除候補、戻す可能性のため保持)
 //   memory: project_next_fv_plan_video_overlay.md / project_video_assets_archive.md
-import StandardComparisonBlueprint from "@/components/sections/StandardComparisonBlueprint";
+// 2026-05-09: StandardComparisonBlueprint (花/風/京 比較 table) を TOP から撤去。
+//   理由: PriceSection と同じ製品ラインを 2 セクションで紹介する構造重複 + placeholder
+//   嘘データ問題 (LIXIL 系等)。PriceSection を Hero/Trust 直下に昇格させ、
+//   それが「3 プランの導入 + 詳細」を 1 本で担う構造に再編。
+//   StandardComparisonBlueprint.tsx ファイル本体は撤去候補メモリで保持 (戻す可能性のため)。
 // 2026-05-09: StickyMechanismPin (3 photo + text panels) を撤去し、
 //   CostPride (実写ブランドフィルム + キネティックタイポ) に差し替え。
 //   理由: FIG.01 cross-section / FIG.02 ZeroDecl の手描き ink との同型反復回避、
@@ -79,17 +83,16 @@ export default function Home() {
         <HeroVideo />
         <TrustStrip />
 
-        {/* 理屈・証拠 */}
-        {/* 2026-05-08: 比較セクションを建築図面エディトリアル(StandardComparisonBlueprint) に
-            刷新。立面図 + ink-line house illustration + 緑/サンドの二大カードで再構成。
-            旧 MechanismEnhanced の bridge + 3 reasons は StickyMechanismPin に直結。 */}
-        <StandardComparisonBlueprint />
+        {/* 商品の導入 + 詳細 — 2026-05-09 から PriceSection を Hero/Trust 直下に昇格。
+            旧 StandardComparisonBlueprint (比較 table) は撤去し、PriceSection cover-card
+            edition が 3 プランの「導入 + 詳細」を 1 セクションで担う。 */}
+        <PriceSection />
+
+        {/* 理屈・証拠 — なぜこの価格で建てられるのか / 同品質の証明 / 追加費用ゼロ */}
         <CostPride />
         <StandardCrossSection />
         <StandardEquipment />
         <ZeroDeclaration />
-        {/* 2026-05-09: RepresentativeMessage 撤去。TOP では不要 (ユーザー判断)。 */}
-        <PriceSection />
 
         {/* 写真ブレイク — 価格ダッシュボードと能動UIの間に呼吸帯を1枚 */}
         <PhotoBreath
