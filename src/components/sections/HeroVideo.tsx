@@ -1,16 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { MessageCircle } from "lucide-react";
-import CtaButton from "@/components/ui/CtaButton";
-import { LINE_ADD_FRIEND_URL } from "@/data/line";
-
 /*
-  HeroVideo — 2026-05-08
+  HeroVideo — 2026-05-08 / 2026-05-09 mobile rev
   ---------------------------------------------------------------
   動画主役の Hero。Seedance 2.0 で生成した 21 秒の左京モデル吹抜俯瞰
   ブランドフィルムをフルブリードで流し、下部に TRACK RECORD(4 指標)を
-  あえて重ねる構成。CTA は中央下に配置し、CVR 導線は維持。
+  あえて重ねる構成。
+
+  2026-05-09: モバイルでヘッダー(LINE/来場予約)+FloatingCta(LINE/見学予約)が
+  常時表示なので、HeroVideo 内 CTA は導線重複だった。動画の視認性を優先し
+  CTA ブロックを撤去 → 動画 + TRACK RECORD overlay のみのミニマル構成に。
 
   方針: memory/project_next_fv_plan_video_overlay.md
   動画資産: memory/project_video_assets_archive.md
@@ -80,10 +79,10 @@ export default function HeroVideo() {
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[44%]"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 18%, rgba(0,0,0,0.42) 50%, rgba(0,0,0,0.82) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 28%, rgba(0,0,0,0.46) 64%, rgba(0,0,0,0.82) 100%)",
         }}
       />
 
@@ -91,62 +90,6 @@ export default function HeroVideo() {
         <div className="flex-1" />
 
         <div className="px-[var(--page-px)] pb-7 md:pb-10">
-          <div className="mx-auto flex max-w-[1400px] flex-col items-end gap-3 sm:flex-row sm:items-stretch sm:justify-end">
-            <a
-              href={LINE_ADD_FRIEND_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex w-full flex-col items-center justify-center overflow-hidden rounded border-b-[3px] px-8 py-4 text-center font-bold text-white transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-10px_rgba(6,199,85,0.55)] sm:min-w-[260px] sm:flex-1 sm:max-w-[300px]"
-              style={{ backgroundColor: "#06C755", borderBottomColor: "#04A346" }}
-            >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-[700ms] ease-out group-hover:translate-x-full"
-              />
-              <span className="relative inline-flex items-center gap-2 leading-tight">
-                <MessageCircle className="h-4 w-4" strokeWidth={2} />
-                LINEで総額の目安を相談する
-              </span>
-              <span className="relative mt-0.5 text-[11px] font-medium text-white/80">
-                友だち追加で気軽にお問い合わせ
-              </span>
-            </a>
-            <CtaButton
-              href="/reserve"
-              variant="dark-bg-secondary"
-              size="md"
-              label="モデルハウスを見学する"
-              sublabel="ご予約なしでも見学可・無料"
-              className="w-full px-8 py-4 sm:min-w-[220px] sm:flex-1 sm:max-w-[260px]"
-            />
-            <Link
-              href="/contact"
-              className="hidden self-center text-[12px] tracking-[0.04em] text-white/75 transition-colors hover:text-white sm:inline-flex sm:items-center sm:gap-1.5 md:text-[13px]"
-              style={{
-                borderBottom: "1px solid rgba(255,255,255,0.4)",
-                paddingBottom: "2px",
-              }}
-            >
-              フォームで資料請求する
-              <span aria-hidden>→</span>
-            </Link>
-          </div>
-          <div className="mt-3 text-right sm:hidden">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-1.5 text-[12px] tracking-[0.04em] text-white/80"
-              style={{
-                borderBottom: "1px solid rgba(255,255,255,0.4)",
-                paddingBottom: "2px",
-              }}
-            >
-              フォームで資料請求する
-              <span aria-hidden>→</span>
-            </Link>
-          </div>
-        </div>
-
-        <div className="px-[var(--page-px)] pb-6 md:pb-8">
           <div className="mx-auto max-w-[1400px]">
             <div className="mb-3 flex items-center gap-3 md:mb-4 md:gap-4">
               <span
