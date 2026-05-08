@@ -34,11 +34,34 @@ Use only these tokens. New colors require explicit approval.
 | `--brand-gold` | `#9A7A3F` | Muted gold accent |
 | `--brand-line-green` | `#06C755` | LINE service color (CTAs only) |
 
-### Typography
-- Headings (Hero confirmed): **Shippori Mincho** weight 600
-- Body: **Noto Sans JP**
-- Numbers: **Oswald**
-- `/money` page is the exception — see `project_money_font_lock.md`. There: 和文ゴシック + Inter + Oswald, **no Mincho**.
+### Typography (2026-05-08 — B 案 Editorial Mincho 採用)
+
+`/font-lab` の 5 案比較を経て **B. Editorial Mincho** を確定。階層は次の通り。
+
+| 役割 | フォント | ウェイト | 用途 |
+|---|---|---|---|
+| 主要見出し (h1/h2) | **Zen Old Mincho** | 600-700 | 編集誌の太明朝として目を引く |
+| 小見出し (h3) / リード本文 | **Murecho** | 500 | 温度感のある現代ゴシック |
+| 本文 | **Murecho** | 400 | 〃 |
+| 欧文 utility caps | **Inter** | 500-600 | FIG ラベル、eyebrow、注記、数字補助 |
+| 大型数字 | **Oswald** | 300-500 | 価格、実績数字 |
+| 欧文 italic アクセント | **Fraunces** (variable opsz 144) | 400 italic | 「Difference」など editorial キャプション |
+
+旧構成(2026-05-08 以前): Shippori Mincho + Noto Sans JP + Inter + Oswald。
+2026-05-08 に Phase 1〜6 で TOP 全セクション + Header / Footer / FloatingCta を
+新構成に統一。詳細は git log の `feat(typography/phase-N)` コミットを参照。
+
+**`/money` ページは引き続き例外**(`project_money_font_lock.md`):
+和文ゴシック (`font-sans` = Noto Sans JP) + Inter + Oswald、**Mincho 禁止**。
+`/money` の `<main>` にハードコードされた `font-sans` が継続して効くため、
+B 案展開後も影響は受けない。
+
+**Tailwind ユーティリティ対応表**:
+- `font-zen-old` ← `var(--font-zen-old-var)`
+- `font-murecho` ← `var(--font-murecho-var)`
+- `font-fraunces` ← `var(--font-fraunces-var)` (italic は `font-fraunces italic`)
+- `font-inter`, `font-oswald` は既存のまま
+- `font-shippori`, `font-sans` は既存のまま残置(/money・後方互換用)
 
 ### Photo allowlist
 Only these directories contain real, approved photography. **Do not use AI-generated
