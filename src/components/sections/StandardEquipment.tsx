@@ -2,269 +2,389 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useScrollIn } from "@/hooks/useScrollIn";
-import {
-  Home,
-  Wind,
-  Shield,
-  Award,
-  Fan,
-  Leaf,
-  HeartHandshake,
-  RectangleHorizontal,
-  Building2,
-  HardHat,
-  ShowerHead,
-  Lightbulb,
-  ArrowRight,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, Check, MessageCircle, Calendar } from "lucide-react";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /*
-  StandardEquipment v2 — 2026-05-06 (Bento + 性能ピル統合)
+  StandardEquipment — 2026-05-08 v3 (Apple 比較ページ調・StandardComparisonBlueprint と統一)
   ---------------------------------------------------------------
-  design-critic 2026-05-06 指摘#2「標準装備が2回出て、構成が重い」への対応。
-  v1(8カード均等配置)+ PerformanceGrid(16アイコン)の重複を1セクションに統合。
+  ユーザー判断: 旧 v2 (Bento + 性能ピル + 設備チップ) は重く、
+  StandardComparisonBlueprint (新版) との視覚的整合がない。
+  本セクションも同じ Apple 比較ページ調 (#F7F5F0 paper / #143426 dark green /
+  hairline 罫線 / Hiragino + Inter) に揃えて、
 
-  構成:
-    1. Bento (大1+中2): キッチン主役 / 浴室・断熱を従に
-    2. 設備チップ行 (小4): 外壁・MIRAIE・構造・洗面・照明
-    3. 性能ピル行 (6): 耐震等級3・高気密高断熱・長期優良・第一種換気・自然素材・アフター
-       (PerformanceGrid から吸収)
-    4. CTA: モデルハウス見学
+    「この価格で、ここまで標準」を 4 カテゴリのチェックリストで見せる
 
-  page.tsx から PerformanceGrid を撤去すること(同コミット内で対応)。
+  方針:
+  - 上部に eyebrow + 大見出し + リード + 1 枚の hero photo
+  - 下に 4 カテゴリ (設備 / 性能 / 構造 / サポート) のリスト
+    各カテゴリ: 番号 eyebrow + カテゴリ名 + hairline + アイテム行 (✓ + 名称 + 詳細)
+  - CTA バー: モデルハウス見学 + LINE
+  - 注意書き: 仕様変更可能性
+
+  カラー / フォントは StandardComparisonBlueprint と同一 (PALETTE / fontFamily)。
 */
 
-const FOREST = "#486B00";
+const PALETTE = {
+  bg: "#F7F5F0",
+  card: "#FBFAF7",
+  text: "#111111",
+  textSub: "#6E6A63",
+  green: "#183528",
+  greenDeep: "#143426",
+  rule: "#D8D2C8",
+  ruleStrong: "#BDB7AB",
+} as const;
 
-type ChipItem = { Icon: LucideIcon; label: string };
-
-const FACILITY_CHIPS: readonly ChipItem[] = [
-  { Icon: RectangleHorizontal, label: "外壁材" },
-  { Icon: Building2, label: "制震ダンパー MIRAIE" },
-  { Icon: HardHat, label: "構造・防蟻対策" },
-  { Icon: ShowerHead, label: "洗面・トイレ" },
-  { Icon: Lightbulb, label: "オール電化・照明" },
-];
-
-const PERFORMANCE_PILLS: readonly { label: string; sub?: string }[] = [
-  { label: "耐震等級3", sub: "最高等級" },
-  { label: "高気密・高断熱" },
-  { label: "長期優良住宅対応" },
-  { label: "第一種換気システム" },
-  { label: "自然素材を選択可" },
-  { label: "アフターサポート" },
-];
-
-const PERFORMANCE_ICONS: Record<string, LucideIcon> = {
-  "耐震等級3": Shield,
-  "高気密・高断熱": Wind,
-  "長期優良住宅対応": Award,
-  "第一種換気システム": Fan,
-  "自然素材を選択可": Leaf,
-  "アフターサポート": HeartHandshake,
+const HERO_PHOTO = {
+  src: "/images/standard/facility_img_01.webp",
+  alt: "やまと不動産の標準装備 — システムキッチン",
+  caption: "FIG. 01 — KITCHEN & DINING / STANDARD",
 };
 
+type Item = { name: string; detail?: string };
+type Category = {
+  no: string;
+  en: string;
+  ja: string;
+  items: Item[];
+};
+
+const CATEGORIES: Category[] = [
+  {
+    no: "01",
+    en: "KITCHEN & BATH",
+    ja: "毎日使う設備",
+    items: [
+      { name: "システムキッチン", detail: "LIXIL シエラS / カップボード標準付属" },
+      { name: "システムバス", detail: "LIXIL リデア / ゆとりサイズ・浴室乾燥機付" },
+      { name: "洗面化粧台", detail: "LIXIL ベーシアハーモL / 三面鏡・引き出し収納" },
+      { name: "タンクレストイレ", detail: "LIXIL ベーシア / 手洗い・温水洗浄便座付" },
+      { name: "給湯設備", detail: "エコキュート (オール電化対応)" },
+    ],
+  },
+  {
+    no: "02",
+    en: "PERFORMANCE",
+    ja: "見えない性能",
+    items: [
+      { name: "耐震等級3", detail: "建築基準法の1.5倍 / 最高等級" },
+      { name: "高気密・高断熱", detail: "UA値 0.42 W/㎡·K (風モデル相当)" },
+      { name: "第一種換気システム", detail: "全熱交換型 / 省エネと空気質を両立" },
+      { name: "Low-E トリプルガラス", detail: "樹脂サッシ / 結露と熱損失を抑制" },
+      { name: "長期優良住宅対応", detail: "標準仕様で認定基準をクリア" },
+    ],
+  },
+  {
+    no: "03",
+    en: "STRUCTURE & SAFETY",
+    ja: "構造と安心",
+    items: [
+      { name: "制震ダンパー MIRAIE", detail: "余震を含む繰返し地震に強い構造補強" },
+      { name: "ベタ基礎", detail: "鉄筋コンクリート / シロアリ・湿気対策" },
+      { name: "防蟻処理", detail: "ホウ酸系 / 10年保証" },
+      { name: "JAS 構造材", detail: "規格適合材を使用" },
+      { name: "外壁材", detail: "サイディング / 30年メンテナンスフリー対応品" },
+    ],
+  },
+  {
+    no: "04",
+    en: "SUPPORT",
+    ja: "アフターサポート",
+    items: [
+      { name: "60年長期保証", detail: "構造・防水 30年 / 設備 10年" },
+      { name: "定期点検", detail: "3ヶ月・1年・2年・5年・10年・以降5年毎" },
+      { name: "24時間対応", detail: "水漏れ・設備トラブルの初動対応" },
+      { name: "資金計画相談", detail: "土地探し・住宅ローンまでワンストップ" },
+    ],
+  },
+];
+
 export default function StandardEquipment() {
-  const ref = useScrollIn<HTMLDivElement>(true);
-
   return (
-    <section className="bg-white py-[var(--section-py)]">
-      <div
-        ref={ref}
-        className="max-w-[1280px] mx-auto px-[var(--page-px)] scroll-in"
-      >
-        {/* ===== ヘッダー ===== */}
-        <div className="relative mb-10 md:mb-14 max-w-[860px]">
-          <p
-            className="text-[11px] md:text-[12px] tracking-[0.06em] mb-3"
-            style={{ color: FOREST, fontWeight: 700 }}
-          >
-            標準装備
-          </p>
-          <h2
-            className="text-text-primary leading-[1.3] tracking-[0.005em]"
-            style={{
-              fontWeight: 500,
-              fontSize: "clamp(22px, 2.8vw, 38px)",
-            }}
-          >
-            この価格で、ここまで標準。
-          </h2>
-          <p className="mt-4 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[680px]">
-            毎日使う設備から、見えない部分の性能まで。
-            住んでからの快適さを支える項目を、価格に含めています。
-          </p>
-        </div>
-
-        {/* ===== Bento グリッド ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-3 md:gap-4 auto-rows-[minmax(220px,auto)]">
-          {/* キッチン (大: 左 col-span-2 row-span-2) */}
-          <article className="group relative md:col-span-2 md:row-span-2 overflow-hidden rounded-[10px] bg-text-primary min-h-[320px] md:min-h-[480px]">
-            <Image
-              src="/images/standard/facility_img_01.webp"
-              alt="やまと不動産の標準仕様 — キッチン・カップボード"
-              fill
-              sizes="(max-width: 768px) 100vw, 66vw"
-              className="object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/20 to-transparent pointer-events-none"
-            />
-            <div className="absolute left-5 right-5 bottom-5 md:left-7 md:right-7 md:bottom-7 z-10 text-white">
-              <p className="font-sans text-[11px] md:text-[12px] tracking-[0.06em] text-white/80 mb-2 font-bold">
-                キッチン・カップボード
-              </p>
-              <h3
-                className="font-sans leading-[1.4] mb-2"
-                style={{
-                  fontSize: "clamp(20px, 2.2vw, 30px)",
-                  fontWeight: 600,
-                  textShadow: "0 2px 14px rgba(0,0,0,0.5)",
-                }}
-              >
-                毎日の家事を、丁寧に。
-              </h3>
-              <p className="text-white/85 text-[12px] md:text-[13px] leading-[1.85] max-w-[460px]">
-                使いやすさと収納力に配慮したシステムキッチンを標準で。
-                カップボードもセットで含みます。
-              </p>
-            </div>
-          </article>
-
-          {/* 浴室 (中: 右上) */}
-          <article className="group relative overflow-hidden rounded-[10px] bg-text-primary min-h-[220px]">
-            <Image
-              src="/images/standard/facility_img_02.webp"
-              alt="やまと不動産の標準仕様 — システムバス"
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-transform duration-[700ms] group-hover:scale-[1.04]"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
-            />
-            <div className="absolute left-5 right-5 bottom-4 z-10 text-white">
-              <p className="text-[11px] tracking-[0.06em] text-white/80 mb-1 font-bold">
-                システムバス
-              </p>
-              <h4 className="text-[15px] md:text-[17px] font-medium leading-[1.4]" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>
-                ゆったり、くつろげる浴室。
-              </h4>
-            </div>
-          </article>
-
-          {/* 断熱 (中: 右下) */}
-          <article className="group relative overflow-hidden rounded-[10px] bg-text-primary min-h-[220px]">
-            <Image
-              src="/images/standard/facility_img_06.webp"
-              alt="やまと不動産の標準仕様 — サッシ・断熱材"
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-transform duration-[700ms] group-hover:scale-[1.04]"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent"
-            />
-            <div className="absolute left-5 right-5 bottom-4 z-10 text-white">
-              <p className="text-[11px] tracking-[0.06em] text-white/80 mb-1 font-bold">
-                サッシ・断熱材
-              </p>
-              <h4 className="text-[15px] md:text-[17px] font-medium leading-[1.4]" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>
-                夏は涼しく、冬は暖かく。
-              </h4>
-            </div>
-          </article>
-        </div>
-
-        {/* ===== 設備チップ行(小5) ===== */}
-        <ul className="mt-8 md:mt-10 grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
-          {FACILITY_CHIPS.map(({ Icon, label }) => (
-            <li
-              key={label}
-              className="flex items-center gap-2.5 px-4 py-3.5 bg-bg-secondary/60 border border-border rounded-[8px] transition-colors hover:border-main"
+    <section
+      aria-labelledby="standard-equipment-heading"
+      style={{
+        background: PALETTE.bg,
+        color: PALETTE.text,
+        fontFamily:
+          '"Hiragino Sans", "Noto Sans JP", system-ui, -apple-system, sans-serif',
+        fontFeatureSettings: '"palt"',
+      }}
+    >
+      <div className="relative mx-auto max-w-[1320px] px-[var(--page-px)] py-[clamp(72px,10vw,140px)]">
+        {/* ─── ヘッダー ─── */}
+        <header className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-x-12 lg:gap-x-16 gap-y-10 items-end">
+          <div className="max-w-[640px]">
+            <p
+              className="text-[10.5px] tracking-[0.32em] uppercase"
+              style={{
+                color: PALETTE.textSub,
+                fontFamily: '"Inter", system-ui, sans-serif',
+                fontWeight: 500,
+              }}
+            >
+              Standard Equipment
+            </p>
+            <h2
+              id="standard-equipment-heading"
+              className="mt-5"
+              style={{
+                fontSize: "clamp(28px, 3.6vw, 46px)",
+                fontWeight: 500,
+                lineHeight: 1.45,
+                letterSpacing: "0.04em",
+                color: PALETTE.text,
+              }}
+            >
+              この価格で、
+              <br />
+              ここまで標準。
+            </h2>
+            <p
+              className="mt-6"
+              style={{
+                color: PALETTE.textSub,
+                fontSize: "clamp(14px, 1vw, 15px)",
+                lineHeight: 2,
+              }}
+            >
+              毎日使う設備から、見えない部分の性能まで。
+              住んでからの快適さを支える項目を、価格に含めています。
+            </p>
+            <p
+              className="mt-5 inline-flex items-center gap-2 text-[12px]"
+              style={{
+                color: PALETTE.green,
+                fontFamily: '"Inter", system-ui, sans-serif',
+                fontWeight: 500,
+                letterSpacing: "0.06em",
+              }}
             >
               <span
+                className="inline-block w-3 h-px"
+                style={{ background: PALETTE.green }}
                 aria-hidden
-                className="inline-flex items-center justify-center w-8 h-8 rounded-full shrink-0"
-                style={{ background: "rgba(162,197,35,0.16)", color: FOREST }}
-              >
-                <Icon className="w-4 h-4" strokeWidth={1.5} />
-              </span>
-              <span className="text-text-primary text-[12px] md:text-[13px] font-medium leading-[1.35]">
-                {label}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        {/* ===== 性能ピル行(PerformanceGrid 吸収) ===== */}
-        <div className="mt-8 md:mt-10 pt-8 md:pt-10 border-t border-border">
-          <div className="flex items-baseline justify-between flex-wrap gap-3 mb-4 md:mb-5">
-            <p className="font-sans font-bold text-text-primary text-[14px] md:text-[16px]">
-              見えない部分の標準
-            </p>
-            <p className="font-sans text-text-secondary text-[11px] md:text-[12px]">
-              長く住める家の土台も、標準仕様の中に。
+              />
+              INCLUDED &nbsp;·&nbsp; 80+ ITEMS
             </p>
           </div>
-          <ul className="flex flex-wrap gap-2 md:gap-2.5">
-            {PERFORMANCE_PILLS.map(({ label, sub }) => {
-              const Icon = PERFORMANCE_ICONS[label];
-              return (
-                <li
-                  key={label}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-[12px] md:text-[13px]"
-                  style={{
-                    background: "rgba(72,107,0,0.06)",
-                    color: FOREST,
-                    border: "1px solid rgba(72,107,0,0.18)",
-                  }}
-                >
-                  {Icon && <Icon className="w-3.5 h-3.5" strokeWidth={1.6} />}
-                  <span className="font-medium">{label}</span>
-                  {sub && (
-                    <span className="text-text-secondary text-[10px] md:text-[11px] ml-0.5">
-                      {sub}
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+
+          {/* hero photo (右) */}
+          <figure className="relative w-full">
+            <div
+              className="relative w-full"
+              style={{ aspectRatio: "16 / 10", background: PALETTE.rule }}
+            >
+              <Image
+                src={HERO_PHOTO.src}
+                alt={HERO_PHOTO.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 700px"
+                className="object-cover"
+              />
+            </div>
+            <figcaption
+              className="mt-3 text-right text-[10.5px] tracking-[0.22em] uppercase"
+              style={{
+                color: PALETTE.textSub,
+                fontFamily: '"Inter", system-ui, sans-serif',
+              }}
+            >
+              ─── {HERO_PHOTO.caption}
+            </figcaption>
+          </figure>
+        </header>
+
+        {/* ─── 4 カテゴリ・チェックリスト ─── */}
+        <div className="mt-16 md:mt-20" style={{ borderTop: `1px solid ${PALETTE.rule}` }}>
+          {CATEGORIES.map((cat) => (
+            <CategoryBlock key={cat.no} category={cat} />
+          ))}
         </div>
 
-        {/* ===== CTA ストリップ ===== */}
+        {/* ─── CTA バー (StandardComparisonBlueprint と同型) ─── */}
         <div
-          className="mt-8 md:mt-12 rounded-[10px] px-5 sm:px-7 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          className="mt-12 md:mt-14"
           style={{
-            background: "rgba(245,238,226,0.6)",
-            border: "1px solid rgba(245,238,226,1)",
+            background: PALETTE.card,
+            border: `1px solid ${PALETTE.rule}`,
           }}
         >
-          <div className="flex items-center gap-3 sm:gap-4 text-center sm:text-left">
-            <Home className="w-5 h-5 sm:w-6 sm:h-6 text-main shrink-0" strokeWidth={1.5} />
-            <p className="text-text-primary text-[13px] sm:text-[14.5px] leading-[1.7]">
-              実物の質感や使い勝手は、モデルハウスでご確認いただけます。
-            </p>
-          </div>
-          <Link
-            href="/reserve"
-            className="inline-flex items-center gap-2 bg-text-primary text-white rounded-full px-6 py-3 text-[13px] sm:text-[14px] font-medium hover:bg-main transition-colors whitespace-nowrap shrink-0"
+          <div
+            className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-px"
+            style={{ background: PALETTE.rule }}
           >
-            モデルハウス見学を予約する
-            <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
-          </Link>
+            <div className="p-6 md:p-8" style={{ background: PALETTE.card }}>
+              <p
+                className="text-[10.5px] tracking-[0.32em] uppercase"
+                style={{
+                  color: PALETTE.textSub,
+                  fontFamily: '"Inter", system-ui, sans-serif',
+                  fontWeight: 500,
+                }}
+              >
+                Next Step
+              </p>
+              <p
+                className="mt-3 text-[14px] md:text-[15px]"
+                style={{ color: PALETTE.text, lineHeight: 1.85 }}
+              >
+                実物の質感や使い勝手は、モデルハウスでご確認いただけます。
+              </p>
+            </div>
+            <CtaCard
+              href={LINE_ADD_FRIEND_URL}
+              external
+              icon={<MessageCircle className="w-4 h-4" strokeWidth={1.5} />}
+              label="LINEで相談する"
+              sub="気軽にご質問いただけます"
+            />
+            <CtaCard
+              href="/reserve"
+              icon={<Calendar className="w-4 h-4" strokeWidth={1.5} />}
+              label="モデルハウスを見学する"
+              sub="標準仕様を体感できます"
+            />
+          </div>
         </div>
 
-        <p className="mt-5 text-text-secondary text-[11px] md:text-[12px] leading-[1.85]">
+        {/* ─── 注意書き ─── */}
+        <p
+          className="mt-7 md:mt-9 text-[11px] md:text-[11.5px]"
+          style={{ color: PALETTE.textSub, lineHeight: 1.85 }}
+        >
           ※ 仕様・メーカーはプランや時期により変更となる場合があります。詳細はご来場時にご案内します。
         </p>
       </div>
     </section>
+  );
+}
+
+// ───────────────────────────────────────────
+// CategoryBlock — 番号 eyebrow + カテゴリ名 + チェックリスト
+// ───────────────────────────────────────────
+function CategoryBlock({ category }: { category: Category }) {
+  return (
+    <article
+      className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-x-10 gap-y-5 py-7 md:py-9"
+      style={{ borderBottom: `1px solid ${PALETTE.rule}` }}
+    >
+      {/* 左: 番号 + カテゴリ名 */}
+      <header>
+        <p
+          className="text-[10.5px] tracking-[0.32em] uppercase"
+          style={{
+            color: PALETTE.green,
+            fontFamily: '"Inter", system-ui, sans-serif',
+            fontWeight: 500,
+          }}
+        >
+          {category.no} &nbsp;—&nbsp; {category.en}
+        </p>
+        <h3
+          className="mt-2 text-[16px] md:text-[17px]"
+          style={{ color: PALETTE.text, fontWeight: 500, letterSpacing: "0.02em" }}
+        >
+          {category.ja}
+        </h3>
+      </header>
+
+      {/* 右: チェックリスト */}
+      <ul className="space-y-3.5">
+        {category.items.map((item) => (
+          <li
+            key={item.name}
+            className="grid grid-cols-[20px_minmax(140px,1fr)_2fr] sm:grid-cols-[20px_180px_1fr] gap-x-4 gap-y-1 items-baseline"
+          >
+            <span
+              className="inline-flex items-center justify-center w-[18px] h-[18px] mt-0.5"
+              style={{ color: PALETTE.green }}
+              aria-hidden
+            >
+              <Check className="w-4 h-4" strokeWidth={2} />
+            </span>
+            <span
+              className="text-[13.5px] md:text-[14px]"
+              style={{ color: PALETTE.text, fontWeight: 500 }}
+            >
+              {item.name}
+            </span>
+            {item.detail && (
+              <span
+                className="text-[12.5px] md:text-[13px] col-span-2 sm:col-span-1 ml-[34px] sm:ml-0"
+                style={{ color: PALETTE.textSub, lineHeight: 1.7 }}
+              >
+                {item.detail}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+// ───────────────────────────────────────────
+// CtaCard (StandardComparisonBlueprint と同型)
+// ───────────────────────────────────────────
+function CtaCard({
+  href,
+  external,
+  icon,
+  label,
+  sub,
+}: {
+  href: string;
+  external?: boolean;
+  icon: React.ReactNode;
+  label: string;
+  sub: string;
+}) {
+  const content = (
+    <>
+      <span
+        className="inline-flex items-center justify-center w-9 h-9 shrink-0 rounded-full"
+        style={{ background: PALETTE.green, color: "#ffffff" }}
+        aria-hidden
+      >
+        {icon}
+      </span>
+      <div className="flex-1 min-w-0">
+        <p
+          className="text-[13.5px] md:text-[14.5px]"
+          style={{ color: PALETTE.text, fontWeight: 500, letterSpacing: "0.02em" }}
+        >
+          {label}
+        </p>
+        <p
+          className="mt-0.5 text-[11.5px]"
+          style={{ color: PALETTE.textSub, lineHeight: 1.6 }}
+        >
+          {sub}
+        </p>
+      </div>
+      <ArrowRight
+        className="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0"
+        strokeWidth={1.5}
+        style={{ color: PALETTE.green }}
+      />
+    </>
+  );
+
+  const className = "group flex items-center gap-4 p-6 md:p-7 transition-colors";
+  const style = { background: PALETTE.card };
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className} style={style}>
+        {content}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className} style={style}>
+      {content}
+    </Link>
   );
 }

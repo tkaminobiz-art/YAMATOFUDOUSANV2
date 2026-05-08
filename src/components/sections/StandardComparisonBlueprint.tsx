@@ -30,49 +30,61 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 // ───────────────────────────────────────────
 // データ — モデル / 比較項目
+// 商品ラインは「花・風・京」3モデル (canonical: PriceSection.tsx PLANS 順序)
+// memory: reference_product_line_hana_kaze_miyako.md
 // ───────────────────────────────────────────
 const MODELS = [
   {
-    id: "kyo",
-    name: "京モデル",
-    subtitle: "価格と性能のバランスを重視した標準モデル",
-    price: "2,280",
-    image: "/images/newsozai/exterior-miyamaki-front.webp",
-    alt: "京モデル 外観",
-  },
-  {
-    id: "nara",
-    name: "奈良モデル",
-    subtitle: "快適性能と設備グレードを高めた上位モデル",
+    id: "hana",
+    name: "花",
+    reading: "HANA",
+    subtitle: "広さと仕様にゆとりを持たせたいご家族へ。",
     price: "2,480",
-    image: "/images/newsozai/exterior-sakyo-clean.webp",
-    alt: "奈良モデル 外観",
+    image: "/images/fv/plan-hana.webp",
+    alt: "花モデルの邸宅外観イメージ — 山並みと整った前庭",
   },
   {
-    id: "premium",
-    name: "プレミアムモデル",
-    subtitle: "広さ・性能・設備にこだわった高品質モデル",
-    price: "2,780",
-    image: "/images/newsozai/exterior-terrace-02.webp",
-    alt: "プレミアムモデル 外観",
+    id: "kaze",
+    name: "風",
+    reading: "KAZE",
+    subtitle: "暮らしやすさと価格のバランスを大切にしたいご家族へ。",
+    price: "2,480",
+    image: "/images/fv/plan-kaze.webp",
+    alt: "風モデルの邸宅外観イメージ — 整った正面と芝生のアプローチ",
+  },
+  {
+    id: "miyako",
+    name: "京",
+    reading: "MIYAKO",
+    subtitle: "必要な広さに絞り、総額を抑えやすい標準プラン。",
+    price: "2,280",
+    image: "/images/fv/plan-miyako.webp",
+    alt: "京モデルの端正な玄関まわり — 木目スリットと石畳のアプローチ",
+    badge: "いちばん選ばれています",
   },
 ] as const;
 
 type SpecRow = {
   label: string;
-  values: [string, string, string]; // [京, 奈良, プレミアム]
+  values: [string, string, string]; // [花, 風, 京]
   highlight?: boolean; // 価格行は強調
 };
 
+// ※ 仕様詳細 (UA値・LIXIL設備型番等) は実データ確定までの placeholder。
+//    確定後にこの SPEC_ROWS を上書きすれば全表に反映される。
 const SPEC_ROWS: SpecRow[] = [
   {
     label: "本体価格",
-    values: ["2,280万円〜", "2,480万円〜", "2,780万円〜"],
+    values: ["2,480万円〜", "2,480万円〜", "2,280万円〜"],
     highlight: true,
   },
   {
+    label: "間取り",
+    values: ["4LDK", "4LDK", "3LDK"],
+  },
+  {
     label: "延床面積",
-    values: ["28.5坪 (94.40㎡)", "31.2坪 (103.30㎡)", "34.6坪 (114.30㎡)"],
+    values: ["33坪 (109㎡)", "30坪 (99㎡)", "28坪 (92㎡)"],
   },
   {
     label: "耐震等級",
@@ -80,35 +92,31 @@ const SPEC_ROWS: SpecRow[] = [
   },
   {
     label: "断熱性能 (UA値)",
-    values: ["0.46 W/㎡·K", "0.42 W/㎡·K", "0.34 W/㎡·K"],
+    values: ["0.34 W/㎡·K", "0.42 W/㎡·K", "0.46 W/㎡·K"],
   },
   {
     label: "窓仕様",
     values: [
+      "樹脂サッシ Low-E トリプルガラス",
+      "樹脂サッシ Low-E トリプルガラス",
       "樹脂サッシ Low-E 複層ガラス",
-      "樹脂サッシ Low-E トリプルガラス",
-      "樹脂サッシ Low-E トリプルガラス",
     ],
   },
   {
     label: "キッチン",
-    values: ["LIXIL シエラS", "LIXIL ノクト", "LIXIL リシェルSI"],
+    values: ["LIXIL リシェルSI", "LIXIL ノクト", "LIXIL シエラS"],
   },
   {
     label: "浴室",
-    values: ["LIXIL リデア", "LIXIL スパージュ", "LIXIL スパージュ"],
+    values: ["LIXIL スパージュ", "LIXIL スパージュ", "LIXIL リデア"],
   },
   {
     label: "洗面",
-    values: [
-      "LIXIL ベーシアハーモL",
-      "LIXIL ピアラ",
-      "LIXIL ルミシス",
-    ],
+    values: ["LIXIL ルミシス", "LIXIL ピアラ", "LIXIL ベーシアハーモL"],
   },
   {
     label: "トイレ",
-    values: ["LIXIL ベーシア", "LIXIL サティスS", "LIXIL サティスG"],
+    values: ["LIXIL サティスG", "LIXIL サティスS", "LIXIL ベーシア"],
   },
   {
     label: "保証・アフターサポート",
