@@ -1,10 +1,15 @@
 import Header from "@/components/Header";
-import HeroEditorial from "@/components/sections/HeroEditorial";
+import HeroMagazine from "@/components/sections/HeroMagazine";
+import {
+  FONT_VARIANTS,
+  BODY_VARIANTS,
+} from "@/components/sections/HeroMagazine.fonts";
 import TrustStrip from "@/components/sections/TrustStrip";
-// 2026-05-08 v4: HeroEditorial v2 (W2 建築図面) で実績を Hero 内 TITLE BLOCK の
-//   RECORDS 行に統合したため、TrustMetricsEditorial は撤去。HeroMagazine /
-//   ScaleBanner / HeroMagazine.fonts / TrustMetricsEditorial も同様に import 不要。
-//   各コンポーネント本体は復旧用に残置。
+import ScaleBanner from "@/components/sections/ScaleBanner";
+// 2026-05-08 (revert): Hero リニューアル試行 (HeroEditorial v1-v4 / W2) は
+//   全没の判断 → 現行 HeroMagazine + ScaleBanner に戻す。
+//   memory: project_hero_renewal_all_rejected_20260508.md
+//   HeroEditorial.tsx / TrustMetricsEditorial.tsx / 各 lab pages は残置 (納品時削除)
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
@@ -23,17 +28,19 @@ import FinalCta from "@/components/sections/FinalCta";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
-/*
-  TOP 構成 — 2026-05-08 v4 (HeroEditorial 移行)
+// 2026-04-24 確定: Z(Noto Sans JP catalog) + IV(Industrial: Oswald + Noto Sans JP 500)
+const HERO_HEADLINE_VARIANT =
+  FONT_VARIANTS.find((v) => v.id === "noto-sans") ?? FONT_VARIANTS[0];
+const HERO_BODY_VARIANT =
+  BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
 
-  v3 (HeroMagazine 全画面オーバーレイ + ScaleBanner)
-   → v4-a (HeroEditorial v1 写真主役 + TrustMetricsEditorial 静か実績帯)
-   → v4 (HeroEditorial v2 建築図面 / FIG.01 + TITLE BLOCK 内 RECORDS で実績統合)
-  方向: 写真依存の LP 構造を脱し、写真ゼロでも成立する建築図面型 design language
-       (memory: feedback_design_first_photo_last_grey_box_test.md / W2 採用)
+/*
+  TOP 構成 — 2026-05-03 v3 (参考画像準拠・Progressive Disclosure 適用)
+  2026-05-08: HeroEditorial 試行 (v1-v4) は全没 → v3 HeroMagazine に revert
 
   【フック・権威】
-  1. HeroEditorial v2     ELEVATION FRAME + TITLE BLOCK (PROJECT/PRICE/RECORDS/ACTION)
+  1. HeroMagazine          写真主役 + 価格 + CTA
+  2. ScaleBanner           4実績(アイコン付き) — バーン
 
   【理屈・証拠】
   3. MechanismEnhanced     坪単価比較 + 3つの仕組み
@@ -71,8 +78,12 @@ export default function Home() {
       <Header />
       <main className="pb-[72px] md:pb-0">
         {/* フック・権威 */}
-        <HeroEditorial />
+        <HeroMagazine
+          variant={HERO_HEADLINE_VARIANT}
+          bodyVariant={HERO_BODY_VARIANT}
+        />
         <TrustStrip />
+        <ScaleBanner />
 
         {/* 理屈・証拠 */}
         <MechanismEnhanced />
