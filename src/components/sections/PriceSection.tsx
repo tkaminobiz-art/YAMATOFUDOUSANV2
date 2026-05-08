@@ -97,21 +97,21 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
   const priceColor = isHeadliner ? "#A9D159" : "#FFFFFF";
 
   return (
-    <article className="group relative flex flex-col overflow-hidden aspect-[3/4] md:aspect-auto md:min-h-[560px] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[0_32px_56px_-24px_rgba(0,0,0,0.35)]">
+    <article className="group relative flex flex-col overflow-hidden aspect-[3/4] md:aspect-auto md:min-h-[560px] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_-18px_rgba(0,0,0,0.25)]">
       {/* 背景: 邸宅写真フルブリード */}
       <Image
         src={plan.bgImage}
         alt={plan.alt}
         fill
         priority={priority}
-        className="object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+        className="object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
       />
 
-      {/* グラデーション: 上(漢字可読) + 下(価格可読) */}
+      {/* グラデーション (浮遊): 写真を呼吸させる軽量オーバーレイ */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/85"
+        className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/65"
       />
 
       {/* Headlinerのみ Lime tint の薄い信号 */}
@@ -119,15 +119,15 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
         <div
           aria-hidden
           className="absolute inset-0 mix-blend-soft-light"
-          style={{ background: "linear-gradient(180deg, rgba(169,209,89,0.18) 0%, transparent 40%, rgba(72,107,0,0.12) 100%)" }}
+          style={{ background: "linear-gradient(180deg, rgba(169,209,89,0.16) 0%, transparent 45%, rgba(72,107,0,0.10) 100%)" }}
         />
       )}
 
       {/* Headliner ラベル: 右上に小さく */}
       {isHeadliner && (
         <div
-          className="absolute top-5 right-5 md:top-6 md:right-6 z-10 font-murecho font-bold text-[10px] md:text-[11px] tracking-[0.06em] px-2.5 py-1 border"
-          style={{ color: "#A9D159", borderColor: "rgba(169,209,89,0.5)", background: "rgba(0,0,0,0.35)", backdropFilter: "blur(4px)" }}
+          className="absolute top-5 right-5 md:top-6 md:right-6 z-10 font-murecho text-[10px] md:text-[11px] tracking-[0.18em] px-2.5 py-1 border"
+          style={{ color: "#A9D159", borderColor: "rgba(169,209,89,0.45)", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(4px)", fontWeight: 500 }}
         >
           いちばん選ばれています
         </div>
@@ -138,76 +138,88 @@ function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }
         {/* Top: 漢字 + ローマ字 + スペック */}
         <div>
           <div className="flex items-end gap-3">
+            {/* 漢字: Mincho 500 weight + 余韻の letter-spacing で「浮遊」 */}
             <span
-              className="font-murecho leading-[0.82] text-white"
+              className="leading-[0.85] text-white"
               style={{
-                fontWeight: 900,
-                fontSize: "clamp(68px, 7.2vw, 116px)",
-                letterSpacing: "0.02em",
-                textShadow: "0 4px 24px rgba(0,0,0,0.35)",
+                fontFamily: "var(--font-zen-old)",
+                fontWeight: 500,
+                fontSize: "clamp(76px, 7.6vw, 124px)",
+                letterSpacing: "0.05em",
+                textShadow: "0 2px 14px rgba(0,0,0,0.4)",
               }}
             >
               {plan.name}
             </span>
             <span
-              className="font-inter text-white/75 pb-2 md:pb-3"
+              className="font-inter text-white/65 pb-2 md:pb-3"
               style={{
-                fontWeight: 600,
+                fontWeight: 400,
                 fontSize: "clamp(11px, 0.85vw, 13px)",
-                letterSpacing: "0.26em",
+                letterSpacing: "0.28em",
               }}
             >
               {plan.reading}
             </span>
           </div>
 
-          <dl className="font-inter flex items-center gap-3 mt-5 md:mt-6 text-[11px] md:text-[12px] tracking-[0.14em] text-white/85 font-bold">
+          <dl className="font-inter flex items-center gap-3 mt-5 md:mt-6 text-[11px] md:text-[12px] tracking-[0.18em] text-white/80 font-medium">
             <dt className="sr-only">間取り</dt>
             <dd>{plan.layout}</dd>
-            <span aria-hidden className="w-px h-3 bg-white/35" />
+            <span aria-hidden className="w-px h-3 bg-white/30" />
             <dt className="sr-only">延床</dt>
             <dd>{plan.tsubo}</dd>
           </dl>
         </div>
 
-        {/* Bottom: 誰向けコピー (caption + mincho 本文・panel なし) + 価格 */}
+        {/* Bottom: 誰向けコピー + 価格 (どちらも「浮遊」) */}
         <div>
-          {/* 「こんなご家族に」 — clean caption + mincho 本文 */}
+          {/* 「こんなご家族に」 — 細身 caption + Mincho 本文 */}
           <div className="mb-7 md:mb-8 max-w-[26rem]">
-            <p className="font-murecho text-[10.5px] md:text-[11px] tracking-[0.18em] text-white/65 font-bold mb-2.5">
+            <p className="font-murecho text-[10.5px] md:text-[11px] tracking-[0.22em] text-white/55 font-medium mb-2.5">
               こんなご家族に
             </p>
             <p
-              className="font-zen-old text-white leading-[1.7] tracking-[0.02em]"
+              className="font-zen-old text-white leading-[1.7] tracking-[0.04em]"
               style={{
                 fontSize: "clamp(13.5px, 1.05vw, 16.5px)",
-                fontWeight: 500,
-                textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+                fontWeight: 400,
+                textShadow: "0 2px 10px rgba(0,0,0,0.4)",
               }}
             >
               {plan.audience}
             </p>
           </div>
 
-          <div className="pt-5 md:pt-6 border-t border-white/25">
+          <div className="pt-5 md:pt-6 border-t border-white/15">
             <div className="flex items-baseline gap-2 md:gap-3">
+              {/* 価格: Fraunces italic 200 (ARM オマージュ) で詩的な数字に */}
               <span
-                className="font-oswald tabular-nums leading-[0.82]"
+                className="tabular-nums leading-[0.85]"
                 style={{
-                  fontWeight: 300,
-                  fontSize: "clamp(56px, 7vw, 100px)",
-                  letterSpacing: "-0.03em",
+                  fontFamily: "var(--font-fraunces)",
+                  fontStyle: "italic",
+                  fontWeight: 200,
+                  fontSize: "clamp(60px, 7.4vw, 108px)",
+                  letterSpacing: "-0.015em",
                   color: priceColor,
-                  textShadow: "0 4px 20px rgba(0,0,0,0.45)",
+                  textShadow: "0 2px 14px rgba(0,0,0,0.4)",
                 }}
               >
                 {plan.price}
               </span>
-              <span className="font-murecho text-white/85 text-[clamp(13px,1vw,16px)] font-medium pb-1.5 md:pb-2">
+              <span
+                className="text-white/80 pb-1.5 md:pb-2"
+                style={{
+                  fontFamily: "var(--font-zen-old)",
+                  fontSize: "clamp(13px, 1vw, 16px)",
+                  fontWeight: 400,
+                }}
+              >
                 万円〜
               </span>
             </div>
-            <p className="font-inter text-[10px] md:text-[11px] tracking-[0.14em] text-white/65 mt-3">
+            <p className="font-inter text-[10px] md:text-[11px] tracking-[0.18em] text-white/55 font-normal mt-3">
               税込・建物本体と付帯工事まで含む
             </p>
           </div>
