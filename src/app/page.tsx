@@ -8,6 +8,7 @@ import TrustStrip from "@/components/sections/TrustStrip";
 //   memory: project_next_fv_plan_video_overlay.md / project_video_assets_archive.md
 import StandardComparisonBlueprint from "@/components/sections/StandardComparisonBlueprint";
 import StickyMechanismPin from "@/components/sections/StickyMechanismPin";
+import StandardCrossSection from "@/components/sections/StandardCrossSection";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 import RepresentativeMessage from "@/components/sections/RepresentativeMessage";
@@ -77,6 +78,7 @@ export default function Home() {
             旧 MechanismEnhanced の bridge + 3 reasons は StickyMechanismPin に直結。 */}
         <StandardComparisonBlueprint />
         <StickyMechanismPin />
+        <StandardCrossSection />
         <StandardEquipment />
         <ZeroDeclaration />
         {/* 代表 + 専務の顔と署名級メッセージ — 仕様/¥0 と価格の間に「これを守る人」を1呼吸 */}
