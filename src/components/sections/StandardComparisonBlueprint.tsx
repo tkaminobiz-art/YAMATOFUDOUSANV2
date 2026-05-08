@@ -211,6 +211,47 @@ function RulerEdge({ position }: { position: "top" | "bottom" }) {
 }
 
 // ────────────────────────────────────────────────
+// 寸法ライン(両端 ┤├ + 中央ラベル) — 建築図面の寸法アロー風
+// ────────────────────────────────────────────────
+function DimTick({ color }: { color: string }) {
+  return (
+    <svg
+      width="6"
+      height="11"
+      viewBox="0 0 6 11"
+      aria-hidden
+      style={{ flexShrink: 0, color }}
+    >
+      <line x1="3" y1="0" x2="3" y2="11" stroke="currentColor" strokeWidth="0.7" />
+      <line x1="0" y1="5.5" x2="6" y2="5.5" stroke="currentColor" strokeWidth="0.7" />
+    </svg>
+  );
+}
+
+function DimensionRule({
+  label,
+  color = "rgba(28,27,24,0.42)",
+  className = "",
+}: {
+  label: React.ReactNode;
+  color?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`flex items-center gap-2 md:gap-3 font-inter text-[10px] md:text-[10.5px] tracking-[0.18em] uppercase font-semibold ${className}`}
+      style={{ color }}
+    >
+      <DimTick color={color} />
+      <span aria-hidden className="flex-1 h-px" style={{ background: color, opacity: 0.7 }} />
+      <span className="px-1 whitespace-nowrap">{label}</span>
+      <span aria-hidden className="flex-1 h-px" style={{ background: color, opacity: 0.7 }} />
+      <DimTick color={color} />
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────
 // メイン
 // ────────────────────────────────────────────────
 export default function StandardComparisonBlueprint() {
@@ -348,203 +389,255 @@ export default function StandardComparisonBlueprint() {
           </figure>
         </div>
 
-        {/* ============ 2. 比較バー: 大手 vs やまと vs 差額 ============ */}
-        <div
-          ref={diffRef}
-          className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_minmax(200px,0.95fr)] gap-y-10 md:gap-x-8 lg:gap-x-10 items-stretch"
-        >
-          {/* 大手 */}
-          <article className="relative pt-6">
-            <p
-              className="font-sans text-[12px] md:text-[12.5px] tracking-[0.04em] mb-3"
-              style={{ color: "rgba(28,27,24,0.7)" }}
-            >
-              大手ハウスメーカー
-              <br />
-              参考価格
-            </p>
-            <div className="flex items-baseline gap-2 mb-3">
-              <span ref={otherRef} className="sr-only" />
-              <span
-                className="font-oswald tabular-nums leading-[0.85]"
-                style={{
-                  fontWeight: 300,
-                  fontSize: "clamp(40px,5.5vw,72px)",
-                  color: "rgba(28,27,24,0.55)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                {other.toLocaleString()}
-              </span>
-              <span
-                className="font-sans font-medium pb-1.5"
-                style={{ color: "rgba(28,27,24,0.6)", fontSize: "clamp(13px,1.1vw,16px)" }}
-              >
-                万円〜
-              </span>
-            </div>
-            {/* 大手のハウスイラスト(generic) */}
-            <div className="relative aspect-[5/3] w-full max-w-[280px]">
-              <Image
-                src="/images/sections/house-generic.png"
-                alt="大手ハウスメーカーの参考イメージ"
-                fill
-                sizes="(max-width: 768px) 60vw, 240px"
-                className="object-contain"
-                style={{ opacity: 0.78 }}
-              />
-            </div>
-            <p
-              className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
-              style={{ color: "rgba(28,27,24,0.5)" }}
-            >
-              ※ 大手ハウスメーカーの坪単価をもとにした参考価格です。
-            </p>
-          </article>
+        {/* ============ 2. 比較バー: 大手 vs やまと vs 差額 ============
+            旧: やまと列が bg + border のパネル(card 気味)
+            新: 全 3 列を「左罫線 + FIG ラベル + 寸法ティック」の建築 marginalia に統一。
+                やまと列だけ罫線を 3px の deep-green にしてヒエラルキを担保する。
+        */}
+        <div className="mt-14 md:mt-20">
+          {/* 寸法ベンチマーク(全比較行の上に張る) */}
+          <DimensionRule
+            className="mb-8 md:mb-10"
+            label="Benchmark · 30坪 / 4LDK · 建物本体 + 標準付帯工事"
+          />
 
-          {/* VS 区切り */}
-          <div className="hidden lg:flex items-center justify-center">
-            <span
-              className="font-inter font-light text-[18px] tracking-[0.2em]"
-              style={{ color: "rgba(28,27,24,0.4)" }}
-            >
-              VS
-            </span>
-          </div>
-
-          {/* やまと京モデル(主役) */}
-          <article
-            className="relative pt-6 md:pt-8 md:pb-8 md:px-6 lg:px-8"
-            style={{
-              background: "rgba(47,74,44,0.04)",
-              border: `1px solid rgba(47,74,44,0.18)`,
-              borderRadius: 2,
-            }}
+          <div
+            ref={diffRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_minmax(200px,0.95fr)] gap-y-10 md:gap-x-8 lg:gap-x-10 items-stretch"
           >
-            {/* バッジ */}
-            <span
-              className="absolute -top-3 left-6 font-sans font-bold text-[10.5px] md:text-[11px] tracking-[0.06em] px-3 py-1.5"
-              style={{
-                background: DEEP_GREEN,
-                color: "#FFFFFF",
-                borderRadius: 2,
-              }}
+            {/* 大手 — REF.01 (薄いグレーレール) */}
+            <article
+              className="relative pt-1 md:pl-5 lg:pl-6"
+              style={{ borderLeft: `1px solid rgba(28,27,24,0.18)` }}
             >
-              やまと不動産・京モデル
-            </span>
-            <p
-              className="font-sans text-[12px] md:text-[12.5px] tracking-[0.04em] mt-1 mb-3 font-bold"
-              style={{ color: DEEP_GREEN }}
-            >
-              建物本体 ＋ 標準付帯工事
-              <br />
-              込み・税込
-            </p>
-            <div className="flex items-baseline gap-2 mb-3">
-              <span ref={yamatoRef} className="sr-only" />
-              <span
-                className="font-oswald tabular-nums leading-[0.85]"
-                style={{
-                  fontWeight: 400,
-                  fontSize: "clamp(48px,6.4vw,84px)",
-                  color: DEEP_GREEN,
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                {yamato.toLocaleString()}
-              </span>
-              <span
-                className="font-sans font-bold pb-1.5"
-                style={{ color: DEEP_GREEN, fontSize: "clamp(13px,1.2vw,17px)" }}
-              >
-                万円〜
-              </span>
-            </div>
-            {/* やまとのハウスイラスト(refined) */}
-            <div className="relative aspect-[5/3] w-full max-w-[280px]">
-              <Image
-                src="/images/sections/house-yamato.png"
-                alt="やまと不動産・京モデルの立面イメージ"
-                fill
-                sizes="(max-width: 768px) 60vw, 240px"
-                className="object-contain"
-              />
-            </div>
-            <p
-              className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
-              style={{ color: "rgba(28,27,24,0.55)" }}
-            >
-              ※ 京モデル30坪・4LDKの目安です。仕様・敷地により異なります。
-            </p>
-          </article>
-
-          {/* = 区切り */}
-          <div className="hidden lg:flex items-center justify-center">
-            <span
-              className="font-inter font-light text-[18px]"
-              style={{ color: "rgba(28,27,24,0.4)" }}
-            >
-              =
-            </span>
-          </div>
-
-          {/* 参考差額 */}
-          <article
-            className="relative pt-6 md:col-span-2 md:pt-8 lg:col-span-1 lg:pt-2 lg:pl-2"
-            style={{ borderTop: "1px dashed rgba(28,27,24,0.16)" }}
-          >
-            <div className="md:flex md:items-center md:justify-between md:gap-10 lg:block lg:gap-0">
-              <div className="md:shrink-0">
-                <p
-                  className="font-sans text-[12px] md:text-[12.5px] tracking-[0.04em] mb-3"
-                  style={{ color: "rgba(28,27,24,0.7)" }}
-                >
-                  参考差額
-                  <span aria-hidden className="ml-2 font-inter italic" style={{ color: "rgba(47,74,44,0.6)" }}>
-                    Difference
-                  </span>
-                </p>
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span
-                    className="font-sans font-bold pb-2"
-                    style={{ color: INK, fontSize: "clamp(13px,1.1vw,16px)" }}
-                  >
-                    約
-                  </span>
-                  <span
-                    className="font-oswald tabular-nums leading-[0.82]"
-                    style={{
-                      fontWeight: 400,
-                      fontSize: "clamp(56px,7.4vw,108px)",
-                      color: INK,
-                      letterSpacing: "-0.025em",
-                    }}
-                  >
-                    {diff.toLocaleString()}
-                  </span>
-                  <span
-                    className="font-sans font-bold pb-2"
-                    style={{ color: INK, fontSize: "clamp(14px,1.2vw,18px)" }}
-                  >
-                    万円
-                  </span>
-                </div>
-              </div>
-
-              <div className="md:flex-1 md:min-w-0">
-                <div
-                  className="mt-3 md:mt-0 h-[1px] w-full"
-                  style={{ background: "rgba(47,74,44,0.4)" }}
-                />
-                <p
-                  className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+              <div className="flex items-center gap-2 mb-3 md:mb-4">
+                <span
+                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
                   style={{ color: "rgba(28,27,24,0.55)" }}
                 >
-                  同条件30坪・4LDKでの当社試算による参考差額です。
-                </p>
+                  Ref. 01
+                </span>
+                <span aria-hidden className="w-3 h-px" style={{ background: "rgba(28,27,24,0.3)" }} />
+                <span
+                  className="font-sans font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
+                  style={{ color: "rgba(28,27,24,0.65)" }}
+                >
+                  大手ハウスメーカー
+                </span>
               </div>
+              <p
+                className="font-sans text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
+                style={{ color: "rgba(28,27,24,0.55)" }}
+              >
+                参考価格
+              </p>
+              <div className="flex items-baseline gap-2 mb-3">
+                <span ref={otherRef} className="sr-only" />
+                <span
+                  className="font-oswald tabular-nums leading-[0.85]"
+                  style={{
+                    fontWeight: 300,
+                    fontSize: "clamp(40px,5.5vw,72px)",
+                    color: "rgba(28,27,24,0.55)",
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {other.toLocaleString()}
+                </span>
+                <span
+                  className="font-sans font-medium pb-1.5"
+                  style={{ color: "rgba(28,27,24,0.6)", fontSize: "clamp(13px,1.1vw,16px)" }}
+                >
+                  万円〜
+                </span>
+              </div>
+              <div className="relative aspect-[5/3] w-full max-w-[280px]">
+                <Image
+                  src="/images/sections/house-generic.png"
+                  alt="大手ハウスメーカーの参考イメージ"
+                  fill
+                  sizes="(max-width: 768px) 60vw, 240px"
+                  className="object-contain"
+                  style={{ opacity: 0.78 }}
+                />
+              </div>
+              <p
+                className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+                style={{ color: "rgba(28,27,24,0.5)" }}
+              >
+                ※ 大手ハウスメーカーの坪単価をもとにした参考価格です。
+              </p>
+            </article>
+
+            {/* VS 区切り */}
+            <div className="hidden lg:flex items-center justify-center">
+              <span
+                className="font-inter font-light text-[18px] tracking-[0.2em]"
+                style={{ color: "rgba(28,27,24,0.4)" }}
+              >
+                VS
+              </span>
             </div>
-          </article>
+
+            {/* やまと京モデル — FIG.── (3px deep-green レール、主役) */}
+            <article
+              className="relative pt-1 md:pl-5 lg:pl-6"
+              style={{ borderLeft: `3px solid ${DEEP_GREEN}` }}
+            >
+              <div className="flex items-center gap-2 mb-3 md:mb-4">
+                <span
+                  className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
+                  style={{ color: DEEP_GREEN }}
+                >
+                  Fig.
+                </span>
+                <span aria-hidden className="w-3 h-px" style={{ background: DEEP_GREEN, opacity: 0.5 }} />
+                <span
+                  className="font-sans font-bold tracking-[0.02em] text-[12px] md:text-[12.5px]"
+                  style={{ color: DEEP_GREEN }}
+                >
+                  やまと不動産・京モデル
+                </span>
+              </div>
+              <p
+                className="font-sans font-bold text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
+                style={{ color: DEEP_GREEN }}
+              >
+                建物本体 ＋ 標準付帯工事 込み・税込
+              </p>
+              <div className="flex items-baseline gap-2 mb-3">
+                <span ref={yamatoRef} className="sr-only" />
+                <span
+                  className="font-oswald tabular-nums leading-[0.85]"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "clamp(48px,6.4vw,84px)",
+                    color: DEEP_GREEN,
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {yamato.toLocaleString()}
+                </span>
+                <span
+                  className="font-sans font-bold pb-1.5"
+                  style={{ color: DEEP_GREEN, fontSize: "clamp(13px,1.2vw,17px)" }}
+                >
+                  万円〜
+                </span>
+              </div>
+              <div className="relative aspect-[5/3] w-full max-w-[280px]">
+                <Image
+                  src="/images/sections/house-yamato.png"
+                  alt="やまと不動産・京モデルの立面イメージ"
+                  fill
+                  sizes="(max-width: 768px) 60vw, 240px"
+                  className="object-contain"
+                />
+              </div>
+              <p
+                className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+                style={{ color: "rgba(28,27,24,0.55)" }}
+              >
+                ※ 京モデル30坪・4LDKの目安です。仕様・敷地により異なります。
+              </p>
+            </article>
+
+            {/* = 区切り */}
+            <div className="hidden lg:flex items-center justify-center">
+              <span
+                className="font-inter font-light text-[18px]"
+                style={{ color: "rgba(28,27,24,0.4)" }}
+              >
+                =
+              </span>
+            </div>
+
+            {/* 参考差額 — Δ (1px dashed レール) */}
+            <article
+              className="relative pt-1 md:col-span-2 md:pl-5 lg:col-span-1 lg:pl-6"
+              style={{ borderLeft: "1px dashed rgba(28,27,24,0.30)" }}
+            >
+              <div className="md:flex md:items-center md:justify-between md:gap-10 lg:block lg:gap-0">
+                <div className="md:shrink-0">
+                  <div className="flex items-center gap-2 mb-3 md:mb-4">
+                    <span
+                      aria-hidden
+                      className="font-inter font-semibold text-[12px] md:text-[12.5px]"
+                      style={{ color: "rgba(28,27,24,0.7)" }}
+                    >
+                      Δ
+                    </span>
+                    <span aria-hidden className="w-3 h-px" style={{ background: "rgba(28,27,24,0.3)" }} />
+                    <span
+                      className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
+                      style={{ color: "rgba(28,27,24,0.7)" }}
+                    >
+                      Difference
+                    </span>
+                  </div>
+                  <p
+                    className="font-sans text-[11px] md:text-[11.5px] tracking-[0.04em] mb-3"
+                    style={{ color: "rgba(28,27,24,0.6)" }}
+                  >
+                    参考差額
+                  </p>
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span
+                      className="font-sans font-bold pb-2"
+                      style={{ color: INK, fontSize: "clamp(13px,1.1vw,16px)" }}
+                    >
+                      約
+                    </span>
+                    <span
+                      className="font-oswald tabular-nums leading-[0.82]"
+                      style={{
+                        fontWeight: 400,
+                        fontSize: "clamp(56px,7.4vw,108px)",
+                        color: INK,
+                        letterSpacing: "-0.025em",
+                      }}
+                    >
+                      {diff.toLocaleString()}
+                    </span>
+                    <span
+                      className="font-sans font-bold pb-2"
+                      style={{ color: INK, fontSize: "clamp(14px,1.2vw,18px)" }}
+                    >
+                      万円
+                    </span>
+                  </div>
+                </div>
+
+                <div className="md:flex-1 md:min-w-0">
+                  <div
+                    className="mt-3 md:mt-0 h-[1px] w-full"
+                    style={{ background: "rgba(47,74,44,0.4)" }}
+                  />
+                  <p
+                    className="mt-3 font-sans text-[10.5px] md:text-[11px] leading-[1.7]"
+                    style={{ color: "rgba(28,27,24,0.55)" }}
+                  >
+                    同条件30坪・4LDKでの当社試算による参考差額です。
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          {/* 寸法サマリ(下) — 4,000 - 2,280 = 1,720 を建築寸法風に */}
+          <DimensionRule
+            className="mt-10 md:mt-12 hidden lg:flex"
+            color={DEEP_GREEN}
+            label={
+              <>
+                4,000 万円 <span className="mx-1.5 opacity-60">−</span> 2,280 万円{" "}
+                <span className="mx-1.5 opacity-60">=</span>{" "}
+                <span className="text-[12px] tracking-[0.16em]">
+                  Δ 1,720 万円
+                </span>
+              </>
+            }
+          />
         </div>
 
         {/* ============ 3. 含まれるもの / 別途となるもの — 建築ノーテーション ============
@@ -557,9 +650,10 @@ export default function StandardComparisonBlueprint() {
             {/* ─── 列 1: 含まれるもの ─── */}
             <section aria-labelledby="fig-01-included" className="md:pr-2">
               <header
-                className="flex items-baseline gap-3 md:gap-4 pb-3"
+                className="flex items-center gap-3 md:gap-4 pb-3"
                 style={{ borderBottom: `1px solid rgba(47,74,44,0.45)` }}
               >
+                <DimTick color={DEEP_GREEN} />
                 <span
                   className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
                   style={{ color: DEEP_GREEN }}
@@ -583,6 +677,7 @@ export default function StandardComparisonBlueprint() {
                 >
                   06 ITEMS
                 </span>
+                <DimTick color="rgba(47,74,44,0.55)" />
               </header>
               <h3
                 id="fig-01-included"
@@ -671,9 +766,10 @@ export default function StandardComparisonBlueprint() {
             {/* ─── 列 2: 別途となるもの ─── */}
             <section aria-labelledby="fig-02-others" className="md:pl-2">
               <header
-                className="flex items-baseline gap-3 md:gap-4 pb-3"
+                className="flex items-center gap-3 md:gap-4 pb-3"
                 style={{ borderBottom: `1px solid rgba(28,27,24,0.40)` }}
               >
+                <DimTick color="rgba(28,27,24,0.55)" />
                 <span
                   className="font-inter font-semibold tracking-[0.32em] uppercase text-[10px] md:text-[10.5px]"
                   style={{ color: "rgba(28,27,24,0.7)" }}
@@ -697,6 +793,7 @@ export default function StandardComparisonBlueprint() {
                 >
                   04 ITEMS
                 </span>
+                <DimTick color="rgba(28,27,24,0.5)" />
               </header>
               <h3
                 id="fig-02-others"
