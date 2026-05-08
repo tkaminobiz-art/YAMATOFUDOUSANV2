@@ -7,107 +7,72 @@ import { LabDisclaimer } from "@/components/lab/LabDisclaimer";
 
 const OPTIONS = [
   {
-    id: "01",
-    name: "Printed Receipt",
+    id: "v2-01",
+    name: "Annotated Real Photo",
     intent:
-      "紙の領収書 / 紙レシート風。strikethrough red + green 注釈、最後に hanko 印。AI生成感ゼロで一番 honest に見える。",
-    src: "/zero-declaration-lab/01-receipt-gpt2.png",
+      "実写の三山木モデル外観に、建築家が手描きで注釈を入れたような ink callouts を 8 個。番号 01-08 で各費用を引き出し線でマーキング。実写 + アナログ感で AI 臭ゼロ。",
+    src: "/zero-declaration-lab/v2-01-photo-annotated.png",
     pros: [
-      "「契約前見える化」のメタファーとして領収書はド直球",
-      "cream paper + 紙感で住宅 LP テンプレ感を完全回避",
-      "strikethrough red と green 注釈の対比で 8 項目が一瞬で読める",
+      "実写ベースで AI らしさが構造的にゼロ",
+      "やまとの実モデル (三山木) を主役に置ける",
+      "建築家のマークアップ風で「誠実 / 透明」イメージが強い",
     ],
     cons: [
-      "情報密度は中程度 (印刷物感を保つため大幅に増やせない)",
-      "実装で印鑑 SVG とレシート行を再現する手間がやや多い",
+      "実装で写真 + SVG annotation overlay が必要 (8本の引き出し線手作業)",
+      "TOP の HeroMagazine も写真主役なので連続性に注意",
     ],
-    tone: "領収書・印刷物・温度高",
+    tone: "実写 + 手描き注釈",
   },
   {
-    id: "02",
-    name: "Two-Column Comparison",
+    id: "v2-02",
+    name: "Two Houses Compared",
     intent:
-      "「一般の相場 / GENERAL MARKET」 vs 「やまと不動産 / YAMATO」の 2 列。strikethrough red + 緑¥0 / 不要 / 事前説明 で対比を最大化。",
-    src: "/zero-declaration-lab/02-comparison-gpt2.png",
+      "「一般的な家づくり」(× 赤いタグが家の周りに散乱) vs 「やまとの家づくり」(○ 緑のタグが整然と並ぶ) の 2 軒並列。視覚で混乱→秩序の対比が一瞬で伝わる。",
+    src: "/zero-declaration-lab/v2-02-two-houses.png",
     pros: [
-      "対比が最も明快、誰が見ても 2 秒で理解できる",
-      "実装が容易 (table + strike-through CSS のみ)",
-      "数字の strikethrough が金額メリットを最大限にビジュアル化",
+      "見た瞬間に "混沌 vs 整理" が一目で伝わる最強の visual",
+      "8 項目すべて両軒に表示されるので情報量も担保",
+      "新建築誌風の手描きトーンで AI らしさゼロ",
     ],
     cons: [
-      "「他社 vs 当社」感が強く出すぎると広告 LP 寄り (memory: feedback_frame_change_cheap_to_waste と要整合)",
-      "前セクション (StandardEquipment Schedule) と純白系で似て見える可能性",
+      "「他社 vs 当社」フレーミングが強い (memory: 安い→他社が無駄 frame と要整合)",
+      "実装で SVG / illustration をどう作るか課題 (生成画像をそのまま使うか、SVG化するか)",
     ],
-    tone: "編集誌コンパリ・直球",
+    tone: "2軒比較・対比最大",
   },
   {
-    id: "03",
-    name: "Traditional Ledger",
+    id: "v2-03",
+    name: "Process Timeline (5 phases)",
     intent:
-      "古紙テクスチャ + 「土地購入時 / BEFORE BUILD」「建築工事中 / DURING BUILD」の 2 セクション帳簿。右下に「透明保証」hanko 印。フォーマルで温度感が最も高い。",
-    src: "/zero-declaration-lab/03-ledger-gpt2.png",
+      "土地探し→設計→契約→施工→引渡しの 5 フェーズに 8 項目の費用を時系列で配置。各フェーズに小さな手描きアイコン (測量杭、製図コンパス、印鑑、足場、鍵)。",
+    src: "/zero-declaration-lab/v2-03-timeline.png",
     pros: [
-      "8項目を BEFORE/DURING の 2 セクション分割で構造的に表現",
-      "古紙 + 印鑑で誠実さ・伝統的な信頼感が立つ",
-      "hanko の赤が単独 spot color として効く",
+      "「いつ発生する費用か」が時系列で理解できる (理屈派に最適)",
+      "5 つの手描き ink イラストが画面全体に温度感を与える",
+      "前セクション (StickyMechanismPin) との連動性が高い",
     ],
     cons: [
-      "古紙テクスチャが web で安っぽくなりやすい (実装に注意)",
-      "古典的すぎて若年層には退屈に映る可能性",
+      "情報密度が高く、scan しづらい可能性",
+      "5 フェーズのアイコンが SVG 化必要 (実装ハードル中)",
     ],
-    tone: "帳簿・伝統・温度高",
+    tone: "プロセス・時系列",
   },
   {
-    id: "04",
-    name: "Bento Editorial",
+    id: "v2-04",
+    name: "Architectural Elevation + 8 Callouts",
     intent:
-      "8 項目を asymmetric Bento で配置。仲介手数料 (¥50万〜100万 → 不要) を最大カードに、残り 7 項目を中小カードで散らす。",
-    src: "/zero-declaration-lab/04-bento-gpt2.png",
+      "建築事務所の立面詳細図のように、家のイラスト中心 + 8 本の引き出し線で fee callouts を配置。新建築・建築知識の本物の建築図面アートに近い。",
+    src: "/zero-declaration-lab/v2-04-elevation.png",
     pros: [
-      "8 項目を視覚的に強弱つけて見せられる",
-      "仲介手数料の最大インパクトを大カードで主役化",
-      "DESIGN_GUARDRAILS の「asymmetric Bento」推奨パターンに沿う",
+      "前セクション (StandardEquipment Schedule) との視覚連続性が最も高い",
+      "建築誌の上品さ、住宅会社らしさが立つ",
+      "8 項目すべてが家の各部位と紐づいて見える",
     ],
     cons: [
-      "Bento は前セクションでも潜在使用、続くと UI トレンド頼みに見える",
-      "実装で配置を asymmetric に保つガード必要 (均等化リスク)",
+      "実は費用は家の「部位」とは紐づかない (営業フェーズの問題)",
+      "イラスト + annotation を SVG で作る実装コストが高い",
     ],
-    tone: "Bento 編集・モダン",
-  },
-  {
-    id: "05",
-    name: "Bold Editorial Poster",
-    intent:
-      "巨大 ¥500,000 / ¥1,500,000 のストライク背景 + 小さい Mincho 見出しオーバーレイ。右側に 8 項目のサイドバーリスト。最もポスター的インパクト。",
-    src: "/zero-declaration-lab/05-poster-gpt2.png",
-    pros: [
-      "視線誘導力が最も強い。スクロール中で目に止まる",
-      "「払わなくていい金額の総量」を巨大ビジュアルで体感させる",
-      "編集誌的 + 広告ポスター的で住宅 LP 定型から最も外れる",
-    ],
-    cons: [
-      "派手寄りで「安売り訴求」と紙一重 (memory: feedback_frame_change_cheap_to_waste 抵触リスク)",
-      "見出しが小さく見える、可読性に注意",
-      "前後セクション (Schedule + 次セクション) と温度差が大きい",
-    ],
-    tone: "ポスター・派手",
-  },
-  {
-    id: "06",
-    name: "Mechanism Diagram",
-    intent:
-      "「当社分譲地 → ワンストップ → 事前明確化」の 3 メカニズム ダイアグラム + 下に 8 項目の薄いフッター。なぜ費用が抑えられるかの『理屈』を視覚化。",
-    src: "/zero-declaration-lab/06-diagram-gpt2.png",
-    pros: [
-      "金額のインパクトより理屈・誠実さで説得 (memory: feedback_mechanism_fact_core 準拠)",
-      "前セクション StickyMechanismPin との連動性が高い",
-      "「3つの仕組み」をビジュアルで明快に",
-    ],
-    cons: [
-      "8 項目の量感が弱い (フッター strip にしか出ない)",
-      "Diagram 系は SaaS 的に見えやすく、慎重実装が必要",
-    ],
-    tone: "ダイアグラム・論理",
+    tone: "建築立面図 + 注釈",
   },
 ];
 
