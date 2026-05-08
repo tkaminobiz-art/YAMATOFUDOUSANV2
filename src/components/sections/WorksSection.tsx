@@ -85,7 +85,7 @@ export default function WorksSection() {
     <section
       id="works"
       ref={sectionRef}
-      className="bg-white text-text-primary py-[var(--section-py)] scroll-in"
+      className="font-murecho bg-white text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ヘッダー */}
@@ -98,9 +98,9 @@ export default function WorksSection() {
               施工事例
             </p>
             <h2
-              className="text-text-primary leading-[1.3] tracking-[0.005em]"
+              className="font-zen-old text-text-primary leading-[1.4] tracking-[0.02em]"
               style={{
-                fontWeight: 500,
+                fontWeight: 600,
                 fontSize: "clamp(22px, 2.6vw, 36px)",
               }}
             >

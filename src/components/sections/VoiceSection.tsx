@@ -131,7 +131,7 @@ function AllVoicesCard() {
           <span
             className="pb-2"
             style={{
-              fontFamily: "var(--font-sans)",
+              fontFamily: "var(--font-murecho-var)",
               fontWeight: 700,
               fontSize: "clamp(14px, 1.1vw, 18px)",
               color: LIME_DARK,
@@ -200,7 +200,7 @@ export default function VoiceSection() {
     <section
       id="voice"
       ref={sectionRef}
-      className="bg-white text-text-primary py-[var(--section-py)] scroll-in"
+      className="font-murecho bg-white text-text-primary py-[var(--section-py)] scroll-in"
     >
       <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
         {/* ヘッダー */}
@@ -213,9 +213,9 @@ export default function VoiceSection() {
               お客様の声
             </p>
             <h2
-              className="text-text-primary leading-[1.3] tracking-[0.005em]"
+              className="font-zen-old text-text-primary leading-[1.4] tracking-[0.02em]"
               style={{
-                fontWeight: 500,
+                fontWeight: 600,
                 fontSize: "clamp(22px, 2.6vw, 36px)",
               }}
             >

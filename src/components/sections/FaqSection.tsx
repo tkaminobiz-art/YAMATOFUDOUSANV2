@@ -88,7 +88,7 @@ function FaqItem({
         </span>
         <span
           className="flex-1 min-w-0 text-text-primary text-[14px] sm:text-[15px] leading-[1.6]"
-          style={{ fontFamily: "var(--font-sans)", fontWeight: 500 }}
+          style={{ fontFamily: "var(--font-murecho-var)", fontWeight: 500 }}
         >
           {q}
         </span>
@@ -118,7 +118,7 @@ export default function FaqSection() {
   const sectionRef = useScrollIn<HTMLDivElement>();
 
   return (
-    <section id="faq" className="bg-white py-[var(--section-py)]">
+    <section id="faq" className="font-murecho bg-white py-[var(--section-py)]">
       <div
         ref={sectionRef}
         className="max-w-[920px] mx-auto px-[var(--page-px)] scroll-in"
@@ -139,7 +139,10 @@ export default function FaqSection() {
         >
           FAQ
         </p>
-        <h2 className="text-[clamp(22px,3vw,36px)] text-text-primary text-center mb-3 leading-[1.5]">
+        <h2
+          className="font-zen-old text-[clamp(22px,3vw,36px)] text-text-primary text-center mb-3 leading-[1.4] tracking-[0.02em]"
+          style={{ fontWeight: 600 }}
+        >
           気になるところから、どうぞ。
         </h2>
         <p className="text-text-secondary text-[13px] sm:text-sm leading-[1.85] text-center max-w-[600px] mx-auto mb-12 md:mb-16">
