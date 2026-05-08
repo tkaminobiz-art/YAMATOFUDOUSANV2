@@ -371,14 +371,14 @@ export default function StandardComparisonBlueprint() {
           <figure className="relative lg:-mr-2 xl:-mr-4">
             <BlueprintMorphVideo
               videoSrc="/videos/blueprint-to-render.mp4"
-              posterSrc="/images/sections/blueprint-elevation.png"
-              alt="設計図から、やまと不動産の住まいになるまで — 立面図のモーフィング"
+              posterSrc="/images/sections/blueprint-elevation.webp"
+              alt="やまと不動産・左京モデルの設計図から完成までを見る — 立面図のモーフ動画"
             />
             <figcaption
               className="mt-2 font-inter text-[10px] md:text-[11px] tracking-[0.16em] uppercase text-right"
               style={{ color: "rgba(28,27,24,0.4)" }}
             >
-              ELEVATION — DESIGN TO BUILD
+              South Elevation — Sakyo Model · Design to Build
             </figcaption>
           </figure>
         </div>
