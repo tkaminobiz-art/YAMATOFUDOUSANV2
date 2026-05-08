@@ -16,7 +16,7 @@ export default function MidCta() {
   const ref = useScrollIn<HTMLDivElement>();
 
   return (
-    <section className="relative bg-text-primary text-white overflow-hidden py-[var(--section-py)]">
+    <section className="font-murecho relative bg-text-primary text-white overflow-hidden py-[var(--section-py)]">
       {/* ノイズテクスチャ（AIっぽさ回避） */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
@@ -39,8 +39,8 @@ export default function MidCta() {
         className="relative max-w-[1200px] mx-auto px-[var(--page-px)] text-center scroll-in"
       >
         <h2
-          className="text-[clamp(22px,3vw,36px)] text-white mb-5 leading-[1.5]"
-          style={{ fontFamily: "var(--font-sans)" }}
+          className="font-zen-old text-[clamp(22px,3vw,36px)] text-white mb-5 leading-[1.4] tracking-[0.02em]"
+          style={{ fontWeight: 600 }}
         >
           気になることは、LINEでも、<br />実物を見ながらでも確認できます。
         </h2>

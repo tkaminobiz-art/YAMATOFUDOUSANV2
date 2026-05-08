@@ -52,7 +52,7 @@ export default function FinalCta() {
   const ref = useScrollIn<HTMLDivElement>(true);
 
   return (
-    <section className="bg-white border-t border-border py-[clamp(72px,7vw,140px)]">
+    <section className="font-murecho bg-white border-t border-border py-[clamp(72px,7vw,140px)]">
       <div
         ref={ref}
         className="max-w-[1180px] mx-auto px-[var(--page-px)] scroll-in"
@@ -60,7 +60,10 @@ export default function FinalCta() {
         {/* === ヘッダー === */}
         {/* 2026-05-06 design-critic: 装飾英語 "GET IN TOUCH" を撤去。
             h2 だけで十分セクションを立てられる(テンプレ感の削除) */}
-        <h2 className="text-[clamp(24px,3.2vw,42px)] text-text-primary text-center leading-[1.45] tracking-[0.02em] mt-2 mb-5">
+        <h2
+          className="font-zen-old text-[clamp(24px,3.2vw,42px)] text-text-primary text-center leading-[1.4] tracking-[0.02em] mt-2 mb-5"
+          style={{ fontWeight: 600 }}
+        >
           家づくりの総額を、<br className="md:hidden" />無料で整理しませんか。
         </h2>
         <p className="text-text-secondary text-sm md:text-[15px] leading-[1.95] text-center max-w-[720px] mx-auto mb-12 md:mb-14">
@@ -90,7 +93,7 @@ export default function FinalCta() {
             {/* 大見出し */}
             <h3
               className="text-lime-deep font-bold text-[clamp(26px,3.4vw,40px)] leading-[1.15] tracking-[0.06em] mb-3"
-              style={{ fontFamily: "var(--font-sans)" }}
+              style={{ fontFamily: "var(--font-murecho-var)" }}
             >
               無料資金計画診断
             </h3>
