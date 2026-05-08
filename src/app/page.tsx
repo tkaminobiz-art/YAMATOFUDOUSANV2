@@ -16,7 +16,9 @@ import CostPride from "@/components/sections/CostPride";
 import StandardCrossSection from "@/components/sections/StandardCrossSection";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
-import RepresentativeMessage from "@/components/sections/RepresentativeMessage";
+// 2026-05-09: RepresentativeMessage (古谷社長+小林専務 portrait+quote) を TOP から撤去。
+//   理由: ユーザー判断で TOP では不要。/staff 配下に主役配置するか判断保留。
+//   RepresentativeMessage.tsx ファイル本体は戻す可能性のため保持 (撤去候補メモリ)。
 import PriceSection from "@/components/sections/PriceSection";
 import PhotoBreath from "@/components/sections/PhotoBreath";
 import MiniSimulator from "@/components/sections/MiniSimulator";
@@ -86,8 +88,7 @@ export default function Home() {
         <StandardCrossSection />
         <StandardEquipment />
         <ZeroDeclaration />
-        {/* 代表 + 専務の顔と署名級メッセージ — 仕様/¥0 と価格の間に「これを守る人」を1呼吸 */}
-        <RepresentativeMessage />
+        {/* 2026-05-09: RepresentativeMessage 撤去。TOP では不要 (ユーザー判断)。 */}
         <PriceSection />
 
         {/* 写真ブレイク — 価格ダッシュボードと能動UIの間に呼吸帯を1枚 */}
