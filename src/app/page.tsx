@@ -24,9 +24,13 @@ import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
 //   理由: ユーザー判断で TOP では不要。/staff 配下に主役配置するか判断保留。
 //   RepresentativeMessage.tsx ファイル本体は戻す可能性のため保持 (撤去候補メモリ)。
 import PriceSection from "@/components/sections/PriceSection";
+// 2026-05-09: ZeroDeclaration 直下に MapBridge (ARM オマージュの物件情報入口) を新設。
+//   MiniSimulator (かんたん試算) と LotsSection (対応エリア) は TOP から撤去。
+//   理由: 「物件情報ページへの動線をおしゃれに」(ユーザー判断)。試算と対応エリアは
+//   /money / /lots で詳細対応する。MiniSimulator.tsx / LotsSection.tsx ファイル本体は
+//   戻す可能性のため保持 (撤去候補メモリ管理)。
+import MapBridge from "@/components/sections/MapBridge";
 import PhotoBreath from "@/components/sections/PhotoBreath";
-import MiniSimulator from "@/components/sections/MiniSimulator";
-import LotsSection from "@/components/sections/LotsSection";
 import WorksSection from "@/components/sections/WorksSection";
 import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
 import { GOOGLE_BRIDGE_ENABLED } from "@/data/google";
@@ -94,17 +98,17 @@ export default function Home() {
         <StandardEquipment />
         <ZeroDeclaration />
 
-        {/* 写真ブレイク — 価格ダッシュボードと能動UIの間に呼吸帯を1枚 */}
+        {/* 物件情報への動線 — ARM オマージュのおしゃれなマップで /lots へ橋渡し
+            (旧 MiniSimulator + LotsSection は撤去) */}
+        <MapBridge />
+
+        {/* 写真ブレイク — マップと施工事例の間に呼吸帯を 1 枚 */}
         <PhotoBreath
           src="/images/newsozai/exterior-terrace-01.webp"
           alt="やまと不動産が手がけた住まいの外観 — テラスのある夕景"
           aspectMobile="aspect-[4/3]"
           aspectDesktop="md:aspect-[21/8]"
         />
-
-        {/* 商品魅力(能動性) */}
-        <MiniSimulator />
-        <LotsSection />
 
         {/* 社会的証明(カルーセル) */}
         <WorksSection />
