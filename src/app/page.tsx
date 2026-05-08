@@ -1,11 +1,10 @@
 import Header from "@/components/Header";
-import HeroMagazine from "@/components/sections/HeroMagazine";
-import {
-  FONT_VARIANTS,
-  BODY_VARIANTS,
-} from "@/components/sections/HeroMagazine.fonts";
+import HeroEditorial from "@/components/sections/HeroEditorial";
+import TrustMetricsEditorial from "@/components/sections/TrustMetricsEditorial";
 import TrustStrip from "@/components/sections/TrustStrip";
-import ScaleBanner from "@/components/sections/ScaleBanner";
+// 2026-05-08: HeroMagazine / ScaleBanner / HeroMagazine.fonts は HeroEditorial +
+//   TrustMetricsEditorial に置き換えのため import から外した。コンポーネントは
+//   復旧用に残置 (削除しない)。
 import MechanismEnhanced from "@/components/sections/MechanismEnhanced";
 import StandardEquipment from "@/components/sections/StandardEquipment";
 import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
@@ -24,21 +23,17 @@ import FinalCta from "@/components/sections/FinalCta";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 
-// 2026-04-24 確定: Z(Noto Sans JP catalog) + IV(Industrial: Oswald + Noto Sans JP 500)
-const HERO_HEADLINE_VARIANT =
-  FONT_VARIANTS.find((v) => v.id === "noto-sans") ?? FONT_VARIANTS[0];
-const HERO_BODY_VARIANT =
-  BODY_VARIANTS.find((v) => v.id === "industrial-bold") ?? BODY_VARIANTS[0];
-
 /*
-  TOP 構成 — 2026-05-03 v3 (参考画像準拠・Progressive Disclosure 適用)
+  TOP 構成 — 2026-05-08 v4 (HeroEditorial 移行)
 
-  v2(17セクション・線形展開) → v3(12セクション・段階的開示)
-  ユーザー方針: 「全部見せず、興味あるものだけ引き出せる構成」
+  v3 (HeroMagazine 全画面オーバーレイ + ScaleBanner)
+    → v4 (HeroEditorial 写真主役エディトリアル + TrustMetricsEditorial 静か実績帯)
+  方向: 価格訴求 LP から外して "建築誌的住宅ブランド第一印象" に寄せる
+       (memory: feedback_hero_photo_led_editorial_evolution.md)
 
   【フック・権威】
-  1. HeroMagazine          写真主役 + 価格 + CTA
-  2. ScaleBanner           4実績(アイコン付き) — バーン
+  1. HeroEditorial         写真主役 + 短いコピー + 価格 + 控えめ 2CTA
+  2. TrustMetricsEditorial Hero 直下の 4 実績の静かな帯 (営業資料風NG)
 
   【理屈・証拠】
   3. MechanismEnhanced     坪単価比較 + 3つの仕組み
@@ -76,12 +71,9 @@ export default function Home() {
       <Header />
       <main className="pb-[72px] md:pb-0">
         {/* フック・権威 */}
-        <HeroMagazine
-          variant={HERO_HEADLINE_VARIANT}
-          bodyVariant={HERO_BODY_VARIANT}
-        />
+        <HeroEditorial />
+        <TrustMetricsEditorial />
         <TrustStrip />
-        <ScaleBanner />
 
         {/* 理屈・証拠 */}
         <MechanismEnhanced />
