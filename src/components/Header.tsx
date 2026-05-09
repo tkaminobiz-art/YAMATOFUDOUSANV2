@@ -70,7 +70,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "物件情報",   english: "LOTS",     subtitle: "土地はある?",  href: "/lots" },
   { label: "施工事例",   english: "WORKS",    subtitle: "建てた家",     href: "/works" },
   { label: "お客様の声", english: "VOICES",   subtitle: "お客様の声",   href: "/voice" },
-  { label: "スタッフ紹介", english: "STAFF",  subtitle: "担当する人",   href: "/staff" },
+  { label: "スタッフ紹介", english: "STAFF",  subtitle: "スタッフ",     href: "/staff" },
 ];
 
 const SP_NAV_ITEMS: NavItem[] = [
