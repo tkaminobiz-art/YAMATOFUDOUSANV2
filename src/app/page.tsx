@@ -95,15 +95,12 @@ export default function Home() {
         <HeroVideo />
         <TrustStrip />
 
-        {/* ① Brand Whisper — TrustStrip 数字 → PriceSection 商品の落差を埋める呼吸帯
-            golden hour の家+山並み写真を parallax で見せる */}
-        <BreathStrip
-          variant="photo"
-          src="/images/breath/brand-whisper.png"
-          alt="奈良の山並みを背景に佇む、やまとが手がけた住まい — golden hour"
-          heightClass="h-[55vh] md:h-[60vh]"
-          parallaxStrength={0.25}
-        />
+        {/* 2026-05-09: BreathStrip (Brand Whisper) を Hero/Trust 直下から
+            SocialProof → FaqSection の間に移動。理由: Hero (動画100vh) で既に
+            最大強度の atmospheric setup が完了しているのに、直後に同温度の
+            golden hour 写真を入れると Hero の効きを薄め、scroll momentum も
+            2 度止まる。新位置では「家族3組の物語(感情) → FAQ(機能)」の
+            切り替えクッションとして文脈を持つ。 */}
 
         {/* 商品の導入 + 詳細 — 2026-05-09 から PriceSection を Hero/Trust 直下に昇格。
             旧 StandardComparisonBlueprint (比較 table) は撤去し、PriceSection cover-card
@@ -125,7 +122,16 @@ export default function Home() {
             (建てた家 3 + 暮らしている人の声 3 を 1 セクションで) */}
         <SocialProof />
 
-        {/* 2026-05-09 Step 1: ④ Final Whisper BreathStrip を撤去 (TOP 軽量化方針)。 */}
+        {/* Brand Whisper — 家族3組の物語(感情) → FAQ(機能) への切り替えクッション。
+            golden hour の家+山並み写真を parallax で見せ、感情の余韻を伸ばしてから
+            機能的 Q&A へ着地させる。 */}
+        <BreathStrip
+          variant="photo"
+          src="/images/breath/brand-whisper.png"
+          alt="奈良の山並みを背景に佇む、やまとが手がけた住まい — golden hour"
+          heightClass="h-[55vh] md:h-[60vh]"
+          parallaxStrength={0.25}
+        />
 
         {/* 行動 — 2026-05-09 Step 3: MidCta を撤去し FinalCta に統合。
             FinalCta が既に総額診断 + 4 特徴アイコン + stats + LINE/見学/資料請求 の
