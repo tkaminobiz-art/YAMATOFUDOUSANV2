@@ -1,14 +1,5 @@
 import Image from "next/image";
 import CtaButton from "@/components/ui/CtaButton";
-import { FLOORPLANS } from "@/data/floorplans";
-
-// 各プランに対応する間取り例(旧サイト /blog 間取り事例 から)
-// 実邸宅の設計例で、各プランに合わせた目安
-const PLAN_FLOORPLAN_MAP: Record<"hana" | "kaze" | "miyako", number> = {
-  hana: 472977,    // entry-05: LDK20+吹抜+和室4.5+4寝室 = 花(4LDK/33坪/ゆとり)
-  kaze: 472979,    // entry-07: LDK18.7+土間収納+4寝室 = 風(4LDK/30坪/家事動線)
-  miyako: 472975,  // entry-03: 平屋+ロフト+LDK24.5+3寝室+書庫 = 京(3LDK/28坪/コンパクト)
-};
 
 /*
   PriceSection — 2026-04-25 v4 (Full-bleed Cover Card)
@@ -75,20 +66,6 @@ const PLANS: readonly Plan[] = [
     bgImage: "/images/fv/plan-miyako.webp",
     alt: "京モデルの端正な玄関まわり — 木目スリットと石畳のアプローチ",
   },
-] as const;
-
-const INCLUDED = [
-  "建物本体",
-  "標準設備（キッチン クリナップ・浴室 TOTO など）",
-  "付帯工事",
-  "設計・申請に関わる費用",
-] as const;
-
-const EXCLUDED = [
-  "土地代",
-  "登記費用",
-  "引越し費用",
-  "外構工事（ご要望の内容により）",
 ] as const;
 
 function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }) {
@@ -268,123 +245,8 @@ export default function PriceSection() {
           ))}
         </div>
 
-        {/* ========== 間取り例(2026-04-25 追加): 3プランに対応する実設計図 ========== */}
-        <div className="mt-14 md:mt-20">
-          <header className="mb-8 md:mb-10 max-w-[860px]">
-            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3">
-              間取り例
-            </p>
-            <h3
-              className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
-              style={{ fontWeight: 700, fontSize: "clamp(22px, 2.6vw, 34px)" }}
-            >
-              この価格で叶う、<br className="sm:hidden" />間取りの一例をご紹介します。
-            </h3>
-            <p className="mt-4 md:mt-5 font-murecho text-text-primary/80 text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[620px]">
-              過去の設計事例から、各プランに近い間取りをご紹介します。実際の間取りはご家族の暮らし方・敷地条件に合わせて、一から設計します。
-            </p>
-          </header>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-            {PLANS.map((plan) => {
-              const entryId = PLAN_FLOORPLAN_MAP[plan.id];
-              const floorplan = FLOORPLANS.entryExamples.find((e) => e.sourceEntryId === entryId);
-              if (!floorplan) return null;
-              return (
-                <article
-                  key={plan.id}
-                  className="bg-white border border-text-primary/10 overflow-hidden"
-                >
-                  {/* 間取り図本体(portrait) */}
-                  <div className="relative aspect-[4/5] bg-bg-secondary/50">
-                    <Image
-                      src={floorplan.image}
-                      alt={`過去の設計事例(${plan.layout}・${plan.tsubo})`}
-                      fill
-                      className="object-contain p-3 md:p-4"
-                      sizes="(max-width: 640px) 100vw, 33vw"
-                    />
-                  </div>
-                  {/* ラベル(ブランド表記なし — 過去事例で仕様が異なるため) */}
-                  <div className="px-5 py-4 md:px-6 md:py-5 border-t border-text-primary/10">
-                    <div className="flex items-baseline gap-3">
-                      <span
-                        className="font-murecho font-bold text-text-primary leading-none"
-                        style={{ fontSize: "clamp(16px, 1.4vw, 20px)" }}
-                      >
-                        {plan.layout}
-                      </span>
-                      <span className="font-inter text-text-secondary text-[11px] md:text-[12px] tracking-[0.08em]">
-                        {plan.tsubo}
-                      </span>
-                    </div>
-                    <p className="mt-2 font-murecho text-text-primary/70 text-[11px] md:text-[12px] leading-[1.7]">
-                      {plan.tagline}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-          <p className="mt-5 md:mt-6 font-murecho text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] pl-3 border-l-2 border-text-primary/15">
-            ※ 間取りはご家族の暮らし・敷地条件に合わせて、一から設計します。掲載は過去事例の一例です。
-          </p>
-        </div>
-
-        {/* 2026-05-09: 土地込み 総額モデルケース (ケースA/B) を冒頭から撤去。
-            理由: PriceSection が冒頭セクションに昇格したため、土地+建物の重い数字
-            (2,800万 / 4,000万) を最初に置くと「物件チラシ」感が出て世界観を崩す。
-            土地込み目安は MiniSimulator (能動入力) と /money (詳細) で対応する。 */}
-
-        {/* ========== 含む / 別途 ==========
-            モバイル: 2列グリッドでコンパクト
-            デスクトップ: 従来の2カラム縦リスト */}
-        <div className="mt-10 md:mt-20 grid grid-cols-2 gap-5 md:gap-14 lg:gap-20 pt-8 md:pt-14 border-t border-text-primary/15">
-          <div>
-            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-lime-deep mb-3 md:mb-5">
-              価格に含まれるもの
-            </p>
-            <ul className="space-y-2 md:space-y-3">
-              {INCLUDED.map((t) => (
-                <li
-                  key={t}
-                  className="font-murecho flex items-baseline gap-2 md:gap-3 text-text-primary text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
-                >
-                  <span
-                    aria-hidden
-                    className="font-oswald shrink-0 pt-[2px] text-lime-deep"
-                    style={{ fontWeight: 500, fontSize: "12px" }}
-                  >
-                    +
-                  </span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="md:border-l md:border-text-primary/15 md:pl-10 lg:pl-14">
-            <p className="font-murecho font-bold text-[11px] md:text-[12px] tracking-[0.06em] text-text-secondary mb-3 md:mb-5">
-              別途となるもの
-            </p>
-            <ul className="space-y-2 md:space-y-3">
-              {EXCLUDED.map((t) => (
-                <li
-                  key={t}
-                  className="font-murecho flex items-baseline gap-2 md:gap-3 text-text-primary/85 text-[12px] md:text-[clamp(13px,1vw,15px)] leading-[1.6] md:leading-[1.75]"
-                >
-                  <span
-                    aria-hidden
-                    className="font-oswald text-text-secondary/50 shrink-0 pt-[2px]"
-                    style={{ fontWeight: 300, fontSize: "11px" }}
-                  >
-                    —
-                  </span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        {/* 2026-05-09 Step 7: 間取り例 (3 floor plan cards) と 含む/別途 (2 col list) を撤去。
+            TOP では 3 cover + CTA に絞り、詳細 (間取り図・含む/別途・総額ケース) は /money へ。 */}
 
         {/* ========== 注記 + CTA ========== */}
         <div className="mt-12 md:mt-16 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
