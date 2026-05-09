@@ -44,12 +44,12 @@ export default function MapBridge() {
       <div className="max-w-[1240px] mx-auto px-[var(--page-px)]">
         {/* eyebrow + h2 + lead — ZeroDecl / CrossSection と完全同型 */}
         <header className="max-w-[860px]">
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-[#1A1815]/55 font-mono">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] text-[#1A1815]/55 font-mono">
             <span>FIG. 03</span>
             <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
-            <span>Map</span>
+            <span>分譲地マップ</span>
             <span aria-hidden className="h-px w-8 bg-[var(--color-rule)] hidden md:inline-block" />
-            <span className="hidden md:inline">Nara + S.Kyoto</span>
+            <span className="hidden md:inline">奈良・京都南部</span>
           </div>
           <h2
             className="mt-5 font-[var(--font-shippori)] text-[#1A1815] leading-[1.32] tracking-[0.01em]"
@@ -75,7 +75,7 @@ export default function MapBridge() {
             <InteractiveMap />
           </div>
           <figcaption className="mt-3 text-[11px] leading-[1.7] text-[#1A1815]/45 font-mono tracking-[0.04em]">
-            FIG. 03 · {displayedCount} active lots in Nara / South Kyoto · ピンをタップで物件詳細へ
+            FIG. 03 · 奈良・京都南部の自社分譲地 {displayedCount} 区画 · ピンをタップで物件詳細へ
           </figcaption>
         </figure>
 
