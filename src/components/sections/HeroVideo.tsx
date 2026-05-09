@@ -87,6 +87,62 @@ export default function HeroVideo() {
       />
 
       <div className="relative z-10 flex min-h-[100svh] flex-col">
+        {/* 2026-05-09 Step 4: Main Hero copy オーバーレイ — ユーザー指定 */}
+        <div className="px-[var(--page-px)] pt-[18vh] md:pt-[20vh]">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="max-w-[760px]">
+              <h1
+                className="text-white leading-[1.32] tracking-[0.01em]"
+                style={{
+                  fontFamily: "var(--font-shippori)",
+                  fontWeight: 500,
+                  fontSize: "clamp(26px, 3.8vw, 56px)",
+                  textShadow: "0 2px 18px rgba(0,0,0,0.55)",
+                }}
+              >
+                奈良・京都南部で、
+                <br className="md:hidden" />
+                土地から考える家づくり。
+              </h1>
+              <p
+                className="mt-5 text-white/95 leading-[1.6] tracking-[0.02em]"
+                style={{
+                  fontFamily: "var(--font-shippori)",
+                  fontWeight: 400,
+                  fontSize: "clamp(15px, 1.4vw, 20px)",
+                  textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+                }}
+              >
+                京モデル{" "}
+                <span
+                  className="tabular-nums"
+                  style={{
+                    fontFamily: "var(--font-fraunces)",
+                    fontStyle: "italic",
+                    fontWeight: 300,
+                    fontSize: "1.35em",
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  2,280
+                </span>
+                <span style={{ fontWeight: 400 }}> 万円〜。</span>
+              </p>
+              <p
+                className="mt-3 max-w-[560px] text-white/85 leading-[1.85] tracking-[0.02em]"
+                style={{
+                  fontFamily: MURECHO,
+                  fontWeight: 400,
+                  fontSize: "clamp(12.5px, 1vw, 14.5px)",
+                  textShadow: "0 1px 8px rgba(0,0,0,0.5)",
+                }}
+              >
+                土地代も、建物代も、後からかかる費用も、はじめにわかりやすく。
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="flex-1" />
 
         <div className="px-[var(--page-px)] pb-7 md:pb-10">
