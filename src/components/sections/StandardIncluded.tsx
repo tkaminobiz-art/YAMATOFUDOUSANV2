@@ -166,7 +166,7 @@ export default function StandardIncluded() {
         {/* CTA: 2 つの ActionLine */}
         <div className="mt-14 md:mt-16 flex flex-col md:flex-row md:justify-end items-end gap-6 md:gap-10 border-t border-[var(--color-rule)] pt-10">
           <Link
-            href="/works"
+            href="/standard"
             className="group inline-flex items-center gap-2.5 text-[14px] md:text-[15px] font-bold text-[#1A1815]/70 border-b border-[#1A1815]/20 hover:border-[#143426] hover:text-[#143426] py-1 transition-colors"
           >
             詳しい仕様を見る

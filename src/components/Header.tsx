@@ -62,7 +62,7 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const SP_NAV_ITEMS: NavItem[] = [
-  { label: "やまとの家づくり", href: "/#concept" },
+  { label: "やまとの家づくり", href: "/#cost-pride" },
   { label: "商品紹介", href: "/#product" },
   { label: "資金計画", href: "/money" },
   { label: "物件情報", href: "/lots" },

@@ -7,7 +7,7 @@ const NAV_GROUPS = [
   {
     title: "家を買いたい方",
     items: [
-      { label: "やまとの家づくり", href: "/#concept" },
+      { label: "やまとの家づくり", href: "/#cost-pride" },
       { label: "商品紹介", href: "/#product" },
       { label: "物件情報", href: "/lots" },
       { label: "施工事例", href: "/works" },
@@ -74,6 +74,7 @@ export default function Footer() {
 
   return (
     <footer
+      id="access"
       className="relative overflow-hidden text-[#D9CFB7]"
       style={{ backgroundColor: "#1A1714", fontFamily: "var(--font-zen-old-var)" }}
     >
