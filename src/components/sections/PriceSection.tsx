@@ -69,8 +69,9 @@ const PLANS: readonly Plan[] = [
 ] as const;
 
 function PlanCard({ plan, priority = false }: { plan: Plan; priority?: boolean }) {
-  const isHeadliner = plan.price === "2,280";
-  // 京(headliner)はやまとブランドのLime、他2プランは白
+  // 専務一押し: 花が headliner (「いちばん選ばれています」)
+  const isHeadliner = plan.id === "hana";
+  // 花(headliner)はやまとブランドのLime、他2プランは白
   const priceColor = isHeadliner ? "#A9D159" : "#FFFFFF";
 
   return (
