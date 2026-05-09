@@ -81,6 +81,23 @@ photos as if they were real properties.** Comp images under `/hero-review/` etc.
 If a section needs new photography that doesn't exist in this allowlist, **ask** before
 generating. Never use AI-rendered house exteriors as if they were real homes.
 
+### AI retouching of real property photos
+
+When a section uses a building, exterior, interior, lot, or model-house image, start
+from a real approved Yamato photo in the allowlist above. Image generation may be used
+only as retouching / art direction support:
+
+- Allowed: exposure, color grading, sky replacement, weather / time-of-day mood,
+  lens correction, crop / extension, removal of distracting nonessential clutter, and
+  subtle atmosphere that makes the original photo more polished.
+- Not allowed: changing the building architecture, plan, materials, windows, exterior
+  shape, neighboring site conditions, legal / location facts, signage, staff, customers,
+  or anything that would make the photo describe a different property.
+- "Location" improvements must mean visual cleanup or framing of the existing scene,
+  not moving the property to a different place or inventing a more premium setting.
+- Any AI-retouched property photo used in implementation must remain traceable to its
+  original source photo path.
+
 ---
 
 ## 2. Numbers (canonical)
