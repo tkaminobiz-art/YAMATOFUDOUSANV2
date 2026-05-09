@@ -117,7 +117,7 @@ const PAYMENT_CASES = [
     borrowing: "3,080万円",
     monthly: "86,944",
     ratio: "19.0%",
-    terms: "金利1.0% / 35年 / 頭金100万円 / ボーナス払いなし",
+    terms: "試算用金利1.0% / 35年元利均等 / 頭金100万円 / ボーナス払いなし",
     image: "/images/works/case3-living.webp",
     caption: "総額を抑えながら、暮らしの核を整えるケース",
   },
@@ -133,7 +133,7 @@ const PAYMENT_CASES = [
     borrowing: "3,380万円",
     monthly: "95,413",
     ratio: "16.8%",
-    terms: "金利1.0% / 35年 / 頭金200万円 / ボーナス払いなし",
+    terms: "試算用金利1.0% / 35年元利均等 / 頭金200万円 / ボーナス払いなし",
     image: "/images/works/case2-kitchen.webp",
     caption: "共働きの家事動線と、予算の余白を同時に見るケース",
   },
@@ -149,7 +149,7 @@ const PAYMENT_CASES = [
     borrowing: "2,880万円",
     monthly: "81,298",
     ratio: "20.3%",
-    terms: "金利1.0% / 35年 / 頭金100万円 / ボーナス払いなし",
+    terms: "試算用金利1.0% / 35年元利均等 / 頭金100万円 / ボーナス払いなし",
     image: "/images/works/case1-living.webp",
     caption: "エリアと土地条件を調整し、無理のない総額を探すケース",
   },
@@ -607,10 +607,10 @@ function PaymentExampleSection() {
           />
           <div className="rounded-[8px] border-l-[4px] bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.red }}>
             <p className="money-card-title" style={{ color: BRAND.ink }}>
-              表示は資金計画の試算例です。実際の審査・金利・土地条件により変わります。
+              表示は「試算用金利1.0%・35年元利均等・ボーナス払いなし（毎月返済のみ）」の資金計画例です。
             </p>
             <p className="money-body-sm mt-2" style={{ color: BRAND.muted }}>
-              だからこそ、最初に「自分の場合の月々」を出してから土地と建物を決めます。
+              実際の適用金利・金利タイプ・審査条件、諸費用を借入に含められるかは金融機関と土地条件により変わります。
             </p>
           </div>
         </div>
@@ -718,7 +718,7 @@ function PaymentExampleSection() {
                           確認ポイント
                         </p>
                         <p className="money-body-sm mt-2" style={{ color: BRAND.muted }}>
-                          土地条件・諸費用・外構を同じ前提で確認
+                          返済比率はこの試算の年間返済額を世帯年収で割った概算
                         </p>
                       </div>
                     </div>

@@ -455,7 +455,7 @@ export default function LoanSimulator() {
                   Monthly payment
                 </p>
                 <p className="mt-2 text-[12px] font-bold text-white/56">
-                  金利{RATE.toFixed(1)}% / {YEARS}年 / ボーナス払いなし
+                  試算用金利{RATE.toFixed(1)}% / {YEARS}年元利均等 / ボーナス払いなし
                 </p>
               </div>
               <WalletCards className="h-5 w-5" style={{ color: BRAND.red }} strokeWidth={1.9} />
