@@ -114,6 +114,14 @@ export default function Home() {
         <StandardEquipment />
         <ZeroDeclaration />
 
+        {/* ② Quiet Pause — ZeroDecl (証拠 cluster 終端) → MapBridge (場所セクション)
+            の間に詩的呼吸。typography only、photo なし、subtle fade-up. */}
+        <BreathStrip
+          variant="quote"
+          quote="土地と、家と、暮らしと。"
+          heightClass="h-[32vh] md:h-[36vh]"
+        />
+
         {/* 物件情報への動線 — ARM オマージュのおしゃれなマップで /lots へ橋渡し
             (旧 MiniSimulator + LotsSection は撤去) */}
         <MapBridge />
@@ -139,6 +147,14 @@ export default function Home() {
             Vercel に NEXT_PUBLIC_GOOGLE_BRIDGE_ENABLED=true を入れると復活する。 */}
         {GOOGLE_BRIDGE_ENABLED && <GoogleReviewBridge />}
         <VoiceSection />
+
+        {/* ④ Final Whisper — Voice (intimate polaroid) → MidCta (行動 cluster) の前に
+            最後の静かな余韻。Mincho italic 句 + hairline rule + subtle fade-up. */}
+        <BreathStrip
+          variant="quote"
+          quote="あなたの家も、ここから。"
+          heightClass="h-[26vh] md:h-[30vh]"
+        />
 
         {/* 行動 */}
         <MidCta />
