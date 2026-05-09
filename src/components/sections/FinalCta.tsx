@@ -67,9 +67,10 @@ export default function FinalCta() {
           家づくりの総額を、<br className="md:hidden" />無料で整理しませんか。
         </h2>
         <p className="text-text-secondary text-sm md:text-[15px] leading-[1.95] text-center max-w-[720px] mx-auto mb-12 md:mb-14">
-          土地探し、建物価格、住宅ローン、月々の支払いまで。ご家族の条件に合わせて、無理のない予算の目安をご案内します。
+          土地代・建物価格・付帯工事・住宅ローン・月々の支払いを、同じ表で並べます。
           <br className="hidden md:inline" />
-          ご希望のない営業電話や訪問はいたしません。まだ何も決まっていなくても大丈夫です。
+          土地がない段階でも、月々の上限から逆算できます。
+          ご希望のない営業電話・訪問はいたしません。
         </p>
 
         {/* === メインカード === 左:診断パネル / 右:写真+実績 */}

@@ -122,13 +122,13 @@ export default function CostPride() {
           <span>なぜ、この価格で建てられるのか</span>
         </div>
 
-        {/* H2 */}
+        {/* H2 — reader が抱える「why」を直接代弁 */}
         <h2
           className="mt-5 max-w-[920px] font-[var(--font-shippori)] text-[#1A1815] leading-[1.32] tracking-[0.01em]"
           style={{ fontSize: "clamp(28px, 3.6vw, 48px)", fontWeight: 500 }}
         >
-          ハイクオリティな家が、<br className="md:hidden" />
-          この価格で建つ理由。
+          なぜ、京モデルは<br className="md:hidden" />
+          2,280 万円で建てられるのか。
         </h2>
 
         {/* editorial 2-column: video (left, ~60%) / body copy (right, ~40%) */}
@@ -204,15 +204,15 @@ export default function CostPride() {
             className="font-[var(--font-shippori)] text-[#1A1815] leading-[1.5] tracking-[0.01em] max-w-[920px]"
             style={{ fontSize: "clamp(22px, 2.8vw, 36px)", fontWeight: 500 }}
           >
-            「安く」ではなく、
-            <br className="md:hidden" />
-            家本来の金額で建てる。
+            販売運営にかかる費用を、<br className="md:hidden" />
+            最初から乗せていません。
           </p>
           <p
-            className="mt-5 text-[#1A1815]/70 leading-[1.85] tracking-[0.02em]"
+            className="mt-5 max-w-[760px] text-[#1A1815]/75 leading-[1.95] tracking-[0.02em]"
             style={{ fontSize: "clamp(13px, 1vw, 15px)" }}
           >
-            ──&nbsp;&nbsp;それが、やまと不動産のプライドです。
+            広告費・専用展示場の維持費・中間マージンが、価格に乗りやすい構造があります。
+            やまとはその 3 つを最初から外している分、ご家族が払う総額のまま家になります。
           </p>
 
           <div className="mt-10">

@@ -55,14 +55,14 @@ export default function MapBridge() {
             className="mt-5 font-[var(--font-shippori)] text-[#1A1815] leading-[1.32] tracking-[0.01em]"
             style={{ fontSize: "clamp(28px, 3.6vw, 48px)", fontWeight: 500 }}
           >
-            {displayedCount}区画 公開中。
-            <br className="md:hidden" />
-            奈良・京都南部、<br className="md:hidden" />
-            地域を知り尽くした家づくり。
+            奈良・京都南部で、<br className="md:hidden" />
+            今、選べる {displayedCount} 区画。
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
-            自社で土地を仕入れ、自社で分譲します。
-            土地探しから建物まで、まとめてご相談ください。
+            土地が決まらないまま、住宅会社だけ先に決めずに済みます。
+            やまとの分譲地は、建物価格と同じ表で並べて比べられます。
+            <br className="hidden md:inline" />
+            SUUMO 等に出る前の区画も、LINE 登録の方には先にお知らせしています。
           </p>
         </header>
 
@@ -85,7 +85,7 @@ export default function MapBridge() {
             href="/lots"
             className="group inline-flex items-center gap-2.5 text-[14px] md:text-[15px] font-bold text-[#1A1815] border-b border-[#1A1815]/30 hover:border-[#143426] hover:text-[#143426] py-1 transition-colors"
           >
-            物件情報を見る
+            土地と総額を一緒に見る
             <ArrowRight
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
               strokeWidth={1.5}

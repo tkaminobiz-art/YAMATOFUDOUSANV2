@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { Plus, Minus } from "lucide-react";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /*
   FaqSection — 2026-05-04 v3 (参考LP準拠・10件1列リスト構造へ)
@@ -47,13 +48,43 @@ function FaqItem({
   q,
   a,
   index,
+  alwaysOpen = false,
 }: {
   q: string;
   a: string;
   index: number;
+  /** 常時オープン (rulebook §1.5「最大の不安は accordion に埋めない」)。Q1 等で使用 */
+  alwaysOpen?: boolean;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(alwaysOpen);
   const num = String(index + 1).padStart(2, "0");
+
+  // 常時オープン版: トグルなし、開いたままレンダー
+  if (alwaysOpen) {
+    return (
+      <div className="border-b border-border bg-[var(--brand-base)]/40">
+        <div className="w-full flex items-center gap-4 sm:gap-6 py-5 sm:py-6">
+          <span
+            className="shrink-0 text-main text-[13px] sm:text-[14px] tabular-nums tracking-[0.04em] w-7 sm:w-9"
+            style={{ fontFamily: "var(--font-inter), Inter, sans-serif", fontWeight: 600 }}
+          >
+            {num}
+          </span>
+          <span
+            className="flex-1 min-w-0 text-text-primary text-[14px] sm:text-[15px] leading-[1.6]"
+            style={{ fontFamily: "var(--font-murecho-var)", fontWeight: 600 }}
+          >
+            {q}
+          </span>
+        </div>
+        <div className="pl-[calc(1.75rem+1rem)] sm:pl-[calc(2.25rem+1.5rem)] pr-4 sm:pr-12 pb-6">
+          <p className="text-text-primary/85 text-[13.5px] sm:text-[14.5px] leading-[1.95]">
+            {a}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-b border-border">
@@ -123,35 +154,38 @@ export default function FaqSection() {
           FAQ
         </p>
         <h2
-          className="font-zen-old text-[clamp(22px,3vw,36px)] text-text-primary text-center mb-3 leading-[1.4] tracking-[0.02em]"
+          className="font-zen-old text-[clamp(22px,3vw,36px)] text-text-primary text-center mb-12 md:mb-16 leading-[1.4] tracking-[0.02em]"
           style={{ fontWeight: 600 }}
         >
-          気になるところから、どうぞ。
+          「後から追加が出ませんか？」<br className="md:hidden" />
+          ── 一番多いご質問から、お答えします。
         </h2>
-        <p className="text-text-secondary text-[13px] sm:text-sm leading-[1.85] text-center max-w-[600px] mx-auto mb-12 md:mb-16">
-          家づくり・お金・土地・契約まわりのよくあるご質問をまとめました。
-        </p>
 
-        {/* 10件1列リスト */}
+        {/* Q1 は常時オープン (rulebook §1.5: 最大の不安を accordion に埋めない)。
+            残り 4 問は accordion で温存し、スキャン時の負荷を下げる。 */}
         <div className="border-t border-border">
           {FAQS.map((faq, i) => (
-            <FaqItem key={i} q={faq.q} a={faq.a} index={i} />
+            <FaqItem
+              key={i}
+              q={faq.q}
+              a={faq.a}
+              index={i}
+              alwaysOpen={i === 0}
+            />
           ))}
         </div>
 
         <p className="text-text-secondary text-xs sm:text-sm mt-10 sm:mt-14 text-center leading-[1.85]">
-          その他のご質問は、
-          <a href="/contact" className="text-main underline mx-1">資料請求</a>
-          または
+          ここに無いご質問は、
           <a
-            href="https://line.me/"
+            href={LINE_ADD_FRIEND_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="text-main underline mx-1"
           >
             LINE
           </a>
-          からお気軽にどうぞ。
+          で具体的にお答えします。
         </p>
       </div>
     </section>

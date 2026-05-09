@@ -226,16 +226,17 @@ export default function PriceSection() {
             className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
             style={{ fontWeight: 700, fontSize: "var(--display-lg)" }}
           >
-            暮らし方に合わせて、<br className="sm:hidden" />選べる3つのプラン。
+            予算 2,300〜2,500 万円台で、<br className="sm:hidden" />
+            どの広さなら無理がないか。
           </h2>
           <p className="mt-5 md:mt-6 font-murecho text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
-            京モデルは、
+            京（28坪）・風（30坪）・花（33坪）の 3 つから、
+            ご家族の人数と土地の広さに合わせて選びます。
+            <br className="hidden md:inline" />
+            すべて税込・建物本体と付帯工事まで含む金額です。
+            京モデルは
             <span className="font-bold text-lime-deep nowrap">2,280万円</span>
-            から始まります。
-            <br />
-            税込で、建物本体と付帯工事まで含みます。
-            <br className="sm:hidden" />
-            土地や登記は別途です。
+            から。土地代・登記費用は別途です。
           </p>
         </header>
 
