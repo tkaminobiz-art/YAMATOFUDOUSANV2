@@ -65,10 +65,10 @@ const ENTRY_TABS = [
 // 下段 = reader-meaning な和文 (カテゴリ名ではなく reader が頭の中で言ってる問い)
 //   reader-first-copy skill §「Convert Claims Into Reader Meaning」に整合。
 const NAV_ITEMS: NavItem[] = [
-  { label: "商品紹介",   english: "PRODUCTS", subtitle: "3 つのプラン", href: "/#product" },
-  { label: "資金計画",   english: "MONEY",    subtitle: "月々いくら?",  href: "/money" },
-  { label: "物件情報",   english: "LOTS",     subtitle: "土地はある?",  href: "/lots" },
-  { label: "施工事例",   english: "WORKS",    subtitle: "建てた家",     href: "/works" },
+  { label: "商品紹介",   english: "PRODUCTS", subtitle: "商品紹介",     href: "/#product" },
+  { label: "資金計画",   english: "MONEY",    subtitle: "資金計画",     href: "/money" },
+  { label: "物件情報",   english: "LOTS",     subtitle: "自社分譲地",   href: "/lots" },
+  { label: "施工事例",   english: "WORKS",    subtitle: "施工事例",     href: "/works" },
   { label: "お客様の声", english: "VOICES",   subtitle: "お客様の声",   href: "/voice" },
   { label: "スタッフ紹介", english: "STAFF",  subtitle: "スタッフ",     href: "/staff" },
 ];
