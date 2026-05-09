@@ -27,8 +27,14 @@ import { ArrowRight, RotateCcw } from "lucide-react";
     - feedback_no_over_assertion
 */
 
-const VIDEO_SRC = "/videos/cost-pride/brand-film.mp4";
-const POSTER_SRC = "/images/newsozai/hero-day-green-exterior.webp";
+// 2026-05-09: brand-film.mp4 (実物件シネマグラフ) → ZeroDeclaration cinematic
+// (Seedance 製・手描きで ¥0 callouts が描かれていく warm paper シーケンス) に差し替え。
+// クラスタの warm paper トーンと完全一致 + 「価格に余分が乗っていない」という
+// CostPride の主張を抽象シンボルとして補強。元の brand-film.mp4 は public/videos/
+// cost-pride/ にアーカイブ保持 (戻す可能性のため)。
+const VIDEO_SRC = "/videos/zero-declaration-cinematic/transition.mp4";
+const POSTER_SRC = "/zero-declaration-cinematic/start.png";
+const REDUCED_MOTION_FALLBACK_SRC = "/zero-declaration-cinematic/goal.png";
 
 type Mechanism = {
   no: string;
@@ -145,8 +151,8 @@ export default function CostPride() {
               {reducedMotion && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={POSTER_SRC}
-                  alt="やまと不動産が手がけた住宅 — 黒い外観と石垣のあるファサード"
+                  src={REDUCED_MOTION_FALLBACK_SRC}
+                  alt="価格に乗らない費用を ¥0 として書き起こした手描き編集スプレッド — 広告・展示場・中間業者を含む 8 項目"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               )}
@@ -162,7 +168,7 @@ export default function CostPride() {
               )}
             </div>
             <p className="mt-3 text-[11px] leading-[1.7] text-[#1A1815]/45 font-mono tracking-[0.04em]">
-              FILM · 12 sec / やまと不動産が手がけた住まい (実物件)
+              INK · 12 sec / 価格に乗らない費用を、手で書き起こす
             </p>
           </div>
 
