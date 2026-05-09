@@ -69,7 +69,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "資金計画",   english: "MONEY",    subtitle: "月々いくら?",  href: "/money" },
   { label: "物件情報",   english: "LOTS",     subtitle: "土地はある?",  href: "/lots" },
   { label: "施工事例",   english: "WORKS",    subtitle: "建てた家",     href: "/works" },
-  { label: "お客様の声", english: "VOICES",   subtitle: "決めた人の話", href: "/voice" },
+  { label: "お客様の声", english: "VOICES",   subtitle: "お客様の声",   href: "/voice" },
   { label: "スタッフ紹介", english: "STAFF",  subtitle: "担当する人",   href: "/staff" },
 ];
 
