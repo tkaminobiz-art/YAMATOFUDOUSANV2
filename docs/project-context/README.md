@@ -17,6 +17,7 @@
 │       ├── README.md
 │       ├── kobayashi-review-20260428.md  専務レビュー結果と原則
 │       ├── 12-rate-gaps.md               年12棟達成のギャップ分析
+│       ├── conversion-sales-rulebook.md   営業マンとして売るための10条
 │       ├── line-first-cta-strategy.md    LINE 主導線方針
 │       ├── gbp-status-and-strategy.md    GBP 評価と公開戦略
 │       └── top-section-structure.md      TOP 構成方針

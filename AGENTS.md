@@ -50,6 +50,29 @@ W2 系 (建築図面アートディレクション) のセクションでは、g
 逃げず、`PriceSpec` / `MetricRail` / `ActionLine` 等の役割別コンポーネントで
 組む。`DESIGN_GUARDRAILS.md` の AI smell check 10 項目を毎 PR 前に通すこと。
 
+# Conversion Sales Rulebook — pages must sell, not just look beautiful
+
+**Read [`docs/project-context/conversion-sales-rulebook.md`](./docs/project-context/conversion-sales-rulebook.md)
+before editing TOP, `/money`, `/lots`, product, voice, reserve/contact, or any
+conversion page.**
+
+The site is not allowed to be only a beautiful company brochure. Conversion pages must
+behave like a salesperson:
+
+- Start by naming the buyer's unresolved situation, not Yamato's virtues.
+- Name the enemy as opaque total cost / late add-ons / building-price-only thinking.
+  Do not attack named competitors or make unprovable blanket claims.
+- Translate every canonical number from `BRAND-TRUTH.md` into buyer meaning.
+- Treat FAQ as a sales battleground: the largest fear must not be buried in an
+  accordion.
+- Build CTAs as a staircase: low-friction total-cost answer first, then LINE /
+  documents / visit booking as appropriate.
+- Use testimonials only when they show Before -> conflict -> decision trigger -> After.
+
+When this rulebook feels more aggressive than `BRAND-TRUTH.md`, `BRAND-TRUTH.md` still
+wins. The correct move is not to soften into brochure copy; it is to write sharper
+claims that remain factual and legally safe.
+
 # Project Context — read [`docs/project-context/`](./docs/project-context/) for strategy
 
 ブランド事実 (`BRAND-TRUTH.md`) では捕捉しきれない「**戦略・関係者の意思決定・歴史的経緯**」
@@ -57,6 +80,7 @@ W2 系 (建築図面アートディレクション) のセクションでは、g
 
 - `kobayashi-review-20260428.md` — 専務レビュー結果と 8 つの原則 (FV 物件出し禁止 / バーン配置 / 投資エッセンス温存 etc.)
 - `12-rate-gaps.md` — 年 12 棟達成のギャップ分析 (LP 改修より優先 ROI が高い 3 動線)
+- `conversion-sales-rulebook.md` — 綺麗な会社案内ではなく、客の不安・敵・証拠・CTA階段で売るための 10 条
 - `line-first-cta-strategy.md` — LINE 主導線方針 (CTA 階層と禁じ手)
 - `gbp-status-and-strategy.md` — GBP 評価★3.6 で公開ブリッジ凍結中 (★4.5+ 達成後再公開)
 - `top-section-structure.md` — TOP の 10 セクション構成方針と削除/統合の指針
