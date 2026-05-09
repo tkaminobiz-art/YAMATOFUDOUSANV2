@@ -95,7 +95,7 @@ export default function ZeroDeclaration() {
   return (
     <section
       id="zero"
-      className="relative bg-[#F7F5F0] text-[#1A1815] py-[var(--section-py)]"
+      className="relative bg-[#F7F5F0] text-[#1A1815] pt-[var(--section-py)] pb-[calc(var(--section-py)*0.5)]"
     >
       <div className="relative max-w-[1240px] mx-auto px-[var(--page-px)]">
         {/* eyebrow + headline + lead */}

@@ -39,7 +39,7 @@ export default function MapBridge() {
   return (
     <section
       id="map-bridge"
-      className="relative bg-[#F7F5F0] text-[#1A1815] py-[var(--section-py)]"
+      className="relative bg-[#F7F5F0] text-[#1A1815] pt-[calc(var(--section-py)*0.5)] pb-[var(--section-py)]"
     >
       <div className="max-w-[1240px] mx-auto px-[var(--page-px)]">
         {/* eyebrow + h2 + lead — ZeroDecl / CrossSection と完全同型 */}
