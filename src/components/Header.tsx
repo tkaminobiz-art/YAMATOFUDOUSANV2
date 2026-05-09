@@ -17,6 +17,10 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
     旧: [資料請求(黒線)] [来場予約(Lime)]
     新: [LINEで相談(LINE緑)] [資料請求(テキストのみ・控えめ)] [来場予約(Lime)]
     SP固定ヘッダーにも LINE をピル型で追加。
+
+  2026-05-09 conversion-sales-rulebook §4 準拠:
+    LINE 文言「LINEで相談」→「LINEで総額診断」に変更 (具体的な answer の約束)。
+    階層: LINEで総額診断 (primary) > 来場予約 (secondary) > 資料請求 (quaternary)。
 */
 
 type NavChild = {
@@ -207,7 +211,7 @@ export default function Header() {
               style={{ backgroundColor: "#06C755" }}
             >
               <MessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
-              LINEで相談
+              LINEで総額診断
             </a>
             {/* 資料請求: 控えめなテキストリンクへ降格 */}
             <Link
@@ -237,7 +241,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-1 min-h-[40px] px-2.5 py-1.5 text-[11px] font-bold text-white rounded whitespace-nowrap"
               style={{ backgroundColor: "#06C755" }}
-              aria-label="LINEで相談"
+              aria-label="LINEで総額診断"
             >
               <MessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
               LINE
@@ -280,7 +284,7 @@ export default function Header() {
                 onClick={() => setMenuOpen(false)}
               >
                 <MessageCircle className="w-4 h-4" strokeWidth={2} />
-                LINEで相談
+                LINEで総額診断
               </a>
               <Link
                 href="/reserve"

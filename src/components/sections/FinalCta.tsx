@@ -140,7 +140,7 @@ export default function FinalCta() {
               <span className="relative inline-flex items-center gap-3">
                 <MessageCircle className="w-5 h-5" strokeWidth={2} fill="currentColor" />
                 <span className="font-bold text-[15px] sm:text-[17px] tracking-[0.04em]">
-                  LINEで無料総額診断を相談する
+                  LINEで土地込み総額を無料診断
                 </span>
               </span>
               <ArrowRight

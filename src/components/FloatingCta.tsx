@@ -7,10 +7,11 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /*
   モバイルフッター固定CTA
-  2026-05-05: LINE主導線化に合わせて 3ボタン(電話/LINE/予約) → 2ボタン(LINE/見学予約) へ。
-    旧: LINEボタンが https://line.me/ プレースホルダーで実質バグだった。
-    新: LINE_ADD_FRIEND_URL に差し替え+ラベル「LINEで相談」、見学予約は Lime で右に配置。
-    電話はヘッダー・FinalCta・/money 等で温存。
+  2026-05-05: LINE主導線化に合わせて 3ボタン → 2ボタン (LINE / 見学予約) へ。
+  2026-05-09 conversion-sales-rulebook §4 準拠:
+    LINE 文言「LINEで相談」→「LINEで総額診断」に変更。
+    rulebook「LINE が primary の場合も CTA は具体的な answer を約束する。
+    曖昧な『相談』にしない」(§4 末尾) に従い、押した先で何が得られるかを明示。
 */
 export default function FloatingCta() {
   const [visible, setVisible] = useState(false);
@@ -34,7 +35,7 @@ export default function FloatingCta() {
           style={{ backgroundColor: "#06C755" }}
         >
           <MessageCircle className="w-4 h-4" strokeWidth={1.75} />
-          <span className="text-[12px] font-bold tracking-[0.04em]">LINEで相談</span>
+          <span className="text-[12px] font-bold tracking-[0.04em]">LINEで総額診断</span>
         </a>
         <Link
           href="/reserve"
