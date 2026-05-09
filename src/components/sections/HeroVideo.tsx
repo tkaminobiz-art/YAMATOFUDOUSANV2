@@ -1,17 +1,27 @@
 "use client";
 
+import Link from "next/link";
+import { MessageCircle, Calendar } from "lucide-react";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
+
 /*
-  HeroVideo — 2026-05-08 / 2026-05-09 mobile rev
+  HeroVideo — 2026-05-09 conversion-sales-rulebook 準拠版
   ---------------------------------------------------------------
   動画主役の Hero。Seedance 2.0 で生成した 21 秒の左京モデル吹抜俯瞰
-  ブランドフィルムをフルブリードで流し、下部に TRACK RECORD(4 指標)を
+  ブランドフィルムをフルブリードで流し、下部に TRACK RECORD (4 指標) を
   あえて重ねる構成。
 
-  2026-05-09: モバイルでヘッダー(LINE/来場予約)+FloatingCta(LINE/見学予約)が
-  常時表示なので、HeroVideo 内 CTA は導線重複だった。動画の視認性を優先し
-  CTA ブロックを撤去 → 動画 + TRACK RECORD overlay のみのミニマル構成に。
+  2026-05-09 conversion-sales-rulebook 反映:
+   - copy: situation-led (anxiety-resolution パターン)
+     旧「奈良・京都南部で、土地から考える家づくり」(brochure tone) →
+     新「土地も、総額も、まだ見えていないご家族へ。」(situation language)
+   - 敵: 「建物 2,000 万円台」だけで決める構造 (named competitor 攻撃ではない)
+   - 京 2,280 万円表示は micro caption に降格。Hero 主役は situation + total cost
+   - CTA staircase 復活: ① LINEで総額診断 (primary) / ② 見学予約 (secondary)
+     旧「導線重複」判断は撤回 — Hero CTA は「次の行動の約束」として必要
+     (rulebook §1.6 / §4)
 
-  方針: memory/project_next_fv_plan_video_overlay.md
+  方針: docs/project-context/conversion-sales-rulebook.md
   動画資産: memory/project_video_assets_archive.md
 */
 
@@ -87,57 +97,103 @@ export default function HeroVideo() {
       />
 
       <div className="relative z-10 flex min-h-[100svh] flex-col">
-        {/* 2026-05-09 Step 4: Main Hero copy オーバーレイ — ユーザー指定 */}
-        <div className="px-[var(--page-px)] pt-[18vh] md:pt-[20vh]">
+        {/* 2026-05-09 conversion-sales-rulebook: situation-led + CTA staircase */}
+        <div className="px-[var(--page-px)] pt-[14vh] md:pt-[16vh]">
           <div className="mx-auto max-w-[1400px]">
-            <div className="max-w-[760px]">
+            <div className="max-w-[820px]">
+              {/* h1: situation language (お客様の感情断定ではなく、市場状況の描写) */}
               <h1
-                className="text-white leading-[1.32] tracking-[0.01em]"
+                className="text-white leading-[1.28] tracking-[0.01em]"
                 style={{
                   fontFamily: "var(--font-shippori)",
                   fontWeight: 500,
-                  fontSize: "clamp(26px, 3.8vw, 56px)",
+                  fontSize: "clamp(28px, 4.2vw, 60px)",
                   textShadow: "0 2px 18px rgba(0,0,0,0.55)",
                 }}
               >
-                奈良・京都南部で、
-                <br className="md:hidden" />
-                土地から考える家づくり。
+                土地も、総額も、
+                <br />
+                まだ見えていない<br className="md:hidden" />ご家族へ。
               </h1>
+
+              {/* lead: enemy (building-only price thinking) → promise */}
               <p
-                className="mt-5 text-white/95 leading-[1.6] tracking-[0.02em]"
+                className="mt-6 max-w-[680px] text-white/95 leading-[1.85] tracking-[0.02em]"
                 style={{
                   fontFamily: "var(--font-shippori)",
                   fontWeight: 400,
-                  fontSize: "clamp(15px, 1.4vw, 20px)",
+                  fontSize: "clamp(14.5px, 1.25vw, 18px)",
                   textShadow: "0 2px 12px rgba(0,0,0,0.55)",
                 }}
               >
-                京モデル{" "}
+                「建物{" "}
                 <span
                   className="tabular-nums"
                   style={{
                     fontFamily: "var(--font-fraunces)",
                     fontStyle: "italic",
                     fontWeight: 300,
-                    fontSize: "1.35em",
+                    fontSize: "1.15em",
                     letterSpacing: "-0.01em",
+                  }}
+                >
+                  2,000
+                </span>
+                万円台」だけ見て決めるのは、難しい。
+                <br className="hidden md:inline" />
+                土地代・付帯工事・諸費用・住宅ローンまで、
+                <br className="md:hidden" />
+                ご家族の場合の総額を、契約前にお見せします。
+              </p>
+
+              {/* CTA staircase — primary: 総額診断 (LINE) / secondary: 見学 */}
+              <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-stretch gap-3 sm:gap-3.5 max-w-[640px]">
+                <a
+                  href={LINE_ADD_FRIEND_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center justify-center gap-2 px-5 py-3.5 sm:py-4 rounded text-white font-bold tracking-[0.04em] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(6,199,85,0.6)]"
+                  style={{
+                    backgroundColor: "#06C755",
+                    fontSize: "clamp(13px, 1.05vw, 15px)",
+                  }}
+                >
+                  <MessageCircle className="w-4 h-4 md:w-[18px] md:h-[18px]" strokeWidth={1.75} />
+                  <span>LINEで土地込み総額を無料診断</span>
+                </a>
+                <Link
+                  href="/reserve"
+                  className="group inline-flex items-center justify-center gap-2 px-5 py-3.5 sm:py-4 rounded border border-white/55 bg-white/5 text-white font-medium tracking-[0.04em] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/12"
+                  style={{ fontSize: "clamp(13px, 1vw, 14.5px)" }}
+                >
+                  <Calendar className="w-4 h-4 md:w-[17px] md:h-[17px]" strokeWidth={1.75} />
+                  <span>モデルハウスで標準仕様を見る</span>
+                </Link>
+              </div>
+
+              {/* micro caption: 拠点 / 商品最低価格 (SEO + Track Record 整合用) */}
+              <p
+                className="mt-5 text-white/65 leading-[1.7] tracking-[0.04em]"
+                style={{
+                  fontFamily: MURECHO,
+                  fontWeight: 400,
+                  fontSize: "clamp(11px, 0.85vw, 12.5px)",
+                  textShadow: "0 1px 6px rgba(0,0,0,0.5)",
+                }}
+              >
+                奈良・京都南部 / 自社分譲地 / 京モデル{" "}
+                <span
+                  className="tabular-nums"
+                  style={{
+                    fontFamily: "var(--font-fraunces)",
+                    fontStyle: "italic",
+                    fontWeight: 300,
+                    fontSize: "1.2em",
                   }}
                 >
                   2,280
                 </span>
-                <span style={{ fontWeight: 400 }}> 万円〜。</span>
-              </p>
-              <p
-                className="mt-3 max-w-[560px] text-white/85 leading-[1.85] tracking-[0.02em]"
-                style={{
-                  fontFamily: MURECHO,
-                  fontWeight: 400,
-                  fontSize: "clamp(12.5px, 1vw, 14.5px)",
-                  textShadow: "0 1px 8px rgba(0,0,0,0.5)",
-                }}
-              >
-                土地代も、建物代も、後からかかる費用も、はじめにわかりやすく。
+                {" "}万円〜
               </p>
             </div>
           </div>
