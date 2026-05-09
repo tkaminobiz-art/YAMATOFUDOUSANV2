@@ -1,72 +1,72 @@
 import Link from "next/link";
 import { LabDisclaimer } from "@/components/lab/LabDisclaimer";
 
-// /map-bridge-lab
-// MapBridge セクション全体の design mock-up 候補 3 案 (v4)。
-// gpt_image_2 / high / 2k で生成。warm paper クラスタ世界観を完全継承し、
-// マップ部分は CartoDB Positron 風の grayscale rectangle として描画
-// (前回 v3 で発生した「手描き地図 vs 実装の interactive 地図」の二重描画問題を回避)。
+// /map-bridge-lab v5
+// MapBridge セクション全体の design direction mock-up 候補 3 案。
 //
-// 採用後: ヘッダー/フッターのタイポグラフィ + レイアウトを忠実に実装し、
-// マップは既存の interactive Leaflet (CartoDB Positron + 深緑ピン) をそのまま使用。
+// v5 の役割: gpt_image_2 にセクション全体のデザインをディレクションしてもらい、
+// それを忠実に code 実装する流れ。
+// テキスト内容は実装側 canonical (区画数等の変動対応):
+//   ・"Lots & Land." (header)
+//   ・"27区画 公開中。奈良・京都南部、地域を知り尽くした家づくり。" (subhead)
+//   ・"自社で土地を仕入れ、自社で分譲します。土地探しから建物まで、まとめてご相談ください。" (lead)
+// マップ部分は実装で interactive Leaflet (CartoDB Positron + 深緑ピン) をそのまま使用。
 //
 // 納品前に削除する (BRAND-TRUTH §9 のラボ削除リスト準拠)。
 
 const OPTIONS = [
   {
-    id: "v4-01",
-    name: "Centered Editorial Flow — 縦の編集誌フロー",
+    id: "v5-01",
+    name: "Centered Elegance — 上品な縦フロー",
     intent:
-      "上から: meta strip → Mincho h2 1行 → lead 1行 → wide map (21:9) → divider → inline 統計 + ActionLine CTA。ZeroDecl の編集誌パターンと完全整合。最も読みやすく rhythm がある。",
-    src: "/map-bridge-lab/v4-01-centered-flow.png",
+      "上から: italic 'Lots & Land.' 中央 → Mincho subhead → 小さい lead → 大判 grayscale 地図 (フル幅) → ActionLine 右下。最も classic で editorial。流れが clean。",
+    src: "/map-bridge-lab/v5-01-centered-elegance.png",
     pros: [
-      "ZeroDecl / CrossSection / Equipment と全く同じ縦フローでクラスタ完全整合",
-      "Mincho h2 + lead が決定的、map が visual centerpiece",
-      "下段 inline stats + ActionLine が編集誌の column footer として完成度高い",
-      "実装が最も素直 (既存パターンの応用)",
+      "最も上品で classic editorial — Apple comparison page のような格式",
+      "縦フローが読みやすく、cluster (FIG.01 / FIG.02) との整合性も高い",
+      "実装が最もストレートフォワード",
     ],
     cons: [
-      "他案より「冒険」が少なく、retreat な印象",
-      "ARM オマージュとしては control が薄い",
+      "他 2 案より「冒険」が少なく、retreat な印象になる可能性",
+      "中央揃えが「centered」すぎてやまと固有性が薄まる懸念",
     ],
-    tone: "縦フロー・編集誌正統",
+    tone: "Centered editorial elegance",
   },
   {
-    id: "v4-02",
-    name: "Asymmetric 2-Column — 縦組み + 大判地図",
+    id: "v5-02",
+    name: "Asymmetric Stacked — 縦積み italic + 大判地図",
     intent:
-      "左 38% に縦組み Mincho 「土地を、自社で。」 + 統計 + CTA、右 62% にフル高さの大判 grayscale 地図。建築誌見開きスプレッド調で最もインパクト。",
-    src: "/map-bridge-lab/v4-02-asymmetric-2col.png",
+      "左 40% に「Lots / & Land.」縦積み italic、右 60% に大判 grayscale 地図。マガジン spread の art-directed 構成。最も差別化が強い。",
+    src: "/map-bridge-lab/v5-02-asymmetric-stacked.png",
     pros: [
-      "左の縦組み Mincho が日本建築誌的で他社サイトと差別化最強",
-      "右の大判地図がドキュメンタリー風で土地の広がりを物語る",
+      "「Lots / & Land.」縦積み italic がマガジン芸術監督的 — 他社サイトでまず見ない",
       "asymmetric 構成で動きが出る ('スピード感')",
+      "右の大判地図がドキュメンタリー風で土地感を物語る",
       "PC で圧倒的なインパクト",
     ],
     cons: [
-      "縦組み実装は writing-mode + 文字数調整が必要 (実装ハードル中)",
-      "モバイル縦並びでは縦組み効果が落ちる",
-      "縦組み copy 「土地を、自社で。」 が短く意味は強いが説明不足の可能性",
+      "縦積み英字 italic は読み順を意識した実装が必要",
+      "モバイルでは縦並び化で印象が変わる",
     ],
-    tone: "縦組み + 大判地図",
+    tone: "Asymmetric magazine spread",
   },
   {
-    id: "v4-03",
-    name: "Map-First Hero — シネマティック",
+    id: "v5-03",
+    name: "Overlay Card — 地図全面 + テキスト card overlay",
     intent:
-      "上薄ストリップに meta + 統計、中央 65% にフル幅 grayscale 大判地図、下にh2 + 統計 + CTA。地図がドミナント、文字は前後に分散される。",
-    src: "/map-bridge-lab/v4-03-map-first-hero.png",
+      "全面に大判地図、左下に warm paper card で 'Lots & Land.' + Mincho subhead + body + CTA を overlay。最もアートディレクション色が強い。",
+    src: "/map-bridge-lab/v5-03-overlay-card.png",
     pros: [
-      "地図がセクション最大のオブジェクトとして君臨",
-      "上下に分散した typographic frame でテロップが落ち着いている",
-      "「ニュルニュル動く」マップを最大限主役化できる",
+      "地図がセクション最大のオブジェクトとして君臨 — 「ニュルニュル動く」を最大化",
+      "card overlay の編集誌的レイヤリングが上品",
+      "右上 meta strip と組み合わせて magazine art-direction",
     ],
     cons: [
-      "上下分散構成で読み順がやや散漫になりがち",
-      "h2 が下段に来るので「最初に何を伝えるか」が曖昧化",
-      "実装で上下バランスを取るのが意外に難しい",
+      "card overlay 実装は absolute positioning + 地図との重なりで微調整必要",
+      "モバイルで card が地図の半分を覆う可能性",
+      "card 内の文字密度が高め",
     ],
-    tone: "シネマティック・地図ドミナント",
+    tone: "Map-dominant with overlay card",
   },
 ];
 
@@ -79,10 +79,10 @@ export default function MapBridgeLabPage() {
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
           <div>
             <p className="text-[11px] uppercase tracking-[0.2em] text-[#A9D159]/85">
-              Map Bridge Lab v4 — Full Section Mock-up
+              Map Bridge Lab v5 — Design Direction Mock-up
             </p>
             <h1 className="mt-1 text-lg font-semibold">
-              MapBridge セクション全体デザイン候補 3 案 (世界観継承)
+              MapBridge セクション デザイン方向性 3 案 (テキスト不問・レイアウト/タイポ集中)
             </h1>
           </div>
           <nav className="flex items-center gap-3 text-xs text-white/70">
@@ -101,23 +101,30 @@ export default function MapBridgeLabPage() {
 
       <section className="mx-auto max-w-[1100px] px-6 py-12">
         <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
-          2026-05-09 / Phase 3 v4: Full Section Design (Worldview-Inherited)
+          2026-05-09 / Phase 3 v5: Design Direction (text agnostic)
         </p>
         <h2 className="mt-3 text-2xl font-semibold">
-          GPT Image 2 にセクション全体のデザイン見本を依頼
+          gpt_image_2 にセクション全体のデザイン方向性を依頼
         </h2>
         <p className="mt-4 max-w-[820px] text-sm leading-relaxed text-white/75">
-          v3 のヘッダー単独再設計では「手描き地図 vs 実装の interactive 地図」の二重描画
-          問題が発生。v4 では セクション全体 (header + map + footer) の design mock-up
-          として生成し、マップ部分は CartoDB Positron 風の grayscale rectangle で描画して
-          実装と整合させた。
+          v5 の役割は「**デザインディレクション**」。区画数等の数字が変わる前提なので、
+          mock-up 内のテキストは参考表示。実装は以下の canonical テキストを使う:
         </p>
-        <p className="mt-3 max-w-[820px] text-[12.5px] leading-relaxed text-white/55">
-          世界観継承: 暖紙 #F7F5F0 / 墨黒 #1A1815 / 深緑 #143426 単一アクセント /
-          Zen Old Mincho (見出し) + Fraunces italic (数字) / FIG.NN 編集誌語彙 /
-          ActionLine CTA。
-          採用後の実装では、interactive Leaflet (CartoDB Positron + 深緑ピン) を
-          そのまま使用し、ヘッダー/フッター typography を mock-up に忠実に再現する。
+        <ul className="mt-4 max-w-[820px] text-[13px] leading-relaxed text-white/85 space-y-2 pl-4 border-l-2 border-white/15">
+          <li>
+            <strong>Header:</strong> Lots &amp; Land.
+          </li>
+          <li>
+            <strong>Subhead:</strong> 27区画 公開中。奈良・京都南部、地域を知り尽くした家づくり。
+          </li>
+          <li>
+            <strong>Lead:</strong> 自社で土地を仕入れ、自社で分譲します。土地探しから建物まで、まとめてご相談ください。
+          </li>
+        </ul>
+        <p className="mt-4 max-w-[820px] text-[12.5px] leading-relaxed text-white/55">
+          実装で参考にするのは「レイアウト・タイポグラフィ・余白・オーナメント・全体の格」。
+          interactive Leaflet (CartoDB Positron + 深緑ピン) を中央に配置し、ヘッダー/フッター
+          typography を mock-up に忠実に再現する。
         </p>
       </section>
 
@@ -186,25 +193,27 @@ export default function MapBridgeLabPage() {
             次の一手
           </p>
           <h3 className="mt-2 text-2xl font-semibold">
-            v4-01 / 02 / 03 のうち 1 つを採用
+            v5-01 / 02 / 03 のうち 1 つを採用 → 忠実に code 実装
           </h3>
           <p className="mt-4 max-w-[820px] text-sm leading-relaxed text-white/75">
-            採用後 MapBridge.tsx 全体を mock-up に忠実に実装。マップは既存の interactive
-            Leaflet (CartoDB Positron + 深緑ピン) をそのまま使用。
+            採用後、MapBridge.tsx 全体を mock-up に忠実に再実装。canonical テキスト 3 つ
+            (header / subhead / lead) を埋め込み、interactive Leaflet を mock-up の地図位置に
+            配置する。
           </p>
           <p className="mt-3 max-w-[820px] text-[12.5px] leading-relaxed text-white/55">
-            僕の所感: <strong>v4-01 (縦の編集誌フロー)</strong> がクラスタ
-            (FIG.01 / FIG.02 / ZeroDecl) との整合性最強で、世界観継承の観点では最有力。
+            僕の所感:
             <br />
-            <strong>v4-02 (縦組み + 大判地図)</strong> はインパクトと差別化で別格。
+            ・<strong>v5-02 (Asymmetric Stacked)</strong> が最もインパクト強・差別化最強。「Lots / & Land.」 縦積み italic がマガジン芸術監督的。
             <br />
-            v4-03 (シネマティック) は地図主役を最大化したい場合の選択肢。
+            ・<strong>v5-01 (Centered Elegance)</strong> は安全策・cluster との整合性最強。
+            <br />
+            ・v5-03 はアートディレクション色は強いが実装難度と読みやすさで僅かに劣る。
           </p>
         </div>
       </section>
 
       <footer className="border-t border-white/10 px-6 py-10 text-center text-xs text-white/40">
-        Map Bridge Lab v4 — 2026-05-09 / gpt_image_2 (high·2k) /{" "}
+        Map Bridge Lab v5 — 2026-05-09 / gpt_image_2 (high·2k) /{" "}
         <Link href="/" className="text-white/60 hover:text-white">
           本番TOP
         </Link>
