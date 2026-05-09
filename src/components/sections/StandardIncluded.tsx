@@ -3,27 +3,34 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /*
-  StandardIncluded — 2026-05-09 v1 (Step 5: TOP 軽量化統合セクション)
+  StandardIncluded — 2026-05-09 v2 (conversion-sales-rulebook 準拠の順序逆転)
   ---------------------------------------------------------------
-  ユーザー戦略「StandardCrossSection + StandardEquipment + ZeroDeclaration を
-  "この価格に含まれるもの" 1 セクションに統合 / 17 項目全部や 8 項目全部は
-  TOP では出し切らず、詳細ページへ」に従う。
+  v1: Header → 断面図 → 主な標準仕様 8 項目 → 後から発生しない 4 項目 → CTA
+      (商品 → 不安解消 の brochure 順序 / sales として逆効果)
 
-  構成:
-   1. Header: eyebrow (FIG.01 · STANDARD) + Mincho h2 + lead
-   2. Visual: 断面図 (v2-01-cross-section.png) — full-width
-   3. Mid: 主な標準仕様 8 項目 (17 → 厳選)
-   4. Bottom: 後から発生しない 4 項目 (8 → 代表)
-   5. CTA: 詳しい仕様を見る / 資金計画を相談する
+  v2: rulebook §1.5「最大の不安は accordion に埋めない」「FAQ は sales
+      battleground」と consultant 指摘「後から増えやすい費用の見せ方が弱い」を反映。
+
+      順序を逆転:
+       1. Header: 「『建物価格』だけで決めると、後から増えます」(敵 = 構造)
+       2. Visual: 断面図 (Standard 全体の anchor visual)
+       3. Sub A (恐怖 → 救済): 業界で後から増えやすい 4 項目
+          → やまとが最初に解決する 4 項目
+       4. Sub B (品質証明): そのうえで、標準仕様 8 項目
+       5. CTA: 詳しい仕様を見る / 資金計画を相談する
+
+      狙い: 客の本音 (「2,000 万円台と聞いてもどうせ後で増えるんでしょ」)
+      を先に肯定し、その救済として標準仕様の充実を見せる。
+      旧順序は「うちはちゃんとしてます」(brochure) で終わっていた。
 
   クラスタ pattern 完全継承:
    - warm paper #F7F5F0 / 墨黒 / 深緑 #143426
    - FIG.NN eyebrow + Shippori Mincho 見出し
    - ActionLine CTA
 
-  関連: page.tsx で従来の 3 セクション (StandardCrossSection / StandardEquipment /
-        ZeroDeclaration) を撤去してこの 1 セクションに置き換える。
-        旧 3 ファイルは保持 (戻す可能性 / 詳細ページで再利用)。
+  関連: docs/project-context/conversion-sales-rulebook.md
+        feedback_frame_change_cheap_to_waste.md (他社が無駄を乗せている)
+        feedback_no_over_assertion.md (「〜になりやすい」相対化)
 */
 
 const STANDARD_ITEMS = [
@@ -64,12 +71,13 @@ export default function StandardIncluded() {
             className="mt-5 font-[var(--font-shippori)] text-[#1A1815] leading-[1.32] tracking-[0.01em]"
             style={{ fontSize: "clamp(28px, 3.6vw, 48px)", fontWeight: 500 }}
           >
-            この価格に、<br className="md:hidden" />
-            含まれるもの。
+            「建物価格」だけで決めると、<br className="md:hidden" />
+            後から増えやすい。
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
-            京モデル 2,280 万円から、この水準を標準で。
-            さらに「後から増えやすい費用」も、契約前に開示・吸収します。
+            家づくりの総額は、「建物本体」に含まれない費用が後から重なりがちです。
+            やまとは、増えやすい 4 項目を契約前に解決し、
+            その上で国内メーカーの標準仕様を組み込んでいます。
           </p>
         </header>
 
@@ -89,55 +97,27 @@ export default function StandardIncluded() {
           </figcaption>
         </figure>
 
-        {/* Mid: 主な標準仕様 8 項目 (17 → 厳選) */}
-        <div className="mt-16 md:mt-20">
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-[#1A1815]/55 font-mono mb-5">
-            <span>Standard</span>
-            <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
-            <span>主な標準仕様 8 項目</span>
-          </div>
-          <h3
-            className="font-[var(--font-shippori)] text-[#1A1815] leading-[1.4]"
-            style={{ fontSize: "clamp(20px, 2.2vw, 28px)", fontWeight: 500 }}
-          >
-            国内メーカーを、標準で。
-          </h3>
-          <ul className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 max-w-[1000px]">
-            {STANDARD_ITEMS.map((item) => (
-              <li
-                key={item.category}
-                className="grid grid-cols-[auto_1fr] gap-x-5 items-baseline py-3.5 border-b border-[var(--color-rule-faint)]"
-              >
-                <span className="text-[12.5px] md:text-[13px] text-[#1A1815]/85 font-medium tracking-[0.02em] min-w-[5em]">
-                  {item.category}
-                </span>
-                <span className="text-[12.5px] md:text-[13.5px] text-[#1A1815] leading-[1.55]">
-                  {item.maker}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-5 text-[11.5px] leading-[1.85] text-[#1A1815]/55">
-            ※ 花モデル基準。風・京モデルは一部仕様が異なります。詳しくは詳細仕様ページへ。
-          </p>
-        </div>
-
-        {/* Bottom: 後から発生しない 4 項目 */}
+        {/* Sub A (恐怖 → 救済): 業界で後から増えやすい 4 項目 — 上に昇格 */}
         <div className="mt-16 md:mt-20">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-[#1A1815]/55 font-mono mb-5">
             <span>FIG. 02</span>
             <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
-            <span>Zero Declaration</span>
+            <span>Hidden Costs</span>
             <span aria-hidden className="h-px w-8 bg-[var(--color-rule)] hidden md:inline-block" />
-            <span className="hidden md:inline">後から増えない 4 項目</span>
+            <span className="hidden md:inline">後から増えやすい 4 項目</span>
           </div>
           <h3
             className="font-[var(--font-shippori)] text-[#1A1815] leading-[1.4]"
             style={{ fontSize: "clamp(20px, 2.2vw, 28px)", fontWeight: 500 }}
           >
-            後から増えやすい費用も、<br className="md:hidden" />
-            契約前に開示・吸収。
+            「建物 2,000 万円台」から、<br className="md:hidden" />
+            後から重なりやすい 4 項目。
           </h3>
+          <p className="mt-5 max-w-[760px] text-[clamp(13px,0.95vw,14.5px)] leading-[1.95] text-[#1A1815]/75">
+            他社で「建物 2,000 万円台」と提示されても、土地・地盤・つなぎ融資・外構などで
+            合計 200〜400 万円が後から重なることが少なくありません。
+            やまとは、この 4 項目を最初に解決します。
+          </p>
           <dl className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 max-w-[1000px]">
             {NO_HIDDEN_COST.map((row) => (
               <div
@@ -160,6 +140,40 @@ export default function StandardIncluded() {
           </dl>
           <p className="mt-5 text-[11.5px] leading-[1.85] text-[#1A1815]/55">
             ※ 業界平均は当社調べ。地域・業者・条件により金額は異なります。
+          </p>
+        </div>
+
+        {/* Sub B (品質証明): そのうえで、国内メーカーの標準仕様 8 項目 — 下に降格 */}
+        <div className="mt-16 md:mt-20">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-[#1A1815]/55 font-mono mb-5">
+            <span>Standard Spec</span>
+            <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
+            <span>主な標準仕様 8 項目</span>
+          </div>
+          <h3
+            className="font-[var(--font-shippori)] text-[#1A1815] leading-[1.4]"
+            style={{ fontSize: "clamp(20px, 2.2vw, 28px)", fontWeight: 500 }}
+          >
+            そのうえで、<br className="md:hidden" />
+            国内メーカーを、標準で。
+          </h3>
+          <ul className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 max-w-[1000px]">
+            {STANDARD_ITEMS.map((item) => (
+              <li
+                key={item.category}
+                className="grid grid-cols-[auto_1fr] gap-x-5 items-baseline py-3.5 border-b border-[var(--color-rule-faint)]"
+              >
+                <span className="text-[12.5px] md:text-[13px] text-[#1A1815]/85 font-medium tracking-[0.02em] min-w-[5em]">
+                  {item.category}
+                </span>
+                <span className="text-[12.5px] md:text-[13.5px] text-[#1A1815] leading-[1.55]">
+                  {item.maker}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-[11.5px] leading-[1.85] text-[#1A1815]/55">
+            ※ 花モデル基準。風・京モデルは一部仕様が異なります。詳しくは詳細仕様ページへ。
           </p>
         </div>
 
