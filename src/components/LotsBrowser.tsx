@@ -1,31 +1,30 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { MapPin, GraduationCap, ShoppingCart, Footprints, ChevronDown } from "lucide-react";
+import {
+  ArrowUpRight,
+  Building2,
+  Check,
+  ChevronDown,
+  Footprints,
+  GraduationCap,
+  MapPin,
+  SlidersHorizontal,
+  ShoppingCart,
+  Train,
+} from "lucide-react";
 import type { Lot } from "@/data/lots";
 import {
   CITY_ACCESS,
-  inferLifestyleTags,
   extractWalkMinutes,
+  inferLifestyleTags,
 } from "@/data/cityAccess";
-
-/*
-  LotsBrowser — 2026-04-30
-  ---------------------------------------------------------------
-  小林専務(2026-04-28)+ 神野(2026-04-30):
-  「価格・徒歩・学校・スーパー」のフィルターで一画面検討を可能にする。
-  デフォルトソート = 価格の安い順(やまとの "まず安いと思わせたい" 戦略)。
-
-  価格データは段階整備中。未投入の物件はソート時に最下部・表示は "お問い合わせ"。
-  学校・スーパーは Overpass API 自動取得(直線距離 80m/min 換算の目安)。
-  個別の正確な学区は教育委員会に要確認 → UI下部に注記。
-*/
 
 type WalkFilter = "all" | "5" | "10" | "15";
 type PriceFilter = "all" | "0-500" | "500-1000" | "1000-2000" | "2000+";
-type SortOrder = "price-asc" | "price-desc" | "walk-asc";
+type SortOrder = "featured" | "price-asc" | "price-desc" | "walk-asc";
+type IntentFilter = "all" | "station" | "school" | "osaka" | "kyoto" | "last";
 
 const WALK_OPTIONS: Array<{ id: WalkFilter; label: string; max: number | null }> = [
   { id: "all", label: "すべて", max: null },
@@ -42,20 +41,159 @@ const PRICE_OPTIONS: Array<{
 }> = [
   { id: "all", label: "すべて", min: null, max: null },
   { id: "0-500", label: "〜500万", min: 0, max: 500 },
-  { id: "500-1000", label: "500-1000万", min: 500, max: 1000 },
-  { id: "1000-2000", label: "1000-2000万", min: 1000, max: 2000 },
+  { id: "500-1000", label: "500〜1000万", min: 500, max: 1000 },
+  { id: "1000-2000", label: "1000〜2000万", min: 1000, max: 2000 },
   { id: "2000+", label: "2000万〜", min: 2000, max: null },
 ];
 
 const SORT_OPTIONS: Array<{ id: SortOrder; label: string }> = [
-  { id: "price-asc", label: "安い順" },
-  { id: "price-desc", label: "高い順" },
-  { id: "walk-asc", label: "駅近い順" },
+  { id: "featured", label: "おすすめ順" },
+  { id: "price-asc", label: "価格が低い順" },
+  { id: "price-desc", label: "価格が高い順" },
+  { id: "walk-asc", label: "駅に近い順" },
 ];
 
-// ─────────────────────────────────────────────
-// アコーディオン式フィルターチップ群(モバイル対応)
-// ─────────────────────────────────────────────
+const INTENT_OPTIONS: Array<{ id: IntentFilter; label: string; short: string }> = [
+  { id: "all", label: "すべて", short: "All" },
+  { id: "station", label: "駅徒歩10分", short: "駅近" },
+  { id: "school", label: "小学校10分", short: "子育て" },
+  { id: "osaka", label: "大阪通勤", short: "大阪" },
+  { id: "kyoto", label: "京都通勤", short: "京都" },
+  { id: "last", label: "最終1区画", short: "希少" },
+];
+
+function compactTitle(title: string) {
+  return title
+    .replace(/～/g, "〜")
+    .replace(/おかげ様で.*/, "")
+    .replace(/第\d期.*/, "")
+    .replace(/残りわずか.*/, "")
+    .replace(/最終販売です！！/, "")
+    .trim();
+}
+
+function hasLastLotSignal(lot: Lot) {
+  return /最終|残り1|残り１|1区画|１区画/.test(lot.title);
+}
+
+function projectScale(lot: Lot) {
+  const raw = lot.fields["総区画数"] || lot.title;
+  const match = raw.match(/(\d+|[０-９]+|[一二三四五六七八九十]+)[\s　]*区画/);
+  if (!match) return null;
+  return match[0].replace(/[０-９]/g, (s) =>
+    String.fromCharCode(s.charCodeAt(0) - 0xfee0)
+  );
+}
+
+function getSchoolWalk(lot: Lot) {
+  return lot.amenities?.primarySchool?.walkMin ?? null;
+}
+
+function getSuperWalk(lot: Lot) {
+  return lot.amenities?.supermarket?.walkMin ?? null;
+}
+
+function editorialScore(lot: Lot) {
+  const walk = extractWalkMinutes(lot.fields["交通"]);
+  const school = getSchoolWalk(lot);
+  const superWalk = getSuperWalk(lot);
+  const access = CITY_ACCESS[lot.city];
+  let score = 0;
+  if (lot.price) score += Math.max(0, 2200 - lot.price.from) / 40;
+  if (walk !== null) score += Math.max(0, 18 - walk) * 4;
+  if (school !== null) score += Math.max(0, 15 - school) * 3;
+  if (superWalk !== null) score += Math.max(0, 15 - superWalk) * 2;
+  if (access?.toOsaka && access.toOsaka.minutes <= 35) score += 18;
+  if (access?.toKyoto && access.toKyoto.minutes <= 35) score += 14;
+  if (hasLastLotSignal(lot)) score += 10;
+  return score;
+}
+
+function lifestyleComment(lot: Lot, stationWalk: number | null): string {
+  const ps = lot.amenities?.primarySchool;
+  const sm = lot.amenities?.supermarket;
+
+  if (ps && ps.walkMin <= 5) return `小学校徒歩${ps.walkMin}分。朝の通学を見守りやすい距離。`;
+  if (sm && sm.walkMin <= 5) return `スーパー徒歩${sm.walkMin}分。毎日の買い物が近所で完結。`;
+  if (ps && ps.walkMin <= 10) return `小学校徒歩${ps.walkMin}分。徒歩通学が無理なく続く立地。`;
+  if (sm && sm.walkMin <= 10) return `スーパー徒歩${sm.walkMin}分。仕事帰りにも寄りやすい距離。`;
+  if (stationWalk !== null && stationWalk <= 10) return `駅まで徒歩${stationWalk}分。通勤を現実的に組み立てやすい。`;
+  return "土地・建物・資金計画をまとめて相談できる候補地です。";
+}
+
+function formatPrice(lot: Lot) {
+  if (!lot.price) return "価格相談";
+  return `${lot.price.from.toLocaleString()}万円〜`;
+}
+
+function osmTile(lat: number, lng: number, zoom = 14) {
+  const scale = 2 ** zoom;
+  const x = ((lng + 180) / 360) * scale;
+  const latRad = (lat * Math.PI) / 180;
+  const y =
+    ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) *
+    scale;
+  const tileX = Math.floor(x);
+  const tileY = Math.floor(y);
+  const maxTile = scale - 1;
+
+  return {
+    tiles: [-1, 0, 1].flatMap((dy) =>
+      [-1, 0, 1].map((dx) => {
+        const wrappedX = (tileX + dx + scale) % scale;
+        const clampedY = Math.max(0, Math.min(maxTile, tileY + dy));
+        return {
+          key: `${dx}:${dy}`,
+          url: `https://tile.openstreetmap.org/${zoom}/${wrappedX}/${clampedY}.png`,
+        };
+      })
+    ),
+    xPercent: (((x - tileX + 1) / 3) * 100).toFixed(4),
+    yPercent: (((y - tileY + 1) / 3) * 100).toFixed(4),
+  };
+}
+
+function LocationThumb({ lot, large = false }: { lot: Lot; large?: boolean }) {
+  if (!lot.coord) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(180deg,#E6E1D6_0%,#D9D4C9_52%,#B5B1A8_100%)] text-[#7B766A]">
+        <MapPin className={large ? "h-10 w-10" : "h-8 w-8"} strokeWidth={1.4} />
+      </div>
+    );
+  }
+
+  const tile = osmTile(lot.coord.lat, lot.coord.lng);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden bg-[#E6E1D6]">
+      <div
+        aria-label={`${lot.city}の所在地周辺地図`}
+        role="img"
+        className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-[0.72]"
+        style={{ filter: "grayscale(0.2) saturate(0.68) contrast(0.94)" }}
+      >
+        {tile.tiles.map((mapTile) => (
+          <div
+            key={mapTile.key}
+            className="bg-cover bg-center"
+            style={{ backgroundImage: `url(${mapTile.url})` }}
+          />
+        ))}
+      </div>
+      <div
+        className="absolute h-5 w-5 -translate-x-1/2 -translate-y-full rounded-full bg-[#1F2D14] shadow-[0_8px_20px_rgba(31,29,22,0.24)] ring-4 ring-white/85"
+        style={{ left: `${tile.xPercent}%`, top: `${tile.yPercent}%` }}
+      >
+        <span className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
+        <span className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 bg-[#1F2D14]" />
+      </div>
+      <div className="absolute bottom-3 left-3 rounded bg-[#FCFBF7]/92 px-2.5 py-1.5 text-[10px] font-semibold tracking-[0.12em] text-[#31461B] backdrop-blur">
+        所在地周辺
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/16 via-transparent to-white/10" />
+    </div>
+  );
+}
 
 function FilterChips<T extends string>({
   label,
@@ -69,8 +207,8 @@ function FilterChips<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <div className="text-[10px] tracking-[0.12em] text-text-secondary font-bold">
+    <div>
+      <div className="mb-2 text-[10px] font-semibold tracking-[0.14em] text-[#777267]">
         {label}
       </div>
       <div className="flex flex-wrap gap-1.5">
@@ -79,10 +217,10 @@ function FilterChips<T extends string>({
             key={o.id}
             type="button"
             onClick={() => onChange(o.id)}
-            className={`px-2.5 py-1 text-[11px] md:text-[12px] rounded-full border transition-colors ${
+            className={`rounded border px-2.5 py-1.5 text-[11px] transition-colors md:text-[12px] ${
               selected === o.id
-                ? "bg-main text-white border-main"
-                : "bg-bg-primary text-text-primary border-border hover:border-main"
+                ? "border-[#1F2D14] bg-[#1F2D14] text-white"
+                : "border-[#D7D2C6] bg-[#FCFBF7] text-[#25251E] hover:border-[#1F2D14]/45"
             }`}
           >
             {o.label}
@@ -93,284 +231,206 @@ function FilterChips<T extends string>({
   );
 }
 
-// ─────────────────────────────────────────────
-// "ここに住むと" 1行コメント生成
-// ─────────────────────────────────────────────
-// 暮らしの実感に近い1行を、最寄り施設データから自動生成する。
-// 過剰な感情断定(「楽になります」等)は避け、距離の事実+生活シーンに留める。
-// 学校 > スーパー > 駅 の優先順(/lotsの主ターゲットが子育て世帯のため)。
-
-function lifestyleComment(lot: Lot, stationWalk: number | null): string | null {
-  const ps = lot.amenities?.primarySchool;
-  const sm = lot.amenities?.supermarket;
-
-  if (ps && ps.walkMin <= 5) {
-    return `小学校徒歩${ps.walkMin}分。朝の通学を、玄関先から見守りやすい区画です。`;
-  }
-  if (sm && sm.walkMin <= 5) {
-    return `スーパー徒歩${sm.walkMin}分。日々のお買い物が、ご近所感覚で済みます。`;
-  }
-  if (ps && ps.walkMin <= 10) {
-    return `小学校徒歩${ps.walkMin}分。徒歩通学が無理なく続く距離です。`;
-  }
-  if (sm && sm.walkMin <= 10) {
-    return `スーパー徒歩${sm.walkMin}分。仕事帰りのお買い物がしやすい立地です。`;
-  }
-  if (stationWalk !== null && stationWalk <= 5) {
-    return `駅まで徒歩${stationWalk}分。朝のご通勤が無理なく続けやすい立地です。`;
-  }
-  if (stationWalk !== null && stationWalk <= 10) {
-    return `駅まで徒歩${stationWalk}分。電車通勤が現実的な距離です。`;
-  }
-  return null;
+function Metric({
+  icon,
+  label,
+  value,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex min-w-0 items-center gap-2 border-t border-[#E2DED3] py-2">
+      <span className="shrink-0 text-main">{icon}</span>
+      <span className="min-w-0 text-[10px] font-semibold tracking-[0.08em] text-[#777267]">
+        {label}
+      </span>
+      <span className="ml-auto truncate text-[12px] font-semibold text-[#25251E]">
+        {value}
+      </span>
+    </div>
+  );
 }
 
-// ─────────────────────────────────────────────
-// 物件カード
-// ─────────────────────────────────────────────
-
-function LotCard({
-  lot,
-  rank,
-}: {
-  lot: Lot;
-  /** 安い順表示時の上位3カードに最安バッジを出す */
-  rank?: number;
-}) {
+function StatusBadges({ lot }: { lot: Lot }) {
   const tags = inferLifestyleTags(lot.city, lot.fields["交通"]);
+  const scale = projectScale(lot);
+  const badges = [
+    hasLastLotSignal(lot) ? "最終1区画" : null,
+    scale,
+    ...tags.slice(0, 2),
+  ].filter(Boolean) as string[];
+
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {badges.slice(0, 3).map((badge) => (
+        <span
+          key={badge}
+          className="rounded bg-[#F2F0E8]/95 px-2 py-1 text-[10px] font-semibold tracking-[0.08em] text-[#31461B] backdrop-blur"
+        >
+          {badge}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function FeaturedLotCard({ lot }: { lot: Lot }) {
   const walk = extractWalkMinutes(lot.fields["交通"]);
+  const school = getSchoolWalk(lot);
+  const superWalk = getSuperWalk(lot);
   const access = CITY_ACCESS[lot.city];
-  const showCheapBadge = rank !== undefined && rank < 3 && lot.price;
-  const lifestyle = lifestyleComment(lot, walk);
 
   return (
     <Link
       href={`/lots/${lot.id}`}
-      className="group block bg-bg-primary rounded-lg overflow-hidden card-shadow transition-all hover:-translate-y-1 flex flex-col"
+      className="group grid overflow-hidden rounded-[8px] border border-[#D7D2C6] bg-[#FCFBF7] shadow-[0_18px_60px_rgba(31,29,22,0.08)] transition-transform hover:-translate-y-1 lg:grid-cols-[0.96fr_1.04fr]"
     >
-      <div className="relative aspect-[4/3] bg-bg-secondary overflow-hidden">
-        {lot.photos[0] ? (
-          <Image
-            src={lot.photos[0]}
-            alt={lot.title}
-            fill
-            className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-text-secondary">
-            <MapPin className="w-8 h-8" strokeWidth={1.5} />
-          </div>
-        )}
-        {showCheapBadge && (
-          <div className="absolute top-3 left-3 bg-lime text-lime-darker text-[11px] font-bold tracking-wider rounded px-2.5 py-1">
-            最安エリア
-          </div>
-        )}
-        {!showCheapBadge && (
-          <div className="absolute top-3 left-3 bg-bg-primary/95 backdrop-blur-sm rounded px-2.5 py-1">
-            <span className="text-main text-[10px] font-medium tracking-wider">
-              {lot.city}
-            </span>
-          </div>
-        )}
-        {tags.length > 0 && (
-          <div className="absolute top-3 right-3 flex flex-wrap gap-1 justify-end max-w-[60%]">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-lime/95 text-lime-darker text-[10px] font-medium tracking-wider rounded px-2 py-0.5 backdrop-blur-sm"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+      <div className="relative min-h-[280px] overflow-hidden bg-[#E8E3D8]">
+        <LocationThumb lot={lot} large />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+        <div className="absolute left-4 top-4">
+          <StatusBadges lot={lot} />
+        </div>
+        <p className="absolute bottom-4 left-4 rounded bg-white/92 px-3 py-2 text-[11px] font-semibold text-[#1F2D14]">
+          注目物件
+        </p>
       </div>
 
-      <div className="p-5 md:p-6 flex flex-col flex-1">
-        {showCheapBadge && (
-          <span className="text-main text-[10px] font-medium tracking-wider mb-1">
-            {lot.city}
-          </span>
-        )}
-        <h2
-          className="text-text-primary text-base md:text-lg mb-2 group-hover:text-main transition-colors line-clamp-2"
-          style={{ fontFamily: "var(--font-sans)" }}
-        >
-          {lot.title}
+      <div className="flex flex-col p-6 md:p-8">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-main">
+          {lot.city}
+        </p>
+        <h2 className="mb-3 text-[clamp(22px,2.4vw,34px)] leading-[1.32] text-[#191A16] [font-family:var(--font-zen-old)]">
+          {compactTitle(lot.title)}
         </h2>
-        {lot.fields["所在地"] && (
-          <p className="text-text-secondary text-xs leading-relaxed mb-2 line-clamp-1">
-            {lot.fields["所在地"]}
-          </p>
-        )}
-        {lot.fields["交通"] && (
-          <p className="text-text-secondary text-xs leading-relaxed line-clamp-1">
-            {lot.fields["交通"]}
-          </p>
-        )}
+        <p className="mb-5 text-[13px] leading-[1.9] text-[#625E53]">
+          {lifestyleComment(lot, walk)}
+        </p>
 
-        {/* "ここに住むと" 1行コメント — スペック中心の中に暮らしの実感を1点だけ差す */}
-        {lifestyle && (
-          <p
-            className="mt-3 px-3 py-2 rounded text-[12px] leading-[1.65]"
-            style={{
-              background: "rgba(72,107,0,0.06)",
-              color: "#486B00",
-              borderLeft: "2px solid #A2C523",
-            }}
-          >
-            <span className="font-bold mr-1">ここに住むと、</span>
-            {lifestyle}
-          </p>
-        )}
+        <div className="mb-6 grid grid-cols-2 gap-x-5">
+          <Metric
+            icon={<Building2 className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="価格"
+            value={formatPrice(lot)}
+          />
+          <Metric
+            icon={<Train className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="駅徒歩"
+            value={walk !== null ? `${walk}分` : "要確認"}
+          />
+          <Metric
+            icon={<GraduationCap className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="小学校"
+            value={school !== null ? `${school}分` : "要確認"}
+          />
+          <Metric
+            icon={<ShoppingCart className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="買い物"
+            value={superWalk !== null ? `${superWalk}分` : "要確認"}
+          />
+        </div>
 
-        {/* 駅・大阪・京都までの分 */}
-        {(walk !== null || access?.toOsaka || access?.toKyoto) && (
-          <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-border pt-3">
-            {walk !== null && (
-              <span className="inline-flex items-baseline gap-1 text-text-primary">
-                <span className="text-[10px] text-text-secondary tracking-[0.04em]">
-                  徒歩
-                </span>
-                <span
-                  className="tabular-nums"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                  }}
-                >
-                  {walk}
-                </span>
-                <span className="text-[10px]">分</span>
-              </span>
-            )}
-            {access?.toOsaka && (
-              <span className="inline-flex items-baseline gap-1 text-text-primary">
-                <span className="text-[10px] text-text-secondary tracking-[0.04em]">
-                  大阪
-                </span>
-                <span
-                  className="tabular-nums"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                  }}
-                >
-                  {access.toOsaka.minutes}
-                </span>
-                <span className="text-[10px]">分</span>
-              </span>
-            )}
-            {access?.toKyoto && (
-              <span className="inline-flex items-baseline gap-1 text-text-primary">
-                <span className="text-[10px] text-text-secondary tracking-[0.04em]">
-                  京都
-                </span>
-                <span
-                  className="tabular-nums"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontSize: "15px",
-                    fontWeight: 500,
-                  }}
-                >
-                  {access.toKyoto.minutes}
-                </span>
-                <span className="text-[10px]">分</span>
-              </span>
-            )}
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-4 border-t border-[#D7D2C6] pt-5">
+          <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-[#4D4B43]">
+            {access?.toOsaka && <span>大阪 {access.toOsaka.minutes}分目安</span>}
+            {access?.toKyoto && <span>京都 {access.toKyoto.minutes}分目安</span>}
           </div>
-        )}
-
-        {/* 学校・スーパー徒歩 */}
-        {(lot.amenities?.primarySchool ||
-          lot.amenities?.supermarket) && (
-          <div className="mt-2 flex flex-col gap-1 text-[11px]">
-            {lot.amenities.primarySchool && (
-              <span className="inline-flex items-center gap-1.5 text-text-secondary">
-                <GraduationCap className="w-3.5 h-3.5" strokeWidth={1.6} />
-                <span className="line-clamp-1">
-                  {lot.amenities.primarySchool.name}
-                </span>
-                <span
-                  className="tabular-nums text-text-primary ml-auto"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontWeight: 500,
-                  }}
-                >
-                  徒歩{lot.amenities.primarySchool.walkMin}分
-                </span>
-              </span>
-            )}
-            {lot.amenities.supermarket && (
-              <span className="inline-flex items-center gap-1.5 text-text-secondary">
-                <ShoppingCart className="w-3.5 h-3.5" strokeWidth={1.6} />
-                <span className="line-clamp-1">
-                  {lot.amenities.supermarket.name}
-                </span>
-                <span
-                  className="tabular-nums text-text-primary ml-auto"
-                  style={{
-                    fontFamily: "var(--font-oswald)",
-                    fontWeight: 500,
-                  }}
-                >
-                  徒歩{lot.amenities.supermarket.walkMin}分
-                </span>
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* 価格 + 詳細リンク (フッター) */}
-        <div className="mt-4 pt-3 border-t border-border flex items-baseline justify-between">
-          {lot.price ? (
-            <span className="flex items-baseline gap-1 text-text-primary">
-              <span
-                className="tabular-nums"
-                style={{
-                  fontFamily: "var(--font-oswald)",
-                  fontSize: "26px",
-                  fontWeight: 500,
-                  color: "var(--color-main)",
-                }}
-              >
-                {lot.price.from.toLocaleString()}
-              </span>
-              <span className="text-[12px]">万円〜</span>
-            </span>
-          ) : (
-            <span className="text-text-secondary text-[11px]">
-              価格はお問い合わせください
-            </span>
-          )}
-          <span className="text-main text-xs font-medium">詳細を見る →</span>
+          <span className="inline-flex items-center gap-2 text-[12px] font-semibold text-main">
+            詳細を見る
+            <ArrowUpRight className="h-4 w-4" strokeWidth={1.8} />
+          </span>
         </div>
       </div>
     </Link>
   );
 }
 
-// ─────────────────────────────────────────────
-// 本体
-// ─────────────────────────────────────────────
+function LotCard({ lot, rank }: { lot: Lot; rank?: number }) {
+  const walk = extractWalkMinutes(lot.fields["交通"]);
+  const school = getSchoolWalk(lot);
+  const superWalk = getSuperWalk(lot);
+  const access = CITY_ACCESS[lot.city];
+
+  return (
+    <Link
+      href={`/lots/${lot.id}`}
+      className="group flex h-full flex-col overflow-hidden rounded-[8px] border border-[#D7D2C6] bg-[#FCFBF7] transition-all hover:-translate-y-1 hover:border-[#1F2D14]/35 hover:shadow-[0_16px_50px_rgba(31,29,22,0.08)]"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-[#E8E3D8]">
+        <LocationThumb lot={lot} />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+        <div className="absolute left-3 top-3">
+          <StatusBadges lot={lot} />
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-main">
+            {lot.city}
+          </p>
+          {rank !== undefined && rank < 3 && (
+            <span className="rounded bg-[#E8F0C8] px-2 py-1 text-[10px] font-semibold text-[#1F2D14]">
+              価格注目
+            </span>
+          )}
+        </div>
+        <h2 className="mb-2 line-clamp-2 min-h-[3.2em] text-[17px] leading-[1.6] text-[#191A16] transition-colors group-hover:text-main">
+          {compactTitle(lot.title)}
+        </h2>
+        <p className="mb-4 line-clamp-2 text-[12px] leading-[1.75] text-[#625E53]">
+          {lifestyleComment(lot, walk)}
+        </p>
+
+        <div className="mb-4 grid grid-cols-2 gap-x-4">
+          <Metric
+            icon={<Building2 className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="価格"
+            value={formatPrice(lot)}
+          />
+          <Metric
+            icon={<Train className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="駅"
+            value={walk !== null ? `${walk}分` : "確認"}
+          />
+          <Metric
+            icon={<GraduationCap className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="学校"
+            value={school !== null ? `${school}分` : "確認"}
+          />
+          <Metric
+            icon={<ShoppingCart className="h-3.5 w-3.5" strokeWidth={1.7} />}
+            label="買物"
+            value={superWalk !== null ? `${superWalk}分` : "確認"}
+          />
+        </div>
+
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-[#D7D2C6] pt-4">
+          <div className="min-w-0 text-[11px] leading-[1.6] text-[#777267]">
+            {access?.toOsaka && <span className="mr-2">大阪 {access.toOsaka.minutes}分</span>}
+            {access?.toKyoto && <span>京都 {access.toKyoto.minutes}分</span>}
+          </div>
+          <span className="shrink-0 text-[12px] font-semibold text-main">見る</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
 
 export default function LotsBrowser({ lots }: { lots: Lot[] }) {
   const [city, setCity] = useState<string>("all");
   const [walkFilter, setWalkFilter] = useState<WalkFilter>("all");
   const [schoolWalk, setSchoolWalk] = useState<WalkFilter>("all");
   const [priceFilter, setPriceFilter] = useState<PriceFilter>("all");
-  const [sort, setSort] = useState<SortOrder>("price-asc");
+  const [intent, setIntent] = useState<IntentFilter>("all");
+  const [sort, setSort] = useState<SortOrder>("featured");
   const [filterOpen, setFilterOpen] = useState(false);
 
   const cities = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const l of lots) counts[l.city] = (counts[l.city] || 0) + 1;
+    for (const lot of lots) counts[lot.city] = (counts[lot.city] || 0) + 1;
     return Object.entries(counts)
       .map(([c, n]) => ({ city: c, count: n }))
       .sort((a, b) => b.count - a.count);
@@ -382,32 +442,35 @@ export default function LotsBrowser({ lots }: { lots: Lot[] }) {
     const priceOpt = PRICE_OPTIONS.find((o) => o.id === priceFilter);
 
     return lots.filter((lot) => {
+      const walk = extractWalkMinutes(lot.fields["交通"]);
+      const school = getSchoolWalk(lot);
+      const access = CITY_ACCESS[lot.city];
+
       if (city !== "all" && lot.city !== city) return false;
-
-      if (walkMax !== null && walkMax !== undefined) {
-        const w = extractWalkMinutes(lot.fields["交通"]);
-        if (w === null || w > walkMax) return false;
-      }
-
-      if (schoolMax !== null && schoolMax !== undefined) {
-        const ps = lot.amenities?.primarySchool;
-        if (!ps || ps.walkMin > schoolMax) return false;
-      }
+      if (walkMax !== null && walkMax !== undefined && (walk === null || walk > walkMax)) return false;
+      if (schoolMax !== null && schoolMax !== undefined && (school === null || school > schoolMax)) return false;
 
       if (priceOpt && priceOpt.min !== null) {
         const p = lot.price;
         if (!p) return false;
-        if (priceOpt.min !== null && p.from < priceOpt.min) return false;
+        if (p.from < priceOpt.min) return false;
         if (priceOpt.max !== null && p.from >= priceOpt.max) return false;
       }
 
+      if (intent === "station" && (walk === null || walk > 10)) return false;
+      if (intent === "school" && (school === null || school > 10)) return false;
+      if (intent === "osaka" && (!access?.toOsaka || access.toOsaka.minutes > 35)) return false;
+      if (intent === "kyoto" && (!access?.toKyoto || access.toKyoto.minutes > 35)) return false;
+      if (intent === "last" && !hasLastLotSignal(lot)) return false;
+
       return true;
     });
-  }, [lots, city, walkFilter, schoolWalk, priceFilter]);
+  }, [lots, city, walkFilter, schoolWalk, priceFilter, intent]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
     arr.sort((a, b) => {
+      if (sort === "featured") return editorialScore(b) - editorialScore(a);
       if (sort === "price-asc" || sort === "price-desc") {
         const ap = a.price?.from ?? Number.POSITIVE_INFINITY;
         const bp = b.price?.from ?? Number.POSITIVE_INFINITY;
@@ -424,17 +487,24 @@ export default function LotsBrowser({ lots }: { lots: Lot[] }) {
     return arr;
   }, [filtered, sort]);
 
+  const featuredLot = sorted.find((lot) => Boolean(lot.coord)) ?? sorted[0];
+  const cardLots = featuredLot
+    ? sorted.filter((lot) => lot.id !== featuredLot.id)
+    : sorted;
+
   const activeFilterCount =
     (city !== "all" ? 1 : 0) +
     (walkFilter !== "all" ? 1 : 0) +
     (schoolWalk !== "all" ? 1 : 0) +
-    (priceFilter !== "all" ? 1 : 0);
+    (priceFilter !== "all" ? 1 : 0) +
+    (intent !== "all" ? 1 : 0);
 
   const reset = () => {
     setCity("all");
     setWalkFilter("all");
     setSchoolWalk("all");
     setPriceFilter("all");
+    setIntent("all");
   };
 
   const cityOptions = useMemo(
@@ -446,52 +516,62 @@ export default function LotsBrowser({ lots }: { lots: Lot[] }) {
   );
 
   return (
-    <div>
-      {/* === フィルターバー === */}
-      <div className="border-b border-border bg-bg-primary sticky top-0 z-20">
-        <div className="max-w-[1400px] mx-auto px-[var(--page-px)] py-3 md:py-4">
-          {/* 上段: トリガー + 結果件数 + ソート */}
-          <div className="flex items-center justify-between gap-3 flex-wrap">
+    <section id="lots-browser" className="scroll-mt-20 bg-[#F8F7F2]">
+      <div className="sticky top-0 z-30 border-b border-[#DCD8CC] bg-[#F8F7F2]/96 backdrop-blur">
+        <div className="max-w-[1500px] mx-auto px-[var(--page-px)] py-4">
+          <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
+            {INTENT_OPTIONS.map((o) => (
+              <button
+                key={o.id}
+                type="button"
+                onClick={() => setIntent(o.id)}
+                className={`inline-flex shrink-0 items-center gap-2 rounded border px-3.5 py-2 text-[12px] font-semibold transition-colors ${
+                  intent === o.id
+                    ? "border-[#1F2D14] bg-[#1F2D14] text-white"
+                    : "border-[#D7D2C6] bg-[#FCFBF7] text-[#25251E] hover:border-[#1F2D14]/45"
+                }`}
+              >
+                {intent === o.id && <Check className="h-3.5 w-3.5" strokeWidth={2} />}
+                <span className="hidden sm:inline">{o.label}</span>
+                <span className="sm:hidden">{o.short}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setFilterOpen((v) => !v)}
-              className="inline-flex items-center gap-2 px-3 py-2 border border-border rounded text-[12px] md:text-[13px] hover:border-main transition-colors"
+              className="inline-flex items-center gap-2 rounded border border-[#D7D2C6] bg-[#FCFBF7] px-3.5 py-2 text-[12px] font-semibold text-[#25251E] transition-colors hover:border-[#1F2D14]/45"
             >
-              <span className="font-medium">
-                絞り込み
-                {activeFilterCount > 0 && (
-                  <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 bg-main text-white rounded-full text-[10px]">
-                    {activeFilterCount}
-                  </span>
-                )}
-              </span>
+              <SlidersHorizontal className="h-4 w-4" strokeWidth={1.8} />
+              詳細条件
+              {activeFilterCount > 0 && (
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded bg-main px-1.5 text-[10px] text-white">
+                  {activeFilterCount}
+                </span>
+              )}
               <ChevronDown
-                className={`w-4 h-4 transition-transform ${filterOpen ? "rotate-180" : ""}`}
-                strokeWidth={1.6}
+                className={`h-4 w-4 transition-transform ${filterOpen ? "rotate-180" : ""}`}
+                strokeWidth={1.7}
               />
             </button>
 
-            <span className="text-text-secondary text-[12px] md:text-[13px] order-3 md:order-2 w-full md:w-auto">
-              販売中 {lots.length} 件中 <strong className="text-text-primary tabular-nums">{sorted.length}</strong> 件を表示
+            <p className="order-3 w-full text-[12px] text-[#625E53] md:order-2 md:w-auto">
+              {lots.length}件中 <strong className="tabular-nums text-[#191A16]">{sorted.length}</strong> 件を表示
               {activeFilterCount > 0 && (
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="ml-3 text-main hover:underline text-[11px]"
-                >
+                <button type="button" onClick={reset} className="ml-3 font-semibold text-main hover:underline">
                   リセット
                 </button>
               )}
-            </span>
+            </p>
 
-            <div className="inline-flex items-center gap-2 order-2 md:order-3">
-              <span className="text-text-secondary text-[11px] md:text-[12px] hidden md:inline">
-                並び替え
-              </span>
+            <label className="order-2 inline-flex items-center gap-2 text-[12px] text-[#625E53] md:order-3">
+              並び替え
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortOrder)}
-                className="border border-border rounded px-2 py-1.5 text-[12px] md:text-[13px] bg-bg-primary text-text-primary focus:outline-none focus:border-main"
+                className="rounded border border-[#D7D2C6] bg-[#FCFBF7] px-3 py-2 text-[12px] font-semibold text-[#25251E] focus:border-main focus:outline-none"
               >
                 {SORT_OPTIONS.map((o) => (
                   <option key={o.id} value={o.id}>
@@ -499,28 +579,17 @@ export default function LotsBrowser({ lots }: { lots: Lot[] }) {
                   </option>
                 ))}
               </select>
-            </div>
+            </label>
           </div>
 
-          {/* 下段: 折りたたみフィルター */}
           {filterOpen && (
-            <div className="mt-4 pt-4 border-t border-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <FilterChips
-                label="エリア"
-                options={cityOptions}
-                selected={city}
-                onChange={setCity}
-              />
-              <FilterChips
-                label="価格帯"
-                options={PRICE_OPTIONS}
-                selected={priceFilter}
-                onChange={setPriceFilter}
-              />
+            <div className="mt-4 grid gap-4 border-t border-[#DCD8CC] pt-4 md:grid-cols-2 lg:grid-cols-4">
+              <FilterChips label="エリア" options={cityOptions} selected={city} onChange={setCity} />
+              <FilterChips label="価格帯" options={PRICE_OPTIONS} selected={priceFilter} onChange={setPriceFilter} />
               <FilterChips
                 label={
                   <span className="inline-flex items-center gap-1.5">
-                    <Footprints className="w-3 h-3" strokeWidth={1.8} />
+                    <Footprints className="h-3 w-3" strokeWidth={1.8} />
                     駅徒歩
                   </span>
                 }
@@ -531,7 +600,7 @@ export default function LotsBrowser({ lots }: { lots: Lot[] }) {
               <FilterChips
                 label={
                   <span className="inline-flex items-center gap-1.5">
-                    <GraduationCap className="w-3 h-3" strokeWidth={1.8} />
+                    <GraduationCap className="h-3 w-3" strokeWidth={1.8} />
                     小学校徒歩
                   </span>
                 }
@@ -544,41 +613,41 @@ export default function LotsBrowser({ lots }: { lots: Lot[] }) {
         </div>
       </div>
 
-      {/* === 一覧 === */}
-      <section className="py-[var(--section-py)] bg-bg-primary">
-        <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-          {sorted.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-text-primary text-base mb-3">
-                該当する物件がありません。
-              </p>
-              <button
-                type="button"
-                onClick={reset}
-                className="text-main hover:underline text-sm"
-              >
-                フィルターをリセット
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[var(--card-gap)]">
-              {sorted.map((lot, i) => (
-                <LotCard
-                  key={lot.id}
-                  lot={lot}
-                  rank={sort === "price-asc" ? i : undefined}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* 注記 */}
-          <div className="mt-12 pt-8 border-t border-border max-w-[760px] text-text-secondary text-[11px] md:text-[12px] leading-[1.85] space-y-1.5">
-            <p>※ 学校・スーパー等の所要時間は、座標からの直線距離に基づく目安(80m/分)です。実際の徒歩時間は道のりにより前後します。</p>
-            <p>※ <strong className="text-text-primary">個別の正確な学区は、転居予定地の市町村教育委員会または当社までお問い合わせください。</strong></p>
+      <div className="max-w-[1500px] mx-auto px-[var(--page-px)] py-[clamp(44px,6vw,96px)]">
+        <div className="mb-7 grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
+          <div>
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-main">
+              Curated Lots
+            </p>
+            <h2 className="text-[clamp(24px,3vw,42px)] leading-[1.35] text-[#191A16] [font-family:var(--font-zen-old)]">
+              条件で絞って、暮らしで比べる。
+            </h2>
           </div>
         </div>
-      </section>
-    </div>
+
+        {sorted.length === 0 ? (
+          <div className="rounded-[8px] border border-[#D7D2C6] bg-[#FCFBF7] px-6 py-16 text-center">
+            <p className="mb-3 text-base text-[#191A16]">該当する分譲地がありません。</p>
+            <button type="button" onClick={reset} className="text-sm font-semibold text-main hover:underline">
+              条件をリセットする
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {featuredLot && <FeaturedLotCard lot={featuredLot} />}
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {cardLots.map((lot, i) => (
+                <LotCard key={lot.id} lot={lot} rank={sort === "price-asc" ? i : undefined} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-12 max-w-[820px] border-t border-[#D7D2C6] pt-7 text-[11px] leading-[1.9] text-[#777267] md:text-[12px]">
+          <p>※ 学校・スーパー等の所要時間は、座標からの直線距離に基づく目安(80m/分)です。実際の徒歩時間は道のりにより前後します。</p>
+          <p>※ 個別の正確な学区は、転居予定地の市町村教育委員会または当社までお問い合わせください。</p>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -41,6 +41,7 @@ export type Lot = {
   dirName: string;
   fields: Record<string, string>;
   photos: string[];
+  coord?: Coord;
   price?: LotPrice;
   amenities?: LotAmenities;
 };
@@ -65,6 +66,7 @@ function resolvePrice(id: string): LotPrice | undefined {
 export const LOTS: Lot[] = (lotsJson as Lot[]).map((l) => ({
   ...l,
   photos: l.photos.map((_, i) => `/images/lots/${l.id}_${i + 1}.webp`),
+  coord: getCoord(l.id) || undefined,
   amenities: AMENITIES[l.id] || undefined,
   price: resolvePrice(l.id),
 }));
@@ -101,7 +103,7 @@ export function getCoord(id: string): Coord | null {
  */
 export function getMappableLots(): (Lot & { coord: Coord })[] {
   return LOTS.flatMap((lot) => {
-    const coord = getCoord(lot.id);
+    const coord = lot.coord || getCoord(lot.id);
     if (!coord) return [];
     return [{ ...lot, coord }];
   });

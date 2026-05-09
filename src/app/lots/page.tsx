@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
-import CtaButton from "@/components/ui/CtaButton";
 import LotsMapWrapper from "@/components/LotsMapWrapper";
 import LotsBrowser from "@/components/LotsBrowser";
 import LineLandFeedCta from "@/components/LineLandFeedCta";
@@ -13,10 +11,7 @@ import {
   getArchivedLots,
   getMappableLots,
 } from "@/data/lots";
-import { Archive } from "lucide-react";
-
-const FOREST = "#486B00";
-const ACCENT = "#A2C523";
+import { Archive, ArrowDown, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "分譲地一覧 | やまと不動産",
@@ -32,180 +27,106 @@ export default function LotsIndexPage() {
   return (
     <>
       <Header />
-      <main className="bg-white">
-        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一・参考画像準拠) === */}
-        <section className="relative w-full overflow-hidden bg-white">
-          <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
-            <Image
-              src="/images/lots-hero/lot-hero-01.webp"
-              alt="やまと不動産の自社分譲地"
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-              style={{ filter: "saturate(0.96) contrast(1.02)" }}
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 35%, rgba(255,255,255,0.20) 65%, transparent 95%)",
-              }}
-            />
-
-            <div className="absolute inset-0 flex items-end md:items-center">
-              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
-                <div className="max-w-[640px]">
-                  <p
-                    className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
-                    style={{ color: FOREST, fontWeight: 600 }}
+      <main className="bg-[#F8F7F2]">
+        <section className="relative overflow-hidden border-b border-[#DCD8CC] bg-[#F8F7F2]">
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-[0.42]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(34,32,27,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(34,32,27,0.06) 1px, transparent 1px)",
+              backgroundSize: "44px 44px",
+            }}
+          />
+          <div className="relative max-w-[1500px] mx-auto px-[var(--page-px)] pt-[clamp(72px,8vw,128px)] pb-[clamp(28px,5vw,72px)]">
+            <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+              <div className="max-w-[640px]">
+                <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-main">
+                  Lots / Nara / Kyoto South
+                </p>
+                <h1 className="mb-6 text-[clamp(34px,4.7vw,72px)] leading-[1.12] text-[#191A16] [font-family:var(--font-zen-old)]">
+                  奈良で、
+                  <br />
+                  暮らしから選ぶ
+                  <br />
+                  分譲地。
+                </h1>
+                <p className="mb-7 max-w-[520px] text-[14px] leading-[2] text-[#4D4B43] md:text-[15px]">
+                  価格だけで決めない。駅までの距離、学校、買い物、通勤時間まで並べて、
+                  家族の毎日から土地を選ぶための一覧です。
+                </p>
+                <div className="mb-7 grid grid-cols-2 border-y border-[#25251E]/15">
+                  {[
+                    ["公開中", activeLots.length, "区画"],
+                    ["地図表示", mappableLots.length, "件"],
+                  ].map(([label, value, unit]) => (
+                    <div key={label} className="py-4 pr-4">
+                      <p className="mb-1 text-[10px] font-semibold tracking-[0.12em] text-[#747064]">
+                        {label}
+                      </p>
+                      <p className="flex items-baseline gap-1 text-[#191A16]">
+                        <span className="tabular-nums text-[clamp(30px,4vw,52px)] leading-none [font-family:var(--font-oswald)]">
+                          {value}
+                        </span>
+                        <span className="text-[11px]">{unit}</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="#lots-browser"
+                    className="inline-flex items-center justify-center gap-2 rounded bg-[#1F2D14] px-6 py-3.5 text-[13px] font-semibold text-white transition-opacity hover:opacity-90"
                   >
-                    分譲地 · Lots
-                  </p>
-
-                  <h1
-                    className="text-text-primary leading-[1.25] tracking-[-0.005em] mb-7"
-                    style={{
-                      fontWeight: 500,
-                      fontSize: "clamp(26px, 3.6vw, 48px)",
-                    }}
+                    条件から探す
+                    <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
+                  </a>
+                  <a
+                    href="#map"
+                    className="inline-flex items-center justify-center gap-2 rounded border border-[#1F2D14]/25 bg-white/55 px-6 py-3.5 text-[13px] font-semibold text-[#1F2D14] transition-colors hover:bg-white"
                   >
-                    土地の価格・駅距離・周辺環境を、
-                    <br />
-                    まとめて確認できます。
-                  </h1>
-
-                  {/* 数字 */}
-                  <div className="flex items-baseline gap-2 mb-6">
-                    <span
-                      className="tabular-nums leading-none"
-                      style={{
-                        fontFamily: "var(--font-oswald)",
-                        fontWeight: 300,
-                        fontSize: "clamp(64px, 9vw, 128px)",
-                        color: ACCENT,
-                        letterSpacing: "-0.03em",
-                      }}
-                    >
-                      {activeLots.length}
-                    </span>
-                    <span
-                      className="text-text-primary text-[14px] md:text-[18px] font-medium leading-none ml-1.5 self-end pb-1 md:pb-2.5"
-                      style={{ fontFamily: "var(--font-sans)" }}
-                    >
-                      区画 公開中
-                    </span>
-                  </div>
-
-                  <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
-                    価格・駅徒歩・小学校・スーパーまで、暮らしの条件で絞り込めます。土地と建物をまとめることで、費用の見通しも立てやすくなります。
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
-                    <a
-                      href="#map"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[14px] md:text-[15px] font-medium rounded transition-opacity hover:opacity-90"
-                      style={{ background: FOREST, color: "#fff" }}
-                    >
-                      地図から探す
-                    </a>
-                    <Link
-                      href="/lots/archive"
-                      className="inline-flex items-center gap-1.5 text-text-primary text-[13px] md:text-[14px] font-medium hover:opacity-70 transition-opacity"
-                    >
-                      <Archive className="w-3.5 h-3.5" strokeWidth={1.6} />
-                      過去の分譲実績{" "}
-                      <span
-                        className="tabular-nums"
-                        style={{
-                          fontFamily: "var(--font-oswald)",
-                          fontWeight: 500,
-                          color: FOREST,
-                        }}
-                      >
-                        {archivedLots.length}
-                      </span>
-                      <span className="ml-0.5">区画</span>
-                      <span aria-hidden>→</span>
-                    </Link>
-                  </div>
+                    <MapPin className="h-4 w-4" strokeWidth={1.8} />
+                    地図を見る
+                  </a>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* === LINE未公開土地配信導線(上部) ===
-            2026-05-05: 土地探しユーザーは途中離脱しやすいので、ヒーロー直下と
-            一覧後の2箇所に配置。default variant はコンパクト・editorial は主役級。 */}
-        <LineLandFeedCta variant="default" />
-
-        {/* === Map (純白背景に切替) === */}
-        <section id="map" className="bg-white py-[clamp(40px,5vw,80px)] border-b border-border scroll-mt-20">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <div className="mb-6 flex items-end justify-between flex-wrap gap-3">
-              <div>
-                <p
-                  className="text-[10px] md:text-[11px] tracking-[0.22em] uppercase mb-2"
-                  style={{
-                    color: "#486B00",
-                    fontFamily: "var(--font-inter)",
-                    fontWeight: 600,
-                  }}
-                >
-                  Map
-                </p>
-                <h2 className="text-text-primary text-lg md:text-xl leading-[1.5]">
-                  地図から分譲地を探す
-                </h2>
+              <div id="map" className="scroll-mt-24">
+                <div className="rounded-[8px] border border-[#2B2B24]/15 bg-[#FCFBF7] p-2 shadow-[0_24px_80px_rgba(31,29,22,0.12)]">
+                  <div className="mb-2 flex items-center justify-between gap-3 px-3 pt-2">
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-main">
+                        Live Map
+                      </p>
+                      <h2 className="text-[15px] leading-[1.5] text-[#191A16]">
+                        地図から候補地を比較
+                      </h2>
+                    </div>
+                    <Link
+                      href="/lots/archive"
+                      className="hidden items-center gap-1.5 text-[12px] font-medium text-[#4D4B43] transition-opacity hover:opacity-70 sm:inline-flex"
+                    >
+                      <Archive className="h-3.5 w-3.5" strokeWidth={1.6} />
+                      実績 {archivedLots.length}区画
+                    </Link>
+                  </div>
+                  <LotsMapWrapper lots={mappableLots} />
+                </div>
+                {mappableLots.length < activeLots.length && (
+                  <p className="mt-3 text-[11px] leading-[1.7] text-[#747064]">
+                    地図上に表示されるのは座標取得できた {mappableLots.length} 件です。販売中 {activeLots.length} 件の全件は下の一覧で確認できます。
+                  </p>
+                )}
               </div>
-              <p className="text-text-secondary text-xs">
-                ピンをタップすると物件情報が表示されます
-              </p>
             </div>
-            <LotsMapWrapper lots={mappableLots} />
-            {mappableLots.length < activeLots.length && (
-              <p className="text-text-secondary text-[11px] mt-3">
-                ※ 地図上に表示されるのは座標取得できた {mappableLots.length} 区画です。販売中 {activeLots.length} 区画の全件は下の一覧をご覧ください。
-              </p>
-            )}
           </div>
         </section>
 
-        {/* === 一覧 (純白背景) === */}
         <LotsBrowser lots={activeLots} />
 
-        {/* === LINE未公開土地配信導線 (2026-05-03 12棟達成の3欠落動線③) === */}
-        <LineLandFeedCta variant="editorial" />
-
-        {/* === 締めCTA === */}
-        <section className="bg-white py-[clamp(64px,7vw,140px)] border-t border-border">
-          <div className="max-w-[640px] mx-auto px-[var(--page-px)] text-center">
-            <h2 className="text-[clamp(22px,2.8vw,36px)] text-text-primary mb-4 leading-[1.4]">
-              気になる分譲地は、ありましたか。
-            </h2>
-            <p className="text-text-secondary text-sm md:text-base leading-[1.9] mb-10">
-              非公開でご案内できる物件もございます。お気軽にお問い合わせください。
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <CtaButton
-                href="/reserve"
-                variant="primary"
-                size="md"
-                label="モデルハウス見学"
-                sublabel="ご予約なしでも見学可・無料"
-              />
-              <CtaButton
-                href="/contact"
-                variant="secondary"
-                size="md"
-                label="資料請求"
-                sublabel="無料・1分で完了"
-              />
-            </div>
-          </div>
-        </section>
+        <div id="line-land-feed">
+          <LineLandFeedCta variant="editorial" />
+        </div>
       </main>
       <Footer />
       <FloatingCta />

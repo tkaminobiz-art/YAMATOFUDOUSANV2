@@ -138,14 +138,14 @@ export default function LotsMap({ lots }: { lots: MappableLot[] }) {
   }, [lots]);
 
   return (
-    <div className="relative w-full h-[400px] md:h-[520px] rounded-lg overflow-hidden border border-border card-shadow">
+    <div className="relative w-full h-[360px] md:h-[520px] rounded-[8px] overflow-hidden border border-[#D7D2C6] shadow-[0_12px_40px_rgba(31,29,22,0.08)]">
       <div
         ref={mapRef}
-        className="h-full w-full bg-bg-secondary"
-        style={{ zIndex: 0 }}
+        className="h-full w-full bg-[#E8E3D8]"
+        style={{ zIndex: 0, filter: "saturate(0.82) contrast(0.96)" }}
       />
-      <div className="pointer-events-none absolute bottom-3 left-3 z-[500] rounded border border-border bg-bg-primary/95 backdrop-blur-sm px-3 py-1.5 text-[11px] text-text-secondary">
-        🟢 {lots.length}区画表示中 / ドラッグで移動・ピンタップで詳細
+      <div className="pointer-events-none absolute bottom-3 left-3 z-[500] rounded border border-[#D7D2C6] bg-[#FCFBF7]/95 px-3 py-1.5 text-[11px] font-medium text-[#625E53] backdrop-blur-sm">
+        {lots.length}件表示中 / ドラッグで移動・ピンタップで詳細
       </div>
     </div>
   );

@@ -23,10 +23,12 @@ const OUTPUT = path.join(REPO_ROOT, "src/data/lots-coords.json");
 const USER_AGENT = "YamatoFudousanWebsite/1.0 (contact: tanaka@yamatogroup.net)";
 
 async function geocode(address) {
+  const normalized = normalizeAddress(address);
+  const municipality = extractMunicipality(normalized);
   const url = new URL("https://nominatim.openstreetmap.org/search");
-  url.searchParams.set("q", address);
+  url.searchParams.set("q", normalized);
   url.searchParams.set("format", "json");
-  url.searchParams.set("limit", "1");
+  url.searchParams.set("limit", "3");
   url.searchParams.set("countrycodes", "jp");
   url.searchParams.set("accept-language", "ja");
 
@@ -44,7 +46,11 @@ async function geocode(address) {
   if (!Array.isArray(data) || data.length === 0) {
     return { ok: false, reason: "no_result" };
   }
-  const first = data[0];
+  const first =
+    data.find((item) => !municipality || item.display_name?.includes(municipality)) || null;
+  if (!first) {
+    return { ok: false, reason: `municipality_mismatch:${municipality}` };
+  }
   return {
     ok: true,
     lat: parseFloat(first.lat),
@@ -53,13 +59,39 @@ async function geocode(address) {
   };
 }
 
+function normalizeAddress(address) {
+  return address
+    .normalize("NFKC")
+    .replace(/[‐‑‒–—―ー]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractMunicipality(address) {
+  const withoutPrefecture = address.replace(/^[^都道府県]+[都道府県]/, "");
+  const city = withoutPrefecture.match(/^(.+?市)/);
+  if (city) return city[1];
+
+  const countyTown = withoutPrefecture.match(/^.+?郡(.+?[町村])/);
+  if (countyTown) return countyTown[1];
+
+  const town = withoutPrefecture.match(/^(.+?[町村])/);
+  return town ? town[1] : "";
+}
+
 // 住所フォールバック: 町内レベルまで削って再試行
 function fallbackAddress(address) {
+  const normalized = normalizeAddress(address);
+
+  // 例: "奈良県奈良市あやめ池南6丁目8-14" → "奈良県奈良市あやめ池南6丁目"
+  // 丁目は所在地の精度に効くため残し、以降の番地・号だけ削る。
+  const chome = normalized.match(/^(.*?\d+丁目)/);
+  if (chome) return chome[1];
+
   // 例: "京都府京田辺市田辺勇田51-2" → "京都府京田辺市田辺勇田"
-  // 番地・号を削除
-  return address
-    .replace(/[\d０-９]+(-[\d０-９]+)*番?地?[-号]?[\d０-９]*/g, "")
-    .replace(/\s+/g, " ")
+  return normalized
+    .replace(/\d+(-\d+)*番?地?(-\d+)?$/, "")
+    .replace(/\d+$/, "")
     .trim();
 }
 
