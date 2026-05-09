@@ -3,24 +3,19 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import {
-  Activity,
   AlertTriangle,
   ArrowDown,
   ArrowRight,
   BadgeCheck,
-  Banknote,
   BarChart3,
   CircleDollarSign,
   FileText,
   Home,
-  Landmark,
   MapPinned,
   MessageCircle,
   PanelLeft,
-  ReceiptText,
   ShieldCheck,
   Sparkles,
-  type LucideIcon,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -56,49 +51,23 @@ const BRAND = {
 
 const ACTIVE_LOT_COUNT = getActiveLots().length;
 
-const COSTS: Array<{
-  icon: LucideIcon;
-  label: string;
-  amount: string;
-  body: string;
-}> = [
+const AVOIDABLE_COSTS = [
   {
-    icon: MapPinned,
-    label: "土地代",
-    amount: "500〜2,500万円",
-    body: "エリアと駅距離で大きく動きます。建物モデルと一緒に候補を絞る費用です。",
-  },
-  {
-    icon: ReceiptText,
-    label: "諸費用",
-    amount: "200〜400万円",
-    body: "登記、ローン手数料、火災保険、印紙税など。契約前に一覧化します。",
-  },
-  {
-    icon: Banknote,
     label: "つなぎ融資",
-    amount: "30〜80万円",
-    body: "一般的に上乗せされることがある費用。やまとの土地+建物なら原則発生しません。",
+    market: "30〜80万円",
+    yamato: "やまとの土地 + 建物なら、原則発生しない",
   },
   {
-    icon: ShieldCheck,
+    label: "仲介手数料",
+    market: "50〜100万円",
+    yamato: "当社分譲地なら不要",
+  },
+  {
     label: "地盤改良費",
-    amount: "最大150万円",
-    body: "当社規定の範囲でやまとが負担。土地選びの時点で確認します。",
+    market: "最大150万円",
+    yamato: "当社規定で負担",
   },
-  {
-    icon: Home,
-    label: "外構・家具・引越し",
-    amount: "50〜150万円+",
-    body: "住み始めるための費用まで、月々支払いの前提に入れておきます。",
-  },
-  {
-    icon: Landmark,
-    label: "住宅ローン",
-    amount: "35年",
-    body: "借りられる額ではなく、返せる月々から土地と建物を逆算します。",
-  },
-];
+] as const;
 
 const PROOFS = [
   {
@@ -528,83 +497,66 @@ function CostAuditSection() {
               <div className="grid gap-4">
                 <LoanSimulator />
 
-                <div className="grid gap-4 xl:grid-cols-3">
-                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
-                    <div className="flex items-start justify-between gap-4">
+                <div className="grid gap-4 xl:grid-cols-[1.45fr_0.55fr]">
+                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)] md:p-6" style={{ borderColor: BRAND.border }}>
+                    <div className="grid gap-3 md:grid-cols-[1fr_auto] md:items-start">
                       <div>
-                        <p className="money-eyebrow" style={{ color: BRAND.alert }}>Late-cost risk</p>
+                        <p className="money-eyebrow" style={{ color: BRAND.red }}>Cost removed first</p>
                         <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
-                          後から増えやすい費用
+                          本来、後から上乗せされやすい費用。
+                          <br />
+                          やまとなら、先に外せるものがあります。
                         </h3>
                       </div>
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-[8px]" style={{ background: BRAND.alertSoft, color: BRAND.alert }}>
-                        <Activity className="h-5 w-5" strokeWidth={1.9} />
-                      </span>
+                      <p className="max-w-[300px] text-[12px] font-bold leading-[1.7]" style={{ color: BRAND.muted }}>
+                        「安く見えた見積もり」が後から膨らむ原因を、契約前に分けて確認します。
+                      </p>
                     </div>
-                    <div className="mt-5 grid gap-5 md:grid-cols-[180px_1fr]">
-                      <div className="mx-auto h-[110px] w-[180px] overflow-hidden">
-                        <div className="grid h-[180px] w-[180px] place-items-center rounded-full border-[22px]" style={{ borderColor: BRAND.border, borderTopColor: BRAND.ink, borderLeftColor: BRAND.alert, borderRightColor: BRAND.alert }}>
-                          <div className="pt-8 text-center">
-                            <p className="text-[11px] font-bold" style={{ color: BRAND.muted }}>先に確認</p>
-                            <p className="mt-1 text-[18px] font-bold" style={{ color: BRAND.alert }}>4項目</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="grid gap-2">
-                        {COSTS.slice(0, 4).map((item, index) => {
-                          const Icon = item.icon;
-                          return (
-                            <div key={item.label} className="grid grid-cols-[32px_1fr_auto] items-center gap-3 rounded-[8px] border px-3 py-2" style={{ borderColor: BRAND.border, background: index < 3 ? "#F8F9FA" : BRAND.alertSoft }}>
-                              <Icon className="h-4 w-4" style={{ color: index < 3 ? BRAND.ink : BRAND.alert }} strokeWidth={1.9} />
-                              <p className="text-[13px] font-bold" style={{ color: BRAND.ink }}>{item.label}</p>
-                              <p className="text-[12px] font-bold" style={{ color: index < 3 ? BRAND.muted : BRAND.alert }}>{item.amount}</p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </article>
 
-                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
-                    <p className="money-eyebrow" style={{ color: BRAND.red }}>Yamato status</p>
-                    <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
-                      やまとで先に処理できる費用
-                    </h3>
-                    <div className="mt-5 grid gap-3">
-                      {[
-                        ["つなぎ融資", "原則発生しない"],
-                        ["地盤改良費", "当社規定で負担"],
-                        ["仲介手数料", "当社分譲地なら不要"],
-                      ].map(([label, value]) => (
-                        <div key={label} className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-[8px] border-l-[4px] bg-[#F8FAFC] p-3" style={{ borderColor: BRAND.red }}>
-                          <p className="text-[13px] font-bold" style={{ color: BRAND.muted }}>{label}</p>
-                          <p className="text-right text-[14px] font-bold" style={{ color: BRAND.ink }}>{value}</p>
+                    <div className="mt-6 grid gap-3">
+                      {AVOIDABLE_COSTS.map((item) => (
+                        <div
+                          key={item.label}
+                          className="grid gap-3 rounded-[8px] border bg-[#F8FAFC] p-4 md:grid-cols-[140px_180px_1fr] md:items-center"
+                          style={{ borderColor: BRAND.border }}
+                        >
+                          <p className="text-[14px] font-black" style={{ color: BRAND.ink }}>{item.label}</p>
+                          <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.06em]" style={{ color: BRAND.muted }}>一般的に上乗せ</p>
+                            <p className="mt-1 text-[20px] font-black leading-none" style={{ color: BRAND.alert }}>{item.market}</p>
+                          </div>
+                          <div className="rounded-[8px] border-l-[4px] bg-white px-4 py-3" style={{ borderColor: BRAND.red }}>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.06em]" style={{ color: BRAND.red }}>やまとなら</p>
+                            <p className="mt-1 text-[14px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>{item.yamato}</p>
+                          </div>
                         </div>
                       ))}
                     </div>
+
+                    <p className="money-body-sm mt-4" style={{ color: BRAND.muted }}>
+                      土地条件・金融機関・当社規定によって個別確認は必要です。だからこそ、最初の資金計画でここを先に見ます。
+                    </p>
                   </article>
 
-                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
+                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)] md:p-6" style={{ borderColor: BRAND.border }}>
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="money-eyebrow" style={{ color: BRAND.green }}>Proof</p>
                         <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
-                          数字は、判断の根拠です
+                          判断の根拠
                         </h3>
                       </div>
                       <FileText className="h-5 w-5" style={{ color: BRAND.green }} strokeWidth={1.9} />
                     </div>
                     <div className="mt-5 grid gap-px overflow-hidden rounded-[8px] border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
                       {PROOFS.slice(0, 3).map((proof) => (
-                        <div key={proof.label} className="grid grid-cols-[86px_1fr] gap-3 bg-[#F8F9FA] p-3">
-                          <p className="font-oswald text-[28px] leading-none" style={{ color: BRAND.green }}>
+                        <div key={proof.label} className="bg-[#F8F9FA] p-4">
+                          <p className="font-oswald text-[34px] leading-none" style={{ color: BRAND.green }}>
                             {proof.value}
-                            <span className="ml-1 text-[10px] font-bold" style={{ color: BRAND.ink }}>{proof.unit}</span>
+                            <span className="ml-1 text-[11px] font-bold" style={{ color: BRAND.ink }}>{proof.unit}</span>
                           </p>
-                          <div>
-                            <p className="text-[12px] font-bold" style={{ color: BRAND.ink }}>{proof.label}</p>
-                            <p className="mt-1 text-[11px] leading-[1.65]" style={{ color: BRAND.muted }}>{proof.body}</p>
-                          </div>
+                          <p className="mt-2 text-[13px] font-bold" style={{ color: BRAND.ink }}>{proof.label}</p>
+                          <p className="mt-1 text-[12px] leading-[1.65]" style={{ color: BRAND.muted }}>{proof.body}</p>
                         </div>
                       ))}
                     </div>
