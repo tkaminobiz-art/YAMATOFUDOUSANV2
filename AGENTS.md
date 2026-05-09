@@ -49,3 +49,19 @@ consuming code.
 W2 系 (建築図面アートディレクション) のセクションでは、generic な table/card に
 逃げず、`PriceSpec` / `MetricRail` / `ActionLine` 等の役割別コンポーネントで
 組む。`DESIGN_GUARDRAILS.md` の AI smell check 10 項目を毎 PR 前に通すこと。
+
+# Project Context — read [`docs/project-context/`](./docs/project-context/) for strategy
+
+ブランド事実 (`BRAND-TRUTH.md`) では捕捉しきれない「**戦略・関係者の意思決定・歴史的経緯**」
+は `docs/project-context/` に集約。実装判断の前提として参照すること。
+
+- `kobayashi-review-20260428.md` — 専務レビュー結果と 8 つの原則 (FV 物件出し禁止 / バーン配置 / 投資エッセンス温存 etc.)
+- `12-rate-gaps.md` — 年 12 棟達成のギャップ分析 (LP 改修より優先 ROI が高い 3 動線)
+- `line-first-cta-strategy.md` — LINE 主導線方針 (CTA 階層と禁じ手)
+- `gbp-status-and-strategy.md` — GBP 評価★3.6 で公開ブリッジ凍結中 (★4.5+ 達成後再公開)
+- `top-section-structure.md` — TOP の 10 セクション構成方針と削除/統合の指針
+
+判断の優先順位:
+1. `BRAND-TRUTH.md` (ブランド事実)
+2. `DESIGN_GUARDRAILS.md` (デザインルール)
+3. `docs/project-context/` (戦略・歴史的経緯)
