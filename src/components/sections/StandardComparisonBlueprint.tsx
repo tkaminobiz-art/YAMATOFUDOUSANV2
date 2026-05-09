@@ -55,7 +55,7 @@ const MODELS = [
   {
     id: "miyako",
     name: "京",
-    reading: "MIYAKO",
+    reading: "KYO",
     subtitle: "必要な広さに絞り、総額を抑えやすい標準プラン。",
     price: "2,280",
     image: "/images/fv/plan-miyako.webp",

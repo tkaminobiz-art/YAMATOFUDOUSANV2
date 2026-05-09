@@ -57,7 +57,7 @@ const PLANS: readonly Plan[] = [
   {
     id: "miyako",
     name: "京",
-    reading: "MIYAKO",
+    reading: "KYO",
     audience: "必要な広さに絞り、総額を抑えやすいプランです。",
     tagline: "3LDK・28坪、必要な広さに絞りました。",
     price: "2,280",
@@ -219,7 +219,7 @@ export default function PriceSection() {
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-text-primary/55 font-mono mb-5">
             <span>Plans</span>
             <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
-            <span>HANA / KAZE / MIYAKO</span>
+            <span>HANA / KAZE / KYO</span>
           </div>
           <h2
             className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
