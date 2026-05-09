@@ -16,12 +16,12 @@ const BRAND = {
   redDark: "#8F211B",
   redSoft: "#FFF0EE",
   green: "#2F4A2C",
-  greenSoft: "#EDF5E4",
-  paper: "#F8F4EA",
-  ivory: "#FFFDF7",
-  text: "#171411",
-  muted: "#625D52",
-  border: "#DED8C8",
+  greenSoft: "#EAF2E8",
+  paper: "#E8ECEF",
+  ivory: "#F8F9FA",
+  text: "#111315",
+  muted: "#5F666C",
+  border: "#D1D7DD",
   line: "#06C755",
 };
 
@@ -96,7 +96,7 @@ function Field({
         step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-[6px] bg-[#E7E0D3]"
+        className="h-2 w-full cursor-pointer appearance-none rounded-[6px] bg-[#D9DEE3]"
         style={{ accentColor: accent }}
       />
       <div className="mt-2 flex justify-between text-[10px]" style={{ color: BRAND.muted }}>
@@ -294,7 +294,7 @@ export default function LoanSimulator() {
                 ["土地", landMode === "owned" ? "所有済み" : `${formatMan(result.effectiveLandCost)}万円`],
                 ["建物に回せる目安", `${formatMan(result.buildingCapacity)}万円`],
               ].map(([label, value]) => (
-                <div key={label} className="bg-[#FFFDF7] p-4">
+                <div key={label} className="bg-[#F8F9FA] p-4">
                   <p className="money-eyebrow text-[10px]" style={{ color: BRAND.muted }}>
                     {label}
                   </p>

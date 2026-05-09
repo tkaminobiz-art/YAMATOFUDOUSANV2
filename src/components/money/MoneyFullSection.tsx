@@ -20,12 +20,12 @@ const BRAND = {
   redSoft: "#FFF0EE",
   green: "#2F4A2C",
   lime: "#A9D159",
-  greenSoft: "#EDF5E4",
-  paper: "#F8F4EA",
-  ivory: "#FFFDF7",
-  ink: "#171411",
-  muted: "#625D52",
-  border: "#DED8C8",
+  greenSoft: "#EAF2E8",
+  paper: "#E8ECEF",
+  ivory: "#F8F9FA",
+  ink: "#111315",
+  muted: "#5F666C",
+  border: "#D1D7DD",
   line: "#06C755",
 };
 
@@ -211,7 +211,7 @@ function ZeroDeclaration() {
 
         <div className="grid gap-px overflow-hidden border" style={{ borderColor: "rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.2)" }}>
           {ZERO_ROWS.map((row) => (
-            <article key={row.label} className="grid gap-5 bg-[#201C18] p-5 md:grid-cols-[0.72fr_0.62fr_1fr] md:items-center md:p-7">
+            <article key={row.label} className="grid gap-5 bg-[#15191C] p-5 md:grid-cols-[0.72fr_0.62fr_1fr] md:items-center md:p-7">
               <div>
                 <p className="money-eyebrow text-white/52">
                   {row.label}
