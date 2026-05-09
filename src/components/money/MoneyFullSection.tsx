@@ -21,11 +21,11 @@ const BRAND = {
   green: "#2F4A2C",
   lime: "#A9D159",
   greenSoft: "#EAF2E8",
-  paper: "#E8ECEF",
-  ivory: "#F8F9FA",
+  paper: "#CBD2D8",
+  ivory: "#F0F2F4",
   ink: "#111315",
-  muted: "#5F666C",
-  border: "#D1D7DD",
+  muted: "#56616A",
+  border: "#B9C2CA",
   line: "#06C755",
 };
 

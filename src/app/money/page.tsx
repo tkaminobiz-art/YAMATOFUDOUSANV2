@@ -21,7 +21,6 @@ import {
   MapPinned,
   MessageCircle,
   PanelLeft,
-  PieChart,
   ReceiptText,
   ShieldCheck,
   Sparkles,
@@ -50,11 +49,11 @@ const BRAND = {
   green: "#2F4A2C",
   lime: "#A9D159",
   greenSoft: "#EAF2E8",
-  paper: "#E8ECEF",
-  ivory: "#F8F9FA",
+  paper: "#CBD2D8",
+  ivory: "#F0F2F4",
   ink: "#111315",
-  muted: "#5F666C",
-  border: "#D1D7DD",
+  muted: "#56616A",
+  border: "#B9C2CA",
   line: "#06C755",
 };
 
@@ -70,7 +69,7 @@ const COSTS: Array<{
     icon: MapPinned,
     label: "土地代",
     amount: "500〜2,500万円",
-    body: "エリアと駅距離で大きく動きます。建物価格より先に候補を絞る費用です。",
+    body: "エリアと駅距離で大きく動きます。建物モデルと一緒に候補を絞る費用です。",
   },
   {
     icon: ReceiptText,
@@ -105,10 +104,10 @@ const COSTS: Array<{
 ];
 
 const REVERSE_STEPS = [
-  ["01", "月々支払い", "家計に無理が出にくいラインを先に置きます。"],
+  ["01", "建物モデル", "固定価格の花・風・京から先に選びます。"],
   ["02", "土地込み総額", "土地・建物・諸費用・外構を一枚で見ます。"],
-  ["03", "増えやすい費用", "地盤、つなぎ融資、仲介、登記を契約前に確認します。"],
-  ["04", "建てられる家", "その範囲で花・風・京のどれが現実的か決めます。"],
+  ["03", "月々返済", "借入額ではなく、家計に残る余白で確かめます。"],
+  ["04", "増えやすい費用", "地盤、つなぎ融資、仲介、登記を契約前に確認します。"],
 ] as const;
 
 const COMMON_STEPS = [
@@ -176,11 +175,11 @@ const MODELS = [
 ] as const;
 
 const DASH_NAV = [
-  [CircleDollarSign, "総額診断"],
-  [PieChart, "費用内訳"],
-  [ShieldCheck, "処理状況"],
+  [Home, "商品選択"],
+  [MapPinned, "土地条件"],
+  [CircleDollarSign, "月々返済"],
   [BarChart3, "実績"],
-  [Home, "商品ライン"],
+  [ShieldCheck, "処理状況"],
 ] as const;
 
 const MECHANISM_ITEMS = [
@@ -340,15 +339,15 @@ function DashboardPreviewCard() {
           </p>
           <p className="mt-3 flex items-end gap-2">
             <span className="font-oswald text-[64px] leading-[0.9]" style={{ color: BRAND.red }}>
-              3,111
+              3,310
             </span>
             <span className="pb-1 text-[14px] font-bold">万円</span>
           </p>
           <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
             {[
-              ["月々", "8.5万"],
-              ["返済比率", "18.5%"],
-              ["土地", "1,200万"],
+              ["建物", "2,280万"],
+              ["土地", "650万"],
+              ["月々", "8.8万"],
             ].map(([label, value]) => (
               <div key={label} className="bg-[#F8F9FA] p-3">
                 <p className="text-[10px] font-bold" style={{ color: BRAND.muted }}>{label}</p>
@@ -381,9 +380,9 @@ function DashboardPreviewCard() {
 
       <div className="grid gap-2 border-t pt-4" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
         {[
-          ["土地", "1,200万円", "62%"],
-          ["建物", "1,531万円", "82%"],
-          ["諸費用", "300万円", "36%"],
+          ["建物", "2,280万円", "82%"],
+          ["土地", "650万円", "40%"],
+          ["諸費用", "380万円", "32%"],
         ].map(([label, value, width]) => (
           <div key={label} className="grid grid-cols-[54px_1fr_76px] items-center gap-3">
             <p className="text-[11px] font-bold text-white/52">{label}</p>
@@ -489,22 +488,22 @@ function Hero() {
 
 function CostAuditSection() {
   return (
-    <section id="costs" className="scroll-mt-24 py-[clamp(78px,8vw,150px)]" style={{ background: "#DDE3E8" }}>
+    <section id="costs" className="scroll-mt-24 py-[clamp(78px,8vw,150px)]" style={{ background: "#BFC8D0" }}>
       <div className="mx-auto max-w-[1480px] px-[var(--page-px)]">
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <SectionLead
             eyebrow="Yamato Smart Ledger"
             title={
               <>
-                本編は、読む資料ではなく
+                まず建物を選び、
                 <br />
-                <span style={{ color: BRAND.red }}>総額ダッシュボード。</span>
+                <span style={{ color: BRAND.red }}>土地込みの月々を見る。</span>
               </>
             }
             body={
               <>
-                土地・建物・諸費用・後から増えやすい費用・やまとの仕組み・実績・商品まで。
-                判断に必要な情報を、ひとつの画面で確認できるように整理しました。
+                建物価格は固定です。花・風・京を先に選び、土地代・諸費用・自己資金を重ねて、
+                自分たちの総額と月々返済を確認します。
               </>
             }
           />
@@ -589,10 +588,10 @@ function CostAuditSection() {
                 </div>
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-[1.16fr_0.84fr]">
+              <div className="grid gap-4">
                 <LoanSimulator />
 
-                <div className="grid gap-4">
+                <div className="grid gap-4 xl:grid-cols-2">
                   <article className="border bg-white p-5" style={{ borderColor: BRAND.border }}>
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -605,7 +604,7 @@ function CostAuditSection() {
                         <Activity className="h-5 w-5" strokeWidth={1.9} />
                       </span>
                     </div>
-                    <div className="mt-5 grid gap-5 md:grid-cols-[180px_1fr] xl:grid-cols-1 2xl:grid-cols-[180px_1fr]">
+                    <div className="mt-5 grid gap-5 md:grid-cols-[180px_1fr]">
                       <div className="mx-auto h-[110px] w-[180px] overflow-hidden">
                         <div className="grid h-[180px] w-[180px] place-items-center rounded-full border-[22px]" style={{ borderColor: "#E2E7EB", borderTopColor: BRAND.ink, borderLeftColor: BRAND.red, borderRightColor: BRAND.red }}>
                           <div className="pt-8 text-center">
@@ -683,7 +682,7 @@ function CostAuditSection() {
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="money-eyebrow" style={{ color: BRAND.green }}>Reverse flow</p>
-                      <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>やまとは月々から逆算します</h3>
+                      <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>やまとは総額と月々を同時に見ます</h3>
                     </div>
                     <TrendingUp className="h-5 w-5" style={{ color: BRAND.green }} strokeWidth={1.9} />
                   </div>
@@ -813,7 +812,7 @@ function PaymentExampleSection() {
       className="relative scroll-mt-24 overflow-hidden py-[clamp(88px,9vw,176px)]"
       style={{
         background:
-          "linear-gradient(135deg, #D9E0E6 0%, #B9C4CC 46%, #8F9AA2 100%)",
+          "linear-gradient(135deg, #BFC8D0 0%, #A9B4BE 46%, #7E8992 100%)",
       }}
     >
       <div
