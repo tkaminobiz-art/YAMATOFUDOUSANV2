@@ -114,13 +114,8 @@ export default function Home() {
         <StandardEquipment />
         <ZeroDeclaration />
 
-        {/* ② Quiet Pause — ZeroDecl (証拠 cluster 終端) → MapBridge (場所セクション)
-            の間に詩的呼吸。typography only、photo なし、subtle fade-up. */}
-        <BreathStrip
-          variant="quote"
-          quote="土地と、家と、暮らしと。"
-          heightClass="h-[32vh] md:h-[36vh]"
-        />
+        {/* 2026-05-09 Step 1: ② Quiet Pause BreathStrip を撤去 (TOP 軽量化方針)。
+            BreathStrip は最大 1 本 (① Brand Whisper) のみ残す。 */}
 
         {/* 物件情報への動線 — ARM オマージュのおしゃれなマップで /lots へ橋渡し
             (旧 MiniSimulator + LotsSection は撤去) */}
@@ -132,15 +127,7 @@ export default function Home() {
         {/* 社会的証明 — 4 枚ギャラリー型のコンパクト施工事例 */}
         <WorksSection />
 
-        {/* ③ Material Breath — Works (4 photo) → Voice (3 polaroid) 間の
-            photo-heavy 連続を切る material 呼吸帯 (washi paper texture + parallax) */}
-        <BreathStrip
-          variant="texture"
-          src="/images/breath/material-band.png"
-          alt=""
-          heightClass="h-[24vh] md:h-[28vh]"
-          parallaxStrength={0.15}
-        />
+        {/* 2026-05-09 Step 1: ③ Material Breath BreathStrip を撤去 (TOP 軽量化方針)。 */}
 
         {/* 信頼ブリッジ(★4.5+ 達成後に再公開) —
             2026-05-07: 現状 ★3.6/51件で目標 ★4.5以上×30件超 未達のため env で off。
@@ -148,13 +135,7 @@ export default function Home() {
         {GOOGLE_BRIDGE_ENABLED && <GoogleReviewBridge />}
         <VoiceSection />
 
-        {/* ④ Final Whisper — Voice (intimate polaroid) → MidCta (行動 cluster) の前に
-            最後の静かな余韻。Mincho italic 句 + hairline rule + subtle fade-up. */}
-        <BreathStrip
-          variant="quote"
-          quote="あなたの家も、ここから。"
-          heightClass="h-[26vh] md:h-[30vh]"
-        />
+        {/* 2026-05-09 Step 1: ④ Final Whisper BreathStrip を撤去 (TOP 軽量化方針)。 */}
 
         {/* 行動 */}
         <MidCta />
