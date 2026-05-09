@@ -41,7 +41,8 @@ import WorksSection from "@/components/sections/WorksSection";
 import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
 import { GOOGLE_BRIDGE_ENABLED } from "@/data/google";
 import VoiceSection from "@/components/sections/VoiceSection";
-import MidCta from "@/components/sections/MidCta";
+// 2026-05-09 Step 3: MidCta を TOP から撤去 (FinalCta に統合)。
+//   ファイル本体は他ページで使う可能性のため保持。
 import FaqSection from "@/components/sections/FaqSection";
 import FinalCta from "@/components/sections/FinalCta";
 import Footer from "@/components/Footer";
@@ -137,8 +138,9 @@ export default function Home() {
 
         {/* 2026-05-09 Step 1: ④ Final Whisper BreathStrip を撤去 (TOP 軽量化方針)。 */}
 
-        {/* 行動 */}
-        <MidCta />
+        {/* 行動 — 2026-05-09 Step 3: MidCta を撤去し FinalCta に統合。
+            FinalCta が既に総額診断 + 4 特徴アイコン + stats + LINE/見学/資料請求 の
+            包括 CTA を持つため単独で十分。MidCta.tsx ファイル本体は保持 (戻す可能性)。 */}
         <FaqSection />
         <FinalCta />
       </main>
