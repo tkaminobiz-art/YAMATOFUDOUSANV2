@@ -10,15 +10,22 @@ import { getMappableLots } from "@/data/lots";
   MapBridgeMap — MapBridge 内部の leaflet 実装。
   MapBridge.tsx から dynamic import (ssr: false) されることを前提とする。
 
-  デザイン: ARM (arm-a.com) オマージュ — CartoDB Positron グレーストーンタイル + 深緑ピン。
+  デザイン: ARM (arm-a.com) オマージュ — グレートーン基調 + 深緑ピン。
   ピン: 12×12 円形 / 深緑 #143426 / 白枠 / 影あり。建築誌的な"刻印"マーカー。
+
+  2026-05-09: タイルを CartoDB Positron (英語ラベル) → 国土地理院 淡色地図
+  (日本語ラベル) に変更。地名・道路名が日本語で表示される。
+  pale (淡色) は GSI のミニマル系で、Positron に最も近いグレートーン。
 */
 
-// CartoDB Positron — ARM ライクなミニマルグレースケールタイル
+// 国土地理院 淡色地図 — 日本語ラベルのミニマルグレートーン
+// (出典: https://maps.gsi.go.jp/development/ichiran.html)
 const TILE_URL =
-  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+  "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png";
 const TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">国土地理院</a>';
+// GSI タイルの最大ズームは 18
+const TILE_MAX_ZOOM = 18;
 
 // やまとサービスエリアの中心 (奈良市〜京田辺市の中間あたり)
 const FALLBACK_CENTER: [number, number] = [34.73, 135.77];
@@ -59,7 +66,7 @@ export default function MapBridgeMap() {
       className="h-full w-full"
       style={{ background: "#EDEAE3" }}
     >
-      <TileLayer url={TILE_URL} attribution={TILE_ATTRIBUTION} />
+      <TileLayer url={TILE_URL} attribution={TILE_ATTRIBUTION} maxZoom={TILE_MAX_ZOOM} />
       {lots.map((lot) => (
         <Marker
           key={lot.id}

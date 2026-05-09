@@ -1,21 +1,20 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Calculator, Gauge, SlidersHorizontal } from "lucide-react";
 
-/*
-  LoanSimulator — 動的住宅ローンシミュレーター
-  3社調査(住友林業・タマホーム・ミサワホーム)で標準装備の機能を吸収。
-  - 借入額 × 期間 × 金利 のスライダー入力
-  - 月々返済額を即時計算(元利均等返済式)
-  - (任意)年収入力 → 返済比率を表示
-
-  【フォント方針】和文ゴシック / 数字 font-oswald のみ。明朝禁止。
-*/
-
-const FOREST = "#486B00";
+const BRAND = {
+  lime: "#A9D159",
+  deep: "#2F4A2C",
+  base: "#F7F4EC",
+  ivory: "#FBF8EE",
+  text: "#1D1D18",
+  muted: "#5E5A50",
+  border: "#DED8C8",
+  gold: "#9A7A3F",
+};
 
 function calcMonthly(principal: number, annualRate: number, years: number): number {
-  // 元利均等返済式: PMT = P * r * (1+r)^n / ((1+r)^n - 1)
   const n = years * 12;
   const r = annualRate / 100 / 12;
   if (r === 0) return principal / n;
@@ -28,185 +27,181 @@ function formatJpy(n: number): string {
   return Math.round(n).toLocaleString("ja-JP");
 }
 
+function Field({
+  id,
+  label,
+  value,
+  suffix,
+  min,
+  max,
+  step,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: number;
+  suffix: string;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <div>
+      <div className="mb-3 flex items-baseline justify-between gap-4">
+        <label htmlFor={id} className="text-[13px] font-bold" style={{ color: BRAND.text }}>
+          {label}
+        </label>
+        <span className="font-oswald text-[24px] leading-none tracking-[0]" style={{ color: BRAND.deep, fontWeight: 400 }}>
+          {value.toLocaleString("ja-JP")}
+          <span className="ml-1 text-[11px] font-bold" style={{ color: BRAND.muted }}>
+            {suffix}
+          </span>
+        </span>
+      </div>
+      <input
+        id={id}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(event) => onChange(Number(event.target.value))}
+        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E5DFD0] accent-[#2F4A2C]"
+        style={{ accentColor: BRAND.deep }}
+      />
+      <div className="mt-2 flex justify-between text-[10px]" style={{ color: BRAND.muted }}>
+        <span>
+          {min.toLocaleString("ja-JP")}
+          {suffix}
+        </span>
+        <span>
+          {max.toLocaleString("ja-JP")}
+          {suffix}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function LoanSimulator() {
-  const [borrow, setBorrow] = useState(2500); // 万円
+  const [borrow, setBorrow] = useState(2500);
   const [years, setYears] = useState(35);
-  const [rate, setRate] = useState(1.0); // %
-  const [income, setIncome] = useState(500); // 万円(年収)
+  const [rate, setRate] = useState(1.0);
+  const [income, setIncome] = useState(500);
 
   const monthly = useMemo(() => calcMonthly(borrow * 10000, rate, years), [borrow, rate, years]);
+  const monthlyMan = monthly / 10000;
   const total = monthly * years * 12;
   const annualPayment = monthly * 12;
   const ratio = (annualPayment / (income * 10000)) * 100;
   const ratioStatus = ratio < 25 ? "safe" : ratio < 30 ? "caution" : "high";
-  const ratioColor =
-    ratioStatus === "safe" ? FOREST : ratioStatus === "caution" ? "#B8860B" : "#C8463A";
-  const ratioLabel =
-    ratioStatus === "safe" ? "無理のない水準" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
+  const ratioColor = ratioStatus === "safe" ? BRAND.deep : ratioStatus === "caution" ? BRAND.gold : "#A7473D";
+  const ratioLabel = ratioStatus === "safe" ? "無理のない水準" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
 
   return (
-    <div className="bg-white border border-text-primary/15 p-6 md:p-8">
-      <div className="flex items-baseline justify-between gap-3 mb-6">
-        <p className="text-[12px] md:text-[13px] tracking-[0.06em] text-text-secondary font-bold">
-          シミュレーター（条件を変更して試算できます）
-        </p>
-        <p className="text-[11px] text-text-secondary">元利均等・35年・ボーナス払いなし</p>
-      </div>
-
-      {/* 入力スライダー3つ */}
-      <div className="space-y-6">
-        {/* 借入額 */}
-        <div>
-          <div className="flex items-baseline justify-between mb-2">
-            <label htmlFor="sim-borrow" className="text-[13px] md:text-[14px] text-text-primary font-medium">
-              借入額
-            </label>
-            <span className="font-oswald tabular-nums text-text-primary" style={{ fontWeight: 400, fontSize: "clamp(18px,1.6vw,22px)" }}>
-              {borrow.toLocaleString()}<span className="text-text-secondary text-[11px] ml-1">万円</span>
-            </span>
-          </div>
-          <input
-            id="sim-borrow"
-            type="range"
-            min={500}
-            max={5000}
-            step={100}
-            value={borrow}
-            onChange={(e) => setBorrow(Number(e.target.value))}
-            className="w-full accent-[#486B00] cursor-pointer"
-            style={{ accentColor: FOREST }}
-          />
-          <div className="flex justify-between text-[10px] text-text-secondary mt-1">
-            <span>500万</span>
-            <span>5,000万</span>
-          </div>
-        </div>
-
-        {/* 返済期間 */}
-        <div>
-          <div className="flex items-baseline justify-between mb-2">
-            <label htmlFor="sim-years" className="text-[13px] md:text-[14px] text-text-primary font-medium">
-              返済期間
-            </label>
-            <span className="font-oswald tabular-nums text-text-primary" style={{ fontWeight: 400, fontSize: "clamp(18px,1.6vw,22px)" }}>
-              {years}<span className="text-text-secondary text-[11px] ml-1">年</span>
-            </span>
-          </div>
-          <input
-            id="sim-years"
-            type="range"
-            min={15}
-            max={35}
-            step={1}
-            value={years}
-            onChange={(e) => setYears(Number(e.target.value))}
-            className="w-full cursor-pointer"
-            style={{ accentColor: FOREST }}
-          />
-          <div className="flex justify-between text-[10px] text-text-secondary mt-1">
-            <span>15年</span>
-            <span>35年</span>
-          </div>
-        </div>
-
-        {/* 金利 */}
-        <div>
-          <div className="flex items-baseline justify-between mb-2">
-            <label htmlFor="sim-rate" className="text-[13px] md:text-[14px] text-text-primary font-medium">
-              金利
-            </label>
-            <span className="font-oswald tabular-nums text-text-primary" style={{ fontWeight: 400, fontSize: "clamp(18px,1.6vw,22px)" }}>
-              {rate.toFixed(1)}<span className="text-text-secondary text-[11px] ml-1">%</span>
-            </span>
-          </div>
-          <input
-            id="sim-rate"
-            type="range"
-            min={0.3}
-            max={3.0}
-            step={0.1}
-            value={rate}
-            onChange={(e) => setRate(Number(e.target.value))}
-            className="w-full cursor-pointer"
-            style={{ accentColor: FOREST }}
-          />
-          <div className="flex justify-between text-[10px] text-text-secondary mt-1">
-            <span>0.3%</span>
-            <span>3.0%</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 結果表示 */}
-      <div className="mt-8 pt-6 border-t border-text-primary/15">
-        <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 md:gap-8 items-end">
+    <div className="border bg-white shadow-[0_24px_70px_-44px_rgba(29,29,24,0.55)]" style={{ borderColor: BRAND.border }}>
+      <div className="border-b p-6 md:p-8" style={{ borderColor: BRAND.border, background: BRAND.ivory }}>
+        <div className="flex items-start justify-between gap-5">
           <div>
-            <p className="text-[11px] md:text-[12px] tracking-[0.06em] text-text-secondary font-bold mb-2">
-              月々のお支払い
+            <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.16em]" style={{ color: BRAND.deep }}>
+              Monthly Simulator
             </p>
-            <div className="flex items-baseline gap-2">
-              <span
-                className="font-oswald tabular-nums leading-[0.85]"
-                style={{
-                  fontWeight: 300,
-                  fontSize: "clamp(56px, 6.4vw, 96px)",
-                  letterSpacing: "-0.04em",
-                  color: FOREST,
-                }}
-              >
-                {formatJpy(monthly)}
-              </span>
-              <span className="text-text-primary text-base md:text-lg font-medium">円</span>
-              <span className="text-text-secondary text-sm ml-1">/月</span>
-            </div>
-            <p className="mt-2 text-[12px] text-text-secondary">
-              総返済額: <span className="font-oswald tabular-nums" style={{ fontWeight: 400 }}>{formatJpy(total / 10000)}</span> 万円
-              （うち利息: 約 <span className="font-oswald tabular-nums" style={{ fontWeight: 400 }}>{formatJpy(total / 10000 - borrow)}</span> 万円）
-            </p>
+            <h3 className="mt-3 text-[22px] font-bold leading-[1.4] tracking-[0] md:text-[28px]" style={{ color: BRAND.text }}>
+              月々を、その場で確かめる。
+            </h3>
           </div>
+          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px]" style={{ background: "rgba(169,209,89,0.28)", color: BRAND.deep }}>
+            <SlidersHorizontal className="h-5 w-5" strokeWidth={1.8} />
+          </span>
+        </div>
+        <p className="mt-4 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+          元利均等・ボーナス払いなしの概算です。固定資産税・修繕費は別途確認します。
+        </p>
+      </div>
 
-          {/* 年収から返済比率 */}
-          <div className="md:border-l md:border-text-primary/15 md:pl-8">
-            <label htmlFor="sim-income" className="text-[11px] md:text-[12px] tracking-[0.06em] text-text-secondary font-bold block mb-2">
+      <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="space-y-7 border-b p-6 md:p-8 lg:border-b-0 lg:border-r" style={{ borderColor: BRAND.border }}>
+          <Field id="sim-borrow" label="借入額" value={borrow} suffix="万円" min={500} max={5000} step={100} onChange={setBorrow} />
+          <Field id="sim-years" label="返済期間" value={years} suffix="年" min={15} max={35} step={1} onChange={setYears} />
+          <Field id="sim-rate" label="金利" value={Number(rate.toFixed(1))} suffix="%" min={0.3} max={3.0} step={0.1} onChange={setRate} />
+
+          <div>
+            <label htmlFor="sim-income" className="text-[13px] font-bold" style={{ color: BRAND.text }}>
               年収（任意）
             </label>
-            <input
-              id="sim-income"
-              type="number"
-              value={income}
-              onChange={(e) => setIncome(Math.max(100, Number(e.target.value) || 0))}
-              className="w-full border border-text-primary/15 px-3 py-2 text-[15px] font-medium tabular-nums focus:outline-none focus:border-main"
-              min={100}
-              max={3000}
-              step={50}
-            />
-            <p className="text-[10px] text-text-secondary mt-1">万円（世帯）</p>
-
-            <div className="mt-4 pt-4 border-t border-text-primary/10">
-              <p className="text-[11px] text-text-secondary mb-1">返済比率</p>
-              <div className="flex items-baseline gap-2">
-                <span
-                  className="font-oswald tabular-nums"
-                  style={{ fontWeight: 400, fontSize: "clamp(28px, 2.8vw, 40px)", color: ratioColor, letterSpacing: "-0.02em" }}
-                >
-                  {isFinite(ratio) ? ratio.toFixed(1) : "—"}
-                </span>
-                <span className="text-text-secondary text-sm">%</span>
-              </div>
-              <p className="mt-1 text-[11px] font-bold" style={{ color: ratioColor }}>
-                {isFinite(ratio) ? ratioLabel : ""}
-              </p>
-              <p className="mt-2 text-[10px] leading-[1.7] text-text-secondary">
-                目安：25%以下が無理のない水準、30%を超える場合は見直しを推奨
-              </p>
+            <div className="mt-3 flex items-center gap-3">
+              <input
+                id="sim-income"
+                type="number"
+                value={income}
+                onChange={(event) => setIncome(Math.max(100, Number(event.target.value) || 0))}
+                className="min-h-[46px] w-full border bg-white px-3 text-[16px] font-bold tabular-nums focus:outline-none"
+                style={{ borderColor: BRAND.border, color: BRAND.text }}
+                min={100}
+                max={3000}
+                step={50}
+              />
+              <span className="shrink-0 text-[12px] font-bold" style={{ color: BRAND.muted }}>
+                万円
+              </span>
             </div>
           </div>
         </div>
-      </div>
 
-      <p className="mt-6 text-[11px] md:text-[12px] leading-[1.85] text-text-secondary">
-        ※ 元利均等・ボーナス払いなしで試算した目安です。実際の金利は金融機関・商品・審査時期により異なります。月々のお支払いには固定資産税・修繕費が別途かかります。
-      </p>
+        <div className="flex flex-col justify-between p-6 md:p-8">
+          <div>
+            <div className="flex items-center gap-2">
+              <Calculator className="h-5 w-5" style={{ color: BRAND.deep }} strokeWidth={1.7} />
+              <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                月々のお支払い
+              </p>
+            </div>
+            <p className="mt-5 flex items-end gap-2 whitespace-nowrap">
+              <span
+                className="font-oswald text-[clamp(62px,8vw,112px)] leading-[0.82] tracking-[0]"
+                style={{ color: BRAND.deep, fontWeight: 380, wordBreak: "keep-all", overflowWrap: "normal" }}
+              >
+                {isFinite(monthlyMan) ? monthlyMan.toFixed(1) : "—"}
+              </span>
+              <span className="pb-2 text-[16px] font-bold" style={{ color: BRAND.text }}>
+                万円/月
+              </span>
+            </p>
+            <p className="mt-5 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+              約 {formatJpy(monthly)} 円/月。
+              <br />
+              総返済額: <span className="font-oswald text-[18px]" style={{ color: BRAND.text, fontWeight: 400 }}>{formatJpy(total / 10000)}</span> 万円
+              / うち利息: 約 <span className="font-oswald text-[18px]" style={{ color: BRAND.text, fontWeight: 400 }}>{formatJpy(total / 10000 - borrow)}</span> 万円
+            </p>
+          </div>
+
+          <div className="mt-10 border-t pt-6" style={{ borderColor: BRAND.border }}>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <Gauge className="h-5 w-5" style={{ color: ratioColor }} strokeWidth={1.7} />
+                <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                  返済比率
+                </p>
+              </div>
+              <p className="flex items-baseline gap-1">
+                <span className="font-oswald text-[42px] leading-none tracking-[0]" style={{ color: ratioColor, fontWeight: 400 }}>
+                  {isFinite(ratio) ? ratio.toFixed(1) : "—"}
+                </span>
+                <span className="text-[12px] font-bold" style={{ color: BRAND.muted }}>
+                  %
+                </span>
+              </p>
+            </div>
+            <p className="mt-2 text-[13px] font-bold" style={{ color: ratioColor }}>
+              {isFinite(ratio) ? ratioLabel : ""}
+            </p>
+            <p className="mt-2 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
+              25%以下がひとつの目安です。30%を超える場合は、借入額・期間・土地候補を見直します。
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
