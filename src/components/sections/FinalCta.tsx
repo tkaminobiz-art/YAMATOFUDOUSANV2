@@ -99,7 +99,7 @@ export default function FinalCta() {
               無料資金計画診断
             </h3>
             <p className="text-text-secondary text-[13px] md:text-sm leading-[1.7] mb-7">
-              あなたの場合の目安をまとめてご提案します。
+              ご家族の場合の目安を、まとめてご提案します。
             </p>
 
             {/* 4つの特徴アイコン */}

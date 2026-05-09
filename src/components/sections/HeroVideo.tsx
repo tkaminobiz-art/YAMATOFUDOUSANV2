@@ -143,7 +143,7 @@ export default function HeroVideo() {
                 <br className="hidden md:inline" />
                 土地代・付帯工事・諸費用・住宅ローンまで、
                 <br className="md:hidden" />
-                ご家族の場合の総額を、契約前にお見せします。
+                契約前にまとめてお見せします。
               </p>
 
               {/* CTA staircase — primary: 総額診断 (LINE) / secondary: 見学 */}

@@ -44,6 +44,39 @@ forbidden claims. Do not duplicate competing facts in prompts, docs, comments, o
 implementation. If a fact changes, update `BRAND-TRUTH.md` first, then update the
 consuming code.
 
+# Japanese Copy Quality — hard rule (do not violate)
+
+User-facing Japanese on this site repeatedly turned awkward / translation-flavored
+through "clever" reader-meaning rewrites. The user explicitly stated this is
+exhausting (2026-05-09). To prevent repeats, **every agent must follow these rules
+when editing user-visible Japanese strings** (nav labels, h1/h2/h3, CTA labels,
+captions, eyebrows, button text, alt text shown in UI):
+
+1. **Default to canonical / standard Japanese category names** (お客様の声・スタッフ・
+   施工事例・商品紹介・資金計画・自社分譲地 等). Do not paraphrase them into
+   verb+noun forms or question forms in nav/category contexts.
+2. **Forbidden forms in nav, button, eyebrow, short-label contexts:**
+   - 動詞 + 「人」型 (「決めた人」「担当する人」「建てる人」)
+   - 疑問形 (「土地はある?」「月々いくら?」)
+   - お客様の感情を断定する言い回し (「不安ですよね」「こわい」「悩む」を
+     主語にした表現)
+3. **Reader-meaning translation is allowed only in long-form body copy** — Hero h1,
+   section h2/h3 narratives, FAQ Q lines. Even there, run the natural-japanese
+   skill (`~/.claude/skills/natural-japanese`) checklist before commit.
+4. **Before committing any Japanese copy change, scan against
+   `~/.claude/skills/natural-japanese/anti-patterns/translation-tells.md`** for
+   the 20 translation tells. Three or more hits = rewrite required.
+5. **When uncertain, present the proposal to the user before commit** — even in
+   auto mode, Japanese copy proposals are an explicit exception to "execute
+   immediately".
+
+Project-specific examples that already failed:
+- 「お客様の声」を「決めた人の話」に翻訳 → reverted
+- 「スタッフ紹介」を「担当する人」に翻訳 → reverted
+- 「物件情報」を「土地はある?」に翻訳 → reverted (改めて canonical な
+  「自社分譲地」へ)
+- 「施工事例」を「建てた家」に翻訳 → reverted
+
 # Design Guardrails — also read [`DESIGN_GUARDRAILS.md`](./DESIGN_GUARDRAILS.md)
 
 W2 系 (建築図面アートディレクション) のセクションでは、generic な table/card に

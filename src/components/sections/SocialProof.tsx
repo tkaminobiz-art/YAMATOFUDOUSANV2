@@ -98,8 +98,8 @@ export default function SocialProof() {
             className="mt-5 font-[var(--font-shippori)] text-[#1A1815] leading-[1.32] tracking-[0.01em]"
             style={{ fontSize: "clamp(28px, 3.6vw, 48px)", fontWeight: 500 }}
           >
-            建てた家と、<br className="md:hidden" />
-            暮らしている人の声。
+            やまとで家を建てた、<br className="md:hidden" />
+            ご家族の声。
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
             「土地が見つからない」「予算内で本当に建てられるのか」
