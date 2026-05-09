@@ -1,81 +1,129 @@
 import Link from "next/link";
 import { LabDisclaimer } from "@/components/lab/LabDisclaimer";
 
-// /voice-lab
-// VoiceSection (お客様の声) リニューアル design direction 3 案。
-// gpt_image_2 / high / 2k で 20 年キャリアの senior editorial designer framing で生成。
+// /voice-lab v2
+// VoiceSection 静止画 design direction 6 案 (動画案 廃止)。
+// gpt_image_2 / high / 2k で「25 年キャリアの TOP editorial designer」 framing で生成。
 //
-// ユーザー指示 (本丸):
-//   - 動画で 3 つの好印象口コミだけを上質におしゃれに
-//   - 暖かい温度感のあるセクション
-//   - ミニマルでとてもおしゃれ
-//   - モバイルは工夫が必要
-//   - 口コミページ /voice への動線
+// ユーザー指示:
+//   - 動画案 廃止 (3 動画 + 連結も不採用)
+//   - 25 年キャリアのトップデザイナーと扮した君ならどう作るか
+//   - 6 パターンほどのガチャ
 //
 // 採用後の実装方針:
 //   - mock-up に忠実に layout / typography / spacing 再現
-//   - 3 つの voice 動画は Seedance 2.0 で yamato 既存 LDK 写真から温度感ある cinemagraph 生成
-//     (顔出しなし・hands/家具/暖色光が主役)
-//   - 1 動画 = 4-6 sec 静か motion (subtle camera move + 暖色 grade)
-//   - 各動画下に Mincho italic 引用 + 家族名/モデル名 caption
-//   - mobile: 縦積み (各動画 portrait 4:5 が縦に 3 つ並ぶ)
+//   - 引用は voices.json から canonical 抜粋
+//   - 写真は yamato 既存 LDK 写真から流用 (顔出しなし)
 //
 // 納品前に削除する (BRAND-TRUTH §9 のラボ削除リスト準拠)。
 
 const OPTIONS = [
   {
-    id: "v-01",
-    name: "Minimal Triptych — 3 portrait 動画を横並び",
+    id: "v2-01",
+    name: "Pull-Quote Hero — タイポ主役の編集誌",
     intent:
-      "3 縦長 (4:5) の portrait 動画を等サイズで横一列。各動画下に italic mincho 引用 + 家族名 caption。最もミニマル・整然・暖かい光のリズム。",
-    src: "/voice-lab/v-01-triptych.png",
+      "中央に巨大な Mincho italic 引用、右に小さな detail 写真。下段に 2 supporting 引用 + 細部 photo。typography が主役、写真は支援。",
+    src: "/voice-lab/v2-01-pull-quote.png",
     pros: [
-      "最もミニマル・お洒落 (ユーザー指示直撃)",
-      "3 動画が等サイズで rhythm が美しい",
-      "横並びで scan しやすい — 一目で 3 voice 把握",
-      "モバイル縦積みでも 3 portrait の連続として自然",
+      "1 引用の重みが圧倒的 — 「最も刺さる声」を fully feature",
+      "ミニマル、編集誌の格・タイポ主導",
+      "実装が素直 (h1 + 3 quote block + photo)",
     ],
     cons: [
-      "voice 間に hierarchy がない (全部 equal)",
-      "1 voice の重みが分散しがち",
+      "1 voice 偏重で 3 voice の equal 表現は弱い",
+      "メインの 1 引用に何を選ぶかの canonical 判断が重要",
     ],
-    tone: "Minimal triptych",
+    tone: "Typography-led pull quote",
   },
   {
-    id: "v-02",
-    name: "Editorial Stack — 3 行のスプレッド (動画左 + 引用右)",
+    id: "v2-02",
+    name: "Polaroid Memory Wall — スクラップブック調",
     intent:
-      "3 行スタック。各行: 動画 (左 40% landscape) + Mincho italic 引用 (右 60%) + 家族名/モデル/エリア caption。各行間 hairline 罫線。新建築誌記事の連作風。",
-    src: "/voice-lab/v-02-editorial-stack.png",
+      "3 つの polaroid 風 photo を傾き付き (-3°/+2°/-1°) で scrapbook composition。各 polaroid の白帯に手書き調引用。最も「暖かい」「個人的」。",
+    src: "/voice-lab/v2-02-polaroid.png",
     pros: [
-      "1 voice がしっかり読める (引用に分量を割ける)",
-      "編集誌 spread 級の格 (新建築の連作記事風)",
-      "暖かさを文字 + 動画の組合せで sustain できる",
-      "モバイル: 各行を独立カードとして縦積み自然",
+      "「暖かい温度感」最強 — まるで家族のアルバムを見ているよう",
+      "polaroid のカジュアルさが他社サイトと完全差別化",
+      "傾きで scrapbook 感 = 編集 + 個人 + intimate",
     ],
     cons: [
-      "縦に高さが嵩む (3 行 × 行高さ) → 「コンパクト」優先度に対しやや不利",
-      "横幅 40/60 分割が mobile で崩れる調整必要",
+      "polaroid の傾き実装で transform / shadow 微調整必要",
+      "real photo を polaroid 加工する CSS 工夫要",
+      "クラスタの編集誌 restraint からやや外れる (温度感とトレードオフ)",
     ],
-    tone: "Editorial stack rows",
+    tone: "Scrapbook polaroid",
   },
   {
-    id: "v-03",
-    name: "Asymmetric Featured — 1 hero voice + 2 supporting",
+    id: "v2-03",
+    name: "Letter Composition — 個人手紙風",
     intent:
-      "左に大判 featured 動画 (3:2 landscape) + その下に substantial な引用、右に supporting 2 voice (動画 small + 引用 short) を縦積み。1 voice を主役にした感情アンカー型。",
-    src: "/voice-lab/v-03-asymmetric-featured.png",
+      "3 つの「手紙」 card。日付スタンプ + Mincho italic 本文 + 署名 + 印章ornament。写真ゼロ、typography のみで個人性を演出。",
+    src: "/voice-lab/v2-03-letter.png",
     pros: [
-      "1 voice が圧倒的な存在感 → 感情アンカーとして強い",
-      "WorksSection v6 と asymmetric 構造が呼応 (cluster 整合)",
-      "featured 引用に分量を割けて『代表の物語』が刺さる",
+      "最もミニマル (写真なし)",
+      "手紙という intimacy の枠組みで「個人の声」が立つ",
+      "印章 + 日付 + 署名で informal warmth + 編集誌格",
     ],
     cons: [
-      "supporting 2 が小さすぎる懸念 (3 voice 等価に見せたい場合は不利)",
-      "実装で featured 動画 file size が支配的になる (重い)",
-      "モバイル縦積みで featured と supporting の関係性が崩れる",
+      "写真ゼロでセクションが「テキストだけ」に見えるリスク",
+      "クラスタ全体に photo が多い中で quiet すぎる懸念",
+      "印章の実装で SVG / 画像が必要",
     ],
-    tone: "Hero featured + supporting",
+    tone: "Personal letter typography",
+  },
+  {
+    id: "v2-04",
+    name: "Annotated Portrait — 1 photo + margin notes",
+    intent:
+      "中央に 1 LDK 大判 photo (4:5)、周囲の余白に 3 引用が手描き leader 線で結ばれて配置。建築家の annotated drawing スタイル。",
+    src: "/voice-lab/v2-04-annotated.png",
+    pros: [
+      "クラスタ FIG.01 cross-section / FIG.02 ZeroDecl と同じ「注釈」語彙で世界観整合性最強",
+      "1 photo + 3 quote の hierarchy が明確",
+      "ink leader 線 ornament で warm + architectural",
+    ],
+    cons: [
+      "leader 線の position 実装は精密 (絶対配置 + 微調整)",
+      "余白に文字を散らすのでモバイル対応で再構成必要",
+      "1 photo に依存 → photo 選定が決定的",
+    ],
+    tone: "Annotated architectural portrait",
+  },
+  {
+    id: "v2-05",
+    name: "Newspaper Column — 3 narrow column 連作",
+    intent:
+      "3 narrow column を vertical hairline で分け、各 column に caption + 4-5 行 italic mincho 引用 + 1 small photo + drop cap。新聞の特集記事風。",
+    src: "/voice-lab/v2-05-newspaper.png",
+    pros: [
+      "3 voice equal で各 voice にしっかり読ませられる (1 voice あたり 4-5 行)",
+      "newspaper feature の格 = quality publication 感",
+      "モバイル: 各 column を独立カードとして縦積み自然",
+    ],
+    cons: [
+      "情報密度高 → minimum でない",
+      "drop cap の Japanese 「 治療実装が要工夫",
+      "3 column が hairline で硬く見えるリスク",
+    ],
+    tone: "Newspaper feature column",
+  },
+  {
+    id: "v2-06",
+    name: "Vertical Mincho Calligraphy — 縦組み 明朝の和の格",
+    intent:
+      "3 つの縦組み (writing-mode vertical-rl) Mincho italic 引用が水平に並ぶ。下に小さい印章 + 横書き署名。和の calligraphy 格。",
+    src: "/voice-lab/v2-06-vertical-mincho.png",
+    pros: [
+      "最も「日本的」で他社との差別化最強 — 縦組み 明朝が美しい",
+      "和の calligraphy 格 + 印章 ornament で温かさと格調",
+      "ミニマル + poetic restraint",
+    ],
+    cons: [
+      "縦組み実装は writing-mode + 文字数調整 (縦書き対応 font 必要)",
+      "モバイル縦並びで縦組み効果が落ちる懸念",
+      "西欧読みの読者には scan しづらい可能性",
+    ],
+    tone: "Japanese vertical calligraphy",
   },
 ];
 
@@ -88,13 +136,13 @@ export default function VoiceLabPage() {
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4">
           <div>
             <p className="text-[11px] uppercase tracking-[0.2em] text-[#A9D159]/85">
-              Voice Lab — Compact Video Gallery 3
+              Voice Lab v2 — Static (No Video) Gallery 6
             </p>
             <h1 className="mt-1 text-lg font-semibold">
-              お客様の声セクション 動画ギャラリー design 3 案
+              お客様の声 セクション 静止画 design 6 案 (動画案 廃止)
             </h1>
           </div>
-          <nav className="flex items-center gap-3 text-xs text-white/70">
+          <nav className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/70">
             {OPTIONS.map((o) => (
               <a key={o.id} href={`#${o.id}`} className="hover:text-white">
                 {o.id}
@@ -110,29 +158,20 @@ export default function VoiceLabPage() {
 
       <section className="mx-auto max-w-[1100px] px-6 py-12">
         <p className="text-[11px] uppercase tracking-[0.2em] text-white/45">
-          2026-05-09 / Phase 5: VoiceSection 本丸リニューアル
+          2026-05-09 / Phase 5 v2: VoiceSection 本丸 (静止画リブート)
         </p>
         <h2 className="mt-3 text-2xl font-semibold">
-          gpt_image_2 + 20 年キャリアの senior editorial designer framing
+          gpt_image_2 + 25 年キャリア TOP editorial designer framing
         </h2>
         <p className="mt-4 max-w-[820px] text-sm leading-relaxed text-white/75">
-          ユーザー指示「動画で 3 つの好印象口コミだけを上質におしゃれに / 暖かい温度感 /
-          ミニマル / モバイル工夫 / 口コミページ動線」を満たす design direction を 3 方向で。
+          動画案 (cinemagraph + 連結) を廃止し、トップデザイナー扮した僕が静止画 6 方向で
+          ガチャ。「暖かい温度感 + ミニマル + おしゃれ + 3 voice + 口コミページ動線」を
+          異なる構造で表現。
         </p>
         <p className="mt-3 max-w-[820px] text-[12.5px] leading-relaxed text-white/55">
-          採用後の実装方針:
-          <br />
-          ・3 つの voice 動画は <strong>Seedance 2.0</strong> で yamato 既存 LDK 写真から
-          subtle motion な cinemagraph 生成 (顔出しなし・hands/光/家具が主役)
-          <br />
-          ・各動画は 4-6 sec の calm camera move + amber/sepia warm grade
-          <br />
-          ・典拠 (canonical): voices.ts の好印象 voice 3 つ抜粋 +
-          引用は実 voice 短文を mincho italic で
-          <br />
-          ・モバイル: 縦積み (portrait 動画なら自然・landscape は 16:9 維持で stack)
-          <br />
-          ・CTA: 「全ての声を見る →」 → /voice
+          世界観継承: 暖紙 #F7F5F0 / 墨黒 #1A1815 / 深緑 #143426 単一アクセント /
+          Zen Old Mincho 見出し / FIG.06 eyebrow / ActionLine CTA。
+          採用後の実装では voices.json canonical + yamato 既存 LDK 写真を使用。
         </p>
       </section>
 
@@ -201,22 +240,24 @@ export default function VoiceLabPage() {
             次の一手
           </p>
           <h3 className="mt-2 text-2xl font-semibold">
-            v-01 / 02 / 03 のうち 1 つを採用
+            v2-01 〜 v2-06 のうち 1 つを採用
           </h3>
           <p className="mt-4 max-w-[820px] text-[12.5px] leading-relaxed text-white/55">
             僕の所感:
             <br />
-            ・<strong>v-01 Triptych</strong> がユーザー指示「ミニマル・おしゃれ」に最も忠実。3 動画 equal で美しいリズム
+            ・<strong>v2-02 Polaroid Memory Wall</strong> が「暖かい温度感」最強。スクラップブックの個人的・温かさで他社差別化最強
             <br />
-            ・<strong>v-02 Editorial Stack</strong> は 1 voice の重みをしっかり乗せたい場合に強い (新建築誌連作風)
+            ・<strong>v2-04 Annotated Portrait</strong> はクラスタ FIG 注釈語彙と最整合 (FIG.01 / FIG.02 と同型)
             <br />
-            ・<strong>v-03 Asymmetric Featured</strong> は 1 voice を主役にした感情アンカー (cluster の WorksSection asymmetric と呼応)
+            ・<strong>v2-06 Vertical Mincho</strong> は最も「日本的」で和の calligraphy 格
+            <br />
+            ・v2-01 はミニマル、v2-03 は手紙の intimacy、v2-05 は新聞の格
           </p>
         </div>
       </section>
 
       <footer className="border-t border-white/10 px-6 py-10 text-center text-xs text-white/40">
-        Voice Lab — 2026-05-09 / gpt_image_2 (high·2k) /{" "}
+        Voice Lab v2 — 2026-05-09 / gpt_image_2 (high·2k) /{" "}
         <Link href="/" className="text-white/60 hover:text-white">
           本番TOP
         </Link>
