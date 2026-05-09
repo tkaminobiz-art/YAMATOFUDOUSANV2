@@ -32,6 +32,11 @@ import PriceSection from "@/components/sections/PriceSection";
 import MapBridge from "@/components/sections/MapBridge";
 // 2026-05-09: PhotoBreath を TOP から撤去 (ユーザー判断・冗長)。
 //   ファイル本体は他ページで使う可能性があるため保持。
+// 2026-05-09 Phase 1: BreathStrip (parallax 装飾) 導入。
+//   ① TrustStrip↘Price 間に "Brand Whisper" (golden hour exterior 写真)
+//   ③ Works↘Voice 間に "Material Breath" (washi paper texture)
+//   詳細は BreathStrip.tsx 参照。
+import BreathStrip from "@/components/sections/BreathStrip";
 import WorksSection from "@/components/sections/WorksSection";
 import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
 import { GOOGLE_BRIDGE_ENABLED } from "@/data/google";
@@ -88,6 +93,16 @@ export default function Home() {
         <HeroVideo />
         <TrustStrip />
 
+        {/* ① Brand Whisper — TrustStrip 数字 → PriceSection 商品の落差を埋める呼吸帯
+            golden hour の家+山並み写真を parallax で見せる */}
+        <BreathStrip
+          variant="photo"
+          src="/images/breath/brand-whisper.png"
+          alt="奈良の山並みを背景に佇む、やまとが手がけた住まい — golden hour"
+          heightClass="h-[55vh] md:h-[60vh]"
+          parallaxStrength={0.25}
+        />
+
         {/* 商品の導入 + 詳細 — 2026-05-09 から PriceSection を Hero/Trust 直下に昇格。
             旧 StandardComparisonBlueprint (比較 table) は撤去し、PriceSection cover-card
             edition が 3 プランの「導入 + 詳細」を 1 セクションで担う。 */}
@@ -108,6 +123,17 @@ export default function Home() {
 
         {/* 社会的証明 — 4 枚ギャラリー型のコンパクト施工事例 */}
         <WorksSection />
+
+        {/* ③ Material Breath — Works (4 photo) → Voice (3 polaroid) 間の
+            photo-heavy 連続を切る material 呼吸帯 (washi paper texture + parallax) */}
+        <BreathStrip
+          variant="texture"
+          src="/images/breath/material-band.png"
+          alt=""
+          heightClass="h-[24vh] md:h-[28vh]"
+          parallaxStrength={0.15}
+        />
+
         {/* 信頼ブリッジ(★4.5+ 達成後に再公開) —
             2026-05-07: 現状 ★3.6/51件で目標 ★4.5以上×30件超 未達のため env で off。
             Vercel に NEXT_PUBLIC_GOOGLE_BRIDGE_ENABLED=true を入れると復活する。 */}
