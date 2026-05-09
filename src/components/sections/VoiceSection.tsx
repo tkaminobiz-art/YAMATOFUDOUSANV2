@@ -1,148 +1,97 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /*
-  VoiceSection — 2026-05-09 v5 (Asymmetric Featured + Mobile Combined)
+  VoiceSection — 2026-05-09 v6 (Polaroid Memory Wall)
   ---------------------------------------------------------------
-  v4 (横カルーセル + cinemagraph) 撤去理由:
-  - スクロール量大・冗長
-  - 「本丸」を上質に表現できていなかった
+  ユーザー判断で v5 (動画案) 廃止 → voice-lab v2-02 Polaroid 採用 + Approach C
+  (polaroid 全体を AI 生成 + CSS で tilt + box-shadow)。
 
-  v5: voice-lab v-03 Asymmetric Featured 採用 + ユーザー指示「モバイル 1 本連結動画」適用。
-  20 年キャリア senior editorial designer デザイン。
+  3 polaroid PNG は gpt_image_2 (3:4 portrait, high/2k) で生成:
+   - p1-windowsill: 窓辺の植物 + 「理想通りの家になりました。」(にさま ご家族)
+   - p2-mug:        マグを持つ手 + 「毎日とても快適に過ごしています。」(おさま ご家族)
+   - p3-drawing:    冷蔵庫の子供の絵 + 「誠実さと信頼感が決め手でした。」(げさま ご家族)
+  全て polaroid フィルター適用 (warm amber grade / slight grain / vignette / aged 白枠 /
+  fountain pen ink 手書きキャプション / tiny ink ornament)。
 
-  【Desktop (lg以上)】
-   2-column asymmetric grid (1.4fr / 1fr):
-   - LEFT: Hero video (16:9, 大判 loop) + substantial Mincho italic quote + caption
-   - RIGHT: 2 supporting videos (4:3 ループ) 縦積み + 短い引用 + caption
-   - 各動画は autoplay muted loop playsInline (静止画的なシネマグラフ)
+  【Desktop】
+   3 polaroid を scrapbook composition で配置:
+   - tilt: -3deg / +2deg / -1deg (カジュアル感)
+   - box-shadow: 軽め (浮遊感)
+   - 横並び with subtle vertical offset (top: 0px / 32px / 16px)
 
-  【Mobile (lg未満)】
-   1 connected video (combined-mobile.mp4: hero+sup1+sup2 の 14 sec 連結 w/ クロスフェード)
-   + 3 quote cards 縦積み
-   → モバイルで動画プレイヤー 3 段の違和感を回避
+  【Mobile】
+   3 polaroid を縦積み, tilt 弱め (1deg/-1deg/0deg)
+   モバイルでも scrapbook 感は保つ
 
-  【写真選定 (Seedance ベース)】
-   Hero:  works-04.webp → hero.mp4 (LDK + kitchen + live-edge bar, 暖色光)
-   Sup 1: works-03.webp → sup1.mp4 (LDK + sofa + 黒 kitchen)
-   Sup 2: case3-living.webp → sup2.mp4 (光wood + 階段 + 和室)
-   Mobile: ffmpeg で 3 動画を 0.5sec crossfade で連結 (14sec)
-
-  【コピー — voices.json から canonical 引用】
-   Hero (Ｓ様 奈良市):  自由設計、追加費用なしで設定された標準設備、
-                       実際の費用を提示してくれる誠実さ。
-   Sup 1 (Ｎ様 奈良市): 理想通りの家となり、とても気に入っています。
-   Sup 2 (Ｏ様 奈良市): 毎日とても快適に過ごしています。
+  【Accessibility】
+   SR-only に canonical voice text を埋め込み (写真の handwritten 文字を text 認識できない reader 向け)
 
   クラスタ pattern 完全継承:
-   - bg #F7F5F0 / 墨黒 #1A1815 / 深緑 #143426 単一アクセント
-   - eyebrow: FIG. 05 · VOICES (mono + hairline)
-   - h2: Shippori Mincho 「実際に住む、ご家族の声。」
-   - 引用: Mincho italic
+   - bg #F7F5F0 / 墨黒 / 深緑 / Shippori Mincho
+   - pt-half / pb-full
+   - FIG. 06 · VOICES eyebrow
+   - h2: 「実際に住む、ご家族の声。」
    - ActionLine CTA: 「全ての声を見る →」 → /voice
 */
 
-type Voice = {
-  videoSrc: string;
+type Polaroid = {
+  src: string;
+  alt: string;
+  rotate: string;
+  rotateMobile: string;
+  offsetTop: string;
+  offsetTopMobile: string;
+  // SR-only canonical
   quote: string;
   family: string;
-  area: string;
-  model?: string;
 };
 
-const HERO: Voice = {
-  videoSrc: "/videos/voices/hero.mp4",
-  quote:
-    "自由設計、追加費用なしで設定された標準設備、実際の費用を提示してくれる誠実さ。すべてが、決め手でした。",
-  family: "Ｓ様 ご家族",
-  area: "奈良市",
-  model: "花モデル",
-};
-
-const SUP_1: Voice = {
-  videoSrc: "/videos/voices/sup1.mp4",
-  quote: "理想通りの家となり、とても気に入っています。",
-  family: "Ｎ様 ご家族",
-  area: "奈良市",
-};
-
-const SUP_2: Voice = {
-  videoSrc: "/videos/voices/sup2.mp4",
-  quote: "毎日とても快適に過ごしています。",
-  family: "Ｏ様 ご家族",
-  area: "奈良市",
-};
-
-const MOBILE_VIDEO_SRC = "/videos/voices/combined-mobile.mp4";
-
-function CaptionLine({ voice }: { voice: Voice }) {
-  return (
-    <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[11px] leading-[1.6] text-[#1A1815]/55 font-mono tracking-[0.04em]">
-      <span className="text-[#1A1815]/85">{voice.family}</span>
-      <span aria-hidden className="text-[#1A1815]/30">/</span>
-      <span>{voice.area}</span>
-      {voice.model && (
-        <>
-          <span aria-hidden className="text-[#1A1815]/30">/</span>
-          <span>{voice.model}</span>
-        </>
-      )}
-    </p>
-  );
-}
-
-function QuoteText({
-  quote,
-  size = "body",
-}: {
-  quote: string;
-  size?: "lead" | "body";
-}) {
-  return (
-    <p
-      className={`font-[var(--font-shippori)] italic text-[#1A1815] leading-[1.85] tracking-[0.02em] ${
-        size === "lead"
-          ? "text-[clamp(15px,1.25vw,19px)]"
-          : "text-[clamp(13px,1vw,15px)]"
-      }`}
-    >
-      <span className="text-[#1A1815]/40 mr-0.5">「</span>
-      {quote}
-      <span className="text-[#1A1815]/40 ml-0.5">」</span>
-    </p>
-  );
-}
-
-function LoopingVideo({ src, alt, aspect }: { src: string; alt: string; aspect: string }) {
-  return (
-    <div
-      className={`relative w-full overflow-hidden bg-[#EDEAE3] ${aspect}`}
-      aria-label={alt}
-    >
-      <video
-        src={src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-    </div>
-  );
-}
+const POLAROIDS: readonly Polaroid[] = [
+  {
+    src: "/images/voices/polaroids/p1-windowsill.png",
+    alt: "polaroid: 窓辺の植物と暖かな朝の光 / 「理想通りの家になりました。」 — にさま ご家族 (奈良市)",
+    rotate: "lg:-rotate-3",
+    rotateMobile: "rotate-1",
+    offsetTop: "lg:translate-y-0",
+    offsetTopMobile: "",
+    quote: "理想通りの家になりました。",
+    family: "Ｎ様 ご家族 / 奈良市",
+  },
+  {
+    src: "/images/voices/polaroids/p2-mug.png",
+    alt: "polaroid: 木のテーブルでマグを持つ手 / 「毎日とても快適に過ごしています。」 — おさま ご家族 (奈良市)",
+    rotate: "lg:rotate-2",
+    rotateMobile: "-rotate-1",
+    offsetTop: "lg:translate-y-8",
+    offsetTopMobile: "",
+    quote: "毎日とても快適に過ごしています。",
+    family: "Ｏ様 ご家族 / 奈良市",
+  },
+  {
+    src: "/images/voices/polaroids/p3-drawing.png",
+    alt: "polaroid: 冷蔵庫に貼られた子供の家の絵 / 「誠実さと信頼感が決め手でした。」 — げさま ご家族 (奈良市・花)",
+    rotate: "lg:-rotate-1",
+    rotateMobile: "rotate-1",
+    offsetTop: "lg:translate-y-4",
+    offsetTopMobile: "",
+    quote: "誠実さと信頼感が決め手でした。",
+    family: "Ｓ様 ご家族 / 奈良市 · 花モデル",
+  },
+];
 
 export default function VoiceSection() {
   return (
     <section
       id="voice"
-      className="relative bg-[#F7F5F0] text-[#1A1815] pt-[calc(var(--section-py)*0.5)] pb-[var(--section-py)]"
+      className="relative bg-[#F7F5F0] text-[#1A1815] pt-[calc(var(--section-py)*0.5)] pb-[var(--section-py)] overflow-hidden"
     >
       <div className="max-w-[1240px] mx-auto px-[var(--page-px)]">
-        {/* Header — クラスタ pattern 完全同型 */}
+        {/* Header — クラスタ pattern 同型 */}
         <header className="max-w-[860px] mb-12 md:mb-16">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-[#1A1815]/55 font-mono">
-            <span>FIG. 05</span>
+            <span>FIG. 06</span>
             <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
             <span>Voices</span>
           </div>
@@ -153,65 +102,50 @@ export default function VoiceSection() {
             実際に住む、ご家族の声。
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
-            家を建てた後の暮らしから、いただいた言葉を 3 つ。
+            家を建てたあとの暮らしから、いただいた一言を 3 つ。
           </p>
         </header>
 
-        {/* Mobile: 1 連結動画 + 3 引用カード縦積み */}
-        <div className="lg:hidden">
-          <LoopingVideo
-            src={MOBILE_VIDEO_SRC}
-            alt="やまと不動産で建てたご家族の暮らし — 3 軒の連続"
-            aspect="aspect-[16/9]"
-          />
-          <p className="mt-3 text-[10.5px] leading-[1.7] text-[#1A1815]/45 font-mono tracking-[0.04em]">
-            FIG. 05 · 3 voices · 14 sec
-          </p>
-          <div className="mt-10 flex flex-col gap-y-10">
-            {[HERO, SUP_1, SUP_2].map((v) => (
-              <article key={v.family} className="flex flex-col">
-                <QuoteText quote={v.quote} size={v === HERO ? "lead" : "body"} />
-                <CaptionLine voice={v} />
-              </article>
-            ))}
-          </div>
+        {/* Polaroid wall */}
+        <div
+          className="relative grid grid-cols-1 lg:grid-cols-3 gap-y-12 lg:gap-y-0 lg:gap-x-6 items-start justify-items-center"
+          aria-label="お客様の声 — 3 枚のポラロイド"
+        >
+          {POLAROIDS.map((p) => (
+            <figure
+              key={p.src}
+              className={`relative w-[min(78vw,320px)] lg:w-full max-w-[340px] ${p.rotateMobile} ${p.rotate} ${p.offsetTop} transition-transform duration-500 hover:-translate-y-1`}
+              style={{
+                filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.12)) drop-shadow(0 4px 8px rgba(0,0,0,0.08))",
+              }}
+            >
+              <Image
+                src={p.src}
+                alt={p.alt}
+                width={1744}
+                height={2336}
+                sizes="(max-width: 1024px) 78vw, 320px"
+                className="block h-auto w-full"
+                priority={false}
+              />
+            </figure>
+          ))}
         </div>
 
-        {/* Desktop: asymmetric 2-column (Hero left + 2 supporting right) */}
-        <div className="hidden lg:grid grid-cols-[1.4fr_1fr] gap-x-10 gap-y-10 items-start">
-          {/* LEFT: Hero featured */}
-          <article className="flex flex-col">
-            <LoopingVideo
-              src={HERO.videoSrc}
-              alt="Hero voice — LDK と live-edge bar の暮らし"
-              aspect="aspect-[16/9]"
-            />
-            <div className="mt-6 max-w-[640px]">
-              <QuoteText quote={HERO.quote} size="lead" />
-              <CaptionLine voice={HERO} />
-            </div>
-          </article>
-
-          {/* RIGHT: 2 supporting voices stacked */}
-          <div className="flex flex-col gap-y-8">
-            {[SUP_1, SUP_2].map((v) => (
-              <article key={v.family} className="flex flex-col">
-                <LoopingVideo
-                  src={v.videoSrc}
-                  alt={`Supporting voice — ${v.family}`}
-                  aspect="aspect-[4/3]"
-                />
-                <div className="mt-4">
-                  <QuoteText quote={v.quote} size="body" />
-                  <CaptionLine voice={v} />
-                </div>
-              </article>
+        {/* SR-only canonical voice text — accessibility (handwritten in image is not OCR-friendly) */}
+        <div className="sr-only" aria-label="お客様の声 全文">
+          <ul>
+            {POLAROIDS.map((p) => (
+              <li key={p.family}>
+                <q>{p.quote}</q>
+                <span> — {p.family}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         {/* ActionLine CTA — 右下、cluster 同型 */}
-        <div className="mt-14 md:mt-16 flex flex-col items-end gap-4 border-t border-[var(--color-rule)] pt-8">
+        <div className="mt-16 md:mt-20 flex flex-col items-end gap-4 border-t border-[var(--color-rule)] pt-8">
           <Link
             href="/voice"
             className="group inline-flex items-center gap-2.5 text-[14px] md:text-[15px] font-bold text-[#1A1815] border-b border-[#1A1815]/30 hover:border-[#143426] hover:text-[#143426] py-1 transition-colors"
