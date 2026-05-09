@@ -1,18 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import {
-  ArrowRight,
   ChevronDown,
-  FileSearch,
   Landmark,
   MapPinned,
-  MessageCircle,
   ReceiptText,
   WalletCards,
   type LucideIcon,
 } from "lucide-react";
-import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 const BRAND = {
   red: "#E84336",
@@ -173,21 +167,6 @@ function SectionLead({
   );
 }
 
-function LineAnchor({ children }: { children: ReactNode }) {
-  return (
-    <a
-      href={LINE_ADD_FRIEND_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-20px_rgba(6,199,85,0.82)]"
-      style={{ background: BRAND.line }}
-    >
-      <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
-      {children}
-    </a>
-  );
-}
-
 function ZeroDeclaration() {
   return (
     <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ink }}>
@@ -290,78 +269,6 @@ function ConsultationOutput() {
   );
 }
 
-function CtaStaircase() {
-  return (
-    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.paper }}>
-      <div className="mx-auto grid max-w-[1360px] gap-12 px-[var(--page-px)] lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div>
-          <SectionLead
-            eyebrow="Next step"
-            title={
-              <>
-                いきなり来場予約ではなく、
-                <br />
-                <span style={{ color: BRAND.green }}>総額だけ先に見る。</span>
-              </>
-            }
-            body="まだ会社を決める段階でなくても大丈夫です。最初の一歩は、土地込み総額と月々支払いを知ることです。"
-          />
-
-          <div className="mt-10 grid gap-px overflow-hidden border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
-            {[
-              ["01", "30秒診断", "月々から土地込み総額の概算を見る。"],
-              ["02", "LINEで相談", "希望エリアと予算に合う土地候補を聞く。"],
-              ["03", "標準仕様を見る", "モデルハウスで、価格に含まれる設備を確認する。"],
-              ["04", "個別相談", "土地・建物・ローンを一枚にして決める。"],
-            ].map(([no, title, body]) => (
-              <div key={no} className="grid gap-4 bg-white p-5 md:grid-cols-[60px_1fr]">
-                <p className="font-oswald money-number-md" style={{ color: no === "01" ? BRAND.red : BRAND.green }}>
-                  {no}
-                </p>
-                <div>
-                  <h3 className="money-card-title" style={{ color: BRAND.ink }}>
-                    {title}
-                  </h3>
-                  <p className="money-body-sm mt-1" style={{ color: BRAND.muted }}>
-                    {body}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#diagnosis"
-              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5"
-              style={{ background: BRAND.red }}
-            >
-              30秒診断へ
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
-            </a>
-            <LineAnchor>LINEで候補を聞く</LineAnchor>
-          </div>
-        </div>
-
-        <figure className="relative aspect-[4/5] overflow-hidden border" style={{ borderColor: BRAND.border }}>
-          <Image
-            src="/images/works/case2-living.webp"
-            alt="家族が暮らすリビングの施工事例"
-            fill
-            sizes="(max-width: 1024px) 100vw, 48vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, rgba(23,20,17,0) 0%, rgba(23,20,17,0.78) 100%)" }}>
-            <p className="money-card-title text-white">
-              暮らしに必要な広さと予算を、一緒に確認できます。
-            </p>
-          </div>
-        </figure>
-      </div>
-    </section>
-  );
-}
-
 function QuestionItem({ item, open = false }: { item: (typeof FAQS)[number]; open?: boolean }) {
   return (
     <details open={open} className="group border bg-white" style={{ borderColor: BRAND.border }}>
@@ -409,41 +316,12 @@ function CombatFaq() {
   );
 }
 
-function DocumentsBand() {
-  return (
-    <section className="py-[clamp(72px,7vw,130px)]" style={{ background: BRAND.green }}>
-      <div className="mx-auto grid max-w-[1180px] gap-7 px-[var(--page-px)] md:grid-cols-[auto_1fr_auto] md:items-center">
-        <span className="inline-flex h-14 w-14 items-center justify-center rounded-[6px] bg-white/12 text-white">
-          <FileSearch className="h-7 w-7" strokeWidth={1.8} />
-        </span>
-        <div>
-          <p className="money-eyebrow text-white/62">
-            Before visiting
-          </p>
-          <h2 className="money-tool-title mt-2 text-white">
-            持ち物なしで大丈夫。今の家賃と希望エリアだけでも、総額の糸口は出せます。
-          </h2>
-        </div>
-        <Link
-          href="/lots"
-          className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-[6px] border border-white/70 px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:bg-white hover:text-[#171411]"
-        >
-          土地候補を見る
-          <ArrowRight className="h-4 w-4" strokeWidth={2} />
-        </Link>
-      </div>
-    </section>
-  );
-}
-
 export default function MoneyFullSection() {
   return (
     <>
       <ZeroDeclaration />
       <ConsultationOutput />
-      <CtaStaircase />
       <CombatFaq />
-      <DocumentsBand />
     </>
   );
 }
