@@ -35,13 +35,13 @@ import MapBridge from "@/components/sections/MapBridge";
 //   ファイル本体は他ページで使う可能性があるため保持。
 // 2026-05-09 Phase 1: BreathStrip (parallax 装飾) 導入。
 //   ① TrustStrip↘Price 間に "Brand Whisper" (golden hour exterior 写真)
-//   ③ Works↘Voice 間に "Material Breath" (washi paper texture)
 //   詳細は BreathStrip.tsx 参照。
 import BreathStrip from "@/components/sections/BreathStrip";
-import WorksSection from "@/components/sections/WorksSection";
-import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
-import { GOOGLE_BRIDGE_ENABLED } from "@/data/google";
-import VoiceSection from "@/components/sections/VoiceSection";
+// 2026-05-09 Step 6: WorksSection + VoiceSection を 1 つの SocialProof セクションに統合。
+//   旧 2 ファイルは保持 (戻す可能性 / 詳細ページで再利用)。
+import SocialProof from "@/components/sections/SocialProof";
+// 2026-05-09 Step 6: WorksSection / VoiceSection は SocialProof に統合済み。
+//   GoogleReviewBridge は env で off の状態を維持 (★4.5+ 達成後再公開予定)。
 // 2026-05-09 Step 3: MidCta を TOP から撤去 (FinalCta に統合)。
 //   ファイル本体は他ページで使う可能性のため保持。
 import FaqSection from "@/components/sections/FaqSection";
@@ -121,19 +121,9 @@ export default function Home() {
             (旧 MiniSimulator + LotsSection は撤去) */}
         <MapBridge />
 
-        {/* 2026-05-09: PhotoBreath (terrace 写真) を撤去 (ユーザー判断・冗長)。
-            MapBridge 直下から WorksSection へ直結し、コンパクトに繋ぐ。 */}
-
-        {/* 社会的証明 — 4 枚ギャラリー型のコンパクト施工事例 */}
-        <WorksSection />
-
-        {/* 2026-05-09 Step 1: ③ Material Breath BreathStrip を撤去 (TOP 軽量化方針)。 */}
-
-        {/* 信頼ブリッジ(★4.5+ 達成後に再公開) —
-            2026-05-07: 現状 ★3.6/51件で目標 ★4.5以上×30件超 未達のため env で off。
-            Vercel に NEXT_PUBLIC_GOOGLE_BRIDGE_ENABLED=true を入れると復活する。 */}
-        {GOOGLE_BRIDGE_ENABLED && <GoogleReviewBridge />}
-        <VoiceSection />
+        {/* 社会的証明 — 2026-05-09 Step 6: Works + Voice を SocialProof に統合
+            (建てた家 3 + 暮らしている人の声 3 を 1 セクションで) */}
+        <SocialProof />
 
         {/* 2026-05-09 Step 1: ④ Final Whisper BreathStrip を撤去 (TOP 軽量化方針)。 */}
 
