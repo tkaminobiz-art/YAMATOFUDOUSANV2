@@ -31,6 +31,10 @@ type NavChild = {
 
 type NavItem = {
   label: string;
+  /** 上段: ALL CAPS 英語ラベル (Hanako 二段ナビ風 / 2026-05-09) */
+  english?: string;
+  /** 下段: reader-meaning な和文サブタイトル (「商品紹介」ではなく「3 つのプラン」) */
+  subtitle?: string;
   href: string;
   children?: NavChild[];
 };
@@ -56,13 +60,17 @@ const ENTRY_TABS = [
   },
 ] as const;
 
+// 2026-05-09: Hanako magazine 風の二段ナビに刷新。
+// 上段 = 英語 ALL CAPS (SEO/structural tag)
+// 下段 = reader-meaning な和文 (カテゴリ名ではなく reader が頭の中で言ってる問い)
+//   reader-first-copy skill §「Convert Claims Into Reader Meaning」に整合。
 const NAV_ITEMS: NavItem[] = [
-  { label: "商品紹介", href: "/#product" },
-  { label: "資金計画", href: "/money" },
-  { label: "物件情報", href: "/lots" },
-  { label: "施工事例", href: "/works" },
-  { label: "お客様の声", href: "/voice" },
-  { label: "スタッフ紹介", href: "/staff" },
+  { label: "商品紹介",   english: "PRODUCTS", subtitle: "3 つのプラン", href: "/#product" },
+  { label: "資金計画",   english: "MONEY",    subtitle: "月々いくら?",  href: "/money" },
+  { label: "物件情報",   english: "LOTS",     subtitle: "土地はある?",  href: "/lots" },
+  { label: "施工事例",   english: "WORKS",    subtitle: "建てた家",     href: "/works" },
+  { label: "お客様の声", english: "VOICES",   subtitle: "決めた人の話", href: "/voice" },
+  { label: "スタッフ紹介", english: "STAFF",  subtitle: "担当する人",   href: "/staff" },
 ];
 
 const SP_NAV_ITEMS: NavItem[] = [
@@ -78,6 +86,48 @@ const SP_NAV_ITEMS: NavItem[] = [
 
 function NavLink({ item }: { item: NavItem }) {
   const hasChildren = Boolean(item.children && item.children.length > 0);
+  // 二段ナビ (Hanako 風): english がある場合は 2 行、無ければ従来 1 行
+  const hasTwoLines = Boolean(item.english && item.subtitle);
+
+  if (hasTwoLines) {
+    return (
+      <a
+        href={item.href}
+        className="relative group whitespace-nowrap text-center transition-colors py-1.5 hover:opacity-100"
+        aria-haspopup={hasChildren ? "menu" : undefined}
+      >
+        {/* 上段: 英語 ALL CAPS (Inter 細字 + wide tracking) */}
+        <span
+          className="block text-text-primary leading-[1.2] transition-colors group-hover:text-main"
+          style={{
+            fontFamily: "var(--font-inter), Inter, sans-serif",
+            fontSize: "12px",
+            fontWeight: 500,
+            letterSpacing: "0.18em",
+          }}
+        >
+          {item.english}
+        </span>
+        {/* 下段: reader-meaning 和文 (Murecho 軽量・muted) */}
+        <span
+          className="block mt-1 text-text-secondary leading-[1.4] transition-colors group-hover:text-text-primary"
+          style={{
+            fontFamily: "var(--font-murecho-var), 'Murecho', sans-serif",
+            fontSize: "10.5px",
+            fontWeight: 400,
+            letterSpacing: "0.04em",
+          }}
+        >
+          {item.subtitle}
+        </span>
+        <span
+          aria-hidden
+          className="absolute left-0 right-0 -bottom-0.5 h-px origin-left scale-x-0 bg-main transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+        />
+      </a>
+    );
+  }
+
   return (
     <a
       href={item.href}
@@ -151,7 +201,7 @@ export default function Header() {
       <div className="border-b border-border transition-colors duration-300">
         <div
           className={`mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-[var(--page-px)] transition-[height] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            scrolled ? "h-14" : "h-20"
+            scrolled ? "h-16" : "h-24"
           }`}
         >
           {/* SP: hamburger */}
@@ -190,9 +240,9 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop nav (右) */}
+          {/* Desktop nav (右) — 2026-05-09 Hanako 風 二段ナビに刷新で gap 拡大 */}
           <nav
-            className="hidden flex-1 items-center justify-end gap-6 xl:gap-9 lg:flex"
+            className="hidden flex-1 items-center justify-end gap-5 xl:gap-7 lg:flex"
             aria-label="メインナビゲーション"
           >
             {NAV_ITEMS.map((item) => (
