@@ -9,18 +9,20 @@ import {
 } from "lucide-react";
 
 const BRAND = {
-  red: "#E84336",
-  redDark: "#8F211B",
-  redSoft: "#FFF0EE",
-  green: "#2F4A2C",
-  lime: "#A9D159",
-  greenSoft: "#EAF2E8",
-  paper: "#CBD2D8",
-  ivory: "#F0F2F4",
-  ink: "#111315",
-  muted: "#56616A",
-  border: "#B9C2CA",
-  line: "#06C755",
+  red: "#16A34A",
+  redDark: "#116832",
+  redSoft: "#ECFDF3",
+  green: "#16A34A",
+  lime: "#16A34A",
+  greenSoft: "#ECFDF3",
+  alert: "#DC2626",
+  paper: "#F4F5F7",
+  ivory: "#FAFAFA",
+  ink: "#0F1115",
+  muted: "#5B6470",
+  border: "#E5E7EB",
+  dark: "#111418",
+  line: "#16A34A",
 };
 
 const ZERO_ROWS = [
@@ -169,45 +171,49 @@ function SectionLead({
 
 function ZeroDeclaration() {
   return (
-    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ink }}>
+    <section className="py-[clamp(96px,9vw,170px)]" style={{ background: BRAND.ivory }}>
       <div className="mx-auto grid max-w-[1360px] gap-12 px-[var(--page-px)] lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div>
           <p className="money-eyebrow" style={{ color: BRAND.red }}>
             Zero declaration
           </p>
-          <h2 className="money-section-title mt-4 text-white">
+          <h2 className="money-section-title mt-4" style={{ color: BRAND.ink }}>
             見積書の外に
             <br />
             追い出されやすい費用を、
             <br />
             先に潰す。
           </h2>
-          <p className="money-body mt-6 max-w-[620px] text-white/66">
+          <p className="money-body mt-6 max-w-[620px]" style={{ color: BRAND.muted }}>
             ここは上品にぼかしません。仲介手数料、つなぎ融資、地盤改良費。
             家づくりの不透明さを、契約前に一つずつ処理します。
           </p>
         </div>
 
-        <div className="grid gap-px overflow-hidden border" style={{ borderColor: "rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.2)" }}>
+        <div className="grid gap-3">
           {ZERO_ROWS.map((row) => (
-            <article key={row.label} className="grid gap-5 bg-[#15191C] p-5 md:grid-cols-[0.72fr_0.62fr_1fr] md:items-center md:p-7">
+            <article
+              key={row.label}
+              className="grid gap-5 rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)] md:grid-cols-[0.72fr_0.62fr_1fr] md:items-center md:p-7"
+              style={{ borderColor: BRAND.border }}
+            >
               <div>
-                <p className="money-eyebrow text-white/52">
+                <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                   {row.label}
                 </p>
-                <p className="money-body-sm mt-2 text-white/56">
+                <p className="money-body-sm mt-2" style={{ color: BRAND.muted }}>
                   {row.body}
                 </p>
               </div>
               <div>
-                <p className="text-[11px] font-bold text-white/42">一般的に上乗せになりやすい目安</p>
-                <p className="font-oswald money-number-lg mt-2" style={{ color: BRAND.red }}>
+                <p className="text-[11px] font-bold" style={{ color: BRAND.muted }}>一般的に上乗せになりやすい目安</p>
+                <p className="font-oswald money-number-lg mt-2" style={{ color: BRAND.alert }}>
                   {row.market}
                 </p>
               </div>
-              <div className="border-l-[5px] p-4" style={{ borderColor: BRAND.lime, background: "rgba(169,209,89,0.11)" }}>
-                <p className="text-[11px] font-bold text-white/48">やまとの扱い</p>
-                <p className="money-card-title mt-2 text-white">
+              <div className="rounded-[8px] border-l-[4px] p-4" style={{ borderColor: BRAND.red, background: BRAND.redSoft }}>
+                <p className="text-[11px] font-bold" style={{ color: BRAND.muted }}>やまとの扱い</p>
+                <p className="money-card-title mt-2" style={{ color: BRAND.ink }}>
                   {row.result}
                 </p>
               </div>
@@ -221,7 +227,7 @@ function ZeroDeclaration() {
 
 function ConsultationOutput() {
   return (
-    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+    <section className="py-[clamp(96px,9vw,170px)]" style={{ background: BRAND.paper }}>
       <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
         <div className="grid gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:items-start">
           <SectionLead
@@ -242,13 +248,13 @@ function ConsultationOutput() {
             }
           />
 
-          <div className="grid gap-px overflow-hidden border md:grid-cols-2" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+          <div className="grid gap-4 md:grid-cols-2">
             {OUTPUTS.map((item) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="bg-white p-6 md:p-7">
+                <article key={item.title} className="rounded-[8px] border bg-white p-6 shadow-[0_1px_2px_rgba(15,17,21,0.04)] md:p-7" style={{ borderColor: BRAND.border }}>
                   <span
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-[6px]"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-[8px]"
                     style={{ background: BRAND.redSoft, color: BRAND.red }}
                   >
                     <Icon className="h-5 w-5" strokeWidth={1.9} />
@@ -271,15 +277,15 @@ function ConsultationOutput() {
 
 function QuestionItem({ item, open = false }: { item: (typeof FAQS)[number]; open?: boolean }) {
   return (
-    <details open={open} className="group border bg-white" style={{ borderColor: BRAND.border }}>
+    <details open={open} className="group rounded-[8px] border bg-white shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
       <summary className="grid cursor-pointer list-none grid-cols-[48px_1fr_auto] items-center gap-4 px-5 py-5 md:px-7 md:py-6 [&::-webkit-details-marker]:hidden">
-        <span className="font-oswald money-number-sm" style={{ color: item.no === "01" ? BRAND.red : "rgba(23,20,17,0.38)" }}>
+        <span className="font-oswald money-number-sm" style={{ color: item.no === "01" ? BRAND.red : "#94A3B8" }}>
           {item.no}
         </span>
         <span className="money-card-title" style={{ color: BRAND.ink }}>
           {item.question}
         </span>
-        <span className="flex h-9 w-9 items-center justify-center rounded-[6px]" style={{ background: BRAND.redSoft, color: BRAND.red }}>
+        <span className="flex h-9 w-9 items-center justify-center rounded-[8px]" style={{ background: BRAND.redSoft, color: BRAND.red }}>
           <ChevronDown className="h-4 w-4 transition duration-300 group-open:rotate-180" strokeWidth={2} />
         </span>
       </summary>
@@ -292,7 +298,7 @@ function QuestionItem({ item, open = false }: { item: (typeof FAQS)[number]; ope
 
 function CombatFaq() {
   return (
-    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+    <section className="py-[clamp(96px,9vw,170px)]" style={{ background: BRAND.ivory }}>
       <div className="mx-auto max-w-[1120px] px-[var(--page-px)]">
         <SectionLead
           align="center"

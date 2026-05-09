@@ -251,7 +251,7 @@ p, blockquote, dd, li {
 .money-page .font-oswald {
   font-family: var(--font-inter-var), "Inter", "Helvetica Neue", Arial, sans-serif;
   font-variant-numeric: tabular-nums;
-  font-weight: 800;
+  font-weight: 750;
   white-space: nowrap;
   word-break: keep-all;
   overflow-wrap: normal;
@@ -262,13 +262,13 @@ p, blockquote, dd, li {
   font-size: 11px;
   line-height: 1.35;
   font-weight: 700;
-  letter-spacing: 0.08em !important;
+  letter-spacing: 0.06em !important;
   text-transform: uppercase;
 }
 
 .money-hero-title {
   font-size: 44px;
-  line-height: 1.15;
+  line-height: 1.12;
   font-weight: 700;
 }
 
@@ -297,14 +297,14 @@ p, blockquote, dd, li {
 }
 
 .money-body {
-  font-size: 14px;
-  line-height: 1.95;
+  font-size: 15px;
+  line-height: 1.78;
   font-weight: 500;
 }
 
 .money-body-sm {
   font-size: 13px;
-  line-height: 1.85;
+  line-height: 1.72;
   font-weight: 500;
 }
 
@@ -330,7 +330,7 @@ p, blockquote, dd, li {
 
 .money-diagnosis-number {
   font-size: 72px;
-  line-height: 0.86;
+  line-height: 0.92;
 }
 
 .money-range::-webkit-slider-thumb {
@@ -354,12 +354,12 @@ p, blockquote, dd, li {
 
 @media (min-width: 768px) {
   .money-hero-title {
-    font-size: 64px;
-    line-height: 1.08;
+    font-size: 58px;
+    line-height: 1.12;
   }
 
   .money-section-title {
-    font-size: 42px;
+    font-size: 38px;
     line-height: 1.22;
   }
 
@@ -369,7 +369,7 @@ p, blockquote, dd, li {
   }
 
   .money-tool-title {
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1.35;
   }
 
@@ -390,21 +390,21 @@ p, blockquote, dd, li {
   }
 
   .money-diagnosis-number {
-    font-size: 104px;
+    font-size: 86px;
   }
 }
 
 @media (min-width: 1280px) {
   .money-hero-title {
-    font-size: 76px;
+    font-size: 64px;
   }
 
   .money-section-title {
-    font-size: 52px;
+    font-size: 40px;
   }
 
   .money-final-title {
-    font-size: 64px;
+    font-size: 48px;
   }
 }
 .voice-quote-serif::before {

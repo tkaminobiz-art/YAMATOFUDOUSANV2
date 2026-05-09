@@ -37,18 +37,21 @@ export const metadata: Metadata = {
 };
 
 const BRAND = {
-  red: "#E84336",
-  redDark: "#8F211B",
-  redSoft: "#FFF0EE",
-  green: "#2F4A2C",
-  lime: "#A9D159",
-  greenSoft: "#EAF2E8",
-  paper: "#CBD2D8",
-  ivory: "#F0F2F4",
-  ink: "#111315",
-  muted: "#56616A",
-  border: "#B9C2CA",
-  line: "#06C755",
+  red: "#16A34A",
+  redDark: "#116832",
+  redSoft: "#ECFDF3",
+  green: "#16A34A",
+  lime: "#16A34A",
+  greenSoft: "#ECFDF3",
+  alert: "#DC2626",
+  alertSoft: "#FEF2F2",
+  paper: "#F4F5F7",
+  ivory: "#FAFAFA",
+  ink: "#0F1115",
+  muted: "#5B6470",
+  border: "#E5E7EB",
+  dark: "#111418",
+  line: "#16A34A",
 };
 
 const ACTIVE_LOT_COUNT = getActiveLots().length;
@@ -221,7 +224,7 @@ function PrimaryAnchor({ href, children }: { href: string; children: ReactNode }
   return (
     <a
       href={href}
-      className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-22px_rgba(232,67,54,0.85)] md:px-8 md:text-[15px]"
+      className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[8px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(22,163,74,0.7)] md:px-8 md:text-[15px]"
       style={{ background: BRAND.red }}
     >
       {children}
@@ -236,7 +239,7 @@ function LineAnchor({ children, className = "" }: { children: ReactNode; classNa
       href={LINE_ADD_FRIEND_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-20px_rgba(6,199,85,0.82)] ${className}`}
+      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[8px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(22,163,74,0.7)] ${className}`}
       style={{ background: BRAND.line }}
     >
       <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
@@ -248,8 +251,8 @@ function LineAnchor({ children, className = "" }: { children: ReactNode; classNa
 function DashboardPreviewCard() {
   return (
     <aside
-      className="relative overflow-hidden border bg-[#11100E] p-4 text-white shadow-[0_34px_80px_-54px_rgba(23,20,17,0.92)] md:p-5"
-      style={{ borderColor: "rgba(255,255,255,0.14)" }}
+      className="relative overflow-hidden rounded-[8px] border bg-[#111418] p-4 text-white shadow-[0_1px_2px_rgba(15,17,21,0.08),0_18px_42px_-30px_rgba(15,17,21,0.55)] md:p-5"
+      style={{ borderColor: "rgba(255,255,255,0.12)" }}
       aria-label="土地込み総額ダッシュボードのプレビュー"
     >
       <div className="flex items-center justify-between gap-4 border-b pb-4" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
@@ -261,13 +264,13 @@ function DashboardPreviewCard() {
             一枚で見る。
           </h2>
         </div>
-        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[6px]" style={{ background: BRAND.red, color: "white" }}>
+        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[8px]" style={{ background: BRAND.red, color: "white" }}>
           <PanelLeft className="h-5 w-5" strokeWidth={1.9} />
         </span>
       </div>
 
       <div className="grid gap-3 py-4 md:grid-cols-[1.15fr_0.85fr]">
-        <div className="border bg-white p-4 text-[#171411]" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
+        <div className="rounded-[8px] border bg-white p-4 text-[#0F1115]" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
           <p className="money-eyebrow" style={{ color: BRAND.muted }}>
             診断サンプルの総額目安
           </p>
@@ -292,7 +295,7 @@ function DashboardPreviewCard() {
         </div>
 
         <div className="grid gap-3">
-          <div className="border bg-[#1C1A17] p-4" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
+          <div className="rounded-[8px] border bg-white/5 p-4" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
             <p className="money-eyebrow text-white/48">Risk Meter</p>
             <div className="mt-4 h-[82px] overflow-hidden">
               <div className="mx-auto grid h-[140px] w-[140px] place-items-center rounded-full border-[18px]" style={{ borderColor: "rgba(255,255,255,0.14)", borderTopColor: BRAND.red, borderLeftColor: BRAND.red }}>
@@ -303,7 +306,7 @@ function DashboardPreviewCard() {
               </div>
             </div>
           </div>
-          <div className="border p-4" style={{ borderColor: "rgba(169,209,89,0.3)", background: "rgba(169,209,89,0.12)" }}>
+          <div className="rounded-[8px] border p-4" style={{ borderColor: "rgba(22,163,74,0.24)", background: "rgba(22,163,74,0.12)" }}>
             <p className="money-eyebrow" style={{ color: BRAND.lime }}>Solved</p>
             <p className="mt-2 text-[15px] font-bold leading-[1.45] text-white">
               つなぎ融資・地盤・仲介を先に整理。
@@ -321,7 +324,7 @@ function DashboardPreviewCard() {
           <div key={label} className="grid grid-cols-[54px_1fr_76px] items-center gap-3">
             <p className="text-[11px] font-bold text-white/52">{label}</p>
             <span className="h-2 bg-white/10">
-              <span className="block h-full" style={{ width, background: label === "諸費用" ? BRAND.red : BRAND.lime }} />
+              <span className="block h-full" style={{ width, background: label === "建物" ? BRAND.red : "#94A3B8" }} />
             </span>
             <p className="text-right text-[12px] font-bold text-white">{value}</p>
           </div>
@@ -339,15 +342,15 @@ function Hero() {
         className="absolute inset-0 opacity-[0.22]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(23,20,17,0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(23,20,17,0.14) 1px, transparent 1px)",
+            "linear-gradient(rgba(15,17,21,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(15,17,21,0.06) 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
       <div className="relative mx-auto grid min-h-[calc(100svh-72px)] max-w-[1480px] gap-10 px-[var(--page-px)] py-[clamp(72px,8vw,128px)] lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <div
-            className="money-eyebrow inline-flex items-center gap-2 border px-3 py-2"
-            style={{ borderColor: BRAND.red, color: BRAND.red, background: BRAND.redSoft }}
+            className="money-eyebrow inline-flex items-center gap-2 rounded-[8px] border bg-white px-3 py-2"
+            style={{ borderColor: BRAND.border, color: BRAND.alert }}
           >
             <AlertTriangle className="h-4 w-4" strokeWidth={2} />
             建物価格だけで判断しない
@@ -371,7 +374,7 @@ function Hero() {
             <PrimaryAnchor href="#diagnosis">無料で土地込み総額を診断する</PrimaryAnchor>
             <a
               href="#costs"
-              className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[6px] border px-6 py-4 text-[14px] font-black transition duration-300 hover:bg-white"
+              className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[8px] border bg-white px-6 py-4 text-[14px] font-black transition duration-300 hover:border-[#16A34A] hover:text-[#16A34A]"
               style={{ borderColor: BRAND.ink, color: BRAND.ink }}
             >
               増えやすい費用を見る
@@ -379,13 +382,13 @@ function Hero() {
             </a>
           </div>
 
-          <div className="mt-10 grid gap-px overflow-hidden border sm:grid-cols-3" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+          <div className="mt-10 grid gap-px overflow-hidden rounded-[8px] border bg-white shadow-[0_1px_2px_rgba(15,17,21,0.04)] sm:grid-cols-3" style={{ borderColor: BRAND.border }}>
             {[
               ["京モデル", "2,280", "万円〜"],
               ["資金計画", "1,000", "件以上"],
               ["公開区画", String(ACTIVE_LOT_COUNT), "区画"],
             ].map(([label, value, unit]) => (
-              <div key={label} className="bg-white/88 p-4 backdrop-blur">
+              <div key={label} className="bg-white p-4">
                 <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                   {label}
                 </p>
@@ -407,7 +410,7 @@ function Hero() {
               ["/images/works/case2-kitchen.webp", "やまと不動産のキッチン施工事例"],
               ["/images/works/case1-living.webp", "やまと不動産のリビング施工事例"],
             ].map(([src, alt]) => (
-              <figure key={src} className="relative aspect-[4/3] overflow-hidden border" style={{ borderColor: BRAND.border }}>
+              <figure key={src} className="relative aspect-[4/3] overflow-hidden rounded-[8px] border" style={{ borderColor: BRAND.border }}>
                 <Image src={src} alt={alt} fill sizes="(max-width: 1024px) 30vw, 220px" className="object-cover" />
               </figure>
             ))}
@@ -422,7 +425,7 @@ function Hero() {
 
 function CostAuditSection() {
   return (
-    <section id="costs" className="scroll-mt-24 py-[clamp(78px,8vw,150px)]" style={{ background: "#BFC8D0" }}>
+    <section id="costs" className="scroll-mt-24 py-[clamp(96px,9vw,150px)]" style={{ background: BRAND.ivory }}>
       <div className="mx-auto max-w-[1480px] px-[var(--page-px)]">
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <SectionLead
@@ -445,7 +448,7 @@ function CostAuditSection() {
             <PrimaryAnchor href="#diagnosis">無料で土地込み総額を診断する</PrimaryAnchor>
             <Link
               href="/reserve"
-              className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[6px] border bg-white px-6 py-4 text-[14px] font-bold transition duration-300 hover:bg-[#171411] hover:text-white"
+              className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[8px] border bg-white px-6 py-4 text-[14px] font-bold transition duration-300 hover:border-[#16A34A] hover:text-[#16A34A]"
               style={{ borderColor: BRAND.ink, color: BRAND.ink }}
             >
               標準仕様を見る
@@ -454,15 +457,15 @@ function CostAuditSection() {
           </div>
         </div>
 
-        <div className="overflow-hidden border bg-[#F5F7F8] shadow-[0_34px_90px_-64px_rgba(17,19,21,0.7)]" style={{ borderColor: "rgba(17,19,21,0.18)" }}>
+        <div className="overflow-hidden rounded-[8px] border bg-white shadow-[0_1px_2px_rgba(15,17,21,0.04),0_12px_32px_-26px_rgba(15,17,21,0.22)]" style={{ borderColor: BRAND.border }}>
           <div className="grid lg:grid-cols-[188px_1fr]">
-            <aside className="hidden bg-[#11100E] p-5 text-white lg:block">
+            <aside className="hidden bg-[#111418] p-5 text-white lg:block">
               <div className="flex items-center justify-between gap-4 border-b pb-5" style={{ borderColor: "rgba(255,255,255,0.12)" }}>
                 <div>
                   <p className="money-eyebrow text-white/42">Yamato</p>
                   <p className="mt-1 text-[17px] font-bold leading-[1.35]">Smart Ledger</p>
                 </div>
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-[6px]" style={{ background: BRAND.red }}>
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-[8px]" style={{ background: BRAND.red }}>
                   <PanelLeft className="h-4 w-4" strokeWidth={2} />
                 </span>
               </div>
@@ -471,7 +474,7 @@ function CostAuditSection() {
                   <a
                     key={label}
                     href={index === 0 ? "#diagnosis" : "#costs"}
-                    className="flex min-h-[42px] items-center gap-3 rounded-[6px] px-3 text-[13px] font-bold transition hover:bg-white/10"
+                    className="flex min-h-[42px] items-center gap-3 rounded-[8px] px-3 text-[13px] font-bold transition hover:bg-white/10"
                     style={{ background: index === 0 ? "white" : "transparent", color: index === 0 ? BRAND.ink : "rgba(255,255,255,0.68)" }}
                   >
                     <Icon className="h-4 w-4" strokeWidth={1.9} />
@@ -479,7 +482,7 @@ function CostAuditSection() {
                   </a>
                 ))}
               </nav>
-              <div className="mt-8 border p-4" style={{ borderColor: "rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.05)" }}>
+              <div className="mt-8 rounded-[8px] border p-4" style={{ borderColor: "rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.05)" }}>
                 <p className="money-eyebrow text-white/42">Primary action</p>
                 <p className="mt-3 text-[14px] font-bold leading-[1.6]">
                   まずは自分たちの土地込み総額を出す。
@@ -488,7 +491,7 @@ function CostAuditSection() {
                   href={LINE_ADD_FRIEND_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex min-h-[40px] w-full items-center justify-center gap-2 rounded-[6px] text-[12px] font-bold text-white"
+                  className="mt-4 inline-flex min-h-[40px] w-full items-center justify-center gap-2 rounded-[8px] text-[12px] font-bold text-white"
                   style={{ background: BRAND.line }}
                 >
                   <MessageCircle className="h-4 w-4" fill="currentColor" strokeWidth={1.8} />
@@ -508,7 +511,7 @@ function CostAuditSection() {
                     奈良・京都南部で、土地なしの状態から総額と月々を見える化します。
                   </p>
                 </div>
-                <div className="grid grid-cols-3 gap-px overflow-hidden border bg-white" style={{ borderColor: BRAND.border }}>
+                <div className="grid grid-cols-3 gap-px overflow-hidden rounded-[8px] border bg-white" style={{ borderColor: BRAND.border }}>
                   {[
                     ["公開区画", `${ACTIVE_LOT_COUNT}`],
                     ["資金計画", "1,000+"],
@@ -526,24 +529,24 @@ function CostAuditSection() {
                 <LoanSimulator />
 
                 <div className="grid gap-4 xl:grid-cols-3">
-                  <article className="border bg-white p-5" style={{ borderColor: BRAND.border }}>
+                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="money-eyebrow" style={{ color: BRAND.red }}>Late-cost risk</p>
+                        <p className="money-eyebrow" style={{ color: BRAND.alert }}>Late-cost risk</p>
                         <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
                           後から増えやすい費用
                         </h3>
                       </div>
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-[6px]" style={{ background: BRAND.redSoft, color: BRAND.red }}>
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-[8px]" style={{ background: BRAND.alertSoft, color: BRAND.alert }}>
                         <Activity className="h-5 w-5" strokeWidth={1.9} />
                       </span>
                     </div>
                     <div className="mt-5 grid gap-5 md:grid-cols-[180px_1fr]">
                       <div className="mx-auto h-[110px] w-[180px] overflow-hidden">
-                        <div className="grid h-[180px] w-[180px] place-items-center rounded-full border-[22px]" style={{ borderColor: "#E2E7EB", borderTopColor: BRAND.ink, borderLeftColor: BRAND.red, borderRightColor: BRAND.red }}>
+                        <div className="grid h-[180px] w-[180px] place-items-center rounded-full border-[22px]" style={{ borderColor: BRAND.border, borderTopColor: BRAND.ink, borderLeftColor: BRAND.alert, borderRightColor: BRAND.alert }}>
                           <div className="pt-8 text-center">
                             <p className="text-[11px] font-bold" style={{ color: BRAND.muted }}>先に確認</p>
-                            <p className="mt-1 text-[18px] font-bold" style={{ color: BRAND.red }}>4項目</p>
+                            <p className="mt-1 text-[18px] font-bold" style={{ color: BRAND.alert }}>4項目</p>
                           </div>
                         </div>
                       </div>
@@ -551,10 +554,10 @@ function CostAuditSection() {
                         {COSTS.slice(0, 4).map((item, index) => {
                           const Icon = item.icon;
                           return (
-                            <div key={item.label} className="grid grid-cols-[32px_1fr_auto] items-center gap-3 border px-3 py-2" style={{ borderColor: BRAND.border, background: index < 3 ? "#F8F9FA" : BRAND.redSoft }}>
-                              <Icon className="h-4 w-4" style={{ color: index < 3 ? BRAND.ink : BRAND.red }} strokeWidth={1.9} />
+                            <div key={item.label} className="grid grid-cols-[32px_1fr_auto] items-center gap-3 rounded-[8px] border px-3 py-2" style={{ borderColor: BRAND.border, background: index < 3 ? "#F8F9FA" : BRAND.alertSoft }}>
+                              <Icon className="h-4 w-4" style={{ color: index < 3 ? BRAND.ink : BRAND.alert }} strokeWidth={1.9} />
                               <p className="text-[13px] font-bold" style={{ color: BRAND.ink }}>{item.label}</p>
-                              <p className="text-[12px] font-bold" style={{ color: index < 3 ? BRAND.muted : BRAND.red }}>{item.amount}</p>
+                              <p className="text-[12px] font-bold" style={{ color: index < 3 ? BRAND.muted : BRAND.alert }}>{item.amount}</p>
                             </div>
                           );
                         })}
@@ -562,9 +565,9 @@ function CostAuditSection() {
                     </div>
                   </article>
 
-                  <article className="border bg-[#11100E] p-5 text-white" style={{ borderColor: "rgba(255,255,255,0.14)" }}>
-                    <p className="money-eyebrow text-white/46">Yamato status</p>
-                    <h3 className="money-card-title mt-2 text-white">
+                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
+                    <p className="money-eyebrow" style={{ color: BRAND.red }}>Yamato status</p>
+                    <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
                       やまとで先に処理できる費用
                     </h3>
                     <div className="mt-5 grid gap-3">
@@ -573,15 +576,15 @@ function CostAuditSection() {
                         ["地盤改良費", "当社規定で負担"],
                         ["仲介手数料", "当社分譲地なら不要"],
                       ].map(([label, value]) => (
-                        <div key={label} className="grid grid-cols-[1fr_auto] items-center gap-3 border-l-[5px] bg-white/6 p-3" style={{ borderColor: BRAND.lime }}>
-                          <p className="text-[13px] font-bold text-white/62">{label}</p>
-                          <p className="text-right text-[14px] font-bold text-white">{value}</p>
+                        <div key={label} className="grid grid-cols-[1fr_auto] items-center gap-3 rounded-[8px] border-l-[4px] bg-[#F8FAFC] p-3" style={{ borderColor: BRAND.red }}>
+                          <p className="text-[13px] font-bold" style={{ color: BRAND.muted }}>{label}</p>
+                          <p className="text-right text-[14px] font-bold" style={{ color: BRAND.ink }}>{value}</p>
                         </div>
                       ))}
                     </div>
                   </article>
 
-                  <article className="border bg-white p-5" style={{ borderColor: BRAND.border }}>
+                  <article className="rounded-[8px] border bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="money-eyebrow" style={{ color: BRAND.green }}>Proof</p>
@@ -591,7 +594,7 @@ function CostAuditSection() {
                       </div>
                       <FileText className="h-5 w-5" style={{ color: BRAND.green }} strokeWidth={1.9} />
                     </div>
-                    <div className="mt-5 grid gap-px overflow-hidden border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+                    <div className="mt-5 grid gap-px overflow-hidden rounded-[8px] border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
                       {PROOFS.slice(0, 3).map((proof) => (
                         <div key={proof.label} className="grid grid-cols-[86px_1fr] gap-3 bg-[#F8F9FA] p-3">
                           <p className="font-oswald text-[28px] leading-none" style={{ color: BRAND.green }}>
@@ -621,17 +624,14 @@ function PaymentExampleSection() {
     <section
       id="payment-examples"
       className="relative scroll-mt-24 overflow-hidden py-[clamp(88px,9vw,176px)]"
-      style={{
-        background:
-          "linear-gradient(135deg, #BFC8D0 0%, #A9B4BE 46%, #7E8992 100%)",
-      }}
+      style={{ background: BRAND.paper }}
     >
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.22]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.42) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.42) 1px, transparent 1px)",
+            "linear-gradient(rgba(15,17,21,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(15,17,21,0.05) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
@@ -643,7 +643,7 @@ function PaymentExampleSection() {
               <>
                 月々いくらなら、
                 <br />
-                <span className="text-white">本当に払えるのか。</span>
+                <span style={{ color: BRAND.red }}>本当に払えるのか。</span>
               </>
             }
             body={
@@ -653,7 +653,7 @@ function PaymentExampleSection() {
               </span>
             }
           />
-          <div className="border-l-[5px] bg-white/72 p-5 backdrop-blur" style={{ borderColor: BRAND.red }}>
+          <div className="rounded-[8px] border-l-[4px] bg-white p-5 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.red }}>
             <p className="money-card-title" style={{ color: BRAND.ink }}>
               表示は資金計画の試算例です。実際の審査・金利・土地条件により変わります。
             </p>
@@ -667,8 +667,8 @@ function PaymentExampleSection() {
           {PAYMENT_CASES.map((item) => (
             <article
               key={item.no}
-              className="relative min-w-[min(1120px,calc(100vw-32px))] snap-center overflow-hidden border bg-[#F8F9FA] shadow-[0_34px_90px_-58px_rgba(17,19,21,0.72)] lg:min-w-[1120px]"
-              style={{ borderColor: "rgba(17,19,21,0.14)" }}
+              className="relative min-w-[min(1120px,calc(100vw-32px))] snap-center overflow-hidden rounded-[8px] border bg-white shadow-[0_1px_2px_rgba(15,17,21,0.04),0_12px_32px_-26px_rgba(15,17,21,0.22)] lg:min-w-[1120px]"
+              style={{ borderColor: BRAND.border }}
             >
               <div
                 aria-hidden
@@ -698,7 +698,7 @@ function PaymentExampleSection() {
                       <div key={label} className="grid gap-2 border-b pb-4 md:grid-cols-[86px_1fr] md:items-baseline" style={{ borderColor: BRAND.border }}>
                         <span
                           className="inline-flex w-fit items-center justify-center rounded-[4px] px-2.5 py-1 text-[12px] font-bold text-white"
-                          style={{ background: "#7E8B94" }}
+                          style={{ background: "#64748B" }}
                         >
                           {label}
                         </span>
@@ -712,7 +712,7 @@ function PaymentExampleSection() {
 
                 <div className="grid content-between gap-8">
                   <div className="flex items-start justify-between gap-5">
-                    <figure className="relative aspect-[4/3] w-[126px] overflow-hidden border md:w-[172px]" style={{ borderColor: BRAND.border }}>
+                    <figure className="relative aspect-[4/3] w-[126px] overflow-hidden rounded-[8px] border md:w-[172px]" style={{ borderColor: BRAND.border }}>
                       <Image
                         src={item.image}
                         alt={item.caption}
@@ -734,7 +734,7 @@ function PaymentExampleSection() {
                   <div className="border-t pt-8" style={{ borderColor: BRAND.border }}>
                     <p
                       className="inline-flex rounded-[4px] px-3 py-1 text-[12px] font-bold text-white"
-                      style={{ background: "#7E8B94" }}
+                      style={{ background: "#64748B" }}
                     >
                       住宅ローン
                     </p>
@@ -742,7 +742,7 @@ function PaymentExampleSection() {
                       月々返済額
                     </p>
                     <p className="mt-3 flex items-end gap-2 whitespace-nowrap">
-                      <span className="font-oswald text-[58px] leading-none md:text-[76px]" style={{ color: "#7E8B94" }}>
+                      <span className="font-oswald text-[58px] leading-none md:text-[76px]" style={{ color: BRAND.red }}>
                         {item.monthly}
                       </span>
                       <span className="pb-2 text-[18px] font-bold" style={{ color: BRAND.ink }}>
@@ -777,7 +777,7 @@ function PaymentExampleSection() {
           ))}
         </div>
 
-        <div className="mx-auto mt-2 h-2 w-24 rounded-full bg-[#30363B]/82" aria-hidden />
+        <div className="mx-auto mt-2 h-2 w-24 rounded-full bg-[#CBD5E1]" aria-hidden />
       </div>
     </section>
   );
@@ -785,27 +785,27 @@ function PaymentExampleSection() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-[clamp(88px,9vw,180px)]" style={{ background: BRAND.red }}>
+    <section className="relative overflow-hidden py-[clamp(88px,9vw,180px)]" style={{ background: BRAND.ivory }}>
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.18]"
+        className="absolute inset-0 opacity-[0.26]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.65) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.65) 1px, transparent 1px)",
+            "linear-gradient(rgba(15,17,21,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15,17,21,0.04) 1px, transparent 1px)",
           backgroundSize: "36px 36px",
         }}
       />
       <div className="relative mx-auto max-w-[980px] px-[var(--page-px)] text-center">
-        <Sparkles className="mx-auto h-7 w-7 text-white" strokeWidth={1.8} />
-        <p className="money-eyebrow mt-7 text-white/70">
+        <Sparkles className="mx-auto h-7 w-7" style={{ color: BRAND.red }} strokeWidth={1.8} />
+        <p className="money-eyebrow mt-7" style={{ color: BRAND.red }}>
           Total cost first
         </p>
-        <h2 className="money-final-title mt-5 text-white">
+        <h2 className="money-final-title mt-5" style={{ color: BRAND.ink }}>
           土地込み総額を知らないまま、
           <br />
           家づくりを進めない。
         </h2>
-        <p className="money-body mx-auto mt-6 max-w-[680px] text-white/78">
+        <p className="money-body mx-auto mt-6 max-w-[680px]" style={{ color: BRAND.muted }}>
           LINEで希望エリア・月々予算・土地の状況を送ってください。
           奈良・京都南部で現実的に選べる候補と、増えやすい費用を先に整理します。
         </p>
@@ -813,13 +813,14 @@ function FinalCta() {
           <LineAnchor className="w-full sm:w-auto">無料で土地込み総額を相談する</LineAnchor>
           <Link
             href="/reserve"
-            className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[6px] border border-white/80 px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:bg-white hover:text-[#171411] sm:w-auto"
+            className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[8px] border bg-white px-6 py-4 text-[14px] font-black transition duration-300 hover:border-[#16A34A] hover:text-[#16A34A] sm:w-auto"
+            style={{ borderColor: BRAND.border, color: BRAND.ink }}
           >
             モデルハウスで標準仕様を見る
             <ArrowRight className="h-4 w-4" strokeWidth={2} />
           </Link>
         </div>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-[12px] font-bold text-white/70">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-[12px] font-bold" style={{ color: BRAND.muted }}>
           <span className="inline-flex items-center gap-1">
             <BadgeCheck className="h-4 w-4" strokeWidth={2} />
             相談無料

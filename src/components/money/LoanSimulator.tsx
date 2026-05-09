@@ -16,17 +16,19 @@ import {
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 const BRAND = {
-  red: "#E84336",
-  redDark: "#8F211B",
-  redSoft: "#FFF0EE",
-  green: "#2F4A2C",
-  greenSoft: "#EAF2E8",
-  paper: "#CBD2D8",
-  ivory: "#F0F2F4",
-  text: "#111315",
-  muted: "#5F666C",
-  border: "#B9C2CA",
-  line: "#06C755",
+  red: "#16A34A",
+  redDark: "#116832",
+  redSoft: "#ECFDF3",
+  green: "#16A34A",
+  greenSoft: "#ECFDF3",
+  alert: "#DC2626",
+  paper: "#F4F5F7",
+  ivory: "#FAFAFA",
+  text: "#0F1115",
+  muted: "#5B6470",
+  border: "#E5E7EB",
+  dark: "#111418",
+  line: "#16A34A",
 };
 
 const RATE = 1.0;
@@ -91,7 +93,7 @@ function StepLabel({ no, label }: { no: string; label: string }) {
   return (
     <div className="mb-5 flex items-center gap-3">
       <span
-        className="inline-flex h-8 min-w-8 items-center justify-center rounded-[6px] text-[12px] font-black text-white"
+        className="inline-flex h-8 min-w-8 items-center justify-center rounded-[8px] text-[12px] font-black text-white"
         style={{ background: BRAND.text }}
       >
         {no}
@@ -127,7 +129,7 @@ function ControlField({
   const update = (next: number) => onChange(Math.min(max, Math.max(min, next)));
 
   return (
-    <div className="border bg-white p-4" style={{ borderColor: BRAND.border }}>
+    <div className="rounded-[8px] border bg-white p-4 shadow-[0_1px_2px_rgba(15,17,21,0.04)]" style={{ borderColor: BRAND.border }}>
       <div className="mb-4 flex items-end justify-between gap-4">
         <label htmlFor={id} className="text-[13px] font-bold" style={{ color: BRAND.text }}>
           {label}
@@ -143,7 +145,7 @@ function ControlField({
         <button
           type="button"
           onClick={() => update(value - step)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-[6px] border transition hover:bg-[#111315] hover:text-white"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-[8px] border transition hover:bg-[#0F1115] hover:text-white"
           style={{ borderColor: BRAND.border, color: BRAND.text }}
           aria-label={`${label}を下げる`}
         >
@@ -157,13 +159,13 @@ function ControlField({
           step={step}
           value={value}
           onChange={(event) => update(Number(event.target.value))}
-          className="money-range h-3 w-full cursor-pointer appearance-none rounded-full bg-[#D0D8DF]"
+          className="money-range h-3 w-full cursor-pointer appearance-none rounded-full bg-[#D8DEE6]"
           style={{ accentColor: accent, color: accent }}
         />
         <button
           type="button"
           onClick={() => update(value + step)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-[6px] border transition hover:bg-[#111315] hover:text-white"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-[8px] border transition hover:bg-[#0F1115] hover:text-white"
           style={{ borderColor: BRAND.border, color: BRAND.text }}
           aria-label={`${label}を上げる`}
         >
@@ -228,7 +230,7 @@ export default function LoanSimulator() {
   }, [income, landCost, landMode, monthlyCap, savings, selectedPlanId]);
 
   const ratioTone =
-    result.ratio <= 25 && result.monthlyGap <= 0 ? BRAND.green : result.ratio <= 28 && result.monthlyGap <= 1 ? "#7E8B94" : BRAND.red;
+    result.ratio <= 25 && result.monthlyGap <= 0 ? BRAND.green : result.ratio <= 28 && result.monthlyGap <= 1 ? "#64748B" : BRAND.alert;
   const ratioLabel =
     result.ratio <= 25 && result.monthlyGap <= 0 ? "月々上限内" : result.ratio <= 28 && result.monthlyGap <= 1 ? "条件調整で検討圏" : "見直し推奨";
 
@@ -236,8 +238,8 @@ export default function LoanSimulator() {
     <section
       id="diagnosis"
       aria-label="土地込み総額の診断"
-      className="scroll-mt-24 border bg-white shadow-[0_32px_90px_-54px_rgba(17,19,21,0.62)]"
-      style={{ borderColor: "rgba(17,19,21,0.18)" }}
+      className="scroll-mt-24 overflow-hidden rounded-[8px] border bg-white shadow-[0_1px_2px_rgba(15,17,21,0.04),0_12px_32px_-26px_rgba(15,17,21,0.22)]"
+      style={{ borderColor: BRAND.border }}
     >
       <div className="border-b p-5 md:p-7" style={{ borderColor: BRAND.border, background: BRAND.ivory }}>
         <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
@@ -252,7 +254,7 @@ export default function LoanSimulator() {
               花・風・京は建物価格が決まっています。だから最初にモデルを置き、土地代・諸費用・自己資金を重ねて、月々返済まで見ます。
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-px overflow-hidden border bg-white" style={{ borderColor: BRAND.border }}>
+          <div className="grid grid-cols-3 gap-px overflow-hidden rounded-[8px] border bg-white" style={{ borderColor: BRAND.border }}>
             {[
               ["建物", `${formatMan(result.selectedPlan.price)}万円`],
               ["土地", landMode === "owned" ? "0万円" : `${formatMan(result.effectiveLandCost)}万円`],
@@ -281,7 +283,7 @@ export default function LoanSimulator() {
                     onClick={() => setSelectedPlanId(plan.id)}
                     aria-label={`${plan.jp}モデルを選ぶ`}
                     aria-pressed={active}
-                    className="min-h-[188px] border p-4 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-30px_rgba(17,19,21,0.45)]"
+                    className="min-h-[188px] rounded-[8px] border p-4 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-22px_rgba(15,17,21,0.26)]"
                     style={{
                       borderColor: active ? BRAND.red : BRAND.border,
                       background: active ? BRAND.redSoft : "#F8F9FA",
@@ -299,7 +301,7 @@ export default function LoanSimulator() {
                       {active && <CheckCircle2 className="h-5 w-5 shrink-0" style={{ color: BRAND.red }} strokeWidth={2} />}
                     </div>
                     <p className="mt-5 flex items-baseline gap-1 whitespace-nowrap">
-                      <span className="font-oswald text-[34px] leading-none" style={{ color: plan.id === "hana" ? "#8FAF24" : BRAND.red }}>
+                      <span className="font-oswald text-[34px] leading-none" style={{ color: BRAND.red }}>
                         {formatMan(plan.price)}
                       </span>
                       <span className="text-[12px] font-bold" style={{ color: BRAND.text }}>
@@ -331,7 +333,7 @@ export default function LoanSimulator() {
                       onClick={() => setLandMode(mode.id)}
                       aria-label={`${mode.label}で計算する`}
                       aria-pressed={active}
-                      className="min-h-[86px] border px-3 py-3 text-left transition duration-200 hover:bg-white"
+                      className="min-h-[86px] rounded-[8px] border px-3 py-3 text-left transition duration-200 hover:bg-white"
                       style={{
                         borderColor: active ? BRAND.red : BRAND.border,
                         background: active ? BRAND.redSoft : "#F8F9FA",
@@ -358,7 +360,7 @@ export default function LoanSimulator() {
                   onChange={setLandCost}
                 />
               ) : (
-                <div className="border bg-[#F8F9FA] p-4" style={{ borderColor: BRAND.border }}>
+                <div className="rounded-[8px] border bg-[#F8F9FA] p-4" style={{ borderColor: BRAND.border }}>
                   <div className="flex items-center gap-3">
                     <MapPinned className="h-5 w-5" style={{ color: BRAND.green }} strokeWidth={1.9} />
                     <p className="money-card-title" style={{ color: BRAND.text }}>
@@ -412,7 +414,7 @@ export default function LoanSimulator() {
           </article>
         </div>
 
-        <aside className="bg-[#111315] p-5 text-white md:p-7 xl:sticky xl:top-24 xl:self-start">
+        <aside className="bg-[#111418] p-5 text-white md:p-7 xl:sticky xl:top-24 xl:self-start">
           <div className="flex items-center gap-2">
             <Home className="h-5 w-5" style={{ color: BRAND.red }} strokeWidth={1.9} />
             <p className="money-eyebrow text-white/48">
@@ -431,7 +433,7 @@ export default function LoanSimulator() {
             </span>
           </p>
 
-          <div className="mt-6 grid gap-px overflow-hidden border" style={{ borderColor: "rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.14)" }}>
+          <div className="mt-6 grid gap-px overflow-hidden rounded-[8px] border" style={{ borderColor: "rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.14)" }}>
             {[
               ["建物", `${formatMan(result.selectedPlan.price)}万円`],
               ["土地", landMode === "owned" ? "0万円" : `${formatMan(result.effectiveLandCost)}万円`],
@@ -464,7 +466,7 @@ export default function LoanSimulator() {
               </span>
               <span className="pb-2 text-[16px] font-bold text-white">円 / 月</span>
             </p>
-            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden border" style={{ borderColor: "rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.14)" }}>
+            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-[8px] border" style={{ borderColor: "rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.14)" }}>
               <div className="bg-white/7 p-4">
                 <div className="flex items-center gap-2">
                   <Gauge className="h-4 w-4" style={{ color: ratioTone }} strokeWidth={1.8} />
@@ -476,7 +478,7 @@ export default function LoanSimulator() {
               </div>
               <div className="bg-white/7 p-4">
                 <p className="money-eyebrow text-white/48">月々上限との差</p>
-                <p className="mt-2 font-oswald text-[34px] leading-none" style={{ color: result.monthlyGap <= 0 ? BRAND.green : BRAND.red }}>
+                <p className="mt-2 font-oswald text-[34px] leading-none" style={{ color: result.monthlyGap <= 0 ? BRAND.green : BRAND.alert }}>
                   {result.monthlyGap <= 0 ? "-" : "+"}
                   {Math.abs(result.monthlyGap).toFixed(1)}
                   <span className="ml-1 text-[11px] font-bold text-white">万円</span>
@@ -485,7 +487,7 @@ export default function LoanSimulator() {
             </div>
           </div>
 
-          <div className="mt-6 border-l-[5px] p-4" style={{ borderColor: ratioTone, background: "rgba(255,255,255,0.08)" }}>
+          <div className="mt-6 rounded-[8px] border-l-[4px] p-4" style={{ borderColor: ratioTone, background: "rgba(255,255,255,0.08)" }}>
             <p className="text-[12px] font-bold" style={{ color: ratioTone }}>
               {ratioLabel}
             </p>
@@ -502,7 +504,7 @@ export default function LoanSimulator() {
               href={LINE_ADD_FRIEND_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[6px] px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-20px_rgba(6,199,85,0.82)]"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[8px] px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(22,163,74,0.7)]"
               style={{ background: BRAND.line }}
             >
               <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
@@ -510,7 +512,7 @@ export default function LoanSimulator() {
             </a>
             <a
               href="/reserve"
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[6px] border px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:bg-white hover:text-[#111315]"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[8px] border px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:bg-white hover:text-[#0F1115]"
               style={{ borderColor: "rgba(255,255,255,0.5)" }}
             >
               相談枠を見る
@@ -518,7 +520,7 @@ export default function LoanSimulator() {
             </a>
           </div>
           <p className="money-body-sm mt-5 flex gap-2 text-white/54">
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: BRAND.red }} strokeWidth={1.8} />
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: BRAND.alert }} strokeWidth={1.8} />
             表示額は概算です。外構、登記、火災保険、金融機関条件、土地条件は個別に確認します。
           </p>
         </aside>
