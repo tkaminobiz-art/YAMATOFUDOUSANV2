@@ -62,10 +62,10 @@ const RIGHT_MID: Work = {
 };
 
 const RIGHT_BOT: Work = {
-  src: "/images/newsozai/exterior-porch-01.webp",
-  alt: "玄関ポーチ — 黒い縦格子ドアと暖色木目天井のディテール",
+  src: "/images/newsozai/interior-ldk-01.webp",
+  alt: "LDK 内観 — ダーク木目天井と無垢のライブエッジダイニングテーブル",
   area: "奈良市",
-  spec: "2LDK",
+  spec: "LDK",
 };
 
 function CaptionLine({ work }: { work: Work }) {
