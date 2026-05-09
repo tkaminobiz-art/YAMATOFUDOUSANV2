@@ -17,9 +17,10 @@ import TrustStrip from "@/components/sections/TrustStrip";
 //   かつ「同品質を、適正価格で」のストーリーを 1 本の動画で物語る。
 //   StickyMechanismPin.tsx ファイル本体は撤去候補メモリで保持 (戻す可能性のため)。
 import CostPride from "@/components/sections/CostPride";
-import StandardCrossSection from "@/components/sections/StandardCrossSection";
-import StandardEquipment from "@/components/sections/StandardEquipment";
-import ZeroDeclaration from "@/components/sections/ZeroDeclaration";
+// 2026-05-09 Step 5: StandardCrossSection + StandardEquipment + ZeroDeclaration を
+//   1 つの StandardIncluded セクションに統合 (TOP 軽量化)。
+//   旧 3 ファイルは保持 (戻す可能性 / 詳細ページで再利用)。
+import StandardIncluded from "@/components/sections/StandardIncluded";
 // 2026-05-09: RepresentativeMessage (古谷社長+小林専務 portrait+quote) を TOP から撤去。
 //   理由: ユーザー判断で TOP では不要。/staff 配下に主役配置するか判断保留。
 //   RepresentativeMessage.tsx ファイル本体は戻す可能性のため保持 (撤去候補メモリ)。
@@ -109,11 +110,9 @@ export default function Home() {
             edition が 3 プランの「導入 + 詳細」を 1 セクションで担う。 */}
         <PriceSection />
 
-        {/* 理屈・証拠 — なぜこの価格で建てられるのか / 同品質の証明 / 追加費用ゼロ */}
+        {/* 理屈・証拠 — なぜこの価格で建てられるのか / 同品質と追加費用ゼロを 1 セクションで */}
         <CostPride />
-        <StandardCrossSection />
-        <StandardEquipment />
-        <ZeroDeclaration />
+        <StandardIncluded />
 
         {/* 2026-05-09 Step 1: ② Quiet Pause BreathStrip を撤去 (TOP 軽量化方針)。
             BreathStrip は最大 1 本 (① Brand Whisper) のみ残す。 */}
