@@ -1,30 +1,54 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Calculator, Gauge, SlidersHorizontal } from "lucide-react";
+import {
+  AlertTriangle,
+  Gauge,
+  Home,
+  MessageCircle,
+  Send,
+  SlidersHorizontal,
+} from "lucide-react";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 const BRAND = {
-  lime: "#A9D159",
-  deep: "#2F4A2C",
-  base: "#F7F4EC",
-  ivory: "#FBF8EE",
-  text: "#1D1D18",
-  muted: "#5E5A50",
+  red: "#E84336",
+  redDark: "#8F211B",
+  redSoft: "#FFF0EE",
+  green: "#2F4A2C",
+  greenSoft: "#EDF5E4",
+  paper: "#F8F4EA",
+  ivory: "#FFFDF7",
+  text: "#171411",
+  muted: "#625D52",
   border: "#DED8C8",
-  gold: "#9A7A3F",
+  line: "#06C755",
 };
 
-function calcMonthly(principal: number, annualRate: number, years: number): number {
+const RATE = 1.0;
+const YEARS = 35;
+const EXTRA_COSTS = 300;
+const MOVING_COSTS = 80;
+
+const LAND_MODES = [
+  { id: "none", label: "土地なし", note: "候補探しから" },
+  { id: "candidate", label: "候補あり", note: "総額を再計算" },
+  { id: "owned", label: "土地あり", note: "建物中心で確認" },
+] as const;
+
+type LandMode = (typeof LAND_MODES)[number]["id"];
+
+function calcBorrowingFromMonthly(monthly: number, annualRate: number, years: number): number {
   const n = years * 12;
   const r = annualRate / 100 / 12;
-  if (r === 0) return principal / n;
+  if (r === 0) return monthly * n;
   const factor = Math.pow(1 + r, n);
-  return (principal * r * factor) / (factor - 1);
+  return (monthly * (factor - 1)) / (r * factor);
 }
 
-function formatJpy(n: number): string {
-  if (!isFinite(n)) return "—";
-  return Math.round(n).toLocaleString("ja-JP");
+function formatMan(value: number): string {
+  if (!Number.isFinite(value)) return "—";
+  return Math.round(value).toLocaleString("ja-JP");
 }
 
 function Field({
@@ -35,6 +59,7 @@ function Field({
   min,
   max,
   step,
+  accent = BRAND.red,
   onChange,
 }: {
   id: string;
@@ -44,6 +69,7 @@ function Field({
   min: number;
   max: number;
   step: number;
+  accent?: string;
   onChange: (value: number) => void;
 }) {
   return (
@@ -52,7 +78,10 @@ function Field({
         <label htmlFor={id} className="text-[13px] font-bold" style={{ color: BRAND.text }}>
           {label}
         </label>
-        <span className="font-oswald text-[24px] leading-none tracking-[0]" style={{ color: BRAND.deep, fontWeight: 400 }}>
+        <span
+          className="font-oswald text-[25px] leading-none tracking-[0]"
+          style={{ color: accent, fontWeight: 420 }}
+        >
           {value.toLocaleString("ja-JP")}
           <span className="ml-1 text-[11px] font-bold" style={{ color: BRAND.muted }}>
             {suffix}
@@ -67,8 +96,8 @@ function Field({
         step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E5DFD0] accent-[#2F4A2C]"
-        style={{ accentColor: BRAND.deep }}
+        className="h-2 w-full cursor-pointer appearance-none rounded-[6px] bg-[#E7E0D3]"
+        style={{ accentColor: accent }}
       />
       <div className="mt-2 flex justify-between text-[10px]" style={{ color: BRAND.muted }}>
         <span>
@@ -85,123 +114,254 @@ function Field({
 }
 
 export default function LoanSimulator() {
-  const [borrow, setBorrow] = useState(2500);
-  const [years, setYears] = useState(35);
-  const [rate, setRate] = useState(1.0);
-  const [income, setIncome] = useState(500);
+  const [monthlyTarget, setMonthlyTarget] = useState(8.5);
+  const [income, setIncome] = useState(550);
+  const [savings, setSavings] = useState(100);
+  const [landMode, setLandMode] = useState<LandMode>("none");
+  const [landCost, setLandCost] = useState(1200);
 
-  const monthly = useMemo(() => calcMonthly(borrow * 10000, rate, years), [borrow, rate, years]);
-  const monthlyMan = monthly / 10000;
-  const total = monthly * years * 12;
-  const annualPayment = monthly * 12;
-  const ratio = (annualPayment / (income * 10000)) * 100;
-  const ratioStatus = ratio < 25 ? "safe" : ratio < 30 ? "caution" : "high";
-  const ratioColor = ratioStatus === "safe" ? BRAND.deep : ratioStatus === "caution" ? BRAND.gold : "#A7473D";
-  const ratioLabel = ratioStatus === "safe" ? "無理のない水準" : ratioStatus === "caution" ? "要確認" : "見直しを推奨";
+  const result = useMemo(() => {
+    const monthlyYen = monthlyTarget * 10000;
+    const borrowing = calcBorrowingFromMonthly(monthlyYen, RATE, YEARS);
+    const borrowingMan = borrowing / 10000;
+    const totalBudget = borrowingMan + savings;
+    const effectiveLandCost = landMode === "owned" ? 0 : landCost;
+    const visibleTotal = totalBudget;
+    const buildingCapacity = visibleTotal - effectiveLandCost - EXTRA_COSTS - MOVING_COSTS;
+    const annualPayment = monthlyYen * 12;
+    const ratio = (annualPayment / (income * 10000)) * 100;
+
+    let verdict = "土地候補から見直す段階";
+    let lead = "月々・土地価格・自己資金のどこを動かすと現実的か、先に確認しましょう。";
+    if (buildingCapacity >= 2480) {
+      verdict = "花・風モデルまで検討圏";
+      lead = "土地条件を絞りすぎなければ、ゆとりある4LDKまで視野に入ります。";
+    } else if (buildingCapacity >= 2280) {
+      verdict = "京モデル中心に検討圏";
+      lead = "総額を抑えやすい土地候補と組み合わせて、現実的なラインを探せます。";
+    }
+
+    return {
+      borrowingMan,
+      visibleTotal,
+      effectiveLandCost,
+      buildingCapacity,
+      ratio,
+      verdict,
+      lead,
+    };
+  }, [income, landCost, landMode, monthlyTarget, savings]);
+
+  const ratioTone =
+    result.ratio <= 25 ? BRAND.green : result.ratio <= 30 ? "#9A7A3F" : BRAND.red;
+  const ratioLabel =
+    result.ratio <= 25 ? "家計に余白を残しやすい水準" : result.ratio <= 30 ? "要確認" : "見直し推奨";
 
   return (
-    <div className="border bg-white shadow-[0_24px_70px_-44px_rgba(29,29,24,0.55)]" style={{ borderColor: BRAND.border }}>
-      <div className="border-b p-6 md:p-8" style={{ borderColor: BRAND.border, background: BRAND.ivory }}>
+    <section
+      id="diagnosis"
+      aria-label="土地込み総額の30秒診断"
+      className="scroll-mt-24 border bg-white shadow-[0_32px_90px_-54px_rgba(23,20,17,0.65)]"
+      style={{ borderColor: "rgba(23,20,17,0.2)" }}
+    >
+      <div className="border-b p-5 md:p-7" style={{ borderColor: BRAND.border, background: BRAND.ivory }}>
         <div className="flex items-start justify-between gap-5">
           <div>
-            <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.16em]" style={{ color: BRAND.deep }}>
-              Monthly Simulator
+            <p
+              className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]"
+              style={{ color: BRAND.red }}
+            >
+              30 sec total diagnosis
             </p>
-            <h3 className="mt-3 text-[22px] font-bold leading-[1.4] tracking-[0] md:text-[28px]" style={{ color: BRAND.text }}>
-              月々を、その場で確かめる。
-            </h3>
+            <h2 className="mt-3 text-[22px] font-black leading-[1.35] tracking-[0] md:text-[30px]" style={{ color: BRAND.text }}>
+              月々から、土地込み総額を逆算。
+            </h2>
           </div>
-          <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px]" style={{ background: "rgba(169,209,89,0.28)", color: BRAND.deep }}>
-            <SlidersHorizontal className="h-5 w-5" strokeWidth={1.8} />
+          <span
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px]"
+            style={{ background: BRAND.redSoft, color: BRAND.red }}
+            aria-hidden
+          >
+            <SlidersHorizontal className="h-5 w-5" strokeWidth={1.9} />
           </span>
         </div>
         <p className="mt-4 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-          元利均等・ボーナス払いなしの概算です。固定資産税・修繕費は別途確認します。
+          金利1.0%・35年・ボーナス払いなしの概算。実際の条件は金融機関審査、土地、時期で変わります。
         </p>
       </div>
 
-      <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="space-y-7 border-b p-6 md:p-8 lg:border-b-0 lg:border-r" style={{ borderColor: BRAND.border }}>
-          <Field id="sim-borrow" label="借入額" value={borrow} suffix="万円" min={500} max={5000} step={100} onChange={setBorrow} />
-          <Field id="sim-years" label="返済期間" value={years} suffix="年" min={15} max={35} step={1} onChange={setYears} />
-          <Field id="sim-rate" label="金利" value={Number(rate.toFixed(1))} suffix="%" min={0.3} max={3.0} step={0.1} onChange={setRate} />
+      <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
+        <div className="space-y-6 border-b p-5 md:p-7 lg:border-b-0 lg:border-r" style={{ borderColor: BRAND.border }}>
+          <Field
+            id="money-monthly-target"
+            label="希望する月々"
+            value={monthlyTarget}
+            suffix="万円"
+            min={5}
+            max={14}
+            step={0.5}
+            onChange={setMonthlyTarget}
+          />
+          <Field
+            id="money-income"
+            label="世帯年収"
+            value={income}
+            suffix="万円"
+            min={300}
+            max={1000}
+            step={50}
+            accent={BRAND.green}
+            onChange={setIncome}
+          />
+          <Field
+            id="money-savings"
+            label="自己資金"
+            value={savings}
+            suffix="万円"
+            min={0}
+            max={800}
+            step={50}
+            accent={BRAND.green}
+            onChange={setSavings}
+          />
 
           <div>
-            <label htmlFor="sim-income" className="text-[13px] font-bold" style={{ color: BRAND.text }}>
-              年収（任意）
-            </label>
-            <div className="mt-3 flex items-center gap-3">
-              <input
-                id="sim-income"
-                type="number"
-                value={income}
-                onChange={(event) => setIncome(Math.max(100, Number(event.target.value) || 0))}
-                className="min-h-[46px] w-full border bg-white px-3 text-[16px] font-bold tabular-nums focus:outline-none"
-                style={{ borderColor: BRAND.border, color: BRAND.text }}
-                min={100}
-                max={3000}
-                step={50}
-              />
-              <span className="shrink-0 text-[12px] font-bold" style={{ color: BRAND.muted }}>
-                万円
-              </span>
+            <p className="mb-3 text-[13px] font-bold" style={{ color: BRAND.text }}>
+              土地の状況
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {LAND_MODES.map((mode) => {
+                const active = landMode === mode.id;
+                return (
+                  <button
+                    key={mode.id}
+                    type="button"
+                    onClick={() => setLandMode(mode.id)}
+                    className="min-h-[62px] border px-2 py-2 text-left transition duration-200"
+                    style={{
+                      borderColor: active ? BRAND.red : BRAND.border,
+                      background: active ? BRAND.redSoft : "white",
+                      color: active ? BRAND.redDark : BRAND.text,
+                    }}
+                  >
+                    <span className="block text-[12px] font-black leading-[1.35]">{mode.label}</span>
+                    <span className="mt-1 block text-[10px] leading-[1.45]" style={{ color: active ? BRAND.redDark : BRAND.muted }}>
+                      {mode.note}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
+
+          {landMode !== "owned" && (
+            <Field
+              id="money-land-cost"
+              label="土地予算"
+              value={landCost}
+              suffix="万円"
+              min={500}
+              max={2500}
+              step={100}
+              onChange={setLandCost}
+            />
+          )}
         </div>
 
-        <div className="flex flex-col justify-between p-6 md:p-8">
+        <div className="flex flex-col justify-between p-5 md:p-7">
           <div>
             <div className="flex items-center gap-2">
-              <Calculator className="h-5 w-5" style={{ color: BRAND.deep }} strokeWidth={1.7} />
+              <Home className="h-5 w-5" style={{ color: BRAND.red }} strokeWidth={1.9} />
               <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
-                月々のお支払い
+                あなたの場合の総額目安
               </p>
             </div>
             <p className="mt-5 flex items-end gap-2 whitespace-nowrap">
               <span
-                className="font-oswald text-[clamp(62px,8vw,112px)] leading-[0.82] tracking-[0]"
-                style={{ color: BRAND.deep, fontWeight: 380, wordBreak: "keep-all", overflowWrap: "normal" }}
+                className="font-oswald text-[clamp(62px,9vw,116px)] leading-[0.82] tracking-[0]"
+                style={{ color: BRAND.red, fontWeight: 440, wordBreak: "keep-all", overflowWrap: "normal" }}
               >
-                {isFinite(monthlyMan) ? monthlyMan.toFixed(1) : "—"}
+                {formatMan(result.visibleTotal)}
               </span>
-              <span className="pb-2 text-[16px] font-bold" style={{ color: BRAND.text }}>
-                万円/月
+              <span className="pb-2 text-[16px] font-black" style={{ color: BRAND.text }}>
+                万円
               </span>
             </p>
-            <p className="mt-5 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-              約 {formatJpy(monthly)} 円/月。
-              <br />
-              総返済額: <span className="font-oswald text-[18px]" style={{ color: BRAND.text, fontWeight: 400 }}>{formatJpy(total / 10000)}</span> 万円
-              / うち利息: 約 <span className="font-oswald text-[18px]" style={{ color: BRAND.text, fontWeight: 400 }}>{formatJpy(total / 10000 - borrow)}</span> 万円
-            </p>
+
+            <div className="mt-6 grid gap-px overflow-hidden border md:grid-cols-3" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+              {[
+                ["借入目安", `${formatMan(result.borrowingMan)}万円`],
+                ["土地", landMode === "owned" ? "所有済み" : `${formatMan(result.effectiveLandCost)}万円`],
+                ["建物に回せる目安", `${formatMan(result.buildingCapacity)}万円`],
+              ].map(([label, value]) => (
+                <div key={label} className="bg-[#FFFDF7] p-4">
+                  <p className="text-[10px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                    {label}
+                  </p>
+                  <p className="mt-2 text-[16px] font-black leading-[1.35]" style={{ color: BRAND.text }}>
+                    {value}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 border-l-[5px] p-4" style={{ borderColor: BRAND.green, background: BRAND.greenSoft }}>
+              <p className="text-[18px] font-black leading-[1.45]" style={{ color: BRAND.green }}>
+                {result.verdict}
+              </p>
+              <p className="mt-2 text-[12px] leading-[1.85]" style={{ color: BRAND.muted }}>
+                {result.lead}
+              </p>
+            </div>
           </div>
 
-          <div className="mt-10 border-t pt-6" style={{ borderColor: BRAND.border }}>
+          <div className="mt-7 border-t pt-6" style={{ borderColor: BRAND.border }}>
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-2">
-                <Gauge className="h-5 w-5" style={{ color: ratioColor }} strokeWidth={1.7} />
+                <Gauge className="h-5 w-5" style={{ color: ratioTone }} strokeWidth={1.8} />
                 <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
                   返済比率
                 </p>
               </div>
               <p className="flex items-baseline gap-1">
-                <span className="font-oswald text-[42px] leading-none tracking-[0]" style={{ color: ratioColor, fontWeight: 400 }}>
-                  {isFinite(ratio) ? ratio.toFixed(1) : "—"}
+                <span className="font-oswald text-[42px] leading-none tracking-[0]" style={{ color: ratioTone, fontWeight: 430 }}>
+                  {result.ratio.toFixed(1)}
                 </span>
                 <span className="text-[12px] font-bold" style={{ color: BRAND.muted }}>
                   %
                 </span>
               </p>
             </div>
-            <p className="mt-2 text-[13px] font-bold" style={{ color: ratioColor }}>
-              {isFinite(ratio) ? ratioLabel : ""}
+            <p className="mt-2 text-[13px] font-black" style={{ color: ratioTone }}>
+              {ratioLabel}
             </p>
-            <p className="mt-2 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
-              25%以下がひとつの目安です。30%を超える場合は、借入額・期間・土地候補を見直します。
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={LINE_ADD_FRIEND_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[6px] px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-20px_rgba(6,199,85,0.82)]"
+                style={{ background: BRAND.line }}
+              >
+                <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
+                この条件で診断を頼む
+              </a>
+              <a
+                href="/reserve"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[6px] border px-5 py-3 text-[14px] font-black transition duration-300 hover:bg-[#171411] hover:text-white"
+                style={{ borderColor: BRAND.text, color: BRAND.text }}
+              >
+                相談枠を見る
+                <Send className="h-4 w-4" strokeWidth={1.9} />
+              </a>
+            </div>
+            <p className="mt-4 flex gap-2 text-[11px] leading-[1.7]" style={{ color: BRAND.muted }}>
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: BRAND.red }} strokeWidth={1.8} />
+              表示額は概算です。外構、登記、火災保険、金融機関条件、土地条件は個別に確認します。
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

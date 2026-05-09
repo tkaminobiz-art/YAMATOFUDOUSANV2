@@ -1,291 +1,139 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import {
   ArrowRight,
-  Minus,
-  PiggyBank,
-  Plus,
+  ChevronDown,
+  FileSearch,
+  Landmark,
+  MapPinned,
+  MessageCircle,
   ReceiptText,
-  ShieldCheck,
+  WalletCards,
+  type LucideIcon,
 } from "lucide-react";
-import { useScrollIn } from "@/hooks/useScrollIn";
-import CtaButton from "@/components/ui/CtaButton";
-import LoanSimulator from "@/components/money/LoanSimulator";
+import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 const BRAND = {
+  red: "#E84336",
+  redDark: "#8F211B",
+  redSoft: "#FFF0EE",
+  green: "#2F4A2C",
   lime: "#A9D159",
-  deep: "#2F4A2C",
-  base: "#F7F4EC",
-  ivory: "#FBF8EE",
-  text: "#1D1D18",
-  muted: "#5E5A50",
+  greenSoft: "#EDF5E4",
+  paper: "#F8F4EA",
+  ivory: "#FFFDF7",
+  ink: "#171411",
+  muted: "#625D52",
   border: "#DED8C8",
-  gold: "#9A7A3F",
   line: "#06C755",
 };
 
-const BUCKETS = [
-  { label: "建物本体", amount: "2,280〜2,480万円", body: "京・風・花の3プラン。標準仕様を含めて整理します。" },
-  { label: "土地代", amount: "500〜2,500万円", body: "大和郡山市矢田町など、価格を抑えやすい自社分譲地もご相談いただけます。" },
-  { label: "諸費用", amount: "200〜400万円", body: "登記・印紙税・ローン手数料・火災保険などの目安です。" },
-  { label: "引越し・家具", amount: "50〜150万円", body: "新生活に必要な費用も、最初から計画に入れておきます。" },
-] as const;
-
-const FUTURE_ROWS = [
-  { age: "40", title: "契約・建築開始", rent: "0", own: "0", note: "ここから月々の住居費を並べて見ます。" },
-  { age: "55", title: "15年目", rent: "1,530", own: "1,530", note: "月8.5万円の場合、累計支出はほぼ同じです。" },
-  { age: "65", title: "25年目", rent: "2,550", own: "2,550", note: "教育費・老後資金との兼ね合いを確認したい時期です。" },
-  { age: "75", title: "35年目", rent: "3,570", own: "3,570", note: "ローン完済の節目。ここから月々の負担の見え方が変わります。" },
-  { age: "85", title: "45年目", rent: "4,590", own: "3,700", note: "賃貸は家賃が続き、持ち家は固定資産税と修繕費が中心になります。" },
-] as const;
-
-const LOAN_TYPES = [
-  { title: "変動金利型", rate: "0.4〜0.7%", body: "当初の月々を抑えやすい一方で、金利上昇時の余力確認が必要です。" },
-  { title: "全期間固定型", rate: "1.7〜2.0%", body: "完済まで月々が変わらず、教育費や老後資金の見通しを立てやすい方式です。" },
-  { title: "固定期間選択型", rate: "1.0〜1.5%", body: "一定期間の金利を固定し、変動と固定の中間として検討できます。" },
-] as const;
-
-const SUPPORTS = [
-  "住宅ローン控除",
-  "年度ごとの住宅省エネ補助",
-  "GX志向型住宅に関する補助制度",
-  "贈与税の非課税特例",
-] as const;
-
-const FLOW_STEPS = [
+const ZERO_ROWS = [
   {
-    no: "01",
-    title: "暮らしの前提をそろえる",
-    body: "家族構成、時期、今の住居費、教育費の山。金額の前に生活の輪郭を見ます。",
-    image: "/images/works/case1-living.webp",
+    label: "仲介手数料",
+    market: "50〜100万円",
+    result: "当社分譲地なら不要",
+    body: "宅建会社直営の分譲地なら、仲介会社を挟みません。",
   },
   {
-    no: "02",
-    title: "総額と月々を並べる",
-    body: "土地・建物・諸費用・住宅ローンを一枚で見て、借りられる額ではなく返せる額へ寄せます。",
-    image: "/images/works/case2-kitchen.webp",
+    label: "つなぎ融資",
+    market: "30〜80万円",
+    result: "原則発生しない",
+    body: "土地分譲と建物施工を一体で進め、タイムラグを抑えます。",
   },
   {
-    no: "03",
-    title: "次に確認する一点を決める",
-    body: "金融機関、土地候補、FP相談、見学。次の一歩を小さく決めて持ち帰れます。",
-    image: "/images/works/case3-living.webp",
+    label: "地盤改良費",
+    market: "最大150万円",
+    result: "当社規定で負担",
+    body: "土地の状態を先に確認し、増えやすい費用を契約前に扱います。",
+  },
+] as const;
+
+const OUTPUTS: Array<{
+  icon: LucideIcon;
+  title: string;
+  body: string;
+}> = [
+  {
+    icon: WalletCards,
+    title: "土地込み総額の目安",
+    body: "土地・建物・諸費用・外構・引越しまで、ざっくり一枚で確認します。",
+  },
+  {
+    icon: Landmark,
+    title: "月々支払いの目安",
+    body: "借入額ではなく、家計に残る余白から判断できるようにします。",
+  },
+  {
+    icon: MapPinned,
+    title: "予算に合う土地候補",
+    body: "奈良・京都南部の自社分譲地を含め、候補を現実的に絞ります。",
+  },
+  {
+    icon: ReceiptText,
+    title: "増えやすい費用チェック表",
+    body: "仲介、つなぎ、地盤、登記、外構など、後で確認になりやすい項目を先出しします。",
   },
 ] as const;
 
 const FAQS: Array<{
   no: string;
   question: string;
-  teaser: string;
-  children: ReactNode;
+  answer: ReactNode;
 }> = [
   {
     no: "01",
-    question: "家のお金、総額でいくらですか？",
-    teaser: "土地・建物・諸費用・引越しまで、内訳で見ます。",
-    children: (
-      <div className="space-y-6">
+    question: "契約後、見積もりは増えませんか？",
+    answer: (
+      <>
         <p>
-          大まかな総額だけでなく、内訳から確認します。「含まれるもの」と「別途になるもの」を、最初の打ち合わせでそろえるためです。
+          正直に言うと、途中で「太陽光を追加したい」「収納を増やしたい」など仕様を上げる場合は金額が変わります。
+          だからこそ、契約前に「含まれるもの」「別途になるもの」「選ぶと増えるもの」を先に並べます。
         </p>
-        <div className="grid gap-px overflow-hidden border md:grid-cols-2" style={{ borderColor: BRAND.border, background: BRAND.border }}>
-          {BUCKETS.map((bucket) => (
-            <div key={bucket.label} className="bg-white p-5">
-              <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
-                {bucket.label}
-              </p>
-              <p className="mt-2 font-oswald text-[28px] leading-none" style={{ color: BRAND.deep, fontWeight: 400 }}>
-                {bucket.amount}
-              </p>
-              <p className="mt-3 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-                {bucket.body}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+        <p className="mt-4">
+          やまとの資金計画は、安く見せるための見積書ではありません。土地込み総額で、後から確認になりやすい費用を最初に見せるためのものです。
+        </p>
+      </>
     ),
   },
   {
     no: "02",
-    question: "月々のお支払いは、どれくらいですか？",
-    teaser: "借入2,500万円の試算例で、月7.1万円から。",
-    children: (
-      <div className="space-y-5">
-        <p>
-          試算例は、30代ご夫婦・お子さま1人、世帯年収500万円、借入2,500万円、金利1.0%、35年です。返済比率は年収の17%前後になります。
-        </p>
-        <p>
-          実際には、固定資産税・修繕費・火災保険・光熱費も含めて、生活費や教育費を圧迫しない範囲を一緒に確認します。
-        </p>
-      </div>
+    question: "つなぎ融資は本当に発生しないのですか？",
+    answer: (
+      <p>
+        やまとの土地と建物をセットで進める場合、土地購入から建物完成までのタイムラグを抑えられるため、つなぎ融資は原則発生しません。
+        ご自身の土地や金融機関の条件がある場合は個別に確認します。
+      </p>
     ),
   },
   {
     no: "03",
-    question: "つなぎ融資って、本当に発生しないのですか？",
-    teaser: "自社分譲地と建物をセットで進める場合、原則発生しません。",
-    children: (
-      <div className="space-y-5">
-        <p>
-          つなぎ融資は、土地購入から建物完成までの間に発生する一時的な借入です。一般的には金利・事務手数料・印紙代などで30〜80万円程度の上乗せになることがあります。
-        </p>
-        <div className="border p-5" style={{ borderColor: BRAND.deep, background: "rgba(169,209,89,0.16)" }}>
-          <p className="font-bold leading-[1.7]" style={{ color: BRAND.text }}>
-            やまとは土地分譲と建物施工を自社で一貫するため、土地購入と建物着工のタイムラグを抑えられます。
-          </p>
-        </div>
-        <p>
-          ご自身が所有されている土地で建てる場合や、特殊な金融機関の条件下では個別に確認します。
-        </p>
-      </div>
+    question: "土地がまだなくても相談していいですか？",
+    answer: (
+      <p>
+        むしろ土地がない段階で相談してください。土地価格が変わると、建てられる家も月々支払いも変わります。
+        やまとは自社分譲地を含めて、土地候補と建物を同時に見ます。
+      </p>
     ),
   },
   {
     no: "04",
-    question: "住宅ローンの種類と制度は、どう選びますか？",
-    teaser: "変動・固定・固定期間選択型と、補助制度を同時に見ます。",
-    children: (
-      <div className="space-y-7">
-        <div className="grid gap-3 md:grid-cols-3">
-          {LOAN_TYPES.map((item) => (
-            <div key={item.title} className="border bg-white p-5" style={{ borderColor: BRAND.border }}>
-              <p className="font-bold" style={{ color: BRAND.text }}>
-                {item.title}
-              </p>
-              <p className="mt-2 font-oswald text-[28px] leading-none" style={{ color: BRAND.deep, fontWeight: 400 }}>
-                {item.rate}
-              </p>
-              <p className="mt-3 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-                {item.body}
-              </p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
-            利用を検討できる制度
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {SUPPORTS.map((support) => (
-              <span key={support} className="border bg-white px-3 py-2 text-[12px]" style={{ borderColor: BRAND.border, color: BRAND.text }}>
-                {support}
-              </span>
-            ))}
-          </div>
-          <p className="mt-3 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
-            ※ 制度の要件・上限額・申請期間は年度・予算により変わります。最新情報を確認してご案内します。
-          </p>
-        </div>
-      </div>
+    question: "年収的に厳しいかどうかも見てもらえますか？",
+    answer: (
+      <p>
+        見ます。借りられる額ではなく、教育費・車・老後資金まで含めて無理が出にくい月々を確認します。
+        必要に応じて、独立した立場の提携先FP事務所にもつなげられます。
+      </p>
     ),
   },
   {
     no: "05",
-    question: "自社の土地は、どこにありますか？",
-    teaser: "大和郡山市矢田町ほか、奈良・京都南部でご相談いただけます。",
-    children: (
-      <div className="space-y-5">
-        <p>
-          やまと不動産は宅地分譲も事業の柱の一つです。中間業者を挟まないため、土地と建物のご相談をまとめて進めやすくなります。
-        </p>
-        <div className="grid gap-px overflow-hidden border md:grid-cols-3" style={{ borderColor: BRAND.border, background: BRAND.border }}>
-          {[
-            ["仲介手数料", "ゼロ", "宅建会社直営の分譲地。仲介会社を挟みません。"],
-            ["地盤改良費", "当社負担", "造成済みの分譲地では、地盤改良費を当社が負担します。"],
-            ["公開区画", "27区画", "累計分譲実績は90区画以上です。"],
-          ].map(([label, value, body]) => (
-            <div key={label} className="bg-white p-5">
-              <p className="text-[12px] font-bold" style={{ color: BRAND.muted }}>
-                {label}
-              </p>
-              <p className="mt-2 text-[24px] font-bold" style={{ color: BRAND.deep }}>
-                {value}
-              </p>
-              <p className="mt-3 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-                {body}
-              </p>
-            </div>
-          ))}
-        </div>
-        <Link href="/lots" className="inline-flex items-center gap-1 text-[13px] font-bold" style={{ color: BRAND.deep }}>
-          分譲区画を見る
-          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-        </Link>
-      </div>
-    ),
-  },
-  {
-    no: "06",
-    question: "FPは、どのような立場で相談に乗ってくれますか？",
-    teaser: "やまと社内ではなく、独立した立場の提携先FP事務所です。",
-    children: (
-      <div className="space-y-5">
-        <p>
-          ファイナンシャルプランナーは、家計やライフプランの整理を手伝う専門家です。やまと不動産にはFPは在籍していません。独立した立場の提携先FP事務所にご相談いただけます。
-        </p>
-        <div className="border p-5" style={{ borderColor: BRAND.border, background: BRAND.base }}>
-          <p className="font-bold leading-[1.7]" style={{ color: BRAND.text }}>
-            社内には住宅ローンアドバイザー資格保有者がおります。複数の金融機関から、ご状況に合うものを一緒に整理します。
-          </p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    no: "07",
-    question: "はじめての相談、何を持っていけばいいですか？",
-    teaser: "資料がなくても構いません。生活の前提から整理します。",
-    children: (
+    question: "相談したら契約を急かされませんか？",
+    answer: (
       <p>
-        手ぶらでも構いません。現在の家賃、希望エリア、時期、ご家族の人数など、わかる範囲から始めます。住宅ローンの事前審査が必要な場合も、段取りからご案内します。
-      </p>
-    ),
-  },
-  {
-    no: "08",
-    question: "返済が不安になった場合、どうなりますか？",
-    teaser: "無理な返済計画になる家づくりはおすすめしません。",
-    children: (
-      <p>
-        ご相談時に、月々の支払いが生活費・教育費を圧迫しない範囲を一緒に確認します。万が一に備えた団体信用生命保険の内容も、金融機関ごとに確認します。
-      </p>
-    ),
-  },
-  {
-    no: "09",
-    question: "用語がわからないまま進みませんか？",
-    teaser: "住宅ローンの基本用語も、ひとつずつ確認します。",
-    children: (
-      <div className="grid gap-px overflow-hidden border md:grid-cols-2" style={{ borderColor: BRAND.border, background: BRAND.border }}>
-        {[
-          ["元利均等返済", "毎月の返済額が一定で、家計が立てやすい方式です。"],
-          ["変動金利", "半年ごとに金利が見直されるタイプです。"],
-          ["団信", "契約者に万が一があった場合にローン残高がゼロになる保険です。"],
-          ["返済比率", "年収に対する年間返済額の割合。25%以下がひとつの目安です。"],
-        ].map(([term, body]) => (
-          <div key={term} className="bg-white p-4">
-            <p className="font-bold" style={{ color: BRAND.text }}>
-              {term}
-            </p>
-            <p className="mt-2 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-              {body}
-            </p>
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  {
-    no: "10",
-    question: "相談したら、契約を急かされませんか？",
-    teaser: "今は建てない、という判断も大切にします。",
-    children: (
-      <p>
-        やまとは資金相談を、契約を急かす場とは考えていません。提携FPと話したあとに「やっぱり今は建てない」とお決めになっても、遠慮なくご判断ください。
+        急かす場ではありません。まずは総額を知るための相談です。
+        「今は建てない」という判断になっても大丈夫です。判断材料を持ち帰ってください。
       </p>
     ),
   },
@@ -303,15 +151,21 @@ function SectionLead({
   align?: "left" | "center";
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-[760px] text-center" : "max-w-[780px]"}>
-      <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.16em] md:text-[12px]" style={{ color: BRAND.deep }}>
+    <div className={align === "center" ? "mx-auto max-w-[820px] text-center" : "max-w-[820px]"}>
+      <p
+        className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]"
+        style={{ color: BRAND.red }}
+      >
         {eyebrow}
       </p>
-      <h2 className="mt-4 text-[clamp(26px,3.2vw,48px)] font-bold leading-[1.3] tracking-[0]" style={{ color: BRAND.text }}>
+      <h2
+        className="mt-4 text-[clamp(28px,4vw,58px)] font-black leading-[1.18] tracking-[0]"
+        style={{ color: BRAND.ink }}
+      >
         {title}
       </h2>
       {body && (
-        <p className="mt-5 text-[14px] leading-[1.95] md:text-[15px]" style={{ color: BRAND.muted }}>
+        <p className="mt-5 text-[14px] leading-[1.95] md:text-[16px]" style={{ color: BRAND.muted }}>
           {body}
         </p>
       )}
@@ -319,267 +173,264 @@ function SectionLead({
   );
 }
 
-function LoanStudio() {
-  const ref = useScrollIn<HTMLDivElement>();
+function LineAnchor({ children }: { children: ReactNode }) {
   return (
-    <section id="loan-studio" className="scroll-mt-24 py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.base }}>
-      <div ref={ref} className="scroll-in mx-auto max-w-[1280px] px-[var(--page-px)]">
-        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-          <div>
-            <SectionLead
-              eyebrow="Loan Studio"
-              title={
-                <>
-                  借りられる額より、
-                  <br />
-                  返せる額へ。
-                </>
-              }
-              body={
-                <>
-                  住宅ローンは、低い金利で長く借りられる家計設計の手段でもあります。
-                  ただし、主役は借入額ではなく、暮らしが続く月々です。
-                </>
-              }
-            />
-            <div className="mt-9 grid gap-px overflow-hidden border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
-              {[
-                [PiggyBank, "返済比率", "25%以下をひとつの目安に、家計の余白を確認します。"],
-                [ReceiptText, "建築後の費用", "固定資産税・修繕費・保険・光熱費も月々に織り込みます。"],
-                [ShieldCheck, "万が一への備え", "団体信用生命保険や固定金利の選択も含めて確認します。"],
-              ].map(([Icon, title, body]) => {
-                const LucideIcon = Icon as typeof PiggyBank;
-                return (
-                  <div key={String(title)} className="flex gap-4 bg-white p-5">
-                    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[6px]" style={{ background: "rgba(169,209,89,0.22)", color: BRAND.deep }}>
-                      <LucideIcon className="h-5 w-5" strokeWidth={1.7} />
-                    </span>
-                    <div>
-                      <p className="text-[14px] font-bold" style={{ color: BRAND.text }}>
-                        {String(title)}
-                      </p>
-                      <p className="mt-1 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-                        {String(body)}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <LoanSimulator />
-        </div>
-      </div>
-    </section>
+    <a
+      href={LINE_ADD_FRIEND_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-20px_rgba(6,199,85,0.82)]"
+      style={{ background: BRAND.line }}
+    >
+      <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
+      {children}
+    </a>
   );
 }
 
-function FutureTimeline() {
-  const ref = useScrollIn<HTMLDivElement>();
+function ZeroDeclaration() {
   return (
-    <section className="py-[clamp(84px,9vw,180px)]" style={{ background: BRAND.ivory }}>
-      <div ref={ref} className="scroll-in mx-auto max-w-[1280px] px-[var(--page-px)]">
-        <SectionLead
-          align="center"
-          eyebrow="Future Ledger"
-          title={
-            <>
-              75歳の節目で、
-              <br className="sm:hidden" />
-              景色が変わります。
-            </>
-          }
-          body={
-            <>
-              40歳で契約、借入3,000万円・金利1.0%・35年ローン・月8.5万円の概算です。
-              同じ月8.5万円の家賃と並べると、完済後に残るものが変わります。
-            </>
-          }
-        />
-
-        <div className="mt-14 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-stretch">
-          <div className="border bg-white p-5 md:p-8" style={{ borderColor: BRAND.border }}>
-            <div className="grid gap-5">
-              {FUTURE_ROWS.map((row, index) => {
-                const isPivot = row.age === "75" || row.age === "85";
-                return (
-                  <article key={row.age} className="grid gap-4 border-b pb-5 last:border-b-0 last:pb-0 md:grid-cols-[88px_1fr]" style={{ borderColor: BRAND.border }}>
-                    <div>
-                      <p className="font-oswald text-[42px] leading-none tracking-[0]" style={{ color: isPivot ? BRAND.deep : BRAND.text, fontWeight: 390 }}>
-                        {row.age}
-                      </p>
-                      <p className="mt-1 text-[11px] font-bold" style={{ color: BRAND.muted }}>
-                        歳 / {row.title}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="grid grid-cols-[72px_1fr_auto] items-center gap-3">
-                        <span className="text-[12px] font-bold" style={{ color: BRAND.muted }}>
-                          賃貸
-                        </span>
-                        <span className="h-2 bg-[#E4DFD2]">
-                          <span className="block h-full" style={{ width: `${Math.max(index * 22, 4)}%`, background: "#9A9486" }} />
-                        </span>
-                        <span className="font-oswald text-[18px] leading-none" style={{ color: BRAND.text, fontWeight: 390 }}>
-                          {row.rent}万
-                        </span>
-                      </div>
-                      <div className="mt-2 grid grid-cols-[72px_1fr_auto] items-center gap-3">
-                        <span className="text-[12px] font-bold" style={{ color: BRAND.deep }}>
-                          持ち家
-                        </span>
-                        <span className="h-2 bg-[#E4DFD2]">
-                          <span className="block h-full" style={{ width: `${Math.max(Math.min(index * 21, 82), 4)}%`, background: BRAND.deep }} />
-                        </span>
-                        <span className="font-oswald text-[18px] leading-none" style={{ color: BRAND.deep, fontWeight: 390 }}>
-                          {row.own}万
-                        </span>
-                      </div>
-                      <p className="mt-3 text-[12px] leading-[1.8]" style={{ color: isPivot ? BRAND.deep : BRAND.muted }}>
-                        {row.note}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-
-          <aside className="flex flex-col justify-between border p-6" style={{ borderColor: BRAND.deep, background: BRAND.base }}>
-            <div>
-              <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.16em]" style={{ color: BRAND.deep }}>
-                At 75
-              </p>
-              <p className="mt-5 text-[18px] font-bold leading-[1.6]" style={{ color: BRAND.text }}>
-                月々の支払いはゼロへ。土地と建物が、資産として残ります。
-              </p>
-            </div>
-            <div className="mt-10">
-              <p className="flex items-baseline gap-1 whitespace-nowrap">
-                <span className="text-[28px] font-bold" style={{ color: BRAND.deep }}>
-                  〜
-                </span>
-                <span className="font-oswald text-[72px] leading-none tracking-[0]" style={{ color: BRAND.deep, fontWeight: 380 }}>
-                  4,500
-                </span>
-                <span className="text-[14px] font-bold" style={{ color: BRAND.text }}>
-                  万円相当
-                </span>
-              </p>
-              <p className="mt-4 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
-                土地2,500万円 + 建物2,000万円を想定した上限の目安。資産価値はエリア・建物の状態・市況により変動します。
-              </p>
-            </div>
-          </aside>
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ink }}>
+      <div className="mx-auto grid max-w-[1360px] gap-12 px-[var(--page-px)] lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+        <div>
+          <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.red }}>
+            Zero declaration
+          </p>
+          <h2 className="mt-4 text-[clamp(30px,4vw,60px)] font-black leading-[1.14] tracking-[0] text-white">
+            見積書の外に
+            <br />
+            追い出されやすい費用を、
+            <br />
+            先に潰す。
+          </h2>
+          <p className="mt-6 max-w-[620px] text-[14px] leading-[2] text-white/66 md:text-[16px]">
+            ここは上品にぼかしません。仲介手数料、つなぎ融資、地盤改良費。
+            家づくりの不透明さを、契約前に一つずつ処理します。
+          </p>
         </div>
-      </div>
-    </section>
-  );
-}
 
-function ConsultationFlow() {
-  const ref = useScrollIn<HTMLDivElement>();
-  return (
-    <section className="py-[clamp(82px,8vw,160px)]" style={{ background: BRAND.base }}>
-      <div ref={ref} className="scroll-in mx-auto max-w-[1280px] px-[var(--page-px)]">
-        <SectionLead
-          eyebrow="First Consultation"
-          title={
-            <>
-              相談は、資料よりも
-              <br />
-              生活の話から。
-            </>
-          }
-          body="手ぶらで構いません。まずは、ご家族の人数、時期、今の住居費、気になっている一点から始めます。"
-        />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {FLOW_STEPS.map((step) => (
-            <article key={step.no}>
-              <figure className="relative aspect-[4/3] overflow-hidden border" style={{ borderColor: BRAND.border }}>
-                <Image src={step.image} alt={step.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
-              </figure>
-              <div className="pt-5">
-                <p className="font-oswald text-[32px] leading-none" style={{ color: BRAND.deep, fontWeight: 360 }}>
-                  {step.no}
+        <div className="grid gap-px overflow-hidden border" style={{ borderColor: "rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.2)" }}>
+          {ZERO_ROWS.map((row) => (
+            <article key={row.label} className="grid gap-5 bg-[#201C18] p-5 md:grid-cols-[0.72fr_0.62fr_1fr] md:items-center md:p-7">
+              <div>
+                <p className="text-[12px] font-black tracking-[0.08em] text-white/52">
+                  {row.label}
                 </p>
-                <h3 className="mt-3 text-[17px] font-bold leading-[1.55] tracking-[0]" style={{ color: BRAND.text }}>
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
-                  {step.body}
+                <p className="mt-2 text-[13px] leading-[1.75] text-white/56">
+                  {row.body}
+                </p>
+              </div>
+              <div>
+                <p className="text-[11px] font-bold text-white/42">一般的に上乗せになりやすい目安</p>
+                <p className="mt-2 font-oswald text-[42px] leading-none tracking-[0]" style={{ color: BRAND.red, fontWeight: 430 }}>
+                  {row.market}
+                </p>
+              </div>
+              <div className="border-l-[5px] p-4" style={{ borderColor: BRAND.lime, background: "rgba(169,209,89,0.11)" }}>
+                <p className="text-[11px] font-bold text-white/48">やまとの扱い</p>
+                <p className="mt-2 text-[19px] font-black leading-[1.45] text-white">
+                  {row.result}
                 </p>
               </div>
             </article>
           ))}
         </div>
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <CtaButton href="/reserve" variant="primary" size="md" label="初回相談を予約する" sublabel="ご相談・事前審査は無料" icon="calendar" />
-          <CtaButton href="/contact" variant="secondary" size="md" label="まずは質問だけ" sublabel="メッセージで気軽にどうぞ" />
+      </div>
+    </section>
+  );
+}
+
+function ConsultationOutput() {
+  return (
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+      <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
+        <div className="grid gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:items-start">
+          <SectionLead
+            eyebrow="What you receive"
+            title={
+              <>
+                「問い合わせ」ではなく、
+                <br />
+                <span style={{ color: BRAND.red }}>自分の場合の答え</span>
+                を受け取る。
+              </>
+            }
+            body={
+              <>
+                人が欲しいのは資料ではなく、自分たちの場合どうなるのかです。
+                資金相談の到達点を、入力前から明確にします。
+              </>
+            }
+          />
+
+          <div className="grid gap-px overflow-hidden border md:grid-cols-2" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+            {OUTPUTS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="bg-white p-6 md:p-7">
+                  <span
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-[6px]"
+                    style={{ background: BRAND.redSoft, color: BRAND.red }}
+                  >
+                    <Icon className="h-5 w-5" strokeWidth={1.9} />
+                  </span>
+                  <h3 className="mt-5 text-[18px] font-black leading-[1.5] tracking-[0]" style={{ color: BRAND.ink }}>
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
+                    {item.body}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function QuestionItem({
-  item,
-  defaultOpen = false,
-}: {
-  item: (typeof FAQS)[number];
-  defaultOpen?: boolean;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
+function CtaStaircase() {
   return (
-    <article className="border bg-white" style={{ borderColor: open ? BRAND.deep : BRAND.border }}>
-      <button
-        type="button"
-        className="grid w-full grid-cols-[48px_1fr_auto] items-center gap-4 px-5 py-5 text-left transition-colors hover:bg-[#F7F4EC] md:px-7 md:py-6"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-      >
-        <span className="font-oswald text-[24px] leading-none" style={{ color: open ? BRAND.deep : "rgba(29,29,24,0.38)", fontWeight: 360 }}>
-          {item.no}
-        </span>
-        <span className="min-w-0">
-          <span className="block text-[15px] font-bold leading-[1.55] tracking-[0] md:text-[17px]" style={{ color: BRAND.text }}>
-            {item.question}
-          </span>
-          <span className="mt-1 block truncate text-[12px] md:text-[13px]" style={{ color: BRAND.muted }}>
-            {item.teaser}
-          </span>
-        </span>
-        <span className="flex h-9 w-9 items-center justify-center rounded-[6px]" style={{ background: open ? BRAND.deep : BRAND.base, color: open ? "white" : BRAND.deep }}>
-          {open ? <Minus className="h-4 w-4" strokeWidth={1.8} /> : <Plus className="h-4 w-4" strokeWidth={1.8} />}
-        </span>
-      </button>
-      <div className={`grid transition-[grid-template-rows,opacity] duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-        <div className="overflow-hidden">
-          <div className="border-t px-5 py-6 text-[13px] leading-[1.95] md:px-7 md:text-[14px]" style={{ borderColor: BRAND.border, color: BRAND.muted }}>
-            {item.children}
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.paper }}>
+      <div className="mx-auto grid max-w-[1360px] gap-12 px-[var(--page-px)] lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div>
+          <SectionLead
+            eyebrow="Next step"
+            title={
+              <>
+                いきなり来場予約ではなく、
+                <br />
+                <span style={{ color: BRAND.green }}>総額だけ先に見る。</span>
+              </>
+            }
+            body="まだ会社を決める段階でなくても大丈夫です。最初の一歩は、土地込み総額と月々支払いを知ることです。"
+          />
+
+          <div className="mt-10 grid gap-px overflow-hidden border" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+            {[
+              ["01", "30秒診断", "月々から土地込み総額の概算を見る。"],
+              ["02", "LINEで相談", "希望エリアと予算に合う土地候補を聞く。"],
+              ["03", "標準仕様を見る", "モデルハウスで、価格に含まれる設備を確認する。"],
+              ["04", "個別相談", "土地・建物・ローンを一枚にして決める。"],
+            ].map(([no, title, body]) => (
+              <div key={no} className="grid gap-4 bg-white p-5 md:grid-cols-[60px_1fr]">
+                <p className="font-oswald text-[34px] leading-none tracking-[0]" style={{ color: no === "01" ? BRAND.red : BRAND.green, fontWeight: 430 }}>
+                  {no}
+                </p>
+                <div>
+                  <h3 className="text-[16px] font-black leading-[1.45] tracking-[0]" style={{ color: BRAND.ink }}>
+                    {title}
+                  </h3>
+                  <p className="mt-1 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+                    {body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#diagnosis"
+              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5"
+              style={{ background: BRAND.red }}
+            >
+              30秒診断へ
+              <ArrowRight className="h-4 w-4" strokeWidth={2} />
+            </a>
+            <LineAnchor>LINEで候補を聞く</LineAnchor>
           </div>
         </div>
+
+        <figure className="relative aspect-[4/5] overflow-hidden border" style={{ borderColor: BRAND.border }}>
+          <Image
+            src="/images/works/case2-living.webp"
+            alt="家族が暮らすリビングの施工事例"
+            fill
+            sizes="(max-width: 1024px) 100vw, 48vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, rgba(23,20,17,0) 0%, rgba(23,20,17,0.78) 100%)" }}>
+            <p className="text-[18px] font-black leading-[1.55] text-white">
+              暮らしに必要な広さと予算を、一緒に確認できます。
+            </p>
+          </div>
+        </figure>
       </div>
-    </article>
+    </section>
   );
 }
 
-function QuestionsSection() {
-  const ref = useScrollIn<HTMLDivElement>();
+function QuestionItem({ item, open = false }: { item: (typeof FAQS)[number]; open?: boolean }) {
   return (
-    <section id="ch-questions" className="scroll-mt-24 py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
-      <div ref={ref} className="scroll-in mx-auto max-w-[1120px] px-[var(--page-px)]">
+    <details open={open} className="group border bg-white" style={{ borderColor: BRAND.border }}>
+      <summary className="grid cursor-pointer list-none grid-cols-[48px_1fr_auto] items-center gap-4 px-5 py-5 md:px-7 md:py-6 [&::-webkit-details-marker]:hidden">
+        <span className="font-oswald text-[28px] leading-none tracking-[0]" style={{ color: item.no === "01" ? BRAND.red : "rgba(23,20,17,0.38)", fontWeight: 430 }}>
+          {item.no}
+        </span>
+        <span className="text-[15px] font-black leading-[1.55] tracking-[0] md:text-[17px]" style={{ color: BRAND.ink }}>
+          {item.question}
+        </span>
+        <span className="flex h-9 w-9 items-center justify-center rounded-[6px]" style={{ background: BRAND.redSoft, color: BRAND.red }}>
+          <ChevronDown className="h-4 w-4 transition duration-300 group-open:rotate-180" strokeWidth={2} />
+        </span>
+      </summary>
+      <div className="border-t px-5 py-6 text-[13px] leading-[1.95] md:px-7 md:text-[14px]" style={{ borderColor: BRAND.border, color: BRAND.muted }}>
+        {item.answer}
+      </div>
+    </details>
+  );
+}
+
+function CombatFaq() {
+  return (
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+      <div className="mx-auto max-w-[1120px] px-[var(--page-px)]">
         <SectionLead
           align="center"
-          eyebrow="Question Library"
-          title="気になるところから、開いてください。"
-          body="資金計画の話は、一度で全部わからなくて大丈夫です。必要なところから、一点ずつ確認できます。"
+          eyebrow="Questions that matter"
+          title={
+            <>
+              最大の不安は、
+              <br />
+              FAQの奥に隠さない。
+            </>
+          }
+          body="細かな補足ではなく、問い合わせ前に頭の中で起きている不安へ先に答えます。"
         />
         <div className="mt-12 space-y-3">
           {FAQS.map((item, index) => (
-            <QuestionItem key={item.no} item={item} defaultOpen={index === 0} />
+            <QuestionItem key={item.no} item={item} open={index === 0} />
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function DocumentsBand() {
+  return (
+    <section className="py-[clamp(72px,7vw,130px)]" style={{ background: BRAND.green }}>
+      <div className="mx-auto grid max-w-[1180px] gap-7 px-[var(--page-px)] md:grid-cols-[auto_1fr_auto] md:items-center">
+        <span className="inline-flex h-14 w-14 items-center justify-center rounded-[6px] bg-white/12 text-white">
+          <FileSearch className="h-7 w-7" strokeWidth={1.8} />
+        </span>
+        <div>
+          <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em] text-white/62">
+            Before visiting
+          </p>
+          <h2 className="mt-2 text-[24px] font-black leading-[1.45] tracking-[0] text-white md:text-[36px]">
+            持ち物なしで大丈夫。今の家賃と希望エリアだけでも、総額の糸口は出せます。
+          </h2>
+        </div>
+        <Link
+          href="/lots"
+          className="inline-flex min-h-[54px] items-center justify-center gap-2 rounded-[6px] border border-white/70 px-5 py-3 text-[14px] font-black text-white transition duration-300 hover:bg-white hover:text-[#171411]"
+        >
+          土地候補を見る
+          <ArrowRight className="h-4 w-4" strokeWidth={2} />
+        </Link>
       </div>
     </section>
   );
@@ -588,10 +439,11 @@ function QuestionsSection() {
 export default function MoneyFullSection() {
   return (
     <>
-      <LoanStudio />
-      <FutureTimeline />
-      <ConsultationFlow />
-      <QuestionsSection />
+      <ZeroDeclaration />
+      <ConsultationOutput />
+      <CtaStaircase />
+      <CombatFaq />
+      <DocumentsBand />
     </>
   );
 }

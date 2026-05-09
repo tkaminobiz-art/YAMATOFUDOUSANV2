@@ -22,6 +22,11 @@ Last updated: 2026-05-09
 ### Brand colors
 Use only these tokens. New colors require explicit approval.
 
+**2026-05-09 update:** the headquarters signboard photo confirmed that red is a real
+Yamato visual asset, not an off-brand invention. Red may be used on conversion pages
+when the page needs to name risk, late-added costs, urgency, or the primary diagnostic
+action. Green remains the solution / proof color.
+
 | Token | Hex | Use |
 |-------|-----|-----|
 | `--brand-lime` | `#A9D159` | Brand accent (logo leaf, key highlights). Use sparingly. |
@@ -33,6 +38,9 @@ Use only these tokens. New colors require explicit approval.
 | `--brand-border` | `#DED8C8` | Hairlines, card borders |
 | `--brand-gold` | `#9A7A3F` | Muted gold accent |
 | `--brand-line-green` | `#06C755` | LINE service color (CTAs only) |
+| `--brand-sign-red` | `#E84336` | Headquarters signage red. Use for risk, hidden costs, urgency, and diagnostic CTA. |
+| `--brand-sign-red-dark` | `#8F211B` | Red text / dark contrast variant. |
+| `--brand-sign-red-soft` | `#FFF0EE` | Light red surface for warning and comparison areas. |
 
 ### Typography (2026-05-08 — B 案 Editorial Mincho 採用)
 

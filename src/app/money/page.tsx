@@ -1,111 +1,167 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import {
+  AlertTriangle,
   ArrowDown,
-  Building2,
-  Calculator,
+  ArrowRight,
+  BadgeCheck,
+  Banknote,
+  CheckCircle2,
+  Home,
   Landmark,
   MapPinned,
   MessageCircle,
+  ReceiptText,
   ShieldCheck,
   Sparkles,
-  WalletCards,
+  type LucideIcon,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
-import CtaButton from "@/components/ui/CtaButton";
+import LoanSimulator from "@/components/money/LoanSimulator";
 import MoneyFullSection from "@/components/money/MoneyFullSection";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
+import { getActiveLots } from "@/data/lots";
+import { FEATURED_WORKS } from "@/data/works";
 
 export const metadata: Metadata = {
-  title: "資金計画 | やまと不動産 花鳥風月",
+  title: "資金計画 | 土地込み総額を先に見る家づくり | やまと不動産",
   description:
-    "月々のお支払い、住宅ローン、つなぎ融資、提携FP相談まで。注文住宅の資金計画を、お客様目線でわかりやすく整理します。奈良・京都の注文住宅 やまと不動産。",
+    "奈良・京都南部で、土地代・建物代・外構・諸費用・住宅ローンまで最初に見える化。やまと不動産の資金計画ページです。",
 };
 
 const BRAND = {
+  red: "#E84336",
+  redDark: "#8F211B",
+  redSoft: "#FFF0EE",
+  green: "#2F4A2C",
   lime: "#A9D159",
-  deep: "#2F4A2C",
-  base: "#F7F4EC",
-  ivory: "#FBF8EE",
-  text: "#1D1D18",
-  muted: "#5E5A50",
+  greenSoft: "#EDF5E4",
+  paper: "#F8F4EA",
+  ivory: "#FFFDF7",
+  ink: "#171411",
+  muted: "#625D52",
   border: "#DED8C8",
-  gold: "#9A7A3F",
   line: "#06C755",
 };
 
-const HERO_IMAGE = "/images/newsozai/interior-ldk-01.webp";
+const ACTIVE_LOT_COUNT = getActiveLots().length;
 
-const MONEY_MAP = [
-  {
-    icon: Building2,
-    label: "建物本体",
-    value: "2,280〜2,480",
-    unit: "万円",
-    note: "京・風・花の3プラン。標準仕様を含めて整理します。",
-  },
+const COSTS: Array<{
+  icon: LucideIcon;
+  label: string;
+  amount: string;
+  body: string;
+}> = [
   {
     icon: MapPinned,
     label: "土地代",
-    value: "500〜2,500",
-    unit: "万円",
-    note: "奈良・京都南部の自社分譲地を含めてご相談いただけます。",
+    amount: "500〜2,500万円",
+    body: "エリアと駅距離で大きく動きます。建物価格より先に候補を絞る費用です。",
   },
   {
-    icon: WalletCards,
+    icon: ReceiptText,
     label: "諸費用",
-    value: "200〜400",
-    unit: "万円",
-    note: "登記・印紙税・ローン手数料・火災保険などの目安です。",
+    amount: "200〜400万円",
+    body: "登記、ローン手数料、火災保険、印紙税など。契約前に一覧化します。",
   },
   {
-    icon: Calculator,
-    label: "月々返済",
-    value: "7.1",
-    unit: "万円から",
-    note: "借入2,500万円・金利1.0%・35年の試算例です。",
+    icon: Banknote,
+    label: "つなぎ融資",
+    amount: "30〜80万円",
+    body: "一般的に上乗せされることがある費用。やまとの土地+建物なら原則発生しません。",
   },
+  {
+    icon: ShieldCheck,
+    label: "地盤改良費",
+    amount: "最大150万円",
+    body: "当社規定の範囲でやまとが負担。土地選びの時点で確認します。",
+  },
+  {
+    icon: Home,
+    label: "外構・家具・引越し",
+    amount: "50〜150万円+",
+    body: "住み始めるための費用まで、月々支払いの前提に入れておきます。",
+  },
+  {
+    icon: Landmark,
+    label: "住宅ローン",
+    amount: "35年",
+    body: "借りられる額ではなく、返せる月々から土地と建物を逆算します。",
+  },
+];
+
+const REVERSE_STEPS = [
+  ["01", "月々支払い", "家計に無理が出にくいラインを先に置きます。"],
+  ["02", "土地込み総額", "土地・建物・諸費用・外構を一枚で見ます。"],
+  ["03", "増えやすい費用", "地盤、つなぎ融資、仲介、登記を契約前に確認します。"],
+  ["04", "建てられる家", "その範囲で花・風・京のどれが現実的か決めます。"],
+] as const;
+
+const COMMON_STEPS = [
+  ["01", "建物価格を見る"],
+  ["02", "土地を後から探す"],
+  ["03", "諸費用・外構・地盤を後で確認"],
+  ["04", "総額と月々が最後に見える"],
 ] as const;
 
 const PROOFS = [
   {
-    label: "資金計画作成実績",
     value: "1,000",
     unit: "件以上",
-    body: "土地・建物・住宅ローンを切り離さず、総額から逆算します。",
+    label: "資金計画作成実績",
+    body: "家族ごとの総額ラインと月々支払いを整理してきた件数です。",
   },
   {
-    label: "つなぎ融資",
-    value: "0",
-    unit: "円",
-    body: "自社分譲地と建物をまとめて進める場合、原則発生しません。",
+    value: "600",
+    unit: "棟以上",
+    label: "引き渡し実績",
+    body: "予算相談の先に、実際に建った暮らしがあります。",
   },
   {
-    label: "75歳完済時に残ることがある資産",
-    value: "4,500",
-    unit: "万円相当",
-    body: "土地2,500万円 + 建物2,000万円を想定した上限の目安です。",
+    value: "90",
+    unit: "区画以上",
+    label: "分譲実績",
+    body: "土地なしのご家族にも、土地候補から提案できる土台です。",
+  },
+  {
+    value: String(ACTIVE_LOT_COUNT),
+    unit: "区画公開中",
+    label: "今見せられる候補",
+    body: "奈良・京都南部で、比較できる土地候補を持っています。",
   },
 ] as const;
 
-const MECHANISMS = [
+const MODELS = [
   {
-    no: "01",
-    title: "土地と建物を、一社で見る。",
-    body: "土地分譲・設計・施工・販売まで自社一貫。窓口を分けず、総額の見通しを早い段階でそろえます。",
+    jp: "花",
+    en: "HANA",
+    price: "2,480万円〜",
+    size: "33坪 / 4LDK",
+    body: "ゆとりを持たせたいご家族へ。収納やLDKの広さを諦めにくいモデルです。",
+    image: "/images/works/case1-living.webp",
+    badge: "専務一押し",
   },
   {
-    no: "02",
-    title: "つなぎ融資を、発生させにくい。",
-    body: "土地購入と建物着工のタイムラグを抑えられるため、一般的な30〜80万円程度の上乗せを避けやすくなります。",
+    jp: "風",
+    en: "KAZE",
+    price: "2,480万円〜",
+    size: "30坪 / 4LDK",
+    body: "価格と広さのバランスを取りやすいモデル。共働きの家事動線とも相性がいい設計です。",
+    image: "/images/works/case2-kitchen.webp",
+    badge: "バランス型",
   },
   {
-    no: "03",
-    title: "第三者目線のFPにもつなげる。",
-    body: "やまと社内ではなく、独立した立場の提携先FP事務所に家計全体の相談ができます。",
+    jp: "京",
+    en: "KYO",
+    price: "2,280万円〜",
+    size: "28坪 / 3LDK",
+    body: "総額を抑えやすい入口。土地条件と合わせて、月々の現実感をつくります。",
+    image: "/images/works/case3-living.webp",
+    badge: "総額重視",
   },
 ] as const;
 
@@ -121,24 +177,21 @@ function SectionLead({
   align?: "left" | "center";
 }) {
   return (
-    <div className={align === "center" ? "mx-auto max-w-[760px] text-center" : "max-w-[760px]"}>
+    <div className={align === "center" ? "mx-auto max-w-[820px] text-center" : "max-w-[820px]"}>
       <p
-        className="font-inter text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.16em]"
-        style={{ color: BRAND.deep }}
+        className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]"
+        style={{ color: BRAND.red }}
       >
         {eyebrow}
       </p>
       <h2
-        className="mt-4 text-[clamp(26px,3.2vw,48px)] leading-[1.28] tracking-[0]"
-        style={{ color: BRAND.text, fontWeight: 600 }}
+        className="mt-4 text-[clamp(28px,4vw,58px)] font-black leading-[1.18] tracking-[0]"
+        style={{ color: BRAND.ink }}
       >
         {title}
       </h2>
       {body && (
-        <p
-          className="mt-5 text-[14px] md:text-[15px] leading-[1.95]"
-          style={{ color: BRAND.muted }}
-        >
+        <p className="mt-5 text-[14px] leading-[1.95] md:text-[16px]" style={{ color: BRAND.muted }}>
           {body}
         </p>
       )}
@@ -146,16 +199,29 @@ function SectionLead({
   );
 }
 
-function LineButton({ children, className = "" }: { children: ReactNode; className?: string }) {
+function PrimaryAnchor({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_-22px_rgba(232,67,54,0.85)] md:px-8 md:text-[15px]"
+      style={{ background: BRAND.red }}
+    >
+      {children}
+      <ArrowRight className="h-4 w-4" strokeWidth={2} />
+    </a>
+  );
+}
+
+function LineAnchor({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <a
       href={LINE_ADD_FRIEND_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-7 py-4 text-[15px] font-bold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-18px_rgba(6,199,85,0.72)] ${className}`}
+      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-20px_rgba(6,199,85,0.82)] ${className}`}
       style={{ background: BRAND.line }}
     >
-      <MessageCircle className="h-5 w-5" strokeWidth={1.8} fill="currentColor" />
+      <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
       {children}
     </a>
   );
@@ -163,96 +229,149 @@ function LineButton({ children, className = "" }: { children: ReactNode; classNa
 
 function Hero() {
   return (
-    <section
-      className="relative isolate min-h-[calc(100svh-72px)] overflow-hidden"
-      style={{ background: BRAND.base }}
-    >
-      <div className="absolute inset-0">
-        <Image
-          src={HERO_IMAGE}
-          alt="やまと不動産の住まいのリビング"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-          style={{ filter: "saturate(0.92) contrast(1.04)" }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(247,244,236,0.98) 0%, rgba(247,244,236,0.92) 37%, rgba(247,244,236,0.54) 62%, rgba(247,244,236,0.10) 100%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 h-32"
-          style={{ background: `linear-gradient(180deg, rgba(247,244,236,0) 0%, ${BRAND.base} 100%)` }}
-        />
-      </div>
-
-      <div className="relative mx-auto grid min-h-[calc(100svh-72px)] max-w-[1440px] items-center px-[var(--page-px)] py-[clamp(80px,9vw,150px)]">
-        <div className="max-w-[760px]">
-          <p
-            className="font-inter text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.18em]"
-            style={{ color: BRAND.deep }}
+    <section className="relative isolate overflow-hidden" style={{ background: BRAND.paper }}>
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.22]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(23,20,17,0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(23,20,17,0.14) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+      <div className="relative mx-auto grid min-h-[calc(100svh-72px)] max-w-[1480px] gap-10 px-[var(--page-px)] py-[clamp(72px,8vw,128px)] lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div>
+          <div
+            className="inline-flex items-center gap-2 border px-3 py-2 text-[11px] font-black tracking-[0.08em]"
+            style={{ borderColor: BRAND.red, color: BRAND.red, background: BRAND.redSoft }}
           >
-            Yamato Money Planning
-          </p>
+            <AlertTriangle className="h-4 w-4" strokeWidth={2} />
+            建物価格だけで判断しない
+          </div>
           <h1
-            className="mt-6 text-[clamp(34px,5.4vw,82px)] leading-[1.08] tracking-[0]"
-            style={{ color: BRAND.text, fontWeight: 650 }}
+            className="mt-6 text-[clamp(38px,5.1vw,76px)] font-black leading-[1.06] tracking-[0]"
+            style={{ color: BRAND.ink }}
           >
-            家のお金、
-            <br />
-            ぜんぶお見せします。
+            <span className="block whitespace-nowrap">その建物価格、</span>
+            <span className="block whitespace-nowrap" style={{ color: BRAND.red }}>
+              土地代も外構も
+            </span>
+            <span className="block whitespace-nowrap">入っていますか？</span>
           </h1>
-          <p
-            className="mt-7 max-w-[560px] text-[15px] md:text-[17px] leading-[2]"
-            style={{ color: BRAND.muted }}
-          >
-            土地、建物、諸費用、住宅ローン、将来の住居費まで。
-            奈良・京都南部の家づくりを、総額からご一緒に見ていきます。
+          <p className="mt-7 max-w-[680px] text-[15px] leading-[2] md:text-[18px]" style={{ color: BRAND.muted }}>
+            「建物2,000万円台」だけで判断する前に、土地代・付帯工事・外構・諸費用・住宅ローンまで。
+            あなたの場合の土地込み総額を、最初に見える化します。
           </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <LineButton className="w-full sm:w-auto">LINEでお金の疑問を相談する</LineButton>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <PrimaryAnchor href="#diagnosis">無料で土地込み総額を診断する</PrimaryAnchor>
             <a
-              href="#money-map"
-              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] border px-7 py-4 text-[14px] font-bold transition duration-300 hover:bg-white/65 sm:w-auto"
-              style={{ borderColor: BRAND.border, color: BRAND.text }}
+              href="#costs"
+              className="inline-flex min-h-[58px] items-center justify-center gap-2 rounded-[6px] border px-6 py-4 text-[14px] font-black transition duration-300 hover:bg-white"
+              style={{ borderColor: BRAND.ink, color: BRAND.ink }}
             >
-              総額の見方へ
-              <ArrowDown className="h-4 w-4" strokeWidth={1.8} />
+              増えやすい費用を見る
+              <ArrowDown className="h-4 w-4" strokeWidth={2} />
             </a>
           </div>
 
-          <div
-            className="mt-12 grid max-w-[720px] grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3"
-            style={{ borderColor: "rgba(47,74,44,0.18)", background: "rgba(47,74,44,0.16)" }}
-          >
+          <div className="mt-10 grid gap-px overflow-hidden border sm:grid-cols-3" style={{ borderColor: BRAND.border, background: BRAND.border }}>
             {[
-              ["月々", "7.1", "万円から"],
-              ["つなぎ融資", "0", "円"],
+              ["京モデル", "2,280", "万円〜"],
               ["資金計画", "1,000", "件以上"],
+              ["公開区画", String(ACTIVE_LOT_COUNT), "区画"],
             ].map(([label, value, unit]) => (
-              <div key={label} className="bg-white/72 px-5 py-4 backdrop-blur-sm">
-                <p className="text-[11px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+              <div key={label} className="bg-white/88 p-4 backdrop-blur">
+                <p className="text-[11px] font-black tracking-[0.08em]" style={{ color: BRAND.muted }}>
                   {label}
                 </p>
                 <p className="mt-2 flex items-baseline gap-1 whitespace-nowrap">
-                  <span
-                    className="font-oswald tabular-nums text-[clamp(34px,4vw,54px)] leading-none tracking-[0]"
-                    style={{ color: BRAND.deep, fontWeight: 420 }}
-                  >
+                  <span className="font-oswald text-[44px] leading-none tracking-[0]" style={{ color: BRAND.red, fontWeight: 430 }}>
                     {value}
                   </span>
-                  <span className="text-[12px] font-bold" style={{ color: BRAND.text }}>
+                  <span className="text-[12px] font-black" style={{ color: BRAND.ink }}>
                     {unit}
                   </span>
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-7 grid grid-cols-3 gap-2">
+            {[
+              ["/images/newsozai/exterior-entrance-01.webp", "やまと不動産のモデルハウス外観"],
+              ["/images/works/case2-kitchen.webp", "やまと不動産のキッチン施工事例"],
+              ["/images/works/case1-living.webp", "やまと不動産のリビング施工事例"],
+            ].map(([src, alt]) => (
+              <figure key={src} className="relative aspect-[4/3] overflow-hidden border" style={{ borderColor: BRAND.border }}>
+                <Image src={src} alt={alt} fill sizes="(max-width: 1024px) 30vw, 220px" className="object-cover" />
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        <LoanSimulator />
+      </div>
+    </section>
+  );
+}
+
+function CostAuditSection() {
+  return (
+    <section id="costs" className="scroll-mt-24 py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+      <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
+        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+          <SectionLead
+            eyebrow="Cost audit"
+            title={
+              <>
+                怖いのは、建てられないことではなく
+                <br />
+                <span style={{ color: BRAND.red }}>後から総額が変わること。</span>
+              </>
+            }
+            body={
+              <>
+                家づくりで見落としやすいのは、間取りより先に、契約前に見えていない費用です。
+                だから最初に「何が含まれ、何が別で、どこが増えやすいか」を明らかにします。
+              </>
+            }
+          />
+
+          <div>
+            <div className="grid gap-px overflow-hidden border md:grid-cols-2" style={{ borderColor: BRAND.border, background: BRAND.border }}>
+              {COSTS.map((item, index) => {
+                const Icon = item.icon;
+                const hot = index < 4;
+                return (
+                  <article key={item.label} className="min-h-[210px] bg-white p-6 md:p-7">
+                    <div className="flex items-start justify-between gap-5">
+                      <div>
+                        <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                          {item.label}
+                        </p>
+                        <p className="mt-4 font-oswald text-[40px] leading-none tracking-[0]" style={{ color: hot ? BRAND.red : BRAND.green, fontWeight: 430 }}>
+                          {item.amount}
+                        </p>
+                      </div>
+                      <span
+                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px]"
+                        style={{ background: hot ? BRAND.redSoft : BRAND.greenSoft, color: hot ? BRAND.red : BRAND.green }}
+                        aria-hidden
+                      >
+                        <Icon className="h-5 w-5" strokeWidth={1.9} />
+                      </span>
+                    </div>
+                    <p className="mt-6 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
+                      {item.body}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
+            <p className="mt-4 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
+              ※ 金額は目安です。土地・金融機関・時期・ご家族の状況により変動します。
+            </p>
           </div>
         </div>
       </div>
@@ -260,97 +379,73 @@ function Hero() {
   );
 }
 
-function MoneyMap() {
+function ReverseProcessSection() {
   return (
-    <section id="money-map" className="relative scroll-mt-24 py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.base }}>
-      <div className="mx-auto max-w-[1280px] px-[var(--page-px)]">
-        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-          <SectionLead
-            eyebrow="Total Budget Map"
-            title={
-              <>
-                先に見るのは、
-                <br />
-                借入額ではなく総額です。
-              </>
-            }
-            body={
-              <>
-                「建物はいくらか」だけでは、家づくりのお金は見えません。
-                やまとでは、土地・建物・諸費用・月々返済をひとつの地図にして、最初に全体像をそろえます。
-              </>
-            }
-          />
+    <section className="py-[clamp(86px,9vw,180px)]" style={{ background: BRAND.paper }}>
+      <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
+        <SectionLead
+          align="center"
+          eyebrow="Reverse process"
+          title={
+            <>
+              建物価格から始めない。
+              <br />
+              <span style={{ color: BRAND.green }}>月々と総額から逆算する。</span>
+            </>
+          }
+          body="順番が変わると、同じ予算でも選ぶべき土地と建物がはっきりします。まず月々から、無理のない総額を置きます。"
+        />
 
-          <div className="relative">
-            <div
-              aria-hidden
-              className="absolute inset-6 -z-10"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(47,74,44,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(47,74,44,0.12) 1px, transparent 1px)",
-                backgroundSize: "28px 28px",
-              }}
-            />
-            <div
-              className="grid gap-px overflow-hidden border md:grid-cols-2"
-              style={{ borderColor: BRAND.border, background: BRAND.border }}
-            >
-              {MONEY_MAP.map((item) => {
-                const Icon = item.icon;
-                const isRange = item.value.includes("〜");
-                const [from, to] = isRange ? item.value.split("〜") : [item.value, ""];
-                return (
-                  <article key={item.label} className="min-h-[220px] bg-[#FBF8EE] p-6 md:p-8">
-                    <div className="flex items-start justify-between gap-6">
-                      <div>
-                        <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
-                          {item.label}
-                        </p>
-                        {isRange ? (
-                          <div className="mt-5" style={{ wordBreak: "keep-all", overflowWrap: "normal" }}>
-                            <p className="font-oswald tabular-nums text-[clamp(42px,5vw,62px)] leading-[0.9] tracking-[0]" style={{ color: BRAND.deep, fontWeight: 380 }}>
-                              {from}
-                              <span className="ml-1 text-[0.72em]">〜</span>
-                            </p>
-                            <p className="mt-2 flex items-baseline gap-1.5 whitespace-nowrap">
-                              <span className="font-oswald tabular-nums text-[clamp(42px,5vw,62px)] leading-none tracking-[0]" style={{ color: BRAND.deep, fontWeight: 380 }}>
-                                {to}
-                              </span>
-                              <span className="text-[13px] font-bold" style={{ color: BRAND.text }}>
-                                {item.unit}
-                              </span>
-                            </p>
-                          </div>
-                        ) : (
-                          <p className="mt-5 flex items-baseline gap-1.5 whitespace-nowrap" style={{ wordBreak: "keep-all", overflowWrap: "normal" }}>
-                            <span className="font-oswald tabular-nums text-[clamp(50px,6.8vw,84px)] leading-none tracking-[0]" style={{ color: BRAND.deep, fontWeight: 380 }}>
-                              {item.value}
-                            </span>
-                            <span className="text-[13px] font-bold" style={{ color: BRAND.text }}>
-                              {item.unit}
-                            </span>
-                          </p>
-                        )}
-                      </div>
-                      <span
-                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px]"
-                        style={{ background: "rgba(169,209,89,0.28)", color: BRAND.deep }}
-                        aria-hidden
-                      >
-                        <Icon className="h-5 w-5" strokeWidth={1.7} />
-                      </span>
-                    </div>
-                    <p className="mt-7 text-[13px] leading-[1.85]" style={{ color: BRAND.muted }}>
-                      {item.note}
-                    </p>
-                  </article>
-                );
-              })}
+        <div className="mt-12 grid gap-4 lg:grid-cols-[1fr_1fr]">
+          <div className="border bg-white" style={{ borderColor: BRAND.border }}>
+            <div className="border-b p-5" style={{ borderColor: BRAND.border, background: BRAND.redSoft }}>
+              <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.red }}>
+                よくある迷い方
+              </p>
+              <h3 className="mt-2 text-[20px] font-black tracking-[0]" style={{ color: BRAND.ink }}>
+                最後に総額が見える
+              </h3>
             </div>
-            <p className="mt-4 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
-              ※ 金額は目安です。土地価格・金融機関・時期・ご家族の状況により変動します。
-            </p>
+            <div className="divide-y" style={{ borderColor: BRAND.border }}>
+              {COMMON_STEPS.map(([no, title]) => (
+                <div key={no} className="grid grid-cols-[56px_1fr] gap-4 p-5">
+                  <span className="font-oswald text-[30px] leading-none tracking-[0]" style={{ color: "rgba(232,67,54,0.45)", fontWeight: 420 }}>
+                    {no}
+                  </span>
+                  <p className="text-[15px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                    {title}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border bg-white shadow-[0_26px_70px_-48px_rgba(47,74,44,0.8)]" style={{ borderColor: BRAND.green }}>
+            <div className="border-b p-5" style={{ borderColor: "rgba(47,74,44,0.28)", background: BRAND.greenSoft }}>
+              <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.green }}>
+                やまとの進め方
+              </p>
+              <h3 className="mt-2 text-[20px] font-black tracking-[0]" style={{ color: BRAND.ink }}>
+                最初に総額が見える
+              </h3>
+            </div>
+            <div className="divide-y" style={{ borderColor: BRAND.border }}>
+              {REVERSE_STEPS.map(([no, title, body]) => (
+                <div key={no} className="grid grid-cols-[56px_1fr] gap-4 p-5">
+                  <span className="font-oswald text-[30px] leading-none tracking-[0]" style={{ color: BRAND.green, fontWeight: 440 }}>
+                    {no}
+                  </span>
+                  <div>
+                    <p className="text-[15px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                      {title}
+                    </p>
+                    <p className="mt-1 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+                      {body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -360,49 +455,167 @@ function MoneyMap() {
 
 function ProofSection() {
   return (
-    <section className="relative py-[clamp(76px,8vw,150px)]" style={{ background: BRAND.ivory }}>
-      <div className="mx-auto max-w-[1280px] px-[var(--page-px)]">
+    <section className="py-[clamp(84px,8vw,160px)]" style={{ background: BRAND.ink }}>
+      <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
+        <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+          <SectionLead
+            eyebrow="Proof, not brochure"
+            title={
+              <span className="text-white">
+                不安の直後に、
+                <br />
+                証拠を置く。
+              </span>
+            }
+            body={
+              <span className="text-white/68">
+                実績は自己紹介ではありません。土地なし、総額不安、住宅ローン不安に向き合ってきた証拠として見せます。
+              </span>
+            }
+          />
+
+          <div className="grid gap-px overflow-hidden border md:grid-cols-4" style={{ borderColor: "rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.18)" }}>
+            {PROOFS.map((proof) => (
+              <article key={proof.label} className="bg-[#201C18] p-5 md:p-6">
+                <p className="text-[11px] font-black tracking-[0.08em] text-white/48">
+                  {proof.label}
+                </p>
+                <p className="mt-4 flex items-baseline gap-1 whitespace-nowrap">
+                  <span className="font-oswald text-[54px] leading-none tracking-[0]" style={{ color: BRAND.lime, fontWeight: 430 }}>
+                    {proof.value}
+                  </span>
+                  <span className="text-[12px] font-black text-white">
+                    {proof.unit}
+                  </span>
+                </p>
+                <p className="mt-4 text-[12px] leading-[1.8] text-white/62">
+                  {proof.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MechanismTeaser() {
+  return (
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+      <div className="mx-auto grid max-w-[1360px] gap-12 px-[var(--page-px)] lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
+        <div>
+          <SectionLead
+            eyebrow="Yamato mechanism"
+            title={
+              <>
+                価格を削るのではなく、
+                <br />
+                <span style={{ color: BRAND.green }}>余分を乗せない。</span>
+              </>
+            }
+            body={
+              <>
+                やまとは「安く見せる見積もり」では進めません。土地分譲・設計・施工・販売を一体で扱うことで、
+                見積もりの外側に出やすい費用を先に整理します。
+              </>
+            }
+          />
+
+          <div className="mt-9 grid gap-3 sm:grid-cols-2">
+            {[
+              "自社分譲地を持つ",
+              "土地・設計・施工を一体対応",
+              "専用展示場を持たない",
+              "高額広告費をかけない",
+              "標準仕様を先に明示",
+              "地盤改良費を当社規定で負担",
+            ].map((item) => (
+              <div key={item} className="flex items-center gap-3 border bg-white p-4" style={{ borderColor: BRAND.border }}>
+                <CheckCircle2 className="h-5 w-5 shrink-0" style={{ color: BRAND.green }} strokeWidth={2} />
+                <p className="text-[13px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <figure className="relative aspect-[4/5] overflow-hidden border" style={{ borderColor: BRAND.border }}>
+          <Image
+            src="/images/newsozai/exterior-terrace-01.webp"
+            alt="やまと不動産の実際の住まい外観"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+            style={{ filter: "saturate(0.95) contrast(1.04)" }}
+          />
+          <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, rgba(23,20,17,0) 0%, rgba(23,20,17,0.78) 100%)" }}>
+            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/70">
+              Real Yamato Photo
+            </p>
+            <p className="mt-2 max-w-[460px] text-[18px] font-black leading-[1.55] text-white">
+              実際の住まいを見ながら、標準仕様と追加範囲を確認できます。
+            </p>
+          </div>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
+function ModelSection() {
+  return (
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.paper }}>
+      <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
         <SectionLead
           align="center"
-          eyebrow="Three Proofs"
+          eyebrow="Plans after money"
           title={
             <>
-              不安をあおらず、
-              <br className="sm:hidden" />
-              数字でほどく。
+              商品を選ぶのは、
+              <br />
+              <span style={{ color: BRAND.red }}>総額が見えてから。</span>
             </>
           }
-          body="資金計画ページで最初に伝えるべきことを、3つに絞ります。大きく見せるより、誤解なく残ることを優先します。"
+          body="花・風・京は、最初に見せる商品カタログではなく、総額診断のあとに選ぶ現実的な選択肢です。"
         />
 
-        <div className="mt-12 grid gap-px overflow-hidden border md:grid-cols-3" style={{ borderColor: BRAND.border, background: BRAND.border }}>
-          {PROOFS.map((proof, index) => (
-            <article key={proof.label} className="bg-white p-6 md:p-8">
-              <p className="font-oswald text-[18px] leading-none" style={{ color: "rgba(29,29,24,0.34)", fontWeight: 360 }}>
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <p className="mt-7 text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
-                {proof.label}
-              </p>
-              <p className="mt-4 flex items-baseline gap-1.5 whitespace-nowrap">
-                {proof.value === "4,500" && (
-                  <span className="text-[24px] font-bold" style={{ color: BRAND.deep }}>
-                    〜
-                  </span>
-                )}
+        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+          {MODELS.map((model) => (
+            <article key={model.jp} className="border bg-white" style={{ borderColor: BRAND.border }}>
+              <figure className="relative aspect-[16/10] overflow-hidden">
+                <Image src={model.image} alt={`${model.jp}モデルの暮らしイメージ`} fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" />
                 <span
-                  className="font-oswald tabular-nums text-[clamp(56px,7vw,96px)] leading-none tracking-[0]"
-                  style={{ color: index === 1 ? BRAND.lime : BRAND.deep, fontWeight: 390 }}
+                  className="absolute left-4 top-4 border px-3 py-1 text-[11px] font-black"
+                  style={{ borderColor: model.jp === "京" ? BRAND.green : BRAND.red, color: model.jp === "京" ? BRAND.green : BRAND.red, background: "rgba(255,255,255,0.9)" }}
                 >
-                  {proof.value}
+                  {model.badge}
                 </span>
-                <span className="text-[14px] font-bold" style={{ color: BRAND.text }}>
-                  {proof.unit}
-                </span>
-              </p>
-              <p className="mt-5 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
-                {proof.body}
-              </p>
+              </figure>
+              <div className="p-6">
+                <div className="flex items-end justify-between gap-4">
+                  <div>
+                    <p className="font-inter text-[11px] font-semibold tracking-[0.12em]" style={{ color: BRAND.muted }}>
+                      {model.en}
+                    </p>
+                    <h3 className="mt-1 text-[34px] font-black leading-none tracking-[0]" style={{ color: BRAND.ink }}>
+                      {model.jp}
+                    </h3>
+                  </div>
+                  <p className="text-right">
+                    <span className="block font-oswald text-[34px] leading-none tracking-[0]" style={{ color: model.jp === "花" ? BRAND.lime : BRAND.red, fontWeight: 440 }}>
+                      {model.price}
+                    </span>
+                    <span className="mt-1 block text-[11px] font-bold" style={{ color: BRAND.muted }}>
+                      {model.size}
+                    </span>
+                  </p>
+                </div>
+                <p className="mt-5 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
+                  {model.body}
+                </p>
+              </div>
             </article>
           ))}
         </div>
@@ -411,83 +624,49 @@ function ProofSection() {
   );
 }
 
-function MechanismSection() {
+function CaseSection() {
   return (
-    <section className="relative overflow-hidden py-[clamp(86px,9vw,180px)]" style={{ background: BRAND.base }}>
-      <div className="mx-auto grid max-w-[1280px] gap-12 px-[var(--page-px)] lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-        <div>
-          <SectionLead
-            eyebrow="Yamato Mechanism"
-            title={
-              <>
-                価格を削るのではなく、
-                <br />
-                余分を乗せない。
-              </>
-            }
-            body={
-              <>
-                やまとは「安い会社」として見せません。
-                土地・建物・資金を一社で扱うから、費用の見え方が整理しやすい。その仕組みを、資金計画ページの主役にします。
-              </>
-            }
-          />
+    <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ivory }}>
+      <div className="mx-auto max-w-[1360px] px-[var(--page-px)]">
+        <SectionLead
+          eyebrow="Cases as proof"
+          title={
+            <>
+              事例は、写真よりも
+              <br />
+              <span style={{ color: BRAND.green }}>不安から決断まで。</span>
+            </>
+          }
+          body="同じ悩みがあったご家族の、土地・予算・間取りの解き方を見てください。"
+        />
 
-          <div className="mt-10 space-y-4">
-            {MECHANISMS.map((item) => (
-              <article
-                key={item.no}
-                className="grid grid-cols-[48px_1fr] gap-5 border-t pt-5"
-                style={{ borderColor: BRAND.border }}
-              >
-                <span className="font-oswald text-[24px] leading-none" style={{ color: BRAND.deep, fontWeight: 360 }}>
-                  {item.no}
-                </span>
-                <div>
-                  <h3 className="text-[17px] font-bold leading-[1.55] tracking-[0]" style={{ color: BRAND.text }}>
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
-                    {item.body}
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          {FEATURED_WORKS.map((work) => (
+            <article key={work.id} className="border bg-white" style={{ borderColor: BRAND.border }}>
+              <figure className="relative aspect-[4/3] overflow-hidden">
+                <Image src={work.subs[0] ?? work.main} alt={work.title} fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" />
+              </figure>
+              <div className="p-6">
+                <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.red }}>
+                  {work.title} / {work.model}
+                </p>
+                <h3 className="mt-4 text-[19px] font-black leading-[1.55] tracking-[0]" style={{ color: BRAND.ink }}>
+                  {work.challenge}
+                </h3>
+                <div className="mt-5 border-l-[5px] p-4" style={{ borderColor: BRAND.green, background: BRAND.greenSoft }}>
+                  <p className="text-[12px] font-black" style={{ color: BRAND.green }}>
+                    設計での解決
+                  </p>
+                  <p className="mt-2 text-[14px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                    {work.solution}
                   </p>
                 </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative">
-          <figure className="relative aspect-[4/5] overflow-hidden border" style={{ borderColor: BRAND.border }}>
-            <Image
-              src="/images/newsozai/exterior-terrace-01.webp"
-              alt="やまと不動産の実際の住まい外観"
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-              style={{ filter: "saturate(0.92) contrast(1.03)" }}
-            />
-            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(29,29,24,0.48) 100%)" }} />
-            <figcaption className="absolute bottom-5 left-5 right-5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/78">
-                Real Yamato Photo
-              </p>
-              <p className="mt-2 text-[18px] font-bold leading-[1.45] tracking-[0] text-white">
-                建物写真は、実際のやまと写真を起点に扱います。
-              </p>
-            </figcaption>
-          </figure>
-
-          <div
-            className="absolute -bottom-8 -left-5 max-w-[310px] border bg-white p-5 shadow-[0_24px_60px_-34px_rgba(29,29,24,0.55)] md:-left-10"
-            style={{ borderColor: BRAND.border }}
-          >
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" style={{ color: BRAND.deep }} strokeWidth={1.8} />
-              <p className="text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
-                IMAGE2を使う場合も、建物の形・素材・所在地事実は変えず、色味や空の印象のブラッシュアップに限定します。
-              </p>
-            </div>
-          </div>
+                <p className="mt-5 text-[12px] leading-[1.85]" style={{ color: BRAND.muted }}>
+                  {work.family} / {work.spec} / {work.meta?.priceRange ?? "価格帯確認中"}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -496,24 +675,23 @@ function MechanismSection() {
 
 function MidCta() {
   return (
-    <section className="py-[clamp(58px,6vw,110px)]" style={{ background: BRAND.ivory }}>
+    <section className="py-[clamp(64px,6vw,110px)]" style={{ background: BRAND.paper }}>
       <div className="mx-auto max-w-[1120px] px-[var(--page-px)]">
-        <div
-          className="grid gap-7 border p-6 md:grid-cols-[1fr_auto] md:items-center md:p-9"
-          style={{ borderColor: BRAND.border, background: BRAND.base }}
-        >
+        <div className="grid gap-7 border p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8" style={{ borderColor: BRAND.red, background: "white" }}>
           <div>
-            <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.16em]" style={{ color: BRAND.deep }}>
-              Money / First Question
+            <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.red }}>
+              First answer
             </p>
-            <h2 className="mt-3 text-[22px] font-bold leading-[1.45] tracking-[0] md:text-[30px]" style={{ color: BRAND.text }}>
-              気になる一点から、解決の糸口を見つけます。
+            <h2 className="mt-3 text-[23px] font-black leading-[1.45] tracking-[0] md:text-[34px]" style={{ color: BRAND.ink }}>
+              家づくりは、まだ決めなくて大丈夫です。
+              <br />
+              でも、総額だけは早く知ってください。
             </h2>
-            <p className="mt-3 max-w-[620px] text-[13px] leading-[1.9] md:text-[14px]" style={{ color: BRAND.muted }}>
-              住宅ローン、土地代、頭金、つなぎ融資。まだ言葉になっていない疑問からで構いません。
+            <p className="mt-3 max-w-[700px] text-[13px] leading-[1.9] md:text-[14px]" style={{ color: BRAND.muted }}>
+              知らないまま展示場を回るほど、判断は難しくなります。まずは土地込み総額の目安から。
             </p>
           </div>
-          <LineButton className="w-full md:w-auto">LINEで一点だけ相談する</LineButton>
+          <PrimaryAnchor href="#diagnosis">30秒診断に戻る</PrimaryAnchor>
         </div>
       </div>
     </section>
@@ -522,52 +700,53 @@ function MidCta() {
 
 function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-[clamp(88px,9vw,180px)]" style={{ background: BRAND.deep }}>
+    <section className="relative overflow-hidden py-[clamp(88px,9vw,180px)]" style={{ background: BRAND.red }}>
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.14]"
+        className="absolute inset-0 opacity-[0.18]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.45) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.45) 1px, transparent 1px)",
-          backgroundSize: "34px 34px",
+            "linear-gradient(rgba(255,255,255,0.65) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.65) 1px, transparent 1px)",
+          backgroundSize: "36px 36px",
         }}
       />
-      <div className="relative mx-auto max-w-[920px] px-[var(--page-px)] text-center">
-        <Sparkles className="mx-auto h-7 w-7" style={{ color: BRAND.lime }} strokeWidth={1.5} />
-        <p className="mt-7 font-inter text-[11px] font-semibold uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.68)" }}>
-          Private Money Consultation
+      <div className="relative mx-auto max-w-[980px] px-[var(--page-px)] text-center">
+        <Sparkles className="mx-auto h-7 w-7 text-white" strokeWidth={1.8} />
+        <p className="mt-7 font-inter text-[11px] font-semibold uppercase tracking-[0.12em] text-white/70">
+          Total cost first
         </p>
-        <h2 className="mt-5 text-[clamp(28px,4vw,56px)] font-bold leading-[1.28] tracking-[0] text-white">
-          気になる一点から、
+        <h2 className="mt-5 text-[clamp(30px,4.7vw,68px)] font-black leading-[1.15] tracking-[0] text-white">
+          土地込み総額を知らないまま、
           <br />
-          解決の糸口を見つけます。
+          家づくりを進めない。
         </h2>
-        <p className="mx-auto mt-6 max-w-[620px] text-[14px] leading-[2] text-white/72 md:text-[15px]">
-          LINE・ご来場・フォーム・お電話、どの窓口でも構いません。
-          ご相談後に「今は建てない」とお決めになっても、それで構いません。
+        <p className="mx-auto mt-6 max-w-[680px] text-[14px] leading-[2] text-white/78 md:text-[16px]">
+          LINEで希望エリア・月々予算・土地の状況を送ってください。
+          奈良・京都南部で現実的に選べる候補と、増えやすい費用を先に整理します。
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <LineButton className="w-full sm:w-auto">LINEでお金の疑問を相談する</LineButton>
-          <CtaButton
+          <LineAnchor className="w-full sm:w-auto">無料で土地込み総額を相談する</LineAnchor>
+          <Link
             href="/reserve"
-            variant="dark-bg-secondary"
-            size="md"
-            label="モデルハウスを見学する"
-            sublabel="ご予約なしでも見学可・無料"
-            className="w-full sm:w-auto"
-          />
+            className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[6px] border border-white/80 px-6 py-4 text-[14px] font-black text-white transition duration-300 hover:bg-white hover:text-[#171411] sm:w-auto"
+          >
+            モデルハウスで標準仕様を見る
+            <ArrowRight className="h-4 w-4" strokeWidth={2} />
+          </Link>
         </div>
-        <div className="mt-10 border-t pt-7" style={{ borderColor: "rgba(255,255,255,0.18)" }}>
-          <p className="text-[12px] text-white/58">お電話でのご相談も承ります</p>
-          <a href="tel:0742-36-1123" className="mt-3 inline-flex items-baseline gap-2 transition-opacity hover:opacity-80">
-            <Landmark className="h-5 w-5 text-white/42" strokeWidth={1.6} />
-            <span className="font-oswald text-[clamp(30px,3.6vw,48px)] leading-none tracking-[0.02em] text-white" style={{ fontWeight: 420 }}>
-              0742-36-1123
-            </span>
-          </a>
-          <p className="mt-2 text-[11px] leading-[1.7] text-white/52">
-            受付 9:00〜19:00（火・水定休）／株式会社やまと不動産 本社
-          </p>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-[12px] font-bold text-white/70">
+          <span className="inline-flex items-center gap-1">
+            <BadgeCheck className="h-4 w-4" strokeWidth={2} />
+            相談無料
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <BadgeCheck className="h-4 w-4" strokeWidth={2} />
+            火・水定休 / 9:00〜19:00
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <BadgeCheck className="h-4 w-4" strokeWidth={2} />
+            TEL 0742-36-1123
+          </span>
         </div>
       </div>
     </section>
@@ -578,13 +757,16 @@ export default function MoneyIndexPage() {
   return (
     <>
       <Header />
-      <main className="font-sans" style={{ background: BRAND.base, color: BRAND.text }}>
+      <main className="font-sans" style={{ background: BRAND.paper, color: BRAND.ink }}>
         <Hero />
-        <MoneyMap />
+        <CostAuditSection />
+        <ReverseProcessSection />
         <ProofSection />
-        <MechanismSection />
-        <MoneyFullSection />
+        <MechanismTeaser />
+        <ModelSection />
+        <CaseSection />
         <MidCta />
+        <MoneyFullSection />
         <FinalCta />
       </main>
       <Footer />
