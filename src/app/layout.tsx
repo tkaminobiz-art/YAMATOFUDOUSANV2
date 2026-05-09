@@ -12,6 +12,7 @@ import {
   Oswald,
   Murecho,
   Fraunces,
+  Zen_Kaku_Gothic_New,
 } from "next/font/google";
 import "./globals.css";
 // Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
@@ -112,6 +113,13 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
+const zenKakuGothicNew = Zen_Kaku_Gothic_New({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+  variable: "--font-zen-kaku-new-var",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "やまと不動産 | 奈良の注文住宅 花鳥風月",
   description:
@@ -124,7 +132,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable} ${murecho.variable} ${fraunces.variable}`}
+      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable} ${murecho.variable} ${fraunces.variable} ${zenKakuGothicNew.variable}`}
     >
       <body className="relative min-h-svh">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>

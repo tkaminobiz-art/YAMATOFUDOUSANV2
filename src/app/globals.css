@@ -56,6 +56,7 @@
   --font-zen-old: var(--font-zen-old-var), "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --font-murecho: var(--font-murecho-var), "Murecho", "Hiragino Sans", "Yu Gothic", sans-serif;
   --font-fraunces: var(--font-fraunces-var), "Fraunces", "Times New Roman", Georgia, serif;
+  --font-money: var(--font-zen-kaku-new-var), "Zen Kaku Gothic New", var(--font-murecho-var), "Murecho", var(--font-noto), "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
 
   /* === Spacing tokens ===（Phase 2: 余白 1.5〜2倍 — ラグジュアリーな呼吸） */
   --section-py: clamp(96px, calc(48px + 7.5vw), 320px);
@@ -218,6 +219,174 @@ p, blockquote, dd, li {
   font-family: var(--font-serif);
   font-weight: 400;
   color: var(--voice-text);
+}
+
+/* =============================================================================
+   Money page typography override
+   2026-05-09: /money 専用。MDの従来フォント制約より、実画面の読みやすさと
+   営業ページとしての品位を優先する。
+   ========================================================================== */
+.money-page {
+  font-family: var(--font-money);
+  font-weight: 500;
+  letter-spacing: 0;
+  font-feature-settings: "palt" 1;
+}
+
+.money-page h1,
+.money-page h2,
+.money-page h3,
+.money-page p,
+.money-page a,
+.money-page button,
+.money-page summary,
+.money-page span {
+  letter-spacing: 0;
+}
+
+.money-page .font-black {
+  font-weight: 700;
+}
+
+.money-page .font-oswald {
+  font-family: var(--font-inter-var), "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.money-eyebrow {
+  font-family: var(--font-inter-var), "Inter", sans-serif;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+}
+
+.money-hero-title {
+  font-size: 44px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.money-section-title {
+  font-size: 30px;
+  line-height: 1.28;
+  font-weight: 700;
+}
+
+.money-final-title {
+  font-size: 34px;
+  line-height: 1.28;
+  font-weight: 700;
+}
+
+.money-tool-title {
+  font-size: 24px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.money-card-title {
+  font-size: 18px;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.money-body {
+  font-size: 14px;
+  line-height: 1.95;
+  font-weight: 500;
+}
+
+.money-body-sm {
+  font-size: 13px;
+  line-height: 1.85;
+  font-weight: 500;
+}
+
+.money-number-sm {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.money-number-md {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.money-number-lg {
+  font-size: 44px;
+  line-height: 0.95;
+}
+
+.money-hero-stat {
+  font-size: 48px;
+  line-height: 0.98;
+}
+
+.money-diagnosis-number {
+  font-size: 72px;
+  line-height: 0.86;
+}
+
+@media (min-width: 768px) {
+  .money-hero-title {
+    font-size: 64px;
+    line-height: 1.08;
+  }
+
+  .money-section-title {
+    font-size: 42px;
+    line-height: 1.22;
+  }
+
+  .money-final-title {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+
+  .money-tool-title {
+    font-size: 30px;
+    line-height: 1.35;
+  }
+
+  .money-body {
+    font-size: 16px;
+  }
+
+  .money-body-sm {
+    font-size: 14px;
+  }
+
+  .money-number-lg {
+    font-size: 54px;
+  }
+
+  .money-hero-stat {
+    font-size: 46px;
+  }
+
+  .money-diagnosis-number {
+    font-size: 104px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .money-hero-title {
+    font-size: 76px;
+  }
+
+  .money-section-title {
+    font-size: 52px;
+  }
+
+  .money-final-title {
+    font-size: 64px;
+  }
 }
 .voice-quote-serif::before {
   content: "\201C";

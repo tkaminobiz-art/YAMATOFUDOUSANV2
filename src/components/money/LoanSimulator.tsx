@@ -79,8 +79,8 @@ function Field({
           {label}
         </label>
         <span
-          className="font-oswald text-[25px] leading-none tracking-[0]"
-          style={{ color: accent, fontWeight: 420 }}
+          className="font-oswald money-number-sm"
+          style={{ color: accent }}
         >
           {value.toLocaleString("ja-JP")}
           <span className="ml-1 text-[11px] font-bold" style={{ color: BRAND.muted }}>
@@ -168,12 +168,12 @@ export default function LoanSimulator() {
         <div className="flex items-start justify-between gap-5">
           <div>
             <p
-              className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]"
+              className="money-eyebrow"
               style={{ color: BRAND.red }}
             >
               30 sec total diagnosis
             </p>
-            <h2 className="mt-3 text-[22px] font-black leading-[1.35] tracking-[0] md:text-[30px]" style={{ color: BRAND.text }}>
+            <h2 className="money-tool-title mt-3" style={{ color: BRAND.text }}>
               月々から、土地込み総額を逆算。
             </h2>
           </div>
@@ -185,7 +185,7 @@ export default function LoanSimulator() {
             <SlidersHorizontal className="h-5 w-5" strokeWidth={1.9} />
           </span>
         </div>
-        <p className="mt-4 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+        <p className="money-body-sm mt-4" style={{ color: BRAND.muted }}>
           金利1.0%・35年・ボーナス払いなしの概算。実際の条件は金融機関審査、土地、時期で変わります。
         </p>
       </div>
@@ -272,18 +272,18 @@ export default function LoanSimulator() {
           <div>
             <div className="flex items-center gap-2">
               <Home className="h-5 w-5" style={{ color: BRAND.red }} strokeWidth={1.9} />
-              <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+              <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                 あなたの場合の総額目安
               </p>
             </div>
             <p className="mt-5 flex items-end gap-2 whitespace-nowrap">
               <span
-                className="font-oswald text-[clamp(62px,9vw,116px)] leading-[0.82] tracking-[0]"
-                style={{ color: BRAND.red, fontWeight: 440, wordBreak: "keep-all", overflowWrap: "normal" }}
+                className="font-oswald money-diagnosis-number"
+                style={{ color: BRAND.red, wordBreak: "keep-all", overflowWrap: "normal" }}
               >
                 {formatMan(result.visibleTotal)}
               </span>
-              <span className="pb-2 text-[16px] font-black" style={{ color: BRAND.text }}>
+              <span className="pb-2 text-[16px] font-bold" style={{ color: BRAND.text }}>
                 万円
               </span>
             </p>
@@ -295,10 +295,10 @@ export default function LoanSimulator() {
                 ["建物に回せる目安", `${formatMan(result.buildingCapacity)}万円`],
               ].map(([label, value]) => (
                 <div key={label} className="bg-[#FFFDF7] p-4">
-                  <p className="text-[10px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                  <p className="money-eyebrow text-[10px]" style={{ color: BRAND.muted }}>
                     {label}
                   </p>
-                  <p className="mt-2 text-[16px] font-black leading-[1.35]" style={{ color: BRAND.text }}>
+                  <p className="money-body-sm mt-2 font-bold" style={{ color: BRAND.text }}>
                     {value}
                   </p>
                 </div>
@@ -306,10 +306,10 @@ export default function LoanSimulator() {
             </div>
 
             <div className="mt-6 border-l-[5px] p-4" style={{ borderColor: BRAND.green, background: BRAND.greenSoft }}>
-              <p className="text-[18px] font-black leading-[1.45]" style={{ color: BRAND.green }}>
+              <p className="money-card-title" style={{ color: BRAND.green }}>
                 {result.verdict}
               </p>
-              <p className="mt-2 text-[12px] leading-[1.85]" style={{ color: BRAND.muted }}>
+              <p className="money-body-sm mt-2" style={{ color: BRAND.muted }}>
                 {result.lead}
               </p>
             </div>
@@ -319,12 +319,12 @@ export default function LoanSimulator() {
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <Gauge className="h-5 w-5" style={{ color: ratioTone }} strokeWidth={1.8} />
-                <p className="text-[12px] font-bold tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                   返済比率
                 </p>
               </div>
               <p className="flex items-baseline gap-1">
-                <span className="font-oswald text-[42px] leading-none tracking-[0]" style={{ color: ratioTone, fontWeight: 430 }}>
+                <span className="font-oswald money-number-lg" style={{ color: ratioTone }}>
                   {result.ratio.toFixed(1)}
                 </span>
                 <span className="text-[12px] font-bold" style={{ color: BRAND.muted }}>
@@ -332,7 +332,7 @@ export default function LoanSimulator() {
                 </span>
               </p>
             </div>
-            <p className="mt-2 text-[13px] font-black" style={{ color: ratioTone }}>
+            <p className="money-body-sm mt-2 font-bold" style={{ color: ratioTone }}>
               {ratioLabel}
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
@@ -355,7 +355,7 @@ export default function LoanSimulator() {
                 <Send className="h-4 w-4" strokeWidth={1.9} />
               </a>
             </div>
-            <p className="mt-4 flex gap-2 text-[11px] leading-[1.7]" style={{ color: BRAND.muted }}>
+            <p className="money-body-sm mt-4 flex gap-2" style={{ color: BRAND.muted }}>
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" style={{ color: BRAND.red }} strokeWidth={1.8} />
               表示額は概算です。外構、登記、火災保険、金融機関条件、土地条件は個別に確認します。
             </p>

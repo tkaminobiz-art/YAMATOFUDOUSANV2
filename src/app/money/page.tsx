@@ -179,19 +179,19 @@ function SectionLead({
   return (
     <div className={align === "center" ? "mx-auto max-w-[820px] text-center" : "max-w-[820px]"}>
       <p
-        className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]"
+        className="money-eyebrow"
         style={{ color: BRAND.red }}
       >
         {eyebrow}
       </p>
       <h2
-        className="mt-4 text-[clamp(28px,4vw,58px)] font-black leading-[1.18] tracking-[0]"
+        className="money-section-title mt-4"
         style={{ color: BRAND.ink }}
       >
         {title}
       </h2>
       {body && (
-        <p className="mt-5 text-[14px] leading-[1.95] md:text-[16px]" style={{ color: BRAND.muted }}>
+        <p className="money-body mt-5" style={{ color: BRAND.muted }}>
           {body}
         </p>
       )}
@@ -242,14 +242,14 @@ function Hero() {
       <div className="relative mx-auto grid min-h-[calc(100svh-72px)] max-w-[1480px] gap-10 px-[var(--page-px)] py-[clamp(72px,8vw,128px)] lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <div
-            className="inline-flex items-center gap-2 border px-3 py-2 text-[11px] font-black tracking-[0.08em]"
+            className="money-eyebrow inline-flex items-center gap-2 border px-3 py-2"
             style={{ borderColor: BRAND.red, color: BRAND.red, background: BRAND.redSoft }}
           >
             <AlertTriangle className="h-4 w-4" strokeWidth={2} />
             建物価格だけで判断しない
           </div>
           <h1
-            className="mt-6 text-[clamp(38px,5.1vw,76px)] font-black leading-[1.06] tracking-[0]"
+            className="money-hero-title mt-6"
             style={{ color: BRAND.ink }}
           >
             <span className="block whitespace-nowrap">その建物価格、</span>
@@ -258,7 +258,7 @@ function Hero() {
             </span>
             <span className="block whitespace-nowrap">入っていますか？</span>
           </h1>
-          <p className="mt-7 max-w-[680px] text-[15px] leading-[2] md:text-[18px]" style={{ color: BRAND.muted }}>
+          <p className="money-body mt-7 max-w-[680px]" style={{ color: BRAND.muted }}>
             「建物2,000万円台」だけで判断する前に、土地代・付帯工事・外構・諸費用・住宅ローンまで。
             あなたの場合の土地込み総額を、最初に見える化します。
           </p>
@@ -282,14 +282,14 @@ function Hero() {
               ["公開区画", String(ACTIVE_LOT_COUNT), "区画"],
             ].map(([label, value, unit]) => (
               <div key={label} className="bg-white/88 p-4 backdrop-blur">
-                <p className="text-[11px] font-black tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                   {label}
                 </p>
                 <p className="mt-2 flex items-baseline gap-1 whitespace-nowrap">
-                  <span className="font-oswald text-[44px] leading-none tracking-[0]" style={{ color: BRAND.red, fontWeight: 430 }}>
+                  <span className="font-oswald money-hero-stat" style={{ color: BRAND.red }}>
                     {value}
                   </span>
-                  <span className="text-[12px] font-black" style={{ color: BRAND.ink }}>
+                  <span className="whitespace-nowrap text-[12px] font-bold" style={{ color: BRAND.ink }}>
                     {unit}
                   </span>
                 </p>
@@ -347,10 +347,10 @@ function CostAuditSection() {
                   <article key={item.label} className="min-h-[210px] bg-white p-6 md:p-7">
                     <div className="flex items-start justify-between gap-5">
                       <div>
-                        <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.muted }}>
+                        <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                           {item.label}
                         </p>
-                        <p className="mt-4 font-oswald text-[40px] leading-none tracking-[0]" style={{ color: hot ? BRAND.red : BRAND.green, fontWeight: 430 }}>
+                        <p className="font-oswald money-number-lg mt-4" style={{ color: hot ? BRAND.red : BRAND.green }}>
                           {item.amount}
                         </p>
                       </div>
@@ -362,14 +362,14 @@ function CostAuditSection() {
                         <Icon className="h-5 w-5" strokeWidth={1.9} />
                       </span>
                     </div>
-                    <p className="mt-6 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
+                    <p className="money-body-sm mt-6" style={{ color: BRAND.muted }}>
                       {item.body}
                     </p>
                   </article>
                 );
               })}
             </div>
-            <p className="mt-4 text-[11px] leading-[1.8]" style={{ color: BRAND.muted }}>
+            <p className="money-body-sm mt-4" style={{ color: BRAND.muted }}>
               ※ 金額は目安です。土地・金融機関・時期・ご家族の状況により変動します。
             </p>
           </div>
@@ -399,20 +399,20 @@ function ReverseProcessSection() {
         <div className="mt-12 grid gap-4 lg:grid-cols-[1fr_1fr]">
           <div className="border bg-white" style={{ borderColor: BRAND.border }}>
             <div className="border-b p-5" style={{ borderColor: BRAND.border, background: BRAND.redSoft }}>
-              <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.red }}>
+              <p className="money-eyebrow" style={{ color: BRAND.red }}>
                 よくある迷い方
               </p>
-              <h3 className="mt-2 text-[20px] font-black tracking-[0]" style={{ color: BRAND.ink }}>
+              <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
                 最後に総額が見える
               </h3>
             </div>
             <div className="divide-y" style={{ borderColor: BRAND.border }}>
               {COMMON_STEPS.map(([no, title]) => (
                 <div key={no} className="grid grid-cols-[56px_1fr] gap-4 p-5">
-                  <span className="font-oswald text-[30px] leading-none tracking-[0]" style={{ color: "rgba(232,67,54,0.45)", fontWeight: 420 }}>
+                  <span className="font-oswald money-number-md" style={{ color: "rgba(232,67,54,0.45)" }}>
                     {no}
                   </span>
-                  <p className="text-[15px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                  <p className="money-card-title" style={{ color: BRAND.ink }}>
                     {title}
                   </p>
                 </div>
@@ -422,24 +422,24 @@ function ReverseProcessSection() {
 
           <div className="border bg-white shadow-[0_26px_70px_-48px_rgba(47,74,44,0.8)]" style={{ borderColor: BRAND.green }}>
             <div className="border-b p-5" style={{ borderColor: "rgba(47,74,44,0.28)", background: BRAND.greenSoft }}>
-              <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.green }}>
+              <p className="money-eyebrow" style={{ color: BRAND.green }}>
                 やまとの進め方
               </p>
-              <h3 className="mt-2 text-[20px] font-black tracking-[0]" style={{ color: BRAND.ink }}>
+              <h3 className="money-card-title mt-2" style={{ color: BRAND.ink }}>
                 最初に総額が見える
               </h3>
             </div>
             <div className="divide-y" style={{ borderColor: BRAND.border }}>
               {REVERSE_STEPS.map(([no, title, body]) => (
                 <div key={no} className="grid grid-cols-[56px_1fr] gap-4 p-5">
-                  <span className="font-oswald text-[30px] leading-none tracking-[0]" style={{ color: BRAND.green, fontWeight: 440 }}>
+                  <span className="font-oswald money-number-md" style={{ color: BRAND.green }}>
                     {no}
                   </span>
                   <div>
-                    <p className="text-[15px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                    <p className="money-card-title" style={{ color: BRAND.ink }}>
                       {title}
                     </p>
-                    <p className="mt-1 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+                    <p className="money-body-sm mt-1" style={{ color: BRAND.muted }}>
                       {body}
                     </p>
                   </div>
@@ -477,18 +477,18 @@ function ProofSection() {
           <div className="grid gap-px overflow-hidden border md:grid-cols-4" style={{ borderColor: "rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.18)" }}>
             {PROOFS.map((proof) => (
               <article key={proof.label} className="bg-[#201C18] p-5 md:p-6">
-                <p className="text-[11px] font-black tracking-[0.08em] text-white/48">
+                <p className="money-eyebrow text-white/48">
                   {proof.label}
                 </p>
                 <p className="mt-4 flex items-baseline gap-1 whitespace-nowrap">
-                  <span className="font-oswald text-[54px] leading-none tracking-[0]" style={{ color: BRAND.lime, fontWeight: 430 }}>
+                  <span className="font-oswald money-number-lg" style={{ color: BRAND.lime }}>
                     {proof.value}
                   </span>
-                  <span className="text-[12px] font-black text-white">
+                  <span className="text-[12px] font-bold text-white">
                     {proof.unit}
                   </span>
                 </p>
-                <p className="mt-4 text-[12px] leading-[1.8] text-white/62">
+                <p className="money-body-sm mt-4 text-white/62">
                   {proof.body}
                 </p>
               </article>
@@ -533,7 +533,7 @@ function MechanismTeaser() {
             ].map((item) => (
               <div key={item} className="flex items-center gap-3 border bg-white p-4" style={{ borderColor: BRAND.border }}>
                 <CheckCircle2 className="h-5 w-5 shrink-0" style={{ color: BRAND.green }} strokeWidth={2} />
-                <p className="text-[13px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                <p className="money-body-sm font-bold" style={{ color: BRAND.ink }}>
                   {item}
                 </p>
               </div>
@@ -551,10 +551,10 @@ function MechanismTeaser() {
             style={{ filter: "saturate(0.95) contrast(1.04)" }}
           />
           <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, rgba(23,20,17,0) 0%, rgba(23,20,17,0.78) 100%)" }}>
-            <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/70">
+            <p className="money-eyebrow text-white/70">
               Real Yamato Photo
             </p>
-            <p className="mt-2 max-w-[460px] text-[18px] font-black leading-[1.55] text-white">
+            <p className="money-card-title mt-2 max-w-[460px] text-white">
               実際の住まいを見ながら、標準仕様と追加範囲を確認できます。
             </p>
           </div>
@@ -587,7 +587,7 @@ function ModelSection() {
               <figure className="relative aspect-[16/10] overflow-hidden">
                 <Image src={model.image} alt={`${model.jp}モデルの暮らしイメージ`} fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" />
                 <span
-                  className="absolute left-4 top-4 border px-3 py-1 text-[11px] font-black"
+                  className="money-eyebrow absolute left-4 top-4 border px-3 py-1"
                   style={{ borderColor: model.jp === "京" ? BRAND.green : BRAND.red, color: model.jp === "京" ? BRAND.green : BRAND.red, background: "rgba(255,255,255,0.9)" }}
                 >
                   {model.badge}
@@ -596,15 +596,15 @@ function ModelSection() {
               <div className="p-6">
                 <div className="flex items-end justify-between gap-4">
                   <div>
-                    <p className="font-inter text-[11px] font-semibold tracking-[0.12em]" style={{ color: BRAND.muted }}>
+                    <p className="money-eyebrow" style={{ color: BRAND.muted }}>
                       {model.en}
                     </p>
-                    <h3 className="mt-1 text-[34px] font-black leading-none tracking-[0]" style={{ color: BRAND.ink }}>
+                    <h3 className="mt-1 text-[32px] font-bold leading-none tracking-[0]" style={{ color: BRAND.ink }}>
                       {model.jp}
                     </h3>
                   </div>
                   <p className="text-right">
-                    <span className="block font-oswald text-[34px] leading-none tracking-[0]" style={{ color: model.jp === "花" ? BRAND.lime : BRAND.red, fontWeight: 440 }}>
+                    <span className="font-oswald money-number-md block" style={{ color: model.jp === "花" ? BRAND.lime : BRAND.red }}>
                       {model.price}
                     </span>
                     <span className="mt-1 block text-[11px] font-bold" style={{ color: BRAND.muted }}>
@@ -612,7 +612,7 @@ function ModelSection() {
                     </span>
                   </p>
                 </div>
-                <p className="mt-5 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
+                <p className="money-body-sm mt-5" style={{ color: BRAND.muted }}>
                   {model.body}
                 </p>
               </div>
@@ -647,21 +647,21 @@ function CaseSection() {
                 <Image src={work.subs[0] ?? work.main} alt={work.title} fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" />
               </figure>
               <div className="p-6">
-                <p className="text-[12px] font-black tracking-[0.08em]" style={{ color: BRAND.red }}>
+                <p className="money-eyebrow" style={{ color: BRAND.red }}>
                   {work.title} / {work.model}
                 </p>
-                <h3 className="mt-4 text-[19px] font-black leading-[1.55] tracking-[0]" style={{ color: BRAND.ink }}>
+                <h3 className="money-card-title mt-4" style={{ color: BRAND.ink }}>
                   {work.challenge}
                 </h3>
                 <div className="mt-5 border-l-[5px] p-4" style={{ borderColor: BRAND.green, background: BRAND.greenSoft }}>
-                  <p className="text-[12px] font-black" style={{ color: BRAND.green }}>
+                  <p className="money-eyebrow" style={{ color: BRAND.green }}>
                     設計での解決
                   </p>
-                  <p className="mt-2 text-[14px] font-black leading-[1.6]" style={{ color: BRAND.ink }}>
+                  <p className="money-card-title mt-2" style={{ color: BRAND.ink }}>
                     {work.solution}
                   </p>
                 </div>
-                <p className="mt-5 text-[12px] leading-[1.85]" style={{ color: BRAND.muted }}>
+                <p className="money-body-sm mt-5" style={{ color: BRAND.muted }}>
                   {work.family} / {work.spec} / {work.meta?.priceRange ?? "価格帯確認中"}
                 </p>
               </div>
@@ -679,15 +679,15 @@ function MidCta() {
       <div className="mx-auto max-w-[1120px] px-[var(--page-px)]">
         <div className="grid gap-7 border p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8" style={{ borderColor: BRAND.red, background: "white" }}>
           <div>
-            <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.red }}>
+            <p className="money-eyebrow" style={{ color: BRAND.red }}>
               First answer
             </p>
-            <h2 className="mt-3 text-[23px] font-black leading-[1.45] tracking-[0] md:text-[34px]" style={{ color: BRAND.ink }}>
+            <h2 className="money-tool-title mt-3" style={{ color: BRAND.ink }}>
               家づくりは、まだ決めなくて大丈夫です。
               <br />
               でも、総額だけは早く知ってください。
             </h2>
-            <p className="mt-3 max-w-[700px] text-[13px] leading-[1.9] md:text-[14px]" style={{ color: BRAND.muted }}>
+            <p className="money-body-sm mt-3 max-w-[700px]" style={{ color: BRAND.muted }}>
               知らないまま展示場を回るほど、判断は難しくなります。まずは土地込み総額の目安から。
             </p>
           </div>
@@ -712,15 +712,15 @@ function FinalCta() {
       />
       <div className="relative mx-auto max-w-[980px] px-[var(--page-px)] text-center">
         <Sparkles className="mx-auto h-7 w-7 text-white" strokeWidth={1.8} />
-        <p className="mt-7 font-inter text-[11px] font-semibold uppercase tracking-[0.12em] text-white/70">
+        <p className="money-eyebrow mt-7 text-white/70">
           Total cost first
         </p>
-        <h2 className="mt-5 text-[clamp(30px,4.7vw,68px)] font-black leading-[1.15] tracking-[0] text-white">
+        <h2 className="money-final-title mt-5 text-white">
           土地込み総額を知らないまま、
           <br />
           家づくりを進めない。
         </h2>
-        <p className="mx-auto mt-6 max-w-[680px] text-[14px] leading-[2] text-white/78 md:text-[16px]">
+        <p className="money-body mx-auto mt-6 max-w-[680px] text-white/78">
           LINEで希望エリア・月々予算・土地の状況を送ってください。
           奈良・京都南部で現実的に選べる候補と、増えやすい費用を先に整理します。
         </p>
@@ -757,7 +757,7 @@ export default function MoneyIndexPage() {
   return (
     <>
       <Header />
-      <main className="font-sans" style={{ background: BRAND.paper, color: BRAND.ink }}>
+      <main className="money-page" style={{ background: BRAND.paper, color: BRAND.ink }}>
         <Hero />
         <CostAuditSection />
         <ReverseProcessSection />

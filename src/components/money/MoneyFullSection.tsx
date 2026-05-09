@@ -153,19 +153,19 @@ function SectionLead({
   return (
     <div className={align === "center" ? "mx-auto max-w-[820px] text-center" : "max-w-[820px]"}>
       <p
-        className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]"
+        className="money-eyebrow"
         style={{ color: BRAND.red }}
       >
         {eyebrow}
       </p>
       <h2
-        className="mt-4 text-[clamp(28px,4vw,58px)] font-black leading-[1.18] tracking-[0]"
+        className="money-section-title mt-4"
         style={{ color: BRAND.ink }}
       >
         {title}
       </h2>
       {body && (
-        <p className="mt-5 text-[14px] leading-[1.95] md:text-[16px]" style={{ color: BRAND.muted }}>
+        <p className="money-body mt-5" style={{ color: BRAND.muted }}>
           {body}
         </p>
       )}
@@ -193,17 +193,17 @@ function ZeroDeclaration() {
     <section className="py-[clamp(84px,9vw,170px)]" style={{ background: BRAND.ink }}>
       <div className="mx-auto grid max-w-[1360px] gap-12 px-[var(--page-px)] lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div>
-          <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.red }}>
+          <p className="money-eyebrow" style={{ color: BRAND.red }}>
             Zero declaration
           </p>
-          <h2 className="mt-4 text-[clamp(30px,4vw,60px)] font-black leading-[1.14] tracking-[0] text-white">
+          <h2 className="money-section-title mt-4 text-white">
             見積書の外に
             <br />
             追い出されやすい費用を、
             <br />
             先に潰す。
           </h2>
-          <p className="mt-6 max-w-[620px] text-[14px] leading-[2] text-white/66 md:text-[16px]">
+          <p className="money-body mt-6 max-w-[620px] text-white/66">
             ここは上品にぼかしません。仲介手数料、つなぎ融資、地盤改良費。
             家づくりの不透明さを、契約前に一つずつ処理します。
           </p>
@@ -213,22 +213,22 @@ function ZeroDeclaration() {
           {ZERO_ROWS.map((row) => (
             <article key={row.label} className="grid gap-5 bg-[#201C18] p-5 md:grid-cols-[0.72fr_0.62fr_1fr] md:items-center md:p-7">
               <div>
-                <p className="text-[12px] font-black tracking-[0.08em] text-white/52">
+                <p className="money-eyebrow text-white/52">
                   {row.label}
                 </p>
-                <p className="mt-2 text-[13px] leading-[1.75] text-white/56">
+                <p className="money-body-sm mt-2 text-white/56">
                   {row.body}
                 </p>
               </div>
               <div>
                 <p className="text-[11px] font-bold text-white/42">一般的に上乗せになりやすい目安</p>
-                <p className="mt-2 font-oswald text-[42px] leading-none tracking-[0]" style={{ color: BRAND.red, fontWeight: 430 }}>
+                <p className="font-oswald money-number-lg mt-2" style={{ color: BRAND.red }}>
                   {row.market}
                 </p>
               </div>
               <div className="border-l-[5px] p-4" style={{ borderColor: BRAND.lime, background: "rgba(169,209,89,0.11)" }}>
                 <p className="text-[11px] font-bold text-white/48">やまとの扱い</p>
-                <p className="mt-2 text-[19px] font-black leading-[1.45] text-white">
+                <p className="money-card-title mt-2 text-white">
                   {row.result}
                 </p>
               </div>
@@ -274,10 +274,10 @@ function ConsultationOutput() {
                   >
                     <Icon className="h-5 w-5" strokeWidth={1.9} />
                   </span>
-                  <h3 className="mt-5 text-[18px] font-black leading-[1.5] tracking-[0]" style={{ color: BRAND.ink }}>
+                  <h3 className="money-card-title mt-5" style={{ color: BRAND.ink }}>
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-[13px] leading-[1.9]" style={{ color: BRAND.muted }}>
+                  <p className="money-body-sm mt-3" style={{ color: BRAND.muted }}>
                     {item.body}
                   </p>
                 </article>
@@ -315,14 +315,14 @@ function CtaStaircase() {
               ["04", "個別相談", "土地・建物・ローンを一枚にして決める。"],
             ].map(([no, title, body]) => (
               <div key={no} className="grid gap-4 bg-white p-5 md:grid-cols-[60px_1fr]">
-                <p className="font-oswald text-[34px] leading-none tracking-[0]" style={{ color: no === "01" ? BRAND.red : BRAND.green, fontWeight: 430 }}>
+                <p className="font-oswald money-number-md" style={{ color: no === "01" ? BRAND.red : BRAND.green }}>
                   {no}
                 </p>
                 <div>
-                  <h3 className="text-[16px] font-black leading-[1.45] tracking-[0]" style={{ color: BRAND.ink }}>
+                  <h3 className="money-card-title" style={{ color: BRAND.ink }}>
                     {title}
                   </h3>
-                  <p className="mt-1 text-[12px] leading-[1.8]" style={{ color: BRAND.muted }}>
+                  <p className="money-body-sm mt-1" style={{ color: BRAND.muted }}>
                     {body}
                   </p>
                 </div>
@@ -352,7 +352,7 @@ function CtaStaircase() {
             className="object-cover"
           />
           <div className="absolute inset-x-0 bottom-0 p-5" style={{ background: "linear-gradient(180deg, rgba(23,20,17,0) 0%, rgba(23,20,17,0.78) 100%)" }}>
-            <p className="text-[18px] font-black leading-[1.55] text-white">
+            <p className="money-card-title text-white">
               暮らしに必要な広さと予算を、一緒に確認できます。
             </p>
           </div>
@@ -366,17 +366,17 @@ function QuestionItem({ item, open = false }: { item: (typeof FAQS)[number]; ope
   return (
     <details open={open} className="group border bg-white" style={{ borderColor: BRAND.border }}>
       <summary className="grid cursor-pointer list-none grid-cols-[48px_1fr_auto] items-center gap-4 px-5 py-5 md:px-7 md:py-6 [&::-webkit-details-marker]:hidden">
-        <span className="font-oswald text-[28px] leading-none tracking-[0]" style={{ color: item.no === "01" ? BRAND.red : "rgba(23,20,17,0.38)", fontWeight: 430 }}>
+        <span className="font-oswald money-number-sm" style={{ color: item.no === "01" ? BRAND.red : "rgba(23,20,17,0.38)" }}>
           {item.no}
         </span>
-        <span className="text-[15px] font-black leading-[1.55] tracking-[0] md:text-[17px]" style={{ color: BRAND.ink }}>
+        <span className="money-card-title" style={{ color: BRAND.ink }}>
           {item.question}
         </span>
         <span className="flex h-9 w-9 items-center justify-center rounded-[6px]" style={{ background: BRAND.redSoft, color: BRAND.red }}>
           <ChevronDown className="h-4 w-4 transition duration-300 group-open:rotate-180" strokeWidth={2} />
         </span>
       </summary>
-      <div className="border-t px-5 py-6 text-[13px] leading-[1.95] md:px-7 md:text-[14px]" style={{ borderColor: BRAND.border, color: BRAND.muted }}>
+      <div className="money-body-sm border-t px-5 py-6 md:px-7" style={{ borderColor: BRAND.border, color: BRAND.muted }}>
         {item.answer}
       </div>
     </details>
@@ -417,10 +417,10 @@ function DocumentsBand() {
           <FileSearch className="h-7 w-7" strokeWidth={1.8} />
         </span>
         <div>
-          <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em] text-white/62">
+          <p className="money-eyebrow text-white/62">
             Before visiting
           </p>
-          <h2 className="mt-2 text-[24px] font-black leading-[1.45] tracking-[0] text-white md:text-[36px]">
+          <h2 className="money-tool-title mt-2 text-white">
             持ち物なしで大丈夫。今の家賃と希望エリアだけでも、総額の糸口は出せます。
           </h2>
         </div>
