@@ -1,203 +1,156 @@
-"use client";
-
-import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useScrollIn } from "@/hooks/useScrollIn";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import {
-  FEATURED_WORKS,
-  GRID_WORKS,
-  TOTAL_WORKS_COUNT,
-} from "@/data/works";
+import { ArrowRight } from "lucide-react";
 
 /*
-  WorksSection — 2026-05-03 v4 (横カルーセル化・参考画像準拠)
+  WorksSection — 2026-05-09 v5 (Asymmetric Magazine Gallery)
   ---------------------------------------------------------------
-  v3: Featured 1件 + テキストリスト
-  v4: 全件を横カルーセル(snap-x)で並列表示
-      - スクロール量を縮減
-      - お客様が能動的に横スワイプして見る Progressive Disclosure
-      - 詳細は /works に誘導(ヒーローと統一の動線)
+  v4 (横カルーセル 8 件 snap-x) 撤去理由:
+  - スクロール量大・冗長。ユーザー判断で「コンパクトでいい」
+  - クラスタの編集誌 worldview と乖離
+
+  v5: 4 枚ギャラリー (Hero 1 + supporting 3) の asymmetric magazine spread。
+  /works-lab w-01 採用。20 年キャリアの senior editorial designer デザイン。
+
+  写真選定 (yamato 既存 works から外観 4 枚):
+   Hero:  works-02 (京田辺市 / 黒外観 + 赤い玄関ドア)
+   Sup 1: works-01 (奈良市 / 鋭い片流れ屋根 + 青空)
+   Sup 2: case1-ext (奈良市 / 黒外観 + ガラス天井カーポート / 花モデル 33坪 4LDK)
+   Sup 3: works-05 (斑鳩町 / 木目スリットアクセントの立体的外観)
+
+  クラスタ pattern 完全継承:
+   - bg #F7F5F0 / 墨黒 #1A1815 / 深緑 #143426 単一アクセント
+   - eyebrow: FIG. 04 · WORKS (mono + hairline)
+   - h2: Shippori Mincho
+   - lead: Mincho 本文
+   - ActionLine CTA: 「事例をもっと見る →」 → /works
 */
 
-const FOREST = "#486B00";
-
-type CardItem = {
-  href: string;
-  image: string;
+type Work = {
+  src: string;
+  alt: string;
   area: string;
-  title: string;
-  meta?: string;
-  priceRange?: string;
+  spec: string;
 };
 
-// 8件を1配列に正規化
-// 2026-05-04 (C15): featured には priceRange を表示してトップの価格訴求とつなぐ
-const CARDS: readonly CardItem[] = [
-  ...FEATURED_WORKS.map((w): CardItem => ({
-    href: `/works`,
-    image: w.main,
-    area: w.title.split(/[市町]/)[0] + (w.title.includes("市") ? "市" : "町"),
-    title: w.model + ' "' + w.spec + '"',
-    meta: w.family,
-    priceRange: w.meta?.priceRange,
-  })),
-  ...GRID_WORKS.map((w): CardItem => ({
-    href: `/works`,
-    image: w.image,
-    area: w.area,
-    title: "やまとの家づくり",
-  })),
+const HERO: Work = {
+  src: "/images/works/works-02.webp",
+  alt: "やまと不動産が手がけた京田辺市の住まい — 黒外観に赤い玄関ドアの妻入りファサード",
+  area: "京田辺市",
+  spec: "4LDK / 30坪",
+};
+
+const SUPPORTS: readonly Work[] = [
+  {
+    src: "/images/works/works-01.webp",
+    alt: "奈良市の住まい — 鋭い片流れ屋根と青空",
+    area: "奈良市",
+    spec: "4LDK / 32坪",
+  },
+  {
+    src: "/images/works/case1-ext.webp",
+    alt: "奈良市 T様邸 — 黒外観とガラス天井のカーポート",
+    area: "奈良市 T様邸",
+    spec: "花モデル · 33坪 / 4LDK",
+  },
+  {
+    src: "/images/works/works-05.webp",
+    alt: "斑鳩町の住まい — 木目スリットアクセントの立体的外観",
+    area: "斑鳩町",
+    spec: "5LDK / 36坪",
+  },
 ];
 
 export default function WorksSection() {
-  const sectionRef = useScrollIn<HTMLDivElement>();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const update = () => {
-      const max = el.scrollWidth - el.clientWidth;
-      setCanPrev(el.scrollLeft > 8);
-      setCanNext(el.scrollLeft < max - 8);
-    };
-    update();
-    el.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      el.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  const scrollByStep = (dir: 1 | -1) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const step = el.clientWidth * 0.85;
-    el.scrollBy({ left: step * dir, behavior: "smooth" });
-  };
-
   return (
     <section
       id="works"
-      ref={sectionRef}
-      className="font-murecho bg-white text-text-primary py-[var(--section-py)] scroll-in"
+      className="relative bg-[#F7F5F0] text-[#1A1815] pt-[calc(var(--section-py)*0.5)] pb-[var(--section-py)]"
     >
-      <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-        {/* ヘッダー */}
-        <div className="flex items-end justify-between gap-6 mb-10 md:mb-12 flex-wrap">
-          <div>
-            <p
-              className="text-[11px] md:text-[12px] tracking-[0.06em] mb-3"
-              style={{ color: FOREST, fontWeight: 700 }}
-            >
-              施工事例
-            </p>
-            <h2
-              className="font-zen-old text-text-primary leading-[1.4] tracking-[0.02em]"
-              style={{
-                fontWeight: 600,
-                fontSize: "clamp(22px, 2.6vw, 36px)",
-              }}
-            >
-              実際の建築事例。
-            </h2>
-            <p className="mt-3 text-text-secondary text-[clamp(13px,1vw,15px)] leading-[1.95] max-w-[600px]">
-              やまとが建てた、{TOTAL_WORKS_COUNT}件の住まい。事例をスライドしてご覧いただけます。
-            </p>
+      <div className="max-w-[1240px] mx-auto px-[var(--page-px)]">
+        {/* eyebrow + h2 + lead — クラスタ pattern 完全同型 */}
+        <header className="max-w-[860px]">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[10.5px] tracking-[0.22em] uppercase text-[#1A1815]/55 font-mono">
+            <span>FIG. 04</span>
+            <span aria-hidden className="h-px w-8 bg-[var(--color-rule)]" />
+            <span>Works</span>
           </div>
-
-          <div className="hidden md:flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => scrollByStep(-1)}
-              disabled={!canPrev}
-              aria-label="前の事例"
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-text-primary transition-all hover:border-main disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-              <ChevronLeft className="w-4 h-4" strokeWidth={1.6} />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollByStep(1)}
-              disabled={!canNext}
-              aria-label="次の事例"
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-text-primary transition-all hover:border-main disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="w-4 h-4" strokeWidth={1.6} />
-            </button>
-          </div>
-        </div>
-
-        {/* カルーセル */}
-        <div
-          ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-5 -mx-[var(--page-px)] px-[var(--page-px)] pb-2 scrollbar-hide"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            WebkitOverflowScrolling: "touch",
-          }}
-        >
-          {CARDS.map((c, i) => (
-            <Link
-              key={`${c.image}-${i}`}
-              href={c.href}
-              className="group shrink-0 w-[78%] sm:w-[48%] md:w-[32%] lg:w-[24%] snap-start flex flex-col"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-bg-secondary rounded">
-                <Image
-                  src={c.image}
-                  alt={`${c.area} ${c.title}`}
-                  fill
-                  className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-                  sizes="(max-width: 640px) 78vw, (max-width: 1024px) 48vw, 24vw"
-                />
-              </div>
-              <div className="pt-3.5">
-                <p
-                  className="text-[11px] tracking-[0.16em] uppercase mb-1.5"
-                  style={{ color: FOREST, fontWeight: 600 }}
-                >
-                  {c.area}
-                </p>
-                <p className="text-text-primary text-[13px] md:text-[14px] font-medium leading-[1.5] mb-1">
-                  {c.title}
-                </p>
-                {c.meta && (
-                  <p className="text-text-secondary text-[11px] leading-[1.7]">
-                    {c.meta}
-                  </p>
-                )}
-                {c.priceRange && (
-                  <p
-                    className="mt-1.5 inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full bg-bg-warm/70 border border-text-primary/10"
-                    style={{ color: FOREST }}
-                  >
-                    {c.priceRange}
-                  </p>
-                )}
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* フッター: もっと見る */}
-        <div className="mt-10 md:mt-12 pt-8 border-t border-border flex items-center justify-between gap-6 flex-wrap">
-          <p className="text-text-secondary text-[11px] md:text-[12px] leading-[1.85] max-w-[44rem]">
-            ※ 掲載の事例は実際にやまとが建築した家です。価格・仕様は土地条件により変動します。
+          <h2
+            className="mt-5 font-[var(--font-shippori)] text-[#1A1815] leading-[1.32] tracking-[0.01em]"
+            style={{ fontSize: "clamp(28px, 3.6vw, 48px)", fontWeight: 500 }}
+          >
+            やまとが手がけた、住まい。
+          </h2>
+          <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
+            実際に建てた住まいを、4 つの実例でご覧ください。
+            土地・ご家族・暮らし方は、すべて違います。
           </p>
+        </header>
+
+        {/* asymmetric magazine gallery: Hero (左) + 3 supports (右)
+            両カラムは items-start で独立した自然高さ (編集誌的 asymmetric リズム) */}
+        <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-x-5 lg:gap-x-8 gap-y-8 items-start">
+          {/* Hero — 左カラム */}
+          <figure className="flex flex-col">
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#EDEAE3]">
+              <Image
+                src={HERO.src}
+                alt={HERO.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 flex items-baseline gap-3 text-[12px] leading-[1.6] text-[#1A1815]/65 font-mono tracking-[0.04em]">
+              <span className="text-[#1A1815]/85">{HERO.area}</span>
+              <span aria-hidden className="text-[#1A1815]/30">/</span>
+              <span>{HERO.spec}</span>
+            </figcaption>
+          </figure>
+
+          {/* 3 supports — 右カラム flex 縦積み (各写真は自然 aspect、隙間は gap のみ) */}
+          <div className="flex flex-col gap-y-5 lg:gap-y-6">
+            {SUPPORTS.map((s, i) => (
+              <figure key={s.src} className="flex flex-col">
+                <div
+                  className={`relative w-full overflow-hidden bg-[#EDEAE3] ${
+                    // 異なるアスペクト比でリズムを作る (mockup の asymmetric 感を再現)
+                    i === 0
+                      ? "aspect-[4/3]"
+                      : i === 1
+                      ? "aspect-[16/10]"
+                      : "aspect-[5/4]"
+                  }`}
+                >
+                  <Image
+                    src={s.src}
+                    alt={s.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 35vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="mt-2 flex items-baseline gap-2.5 text-[11px] leading-[1.6] text-[#1A1815]/65 font-mono tracking-[0.04em]">
+                  <span className="text-[#1A1815]/85">{s.area}</span>
+                  <span aria-hidden className="text-[#1A1815]/30">/</span>
+                  <span>{s.spec}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        {/* ActionLine CTA — 右下、cluster 同型 */}
+        <div className="mt-12 md:mt-14 flex flex-col items-end gap-4 border-t border-[var(--color-rule)] pt-8">
           <Link
             href="/works"
-            className="inline-flex items-center gap-2 text-[13px] md:text-[14px] font-medium px-6 py-3 rounded transition-colors"
-            style={{ background: FOREST, color: "#fff" }}
+            className="group inline-flex items-center gap-2.5 text-[14px] md:text-[15px] font-bold text-[#1A1815] border-b border-[#1A1815]/30 hover:border-[#143426] hover:text-[#143426] py-1 transition-colors"
           >
-            施工事例をもっと見る
-            <span aria-hidden>→</span>
+            事例をもっと見る
+            <ArrowRight
+              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              strokeWidth={1.5}
+            />
           </Link>
         </div>
       </div>
