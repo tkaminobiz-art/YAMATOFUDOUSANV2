@@ -30,7 +30,8 @@ import PriceSection from "@/components/sections/PriceSection";
 //   /money / /lots で詳細対応する。MiniSimulator.tsx / LotsSection.tsx ファイル本体は
 //   戻す可能性のため保持 (撤去候補メモリ管理)。
 import MapBridge from "@/components/sections/MapBridge";
-import PhotoBreath from "@/components/sections/PhotoBreath";
+// 2026-05-09: PhotoBreath を TOP から撤去 (ユーザー判断・冗長)。
+//   ファイル本体は他ページで使う可能性があるため保持。
 import WorksSection from "@/components/sections/WorksSection";
 import GoogleReviewBridge from "@/components/sections/GoogleReviewBridge";
 import { GOOGLE_BRIDGE_ENABLED } from "@/data/google";
@@ -102,15 +103,10 @@ export default function Home() {
             (旧 MiniSimulator + LotsSection は撤去) */}
         <MapBridge />
 
-        {/* 写真ブレイク — マップと施工事例の間に呼吸帯を 1 枚 */}
-        <PhotoBreath
-          src="/images/newsozai/exterior-terrace-01.webp"
-          alt="やまと不動産が手がけた住まいの外観 — テラスのある夕景"
-          aspectMobile="aspect-[4/3]"
-          aspectDesktop="md:aspect-[21/8]"
-        />
+        {/* 2026-05-09: PhotoBreath (terrace 写真) を撤去 (ユーザー判断・冗長)。
+            MapBridge 直下から WorksSection へ直結し、コンパクトに繋ぐ。 */}
 
-        {/* 社会的証明(カルーセル) */}
+        {/* 社会的証明 — 4 枚ギャラリー型のコンパクト施工事例 */}
         <WorksSection />
         {/* 信頼ブリッジ(★4.5+ 達成後に再公開) —
             2026-05-07: 現状 ★3.6/51件で目標 ★4.5以上×30件超 未達のため env で off。
