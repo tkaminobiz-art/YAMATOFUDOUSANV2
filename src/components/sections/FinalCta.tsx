@@ -38,14 +38,14 @@ const DIAGNOSIS_FEATURES = [
   { Icon: Calculator, label: "月々いくらなら\n無理がないか" },
   { Icon: Home, label: "土地込みで\n総額いくら必要か" },
   { Icon: Wallet, label: "自己資金が少なくても\n建てられるか" },
-  { Icon: MapPin, label: "どのエリアが\n現実的か" },
+  { Icon: MapPin, label: "どのエリアまで\n土地を探せるか" },
 ] as const;
 
 const BUTTON_TRUST = [
   "ご希望のない営業はいたしません",
   "ご相談無料",
   "1分で送信",
-  "土地なしOK",
+  "土地なしからご相談可",
 ] as const;
 
 export default function FinalCta() {
@@ -99,7 +99,7 @@ export default function FinalCta() {
               無料資金計画診断
             </h3>
             <p className="text-text-secondary text-[13px] md:text-sm leading-[1.7] mb-7">
-              ご家族の場合の目安を、まとめてご提案します。
+              ご家族の条件に合わせた目安を、まとめてご提案します。
             </p>
 
             {/* 4つの特徴アイコン */}
@@ -151,7 +151,7 @@ export default function FinalCta() {
             </a>
             {/* フォーム派・LINE未利用層への補助リンク */}
             <p className="text-center text-[12px] text-text-secondary mb-5">
-              LINEを使われない方は、
+              LINEをお使いでない方は、
               <Link
                 href="/money"
                 className="text-main font-medium underline decoration-main/40 underline-offset-2 hover:decoration-main"

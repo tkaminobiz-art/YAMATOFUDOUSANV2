@@ -38,7 +38,7 @@ const STANDARD_ITEMS = [
   { category: "水回り", maker: "TOTO (浴室・洗面・トイレ)" },
   { category: "窓・玄関", maker: "YKK AP APW330 / Venato K4" },
   { category: "外壁", maker: "旭化成 ヘーベルパワーボード" },
-  { category: "断熱", maker: "クレタン吹付 85mm + 屋根 95mm" },
+  { category: "断熱", maker: "ウレタン吹付 85mm + 屋根 95mm" },
   { category: "制震ダンパー", maker: "MIRAIE (住友ゴム)" },
   { category: "給湯", maker: "エコキュート 460L オール電化" },
   { category: "保証", maker: "地盤 20年 / しろあり 10年" },
@@ -155,7 +155,7 @@ export default function StandardIncluded() {
             style={{ fontSize: "clamp(20px, 2.2vw, 28px)", fontWeight: 500 }}
           >
             そのうえで、<br className="md:hidden" />
-            国内メーカーを、標準で。
+            国内メーカーを標準でご用意しています。
           </h3>
           <ul className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 max-w-[1000px]">
             {STANDARD_ITEMS.map((item) => (

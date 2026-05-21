@@ -59,8 +59,8 @@ export default function MapBridge() {
             今、選べる {displayedCount} 区画。
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
-            土地が決まらないまま、住宅会社だけ先に決めずに済みます。
-            やまとの分譲地は、建物価格と同じ表で並べて比べられます。
+            土地が決まらないまま、住宅会社だけ先に決めなくて済みます。
+            やまとの自社分譲地は、建物価格とまとめた表で総額を比べられます。
             <br className="hidden md:inline" />
             SUUMO 等に出る前の区画も、LINE 登録の方には先にお知らせしています。
           </p>
@@ -75,7 +75,7 @@ export default function MapBridge() {
             <InteractiveMap />
           </div>
           <figcaption className="mt-3 text-[11px] leading-[1.7] text-[#1A1815]/45 font-mono tracking-[0.04em]">
-            FIG. 03 · 奈良・京都南部の自社分譲地 {displayedCount} 区画 · ピンをタップで物件詳細へ
+            FIG. 03 · 奈良・京都南部の自社分譲地 {displayedCount} 区画 · ピンを選んで物件詳細へ
           </figcaption>
         </figure>
 

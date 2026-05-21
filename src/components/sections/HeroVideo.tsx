@@ -55,6 +55,7 @@ const METRICS: readonly Metric[] = [
     caption: "原文に近い形で掲載しています。",
   },
   {
+    eyebrow: "創立",
     value: "14",
     unit: "年",
     label: "の家づくり実績",
@@ -101,7 +102,7 @@ export default function HeroVideo() {
         <div className="px-[var(--page-px)] pt-[14vh] md:pt-[16vh]">
           <div className="mx-auto max-w-[1400px]">
             <div className="max-w-[820px]">
-              {/* h1: situation language (お客様の感情断定ではなく、市場状況の描写) */}
+              {/* h1: 約束 + 招待 (お客様の状況断定を避け、やまと側の動詞で寄り添う) */}
               <h1
                 className="text-white leading-[1.28] tracking-[0.01em]"
                 style={{
@@ -111,12 +112,12 @@ export default function HeroVideo() {
                   textShadow: "0 2px 18px rgba(0,0,0,0.55)",
                 }}
               >
-                土地も、総額も、
+                土地から総額まで、
                 <br />
-                まだ見えていない<br className="md:hidden" />ご家族へ。
+                はじめにお見せします。
               </h1>
 
-              {/* lead: enemy (building-only price thinking) → promise */}
+              {/* lead: 事実描写 (建物価格だけでは見えない範囲) → やまとの約束 */}
               <p
                 className="mt-6 max-w-[680px] text-white/95 leading-[1.85] tracking-[0.02em]"
                 style={{
@@ -139,7 +140,7 @@ export default function HeroVideo() {
                 >
                   2,000
                 </span>
-                万円台」だけ見て決めるのは、難しい。
+                万円台」だけでは、暮らしの総額は見えません。
                 <br className="hidden md:inline" />
                 土地代・付帯工事・諸費用・住宅ローンまで、
                 <br className="md:hidden" />

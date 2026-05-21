@@ -58,7 +58,7 @@ const PLANS: readonly Plan[] = [
     id: "miyako",
     name: "京",
     reading: "KYO",
-    audience: "必要な広さに絞り、総額を抑えやすいプランです。",
+    audience: "必要な広さに絞って、総額を抑えたいご家族へ。",
     tagline: "3LDK・28坪、必要な広さに絞りました。",
     price: "2,280",
     tsubo: "28坪",
@@ -226,11 +226,11 @@ export default function PriceSection() {
             className="font-zen-old text-text-primary leading-[1.32] tracking-[0.02em]"
             style={{ fontWeight: 700, fontSize: "var(--display-lg)" }}
           >
-            予算 2,300〜2,500 万円台で、<br className="sm:hidden" />
+            予算 2,280〜2,500 万円台で、<br className="sm:hidden" />
             どの広さなら無理がないか。
           </h2>
           <p className="mt-5 md:mt-6 font-murecho text-text-primary/80 text-[clamp(14px,1.1vw,17px)] leading-[2.0] max-w-[680px]">
-            京（28坪）・風（30坪）・花（33坪）の 3 つから、
+            花（33坪）・風（30坪）・京（28坪）の 3 つから、
             ご家族の人数と土地の広さに合わせて選びます。
             <br className="hidden md:inline" />
             すべて税込・建物本体と付帯工事まで含む金額です。
@@ -253,8 +253,7 @@ export default function PriceSection() {
         {/* ========== 注記 + CTA ========== */}
         <div className="mt-12 md:mt-16 flex flex-col gap-8 pt-10 border-t border-text-primary/15 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-12">
           <div className="font-murecho max-w-[44rem] pl-3 border-l-2 border-text-primary/15 text-[12px] md:text-[12.5px] leading-[1.95] text-text-secondary space-y-1.5">
-            <p>※ 広さ・間取り・価格帯の目安です。間取り・坪数・設備は、ご家族に合わせて設計します。</p>
-            <p>※ 表示価格は、建物本体(税込)に標準付帯工事まで含む目安です。土地代・登記費用は別途です。</p>
+            <p>※ 価格帯と広さは目安です。間取り・坪数・設備は、ご家族に合わせて設計します。</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end shrink-0">
             <CtaButton

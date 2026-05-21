@@ -19,8 +19,8 @@ type Trust = { Icon: LucideIcon; label: string };
 
 const TRUST: readonly Trust[] = [
   { Icon: Repeat, label: "何度でも相談無料" },
-  { Icon: MonitorSmartphone, label: "オンライン対応OK" },
-  { Icon: PhoneOff, label: "営業電話なし" },
+  { Icon: MonitorSmartphone, label: "オンラインでもご相談いただけます" },
+  { Icon: PhoneOff, label: "ご希望のない営業はいたしません" },
 ];
 
 export default function TrustStrip() {
