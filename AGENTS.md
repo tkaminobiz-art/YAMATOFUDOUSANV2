@@ -114,6 +114,7 @@ claims that remain factual and legally safe.
 - `kobayashi-review-20260428.md` — 専務レビュー結果と 8 つの原則 (FV 物件出し禁止 / バーン配置 / 投資エッセンス温存 etc.)
 - `12-rate-gaps.md` — 年 12 棟達成のギャップ分析 (LP 改修より優先 ROI が高い 3 動線)
 - `conversion-sales-rulebook.md` — 綺麗な会社案内ではなく、客の不安・敵・証拠・CTA階段で売るための 10 条
+- `bplan-design-rhythm.md` — Bプラン専用の日本語Webタイポ/余白リズム。数値トークンを基本にし、例外は局所理由つきで扱う
 - `line-first-cta-strategy.md` — LINE 主導線方針 (CTA 階層と禁じ手)
 - `gbp-status-and-strategy.md` — GBP 評価★3.6 で公開ブリッジ凍結中 (★4.5+ 達成後再公開)
 - `top-section-structure.md` — TOP の 10 セクション構成方針と削除/統合の指針
