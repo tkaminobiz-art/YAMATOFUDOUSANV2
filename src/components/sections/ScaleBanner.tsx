@@ -3,6 +3,13 @@
 import { useScrollIn } from "@/hooks/useScrollIn";
 import { useCountUp } from "@/hooks/useCountUp";
 import { Building2, MapPin, Users, Calendar, type LucideIcon } from "lucide-react";
+import {
+  DELIVERED_HOMES,
+  PARCELS_SOLD,
+  CUSTOMER_VOICES,
+  BUSINESS_YEARS,
+  FOUNDED_YEAR,
+} from "@/data/brand-facts";
 
 /*
   ScaleBanner — 2026-04-30
@@ -37,7 +44,7 @@ type Stat = {
 const STATS: readonly Stat[] = [
   {
     Icon: Building2,
-    value: "600",
+    value: String(DELIVERED_HOMES),
     unit: "棟",
     prefix: "累計",
     label: "以上のお引き渡し",
@@ -45,7 +52,7 @@ const STATS: readonly Stat[] = [
   },
   {
     Icon: MapPin,
-    value: "90",
+    value: String(PARCELS_SOLD),
     unit: "区画",
     prefix: "累計分譲",
     label: "以上の自社分譲実績",
@@ -53,7 +60,7 @@ const STATS: readonly Stat[] = [
   },
   {
     Icon: Users,
-    value: "50",
+    value: String(CUSTOMER_VOICES),
     unit: "組",
     prefix: "",
     label: "以上のお客様の声",
@@ -61,11 +68,11 @@ const STATS: readonly Stat[] = [
   },
   {
     Icon: Calendar,
-    value: "14",
+    value: String(BUSINESS_YEARS),
     unit: "年",
     prefix: "",
     label: "の家づくり実績",
-    sub: "2011年創立、奈良・京都南部一筋。",
+    sub: `${FOUNDED_YEAR}年創立、奈良・京都南部一筋。`,
   },
 ];
 

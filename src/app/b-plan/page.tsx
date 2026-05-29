@@ -15,6 +15,18 @@ import {
   ReceiptText,
 } from "lucide-react";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
+import {
+  DELIVERED_HOMES,
+  BUSINESS_YEARS,
+  FOUNDED_YEAR,
+  FUNDING_PLANS,
+  GROUND_WARRANTY_YEARS,
+  TERMITE_WARRANTY_YEARS,
+  COMPANY_NAME,
+  REAL_ESTATE_LICENSE_LABEL,
+  REAL_ESTATE_LICENSE_NO,
+} from "@/data/brand-facts";
+import { REPRESENTATIVES } from "@/data/staff";
 import ReasonReveal from "@/components/bplan/ReasonReveal";
 import TruthVoiceSlider from "@/components/bplan/TruthVoiceSlider";
 import VoiceProofObserver from "@/components/bplan/VoiceProofObserver";
@@ -485,6 +497,82 @@ export default function BPlanPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* TRUST LEDGER — 段階3「信頼」の土台 (prototype 2026-05-29) / 数値主役・図面レイヤなし・無地で前半の単調を断つ */}
+        <section id="trust" className="relative scroll-mt-24 px-5 py-20 md:scroll-mt-28 md:px-10 lg:py-28 xl:px-14" style={{ backgroundColor: P.white }}>
+          <div className="relative mx-auto max-w-[1380px]">
+            <Eyebrow>since 2011 / track record</Eyebrow>
+            <h2
+              className="max-w-[800px] text-[clamp(23px,2.5vw,36px)] font-medium leading-[1.45] tracking-[0.02em]"
+              style={{ fontFamily: "var(--font-shippori)" }}
+            >
+              {BUSINESS_YEARS}年で{DELIVERED_HOMES}家族の、土地と予算と月々に立ち会ってきました。
+            </h2>
+            <p className="mt-6 max-w-[640px] text-[15px] leading-[1.95] md:text-[16px]" style={{ color: P.mute }}>
+              奈良・京都南部で{FOUNDED_YEAR}年から。総額の見え方も、資金計画も、ひとつずつ数を重ねてきました。
+            </p>
+
+            {/* Metric rail — 600棟をアンカーに非対称（均等テーブル回避）。数字は Oswald */}
+            <div className="mt-12 grid gap-px border lg:grid-cols-[1.05fr_0.95fr]" style={{ borderColor: P.line, backgroundColor: P.line }}>
+              {/* アンカー: 引渡し600棟 */}
+              <div className="flex flex-col justify-center p-8 md:p-10" style={{ backgroundColor: P.white }}>
+                <p className="text-[12px] font-bold uppercase tracking-[0.22em]" style={{ color: P.rust, fontFamily: "var(--font-inter)" }}>
+                  引渡し実績
+                </p>
+                <p className="mt-4 flex items-baseline gap-2">
+                  <span className="text-[clamp(64px,9vw,108px)] font-light leading-none" style={{ fontFamily: "var(--font-oswald)", color: P.ink }}>{DELIVERED_HOMES}</span>
+                  <span className="text-[20px] font-medium md:text-[24px]" style={{ fontFamily: "var(--font-shippori)" }}>棟以上</span>
+                </p>
+                <p className="mt-4 max-w-[360px] text-[14px] leading-[1.9]" style={{ color: P.mute }}>
+                  {DELIVERED_HOMES}家族の土地・予算・月々の判断に、これまで立ち会ってきました。
+                </p>
+              </div>
+
+              {/* 補助3指標: 業歴 / 資金計画 / 保証 */}
+              <div className="grid" style={{ backgroundColor: P.white }}>
+                {[
+                  { num: String(BUSINESS_YEARS), unit: "年", label: `業歴（${FOUNDED_YEAR}年創立）`, note: "奈良・京都南部での家づくり" },
+                  { num: FUNDING_PLANS.toLocaleString(), unit: "件以上", label: "資金計画の作成", note: "総額と月々を、契約前に試算" },
+                  { num: `${GROUND_WARRANTY_YEARS} / ${TERMITE_WARRANTY_YEARS}`, unit: "年", label: "保証", note: `地盤保証${GROUND_WARRANTY_YEARS}年・しろあり保証${TERMITE_WARRANTY_YEARS}年` },
+                ].map((m) => (
+                  <div key={m.label} className="flex items-baseline justify-between gap-5 border-b px-8 py-6 last:border-b-0 md:px-10" style={{ borderColor: P.line }}>
+                    <div>
+                      <p className="text-[12px] font-bold uppercase tracking-[0.2em]" style={{ color: P.rust, fontFamily: "var(--font-inter)" }}>{m.label}</p>
+                      <p className="mt-1.5 text-[13px] leading-[1.7]" style={{ color: P.mute }}>{m.note}</p>
+                    </div>
+                    <p className="flex shrink-0 items-baseline gap-1">
+                      <span className="text-[clamp(30px,3.6vw,44px)] font-light leading-none" style={{ fontFamily: "var(--font-oswald)", color: P.ink }}>{m.num}</span>
+                      <span className="text-[14px] font-medium" style={{ fontFamily: "var(--font-shippori)" }}>{m.unit}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 代表2名 — 完全同格（スタッフ平等ルール） */}
+            <div className="mt-16">
+              <p className="text-[18px] font-medium tracking-[0.04em] md:text-[20px]" style={{ fontFamily: "var(--font-shippori)" }}>
+                会社を背負う、二人。
+              </p>
+              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                {REPRESENTATIVES.map((rep) => (
+                  <div key={rep.id} className="flex items-center gap-5 border p-5" style={{ borderColor: P.line, backgroundColor: P.white }}>
+                    <div className="relative h-[88px] w-[88px] shrink-0 overflow-hidden rounded-full" style={{ backgroundColor: P.smoke }}>
+                      <Image src={`/images/staff/${rep.id}.webp`} alt={`${rep.role} ${rep.name}`} fill className="object-cover" sizes="88px" />
+                    </div>
+                    <div>
+                      <p className="text-[12px] font-bold tracking-[0.12em]" style={{ color: P.rust }}>{rep.role}</p>
+                      <p className="mt-1 text-[19px] font-medium tracking-[0.04em]" style={{ fontFamily: "var(--font-shippori)" }}>{rep.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 text-[12px] leading-[1.7]" style={{ color: P.mute }}>
+                {REAL_ESTATE_LICENSE_LABEL} {REAL_ESTATE_LICENSE_NO} ／ {COMPANY_NAME}
+              </p>
             </div>
           </div>
         </section>

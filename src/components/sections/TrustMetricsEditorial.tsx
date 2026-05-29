@@ -1,4 +1,10 @@
 import { Home, MapPin, Users, Calendar } from "lucide-react";
+import {
+  DELIVERED_HOMES,
+  PARCELS_SOLD,
+  CUSTOMER_VOICES,
+  BUSINESS_YEARS,
+} from "@/data/brand-facts";
 
 /*
   TrustMetricsEditorial — 2026-05-08 v1
@@ -25,10 +31,10 @@ type Metric = {
 };
 
 const METRICS: readonly Metric[] = [
-  { Icon: Home,     value: "600", unit: "棟以上",   label: "地域で積み重ねた施工実績" },
-  { Icon: MapPin,   value: "90",  unit: "区画以上", label: "分譲地・土地探しにも対応" },
-  { Icon: Users,    value: "50",  unit: "組以上",   label: "お客様の声を掲載" },
-  { Icon: Calendar, value: "14",  unit: "年",       label: "奈良・京都南部での家づくり" },
+  { Icon: Home,     value: String(DELIVERED_HOMES), unit: "棟以上",   label: "地域で積み重ねた施工実績" },
+  { Icon: MapPin,   value: String(PARCELS_SOLD),    unit: "区画以上", label: "分譲地・土地探しにも対応" },
+  { Icon: Users,    value: String(CUSTOMER_VOICES), unit: "組以上",   label: "お客様の声を掲載" },
+  { Icon: Calendar, value: String(BUSINESS_YEARS),  unit: "年",       label: "奈良・京都南部での家づくり" },
 ];
 
 export default function TrustMetricsEditorial() {
