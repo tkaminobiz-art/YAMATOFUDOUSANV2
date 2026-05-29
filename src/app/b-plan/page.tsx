@@ -509,10 +509,10 @@ export default function BPlanPage() {
               className="max-w-[800px] text-[clamp(23px,2.5vw,36px)] font-medium leading-[1.45] tracking-[0.02em]"
               style={{ fontFamily: "var(--font-shippori)" }}
             >
-              {BUSINESS_YEARS}年で{DELIVERED_HOMES}家族の、土地と予算と月々に立ち会ってきました。
+              奈良・京都南部で、{FOUNDED_YEAR}年から家づくりを続けてきました。
             </h2>
             <p className="mt-6 max-w-[640px] text-[15px] leading-[1.95] md:text-[16px]" style={{ color: P.mute }}>
-              奈良・京都南部で{FOUNDED_YEAR}年から。総額の見え方も、資金計画も、ひとつずつ数を重ねてきました。
+              これまで{DELIVERED_HOMES}を超えるお客様のご要望にお応えしてきました。総額の出し方も資金計画も、一件ずつ積み重ねてきた仕事です。
             </p>
 
             {/* Metric rail — 600棟をアンカーに非対称（均等テーブル回避）。数字は Oswald */}
@@ -527,7 +527,7 @@ export default function BPlanPage() {
                   <span className="text-[20px] font-medium md:text-[24px]" style={{ fontFamily: "var(--font-shippori)" }}>棟以上</span>
                 </p>
                 <p className="mt-4 max-w-[360px] text-[14px] leading-[1.9]" style={{ color: P.mute }}>
-                  {DELIVERED_HOMES}家族の土地・予算・月々の判断に、これまで立ち会ってきました。
+                  土地探しから資金計画まで、ご家族ごとに対応してきました。
                 </p>
               </div>
 
@@ -555,7 +555,7 @@ export default function BPlanPage() {
             {/* 代表2名 — 完全同格（スタッフ平等ルール） */}
             <div className="mt-16">
               <p className="text-[18px] font-medium tracking-[0.04em] md:text-[20px]" style={{ fontFamily: "var(--font-shippori)" }}>
-                会社を背負う、二人。
+                経営はこの二人で担っています。
               </p>
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 {REPRESENTATIVES.map((rep) => (
@@ -593,8 +593,8 @@ export default function BPlanPage() {
           <div className="relative z-10 mx-auto max-w-[1380px]">
             <div className="max-w-[620px]">
               <Eyebrow light>50 voices proof</Eyebrow>
-              <h2 className="voice-proof-title font-medium leading-[1.16]" style={{ fontFamily: "var(--font-shippori)" }}>
-                選ばれた理由は、価格だけではありません。
+              <h2 className="voice-proof-title font-medium leading-[1.16]" style={{ fontFamily: "var(--font-shippori)", whiteSpace: "normal", wordBreak: "auto-phrase", textWrap: "balance" }}>
+                お客様が決め手に挙げたのは、価格だけではありませんでした。
               </h2>
               <p className="mt-7 max-w-[520px] text-[15px] font-bold leading-[2] text-white/72 md:text-[17px]">
                 50組以上の声に残っていたのは、標準仕様・総額・土地・人の力。
@@ -635,16 +635,16 @@ export default function BPlanPage() {
           <ReasonReveal className="relative z-10 mx-auto max-w-[1480px]">
             <div className="max-w-[980px]">
               <Eyebrow>02 / customer cases</Eyebrow>
-              <h2 className="payment-main-title font-medium leading-[1.12]" style={{ fontFamily: "var(--font-shippori)" }}>
+              <h2 className="payment-main-title font-medium leading-[1.12]" style={{ fontFamily: "var(--font-shippori)", whiteSpace: "normal", wordBreak: "auto-phrase", textWrap: "balance" }}>
                 家は欲しい。
                 <br />
-                でも、月々が見えない。
+                でも、毎月の返済がいくらか分からない。
               </h2>
               <p className="payment-subtitle mt-4 text-[14px] font-black tracking-[0.12em]">
                 建てられたご家族も、最初は同じ不安からでした。
               </p>
               <p className="payment-lead mt-[24px] max-w-[780px] text-[15px] font-bold leading-[1.9] md:text-[16px]">
-                土地代、建物、諸費用まで合わせて見ると、月々の見え方は変わります。実例を見ながら、自分たちに近い金額を確かめてください。
+                土地代も建物も諸費用も合わせて見ると、毎月の金額の印象は変わります。実例を見ながら、自分たちに近い金額を確かめてください。
               </p>
               <div className="payment-signal-row mt-7">
                 {["年収だけで見ない", "土地込みで比べる", "月々まで確かめる"].map((item) => (
@@ -738,7 +738,7 @@ export default function BPlanPage() {
               <div className="cost-clarity-head">
                 <div>
                   <Eyebrow>03 / why possible</Eyebrow>
-                  <h2>価格差は、家以外で生まれます。</h2>
+                  <h2 style={{ wordBreak: "auto-phrase", textWrap: "balance" }}>価格の差は、家そのものではなく、家以外のところで出ます。</h2>
                 </div>
                 <p>
                   やまとが抑えるのは、建材や室内設備ではありません。
@@ -894,10 +894,10 @@ export default function BPlanPage() {
           <div className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
             <div>
               <Eyebrow>07 / next action</Eyebrow>
-              <h2 className="text-[clamp(33px,5vw,72px)] font-medium leading-[1.16]" style={{ fontFamily: "var(--font-shippori)" }}>
-                まだ決めなくていい。
+              <h2 className="text-[clamp(28px,4.4vw,56px)] font-medium leading-[1.3]" style={{ fontFamily: "var(--font-shippori)", wordBreak: "auto-phrase", textWrap: "balance" }}>
+                まだ決めなくて大丈夫です。
                 <br />
-                判断できる状態へ。
+                まずは、判断できる材料をそろえましょう。
               </h2>
             </div>
             <div className="grid gap-px border" style={{ borderColor: P.line, backgroundColor: P.line }}>
