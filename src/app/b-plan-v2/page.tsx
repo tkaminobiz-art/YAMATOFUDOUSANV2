@@ -445,7 +445,7 @@ export default function BPlanPage() {
       <main>
         <section className="relative overflow-hidden" style={{ backgroundColor: "var(--bp-bg-paper)" }}>
           <div className="mx-auto grid min-h-[86vh] max-w-[1600px] items-stretch lg:grid-cols-[1fr_1.06fr]">
-            <div className="flex flex-col justify-center px-5 pb-14 pt-28 md:px-10 lg:py-24 xl:px-16">
+            <div className="order-2 flex flex-col justify-center px-5 pb-16 pt-12 md:px-10 lg:order-1 lg:py-24 xl:px-16">
               <Eyebrow>total cost first</Eyebrow>
               <h1 className="font-medium leading-[1.2] tracking-[0.01em]" style={{ fontFamily: "var(--font-shippori)", fontSize: "clamp(34px,4.6vw,62px)", color: P.ink }}>
                 大手の理想を、
@@ -487,8 +487,20 @@ export default function BPlanPage() {
                 ))}
               </div>
             </div>
-            <div className="relative min-h-[52vh] lg:min-h-full">
+            <div className="relative order-1 min-h-[46vh] lg:order-2 lg:min-h-full">
               <Image src="/images/bplan/hero-interior-v2.webp" alt="やまと不動産で建てた住まいのリビング" fill className="object-cover" sizes="(min-width:1024px) 53vw, 100vw" priority />
+              {/* soft-bleed: デスクトップは左端を生成りへ溶かし、splitの継ぎ目を消す */}
+              <div
+                aria-hidden
+                className="absolute inset-0 hidden lg:block"
+                style={{ background: "linear-gradient(to right, var(--bp-bg-paper) 0%, rgba(244,239,230,0.5) 12%, rgba(244,239,230,0) 32%)" }}
+              />
+              {/* soft-bleed: モバイルは下端を生成りへ溶かし、下のテキストと一体化 */}
+              <div
+                aria-hidden
+                className="absolute inset-0 lg:hidden"
+                style={{ background: "linear-gradient(to bottom, rgba(244,239,230,0) 58%, rgba(244,239,230,0.7) 86%, var(--bp-bg-paper) 100%)" }}
+              />
             </div>
           </div>
         </section>
