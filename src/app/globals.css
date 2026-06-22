@@ -30,6 +30,40 @@
   --color-accent-soft: #D4BDA8;    /* earth の柔らかいトーン (装飾用) */
   --color-border: #E5E5E0;
 
+  /* === /money (資金計画) 役割色トークン — 2026-06-13 リデザイン =================
+     旧実装は3ファイルが BRAND={red/green/lime:#16A34A, ink:#0F1115, paper:#F4F5F7…}
+     という冷たいSaaSパレットをハードコードしていた。BRAND-TRUTH §1 の温かい正規色へ統一。
+     役割分離が肝: 解決/証明=深緑(--color-main)、アクセント/CTA下地=lime、
+     リスク/隠れ費用/緊急=sign-red、第一CTA=LINE green。 */
+  --color-ink: #1D1D18;            /* BRAND-TRUTH §1 brand-text: 見出し/本文(冷#0F1115の置換) */
+  --color-ink-muted: #5E5A50;      /* BRAND-TRUTH §1 brand-text-muted: 補足(冷#5B6470の置換) */
+  --color-risk: #E84336;           /* sign-red: 後から増える費用・市場相場・緊急(BRAND-TRUTH §1) */
+  --color-risk-dark: #8F211B;      /* sign-red 濃: soft面上のリスク文字(AA確保) */
+  --color-risk-soft: #FFF0EE;      /* リスク警告帯のサーフェス(誤#ECFDF3緑の置換) */
+  --color-risk-bright: #FF9486;    /* forest(暗緑)面上のリスク文字(AA 4.6:1)。#E84336は暗緑上で2.6:1のため専用 */
+  --color-line: #06C755;           /* LINE: 第一CTA下地のみ(emerald#16A34Aから復元) */
+  --color-cream: #F5EEE2;          /* forest面上のテキスト/木目余白(--color-bg-warm 同値の別名) */
+
+  /* === /money 2026-06-22「Editorial Monochrome + Signal Red」=====================
+     参照=小林工務店(0561569111.com)の編集的余白規律 × 神野さん指定の
+     白黒グレー土台 + 原色赤 #FF2D2D。色は構造を作らない——余白とヘアラインだけで
+     構造を組み、色は「写真」と「赤1色」のみ。赤は数字/罫/アクティブ/CTAに限定し
+     どのビューポートでも面積 ≤5%。 */
+  --color-paper: #FAFAFA;          /* 唯一の地。純白#FFFは使わない(web-design-creation D-3) */
+  --color-band: #F4F4F5;           /* 例外の淡いバンド(ページ内 最大1回) */
+  --color-noir: #0A0A0A;           /* 主役の墨: 見出し・本文 */
+  --color-ash: #3F3F46;            /* 二次テキスト(AA on white 10:1) */
+  --color-slate: #6B6B72;          /* ミュート: キャプション・サブ(AA on white 4.9:1) */
+  --color-mist: #A1A1AA;           /* 最薄: 装飾ラベルのみ(大字/非本文) */
+  --color-hair: #E4E4E7;           /* 唯一のヘアライン罫線 */
+  --color-signal: #FF2D2D;         /* 原色赤アクセント: 大字の数字・罫・アクティブ */
+  --color-signal-ink: #D6001C;     /* 白地に小サイズ赤文字を置く時のみ(AA確保) */
+
+  /* Latin 編集ディスプレイ書体(英字の大字タイトル専用。和文はゴシック維持) */
+  --font-cormorant: var(--font-cormorant-var), "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  /* 明細レジスター: 仕様書/受領書の mono ラベル・索引・数字注記 */
+  --font-mono: var(--font-jbmono-var), "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
   /* === W2 (建築図面) 系セクション用の薄い罫線トークン =====================
      2026-05-08: AI smell check 対策。表/カードの強い枠ではなく、図面の薄い
      hairline でしか情報を区切らないために専用色を切り出す (DESIGN_GUARDRAILS.md)。 */
@@ -248,13 +282,167 @@ p, blockquote, dd, li {
   font-weight: 700;
 }
 
+/* 数字 = Oswald (project_money_font_lock.md の確定ルール)。
+   旧実装は Inter にエイリアスしていたため数字が「バーン」しなかった。
+   実 Oswald(condensed・confident)へ復元し、tabular で桁揺れを防ぐ。 */
 .money-page .font-oswald {
-  font-family: var(--font-inter-var), "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-oswald-var), "Oswald", "Helvetica Neue", Arial, sans-serif;
   font-variant-numeric: tabular-nums;
-  font-weight: 750;
+  font-feature-settings: "tnum" 1;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   white-space: nowrap;
   word-break: keep-all;
   overflow-wrap: normal;
+}
+
+/* 主役の「数字バーン」表示 — 生成り/forest面に直接灼きつく一発の大数字 */
+.money-burn-display {
+  font-family: var(--font-oswald-var), "Oswald", "Helvetica Neue", Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 600;
+  font-size: clamp(64px, 13vw, 132px);
+  line-height: 0.86;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+}
+
+/* ============================================================================
+   /money「Editorial Monochrome」表現層クラス (2026-06-22)
+   ========================================================================= */
+.font-cormorant { font-family: var(--font-cormorant); }
+
+/* 編集的セクションタイトル: Cormorant の Latin 大字。1セクション1個まで */
+.money-display {
+  font-family: var(--font-cormorant);
+  font-weight: 400;
+  letter-spacing: 0.045em;
+  line-height: 0.98;
+  font-size: clamp(46px, 7vw, 96px);
+}
+
+/* Latin の小キッカー (Inter caps)。和文グロスと組む */
+.money-kicker {
+  font-family: var(--font-inter-var), "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Hero/締めの和文キャッチ (ゴシック・太字・編集的) */
+.money-hero-copy {
+  font-family: var(--font-money);
+  font-weight: 700;
+  line-height: 1.34;
+  letter-spacing: 0.02em;
+  font-size: clamp(27px, 4.2vw, 50px);
+}
+
+/* セクション英字タイトル直下の和文サブ (ゴシック・控えめ) */
+.money-sub {
+  font-family: var(--font-money);
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+}
+
+/* シグネチャー: 赤い罫が左から伸びる ("accent draws itself") */
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.rule-draw {
+  transform-origin: left center;
+  animation: rule-draw 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.is-visible .rule-draw { animation-play-state: running; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rule-draw { animation: none !important; transform: none !important; }
+}
+
+/* ============================================================================
+   /money「明細 / The Honest Ledger」表現層 (2026-06-22)
+   白黒グレー＋vivid red。中央セリフを廃し、明細/仕様書のレジスターで組む。
+   ========================================================================= */
+.font-mono { font-family: var(--font-mono); }
+
+/* mono の小ラベル・索引（EST. 2011 / 01 / 標準仕様 …） */
+.ledger-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-feature-settings: "tnum" 1;
+}
+
+/* FV の巨大ゴシック見出し（左寄せ・追い込み・詰まった行間） */
+.ledger-h1 {
+  font-family: var(--font-money);
+  font-weight: 900;
+  font-size: clamp(38px, 3rem + 3.4vw, 84px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+/* 明細メタ行（mono・tabular） */
+.ledger-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum" 1;
+}
+
+/* 行マスク・リビール（overflow:hidden の親＋このクラスの子） */
+@keyframes line-rise {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+.line-rise {
+  display: inline-block;
+  animation: line-rise 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.line-rise-1 { animation-delay: 60ms; }
+.line-rise-2 { animation-delay: 150ms; }
+.line-rise-3 { animation-delay: 240ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .line-rise { animation: none !important; transform: none !important; }
+}
+
+/* ============================================================================
+   /money「連番カタログ」表現層 (2026-06-22 確定 / FV=B 暮らし主役 + 本文=A連番)
+   大見出しは句読点なし・SP/PC とも必ず一行 (white-space:nowrap + ビューポート連動)
+   ========================================================================= */
+.head-1line {
+  font-family: var(--font-money);
+  font-weight: 900;
+  white-space: nowrap;          /* 折り返し禁止＝必ず一行 */
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  /* 全角14字が SP375px で一行に収まり、PC で伸びる。ディスプレイ見出し専用の vw 例外 */
+  font-size: clamp(1.375rem, 6vw, 3.75rem);
+}
+.head-1line-sm {            /* 索引セクションの中位見出し用 */
+  font-family: var(--font-money);
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  font-size: clamp(1.125rem, 4.4vw, 2rem);
+}
+/* FV の白文字大見出し(写真の上) */
+.head-fv {
+  font-family: var(--font-money);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  font-size: clamp(1.75rem, 8vw, 4rem);
 }
 
 .money-eyebrow {
@@ -267,25 +455,25 @@ p, blockquote, dd, li {
 }
 
 .money-hero-title {
-  font-size: 44px;
-  line-height: 1.12;
+  font-size: 34px;
+  line-height: 1.14;
   font-weight: 700;
 }
 
 .money-section-title {
-  font-size: 30px;
-  line-height: 1.28;
+  font-size: 26px;
+  line-height: 1.26;
   font-weight: 700;
 }
 
 .money-final-title {
-  font-size: 34px;
-  line-height: 1.28;
+  font-size: 30px;
+  line-height: 1.26;
   font-weight: 700;
 }
 
 .money-tool-title {
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.4;
   font-weight: 700;
 }
@@ -314,23 +502,23 @@ p, blockquote, dd, li {
 }
 
 .money-number-md {
-  font-size: 34px;
+  font-size: 36px;
   line-height: 1;
 }
 
 .money-number-lg {
-  font-size: 44px;
+  font-size: 40px;
   line-height: 0.95;
 }
 
 .money-hero-stat {
-  font-size: 48px;
-  line-height: 0.98;
+  font-size: 52px;
+  line-height: 0.96;
 }
 
 .money-diagnosis-number {
-  font-size: 72px;
-  line-height: 0.92;
+  font-size: 76px;
+  line-height: 0.9;
 }
 
 .money-range::-webkit-slider-thumb {
@@ -354,17 +542,17 @@ p, blockquote, dd, li {
 
 @media (min-width: 768px) {
   .money-hero-title {
-    font-size: 58px;
-    line-height: 1.12;
+    font-size: 54px;
+    line-height: 1.1;
   }
 
   .money-section-title {
-    font-size: 38px;
+    font-size: 36px;
     line-height: 1.22;
   }
 
   .money-final-title {
-    font-size: 48px;
+    font-size: 44px;
     line-height: 1.2;
   }
 
@@ -381,22 +569,26 @@ p, blockquote, dd, li {
     font-size: 14px;
   }
 
+  .money-number-md {
+    font-size: 40px;
+  }
+
   .money-number-lg {
-    font-size: 54px;
+    font-size: 56px;
   }
 
   .money-hero-stat {
-    font-size: 46px;
+    font-size: 60px;
   }
 
   .money-diagnosis-number {
-    font-size: 86px;
+    font-size: 88px;
   }
 }
 
 @media (min-width: 1280px) {
   .money-hero-title {
-    font-size: 64px;
+    font-size: 62px;
   }
 
   .money-section-title {
@@ -405,6 +597,10 @@ p, blockquote, dd, li {
 
   .money-final-title {
     font-size: 48px;
+  }
+
+  .money-diagnosis-number {
+    font-size: 100px;
   }
 }
 .voice-quote-serif::before {

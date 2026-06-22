@@ -13,6 +13,8 @@ import {
   Murecho,
   Fraunces,
   Zen_Kaku_Gothic_New,
+  Cormorant_Garamond,
+  JetBrains_Mono,
 } from "next/font/google";
 import "./globals.css";
 // Leaflet の base CSS（/lots の地図用・グローバル読み込みで確実に適用）
@@ -82,7 +84,7 @@ const playfairDisplay = Playfair_Display({
 
 const oswald = Oswald({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-oswald-var",
   display: "swap",
 });
@@ -120,6 +122,24 @@ const zenKakuGothicNew = Zen_Kaku_Gothic_New({
   display: "swap",
 });
 
+// /money「Editorial Monochrome」リデザイン: Latin の編集的ディスプレイ書体
+// (大字のセクション英字タイトルのみに使用。和文はゴシック維持)
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant-var",
+  display: "swap",
+});
+
+// /money「明細 / The Honest Ledger」: 仕様書・受領書レジスターの mono ラベル/索引/数字注記
+const jbMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jbmono-var",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "やまと不動産 | 奈良の注文住宅 花鳥風月",
   description:
@@ -132,7 +152,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable} ${murecho.variable} ${fraunces.variable} ${zenKakuGothicNew.variable}`}
+      className={`${notoSansJP.variable} ${notoSerifJP.variable} ${shipporiMincho.variable} ${zenOldMincho.variable} ${kaiseiTokumin.variable} ${newTegomin.variable} ${bodoniModa.variable} ${playfairDisplay.variable} ${oswald.variable} ${inter.variable} ${murecho.variable} ${fraunces.variable} ${zenKakuGothicNew.variable} ${cormorant.variable} ${jbMono.variable}`}
     >
       <body className="relative min-h-svh">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
