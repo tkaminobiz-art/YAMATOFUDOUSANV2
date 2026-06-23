@@ -75,7 +75,7 @@ function Intro() {
           <h1 className="mt-5 whitespace-nowrap text-[clamp(19px,5.4vw,50px)] font-bold leading-[1.3] text-noir">
             「あれもこれも」を、予算のなかで。
           </h1>
-          <p className="mt-6 max-w-[560px] text-[15px] leading-[1.9] text-ash">
+          <p className="mt-6 max-w-[clamp(274px,78vw,723px)] text-[15px] leading-[1.9] text-ash">
             あこがれのマイホーム。我慢や妥協は、したくないですよね。やまとは高水準の設備をぜんぶ標準にして、予算のなかでかたちにします。資金計画を、順にご覧ください。
           </p>
         </div>
