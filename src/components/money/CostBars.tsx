@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
      1) ビュー入りで 家の本体(両方)が下から立ち上がる（720ms）
      2) 少し遅れて 大手の赤い無駄が横に伸びる
      3) ライムが完成した瞬間に やまとの総額がフェードインで出る（約880ms後）
+   画面外へ完全に出るとリセットし、再入場で最初から再生する（毎回見られる）。
    prefers-reduced-motion: reduce では即・完成状態（モーションなし）。 */
 
 const WASTE = ["広告費", "展示場の維持費", "中間マージン"] as const;
@@ -39,15 +40,28 @@ export default function CostBars() {
       return;
     }
     let timer = 0;
+    const playing = { current: false };
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        const e = entries[0];
+        if (e.intersectionRatio >= 0.45 && !playing.current) {
+          // 45%以上見えたら再生（入場のたびに最初から）
+          playing.current = true;
           setActive(true);
+          if (timer) clearTimeout(timer);
           timer = window.setTimeout(() => setShowPrice(true), PRICE_DELAY);
-          io.disconnect();
+        } else if (!e.isIntersecting && playing.current) {
+          // 完全に画面外へ出たらリセット → 再入場で再び立ち上がる
+          playing.current = false;
+          setActive(false);
+          setShowPrice(false);
+          if (timer) {
+            clearTimeout(timer);
+            timer = 0;
+          }
         }
       },
-      { threshold: 0.45 },
+      { threshold: [0, 0.45] },
     );
     io.observe(el);
     return () => {
