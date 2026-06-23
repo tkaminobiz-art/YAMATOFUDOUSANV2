@@ -174,9 +174,15 @@ p, blockquote, dd, li {
 .num-tnum { font-variant-numeric: tabular-nums; font-feature-settings: "liga" 0, "calt" 0; }
 
 /* /money 賃貸vs持ち家シミュの家賃スライダー（角ゼロ・1px罫線・赤つまみ） */
-.rent-range { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; background: var(--color-hair); cursor: pointer; }
-.rent-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 0; background: var(--color-signal); border: none; cursor: pointer; }
-.rent-range::-moz-range-thumb { width: 22px; height: 22px; border-radius: 0; background: var(--color-signal); border: none; cursor: pointer; }
+/* 家賃スライダー＝操作の手がかりを強く。塗りトラック(墨)＋大きい掴めるツマミ(赤/生成り縁)。
+   入力域は28pxにして掴みやすく（タッチ対応）、見た目のトラックは6px。 */
+.rent-range { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; cursor: grab; background: transparent; }
+.rent-range:active { cursor: grabbing; }
+.rent-range::-webkit-slider-runnable-track { height: 6px; border-radius: 0; background: linear-gradient(to right, var(--color-noir) 0 var(--rng-fill, 0%), var(--color-hair) var(--rng-fill, 0%) 100%); }
+.rent-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 28px; height: 28px; border-radius: 0; background: var(--color-signal); border: 3px solid var(--color-paper); cursor: grab; margin-top: -11px; }
+.rent-range::-moz-range-track { height: 6px; background: var(--color-hair); }
+.rent-range::-moz-range-progress { height: 6px; background: var(--color-noir); }
+.rent-range::-moz-range-thumb { width: 28px; height: 28px; border-radius: 0; background: var(--color-signal); border: 3px solid var(--color-paper); cursor: grab; }
 .rent-range:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
   .scroll-in { transition: none; }

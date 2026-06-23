@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { MessageCircle } from "lucide-react";
+import { useMemo, useState, type CSSProperties } from "react";
+import { MessageCircle, MoveHorizontal } from "lucide-react";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /* 05 シミュレーション＝家賃逆算。
@@ -50,32 +50,43 @@ export default function SimWire() {
 
   return (
     <div className="border border-hair bg-paper p-6 md:p-8">
-      {/* 持ち家モデル */}
-      <div role="group" aria-label="やまとの家のモデル" className="flex items-center gap-1">
-        <span className="font-mono mr-2 text-[11px] text-slate">やまとの家</span>
-        {PLANS.map((p) => {
-          const active = p.id === planId;
-          return (
-            <button
-              key={p.id}
-              type="button"
-              aria-pressed={active}
-              onClick={() => setPlanId(p.id)}
-              className={`min-h-[44px] border-b-2 px-3 text-[15px] font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${
-                active ? "border-signal text-noir" : "border-transparent text-slate"
-              }`}
-            >
-              {p.jp}
-            </button>
-          );
-        })}
+      {/* これは動かせるツール、の合図 */}
+      <p className="font-mono inline-flex items-center gap-1.5 border border-signal px-2 py-1 text-[10px] tracking-[0.06em] text-signal">
+        <MoveHorizontal className="h-3 w-3" strokeWidth={2.2} />
+        動かして試算できます
+      </p>
+
+      {/* 持ち家モデル＝セグメント型ボタン（選べる感を出す） */}
+      <div role="group" aria-label="やまとの家のモデル" className="mt-6">
+        <p className="font-mono text-[11px] text-slate">やまとの家を選ぶ（タップで切替）</p>
+        <div className="mt-2.5 grid grid-cols-3 gap-px border border-noir bg-noir">
+          {PLANS.map((p) => {
+            const active = p.id === planId;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => setPlanId(p.id)}
+                className={`min-h-[48px] text-[16px] font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-signal ${
+                  active ? "bg-signal text-white" : "bg-paper text-slate hover:bg-band hover:text-noir"
+                }`}
+              >
+                {p.jp}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* 今の家賃 */}
-      <div className="mt-6 flex items-baseline justify-between">
-        <label htmlFor="rent-slider" className="text-[13px] font-bold text-noir">今の家賃</label>
+      {/* 今の家賃＝スライダー（塗りトラック＋大きいツマミ＋手がかり） */}
+      <div className="mt-7 flex items-baseline justify-between">
+        <label htmlFor="rent-slider" className="text-[13px] font-bold text-noir">
+          今の家賃
+          <span className="font-mono ml-2 text-[10px] font-normal text-slate">スライドで調整</span>
+        </label>
         <span className="flex items-baseline gap-1">
-          <span className="font-oswald text-[28px] leading-none text-noir">{rent.toFixed(1)}</span>
+          <span className="num-tnum font-oswald text-[30px] leading-none text-signal">{rent.toFixed(1)}</span>
           <span className="font-mono text-[11px] text-slate">万円</span>
         </span>
       </div>
@@ -88,9 +99,11 @@ export default function SimWire() {
         value={rent}
         onChange={(e) => setRent(Number(e.target.value))}
         className="rent-range mt-4 w-full"
+        style={{ "--rng-fill": `${((rent - 5) / 7) * 100}%` } as CSSProperties}
       />
-      <div className="mt-1 flex justify-between font-mono text-[10px] text-mist">
+      <div className="mt-2 flex items-center justify-between font-mono text-[10px] text-mist">
         <span>5万</span>
+        <span className="text-slate">◀ ドラッグ ▶</span>
         <span>12万</span>
       </div>
 
