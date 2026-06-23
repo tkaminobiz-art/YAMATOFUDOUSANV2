@@ -165,7 +165,20 @@ function CostBars() {
 
         {/* やまと：家の本体だけ（低い＝総額が下がる）。本体をライムで“正の色”に */}
         <figure className="m-0 flex-1">
-          <div className="flex flex-col border border-noir" style={{ height: "var(--cb-house)" }}>
+          <div className="relative flex flex-col border border-noir" style={{ height: "var(--cb-house)" }}>
+            {/* バー上部の空き（＝大手の無駄ゾーンと同じ高さ）に総額を出す＝グラフ完成時に立ち上がる */}
+            <div
+              className="pointer-events-none absolute bottom-full left-0 right-0 flex items-end justify-center pb-3"
+              style={{ height: "var(--cb-waste)" }}
+            >
+              <span className="flex flex-col items-center">
+                <span className="font-mono text-[10px] tracking-[0.08em] text-slate">総額・京モデル</span>
+                <span className="mt-1 flex items-baseline gap-1 whitespace-nowrap text-noir">
+                  <CountUp value={2280} className="num-tnum font-oswald text-[clamp(34px,6.4vw,66px)] font-semibold leading-[0.82]" />
+                  <span className="font-mono text-[13px] font-bold">万円〜</span>
+                </span>
+              </span>
+            </div>
             <div className="cost-rise flex items-end bg-lime px-2 pb-2" style={{ height: "var(--cb-house)" }}>
               {houseLabel}
             </div>
