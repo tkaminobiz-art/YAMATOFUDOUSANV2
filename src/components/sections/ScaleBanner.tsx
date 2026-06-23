@@ -5,7 +5,7 @@ import { useCountUp } from "@/hooks/useCountUp";
 import { Building2, MapPin, Users, Calendar, type LucideIcon } from "lucide-react";
 import {
   DELIVERED_HOMES,
-  PARCELS_SOLD,
+  PARCELS_HELD,
   CUSTOMER_VOICES,
   BUSINESS_YEARS,
   FOUNDED_YEAR,
@@ -20,13 +20,14 @@ import {
 
   方針:
   - "バーン" 配置 = 単独で大きく主役級。心拍ダッシュボード化はしない
-  - 4つの数字を独立カードで並列(600棟/90区画/50組/14年)
+  - 4つの数字を独立カードで並列(600棟/常時150区画保有/50組/14年)
   - HeroMagazine 直下に置き、Mechanism(理屈)に入る前に量産規模を刷り込む
 
   数字の出典:
   - 600棟以上: 専務発言(2026-04-28). 公式データ(memory/reference_yamato_official_data.md)に
     棟数記載なし。グループ会社/前身を含む累計の可能性あり。要内部確認。
-  - 90区画以上: 公式(reference_yamato_official_data.md / 旧サイト companyinfo)
+  - 常時150区画程度を保有: 公式(yamatogroup.net /pg-strength・トップ「常時およそ150区画」)。
+    旧「累計90区画以上」(旧サイト)は2026-06-23に公式の常時保有150へ統一。指標は常時保有。
   - 50組以上: customer_voices_full.json と整合
   - 14年: 創立2011年11月30日(公式)。引継書の"1991年創業"は宅建免許(1)更新回数と
     矛盾するため、関連会社/前身の創業年と推測。実機の14年を維持。
@@ -52,10 +53,10 @@ const STATS: readonly Stat[] = [
   },
   {
     Icon: MapPin,
-    value: String(PARCELS_SOLD),
+    value: String(PARCELS_HELD),
     unit: "区画",
-    prefix: "累計分譲",
-    label: "以上の自社分譲実績",
+    prefix: "常時",
+    label: "程度を保有する自社分譲地",
     sub: "土地の仕入れから、自社で。",
   },
   {

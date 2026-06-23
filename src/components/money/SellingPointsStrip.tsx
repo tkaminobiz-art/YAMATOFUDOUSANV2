@@ -45,7 +45,7 @@ const POINTS: readonly Point[] = [
     label: "自社の土地",
     num: "500",
     unit: "万円〜",
-    sub: "大和郡山市矢田町ほか、現在27区画公開中(累計分譲実績90区画以上)。",
+    sub: "大和郡山市矢田町ほか、現在27区画公開中(常時150区画程度を保有)。",
     href: "#ch-questions",
   },
   {

@@ -17,8 +17,9 @@
 // ── §2 Numbers (canonical) ──────────────────────────────────────
 /** 引渡し件数 600棟以上 — 2026-05-03 専務確認 */
 export const DELIVERED_HOMES = 600;
-/** 分譲実績 90区画以上 — 旧サイト */
-export const PARCELS_SOLD = 90;
+/** 自社分譲地 常時150区画程度（保有）— 公式（2026-06-23 神野さん指示で旧90→公式150）。
+ *  指標は「常時保有」。累計分譲実績ではない。「以上」ではなく「程度」で表記する。 */
+export const PARCELS_HELD = 150;
 /** お客様の声 50組以上 — customer detail HTML */
 export const CUSTOMER_VOICES = 50;
 /** 業歴 14年（2011年11月30日創立）— 公式 */

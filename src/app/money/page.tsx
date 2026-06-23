@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import { Reveal, CountUp } from "@/components/money/MoneyAnim";
 import SimWire from "@/components/money/SimWire";
+import WarrantyPanel from "@/components/money/WarrantyPanel";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 export const metadata: Metadata = {
@@ -337,8 +338,12 @@ function SimSection() {
           <h2 className="head-1line text-noir">賃貸と持ち家を比較</h2>
           <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れて、払い続けた場合と持ち家を持った場合を見比べてください。</p>
         </Reveal>
-        <Reveal className="mt-9 max-w-[600px]">
-          <SimWire />
+        {/* 賃貸vs持ち家(左) + 補償パネル(右・案A)。lg未満は縦積み。 */}
+        <Reveal className="mt-9">
+          <div className="grid max-w-[1100px] items-start gap-6 lg:grid-cols-[1fr_360px]">
+            <SimWire />
+            <WarrantyPanel />
+          </div>
         </Reveal>
       </Container>
     </section>

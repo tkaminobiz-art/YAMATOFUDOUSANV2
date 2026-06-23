@@ -91,7 +91,7 @@ export default function LotsSection() {
                 区画 公開中
               </span>
               <span className="text-text-secondary text-[11px] ml-2">
-                / 累計分譲実績 90区画以上
+                / 常時150区画程度を保有
               </span>
             </div>
 

@@ -42,10 +42,10 @@ const METRICS: readonly Metric[] = [
     caption: "奈良・京都南部で積み重ねた家づくり",
   },
   {
-    eyebrow: "累計分譲",
-    value: "90",
+    eyebrow: "常時",
+    value: "150",
     unit: "区画",
-    label: "以上の自社分譲実績",
+    label: "程度を保有する自社分譲地",
     caption: "土地の仕入れから、自社で。",
   },
   {

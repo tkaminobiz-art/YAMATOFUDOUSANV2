@@ -58,7 +58,7 @@ const COPY = {
   metricsEyebrow: "RECORDS",
   metrics: [
     { value: "600", unit: "棟以上", label: "施工実績" },
-    { value: "90", unit: "区画以上", label: "分譲・土地" },
+    { value: "150", unit: "区画程度", label: "常時保有" },
     { value: "50", unit: "組以上", label: "お客様の声" },
     { value: "14", unit: "年", label: "業歴" },
   ],

@@ -118,8 +118,9 @@ export function getActiveLots(): Lot[] {
 }
 
 /**
- * 過去の分譲実績 = 価格情報がない(旧サイトに掲載されていない)もの。
- * "累計90区画以上の分譲実績" の根拠資産として保持する。
+ * 価格情報がない(旧サイトに掲載されていない)区画 = 過去に扱った分譲地の記録。
+ * 区画数の対外表記は公式の「常時150区画程度を保有」に統一(2026-06-23, BRAND-TRUTH §2)。
+ * これらは履歴資産として保持する(現在公開中=getActiveLots、価格ありのもの)。
  */
 export function getArchivedLots(): Lot[] {
   return LOTS.filter((l) => !l.price);

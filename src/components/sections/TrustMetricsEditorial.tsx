@@ -1,7 +1,7 @@
 import { Home, MapPin, Users, Calendar } from "lucide-react";
 import {
   DELIVERED_HOMES,
-  PARCELS_SOLD,
+  PARCELS_HELD,
   CUSTOMER_VOICES,
   BUSINESS_YEARS,
 } from "@/data/brand-facts";
@@ -15,7 +15,7 @@ import {
   - 4 カラム / 細い区切り線
   - 数字は上品に大きく / Oswald
   - アイコンは小さく薄く / 装飾的に主張しない
-  - 数値は BRAND-TRUTH §2 に準拠 (引渡し 600棟以上 / 分譲 90区画以上 /
+  - 数値は BRAND-TRUTH §2 に準拠 (引渡し 600棟以上 / 自社分譲地 常時150区画程度保有 /
     お客様の声 50組以上 / 業歴 14年)
 
   従来の ScaleBanner との違い:
@@ -32,7 +32,7 @@ type Metric = {
 
 const METRICS: readonly Metric[] = [
   { Icon: Home,     value: String(DELIVERED_HOMES), unit: "棟以上",   label: "地域で積み重ねた施工実績" },
-  { Icon: MapPin,   value: String(PARCELS_SOLD),    unit: "区画以上", label: "分譲地・土地探しにも対応" },
+  { Icon: MapPin,   value: String(PARCELS_HELD),    unit: "区画程度", label: "常時保有する自社分譲地" },
   { Icon: Users,    value: String(CUSTOMER_VOICES), unit: "組以上",   label: "お客様の声を掲載" },
   { Icon: Calendar, value: String(BUSINESS_YEARS),  unit: "年",       label: "奈良・京都南部での家づくり" },
 ];
