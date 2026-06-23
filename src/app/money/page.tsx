@@ -313,7 +313,7 @@ function SimSection() {
           <SectionIndex no="05" jp="シミュレーション" en="SIMULATOR" />
         </Reveal>
         <Reveal className="mt-10">
-          <h2 className="head-1line text-noir">今の家賃のままで、あこがれのマイホームを。</h2>
+          <h2 className="head-1line max-w-[13em] text-noir" style={{ whiteSpace: "normal", lineHeight: 1.25, textWrap: "balance" }}>今の家賃のままで、あこがれのマイホームを。</h2>
           <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れてみてください。やまとなら、どんな住まいになるか、毎月のお支払いとあわせてご覧いただけます。</p>
         </Reveal>
         {/* 賃貸vs持ち家(左) + 補償パネル(右・案A)。lg未満は縦積み。 */}
