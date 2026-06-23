@@ -77,14 +77,33 @@ const SECTION = "py-[clamp(64px,calc(40px+5vw),140px)]";
 /* ───────────── 導入 ── コピー先導（FV写真は撤去。お金ページはまず約束を１行で） ───────────── */
 function Intro() {
   return (
-    <section className="bg-paper">
-      <Container>
+    <section className="relative isolate overflow-hidden bg-noir">
+      {/* 背景＝当社が手がけた実邸リビング（FV撮影グレード）。高さはコピー側の padding が決める＝現状維持 */}
+      <Image
+        src="/images/fv/hero-03-living.webp"
+        alt=""
+        aria-hidden
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+      />
+      {/* 可読性スクリム：テキストは左寄せなので左を濃く、右へ抜いて室内を見せる */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(10,10,10,0.86) 0%, rgba(10,10,10,0.62) 48%, rgba(10,10,10,0.30) 100%)",
+        }}
+      />
+      <Container className="relative">
         <div className="pt-[clamp(52px,9vw,100px)] pb-[clamp(44px,7vw,84px)]">
           <p className="font-mono text-[12px] tracking-[0.16em] text-signal">資金計画 / MONEY</p>
-          <h1 className="head-hero mt-5 text-noir">
+          <h1 className="head-hero mt-5 text-paper">
             「あれもこれも」を、予算のなかで。
           </h1>
-          <p className="mt-6 max-w-[clamp(274px,78vw,723px)] text-[15px] leading-[1.9] text-ash">
+          <p className="mt-6 max-w-[clamp(274px,78vw,723px)] text-[15px] leading-[1.9] text-paper/85">
             あこがれのマイホーム。我慢や妥協は、したくないですよね。当社は高水準の設備をぜんぶ標準にして、予算のなかでかたちにします。資金計画を、順にご覧ください。
           </p>
         </div>
