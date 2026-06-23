@@ -125,7 +125,6 @@ export default function SimWire() {
           : "35年の総額は、ほぼ同じです。"}
         持ち家は、家が資産として残ります。
       </p>
-      <p className="font-mono mt-2 text-[11px] text-signal">つなぎ融資 0円 ・ 地盤改良費 0円</p>
       <p className="font-mono mt-4 text-[10px] leading-[1.8] text-mist">
         賃貸＝更新料込み（2年ごと家賃1ヶ月）。持ち家＝土地込み概算（諸費用込み）を当社実例の試算（金利1.0% / 35年 / 頭金0）で算出。金利・条件により変動します。
       </p>
