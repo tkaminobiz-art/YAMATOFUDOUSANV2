@@ -85,13 +85,20 @@ function Intro() {
 }
 
 /* ───────────── 01 標準仕様 ───────────── */
-const SPEC = [
-  ["外壁", "旭化成 パワーボード"],
-  ["制振", "住友ゴム MIRAIE（揺れ最大70%低減）"],
-  ["断熱", "ウレタン吹付（隙間ゼロ）"],
-  ["キッチン", "クリナップ ステディア"],
-  ["浴室", "TOTO サザナ"],
-  ["床暖房", "大阪ガス ヌック"],
+const SPEC_GALLERY = [
+  { img: "/images/works/case2-kitchen.webp", cat: "キッチン", label: "クリナップ ステディア", alt: "標準仕様のキッチン（クリナップ ステディア）" },
+  { img: "/images/works/case2-wash.webp", cat: "洗面", label: "三面鏡が標準", alt: "標準仕様の洗面化粧台" },
+  { img: "/images/works/case2-ext.webp", cat: "リビング", label: "自由設計の住まい", alt: "自由設計で仕上げたリビング" },
+] as const;
+const SPEC_ICONS = [
+  { icon: "/images/newsozai/spec/icon-kitchen.webp", cat: "キッチン", maker: "クリナップ ステディア" },
+  { icon: "/images/newsozai/spec/icon-bath.webp", cat: "浴室", maker: "TOTO サザナ" },
+  { icon: "/images/newsozai/spec/icon-wash.webp", cat: "洗面", maker: "三面鏡が標準" },
+  { icon: "/images/newsozai/spec/icon-wall.webp", cat: "外壁", maker: "旭化成 パワーボード" },
+  { icon: "/images/newsozai/spec/icon-damper.webp", cat: "制振", maker: "住友ゴム MIRAIE" },
+  { icon: "/images/newsozai/spec/icon-insulation.webp", cat: "断熱", maker: "ウレタン吹付" },
+  { icon: "/images/newsozai/spec/icon-floor.webp", cat: "床暖房", maker: "大阪ガス ヌック" },
+  { icon: "/images/newsozai/spec/icon-window.webp", cat: "窓", maker: "Low-E複層ガラス" },
 ] as const;
 
 function Standard() {
@@ -107,11 +114,28 @@ function Standard() {
             クリナップ・TOTO・MIRAIE など、設備は標準で揃います。追加費用はかかりません。
           </p>
         </Reveal>
-        <Reveal stagger className="mt-10 grid gap-px border-t border-hair sm:grid-cols-2">
-          {SPEC.map(([label, value]) => (
-            <div key={label} className="scroll-in flex items-baseline gap-4 border-b border-hair py-4">
-              <span className="font-mono w-[64px] shrink-0 text-[12px] tracking-[0.08em] text-slate">{label}</span>
-              <span className="text-[14.5px] font-bold text-noir">{value}</span>
+        {/* 標準設備の実写真ギャラリー＝「高水準装備」を見せて白を埋める */}
+        <Reveal stagger className="mt-10 grid gap-px bg-hair sm:grid-cols-3">
+          {SPEC_GALLERY.map((g) => (
+            <figure key={g.cat} className="scroll-in m-0 bg-paper">
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <Image src={g.img} alt={g.alt} fill sizes="(max-width:640px) 100vw, 320px" className="object-cover" />
+              </div>
+              <figcaption className="flex items-baseline gap-2 px-1 py-3">
+                <span className="font-mono text-[11px] text-slate">{g.cat}</span>
+                <span className="text-[13px] font-bold text-noir">{g.label}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </Reveal>
+        {/* 全標準装備を統一アイコンで（生成・スタイリッシュ）。撮れない設備も網羅 */}
+        <Reveal stagger className="mt-10 grid grid-cols-2 gap-px border border-hair bg-hair sm:grid-cols-4">
+          {SPEC_ICONS.map((s) => (
+            <div key={s.cat} className="scroll-in flex flex-col items-center gap-1.5 bg-paper px-3 py-5 text-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={s.icon} alt="" className="h-12 w-12 object-contain mix-blend-multiply" loading="lazy" decoding="async" />
+              <p className="font-mono mt-1 text-[10px] tracking-[0.04em] text-slate">{s.cat}</p>
+              <p className="text-[12px] font-bold leading-[1.45] text-noir">{s.maker}</p>
             </div>
           ))}
         </Reveal>
