@@ -85,11 +85,6 @@ function Intro() {
 }
 
 /* ───────────── 01 標準仕様 ───────────── */
-const SPEC_GALLERY = [
-  { img: "/images/works/case2-kitchen.webp", cat: "キッチン", label: "クリナップ ステディア", alt: "標準仕様のキッチン（クリナップ ステディア）" },
-  { img: "/images/works/case2-wash.webp", cat: "洗面", label: "三面鏡が標準", alt: "標準仕様の洗面化粧台" },
-  { img: "/images/works/case2-ext.webp", cat: "リビング", label: "自由設計の住まい", alt: "自由設計で仕上げたリビング" },
-] as const;
 const SPEC_ICONS = [
   { icon: "/images/newsozai/spec/icon-kitchen.webp", cat: "キッチン", maker: "クリナップ ステディア" },
   { icon: "/images/newsozai/spec/icon-bath.webp", cat: "浴室", maker: "TOTO サザナ" },
@@ -113,20 +108,6 @@ function Standard() {
           <p className="mt-5 max-w-[560px] text-[15px] leading-[1.85] text-ash">
             クリナップ・TOTO・MIRAIE など、設備は標準で揃います。追加費用はかかりません。
           </p>
-        </Reveal>
-        {/* 標準設備の実写真ギャラリー＝「高水準装備」を見せて白を埋める */}
-        <Reveal stagger className="mt-10 grid gap-px bg-hair sm:grid-cols-3">
-          {SPEC_GALLERY.map((g) => (
-            <figure key={g.cat} className="scroll-in m-0 bg-paper">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image src={g.img} alt={g.alt} fill sizes="(max-width:640px) 100vw, 320px" className="object-cover" />
-              </div>
-              <figcaption className="flex items-baseline gap-2 px-1 py-3">
-                <span className="font-mono text-[11px] text-slate">{g.cat}</span>
-                <span className="text-[13px] font-bold text-noir">{g.label}</span>
-              </figcaption>
-            </figure>
-          ))}
         </Reveal>
         {/* 全標準装備を統一アイコンで（生成・スタイリッシュ）。撮れない設備も網羅 */}
         <Reveal stagger className="mt-10 grid grid-cols-2 gap-px border border-hair bg-hair sm:grid-cols-4">
