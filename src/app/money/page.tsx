@@ -65,21 +65,21 @@ function OutlineCta({ href, children }: { href: string; children: ReactNode }) {
 
 const SECTION = "py-[clamp(64px,calc(40px+5vw),140px)]";
 
-/* ───────────── FV ── 見せる画像のみ（コピー・CTAなし／最初の文章は 01） ───────────── */
-function Hero() {
+/* ───────────── 導入 ── コピー先導（FV写真は撤去。お金ページはまず約束を１行で） ───────────── */
+function Intro() {
   return (
-    <section className="relative bg-noir">
-      <div className="relative h-[clamp(480px,86vh,900px)] w-full overflow-hidden">
-        <Image
-          src="/images/newsozai/money-fv.webp"
-          alt="やまと不動産が建てた住まいの内観"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-paper to-transparent" />
-      </div>
+    <section className="bg-paper">
+      <Container>
+        <div className="pt-[clamp(52px,9vw,100px)] pb-[clamp(44px,7vw,84px)]">
+          <p className="font-mono text-[12px] tracking-[0.16em] text-signal">資金計画 / MONEY</p>
+          <h1 className="mt-5 max-w-[15em] text-[clamp(28px,5vw,50px)] font-bold leading-[1.35] text-noir">
+            「あれもこれも」を、予算のなかで。
+          </h1>
+          <p className="mt-6 max-w-[560px] text-[15px] leading-[1.9] text-ash">
+            あこがれのマイホーム。我慢や妥協は、したくないですよね。やまとは高水準の設備をぜんぶ標準にして、予算のなかでかたちにします。資金計画を、順にご覧ください。
+          </p>
+        </div>
+      </Container>
     </section>
   );
 }
@@ -221,47 +221,83 @@ function Price() {
 
 /* ───────────── 04 商品ライン ───────────── */
 const PLANS = [
-  { jp: "花", en: "HANA", price: "2,480", size: "33坪 / 4LDK", featured: true },
-  { jp: "風", en: "KAZE", price: "2,480", size: "30坪 / 4LDK", featured: false },
-  { jp: "京", en: "KYO", price: "2,280", size: "28坪 / 3LDK", featured: false },
+  { jp: "花", en: "HANA", price: "2,480", size: "33坪 / 4LDK", img: "/images/fv/plan-hana.webp", note: "家族が増えても、ゆとりのある広さ。収納も部屋数も、余裕をもって。" },
+  { jp: "風", en: "KAZE", price: "2,480", size: "30坪 / 4LDK", img: "/images/fv/plan-kaze.webp", note: "暮らしやすさを、まんなかに。ちょうどいい広さの4LDK。" },
+  { jp: "京", en: "KYO", price: "2,280", size: "28坪 / 3LDK", img: "/images/fv/plan-miyako.webp", note: "必要なものを、コンパクトに。はじめやすい広さの3LDK。" },
 ] as const;
+const PLAN_EQUIP = ["クリナップ ステディア", "TOTO サザナ 1.25坪", "旭化成 パワーボード", "住友ゴム MIRAIE 制震", "アクアフォーム断熱", "Low-E複層ガラス", "木造軸組＋金物工法"] as const;
+
+function PlanMeta({ p, big = false }: { p: (typeof PLANS)[number]; big?: boolean }) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 p-5 md:p-6">
+      <div className="min-w-0">
+        <div className="flex items-baseline gap-3">
+          <span className={`font-black leading-none text-noir ${big ? "text-[clamp(40px,8vw,56px)]" : "text-[clamp(32px,6vw,40px)]"}`}>{p.jp}</span>
+          <span className="font-mono text-[11px] tracking-[0.14em] text-slate">{p.en}</span>
+        </div>
+        <p className={`mt-3 leading-[1.8] text-ash ${big ? "max-w-[440px] text-[14px]" : "text-[13px]"}`}>{p.note}</p>
+        <p className="font-mono mt-2 text-[12px] tracking-[0.06em] text-slate">{p.size}</p>
+      </div>
+      <p className="flex items-baseline gap-1.5 whitespace-nowrap">
+        <span className={`font-oswald leading-none text-noir ${big ? "text-[clamp(36px,7vw,52px)]" : "text-[clamp(30px,6vw,40px)]"}`}>{p.price}</span>
+        <span className="font-mono text-[11px] text-slate">万円〜</span>
+      </p>
+    </div>
+  );
+}
 
 function Plans() {
+  const [hero, ...rest] = PLANS;
   return (
     <section id="plans" className={`scroll-mt-24 bg-paper ${SECTION}`}>
       <Container>
         <Reveal>
           <SectionIndex no="04" jp="商品ライン" en="PRODUCT" />
         </Reveal>
-        <Reveal className="mt-10">
+        <Reveal className="mt-10 max-w-[560px]">
           <h2 className="head-1line text-noir">高水準標準装備＋自由設計</h2>
+          <p className="mt-5 text-[15px] leading-[1.85] text-ash">どのモデルも、高水準の設備が標準です。あとは、ご家族の暮らしに合わせて、自由に設計します。</p>
         </Reveal>
-        <Reveal stagger className="mt-8 border-t border-hair">
-          {PLANS.map((p) => (
-            <div key={p.en} className="scroll-in border-b border-hair py-6">
-              <div className="flex items-baseline justify-between gap-4">
-                <div className="flex items-baseline gap-3">
-                  <span className="text-[clamp(34px,8vw,44px)] font-black leading-none text-noir">{p.jp}</span>
-                  <span className="font-mono text-[11px] tracking-[0.14em] text-slate">{p.en}</span>
-                </div>
-                <p className="flex items-baseline gap-1.5 whitespace-nowrap">
-                  <span className="font-oswald text-[clamp(32px,7vw,46px)] leading-none text-noir">{p.price}</span>
-                  <span className="font-mono text-[11px] text-slate">万円〜</span>
-                </p>
-              </div>
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-                <p className="font-mono text-[12px] tracking-[0.06em] text-slate">{p.size}</p>
-                {p.featured && (
-                  <span className="inline-block whitespace-nowrap bg-signal px-2 py-0.5 text-[10.5px] font-bold tracking-[0.04em] text-white">
-                    いちばん選ばれています
-                  </span>
-                )}
-              </div>
+
+        {/* 花＝ヒーロー（実邸写真・大） */}
+        <Reveal className="mt-8">
+          <div className="border border-hair">
+            <figure className="relative m-0 aspect-[16/9] overflow-hidden">
+              <Image src={hero.img} alt={`${hero.jp}モデルの外観`} fill sizes="(max-width:1024px) 100vw, 1100px" className="object-cover" />
+              <span className="font-mono absolute left-0 top-0 bg-signal px-3 py-1.5 text-[11px] font-bold tracking-[0.04em] text-white">いちばん選ばれています</span>
+            </figure>
+            <PlanMeta p={hero} big />
+          </div>
+        </Reveal>
+
+        {/* 風・京＝サブ（実邸写真・2列） */}
+        <Reveal stagger className="mt-6 grid gap-6 md:grid-cols-2">
+          {rest.map((p) => (
+            <div key={p.en} className="scroll-in border border-hair">
+              <figure className="relative m-0 aspect-[4/3] overflow-hidden">
+                <Image src={p.img} alt={`${p.jp}モデルの外観`} fill sizes="(max-width:768px) 100vw, 540px" className="object-cover" />
+              </figure>
+              <PlanMeta p={p} />
             </div>
           ))}
         </Reveal>
+
+        {/* 全モデル標準の高水準装備＝価値の証明 */}
+        <Reveal className="mt-6 border border-hair bg-band p-5 md:p-6">
+          <p className="font-mono text-[11px] tracking-[0.08em] text-signal">全モデル標準</p>
+          <p className="mt-2 text-[15px] font-bold text-noir">どのモデルも、この高水準装備が標準です。</p>
+          <ul className="mt-3.5 flex flex-wrap gap-x-4 gap-y-2.5">
+            {PLAN_EQUIP.map((e) => (
+              <li key={e} className="font-mono flex items-center gap-1.5 text-[11.5px] text-noir">
+                <span aria-hidden className="font-bold text-lime-deep">✓</span>
+                {e}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
         <Reveal className="mt-8">
-          <OutlineCta href="/reserve">モデルハウスで標準仕様を見る</OutlineCta>
+          <OutlineCta href="/reserve">モデルハウスで、実物を見る</OutlineCta>
         </Reveal>
       </Container>
     </section>
@@ -441,8 +477,7 @@ export default function MoneyIndexPage() {
     <>
       <Header />
       <main className="money-page bg-paper text-noir">
-        <h1 className="sr-only">資金計画｜やまと不動産</h1>
-        <Hero />
+        <Intro />
         <Standard />
         <Mechanism />
         <Price />
