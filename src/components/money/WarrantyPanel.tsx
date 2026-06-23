@@ -6,7 +6,8 @@
      - しろあり保証 10年（BRAND-TRUTH §2）
      - 機関名(JIO/JHS)を明記する／図解を入れる
      - 点検回数・団信・火災保険は無記載
-   図解はパンフ断面図の複製ではなく、概念を伝えるオリジナルの線画SVG。
+   図解はパンフ断面図の複製ではなく、概念を伝えるオリジナルの建築断面イラスト
+   (nano_banana 生成・/public/images/newsozai/warranty-cutaway.webp)。
    デザインは SimWire と同言語：1px罫線・mono明細・Oswald数字・影なし・vivid red。 */
 
 const WARRANTIES = [
@@ -68,44 +69,19 @@ export default function WarrantyPanel() {
         ))}
       </div>
 
-      {/* 図解：保険でカバーされる部位（構造／防水） */}
+      {/* 図解：保険でカバーされる部位（構造／防水）。建築断面イラスト＋HTML凡例。 */}
       <figure className="mt-6 border border-hair p-4">
         <figcaption className="font-mono text-[10px] tracking-wide text-slate">
           建物保証でカバーする部位
         </figcaption>
-        <svg
-          viewBox="0 0 220 150"
-          className="mt-2 h-auto w-full"
-          role="img"
-          aria-label="家の断面図。屋根・外壁・開口部が雨水の浸入を防ぐ部分、柱・横架材・斜材・土台・基礎が構造耐力上主要な部分。"
-        >
-          {/* 雨水の浸入を防ぐ部分：屋根・外壁・開口部（vivid red） */}
-          <g fill="none" style={{ stroke: "var(--color-signal)" }} strokeWidth="2" strokeLinejoin="round">
-            <path d="M26 60 L110 16 L194 60" />
-            <line x1="44" y1="60" x2="44" y2="120" />
-            <line x1="176" y1="60" x2="176" y2="120" />
-          </g>
-          <rect x="150" y="82" width="16" height="22" fill="none" style={{ stroke: "var(--color-signal)" }} strokeWidth="1.5" />
-          {/* 構造耐力上主要な部分：柱・横架材・斜材・土台・基礎（noir） */}
-          <g fill="none" style={{ stroke: "var(--color-noir)" }} strokeWidth="1.3">
-            <line x1="44" y1="60" x2="176" y2="60" />
-            <line x1="82" y1="60" x2="82" y2="120" />
-            <line x1="118" y1="60" x2="118" y2="120" />
-            <line x1="82" y1="88" x2="118" y2="88" />
-            <line x1="82" y1="120" x2="118" y2="88" />
-            <line x1="44" y1="120" x2="176" y2="120" />
-          </g>
-          {/* 基礎 */}
-          <rect x="44" y="120" width="132" height="13" fill="none" style={{ stroke: "var(--color-noir)" }} strokeWidth="1" />
-          <g style={{ stroke: "var(--color-noir)" }} strokeWidth="0.6" opacity="0.5">
-            <line x1="56" y1="133" x2="64" y2="120" />
-            <line x1="76" y1="133" x2="84" y2="120" />
-            <line x1="96" y1="133" x2="104" y2="120" />
-            <line x1="116" y1="133" x2="124" y2="120" />
-            <line x1="136" y1="133" x2="144" y2="120" />
-            <line x1="156" y1="133" x2="164" y2="120" />
-          </g>
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/newsozai/warranty-cutaway.webp"
+          alt="家の断面図。屋根・外壁・開口部が雨水の浸入を防ぐ部分、柱・横架材・斜材・土台・基礎が構造耐力上主要な部分。"
+          className="mt-2 w-full mix-blend-multiply"
+          loading="lazy"
+          decoding="async"
+        />
         {/* 凡例 */}
         <div className="mt-3 grid gap-1.5 border-t border-hair pt-3">
           <span className="flex items-center gap-2 text-[11px] text-noir">

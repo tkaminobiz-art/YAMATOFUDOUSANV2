@@ -9,6 +9,7 @@ import FloatingCta from "@/components/FloatingCta";
 import { Reveal, CountUp } from "@/components/money/MoneyAnim";
 import SimWire from "@/components/money/SimWire";
 import WarrantyPanel from "@/components/money/WarrantyPanel";
+import ExteriorBreath from "@/components/money/ExteriorBreath";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 export const metadata: Metadata = {
@@ -132,15 +133,16 @@ const FACTS = [
 ] as const;
 
 function CostBars() {
-  const barH = "h-[clamp(240px,42vw,300px)]";
+  // 家の本体は同じ高さ。大手はその上に赤い無駄が乗って“総額が高くなる”。下揃えで差を見せる。
+  const vars = { "--cb-house": "clamp(150px,26vw,188px)", "--cb-waste": "clamp(92px,16vw,116px)" } as CSSProperties;
+  const houseLabel = <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>;
   return (
     <div>
-      <div className="grid grid-cols-2 gap-5 md:gap-12">
-        {/* 一般的な大手 */}
-        <figure className="m-0">
-          <figcaption className="mb-3 text-[13px] font-bold text-noir">一般的な大手</figcaption>
-          <div className={`flex ${barH} flex-col border border-noir`}>
-            <div className="flex h-[42%] flex-col">
+      <div className="flex items-end gap-5 md:gap-12" style={vars}>
+        {/* 一般的な大手：家の本体 ＋ 赤い無駄（高い） */}
+        <figure className="m-0 flex-1">
+          <div className="flex flex-col border border-noir" style={{ height: "calc(var(--cb-house) + var(--cb-waste))" }}>
+            <div className="flex flex-col" style={{ height: "var(--cb-waste)" }}>
               {WASTE.map((w, i) => (
                 <div
                   key={w}
@@ -151,26 +153,31 @@ function CostBars() {
                 </div>
               ))}
             </div>
-            <div className="cost-rise flex h-[58%] items-end border-t-2 border-noir px-2 pb-2">
-              <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>
+            <div className="cost-rise flex items-end border-t-2 border-noir px-2 pb-2" style={{ height: "var(--cb-house)" }}>
+              {houseLabel}
             </div>
           </div>
+          <figcaption className="mt-3 flex items-baseline gap-2">
+            <span className="text-[13px] font-bold text-noir">一般的な大手</span>
+            <span className="font-mono text-[10px] text-signal">家＋無駄</span>
+          </figcaption>
         </figure>
-        {/* やまと */}
-        <figure className="m-0">
-          <figcaption className="mb-3 text-[13px] font-bold text-noir">やまと</figcaption>
-          <div className={`flex ${barH} flex-col border border-noir`}>
-            <div className="flex h-[42%] items-center justify-center">
-              <span className="font-mono text-[10px] tracking-[0.1em] text-slate">— 無駄が乗らない —</span>
-            </div>
-            <div className="cost-rise flex h-[58%] items-end border-t-2 border-noir px-2 pb-2">
-              <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>
+
+        {/* やまと：家の本体だけ（低い＝総額が下がる） */}
+        <figure className="m-0 flex-1">
+          <div className="flex flex-col border border-noir" style={{ height: "var(--cb-house)" }}>
+            <div className="cost-rise flex items-end px-2 pb-2" style={{ height: "var(--cb-house)" }}>
+              {houseLabel}
             </div>
           </div>
+          <figcaption className="mt-3 flex items-baseline gap-2">
+            <span className="text-[13px] font-bold text-noir">やまと</span>
+            <span className="font-mono text-[10px] text-slate">家だけ</span>
+          </figcaption>
         </figure>
       </div>
       <p className="font-mono mt-4 text-[10px] leading-[1.7] text-slate">
-        <span className="text-signal">赤＝家に乗らない無駄</span>（金額は当社試算・参考値。一般的な大手の見積もりの構造）
+        家の本体は同じ。<span className="text-signal">赤い部分が、やまとには乗りません</span>。その分、完成までの費用が下がります。（金額は当社試算・参考値）
       </p>
     </div>
   );
@@ -265,17 +272,7 @@ function Price() {
   );
 }
 
-/* ───────────── 中盤の視覚休符：外観パララックス（コピーなし） ───────────── */
-function ExteriorBreath() {
-  return (
-    <section className="relative bg-noir" aria-hidden>
-      <div className="relative h-[clamp(420px,72vh,760px)] overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/newsozai/money-exterior.webp" alt="" className="parallax-slow" loading="lazy" decoding="async" />
-      </div>
-    </section>
-  );
-}
+/* 外観パララックス（中盤の視覚休符）は client コンポーネントへ分離: @/components/money/ExteriorBreath */
 
 /* ───────────── 04 商品ライン ───────────── */
 const PLANS = [

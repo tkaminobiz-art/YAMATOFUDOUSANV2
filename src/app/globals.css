@@ -167,7 +167,8 @@ p, blockquote, dd, li {
 /* ── /money セクション・モーション（純CSSスクロール駆動・GPU合成・reduced-motionで静止） ──
    非対応 / reduced-motion では最終状態（完成形）を初期表示する静的フォールバックを担保。 */
 .cost-wedge { transform-origin: left center; }
-.parallax-slow { position: absolute; left: 0; top: -12%; width: 100%; height: 124%; object-fit: cover; }
+/* 外観パララックス用の画像。縦移動の余白として 124% にオーバースキャン。動きは JS(rAF)で駆動。 */
+.parallax-img { position: absolute; left: 0; top: -12%; width: 100%; height: 124%; object-fit: cover; will-change: transform; }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     /* 02 価格のしくみ：家の本体（基礎）が下から立ち上がる（先・左右同じだけ） */
@@ -176,9 +177,6 @@ p, blockquote, dd, li {
     /* 02：大手だけ、赤い無駄が横に伸びる（後） */
     .cost-wedge { animation: costWedge linear both; animation-timeline: view(); animation-range: entry 24% cover 52%; }
     @keyframes costWedge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-    /* 外観の視差（背景は動かさず画像のみ・GPU合成） */
-    .parallax-slow { animation: parallaxSlow linear both; animation-timeline: view(); animation-range: cover; will-change: transform; }
-    @keyframes parallaxSlow { from { transform: translateY(-7%); } to { transform: translateY(7%); } }
   }
 }
 
