@@ -1,16 +1,12 @@
 import Image from "next/image";
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import CtaButton from "@/components/ui/CtaButton";
 import GoogleReviewCta from "@/components/GoogleReviewCta";
-import VoiceFilterableList from "@/components/voice/VoiceFilterableList";
+import VoiceImmersive from "@/components/voice/VoiceImmersive";
 import { VOICES } from "@/data/voices";
-
-const FOREST = "#486B00";
-const ACCENT = "#A2C523";
 
 export const metadata: Metadata = {
   title: "お客様の声 | やまと不動産 花鳥風月",
@@ -31,9 +27,9 @@ export default function VoiceIndexPage() {
   return (
     <>
       <Header />
-      <main className="bg-white">
-        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一) === */}
-        <section className="relative w-full overflow-hidden bg-white">
+      <main className="bg-paper">
+        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一 / 2026-06-24 Editorial Monochrome 調整) === */}
+        <section className="relative w-full overflow-hidden bg-paper">
           <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
             <Image
               src="/images/works/case1-living.webp"
@@ -57,10 +53,10 @@ export default function VoiceIndexPage() {
               <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
                 <div className="max-w-[640px]">
                   <p
-                    className="text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
-                    style={{ color: FOREST, fontWeight: 600 }}
+                    className="font-mono text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
+                    style={{ color: "var(--color-signal)", fontWeight: 600 }}
                   >
-                    お客様の声 · Voice
+                    お客様の声 / VOICE
                   </p>
 
                   <h1
@@ -78,9 +74,9 @@ export default function VoiceIndexPage() {
                       className="tabular-nums leading-none"
                       style={{
                         fontFamily: "var(--font-oswald)",
-                        fontWeight: 300,
+                        fontWeight: 400,
                         fontSize: "clamp(64px, 9vw, 128px)",
-                        color: ACCENT,
+                        color: "var(--color-noir)",
                         letterSpacing: "-0.03em",
                       }}
                     >
@@ -103,19 +99,9 @@ export default function VoiceIndexPage() {
           </div>
         </section>
 
-        {/* === タグ chip フィルタ + 一覧(Client component) === */}
-        <section className="py-[var(--section-py)] bg-white">
-          <div className="max-w-[1400px] mx-auto px-[var(--page-px)]">
-            <Suspense
-              fallback={
-                <div className="text-text-secondary text-sm py-12 text-center">
-                  読み込み中...
-                </div>
-              }
-            >
-              <VoiceFilterableList voices={voicesWithExcerpt} />
-            </Suspense>
-          </div>
+        {/* === 3カラム没入：左右＝写真レール(sticky/パララックス) ／ 中央＝口コミ本体 === */}
+        <section className="bg-paper">
+          <VoiceImmersive voices={voicesWithExcerpt} />
         </section>
 
         {/* === OB向け Google 口コミ動線 (2026-05-03 GBP整備 - 12棟達成の3欠落動線①) === */}
