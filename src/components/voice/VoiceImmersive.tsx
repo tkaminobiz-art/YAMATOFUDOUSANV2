@@ -158,19 +158,25 @@ export default function VoiceImmersive({ voices }: { voices: V[] }) {
         <Rail photos={leftPhotos} innerRef={leftRef} side="left" />
 
         <div>
-          {/* 中央ヘッダー */}
-          <div className="border-b border-noir px-5 py-6 md:px-10">
-            <p className="font-mono text-[11px] tracking-[0.16em] text-signal">
-              REVIEWS / 口コミ
-            </p>
-            <p className="mt-2 text-[14px] leading-[1.8] text-ash">
-              花鳥風月で家を建てた
-              <span className="num-tnum font-oswald mx-1 text-[18px] font-semibold text-noir">
+          {/* 中央上段＝章扉ヒーロー（連番カタログ言語・左右の写真レールに挟まれて始まる＝継ぎ目ゼロ） */}
+          <header className="border-b border-noir px-5 pt-12 pb-10 md:px-10 md:pt-16 md:pb-12">
+            <p className="font-mono text-[11px] tracking-[0.18em] text-signal">№ 00 ／ VOICE</p>
+            <h1 className="mt-5 text-[clamp(26px,4.2vw,44px)] font-bold leading-[1.34] tracking-[-0.01em] text-noir">
+              本音のまま、お聞きください。
+            </h1>
+            <div className="mt-8 flex items-baseline gap-2.5">
+              <span className="num-tnum font-oswald text-[clamp(56px,9vw,100px)] font-semibold leading-[0.78] tracking-[-0.03em] text-noir">
                 {voices.length}
               </span>
-              組のご家族の、率直な声です。
+              <span className="pb-1.5 text-[14px] font-bold text-noir">組のご家族</span>
+            </div>
+            <p className="font-mono mt-3 text-[10px] tracking-[0.1em] text-slate">
+              REVIEWS FROM {voices.length} FAMILIES
             </p>
-          </div>
+            <p className="mt-6 max-w-[460px] text-[14px] leading-[1.95] text-ash">
+              花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で。
+            </p>
+          </header>
 
           {voices.map((v, i) => (
             <VoiceCard key={v.id} v={v} no={i + 1} />

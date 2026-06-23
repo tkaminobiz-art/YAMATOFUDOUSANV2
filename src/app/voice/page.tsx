@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -28,78 +27,7 @@ export default function VoiceIndexPage() {
     <>
       <Header />
       <main className="bg-paper">
-        {/* === Photo-led Editorial Soft Hero (2026-05-03 全ページ統一 / 2026-06-24 Editorial Monochrome 調整) === */}
-        <section className="relative w-full overflow-hidden bg-paper">
-          <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
-            <Image
-              src="/images/works/case1-living.webp"
-              alt="お客様の暮らし"
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-              style={{ filter: "saturate(0.96) contrast(1.02)" }}
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 35%, rgba(255,255,255,0.20) 65%, transparent 95%)",
-              }}
-            />
-
-            <div className="absolute inset-0 flex items-end md:items-center">
-              <div className="relative max-w-[1400px] mx-auto px-[var(--page-px)] pb-10 md:pb-0 w-full">
-                <div className="max-w-[640px]">
-                  <p
-                    className="font-mono text-[11px] md:text-[12px] tracking-[0.22em] uppercase mb-5"
-                    style={{ color: "var(--color-signal)", fontWeight: 600 }}
-                  >
-                    お客様の声 / VOICE
-                  </p>
-
-                  <h1
-                    className="text-text-primary leading-[1.25] tracking-[-0.005em] mb-7"
-                    style={{
-                      fontWeight: 500,
-                      fontSize: "clamp(28px, 4vw, 52px)",
-                    }}
-                  >
-                    本音のまま、お聞きください。
-                  </h1>
-
-                  <div className="flex items-baseline gap-2 mb-6">
-                    <span
-                      className="tabular-nums leading-none"
-                      style={{
-                        fontFamily: "var(--font-oswald)",
-                        fontWeight: 400,
-                        fontSize: "clamp(64px, 9vw, 128px)",
-                        color: "var(--color-noir)",
-                        letterSpacing: "-0.03em",
-                      }}
-                    >
-                      {VOICES.length}
-                    </span>
-                    <span
-                      className="text-text-primary text-[14px] md:text-[18px] font-medium leading-none ml-1.5 self-end pb-1 md:pb-2.5"
-                      style={{ fontFamily: "var(--font-sans)" }}
-                    >
-                      組のご家族
-                    </span>
-                  </div>
-
-                  <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
-                    花鳥風月で家を建てた方々の、率直な感想です。決め手・こだわり・満足度まで、できる限り原文に近い形で掲載しています。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* === 3カラム没入：左右＝写真レール(sticky/パララックス) ／ 中央＝口コミ本体 === */}
+        {/* === 3カラム没入＝ヒーロー(章扉)を中央上段に内包し、左右の写真レールを最上端から流す＝継ぎ目ゼロ(C案/2026-06-24) === */}
         <section className="bg-paper">
           <VoiceImmersive voices={voicesWithExcerpt} />
         </section>
