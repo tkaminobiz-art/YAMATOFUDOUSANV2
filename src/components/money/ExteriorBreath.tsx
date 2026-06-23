@@ -23,8 +23,8 @@ export default function ExteriorBreath() {
       // セクションが視界を通過する間の進捗 0..1（下から入って上へ抜ける）
       const progress = (vh - rect.top) / (vh + rect.height);
       const clamped = Math.max(0, Math.min(1, progress));
-      // -8% 〜 +8% の縦移動（オーバースキャン 124% の範囲内）
-      const shift = (clamped - 0.5) * 16;
+      // -11% 〜 +11% の縦移動（オーバースキャン 128% の範囲内・ダイナミックに）
+      const shift = (clamped - 0.5) * 22;
       img.style.transform = `translate3d(0, ${shift.toFixed(2)}%, 0)`;
     };
     const onScroll = () => {
@@ -43,7 +43,7 @@ export default function ExteriorBreath() {
 
   return (
     <section className="relative bg-noir" aria-hidden>
-      <div className="relative h-[clamp(420px,72vh,760px)] overflow-hidden">
+      <div className="relative h-[clamp(480px,88vh,920px)] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           ref={imgRef}
