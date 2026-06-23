@@ -20,8 +20,17 @@
 │       ├── conversion-sales-rulebook.md   営業マンとして売るための10条
 │       ├── line-first-cta-strategy.md    LINE 主導線方針
 │       ├── gbp-status-and-strategy.md    GBP 評価と公開戦略
-│       └── top-section-structure.md      TOP 構成方針
+│       ├── top-section-structure.md      TOP 構成方針
+│       └── yamato-words-bank.md          ★ やまとの言葉バンク (公式サイト+パンフ逐語コーパス)
 ```
+
+## やまとの言葉バンク (一次資料の逐語)
+
+`yamato-words-bank.md` は、やまと不動産が「実際に使っている言葉」を公式サイト
+(yamatogroup.net) とパンフレット写真から逐語で蓄積した一次資料コーパス。
+copywriter スキルが `素の説明体` の北極星 (クライアントの実テキスト) として参照する。
+改変・要約せず引用し、register (口調・温度) を合わせること。数字の正本は
+`BRAND-TRUTH.md` で、公式サイトとの差異は同ファイル §9 にメモ済み。
 
 ## 優先順位
 
