@@ -164,21 +164,11 @@ p, blockquote, dd, li {
   transform: translateY(0);
 }
 
-/* ── /money セクション・モーション（純CSSスクロール駆動・GPU合成・reduced-motionで静止） ──
-   非対応 / reduced-motion では最終状態（完成形）を初期表示する静的フォールバックを担保。 */
-.cost-wedge { transform-origin: left center; }
+/* ── /money セクション・モーション ──
+   02 価格グラフのバー立ち上がり・赤の伸長・価格フェードインは
+   src/components/money/CostBars.tsx の JS(IntersectionObserver)で時間制御する。 */
 /* 外観パララックス用の画像。縦移動の余白として 128% にオーバースキャン。動きは JS(rAF)で駆動。 */
 .parallax-img { position: absolute; left: 0; top: -14%; width: 100%; height: 128%; object-fit: cover; object-position: center 42%; will-change: transform; }
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    /* 02 価格のしくみ：家の本体（基礎）が下から立ち上がる（先・左右同じだけ） */
-    .cost-rise { animation: costRise linear both; animation-timeline: view(); animation-range: entry 6% cover 34%; }
-    @keyframes costRise { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
-    /* 02：大手だけ、赤い無駄が横に伸びる（後） */
-    .cost-wedge { animation: costWedge linear both; animation-timeline: view(); animation-range: entry 24% cover 52%; }
-    @keyframes costWedge { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  }
-}
 
 /* /money 数字の桁ゆれ防止（カウントアップ／価格・桁送り抑止） */
 .num-tnum { font-variant-numeric: tabular-nums; font-feature-settings: "liga" 0, "calt" 0; }

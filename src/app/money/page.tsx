@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode, CSSProperties } from "react";
+import type { ReactNode } from "react";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
 import { Reveal, CountUp } from "@/components/money/MoneyAnim";
+import CostBars from "@/components/money/CostBars";
 import SimWire from "@/components/money/SimWire";
 import WarrantyPanel from "@/components/money/WarrantyPanel";
 import ExteriorBreath from "@/components/money/ExteriorBreath";
@@ -63,10 +64,6 @@ function OutlineCta({ href, children }: { href: string; children: ReactNode }) {
 }
 
 const SECTION = "py-[clamp(64px,calc(40px+5vw),140px)]";
-const HATCH: CSSProperties = {
-  backgroundImage:
-    "repeating-linear-gradient(45deg, var(--color-signal) 0, var(--color-signal) 1px, transparent 1px, transparent 9px)",
-};
 
 /* ───────────── FV ── 見せる画像のみ（コピー・CTAなし／最初の文章は 01） ───────────── */
 function Hero() {
@@ -125,76 +122,11 @@ function Standard() {
 }
 
 /* ───────────── 02 価格のしくみ（比較バー＝下から立ち上がる／赤が横に伸びる） ───────────── */
-const WASTE = ["広告費", "展示場の維持費", "中間マージン"] as const;
 const FACTS = [
   ["展示場を持ちません", "分譲地に建てた家を、そのままモデルハウスにしています。その家は、いずれ販売します。"],
   ["土地から自社で一貫します", "土地の分譲から設計・施工まで自社です。仲介マージンが乗りません。"],
   ["広告は必要な分だけです", "SNSや物件サイトは使いますが、テレビCMや大型広告は出していません。"],
 ] as const;
-
-function CostBars() {
-  // 家の本体は同じ高さ。大手はその上に赤い無駄が乗って“総額が高くなる”。下揃えで差を見せる。
-  const vars = { "--cb-house": "clamp(150px,26vw,188px)", "--cb-waste": "clamp(92px,16vw,116px)" } as CSSProperties;
-  const houseLabel = <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>;
-  return (
-    <div>
-      <div className="flex items-end gap-5 md:gap-12" style={vars}>
-        {/* 一般的な大手：家の本体 ＋ 赤い無駄（高い） */}
-        <figure className="m-0 flex-1">
-          <div className="flex flex-col border border-noir" style={{ height: "calc(var(--cb-house) + var(--cb-waste))" }}>
-            <div className="flex flex-col" style={{ height: "var(--cb-waste)" }}>
-              {WASTE.map((w, i) => (
-                <div
-                  key={w}
-                  className={`relative flex flex-1 items-center px-2 ${i < WASTE.length - 1 ? "border-b border-paper" : ""}`}
-                >
-                  <span className="cost-wedge absolute inset-0" style={HATCH} aria-hidden />
-                  <span className="font-mono relative bg-paper px-1 text-[10px] text-noir">{w}</span>
-                </div>
-              ))}
-            </div>
-            <div className="cost-rise flex items-end border-t-2 border-noir bg-hair px-2 pb-2" style={{ height: "var(--cb-house)" }}>
-              {houseLabel}
-            </div>
-          </div>
-          <figcaption className="mt-3 flex items-baseline gap-2">
-            <span className="text-[13px] font-bold text-noir">一般的な大手</span>
-            <span className="font-mono text-[10px] text-signal">家＋無駄</span>
-          </figcaption>
-        </figure>
-
-        {/* やまと：家の本体だけ（低い＝総額が下がる）。本体をライムで“正の色”に */}
-        <figure className="m-0 flex-1">
-          <div className="relative flex flex-col border border-noir" style={{ height: "var(--cb-house)" }}>
-            {/* バー上部の空き（＝大手の無駄ゾーンと同じ高さ）に総額を出す＝グラフ完成時に立ち上がる */}
-            <div
-              className="pointer-events-none absolute bottom-full left-0 right-0 flex items-end justify-center pb-3"
-              style={{ height: "var(--cb-waste)" }}
-            >
-              <span className="flex flex-col items-center">
-                <span className="font-mono text-[10px] tracking-[0.08em] text-slate">総額・京モデル</span>
-                <span className="mt-1 flex items-baseline gap-1 whitespace-nowrap text-noir">
-                  <CountUp value={2280} className="num-tnum font-oswald text-[clamp(34px,6.4vw,66px)] font-semibold leading-[0.82]" />
-                  <span className="font-mono text-[13px] font-bold">万円〜</span>
-                </span>
-              </span>
-            </div>
-            <div className="cost-rise flex items-end bg-lime px-2 pb-2" style={{ height: "var(--cb-house)" }}>
-              {houseLabel}
-            </div>
-          </div>
-          <figcaption className="mt-3 flex items-baseline gap-2">
-            <span className="text-[13px] font-bold text-noir">やまと</span>
-            <span className="font-mono text-[10px] text-slate">家だけ</span>
-          </figcaption>
-        </figure>
-      </div>
-      <p className="font-mono mt-4 text-[10px] leading-[1.7] text-slate">
-        家の本体は同じ。<span className="text-signal">赤い部分が、やまとには乗りません</span>。その分、完成までの費用が下がります。（金額は当社試算・参考値）
-      </p>
-    </div>
-  );
-}
 
 function Mechanism() {
   return (
