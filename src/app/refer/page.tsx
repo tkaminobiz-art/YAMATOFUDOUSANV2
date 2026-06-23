@@ -38,7 +38,7 @@ export default function ReferPage() {
           <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
             <Image
               src="/images/newsozai/interior-ldk-01.webp"
-              alt="やまとで建てたご家族の暮らし"
+              alt="当社で建てたご家族の暮らし"
               fill
               priority
               className="object-cover"
@@ -77,7 +77,7 @@ export default function ReferPage() {
                   </h1>
 
                   <p className="text-text-primary/85 text-[14px] md:text-[16px] leading-[1.95] mb-8 max-w-[560px]">
-                    やまとで建てた方の「うちでも良かった」のひと言は、これから家を考える方にとって、何よりの後押しになります。ご紹介、ありがたく受けとめます。
+                    当社で建てた方の「うちでも良かった」のひと言は、これから家を考える方にとって、何よりの後押しになります。ご紹介、ありがたく受けとめます。
                   </p>
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5">
@@ -198,7 +198,7 @@ export default function ReferPage() {
                 variant="secondary"
                 size="md"
                 label="LINEで知らせる"
-                sublabel="やまと公式LINEから"
+                sublabel="当社公式LINEから"
               />
             </div>
             <p className="mt-8 text-text-primary/60 text-[11px] md:text-[12px] leading-[1.85]">
@@ -267,7 +267,7 @@ export default function ReferPage() {
               className="group inline-flex items-center gap-2 mt-12 text-main hover:opacity-80 text-[13px] md:text-[14px] transition-opacity"
             >
               <ChevronLeft className="w-4 h-4" strokeWidth={1.6} />
-              既にやまとで建てたご家族の声を見る
+              既に当社で建てたご家族の声を見る
             </Link>
           </div>
         </section>

@@ -106,7 +106,7 @@ export default function GoogleReviewCta({
           </h3>
           <p className="text-text-secondary text-[13px] md:text-[14px] leading-[1.85] mb-4">
             {description ||
-              "これから検討される方への参考に、やまとで建てた感想をひと言。短くて構いません。"}
+              "これから検討される方への参考に、当社で建てた感想をひと言。短くて構いません。"}
           </p>
           <div className="flex flex-wrap gap-3">
             <a

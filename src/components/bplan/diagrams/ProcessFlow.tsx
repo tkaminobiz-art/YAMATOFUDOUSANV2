@@ -69,7 +69,7 @@ const BADGES = ["つなぎ融資は発生しない", "展示場の維持費を�
 
 export default function ProcessFlow() {
   return (
-    <figure className="my-12 md:my-14" aria-label="やまとの一貫構造：土地探しから販売まで自社でつなぐ">
+    <figure className="my-12 md:my-14" aria-label="当社の一貫構造：土地探しから販売まで自社でつなぐ">
       <div className="flex items-start" style={{ color: S.green }}>
         {STEPS.map((s, i) => (
           <div key={s.label} className="flex flex-1 items-start">

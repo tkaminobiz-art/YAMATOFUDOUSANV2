@@ -598,7 +598,7 @@ export default function BPlanPage() {
               </h2>
               <p className="mt-7 max-w-[520px] text-[15px] font-bold leading-[2] text-white/72 md:text-[17px]">
                 50組以上の声に残っていたのは、標準仕様・総額・土地・人の力。
-                やまとが選ばれた理由を、短い言葉に整えました。
+                当社が選ばれた理由を、短い言葉に整えました。
               </p>
             </div>
 
@@ -741,7 +741,7 @@ export default function BPlanPage() {
                   <h2 style={{ wordBreak: "auto-phrase", textWrap: "balance" }}>価格の差は、家そのものではなく、家以外のところで出ます。</h2>
                 </div>
                 <p>
-                  やまとが抑えるのは、建材や室内設備ではありません。
+                  当社が抑えるのは、建材や室内設備ではありません。
                   つなぎ融資、地盤改良費、仲介手数料のように、家以外で増えやすい費用です。
                 </p>
               </div>

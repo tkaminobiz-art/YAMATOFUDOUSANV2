@@ -342,7 +342,7 @@ export default function MechanismEnhanced() {
 
         {/* ========== 注記 ========== */}
         <div className="mt-12 md:mt-16 pl-3 border-l-2 border-text-primary/15 font-sans text-text-secondary text-[12px] md:text-[12.5px] leading-[1.95] space-y-1.5">
-          <p>※ やまとの2,280万円は、京モデル30坪・4LDKの税込・建物本体＋付帯工事の価格です。</p>
+          <p>※ 当社の2,280万円は、京モデル30坪・4LDKの税込・建物本体＋付帯工事の価格です。</p>
           <p>※ 比較条件と「含まれるもの／別途費用」は、上の比較条件ブロックをご参照ください。</p>
         </div>
       </div>

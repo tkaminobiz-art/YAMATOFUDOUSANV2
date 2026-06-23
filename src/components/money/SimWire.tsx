@@ -110,7 +110,7 @@ export default function SimWire() {
       {/* 答え：その月々で、やまとならこの家が持てる */}
       <div className="mt-7 border-t border-noir pt-6">
         <p className="font-mono text-[11px] tracking-[0.06em] text-slate">
-          今の家賃で、やまとなら（{plan.jp}モデル・{plan.size}）
+          今の家賃で、当社なら（{plan.jp}モデル・{plan.size}）
         </p>
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
@@ -144,7 +144,7 @@ export default function SimWire() {
       </p>
       {/* 土地は別途＝総額がはっきりの売りに転換 */}
       <p className="font-mono mt-3 text-[11px] leading-[1.8] text-signal">
-        土地も、やまとの分譲地（500万円台〜）からお選びいただけます。土地と建物をあわせた総額も、はじめにきちんとお伝えします。
+        土地も、当社の分譲地（500万円台〜）からお選びいただけます。土地と建物をあわせた総額も、はじめにきちんとお伝えします。
       </p>
 
       <p className="font-mono mt-4 text-[10px] leading-[1.8] text-mist">

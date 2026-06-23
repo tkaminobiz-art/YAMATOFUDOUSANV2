@@ -54,7 +54,7 @@ const POINTS: readonly Point[] = [
     label: "FP相談",
     num: "独立",
     unit: "",
-    sub: "やまと社内ではなく、独立した立場の提携先FP事務所にご相談いただけます。",
+    sub: "当社内ではなく、独立した立場の提携先FP事務所にご相談いただけます。",
     href: "#ch-questions",
   },
 ] as const;

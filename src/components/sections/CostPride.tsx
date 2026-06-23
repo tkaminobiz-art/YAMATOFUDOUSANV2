@@ -178,7 +178,7 @@ export default function CostPride() {
               className="text-[#1A1815] font-[var(--font-shippori)] leading-[1.95] tracking-[0.02em]"
               style={{ fontSize: "clamp(15px, 1.05vw, 17.5px)", fontWeight: 500 }}
             >
-              建物本来の金額で家を建てるために、やまとは
+              建物本来の金額で家を建てるために、当社は
               <span className="text-[#143426]">3 つの費用</span>
               をかけていません。
             </p>
@@ -212,7 +212,7 @@ export default function CostPride() {
             style={{ fontSize: "clamp(13px, 1vw, 15px)" }}
           >
             広告費・専用展示場の維持費・中間マージンが、価格に乗りやすい構造があります。
-            やまとはその 3 つを最初から外しているので、ご家族が支払う建物価格は、そのまま家そのものの値段になります。
+            当社はその 3 つを最初から外しているので、ご家族が支払う建物価格は、そのまま家そのものの値段になります。
           </p>
 
           <div className="mt-10">

@@ -58,7 +58,7 @@ const PANELS: readonly Panel[] = [
     title: "広告費を、\n地域に必要な範囲へ",
     body: "全国向けの大きな広告ではなく、奈良・京都南部のお客様に届く範囲で。過度な広告費を抑え、適正価格でご提供しています。",
     image: "/images/newsozai/hero-miyamaki-mountain.webp",
-    alt: "奈良の山並みを背景にした、やまとの住まい",
+    alt: "奈良の山並みを背景にした、当社の住まい",
   },
 ] as const;
 

@@ -26,7 +26,7 @@ export default function WorksIndexPage() {
           <div className="relative aspect-[16/10] md:aspect-[21/9] w-full">
             <Image
               src="/images/newsozai/exterior-miyamaki-front.webp"
-              alt="やまとが建てた家の外観"
+              alt="当社が建てた家の外観"
               fill
               priority
               className="object-cover"
@@ -84,7 +84,7 @@ export default function WorksIndexPage() {
                   </div>
 
                   <p className="text-text-primary/85 text-[13px] md:text-[15px] leading-[1.95] mb-8 max-w-[520px]">
-                    やまとが実際に建てたご家族の家。ご相談時の悩み、設計で工夫したこと、住んでからの感想まで、できるだけそのまま、ご紹介しています。
+                    当社が実際に建てたご家族の家。ご相談時の悩み、設計で工夫したこと、住んでからの感想まで、できるだけそのまま、ご紹介しています。
                   </p>
                 </div>
               </div>

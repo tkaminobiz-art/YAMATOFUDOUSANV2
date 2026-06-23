@@ -59,7 +59,7 @@ function ConceptMap({ list }: { list: CityAccess[] }) {
         viewBox="0 0 1200 280"
         className="w-full h-auto"
         role="img"
-        aria-label="大阪・京都とやまとの分譲エリアの距離感"
+        aria-label="大阪・京都と当社の分譲エリアの距離感"
       >
         {/* 背景帯 — やまとエリア(中央) */}
         <rect

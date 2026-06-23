@@ -76,7 +76,7 @@ export default function StandardIncluded() {
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
             家づくりの総額は、「建物本体」に含まれない費用が後から重なりがちです。
-            やまとは、増えやすい 4 項目を契約前に解決し、
+            当社は、増えやすい 4 項目を契約前に解決し、
             その上で国内メーカーの標準仕様を組み込んでいます。
           </p>
         </header>
@@ -116,7 +116,7 @@ export default function StandardIncluded() {
           <p className="mt-5 max-w-[760px] text-[clamp(13px,0.95vw,14.5px)] leading-[1.95] text-[#1A1815]/75">
             他社で「建物 2,000 万円台」と提示されても、土地・地盤・つなぎ融資・外構などで
             合計 200〜400 万円が後から重なることが少なくありません。
-            やまとは、この 4 項目を最初に解決します。
+            当社は、この 4 項目を最初に解決します。
           </p>
           <dl className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 max-w-[1000px]">
             {NO_HIDDEN_COST.map((row) => (

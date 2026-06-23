@@ -85,7 +85,7 @@ function Intro() {
             「あれもこれも」を、予算のなかで。
           </h1>
           <p className="mt-6 max-w-[clamp(274px,78vw,723px)] text-[15px] leading-[1.9] text-ash">
-            あこがれのマイホーム。我慢や妥協は、したくないですよね。やまとは高水準の設備をぜんぶ標準にして、予算のなかでかたちにします。資金計画を、順にご覧ください。
+            あこがれのマイホーム。我慢や妥協は、したくないですよね。当社は高水準の設備をぜんぶ標準にして、予算のなかでかたちにします。資金計画を、順にご覧ください。
           </p>
         </div>
       </Container>
@@ -335,7 +335,7 @@ function SimSection() {
         </Reveal>
         <Reveal className="mt-10">
           <h2 className="head-1line max-w-[13em] text-noir" style={{ whiteSpace: "normal", lineHeight: 1.25, textWrap: "balance" }}>今の家賃のままで、あこがれのマイホームを。</h2>
-          <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れてみてください。やまとなら、どんな住まいになるか、毎月のお支払いとあわせてご覧いただけます。</p>
+          <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れてみてください。当社なら、どんな住まいになるか、毎月のお支払いとあわせてご覧いただけます。</p>
         </Reveal>
         {/* 賃貸vs持ち家(左) + 補償パネル(右・案A)。lg未満は縦積み。 */}
         <Reveal className="mt-9">
@@ -450,7 +450,7 @@ function Contact() {
             <figure className="m-0 border border-hair bg-lime-light p-6 sm:p-8">
               <img
                 src="/images/newsozai/contact-consult.webp"
-                alt="テーブルを囲んで、やまとのスタッフに気軽に相談できる様子のイラスト"
+                alt="テーブルを囲んで、当社のスタッフに気軽に相談できる様子のイラスト"
                 className="mx-auto block w-full max-w-[320px] mix-blend-multiply"
                 loading="lazy"
                 decoding="async"

@@ -54,7 +54,7 @@ const FLOW_STEPS = [
   {
     num: "09",
     title: "お引渡し",
-    desc: "お引き渡しの日から、本当のお付き合いが始まります。半年・1年・5年ごとに、やまとが伺います。",
+    desc: "お引き渡しの日から、本当のお付き合いが始まります。半年・1年・5年ごとに、当社が伺います。",
     duration: "半日",
   },
   {
@@ -82,7 +82,7 @@ export default function FlowSection() {
             ご相談から完成まで、10段階でご案内します。
           </h2>
           <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
-            土地探しから手入れまで、やまとが担当します。
+            土地探しから手入れまで、当社が担当します。
           </p>
         </div>
 

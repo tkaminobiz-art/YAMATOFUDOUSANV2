@@ -139,13 +139,13 @@ export default function CostBars() {
             </div>
           </div>
           <figcaption className="mt-3 flex items-baseline gap-2.5">
-            <span className="text-[clamp(16px,1.9vw,20px)] font-bold text-noir">やまと</span>
+            <span className="text-[clamp(16px,1.9vw,20px)] font-bold text-noir">当社</span>
             <span className="text-[clamp(12px,1.4vw,14px)] font-bold text-lime-deep">家だけ</span>
           </figcaption>
         </figure>
       </div>
       <p className="font-mono mt-4 text-[10px] leading-[1.7] text-slate">
-        家の本体は同じ。<span className="text-signal">赤い部分が、やまとには乗りません</span>。その分、完成までの費用が下がります。（金額は当社試算・参考値）
+        家の本体は同じ。<span className="text-signal">赤い部分が、当社には乗りません</span>。その分、完成までの費用が下がります。（金額は当社試算・参考値）
       </p>
     </div>
   );

@@ -60,7 +60,7 @@ export default function MapBridge() {
           </h2>
           <p className="mt-6 max-w-[680px] text-[clamp(13.5px,1vw,15px)] leading-[1.95] text-[#1A1815]/80">
             土地が決まらないまま、住宅会社だけ先に決めなくて済みます。
-            やまとの自社分譲地は、建物価格とまとめた表で総額を比べられます。
+            当社の分譲地は、建物価格とまとめた表で総額を比べられます。
             <br className="hidden md:inline" />
             SUUMO 等に出る前の区画も、LINE 登録の方には先にお知らせしています。
           </p>

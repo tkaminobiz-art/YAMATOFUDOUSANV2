@@ -239,7 +239,7 @@ export default function SellPage() {
                 BENEFITS
               </p>
               <h2 className="text-[clamp(22px,3vw,36px)] text-text-primary mb-4 leading-[1.5]">
-                やまと買取、5つの安心。
+                当社の買取、5つの安心。
               </h2>
               <p className="text-text-secondary text-[clamp(15px,1.1vw,17px)] leading-relaxed">
                 当社が直接買い取るから、できることがあります。

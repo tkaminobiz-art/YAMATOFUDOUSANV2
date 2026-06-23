@@ -169,7 +169,7 @@ export default function ComparisonTable() {
                     </div>
                     <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-main/25 bg-white/70 px-3 py-1 text-[11px] font-semibold text-main">
                       <Check className="h-4 w-4" strokeWidth={2.5} />
-                      やまと優位
+                      当社優位
                     </span>
                   </div>
 
@@ -252,7 +252,7 @@ export default function ComparisonTable() {
                     参考（一般）
                   </div>
                   <div className="border-l border-border bg-main/10 px-4 py-3 text-center text-[10px] font-semibold tracking-[0.18em] text-main md:px-6 md:py-4">
-                    やまと
+                    当社
                   </div>
                 </div>
                 {SAME_ONLY.map((row, i) => (

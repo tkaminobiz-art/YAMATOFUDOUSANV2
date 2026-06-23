@@ -128,7 +128,7 @@ export default function Home() {
         <BreathStrip
           variant="photo"
           src="/images/breath/brand-whisper.png"
-          alt="奈良の山並みを背景に佇む、やまとが手がけた住まい — golden hour"
+          alt="奈良の山並みを背景に佇む、当社が手がけた住まい — golden hour"
           heightClass="h-[55vh] md:h-[60vh]"
           parallaxStrength={0.25}
         />
