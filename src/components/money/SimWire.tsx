@@ -4,21 +4,23 @@ import { useMemo, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
-/* ワイヤー用・賃貸 vs 持ち家の比較ツール。
-   今の家賃をスライダーで入れ、賃貸を払い続けた総額と、
-   やまとの家を持った場合の総額を、毎月／年間／35年で対置する。
-   前提＝持ち家：土地込み概算（諸費用込み）を当社実例の試算（金利1.0%/35年/頭金0）。
-        賃貸：更新料（2年ごと家賃1ヶ月・約17回）を加算。
-   煽らず事実のみ（感情断定NG）。 */
+/* 05 シミュレーション＝家賃逆算。
+   心理設計(lp-psych-audit 2026-06-23): 賃貸vs持ち家(手垢・営業臭)をやめ、
+   「今の家賃で、やまとならどんな家が持てるか」を自分の数字で見せる。
+   植える思考＝「今の家賃と変わらない月々で、資産になる家が持てる」。
+   - 入口: 今の家賃をスライダー(自分ごと化)
+   - 主役: その月々で持てる やまとの家（建物2,280万〜）と月々。家賃との差を事実で。
+   - 支え: 賃貸は手元に残らない/持ち家は資産（煽らず一言）
+   - 正直さ: 月々は建物本体＋付帯＋諸費用の概算。土地は別途＝"総額がはっきり"の売りに転換。
+   煽り・損失回避フレーム(35年で◯◯万多く払う)は廃止。 */
 const RATE = 1.0;
 const YEARS = 35;
-const EXTRA = 380; // 諸費用込み概算（万）
-const RENEWALS = 17; // 2年ごと家賃1ヶ月 ≒ 35年で約17回
+const EXTRA = 380; // 諸費用込み概算（万）。土地は含まない（別途・脚注で開示）
 
 const PLANS = [
-  { id: "kyo", jp: "京", price: 2280 },
-  { id: "kaze", jp: "風", price: 2480 },
-  { id: "hana", jp: "花", price: 2480 },
+  { id: "kyo", jp: "京", price: 2280, size: "28坪 / 3LDK" },
+  { id: "kaze", jp: "風", price: 2480, size: "30坪 / 4LDK" },
+  { id: "hana", jp: "花", price: 2480, size: "33坪 / 4LDK" },
 ] as const;
 type PlanId = (typeof PLANS)[number]["id"];
 
@@ -29,27 +31,28 @@ function ownMonthlyYen(priceMan: number): number {
   const f = Math.pow(1 + r, n);
   return Math.round((principal * r * f) / (f - 1));
 }
-const toMan = (yen: number) => Math.round(yen / 10000);
 const toMan1 = (yen: number) => (yen / 10000).toFixed(1);
+const roundYen = (yen: number) => Math.round(Math.abs(yen) / 1000) * 1000;
 
 export default function SimWire() {
   const [rent, setRent] = useState(8);
   const [planId, setPlanId] = useState<PlanId>("kyo");
   const plan = PLANS.find((p) => p.id === planId)!;
+  const ownYen = useMemo(() => ownMonthlyYen(plan.price), [plan]);
 
-  const c = useMemo(() => {
-    const rentYen = rent * 10000;
-    const ownYen = ownMonthlyYen(plan.price);
-    const rent35 = toMan(rentYen * 12 * YEARS + rentYen * RENEWALS);
-    const own35 = toMan(ownYen * 12 * YEARS);
-    return { rentYen, ownYen, rent35, own35, diff: rent35 - own35 };
-  }, [rent, plan]);
+  const diff = rent * 10000 - ownYen; // ＋＝家賃のほうが高い（持ち家がおさえられる）
+  const verdict =
+    Math.abs(diff) < 3000
+      ? { tone: "same", text: "今の家賃と、ほとんど変わりません。" }
+      : diff > 0
+        ? { tone: "good", text: `今の家賃より、月々 約${roundYen(diff).toLocaleString()}円 おさえられます。` }
+        : { tone: "plain", text: `今の家賃に 月々 約${roundYen(diff).toLocaleString()}円 を加えると、手が届きます。` };
 
   return (
     <div className="border border-hair bg-paper p-6 md:p-8">
-      {/* 持ち家の比較モデル */}
-      <div role="group" aria-label="持ち家のモデル" className="flex items-center gap-1">
-        <span className="font-mono mr-2 text-[11px] text-slate">持ち家のモデル</span>
+      {/* 持ち家モデル */}
+      <div role="group" aria-label="やまとの家のモデル" className="flex items-center gap-1">
+        <span className="font-mono mr-2 text-[11px] text-slate">やまとの家</span>
         {PLANS.map((p) => {
           const active = p.id === planId;
           return (
@@ -91,42 +94,48 @@ export default function SimWire() {
         <span>12万</span>
       </div>
 
-      {/* 比較テーブル */}
-      <div className="mt-7 border-t border-noir">
-        <div className="grid grid-cols-[1fr_auto_auto] gap-x-4 border-b border-hair py-2">
-          <span />
-          <span className="font-mono text-right text-[11px] text-slate">賃貸</span>
-          <span className="font-mono text-right text-[11px] text-noir">持ち家・{plan.jp}</span>
-        </div>
-        {[
-          ["毎月", `${rent.toFixed(1)}万`, `${toMan1(c.ownYen)}万`],
-          ["年間", `${toMan(c.rentYen * 12).toLocaleString()}万`, `${toMan(c.ownYen * 12).toLocaleString()}万`],
-          ["35年で払う総額", `${c.rent35.toLocaleString()}万`, `${c.own35.toLocaleString()}万`],
-        ].map(([label, a, b]) => (
-          <div key={label} className="grid grid-cols-[1fr_auto_auto] items-baseline gap-x-4 border-b border-hair py-3">
-            <span className="text-[12px] font-bold text-noir">{label}</span>
-            <span className="font-oswald text-right text-[16px] text-slate">{a}</span>
-            <span className="font-oswald text-right text-[16px] text-noir">{b}</span>
+      {/* 答え：その月々で、やまとならこの家が持てる */}
+      <div className="mt-7 border-t border-noir pt-6">
+        <p className="font-mono text-[11px] tracking-[0.06em] text-slate">
+          今の家賃で、やまとなら（{plan.jp}モデル・{plan.size}）
+        </p>
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <div>
+            <p className="font-mono text-[10px] text-slate">月々（ローン）</p>
+            <p className="mt-1 flex items-baseline gap-1">
+              <span className="num-tnum font-oswald text-[clamp(40px,8vw,60px)] font-semibold leading-[0.82] text-noir">
+                {toMan1(ownYen)}
+              </span>
+              <span className="font-mono text-[12px] font-bold text-slate">万円〜</span>
+            </p>
           </div>
-        ))}
-        <div className="grid grid-cols-[1fr_auto_auto] items-baseline gap-x-4 py-3">
-          <span className="text-[12px] font-bold text-noir">手元に残るもの</span>
-          <span className="font-mono text-right text-[12px] text-slate">なし</span>
-          <span className="font-mono text-right text-[12px] text-signal">家（資産）</span>
+          <div className="border-l border-hair pl-4">
+            <p className="font-mono text-[10px] text-slate">家の総額（建物）</p>
+            <p className="mt-1 flex items-baseline gap-1">
+              <span className="num-tnum font-oswald text-[clamp(40px,8vw,60px)] font-semibold leading-[0.82] text-noir">
+                {plan.price.toLocaleString()}
+              </span>
+              <span className="font-mono text-[12px] font-bold text-slate">万円〜</span>
+            </p>
+          </div>
         </div>
+        {/* 家賃との差（事実・煽らない） */}
+        <p className={`mt-4 text-[14px] font-bold leading-[1.7] ${verdict.tone === "good" ? "text-lime-deep" : "text-noir"}`}>
+          {verdict.text}
+        </p>
       </div>
 
-      {/* まとめ（事実・煽らない） */}
-      <p className="mt-5 text-[13px] font-bold leading-[1.75] text-noir">
-        {c.diff > 0
-          ? `35年では、賃貸のほうが約${c.diff.toLocaleString()}万円多く払います。`
-          : c.diff < 0
-          ? `35年の総額は、持ち家が約${Math.abs(c.diff).toLocaleString()}万円多めです。`
-          : "35年の総額は、ほぼ同じです。"}
-        持ち家は、家が資産として残ります。
+      {/* 支え：お支払いが資産になる（やわらかく・煽らない） */}
+      <p className="mt-5 text-[13px] leading-[1.85] text-ash">
+        毎月のお支払いは、そのままご家族の資産になっていきます。
       </p>
+      {/* 土地は別途＝総額がはっきりの売りに転換 */}
+      <p className="font-mono mt-3 text-[11px] leading-[1.8] text-signal">
+        土地も、やまとの分譲地（500万円台〜）からお選びいただけます。土地と建物をあわせた総額も、はじめにきちんとお伝えします。
+      </p>
+
       <p className="font-mono mt-4 text-[10px] leading-[1.8] text-mist">
-        賃貸＝更新料込み（2年ごと家賃1ヶ月）。持ち家＝土地込み概算（諸費用込み）を当社実例の試算（金利1.0% / 35年 / 頭金0）で算出。金利・条件により変動します。
+        月々は建物本体＋付帯工事＋諸費用の概算です（金利1.0% / 35年 / 頭金0）。土地は別途。金利・条件により変わります。
       </p>
 
       {/* CTA */}
@@ -137,7 +146,7 @@ export default function SimWire() {
         className="mt-6 inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 bg-line px-6 text-[14px] font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       >
         <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
-        この比較をLINEで相談する
+        今の家賃で建てられる家を、LINEでご相談ください
       </a>
     </div>
   );

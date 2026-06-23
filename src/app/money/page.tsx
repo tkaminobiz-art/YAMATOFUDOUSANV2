@@ -277,8 +277,8 @@ function SimSection() {
           <SectionIndex no="05" jp="シミュレーション" en="SIMULATOR" />
         </Reveal>
         <Reveal className="mt-10">
-          <h2 className="head-1line text-noir">賃貸と持ち家を比較</h2>
-          <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れて、払い続けた場合と持ち家を持った場合を見比べてください。</p>
+          <h2 className="head-1line text-noir">今の家賃のままで、あこがれのマイホームを。</h2>
+          <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れてみてください。やまとなら、どんな住まいになるか、毎月のお支払いとあわせてご覧いただけます。</p>
         </Reveal>
         {/* 賃貸vs持ち家(左) + 補償パネル(右・案A)。lg未満は縦積み。 */}
         <Reveal className="mt-9">
@@ -378,6 +378,8 @@ function Voices() {
 }
 
 /* ───────────── 08 ご相談 ───────────── */
+const CONTACT_CHIPS = ["相談無料", "営業電話はしません", "急かしません", "土曜も対応"] as const;
+
 function Contact() {
   return (
     <section id="contact" className={`scroll-mt-24 bg-paper ${SECTION}`}>
@@ -385,29 +387,50 @@ function Contact() {
         <Reveal>
           <SectionIndex no="08" jp="ご相談" en="CONTACT" />
         </Reveal>
-        <Reveal className="mt-12 max-w-[820px]">
-          <h2 className="head-1line text-noir">気になることから どうぞ</h2>
-          <div className="mt-7 flex flex-wrap gap-x-7 gap-y-2 font-mono text-[12px] tracking-[0.04em] text-slate">
-            <span>相談無料</span>
-            <span>営業電話はしません</span>
-            <span>急かしません</span>
-            <span>土曜も対応</span>
-          </div>
-          <div className="mt-7 border border-hair p-4">
-            <p className="font-mono text-[11px] tracking-[0.06em] text-slate">LINEで届くもの</p>
-            <p className="mt-1.5 text-[14px] font-bold text-noir">① あなたの総額目安　② 資金計画相談1,000件超の実例集</p>
-          </div>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <LineCta>LINEで相談する</LineCta>
-            <OutlineCta href="/reserve">モデルハウスを見学する</OutlineCta>
-            <Link
-              href="/contact"
-              className="inline-flex min-h-[52px] items-center justify-center px-4 text-[13px] font-bold text-slate underline-offset-4 transition hover:text-noir hover:underline"
-            >
-              資料を請求する
-            </Link>
-          </div>
-        </Reveal>
+        <div className="mt-12 grid items-center gap-8 lg:grid-cols-[minmax(0,400px)_1fr] lg:gap-12">
+          {/* 親しみのある相談イラスト（ライム淡色パネル） */}
+          <Reveal>
+            <figure className="m-0 border border-hair bg-lime-light p-6 sm:p-8">
+              <img
+                src="/images/newsozai/contact-consult.webp"
+                alt="テーブルを囲んで、やまとのスタッフに気軽に相談できる様子のイラスト"
+                className="mx-auto block w-full max-w-[320px] mix-blend-multiply"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </Reveal>
+
+          {/* 招き＋安心＋CTA */}
+          <Reveal>
+            <h2 className="head-1line text-noir">気になることから どうぞ</h2>
+            <p className="mt-5 max-w-[460px] text-[15px] leading-[1.9] text-ash">
+              総額のことも、土地のことも、お金のことも。むずかしい言葉は使いません。思いついた順で、気軽に聞いてください。
+            </p>
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2.5">
+              {CONTACT_CHIPS.map((c) => (
+                <li key={c} className="flex items-center gap-1.5 text-[13px] font-bold text-noir">
+                  <span aria-hidden className="font-bold text-lime-deep">✓</span>
+                  {c}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-7 border border-hair bg-lime-light p-4">
+              <p className="font-mono text-[11px] tracking-[0.06em] text-slate">LINEで届くもの</p>
+              <p className="mt-1.5 text-[14px] font-bold leading-[1.7] text-noir">① あなたの総額目安　② 資金計画相談1,000件超の実例集</p>
+            </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <LineCta>LINEで相談する</LineCta>
+              <OutlineCta href="/reserve">モデルハウスを見学する</OutlineCta>
+              <Link
+                href="/contact"
+                className="inline-flex min-h-[52px] items-center justify-center px-4 text-[13px] font-bold text-slate underline-offset-4 transition hover:text-noir hover:underline"
+              >
+                資料を請求する
+              </Link>
+            </div>
+          </Reveal>
+        </div>
       </Container>
     </section>
   );
