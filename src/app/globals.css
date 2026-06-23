@@ -51,6 +51,7 @@
      どのビューポートでも面積 ≤5%。 */
   --color-paper: #FAFAFA;          /* 唯一の地。純白#FFFは使わない(web-design-creation D-3) */
   --color-band: #F4F4F5;           /* 例外の淡いバンド(ページ内 最大1回) */
+  --color-shade: #ECECEE;          /* 知覚できる灰: /money 章扉の濃淡ステップ(paperとの明度差を可視化) */
   --color-noir: #0A0A0A;           /* 主役の墨: 見出し・本文 */
   --color-ash: #3F3F46;            /* 二次テキスト(AA on white 10:1) */
   --color-slate: #6B6B72;          /* ミュート: キャプション・サブ(AA on white 4.9:1) */

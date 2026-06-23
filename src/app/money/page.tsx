@@ -107,7 +107,7 @@ const SPEC_ICONS = [
 
 function Standard() {
   return (
-    <section id="standard" className={`scroll-mt-24 bg-paper ${SECTION}`}>
+    <section id="standard" className={`scroll-mt-24 bg-[var(--color-shade)] ${SECTION}`}>
       <Container>
         <Reveal>
           <SectionIndex no="01" jp="標準仕様" en="STANDARD" />
@@ -151,26 +151,26 @@ const FACTS = [
 
 function Mechanism() {
   return (
-    <section id="mechanism" className={`scroll-mt-24 bg-band ${SECTION}`}>
+    <section id="mechanism" className={`scroll-mt-24 bg-noir text-paper ${SECTION}`}>
       <Container>
         <Reveal>
-          <SectionIndex no="02" jp="価格のしくみ" en="MECHANISM" />
+          <SectionIndex no="02" jp="価格のしくみ" en="MECHANISM" dark />
         </Reveal>
         <Reveal className="mt-10 max-w-[560px]">
-          <h2 className="head-1line text-noir">完成までの費用を比較</h2>
-          <p className="mt-5 text-[15px] leading-[1.9] text-ash">
+          <h2 className="head-1line text-paper">完成までの費用を比較</h2>
+          <p className="mt-5 text-[15px] leading-[1.9] text-mist">
             素材も性能も大手と同じです。完成までにかかる費用だけが違います。
           </p>
         </Reveal>
         <Reveal className="mt-10">
-          <CostBars />
+          <CostBars dark />
         </Reveal>
-        <Reveal stagger className="mt-14 grid gap-px border-t border-hair pt-px md:grid-cols-3">
+        <Reveal stagger className="mt-14 grid gap-px border-t border-paper/20 pt-px md:grid-cols-3">
           {FACTS.map(([title, body], i) => (
-            <div key={title} className="scroll-in pt-7 md:border-l md:border-hair md:pl-7 md:first:border-l-0 md:first:pl-0">
+            <div key={title} className="scroll-in pt-7 md:border-l md:border-paper/15 md:pl-7 md:first:border-l-0 md:first:pl-0">
               <p className="font-mono text-[12px] tracking-[0.1em] text-signal">0{i + 1}</p>
-              <h3 className="mt-3 text-[16px] font-bold leading-[1.5] text-noir">{title}</h3>
-              <p className="mt-3 text-[13.5px] leading-[1.85] text-ash">{body}</p>
+              <h3 className="mt-3 text-[16px] font-bold leading-[1.5] text-paper">{title}</h3>
+              <p className="mt-3 text-[13.5px] leading-[1.85] text-mist">{body}</p>
             </div>
           ))}
         </Reveal>
@@ -189,42 +189,42 @@ const RECEIPT = [
 
 function Price() {
   return (
-    <section id="price" className={`scroll-mt-24 bg-noir text-paper ${SECTION}`}>
+    <section id="price" className={`scroll-mt-24 bg-paper ${SECTION}`}>
       <Container>
         <Reveal>
-          <SectionIndex no="03" jp="総額" en="PRICE" dark />
+          <SectionIndex no="03" jp="総額" en="PRICE" />
         </Reveal>
         <div className="mt-10 grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <Reveal>
-            <h2 className="head-1line text-paper">2,280万円から建てられます</h2>
+            <h2 className="head-1line text-noir">2,280万円から建てられます</h2>
             <p className="mt-6 flex items-end gap-3 whitespace-nowrap">
               <CountUp
                 value={2280}
-                className="num-tnum font-oswald inline-block min-w-[2.6em] text-right text-[clamp(64px,13vw,150px)] font-semibold leading-[0.82] text-paper"
+                className="num-tnum font-oswald inline-block min-w-[2.6em] text-right text-[clamp(64px,13vw,150px)] font-semibold leading-[0.82] text-noir"
               />
               <span className="font-mono pb-3 text-[13px] tracking-[0.06em] text-signal">万円〜</span>
             </p>
-            <p className="mt-5 max-w-[420px] text-[14px] leading-[1.95] text-mist">
+            <p className="mt-5 max-w-[420px] text-[14px] leading-[1.95] text-ash">
               素材は大手と同じです。展示場と広告の費用を乗せていません。
             </p>
           </Reveal>
           <Reveal>
             {/* 総額の内訳（100%スタックバー） */}
-            <div className="mb-2 flex font-mono text-[11px] text-mist">
+            <div className="mb-2 flex font-mono text-[11px] text-slate">
               <span className="w-[70%]">本体 70%</span>
               <span className="w-[20%]">付帯 20%</span>
               <span className="w-[10%]">諸費 10%</span>
             </div>
-            <div className="flex h-11 w-full border border-paper/40">
-              <div className="w-[70%] bg-paper/80" />
-              <div className="w-[20%] border-l border-noir bg-paper/45" />
-              <div className="w-[10%] border-l border-noir bg-paper/20" />
+            <div className="flex h-11 w-full border border-noir/20">
+              <div className="w-[70%] bg-noir/85" />
+              <div className="w-[20%] border-l border-paper bg-noir/55" />
+              <div className="w-[10%] border-l border-paper bg-noir/30" />
             </div>
-            <dl className="mt-7 border-t border-paper/30">
+            <dl className="mt-7 border-t border-hair">
               {RECEIPT.map(([label, value, strong]) => (
-                <div key={label} className="flex items-baseline justify-between gap-4 border-b border-paper/15 py-4">
-                  <dt className="text-[14px] font-bold text-paper">{label}</dt>
-                  <dd className={`font-mono text-[13px] tracking-[0.04em] ${strong ? "text-signal" : "text-paper"}`}>{value}</dd>
+                <div key={label} className="flex items-baseline justify-between gap-4 border-b border-hair py-4">
+                  <dt className="text-[14px] font-bold text-noir">{label}</dt>
+                  <dd className={`font-mono text-[13px] tracking-[0.04em] ${strong ? "text-signal" : "text-noir"}`}>{value}</dd>
                 </div>
               ))}
             </dl>
@@ -270,7 +270,7 @@ function PlanMeta({ p, big = false }: { p: (typeof PLANS)[number]; big?: boolean
 function Plans() {
   const [hero, ...rest] = PLANS;
   return (
-    <section id="plans" className={`scroll-mt-24 bg-paper ${SECTION}`}>
+    <section id="plans" className={`scroll-mt-24 bg-[var(--color-shade)] ${SECTION}`}>
       <Container>
         <Reveal>
           <SectionIndex no="04" jp="商品ライン" en="PRODUCT" />
@@ -328,7 +328,7 @@ function Plans() {
 /* ───────────── 05 シミュレーション（賃貸 vs 持ち家） ───────────── */
 function SimSection() {
   return (
-    <section id="sim" className={`scroll-mt-24 bg-band ${SECTION}`}>
+    <section id="sim" className={`scroll-mt-24 bg-paper ${SECTION}`}>
       <Container>
         <Reveal>
           <SectionIndex no="05" jp="シミュレーション" en="SIMULATOR" />
@@ -358,7 +358,7 @@ const CASES = [
 
 function Cases() {
   return (
-    <section id="cases" className={`scroll-mt-24 bg-paper ${SECTION}`}>
+    <section id="cases" className={`scroll-mt-24 bg-[var(--color-shade)] ${SECTION}`}>
       <Container>
         <Reveal>
           <SectionIndex no="06" jp="支払いの実例" en="CASE" />
@@ -402,7 +402,7 @@ const VOICES = [
 
 function Voices() {
   return (
-    <section id="voice" className={`scroll-mt-24 bg-band ${SECTION}`}>
+    <section id="voice" className={`scroll-mt-24 bg-lime-light ${SECTION}`}>
       <Container>
         <Reveal>
           <SectionIndex no="07" jp="お客様の声" en="VOICE" />
