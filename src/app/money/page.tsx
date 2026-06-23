@@ -25,14 +25,23 @@ function Container({ children, className = "" }: { children: ReactNode; classNam
 }
 
 /** 連番の索引ヘッダー（mono・赤番号・1px罫線。dark=墨地用） */
+/* 連番マーカー帯＝full-bleed の細い帯。やまと固有の連番カタログ言語で章扉リズムを作る。
+   赤の細マーカー＋mono番号/和名（左）／英名（右）。dark=03墨反転セクション用。 */
 function SectionIndex({ no, jp, en, dark = false }: { no: string; jp: string; en: string; dark?: boolean }) {
   return (
-    <div className={`flex items-baseline justify-between border-b pb-4 ${dark ? "border-paper/20" : "border-hair"}`}>
-      <p className="font-mono text-[12px] tracking-[0.14em]">
-        <span className="text-signal">{no}</span>
-        <span className={dark ? "text-mist" : "text-slate"}> / {jp}</span>
-      </p>
-      <p className="font-mono text-[11px] tracking-[0.18em] text-mist">{en}</p>
+    <div
+      className={`ml-[calc(50%-50vw)] w-screen border-y py-3 ${
+        dark ? "border-paper/15 bg-white/[0.04]" : "border-hair bg-band"
+      }`}
+    >
+      <div className="mx-auto flex w-[min(100%-32px,1200px)] items-center justify-between">
+        <p className="font-mono flex items-center gap-2.5 text-[12px] tracking-[0.14em]">
+          <span aria-hidden className="inline-block h-3.5 w-[3px] bg-signal" />
+          <span className="text-signal">{no}</span>
+          <span className={dark ? "text-mist" : "text-slate"}>/ {jp}</span>
+        </p>
+        <p className="font-mono text-[11px] tracking-[0.18em] text-mist">{en}</p>
+      </div>
     </div>
   );
 }
@@ -488,7 +497,7 @@ export default function MoneyIndexPage() {
   return (
     <>
       <Header />
-      <main className="money-page bg-paper text-noir">
+      <main className="money-page overflow-x-clip bg-paper text-noir">
         <Intro />
         <Standard />
         <Mechanism />
