@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { ReactNode, CSSProperties } from "react";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCta from "@/components/FloatingCta";
-import { Reveal } from "@/components/money/MoneyAnim";
+import { Reveal, CountUp } from "@/components/money/MoneyAnim";
+import SimWire from "@/components/money/SimWire";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 export const metadata: Metadata = {
@@ -20,13 +21,13 @@ function Container({ children, className = "" }: { children: ReactNode; classNam
   return <div className={`mx-auto w-[min(100%-32px,1200px)] ${className}`.trim()}>{children}</div>;
 }
 
-/** 連番の索引ヘッダー（mono・赤番号・1px罫線） */
-function SectionIndex({ no, jp, en }: { no: string; jp: string; en: string }) {
+/** 連番の索引ヘッダー（mono・赤番号・1px罫線。dark=墨地用） */
+function SectionIndex({ no, jp, en, dark = false }: { no: string; jp: string; en: string; dark?: boolean }) {
   return (
-    <div className="flex items-baseline justify-between border-b border-hair pb-4">
+    <div className={`flex items-baseline justify-between border-b pb-4 ${dark ? "border-paper/20" : "border-hair"}`}>
       <p className="font-mono text-[12px] tracking-[0.14em]">
         <span className="text-signal">{no}</span>
-        <span className="text-slate"> / {jp}</span>
+        <span className={dark ? "text-mist" : "text-slate"}> / {jp}</span>
       </p>
       <p className="font-mono text-[11px] tracking-[0.18em] text-mist">{en}</p>
     </div>
@@ -39,7 +40,7 @@ function LineCta({ children = "LINEで相談する", className = "" }: { childre
       href={LINE_ADD_FRIEND_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex min-h-[52px] items-center justify-center gap-2.5 bg-line px-7 text-[14px] font-bold text-white transition duration-200 hover:brightness-[0.94] ${className}`.trim()}
+      className={`inline-flex min-h-[52px] items-center justify-center gap-2.5 bg-line px-7 text-[14px] font-bold text-white transition duration-200 hover:brightness-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal ${className}`.trim()}
     >
       <MessageCircle className="h-5 w-5" strokeWidth={1.9} fill="currentColor" />
       {children}
@@ -51,7 +52,7 @@ function OutlineCta({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
       href={href}
-      className="group inline-flex min-h-[52px] items-center justify-center gap-2 border border-noir px-7 text-[14px] font-bold text-noir transition duration-200 hover:bg-noir hover:text-paper"
+      className="group inline-flex min-h-[52px] items-center justify-center gap-2 border border-noir px-7 text-[14px] font-bold text-noir transition duration-200 hover:bg-noir hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
     >
       {children}
       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" strokeWidth={2} />
@@ -60,59 +61,26 @@ function OutlineCta({ href, children }: { href: string; children: ReactNode }) {
 }
 
 const SECTION = "py-[clamp(64px,calc(40px+5vw),140px)]";
+const HATCH: CSSProperties = {
+  backgroundImage:
+    "repeating-linear-gradient(45deg, var(--color-signal) 0, var(--color-signal) 1px, transparent 1px, transparent 9px)",
+};
 
-/* ───────────── FV ── B: 暮らし主役 ───────────── */
+/* ───────────── FV ── 見せる画像のみ（コピー・CTAなし／最初の文章は 01） ───────────── */
 function Hero() {
   return (
     <section className="relative bg-noir">
-      <div className="relative h-[clamp(520px,82vh,860px)] w-full overflow-hidden">
+      <div className="relative h-[clamp(480px,86vh,900px)] w-full overflow-hidden">
         <Image
-          src="/images/newsozai/interior-ldk-01.webp"
-          alt="やまと不動産が手がけた、奈良の住まいの暮らし"
+          src="/images/newsozai/money-fv.webp"
+          alt="やまと不動産が建てた住まいの内観"
           fill
           priority
           sizes="100vw"
-          className="object-cover saturate-[0.92] contrast-[1.03]"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" aria-hidden />
-        <div className="absolute inset-x-0 bottom-0">
-          <Container className="pb-9 md:pb-14">
-            <p className="font-mono text-[11px] tracking-[0.2em] text-white/85">YAMATO &nbsp;/&nbsp; 資金計画</p>
-            <span aria-hidden className="mt-3 block h-[3px] w-12 bg-signal" />
-            <h1 className="head-fv mt-4 text-white">後悔しない家づくり</h1>
-            <div className="mt-7">
-              <LineCta>LINEで相談する</LineCta>
-            </div>
-          </Container>
-        </div>
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-paper to-transparent" />
       </div>
-    </section>
-  );
-}
-
-/* ───────────── こだわり3宣言（赤ドット帯） ───────────── */
-const KODAWARI = [
-  "これ、ぜんぶ標準です",
-  "素材も性能も、大手と変わりません",
-  "広告費を抑えた、結果の価格です",
-] as const;
-
-function Kodawari() {
-  return (
-    <section className="bg-paper py-[clamp(40px,6vw,72px)]">
-      <Container>
-        <Reveal stagger className="border-t border-hair">
-          {KODAWARI.map((line) => (
-            <p
-              key={line}
-              className="scroll-in flex items-center gap-4 border-b border-hair py-5 text-[clamp(16px,3.4vw,22px)] font-bold text-noir md:py-6"
-            >
-              <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full bg-signal" />
-              {line}
-            </p>
-          ))}
-        </Reveal>
-      </Container>
     </section>
   );
 }
@@ -137,7 +105,7 @@ function Standard() {
         <Reveal className="mt-10">
           <h2 className="head-1line text-noir">標準で 自由に設計できます</h2>
           <p className="mt-5 max-w-[560px] text-[15px] leading-[1.85] text-ash">
-            大手と同じ素材が、標準で揃います。追加費用はかかりません。
+            クリナップ・TOTO・MIRAIE など、設備は標準で揃います。追加費用はかかりません。
           </p>
         </Reveal>
         <Reveal stagger className="mt-10 grid gap-px border-t border-hair sm:grid-cols-2">
@@ -154,13 +122,58 @@ function Standard() {
   );
 }
 
-/* ───────────── 02 価格のしくみ ───────────── */
-const LOADED = ["広告宣伝費", "展示場の維持費", "中間マージン"] as const;
+/* ───────────── 02 価格のしくみ（比較バー＝下から立ち上がる／赤が横に伸びる） ───────────── */
+const WASTE = ["広告費", "展示場の維持費", "中間マージン"] as const;
 const FACTS = [
-  ["展示場を、持ちません", "分譲地に建てた家を、そのままモデルハウスにしています。その家は、いずれ販売します。"],
-  ["土地から、自社で一貫", "土地の分譲から設計・施工まで自社です。仲介マージンが乗りません。"],
-  ["広告は、必要な分だけ", "SNSや物件サイトは使いますが、テレビCMや大型広告は出していません。"],
+  ["展示場を持ちません", "分譲地に建てた家を、そのままモデルハウスにしています。その家は、いずれ販売します。"],
+  ["土地から自社で一貫します", "土地の分譲から設計・施工まで自社です。仲介マージンが乗りません。"],
+  ["広告は必要な分だけです", "SNSや物件サイトは使いますが、テレビCMや大型広告は出していません。"],
 ] as const;
+
+function CostBars() {
+  const barH = "h-[clamp(240px,42vw,300px)]";
+  return (
+    <div>
+      <div className="grid grid-cols-2 gap-5 md:gap-12">
+        {/* 一般的な大手 */}
+        <figure className="m-0">
+          <figcaption className="mb-3 text-[13px] font-bold text-noir">一般的な大手</figcaption>
+          <div className={`flex ${barH} flex-col border border-noir`}>
+            <div className="flex h-[42%] flex-col">
+              {WASTE.map((w, i) => (
+                <div
+                  key={w}
+                  className={`relative flex flex-1 items-center px-2 ${i < WASTE.length - 1 ? "border-b border-paper" : ""}`}
+                >
+                  <span className="cost-wedge absolute inset-0" style={HATCH} aria-hidden />
+                  <span className="font-mono relative bg-paper px-1 text-[10px] text-noir">{w}</span>
+                </div>
+              ))}
+            </div>
+            <div className="cost-rise flex h-[58%] items-end border-t-2 border-noir px-2 pb-2">
+              <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>
+            </div>
+          </div>
+        </figure>
+        {/* やまと */}
+        <figure className="m-0">
+          <figcaption className="mb-3 text-[13px] font-bold text-noir">やまと</figcaption>
+          <div className={`flex ${barH} flex-col border border-noir`}>
+            <div className="flex h-[42%] items-center justify-center">
+              <span className="font-mono text-[10px] tracking-[0.1em] text-slate">— 無駄が乗らない —</span>
+            </div>
+            <div className="cost-rise flex h-[58%] items-end border-t-2 border-noir px-2 pb-2">
+              <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>
+            </div>
+          </div>
+        </figure>
+      </div>
+      <p className="font-mono mt-4 text-[10px] leading-[1.7] text-slate">
+        <span className="text-signal">赤＝家に乗らない無駄</span>（金額は当社試算・参考値。一般的な大手の見積もりの構造）
+      </p>
+    </div>
+  );
+}
 
 function Mechanism() {
   return (
@@ -169,34 +182,20 @@ function Mechanism() {
         <Reveal>
           <SectionIndex no="02" jp="価格のしくみ" en="MECHANISM" />
         </Reveal>
-        <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-start lg:gap-20">
-          <Reveal>
-            <h2 className="head-1line text-noir">完成までの費用を比較</h2>
-            <p className="mt-6 max-w-[440px] text-[15px] leading-[1.95] text-ash">
-              素材も性能も、大手と同じです。違うのは、家を届けるまでの費用です。
-            </p>
-          </Reveal>
-          <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.1em] text-slate">大手の見積もりに乗るもの</p>
-            <dl className="mt-3 border-t border-noir">
-              {LOADED.map((label) => (
-                <div key={label} className="flex items-center justify-between gap-4 border-b border-hair py-3.5">
-                  <dt className="text-[15px] font-bold text-noir">{label}</dt>
-                  <dd className="font-mono text-[12px] tracking-[0.06em] text-signal">＋ 上乗せ</dd>
-                </div>
-              ))}
-              <div className="flex items-center justify-between gap-4 py-3.5">
-                <dt className="text-[15px] font-bold text-noir">やまと</dt>
-                <dd className="font-mono text-[12px] tracking-[0.06em] text-noir">家の値段だけ</dd>
-              </div>
-            </dl>
-          </Reveal>
-        </div>
+        <Reveal className="mt-10 max-w-[560px]">
+          <h2 className="head-1line text-noir">完成までの費用を比較</h2>
+          <p className="mt-5 text-[15px] leading-[1.9] text-ash">
+            素材も性能も大手と同じです。完成までにかかる費用だけが違います。
+          </p>
+        </Reveal>
+        <Reveal className="mt-10">
+          <CostBars />
+        </Reveal>
         <Reveal stagger className="mt-14 grid gap-px border-t border-hair pt-px md:grid-cols-3">
           {FACTS.map(([title, body], i) => (
             <div key={title} className="scroll-in pt-7 md:border-l md:border-hair md:pl-7 md:first:border-l-0 md:first:pl-0">
               <p className="font-mono text-[12px] tracking-[0.1em] text-signal">0{i + 1}</p>
-              <h3 className="head-1line-sm mt-3 text-noir">{title}</h3>
+              <h3 className="mt-3 text-[16px] font-bold leading-[1.5] text-noir">{title}</h3>
               <p className="mt-3 text-[13.5px] leading-[1.85] text-ash">{body}</p>
             </div>
           ))}
@@ -206,7 +205,7 @@ function Mechanism() {
   );
 }
 
-/* ───────────── 03 総額 ───────────── */
+/* ───────────── 03 総額（墨反転ダークバンド＋カウントアップ＋内訳） ───────────── */
 const RECEIPT = [
   ["建物本体（京モデル）", "2,280万円〜", false],
   ["付帯工事", "込み", false],
@@ -216,28 +215,42 @@ const RECEIPT = [
 
 function Price() {
   return (
-    <section id="price" className={`scroll-mt-24 bg-paper ${SECTION}`}>
+    <section id="price" className={`scroll-mt-24 bg-noir text-paper ${SECTION}`}>
       <Container>
         <Reveal>
-          <SectionIndex no="03" jp="総額" en="PRICE" />
+          <SectionIndex no="03" jp="総額" en="PRICE" dark />
         </Reveal>
         <div className="mt-10 grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <Reveal>
-            <h2 className="head-1line text-noir">2,280万円から建てられます</h2>
-            <p className="mt-5 flex items-end gap-3 whitespace-nowrap">
-              <span className="font-oswald text-[clamp(64px,13vw,150px)] font-semibold leading-[0.82] text-noir">2,280</span>
+            <h2 className="head-1line text-paper">2,280万円から建てられます</h2>
+            <p className="mt-6 flex items-end gap-3 whitespace-nowrap">
+              <CountUp
+                value={2280}
+                className="num-tnum font-oswald inline-block min-w-[2.6em] text-right text-[clamp(64px,13vw,150px)] font-semibold leading-[0.82] text-paper"
+              />
               <span className="font-mono pb-3 text-[13px] tracking-[0.06em] text-signal">万円〜</span>
             </p>
-            <p className="mt-5 max-w-[420px] text-[14px] leading-[1.95] text-ash">
-              素材は大手と同じ。展示場と広告の費用を、乗せていません。
+            <p className="mt-5 max-w-[420px] text-[14px] leading-[1.95] text-mist">
+              素材は大手と同じです。展示場と広告の費用を乗せていません。
             </p>
           </Reveal>
           <Reveal>
-            <dl className="border-t border-noir">
+            {/* 総額の内訳（100%スタックバー） */}
+            <div className="mb-2 flex font-mono text-[11px] text-mist">
+              <span className="w-[70%]">本体 70%</span>
+              <span className="w-[20%]">付帯 20%</span>
+              <span className="w-[10%]">諸費 10%</span>
+            </div>
+            <div className="flex h-11 w-full border border-paper/40">
+              <div className="w-[70%] bg-paper/80" />
+              <div className="w-[20%] border-l border-noir bg-paper/45" />
+              <div className="w-[10%] border-l border-noir bg-paper/20" />
+            </div>
+            <dl className="mt-7 border-t border-paper/30">
               {RECEIPT.map(([label, value, strong]) => (
-                <div key={label} className="flex items-baseline justify-between gap-4 border-b border-hair py-4">
-                  <dt className="text-[14px] font-bold text-noir">{label}</dt>
-                  <dd className={`font-mono text-[13px] tracking-[0.04em] ${strong ? "text-signal" : "text-noir"}`}>{value}</dd>
+                <div key={label} className="flex items-baseline justify-between gap-4 border-b border-paper/15 py-4">
+                  <dt className="text-[14px] font-bold text-paper">{label}</dt>
+                  <dd className={`font-mono text-[13px] tracking-[0.04em] ${strong ? "text-signal" : "text-paper"}`}>{value}</dd>
                 </div>
               ))}
             </dl>
@@ -247,6 +260,18 @@ function Price() {
           </Reveal>
         </div>
       </Container>
+    </section>
+  );
+}
+
+/* ───────────── 中盤の視覚休符：外観パララックス（コピーなし） ───────────── */
+function ExteriorBreath() {
+  return (
+    <section className="relative bg-noir" aria-hidden>
+      <div className="relative h-[clamp(420px,72vh,760px)] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/newsozai/money-exterior.webp" alt="" className="parallax-slow" loading="lazy" decoding="async" />
+      </div>
     </section>
   );
 }
@@ -266,7 +291,7 @@ function Plans() {
           <SectionIndex no="04" jp="商品ライン" en="PRODUCT" />
         </Reveal>
         <Reveal className="mt-10">
-          <h2 className="head-1line text-noir">間取りも設備も自由に選べます</h2>
+          <h2 className="head-1line text-noir">高水準標準装備＋自由設計</h2>
         </Reveal>
         <Reveal stagger className="mt-8 border-t border-hair">
           {PLANS.map((p) => (
@@ -300,7 +325,27 @@ function Plans() {
   );
 }
 
-/* ───────────── 05 支払いの実例 ───────────── */
+/* ───────────── 05 シミュレーション（賃貸 vs 持ち家） ───────────── */
+function SimSection() {
+  return (
+    <section id="sim" className={`scroll-mt-24 bg-band ${SECTION}`}>
+      <Container>
+        <Reveal>
+          <SectionIndex no="05" jp="シミュレーション" en="SIMULATOR" />
+        </Reveal>
+        <Reveal className="mt-10">
+          <h2 className="head-1line text-noir">賃貸と持ち家を比較</h2>
+          <p className="mt-5 text-[15px] leading-[1.85] text-ash">今の家賃を入れて、払い続けた場合と持ち家を持った場合を見比べてください。</p>
+        </Reveal>
+        <Reveal className="mt-9 max-w-[600px]">
+          <SimWire />
+        </Reveal>
+      </Container>
+    </section>
+  );
+}
+
+/* ───────────── 06 支払いの実例 ───────────── */
 const CASES = [
   { no: "01", plan: "京モデル", family: "30代ご夫婦＋お子様1人", total: "3,180万円", monthly: "86,944", image: "/images/works/case3-living.webp" },
   { no: "02", plan: "風モデル", family: "30代ご夫婦＋お子様2人", total: "3,580万円", monthly: "95,413", image: "/images/works/case2-kitchen.webp" },
@@ -309,10 +354,10 @@ const CASES = [
 
 function Cases() {
   return (
-    <section id="cases" className={`scroll-mt-24 bg-band ${SECTION}`}>
+    <section id="cases" className={`scroll-mt-24 bg-paper ${SECTION}`}>
       <Container>
         <Reveal>
-          <SectionIndex no="05" jp="支払いの実例" en="CASE" />
+          <SectionIndex no="06" jp="支払いの実例" en="CASE" />
           <p className="font-mono mt-4 text-[11px] tracking-[0.06em] text-slate">
             試算用金利1.0% / 35年 / ボーナス払いなしの例です
           </p>
@@ -344,7 +389,7 @@ function Cases() {
   );
 }
 
-/* ───────────── 06 お客様の声 ───────────── */
+/* ───────────── 07 お客様の声 ───────────── */
 const VOICES = [
   { id: "208786", family: "Ｙ様", area: "天理市", quote: "標準仕様の設備と金額が明確でわかりやすく、資金のイメージがしやすかったです。", image: "/images/voices/208786_1.webp" },
   { id: "190536", family: "Ｎ様", area: "奈良市", quote: "オプション工事も一つ一つ値段設定表があったので、資金計画がしやすい点も良かったです。", image: "/images/voices/190536_1.webp" },
@@ -353,10 +398,10 @@ const VOICES = [
 
 function Voices() {
   return (
-    <section id="voice" className={`scroll-mt-24 bg-paper ${SECTION}`}>
+    <section id="voice" className={`scroll-mt-24 bg-band ${SECTION}`}>
       <Container>
         <Reveal>
-          <SectionIndex no="06" jp="お客様の声" en="VOICE" />
+          <SectionIndex no="07" jp="お客様の声" en="VOICE" />
         </Reveal>
         <Reveal className="mt-10">
           <h2 className="head-1line text-noir">建てたご家族に聞きました</h2>
@@ -385,13 +430,13 @@ function Voices() {
   );
 }
 
-/* ───────────── 07 ご相談 ───────────── */
+/* ───────────── 08 ご相談 ───────────── */
 function Contact() {
   return (
     <section id="contact" className={`scroll-mt-24 bg-paper ${SECTION}`}>
       <Container>
         <Reveal>
-          <SectionIndex no="07" jp="ご相談" en="CONTACT" />
+          <SectionIndex no="08" jp="ご相談" en="CONTACT" />
         </Reveal>
         <Reveal className="mt-12 max-w-[820px]">
           <h2 className="head-1line text-noir">気になることから どうぞ</h2>
@@ -401,10 +446,17 @@ function Contact() {
             <span>急かしません</span>
             <span>土曜も対応</span>
           </div>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-7 border border-hair p-4">
+            <p className="font-mono text-[11px] tracking-[0.06em] text-slate">LINEで届くもの</p>
+            <p className="mt-1.5 text-[14px] font-bold text-noir">① あなたの総額目安　② 資金計画相談1,000件超の実例集</p>
+          </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <LineCta>LINEで相談する</LineCta>
             <OutlineCta href="/reserve">モデルハウスを見学する</OutlineCta>
-            <Link href="/contact" className="inline-flex min-h-[52px] items-center justify-center px-4 text-[13px] font-bold text-slate underline-offset-4 transition hover:text-noir hover:underline">
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[52px] items-center justify-center px-4 text-[13px] font-bold text-slate underline-offset-4 transition hover:text-noir hover:underline"
+            >
               資料を請求する
             </Link>
           </div>
@@ -419,12 +471,14 @@ export default function MoneyIndexPage() {
     <>
       <Header />
       <main className="money-page bg-paper text-noir">
+        <h1 className="sr-only">資金計画｜やまと不動産</h1>
         <Hero />
-        <Kodawari />
         <Standard />
         <Mechanism />
         <Price />
+        <ExteriorBreath />
         <Plans />
+        <SimSection />
         <Cases />
         <Voices />
         <Contact />
