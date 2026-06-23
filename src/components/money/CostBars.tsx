@@ -89,7 +89,7 @@ export default function CostBars() {
     transition: reduce ? "none" : `opacity 560ms ease, transform 560ms ${EASE}`,
   };
 
-  const houseLabel = <span className="text-[12px] font-bold text-noir">家の本体・標準仕様</span>;
+  const houseLabel = <span className="text-[clamp(14px,1.6vw,17px)] font-bold text-noir">家の本体・標準仕様</span>;
 
   return (
     <div ref={ref}>
@@ -104,7 +104,7 @@ export default function CostBars() {
                   className={`relative flex flex-1 items-center px-2 ${i < WASTE.length - 1 ? "border-b border-paper" : ""}`}
                 >
                   <span className="absolute inset-0" style={wasteStyle} aria-hidden />
-                  <span className="font-mono relative bg-paper px-1 text-[10px] text-noir">{w}</span>
+                  <span className="relative bg-paper px-1.5 text-[clamp(12px,1.4vw,15px)] font-bold text-noir">{w}</span>
                 </div>
               ))}
             </div>
@@ -112,9 +112,9 @@ export default function CostBars() {
               {houseLabel}
             </div>
           </div>
-          <figcaption className="mt-3 flex items-baseline gap-2">
-            <span className="text-[13px] font-bold text-noir">一般的な大手</span>
-            <span className="font-mono text-[10px] text-signal">家＋無駄</span>
+          <figcaption className="mt-3 flex items-baseline gap-2.5">
+            <span className="text-[clamp(16px,1.9vw,20px)] font-bold text-noir">一般的な大手</span>
+            <span className="text-[clamp(12px,1.4vw,14px)] font-bold text-signal">家＋無駄</span>
           </figcaption>
         </figure>
 
@@ -138,9 +138,9 @@ export default function CostBars() {
               {houseLabel}
             </div>
           </div>
-          <figcaption className="mt-3 flex items-baseline gap-2">
-            <span className="text-[13px] font-bold text-noir">やまと</span>
-            <span className="font-mono text-[10px] text-slate">家だけ</span>
+          <figcaption className="mt-3 flex items-baseline gap-2.5">
+            <span className="text-[clamp(16px,1.9vw,20px)] font-bold text-noir">やまと</span>
+            <span className="text-[clamp(12px,1.4vw,14px)] font-bold text-lime-deep">家だけ</span>
           </figcaption>
         </figure>
       </div>
