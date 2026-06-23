@@ -108,7 +108,7 @@ export default function CostBars() {
                 </div>
               ))}
             </div>
-            <div className="flex items-end border-t-2 border-noir bg-hair px-2 pb-2" style={houseStyle}>
+            <div className="flex items-end border-t-2 border-noir bg-[#ED7D2B] px-2 pb-2" style={houseStyle}>
               {houseLabel}
             </div>
           </div>
