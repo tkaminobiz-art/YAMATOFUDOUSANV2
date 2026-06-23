@@ -111,14 +111,21 @@ function Standard() {
         </Reveal>
         {/* 全標準装備を統一アイコンで（生成・スタイリッシュ）。撮れない設備も網羅 */}
         <Reveal stagger className="mt-10 grid grid-cols-2 gap-px border border-hair bg-hair sm:grid-cols-4">
-          {SPEC_ICONS.map((s) => (
-            <div key={s.cat} className="scroll-in flex flex-col items-center gap-1.5 bg-paper px-3 py-5 text-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={s.icon} alt="" className="h-12 w-12 object-contain mix-blend-multiply" loading="lazy" decoding="async" />
-              <p className="font-mono mt-1 text-[10px] tracking-[0.04em] text-slate">{s.cat}</p>
-              <p className="text-[12px] font-bold leading-[1.45] text-noir">{s.maker}</p>
-            </div>
-          ))}
+          {SPEC_ICONS.map((s, i) => {
+            const lime = (Math.floor(i / 4) + (i % 4)) % 2 === 0; // ライム×クリームの市松
+            return (
+              <div
+                key={s.cat}
+                className="scroll-in flex flex-col items-center gap-1.5 px-3 py-5 text-center"
+                style={{ background: lime ? "#A2C523" : "#F3ECD9" }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={s.icon} alt="" className="h-12 w-12 object-contain mix-blend-multiply" loading="lazy" decoding="async" />
+                <p className="font-mono mt-1 text-[10px] tracking-[0.04em] text-noir/65">{s.cat}</p>
+                <p className="text-[12px] font-bold leading-[1.45] text-noir">{s.maker}</p>
+              </div>
+            );
+          })}
         </Reveal>
         <p className="font-mono mt-6 text-[12px] tracking-[0.06em] text-slate">標準仕様 ── ほか17項目</p>
       </Container>
