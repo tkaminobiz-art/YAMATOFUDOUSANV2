@@ -153,7 +153,7 @@ function CostBars() {
                 </div>
               ))}
             </div>
-            <div className="cost-rise flex items-end border-t-2 border-noir px-2 pb-2" style={{ height: "var(--cb-house)" }}>
+            <div className="cost-rise flex items-end border-t-2 border-noir bg-hair px-2 pb-2" style={{ height: "var(--cb-house)" }}>
               {houseLabel}
             </div>
           </div>
@@ -163,10 +163,10 @@ function CostBars() {
           </figcaption>
         </figure>
 
-        {/* やまと：家の本体だけ（低い＝総額が下がる） */}
+        {/* やまと：家の本体だけ（低い＝総額が下がる）。本体をライムで“正の色”に */}
         <figure className="m-0 flex-1">
           <div className="flex flex-col border border-noir" style={{ height: "var(--cb-house)" }}>
-            <div className="cost-rise flex items-end px-2 pb-2" style={{ height: "var(--cb-house)" }}>
+            <div className="cost-rise flex items-end bg-lime px-2 pb-2" style={{ height: "var(--cb-house)" }}>
               {houseLabel}
             </div>
           </div>
