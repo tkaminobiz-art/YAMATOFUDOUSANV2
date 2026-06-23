@@ -452,6 +452,15 @@ p, blockquote, dd, li {
   /* 全角14字が SP375px で一行に収まり、PC で伸びる。ディスプレイ見出し専用の vw 例外 */
   font-size: clamp(1.375rem, 6vw, 3.75rem);
 }
+.head-hero {                /* ページ最上位 h1 専用＝section h2(head-1line 最大60px)より大きく */
+  font-family: var(--font-money);
+  font-weight: 900;
+  white-space: nowrap;       /* 1行固定 */
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  /* 長い見出し(約17em)がコンテナ(100vw-32px)に1行で収まる上限。幅倍率17で算出。最大68px(h2の60pxより大) */
+  font-size: clamp(1.1875rem, calc(5.85vw - 2px), 4.25rem);
+}
 .head-1line-sm {            /* 索引セクションの中位見出し用 */
   font-family: var(--font-money);
   font-weight: 700;

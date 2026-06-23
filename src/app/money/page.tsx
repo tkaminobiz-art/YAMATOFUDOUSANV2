@@ -72,7 +72,7 @@ function Intro() {
       <Container>
         <div className="pt-[clamp(52px,9vw,100px)] pb-[clamp(44px,7vw,84px)]">
           <p className="font-mono text-[12px] tracking-[0.16em] text-signal">資金計画 / MONEY</p>
-          <h1 className="mt-5 whitespace-nowrap text-[clamp(19px,5.4vw,50px)] font-bold leading-[1.3] text-noir">
+          <h1 className="head-hero mt-5 text-noir">
             「あれもこれも」を、予算のなかで。
           </h1>
           <p className="mt-6 max-w-[clamp(274px,78vw,723px)] text-[15px] leading-[1.9] text-ash">
