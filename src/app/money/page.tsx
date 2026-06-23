@@ -31,7 +31,7 @@ function SectionIndex({ no, jp, en, dark = false }: { no: string; jp: string; en
   return (
     <div
       className={`ml-[calc(50%-50vw)] w-screen border-y py-3 ${
-        dark ? "border-paper/15 bg-white/[0.04]" : "border-hair bg-band"
+        dark ? "border-paper/25 bg-white/[0.10]" : "border-hair bg-band"
       }`}
     >
       <div className="mx-auto flex w-[min(100%-32px,1200px)] items-center justify-between">
