@@ -23,7 +23,17 @@ export default function WorksScrollB() {
   const cats = WORKS_PARTS.categories;
   const [active, setActive] = useState(0);
   const [slide, setSlide] = useState(0);
+  const [reduce, setReduce] = useState(false);
   const refs = useRef<(HTMLElement | null)[]>([]);
+
+  // reduced-motion は“スライド”をやめてクロスフェードへ（自動めくり自体は続ける）
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const on = () => setReduce(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
 
   // アクティブ章の検出
   useEffect(() => {
@@ -43,7 +53,7 @@ export default function WorksScrollB() {
   useEffect(() => {
     setSlide(0);
     const len = Math.min(cats[active].gallery.length, SHOWN);
-    if (len <= 1 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (len <= 1) return;
     const id = window.setInterval(() => setSlide((s) => (s + 1) % len), 3600);
     return () => window.clearInterval(id);
   }, [active, cats]);
@@ -58,21 +68,40 @@ export default function WorksScrollB() {
         {/* min-w-0 必須：横スライドの track が grid 列を肥大化させ右列を画面外へ押し出すのを防ぐ */}
         <div className="relative min-w-0">
           <div className="sticky top-0 h-screen overflow-hidden bg-noir/[0.02]">
-            {/* その部位の写真を1枚ずつ表示し、横スライドで次へ“めくる”（key で章切替時にリセット） */}
-            <div
-              key={active}
-              className="flex h-full"
-              style={{
-                transform: `translateX(-${slide * 100}%)`,
-                transition: "transform 760ms cubic-bezier(0.16,1,0.3,1)",
-              }}
-            >
-              {shots.map((src, k) => (
-                <div key={k} className="relative h-full w-full shrink-0">
-                  <Image src={src} alt="" aria-hidden fill priority={k === 0} sizes="70vw" className="object-cover" />
-                </div>
-              ))}
-            </div>
+            {/* その部位の写真を1枚ずつ表示し、約3.6秒ごとに次の1枚へ“めくる”。
+                通常＝横スライド／reduced-motion＝クロスフェード（どちらも自動めくりは行う） */}
+            {reduce ? (
+              <div className="relative h-full w-full">
+                {shots.map((src, k) => (
+                  <Image
+                    key={k}
+                    src={src}
+                    alt=""
+                    aria-hidden
+                    fill
+                    priority={k === 0}
+                    sizes="70vw"
+                    className="object-cover"
+                    style={{ opacity: slide === k ? 1 : 0, transition: "opacity 700ms ease" }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div
+                key={active}
+                className="flex h-full"
+                style={{
+                  transform: `translateX(-${slide * 100}%)`,
+                  transition: "transform 760ms cubic-bezier(0.16,1,0.3,1)",
+                }}
+              >
+                {shots.map((src, k) => (
+                  <div key={k} className="relative h-full w-full shrink-0">
+                    <Image src={src} alt="" aria-hidden fill priority={k === 0} sizes="70vw" className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="num-tnum font-oswald pointer-events-none absolute left-7 top-6 text-[clamp(56px,6vw,112px)] font-semibold leading-none text-paper mix-blend-difference">
               {String(active + 1).padStart(2, "0")}
