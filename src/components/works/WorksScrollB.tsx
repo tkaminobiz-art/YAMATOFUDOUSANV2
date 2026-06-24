@@ -37,8 +37,8 @@ export default function WorksScrollB() {
   return (
     <div className="bg-paper">
       {/* デスクトップ＝7:3 sticky写真ステージ ＋ テキスト列 */}
-      <div className="hidden lg:grid lg:grid-cols-[7fr_3fr]">
-        <div className="relative border-r border-hair">
+      <div className="hidden lg:grid lg:grid-cols-[7fr_60px_3fr]">
+        <div className="relative">
           <div className="sticky top-0 h-screen overflow-hidden">
             {cats.map((c, i) => (
               <Image
@@ -65,6 +65,24 @@ export default function WorksScrollB() {
             </div>
           </div>
         </div>
+
+        {/* 縦の帯＝部位インデックスのスパイン（仕切りのメリハリ＋進行表示） */}
+        <div className="relative border-x border-hair bg-band">
+          <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-6">
+            <div className="flex flex-col items-center gap-2.5">
+              {cats.map((_, i) => (
+                <span
+                  key={i}
+                  className={`block h-[2px] transition-all duration-300 ${active === i ? "w-7 bg-signal" : "w-3 bg-noir/25"}`}
+                />
+              ))}
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.3em] text-slate [writing-mode:vertical-rl]">
+              {EN[cats[active].slug]}
+            </span>
+          </div>
+        </div>
+
         <div>
           {cats.map((c, i) => (
             <section
