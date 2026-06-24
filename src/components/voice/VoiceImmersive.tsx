@@ -116,13 +116,15 @@ function VoiceCard({ v, no }: { v: V; no: number }) {
         transform: shown ? "scaleX(1)" : "scaleX(0)",
         transition: "transform 280ms cubic-bezier(0.16,1,0.3,1)",
       };
+  const photoStyle: CSSProperties = reduce
+    ? {}
+    : { opacity: shown ? 1 : 0, transition: "opacity 600ms ease", transitionDelay: "60ms" };
 
-  return (
-    <article ref={ref} className="relative scroll-mt-24 px-5 py-9 md:px-10 md:py-12">
-      {/* カード上端の1px罫線が左から引かれる（先頭は章扉の墨罫が境界なので不要） */}
-      {no > 1 && <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-hair" style={ruleStyle} />}
+  const photo = v.photos[0];
 
-      <div className="flex items-center justify-between" style={item(0)}>
+  const text = (
+    <div className="py-7 pl-4 pr-4 md:pl-6 md:pr-6 md:py-9 lg:px-10 lg:py-12">
+      <div className="flex items-center justify-between gap-2" style={item(0)}>
         <span className="num-tnum font-oswald text-[15px] font-semibold tracking-[0.04em] text-signal">
           № {String(no).padStart(2, "0")}
         </span>
@@ -167,6 +169,33 @@ function VoiceCard({ v, no }: { v: V; no: number }) {
           </span>
         </Link>
       </div>
+    </div>
+  );
+
+  return (
+    <article ref={ref} className="relative scroll-mt-24">
+      {/* カード上端の1px罫線が左から引かれる（先頭は章扉の墨罫が境界なので不要） */}
+      {no > 1 && <span aria-hidden className="absolute inset-x-0 top-0 z-10 h-px bg-hair" style={ruleStyle} />}
+
+      {/* モバイル＝2カラム(左:実邸写真スパイン 3 / 右:テキスト 7)。デスクトップは左右レールが写真を担うので text のみ。 */}
+      {photo ? (
+        <div className="grid grid-cols-[3fr_7fr] lg:block">
+          <div className="relative overflow-hidden border-r border-hair lg:hidden" style={photoStyle}>
+            <Image
+              src={photo}
+              alt=""
+              aria-hidden
+              fill
+              sizes="(max-width:1024px) 34vw, 1px"
+              className="object-cover grayscale"
+              loading="lazy"
+            />
+          </div>
+          {text}
+        </div>
+      ) : (
+        text
+      )}
     </article>
   );
 }
