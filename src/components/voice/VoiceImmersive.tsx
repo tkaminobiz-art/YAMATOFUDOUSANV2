@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Voice, VoiceTag } from "@/data/voices";
@@ -67,15 +67,62 @@ function Rail({
 }
 
 function VoiceCard({ v, no }: { v: V; no: number }) {
+  const ref = useRef<HTMLElement>(null);
+  const [shown, setShown] = useState(false);
+  const [reduce, setReduce] = useState(false);
+
+  // 視界に入ったら1回だけリビール（罫線ドロー→中身スタガー）。reduced-motion は即表示。
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReduce(true);
+      setShown(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const lead = v.qas?.[0];
   const body = lead
     ? lead.a.replace(/\s+/g, " ").trim().slice(0, 116) + (lead.a.length > 116 ? "…" : "")
     : v.excerpt ?? "";
   const qLabel = lead ? lead.q.replace(/[「」]/g, "").trim() : "";
 
+  // 罫線が引かれた(≈200ms)あとに中身を 70ms 間隔でスタガー
+  const item = (i: number): CSSProperties =>
+    reduce
+      ? {}
+      : {
+          opacity: shown ? 1 : 0,
+          transform: shown ? "translateY(0)" : "translateY(8px)",
+          transition: "opacity 460ms ease, transform 460ms cubic-bezier(0.16,1,0.3,1)",
+          transitionDelay: `${200 + i * 70}ms`,
+        };
+  const ruleStyle: CSSProperties = reduce
+    ? {}
+    : {
+        transformOrigin: "left center",
+        transform: shown ? "scaleX(1)" : "scaleX(0)",
+        transition: "transform 280ms cubic-bezier(0.16,1,0.3,1)",
+      };
+
   return (
-    <article className="scroll-mt-24 border-b border-hair px-5 py-9 md:px-10 md:py-12">
-      <div className="flex items-center justify-between">
+    <article ref={ref} className="relative scroll-mt-24 px-5 py-9 md:px-10 md:py-12">
+      {/* カード上端の1px罫線が左から引かれる（先頭は章扉の墨罫が境界なので不要） */}
+      {no > 1 && <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-hair" style={ruleStyle} />}
+
+      <div className="flex items-center justify-between" style={item(0)}>
         <span className="num-tnum font-oswald text-[15px] font-semibold tracking-[0.04em] text-signal">
           № {String(no).padStart(2, "0")}
         </span>
@@ -91,30 +138,35 @@ function VoiceCard({ v, no }: { v: V; no: number }) {
         </div>
       </div>
 
-      <p className="font-mono mt-4 text-[11px] tracking-[0.08em] text-slate">
+      <p className="font-mono mt-4 text-[11px] tracking-[0.08em] text-slate" style={item(1)}>
         {v.area} ・ {v.familyName}
       </p>
 
       {qLabel && (
-        <p className="font-mono mt-5 text-[11px] leading-[1.6] tracking-[0.04em] text-signal">
+        <p
+          className="font-mono mt-5 text-[11px] leading-[1.6] tracking-[0.04em] text-signal"
+          style={item(2)}
+        >
           {qLabel}
         </p>
       )}
-      <p className="mt-2 text-[clamp(16px,1.7vw,21px)] font-bold leading-[1.7] text-noir">
+      <p className="mt-2 text-[clamp(16px,1.7vw,21px)] font-bold leading-[1.7] text-noir" style={item(3)}>
         <span className="text-signal">「</span>
         {body}
         <span className="text-signal">」</span>
       </p>
 
-      <Link
-        href={`/voice/${v.id}`}
-        className="group mt-6 inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.04em] text-noir transition-colors hover:text-signal"
-      >
-        この声を読む
-        <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
-          →
-        </span>
-      </Link>
+      <div style={item(4)}>
+        <Link
+          href={`/voice/${v.id}`}
+          className="group mt-6 inline-flex items-center gap-1.5 font-mono text-[12px] tracking-[0.04em] text-noir transition-colors hover:text-signal"
+        >
+          この声を読む
+          <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+            →
+          </span>
+        </Link>
+      </div>
     </article>
   );
 }
