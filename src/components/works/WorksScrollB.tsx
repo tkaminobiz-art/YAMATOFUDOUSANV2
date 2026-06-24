@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { WORKS_PARTS } from "@/data/worksParts";
 
-/* 施工事例＝部位ごとに「縦にめくる」スクロール駆動ギャラリー（2026-06-24・lerp版）。
-   各部位を tall section にして sticky でピン留め。スクロール量＝めくり位置。
-   5枚スクロールし切るまで次の部位に進めない（飛ばさない）。
-   カクつき対策：CSSトランジションをやめ、毎フレーム lerp で「次の1枚」へ滑らかに寄せる
-   ＝スクロールに追従しつつ各写真にスッと収まる（ヌルヌル＋小気味よく）。
-   rAF はスクロール中＋収束までだけ回す（アイドル時は止める）。
-   reduced-motion では補間せず即時。モバイルは部位ごとの横スワイプ。 */
+/* 施工事例＝GSAP pin+snap の「上質なページめくり」（2026-06-25・案A）。
+   部位ごとに左写真ステージ(行ごと)を pin し、その区間内だけ写真を縦に送る。
+   snap(snapTo=1/(n-1), ease, duration) で1枚ずつ確実に止まり、scrub で滑らかに追従＝
+   “溜め”のある上質なめくり。部位末で pin 解除＝写真とテキストが一緒に通常スクロール。
+   gsap.matchMedia で PC(≥1024)かつ no-reduced-motion のときだけ作動。
+   モバイル／reduced-motion は素の縦スクロール（モバイルは横スワイプ・フィルムストリップ）。 */
 
 const EN: Record<string, string> = {
   exterior: "EXTERIOR", entrance: "ENTRANCE", living: "LIVING", kitchen: "KITCHEN",
@@ -19,89 +21,80 @@ const EN: Record<string, string> = {
 };
 
 const SHOWN = 5; // 1部位あたり めくる枚数
-const STEP_VH = 22; // 写真1枚あたりのスクロール量(vh)
-const LERP = 0.16; // 補間係数（大きいほど速く収束＝小気味よい）
 
 export default function WorksScrollB() {
   const cats = WORKS_PARTS.categories;
-  const [slides, setSlides] = useState<number[]>([]); // インジケータ/ティック用（離散・低頻度更新）
-  const [reduce, setReduce] = useState(false);
-  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
-  const trackRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const offsets = useRef<number[]>([]); // 各部位の現在のtranslateY(%)
-  const slidesRef = useRef<number[]>([]);
-  const reduceRef = useRef(false);
-  const rafRef = useRef(0);
+  const root = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const on = () => { setReduce(mq.matches); reduceRef.current = mq.matches; };
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+        const sections = gsap.utils.toArray<HTMLElement>(".wp");
+        sections.forEach((sec) => {
+          const film = sec.querySelector<HTMLElement>(".wp-film");
+          const pin = sec.querySelector<HTMLElement>(".wp-pin");
+          if (!film || !pin) return;
+          const pages = film.children.length;
+          if (pages <= 1) return;
 
-  useEffect(() => {
-    const tick = () => {
-      const vh = window.innerHeight;
-      let moving = false;
-      const step: number[] = [];
-      for (let i = 0; i < sectionRefs.current.length; i++) {
-        const sec = sectionRefs.current[i];
-        const track = trackRefs.current[i];
-        const len = Math.min(cats[i].gallery.length, SHOWN);
-        if (!sec || !track) { step[i] = 0; continue; }
-        const rect = sec.getBoundingClientRect();
-        const total = sec.offsetHeight - vh;
-        const p = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
-        const cur = Math.min(len - 1, Math.floor(p * len));
-        step[i] = cur;
-        const target = cur * 100; // %（縦に len 枚積んだ track を 100%/枚 で送る）
-        const now = offsets.current[i] ?? 0;
-        let nxt = reduceRef.current ? target : now + (target - now) * LERP;
-        if (Math.abs(target - nxt) < 0.05) nxt = target;
-        else moving = true;
-        offsets.current[i] = nxt;
-        track.style.transform = `translate3d(0, -${nxt}%, 0)`;
-      }
-      if (step.length !== slidesRef.current.length || step.some((v, i) => v !== slidesRef.current[i])) {
-        slidesRef.current = step;
-        setSlides(step);
-      }
-      rafRef.current = moving ? requestAnimationFrame(tick) : 0;
-    };
-    const onScroll = () => { if (!rafRef.current) rafRef.current = requestAnimationFrame(tick); };
-    rafRef.current = requestAnimationFrame(tick);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [cats]);
+          const idxEl = sec.querySelector<HTMLElement>(".wp-idx");
+          const ticks = gsap.utils.toArray<HTMLElement>(".wp-tick", sec);
+          const setIdx = (idx: number) => {
+            if (idxEl) idxEl.textContent = String(idx + 1).padStart(2, "0");
+            ticks.forEach((t, k) => {
+              t.style.height = k === idx ? "28px" : "12px";
+              t.style.backgroundColor = k === idx ? "var(--color-signal)" : "rgba(10,10,10,0.25)";
+            });
+          };
+          setIdx(0);
+
+          gsap.to(film, {
+            yPercent: -100 * (pages - 1),
+            ease: "none",
+            scrollTrigger: {
+              trigger: sec,
+              pin, // 左写真＋帯＋テキストの行を pin（区間内はめくり）
+              start: "top top",
+              end: "+=" + pages * 52 + "%", // 送り距離（1枚あたり約 52% ÷ (n-1)）
+              scrub: 1, // 1秒の追従＝ヌルヌル
+              snap: {
+                snapTo: 1 / (pages - 1), // 1枚ずつ確定
+                duration: { min: 0.25, max: 0.6 }, // 上質な“溜め”
+                delay: 0.04,
+                ease: "power2.inOut",
+                directional: true, // スクロール方向へ送る
+              },
+              onUpdate: (self) => setIdx(Math.round(self.progress * (pages - 1))),
+            },
+          });
+        });
+      });
+
+      // 画像ロードでレイアウト確定後に位置を再計算（pin のズレ防止）
+      const onLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", onLoad);
+      return () => {
+        window.removeEventListener("load", onLoad);
+        mm.revert();
+      };
+    },
+    { scope: root },
+  );
 
   return (
-    <div className="bg-paper">
-      {/* デスクトップ＝部位ごとに tall section をピン留め、縦めくり（スクロール駆動・lerp） */}
+    <div ref={root} className="bg-paper">
+      {/* デスクトップ＝部位ごとに pin+snap でめくり、部位末で通常スクロールへ */}
       <div className="hidden lg:block">
         {cats.map((c, i) => {
           const shots = c.gallery.slice(0, Math.min(c.gallery.length, SHOWN));
-          const sl = slides[i] ?? 0;
           return (
-            <section
-              key={c.slug}
-              ref={(el) => { sectionRefs.current[i] = el; }}
-              style={{ height: `${shots.length * STEP_VH + 100}vh` }}
-              className="relative"
-            >
-              <div className="sticky top-0 grid h-screen grid-cols-[7fr_60px_3fr] overflow-hidden border-t border-hair bg-paper">
-                {/* 写真：その部位を1枚ずつ縦めくり（transform は rAF で直接適用） */}
+            <section key={c.slug} className="wp">
+              <div className="wp-pin grid h-screen grid-cols-[7fr_60px_3fr] overflow-hidden border-t border-hair bg-paper">
+                {/* 写真：縦フィルムストリップ（GSAPが yPercent を駆動） */}
                 <div className="relative min-w-0 overflow-hidden bg-noir/[0.02]">
-                  <div
-                    ref={(el) => { trackRefs.current[i] = el; }}
-                    className="flex h-full flex-col will-change-transform"
-                  >
+                  <div className="wp-film flex h-full flex-col">
                     {shots.map((src, k) => (
                       <div key={k} className="relative h-full w-full shrink-0">
                         <Image src={src} alt="" aria-hidden fill priority={i === 0 && k === 0} sizes="70vw" className="object-cover" />
@@ -115,18 +108,19 @@ export default function WorksScrollB() {
                   <div className="pointer-events-none absolute bottom-6 left-7 flex items-center gap-3 text-paper mix-blend-difference">
                     <span className="font-mono text-[11px] tracking-[0.18em]">{EN[c.slug]}</span>
                     <span className="num-tnum font-mono text-[11px]">
-                      {String(sl + 1).padStart(2, "0")} / {String(shots.length).padStart(2, "0")}
+                      <span className="wp-idx">01</span> / {String(shots.length).padStart(2, "0")}
                     </span>
                   </div>
                 </div>
 
-                {/* 縦帯＝この部位の写真進行（縦ティック） */}
+                {/* 縦帯＝この部位の写真進行（縦ティック・GSAPが高さ/色を駆動） */}
                 <div className="relative border-x border-hair bg-band">
                   <div className="flex h-full flex-col items-center justify-center gap-2.5">
                     {shots.map((_, k) => (
                       <span
                         key={k}
-                        className={`block w-[2px] transition-all duration-300 ${sl === k ? "h-7 bg-signal" : "h-3 bg-noir/25"}`}
+                        className="wp-tick block w-[2px] transition-all duration-300"
+                        style={{ height: "12px", backgroundColor: "rgba(10,10,10,0.25)" }}
                       />
                     ))}
                   </div>
