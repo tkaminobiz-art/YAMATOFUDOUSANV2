@@ -89,10 +89,10 @@ export default function WorksScrollB() {
             ) : (
               <div
                 key={active}
-                className="flex h-full"
+                className="flex h-full flex-col"
                 style={{
-                  transform: `translateX(-${slide * 100}%)`,
-                  transition: "transform 760ms cubic-bezier(0.16,1,0.3,1)",
+                  transform: `translateY(-${slide * 100}%)`,
+                  transition: "transform 820ms cubic-bezier(0.16,1,0.3,1)",
                 }}
               >
                 {shots.map((src, k) => (
