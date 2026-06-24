@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { WORKS_PARTS } from "@/data/worksParts";
 
-/* 施工事例＝部位ごとに「縦にめくる」スクロール駆動ギャラリー（2026-06-24 改）。
-   各部位を tall な section にして sticky でピン留め。スクロール量＝めくり位置に連動し、
-   その部位の写真(最大5枚)を順に縦めくり表示。5枚スクロールし切るまで次の部位へ進めない
-   （＝勢いよくスクロールしてもセクションを飛ばさない／規定枚数を満たすまで保持）。
-   タイマー自動めくりは廃止。横→縦めくり。スパインは「今その部位の何枚目か」を縦に表示。
-   reduced-motion では transition を切る（スクロール連動なので閲覧は可能）。
-   モバイルは部位ごとの横スワイプ・フィルムストリップ。 */
+/* 施工事例＝部位ごとに「縦にめくる」スクロール駆動ギャラリー（2026-06-24・lerp版）。
+   各部位を tall section にして sticky でピン留め。スクロール量＝めくり位置。
+   5枚スクロールし切るまで次の部位に進めない（飛ばさない）。
+   カクつき対策：CSSトランジションをやめ、毎フレーム lerp で「次の1枚」へ滑らかに寄せる
+   ＝スクロールに追従しつつ各写真にスッと収まる（ヌルヌル＋小気味よく）。
+   rAF はスクロール中＋収束までだけ回す（アイドル時は止める）。
+   reduced-motion では補間せず即時。モバイルは部位ごとの横スワイプ。 */
 
 const EN: Record<string, string> = {
   exterior: "EXTERIOR", entrance: "ENTRANCE", living: "LIVING", kitchen: "KITCHEN",
@@ -19,57 +19,71 @@ const EN: Record<string, string> = {
 };
 
 const SHOWN = 5; // 1部位あたり めくる枚数
-const STEP_VH = 24; // 写真1枚あたりのスクロール量(vh)。大きいほど1枚を長く保持
+const STEP_VH = 22; // 写真1枚あたりのスクロール量(vh)
+const LERP = 0.16; // 補間係数（大きいほど速く収束＝小気味よい）
 
 export default function WorksScrollB() {
   const cats = WORKS_PARTS.categories;
-  const [slides, setSlides] = useState<number[]>([]);
+  const [slides, setSlides] = useState<number[]>([]); // インジケータ/ティック用（離散・低頻度更新）
   const [reduce, setReduce] = useState(false);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
-  const lastRef = useRef<number[]>([]);
+  const trackRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const offsets = useRef<number[]>([]); // 各部位の現在のtranslateY(%)
+  const slidesRef = useRef<number[]>([]);
+  const reduceRef = useRef(false);
+  const rafRef = useRef(0);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const on = () => setReduce(mq.matches);
+    const on = () => { setReduce(mq.matches); reduceRef.current = mq.matches; };
     on();
     mq.addEventListener("change", on);
     return () => mq.removeEventListener("change", on);
   }, []);
 
-  // スクロール量から「アクティブ部位」と「その部位の何枚目か」を決める（スクロール駆動）
   useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
+    const tick = () => {
       const vh = window.innerHeight;
-      // 各部位を「自分のスクロール位置」で独立計算（退場側は最後の1枚で固定／未到達は1枚目）
-      const next = sectionRefs.current.map((sec, i) => {
-        if (!sec) return 0;
-        const rect = sec.getBoundingClientRect();
+      let moving = false;
+      const step: number[] = [];
+      for (let i = 0; i < sectionRefs.current.length; i++) {
+        const sec = sectionRefs.current[i];
+        const track = trackRefs.current[i];
         const len = Math.min(cats[i].gallery.length, SHOWN);
-        const total = sec.offsetHeight - vh; // ピン中のスクロール距離
+        if (!sec || !track) { step[i] = 0; continue; }
+        const rect = sec.getBoundingClientRect();
+        const total = sec.offsetHeight - vh;
         const p = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
-        return Math.min(len - 1, Math.floor(p * len));
-      });
-      if (next.length !== lastRef.current.length || next.some((v, i) => v !== lastRef.current[i])) {
-        lastRef.current = next;
-        setSlides(next);
+        const cur = Math.min(len - 1, Math.floor(p * len));
+        step[i] = cur;
+        const target = cur * 100; // %（縦に len 枚積んだ track を 100%/枚 で送る）
+        const now = offsets.current[i] ?? 0;
+        let nxt = reduceRef.current ? target : now + (target - now) * LERP;
+        if (Math.abs(target - nxt) < 0.05) nxt = target;
+        else moving = true;
+        offsets.current[i] = nxt;
+        track.style.transform = `translate3d(0, -${nxt}%, 0)`;
       }
+      if (step.length !== slidesRef.current.length || step.some((v, i) => v !== slidesRef.current[i])) {
+        slidesRef.current = step;
+        setSlides(step);
+      }
+      rafRef.current = moving ? requestAnimationFrame(tick) : 0;
     };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-    update();
+    const onScroll = () => { if (!rafRef.current) rafRef.current = requestAnimationFrame(tick); };
+    rafRef.current = requestAnimationFrame(tick);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [cats]);
 
   return (
     <div className="bg-paper">
-      {/* デスクトップ＝部位ごとに tall section をピン留め、縦めくり（スクロール駆動） */}
+      {/* デスクトップ＝部位ごとに tall section をピン留め、縦めくり（スクロール駆動・lerp） */}
       <div className="hidden lg:block">
         {cats.map((c, i) => {
           const shots = c.gallery.slice(0, Math.min(c.gallery.length, SHOWN));
@@ -82,14 +96,11 @@ export default function WorksScrollB() {
               className="relative"
             >
               <div className="sticky top-0 grid h-screen grid-cols-[7fr_60px_3fr] overflow-hidden border-t border-hair bg-paper">
-                {/* 写真：その部位を1枚ずつ縦めくり */}
+                {/* 写真：その部位を1枚ずつ縦めくり（transform は rAF で直接適用） */}
                 <div className="relative min-w-0 overflow-hidden bg-noir/[0.02]">
                   <div
-                    className="flex h-full flex-col"
-                    style={{
-                      transform: `translateY(-${sl * 100}%)`,
-                      transition: reduce ? "none" : "transform 560ms cubic-bezier(0.16,1,0.3,1)",
-                    }}
+                    ref={(el) => { trackRefs.current[i] = el; }}
+                    className="flex h-full flex-col will-change-transform"
                   >
                     {shots.map((src, k) => (
                       <div key={k} className="relative h-full w-full shrink-0">
