@@ -12,13 +12,12 @@ import type { Voice, VoiceTag } from "@/data/voices";
    設計言語＝Editorial Monochrome（白黒グレー＋赤＋lime / 1px罫線 / mono / Oswald / 影なし角丸なし）。
    prefers-reduced-motion: reduce では transform を当てず静止。 */
 
-type V = Voice & { excerpt?: string };
+type V = Voice & { excerpt?: string; cover: string };
 
 const FADE =
   "linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent)";
 
-// チューニング用：片側に流す枚数（全195枚から均等に間引いて使用）／パララックス速度（大きいほど速い）
-const RAIL_COUNT = 26;
+// チューニング用：パララックス速度（大きいほど速い）
 const SPEED_LEFT = 0.2;
 const SPEED_RIGHT = 0.1;
 
@@ -120,7 +119,7 @@ function VoiceCard({ v, no }: { v: V; no: number }) {
     ? {}
     : { opacity: shown ? 1 : 0, transition: "opacity 600ms ease", transitionDelay: "60ms" };
 
-  const photo = v.photos[0];
+  const photo = v.cover ?? v.photos[0];
 
   const text = (
     <div className="py-7 pl-4 pr-4 md:pl-6 md:pr-6 md:py-9 lg:px-10 lg:py-12">
@@ -187,7 +186,7 @@ function VoiceCard({ v, no }: { v: V; no: number }) {
               aria-hidden
               fill
               sizes="(max-width:1024px) 34vw, 1px"
-              className="object-cover grayscale"
+              className="object-cover"
               loading="lazy"
             />
           </div>
@@ -234,15 +233,10 @@ export default function VoiceImmersive({ voices }: { voices: V[] }) {
     };
   }, []);
 
-  // 全195枚から RAIL_COUNT 枚を「50軒全体に均等散らし」で抽出（先頭の数軒に偏らせない）。
-  // 左右でオフセットを変え、重複なく別カットを流す。
-  const all = voices.flatMap((v) => v.photos);
-  const spread = (offset: number) =>
-    Array.from({ length: RAIL_COUNT }, (_, k) =>
-      all[Math.min(all.length - 1, Math.floor((k + offset) * (all.length / RAIL_COUNT)))],
-    );
-  const leftPhotos = spread(0);
-  const rightPhotos = spread(0.5);
+  // レール＝各物件のベスト1枚（口コミ表紙）50枚を、左右で別物件に振り分けて流す。
+  const covers = voices.map((v) => v.cover);
+  const leftPhotos = covers.filter((_, i) => i % 2 === 0);
+  const rightPhotos = covers.filter((_, i) => i % 2 === 1);
 
   return (
     <div ref={sectionRef} className="bg-paper">
