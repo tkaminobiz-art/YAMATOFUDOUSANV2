@@ -4,11 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { WORKS_PARTS } from "@/data/worksParts";
 
-/* 施工事例リブート 案B＝sticky差し替え型（2026-06-24 デモ）。
-   左70%＝写真ステージを sticky で固定。スクロールに同期して、右30%テキストの
-   アクティブ章を IntersectionObserver(rootMargin -45%) で検出し、
-   左の写真を clip-path クロスフェードで差し替える（pinned media crossfade）。
-   モバイルは 7:3 不可のため写真＋テキストの縦積みへ転換。reduced-motion でも閲覧可。 */
+/* 施工事例＝B案（sticky差し替え）＋部位ごとの横スライド（2026-06-24）。
+   左70%＝写真ステージを sticky 固定。右30%テキストのアクティブ章を
+   IntersectionObserver(rootMargin -45%) で検出し、左ステージに「その部位の
+   ギャラリー全枚を横にどんどん流すマーキー」を出す（複数枚＝3枚前後が見え、
+   連続スライド）。中央に縦帯の索引スパイン。
+   横スライドは既存 .gallery-marquee-left（translateX -50%・GPU・reduced-motion
+   で停止）を再利用。カテゴリ枚数に応じて速度(animationDuration)だけ可変。
+   モバイルは 7:3 不可のため、部位ごとに横スワイプのフィルムストリップ＋テキスト。 */
 
 const EN: Record<string, string> = {
   exterior: "EXTERIOR", entrance: "ENTRANCE", living: "LIVING", kitchen: "KITCHEN",
@@ -34,39 +37,39 @@ export default function WorksScrollB() {
     return () => io.disconnect();
   }, []);
 
+  const activeCat = cats[active];
+  // 1枚あたり約4.5秒で流れる速度。1セット(複製前)の枚数 × 4.5s。
+  const slideDur = `${Math.max(28, activeCat.gallery.length * 4.5)}s`;
+
   return (
     <div className="bg-paper">
-      {/* デスクトップ＝7:3 sticky写真ステージ ＋ テキスト列 */}
+      {/* デスクトップ＝7:3 sticky写真ステージ ／ 縦帯 ／ テキスト列 */}
       <div className="hidden lg:grid lg:grid-cols-[7fr_60px_3fr]">
-        <div className="relative">
-          <div className="sticky top-0 h-screen overflow-hidden">
-            {cats.map((c, i) => (
-              <Image
-                key={c.slug}
-                src={c.coverImage}
-                alt=""
-                aria-hidden
-                fill
-                sizes="70vw"
-                className="object-cover"
-                style={{
-                  opacity: active === i ? 1 : 0,
-                  clipPath: active === i ? "inset(0 0 0 0)" : "inset(8% 5% 8% 5%)",
-                  transition:
-                    "opacity 720ms linear, clip-path 720ms cubic-bezier(0.16,1,0.3,1)",
-                }}
-              />
-            ))}
+        {/* min-w-0 必須：横長マーキー(w-max)が grid 列を肥大化させ右列を画面外へ押し出すのを防ぐ */}
+        <div className="relative min-w-0">
+          <div className="sticky top-0 h-screen overflow-hidden bg-noir/[0.02]">
+            {/* アクティブ部位の写真を横スライド（key で切替時に流し直し） */}
+            <div
+              key={active}
+              className="gallery-marquee-left flex h-full w-max"
+              style={{ animationDuration: slideDur }}
+            >
+              {[...activeCat.gallery, ...activeCat.gallery].map((src, k) => (
+                <div key={k} className="relative h-full w-[26vw] shrink-0 border-r border-paper/20">
+                  <Image src={src} alt="" aria-hidden fill sizes="26vw" className="object-cover" />
+                </div>
+              ))}
+            </div>
             <div className="num-tnum font-oswald pointer-events-none absolute left-7 top-6 text-[clamp(56px,6vw,112px)] font-semibold leading-none text-paper mix-blend-difference">
               {String(active + 1).padStart(2, "0")}
             </div>
             <div className="pointer-events-none absolute bottom-6 left-7 font-mono text-[11px] tracking-[0.18em] text-paper mix-blend-difference">
-              {EN[cats[active].slug]} ／ GALLERY {cats[active].gallery.length}
+              {EN[activeCat.slug]} ／ {activeCat.gallery.length} PHOTOS ▶▶
             </div>
           </div>
         </div>
 
-        {/* 縦の帯＝部位インデックスのスパイン（仕切りのメリハリ＋進行表示） */}
+        {/* 縦の帯＝部位インデックスのスパイン */}
         <div className="relative border-x border-hair bg-band">
           <div className="sticky top-0 flex h-screen flex-col items-center justify-center gap-6">
             <div className="flex flex-col items-center gap-2.5">
@@ -78,7 +81,7 @@ export default function WorksScrollB() {
               ))}
             </div>
             <span className="font-mono text-[10px] tracking-[0.3em] text-slate [writing-mode:vertical-rl]">
-              {EN[cats[active].slug]}
+              {EN[activeCat.slug]}
             </span>
           </div>
         </div>
@@ -104,19 +107,25 @@ export default function WorksScrollB() {
         </div>
       </div>
 
-      {/* モバイル＝写真＋テキストの縦積み */}
+      {/* モバイル＝部位ごとに横スワイプのフィルムストリップ＋テキスト */}
       <div className="lg:hidden">
         {cats.map((c, i) => (
           <section key={c.slug} className="border-t border-hair">
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <Image src={c.coverImage} alt={c.title} fill sizes="100vw" className="object-cover" />
-              <span className="num-tnum font-oswald pointer-events-none absolute left-4 top-3 text-[44px] font-semibold leading-none text-paper mix-blend-difference">
+            <div className="relative">
+              <div className="flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2">
+                {c.gallery.map((src, k) => (
+                  <div key={k} className="relative aspect-[4/3] w-[86%] shrink-0 snap-start overflow-hidden">
+                    <Image src={src} alt={c.title} fill sizes="86vw" className="object-cover" loading="lazy" />
+                  </div>
+                ))}
+              </div>
+              <span className="num-tnum font-oswald pointer-events-none absolute left-4 top-3 text-[40px] font-semibold leading-none text-paper mix-blend-difference">
                 {String(i + 1).padStart(2, "0")}
               </span>
             </div>
-            <div className="flex flex-col gap-4 px-6 py-10">
+            <div className="flex flex-col gap-4 px-6 py-9">
               <p className="font-mono text-[11px] tracking-[0.18em] text-signal">
-                № {String(i + 1).padStart(2, "0")} ／ {EN[c.slug] ?? c.slug.toUpperCase()}
+                № {String(i + 1).padStart(2, "0")} ／ {EN[c.slug] ?? c.slug.toUpperCase()} ／ {c.gallery.length}枚 ▶
               </p>
               <h2 className="text-[26px] font-bold leading-[1.3] text-noir">{c.title}</h2>
               <p className="whitespace-pre-line text-[14px] leading-[2] text-ash">{c.copy}</p>
