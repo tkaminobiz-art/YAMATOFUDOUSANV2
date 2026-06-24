@@ -108,7 +108,8 @@ export default function WorksScrollB() {
                       </div>
                     ))}
                   </div>
-                  <div className="num-tnum font-oswald pointer-events-none absolute left-7 top-6 text-[clamp(56px,6vw,112px)] font-semibold leading-none text-paper mix-blend-difference">
+                  {/* sticky Header(約65px)の裏に潜らないよう top をHeader下へ */}
+                  <div className="num-tnum font-oswald pointer-events-none absolute left-7 top-[clamp(84px,12vh,128px)] text-[clamp(56px,6vw,112px)] font-semibold leading-none text-paper mix-blend-difference">
                     {String(i + 1).padStart(2, "0")}
                   </div>
                   <div className="pointer-events-none absolute bottom-6 left-7 flex items-center gap-3 text-paper mix-blend-difference">
