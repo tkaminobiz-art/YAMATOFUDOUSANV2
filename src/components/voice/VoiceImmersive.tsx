@@ -17,6 +17,11 @@ type V = Voice & { excerpt?: string };
 const FADE =
   "linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent)";
 
+// チューニング用：片側に流す枚数（全195枚から均等に間引いて使用）／パララックス速度（大きいほど速い）
+const RAIL_COUNT = 26;
+const SPEED_LEFT = 0.2;
+const SPEED_RIGHT = 0.1;
+
 function RailPhoto({ src }: { src: string }) {
   return (
     <div className="relative w-full" style={{ aspectRatio: "4 / 5" }}>
@@ -132,8 +137,8 @@ export default function VoiceImmersive({ voices }: { voices: V[] }) {
       // section 上端が視点上端を通り過ぎた量（下スクロールで増える）
       const y = -section.getBoundingClientRect().top;
       // 速度差パララックス：左は速く・右は遅く、ともに上へ流れる
-      L.style.transform = `translate3d(0, ${(-y * 0.12).toFixed(1)}px, 0)`;
-      R.style.transform = `translate3d(0, ${(-y * 0.05).toFixed(1)}px, 0)`;
+      L.style.transform = `translate3d(0, ${(-y * SPEED_LEFT).toFixed(1)}px, 0)`;
+      R.style.transform = `translate3d(0, ${(-y * SPEED_RIGHT).toFixed(1)}px, 0)`;
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -148,9 +153,15 @@ export default function VoiceImmersive({ voices }: { voices: V[] }) {
     };
   }, []);
 
+  // 全195枚から RAIL_COUNT 枚を「50軒全体に均等散らし」で抽出（先頭の数軒に偏らせない）。
+  // 左右でオフセットを変え、重複なく別カットを流す。
   const all = voices.flatMap((v) => v.photos);
-  const leftPhotos = all.filter((_, i) => i % 2 === 0).slice(0, 16);
-  const rightPhotos = all.filter((_, i) => i % 2 === 1).slice(0, 16);
+  const spread = (offset: number) =>
+    Array.from({ length: RAIL_COUNT }, (_, k) =>
+      all[Math.min(all.length - 1, Math.floor((k + offset) * (all.length / RAIL_COUNT)))],
+    );
+  const leftPhotos = spread(0);
+  const rightPhotos = spread(0.5);
 
   return (
     <div ref={sectionRef} className="bg-paper">
