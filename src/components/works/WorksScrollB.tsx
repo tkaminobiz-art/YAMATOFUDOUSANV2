@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useGSAP } from "@gsap/react";
 import { WORKS_PARTS } from "@/data/worksParts";
 
@@ -25,14 +26,23 @@ const SHOWN = 5; // 1部位あたり めくる枚数
 export default function WorksScrollB() {
   const cats = WORKS_PARTS.categories;
   const root = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  // 右の連番インデックスからその部位へスムーズジャンプ
+  const jump = (i: number) => {
+    const secs = gsap.utils.toArray<HTMLElement>(".wp");
+    const t = secs[i];
+    if (!t) return;
+    gsap.to(window, { scrollTo: { y: t, autoKill: false }, duration: 0.9, ease: "power2.inOut" });
+  };
 
   useGSAP(
     () => {
-      gsap.registerPlugin(ScrollTrigger);
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
       const mm = gsap.matchMedia();
       mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const sections = gsap.utils.toArray<HTMLElement>(".wp");
-        sections.forEach((sec) => {
+        sections.forEach((sec, i) => {
           const film = sec.querySelector<HTMLElement>(".wp-film");
           const pin = sec.querySelector<HTMLElement>(".wp-pin");
           if (!film || !pin) return;
@@ -66,6 +76,8 @@ export default function WorksScrollB() {
                 ease: "power2.inOut",
                 directional: true, // スクロール方向へ送る
               },
+              onEnter: () => setActive(i), // 右インデックスの現在地ハイライト
+              onEnterBack: () => setActive(i),
               onUpdate: (self) => setIdx(Math.round(self.progress * (pages - 1))),
             },
           });
@@ -85,6 +97,45 @@ export default function WorksScrollB() {
 
   return (
     <div ref={root} className="bg-paper">
+      {/* 右端に固定の連番インデックス（現在地ハイライト＋クリックでその部位へジャンプ） */}
+      <nav
+        aria-label="部位インデックス"
+        className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-end gap-2.5 lg:flex"
+      >
+        {cats.map((c, i) => {
+          const on = active === i;
+          return (
+            <button
+              key={c.slug}
+              type="button"
+              onClick={() => jump(i)}
+              aria-current={on ? "true" : undefined}
+              className="group flex items-center justify-end gap-2"
+            >
+              <span
+                className={`whitespace-nowrap font-mono text-[10px] tracking-[0.04em] transition-colors duration-200 ${
+                  on ? "font-bold text-noir" : "text-mist group-hover:text-slate"
+                }`}
+              >
+                {c.title}
+              </span>
+              <span
+                className={`num-tnum font-oswald text-[12px] font-semibold transition-colors ${
+                  on ? "text-signal" : "text-mist group-hover:text-noir"
+                }`}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span
+                className={`block h-px transition-all duration-300 ${
+                  on ? "w-5 bg-signal" : "w-2 bg-noir/30 group-hover:w-3.5"
+                }`}
+              />
+            </button>
+          );
+        })}
+      </nav>
+
       {/* デスクトップ＝部位ごとに pin+snap でめくり、部位末で通常スクロールへ */}
       <div className="hidden lg:block">
         {cats.map((c, i) => {
@@ -126,8 +177,8 @@ export default function WorksScrollB() {
                   </div>
                 </div>
 
-                {/* テキスト */}
-                <div className="flex flex-col justify-center gap-5 px-10">
+                {/* テキスト（右に固定ナビの余白 pr を確保） */}
+                <div className="flex flex-col justify-center gap-5 py-10 pl-10 pr-[104px]">
                   <p className="font-mono text-[11px] tracking-[0.18em] text-signal">
                     № {String(i + 1).padStart(2, "0")} ／ {EN[c.slug] ?? c.slug.toUpperCase()}
                   </p>
