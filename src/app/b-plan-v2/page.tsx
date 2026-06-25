@@ -376,11 +376,15 @@ function Header() {
           <Image src="/images/logo.png" alt="やまと不動産" width={190} height={42} className="h-7 w-auto bg-white/86 px-2 py-1 md:h-8" priority />
           <span className="hidden text-[11px] font-bold tracking-[0.22em] text-white/70 md:block">BPLAN</span>
         </Link>
-        <nav className="hidden items-center gap-8 text-[12px] font-bold text-white/72 lg:flex">
-          <a href="#truth">本音</a>
-          <a href="#cost">理由</a>
-          <a href="#design">誇り</a>
-          <a href="#action">次へ</a>
+        {/* トップ(=B-plan V2)から主要ページへの導線。旧ページ内アンカー(本音/理由/誇り/次へ)を
+            サイト主要ナビへ差し替え（2026-06-25・導線回復） */}
+        <nav className="hidden items-center gap-6 text-[12px] font-bold text-white/72 lg:flex">
+          <Link href="/#product" className="transition-colors hover:text-white">商品紹介</Link>
+          <Link href="/money" className="transition-colors hover:text-white">資金計画</Link>
+          <Link href="/lots" className="transition-colors hover:text-white">物件情報</Link>
+          <Link href="/works" className="transition-colors hover:text-white">施工事例</Link>
+          <Link href="/voice" className="transition-colors hover:text-white">お客様の声</Link>
+          <Link href="/staff" className="transition-colors hover:text-white">スタッフ</Link>
         </nav>
         <Link href="/reserve" className="inline-flex h-11 items-center gap-2 border border-white/35 px-4 text-[13px] font-bold text-white">
           <CalendarDays className="h-4 w-4" />
