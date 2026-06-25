@@ -117,6 +117,10 @@ const fraunces = Fraunces({
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
+  // 800 を追加しようとしたが、Google Fonts の Zen Kaku Gothic New は
+  // 300/400/500/700/900 のみ提供で 800 は存在せずビルドが失敗する（2026-06-25 確認）。
+  // 800 は CSS 側 .t-h2 の指定として残し、ブラウザの nearest-match で 900 に丸める運用。
+  // 既存ロードを壊さない・追加のみ。--font-zen-kaku-new-var は <html> へ連結済み(L155)。
   weight: ["400", "500", "700", "900"],
   variable: "--font-zen-kaku-new-var",
   display: "swap",

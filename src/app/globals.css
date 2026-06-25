@@ -93,6 +93,11 @@
   --font-fraunces: var(--font-fraunces-var), "Fraunces", "Times New Roman", Georgia, serif;
   --font-money: var(--font-zen-kaku-new-var), "Zen Kaku Gothic New", var(--font-murecho-var), "Murecho", var(--font-noto), "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
 
+  /* === TOP reboot v3 (additive) === */
+  /* TOPリブート主見出し（カタログ太角ゴシック）。/money 互換の --font-money とは命名分離・流用しない */
+  --font-zen-kaku-new: var(--font-zen-kaku-new-var), "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+  /* === /TOP reboot v3 === */
+
   /* === Spacing tokens ===（Phase 2: 余白 1.5〜2倍 — ラグジュアリーな呼吸） */
   --section-py: clamp(96px, calc(48px + 7.5vw), 320px);
   --page-px: clamp(16px, 5vw, 80px);
@@ -751,3 +756,130 @@ p, blockquote, dd, li {
     transform: none !important;
   }
 }
+
+/* ============================================================================
+   === TOP reboot v3 (additive) ===
+   /b-plan-v3 専用の表現層ユーティリティ。確定フレームワーク §3.2 の確定値。
+   font-family は @theme トークン (font-zen-kaku-new / font-oswald / font-murecho
+   / font-inter) を指し、色は @theme の --color-* トークンを参照する。
+   蛍光禁止。既存ルールは一切上書きしない（追加のみ）。
+   ========================================================================= */
+
+/* 主見出し系: 太角ゴシック Zen Kaku Gothic New（明朝は使わない） */
+.t-display {
+  font-family: var(--font-zen-kaku-new);
+  font-weight: 900;
+  font-size: clamp(34px, 5.2vw, 76px);
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.t-h1 {
+  font-family: var(--font-zen-kaku-new);
+  font-weight: 900;
+  font-size: clamp(30px, 4.4vw, 60px);
+  line-height: 1.22;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.t-h2 {
+  font-family: var(--font-zen-kaku-new);
+  font-weight: 800;
+  font-size: clamp(28px, 3.4vw, 50px);
+  line-height: 1.28;
+  letter-spacing: 0.015em;
+  text-wrap: balance;
+}
+.t-h3 {
+  font-family: var(--font-zen-kaku-new);
+  font-weight: 700;
+  font-size: clamp(20px, 1.9vw, 30px);
+  line-height: 1.42;
+  letter-spacing: 0.02em;
+}
+
+/* 巨大数字バーン: Oswald 600・tabular（§3.2 実証値で確定） */
+.t-burn {
+  font-family: var(--font-oswald);
+  font-weight: 600;
+  font-size: clamp(64px, 13vw, 132px);
+  line-height: 0.86;
+  letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  white-space: nowrap;
+  word-break: keep-all;
+  display: inline-block;
+  contain: layout;
+}
+.t-burn-sub {
+  font-family: var(--font-oswald);
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 34px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* 本文 / eyebrow */
+.t-body {
+  font-family: var(--font-murecho);
+  font-weight: 400;
+  font-size: clamp(15px, 0.95vw, 17px);
+  line-height: 1.85;
+  letter-spacing: 0.025em;
+  text-wrap: pretty;
+  word-break: auto-phrase;
+}
+.t-eyebrow {
+  font-family: var(--font-inter);
+  font-weight: 600;
+  font-size: clamp(11px, 0.75vw, 13px);
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* サーフェス（色は @theme トークン参照・蛍光なし） */
+.surface-ink {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+.surface-base {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.surface-ivory {
+  background: var(--color-bg-warm);
+  color: var(--color-ink);
+}
+
+/* ----------------------------------------------------------------------------
+   v3 フォーカス可視（WCAG 2.4.7 / 2.4.11）— 追加のみ・/b-plan-v3 配下に限定。
+   .v3-scope 直下のインタラクティブ要素に地色別の可視 outline を付与する。
+   - 暗地（surface-ink）: lime の二重リングは地に近いため cream の outline で確保。
+   - bg-line(#06C755) CTA: 緑に対し cream/2px+offset で位置を明示。
+   - 明地（surface-base / ivory）: deep-green(main) の outline。
+   既存 globals の focus 規定は上書きしない（.v3-scope セレクタで隔離）。
+   ------------------------------------------------------------------------- */
+.v3-scope a:focus-visible,
+.v3-scope button:focus-visible {
+  outline: 2px solid var(--color-main);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+.v3-scope .surface-ink a:focus-visible,
+.v3-scope .surface-ink button:focus-visible,
+.v3-scope.surface-ink a:focus-visible,
+.v3-scope.surface-ink button:focus-visible {
+  outline: 2px solid var(--color-cream);
+  outline-offset: 2px;
+}
+/* bg-line CTA は緑地のため cream outline（lime だと近接）。最優先で隔離。 */
+.v3-scope a.bg-line:focus-visible,
+.v3-scope button.bg-line:focus-visible {
+  outline: 2px solid var(--color-cream);
+  outline-offset: 2px;
+}
+/* === /TOP reboot v3 === */
