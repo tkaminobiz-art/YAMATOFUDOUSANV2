@@ -1,8 +1,9 @@
 I now have the complete framework (all 636 lines) plus all four confirmed artifacts, the verification corrections, the AD 7-point decisions, and the blocker corrections. I have the canonical grounding from CLAUDE.md/AGENTS.md. I'll now produce the confirmed v2.0 — a single complete document that integrates everything, resolves the blockers (especially §3.5 token reconciliation against existing globals.css `--color-*`, the lime hex drift, and the §10 line-number corrections), preserves all rich detail, and outputs Japanese markdown only.
 
-# やまと不動産 TOPリブート — 単一フレームワーク文書（確定版 v2.0）
+# やまと不動産 TOPリブート — 単一フレームワーク文書（確定版 v2.1）
 
-**版: 確定版 v2.0 / 2026-06-25 AD承認・7論点確定 / 実装直前**
+**版: 確定版 v2.1 / 2026-06-25 AD承認・8論点確定 / 実装直前**
+**v2.1 差分: 第8論点（根幹色の正本）を A で確定＝実コード @theme の実働値（深緑 `#486B00`=`--color-main` / lime `#A2C523`=`--color-lime`）を正本化し、BRAND-TRUTH §1 をこの実値へ更新（コード変更なし・再チューニング不要）。§3.3/§3.5/§3.6/§6/§8/§10/§12 を反映済み。**
 対象: `src/app/b-plan-v2/page.tsx`（明朝・静寂回帰の現実装＝リブート対象）
 統合元: IA・デザインシステム・モーション・心理・コピー・RWD/A11y の6次元設計＋確定アーティファクト4種（最終トークン／BRAND-TRUTH適用差分／S01-S12ビルドカード／ビルド計画）＋整合・完全性Critic是正＋Reference Scout（xmobile実機監査）
 正本優先: `BRAND-TRUTH.md` ＞ `DESIGN_GUARDRAILS.md` ＞ `docs/project-context/*`。**数値・コピー・色・CTAが本書と食い違ったら正本が勝つ。**
@@ -24,7 +25,7 @@ I now have the complete framework (all 636 lines) plus all four confirmed artifa
 | §11追補 | 付録C1-C5＋スクショ確定ディテールを別章で二重管理 | **本体へ統合**（該当セクション説明へ織り込み・付録の二重管理を廃止） |
 | アーティファクト | 別ファイル4種 | **本体に正式章化**: §3最終トークン確定値化／§10そのまま貼れる差分／**新§S S01-S12ビルドカード**／§8確定ビルド計画 |
 | トークン棚卸し | green-mid欠落・**既存`--color-*`との関係未定義** | **既存 globals.css `--color-*` との対応・統合表へ書換**（新規追加でなく統合）。`--bp-green-mid`確定派生を追加 |
-| lime hex | 「現実装に lime 不在→追加」（事実誤認） | **`--color-lime=#A2C523` は `--brand-lime=#A9D159` とドリフト中→正本#A9D159へ統一**。scale再算出・bg-lime利用箇所をコントラスト再実測 |
+| lime hex | 「現実装に lime 不在→追加」（事実誤認） | **`--color-lime=#A2C523` は `--brand-lime=#A9D159` （ドリフト）→**実働 #A2C523 を正本化（第8論点A・AD確定）**。BRAND-TRUTH §1 を #A2C523 へ更新・コード変更なし |
 | フォントユーティリティ | `font-zen-kaku` と `font-zen-kaku-new` で割れ | **`font-zen-kaku-new`／`--font-zen-kaku-new` に一意統一**（`--font-money`と命名分離・流用しない） |
 | weight 800 | タイポ転換に内包・埋没 | **P0独立必須項目へ昇格**（layout.tsx の Zen Kaku Gothic New weight配列へ`"800"`追加） |
 | reduced-motion | 「reduced-motionで本文が消える」と過剰主張 | **JS無効(`scripting:none`)のみが穴**へ是正（L739-742で既にopacity/transform解除済を併記） |
@@ -62,7 +63,7 @@ xmobile監査が示した最重要の事実: 参照元LPは**元からゴシッ�
 | **0ベース禁止**（確定コピー不変・新機能は要承認フラグ） | §0.1 / §6.1 / §5.2 / 各ビルドカードの〔新規フラグ〕 |
 | **BRAND-TRUTH正本の出典分離・更新ゲート** | §0.4 / §6.2 / §10 BRAND-TRUTH更新差分（そのまま貼れる・実測行番号） |
 | **既存`--color-*`トークンとの二重層リスク**（blocker） | §3.5 既存 globals.css `--color-*` 供給元との対応・統合表（新規追加でなく統合） |
-| **lime hex 二重化**（blocker） | §3.5/§3.6（`--color-lime=#A2C523` を正本 `#A9D159` へ統一・scale再算出）/ §8 P0-2 |
+| **lime hex 二重化**（blocker→第8論点A確定） | §3.5/§3.6（実働 `--color-lime=#A2C523` を正本化・BRAND-TRUTH §1更新）/ §8 P0-2 / §12 |
 | **green-mid欠落・font命名割れ・weight800埋没**（完全性Critic） | §3.5 トークン棚卸し（green-mid追加）/ §3.6 font一意化 / §8 P0-0b独立項目 |
 | **reduced-motion過剰主張**（整合Critic） | §4.5（穴はJS無効`scripting:none`のみ・L739-742で既に解除済を併記） |
 
@@ -166,7 +167,7 @@ S07の未公開土地LINEは「土地から相談」の別文脈CTAとして独�
 
 ## 3. デザインシステム（確定トークン）
 
-**結論サマリー（迷ったらここ）**: 主見出し=Zen Kaku Gothic New 800–900（ゲートA後）/ 巨大数字=Oswald **600確定**（700は専務確認後） tabular / 縦書き明朝=撤去 / 黒地=ink `#1D1D18`（純黒不採用・確定）/ シグナル=lime証明・deep-green面・sign-redリスク（二分確定・両者文字色NG）/ 数字バーン=1セクション1発・二度打ち禁止 / **lime正本=`#A9D159`**（globals.css の `--color-lime=#A2C523` を統一する）。
+**結論サマリー（迷ったらここ）**: 主見出し=Zen Kaku Gothic New 800–900（ゲートA後）/ 巨大数字=Oswald **600確定**（700は専務確認後） tabular / 縦書き明朝=撤去 / 黒地=ink `#1D1D18`（純黒不採用・確定）/ シグナル=lime証明・deep-green面・sign-redリスク（二分確定・両者文字色NG）/ 数字バーン=1セクション1発・二度打ち禁止 / **lime正本=`#A2C523`**（実働 globals.css `--color-lime` を正本化・第8論点A）。
 
 ### 3.1 タイプ階層（書体方針と用途・確定）
 
@@ -232,8 +233,8 @@ xmobile実機は固定px2段だが、やまとは**clamp流体を採用**（実�
 
 | シグナル | 色 | 役割 | 面積 |
 |---|---|---|---|
-| lime | `#A9D159` | 証明・到達・肯定（花バッジ・達成数字の下線/8pxバンド・「いちばん選ばれています」） | 極小（点・面上の暗文字用） |
-| deep-green | `#2F4A2C` | 面と主体性（主CTA見学・主声面・結論帯） | 中（面） |
+| lime | `#A2C523` | 証明・到達・肯定（花バッジ・達成数字の下線/8pxバンド・「いちばん選ばれています」） | 極小（点・面上の暗文字用） |
+| deep-green | `#486B00` | 面と主体性（主CTA見学・主声面・結論帯） | 中（面） |
 | sign-red | `#E84336` | リスク・後出し費用・緊急・診断CTA | 極小（点） |
 | LINE-green | `#06C755` | LINE CTAのみ（他用途禁止） | ボタンのみ |
 
@@ -275,16 +276,16 @@ xmobile実機は固定px2段だが、やまとは**clamp流体を採用**（実�
 
 ### 3.5 :rootトークン（色・余白・モーション・確定値）／ 既存 globals.css `--color-*` との対応・統合
 
-> **このリブートはトークンを「新規追加」しない方針。** 既存 `src/app/globals.css` の `@theme`（L19/L36–42 ほか）に**等価ロールが既にある**ため、本書 `:root` の `--ink`/`--deep-green`/`--sign-red`/`--lime`/`--line-green` 等は**既存 `--color-*` を正本値へ寄せて使う**か、**`--color-*` のエイリアスにする**。二重トークン層（`--color-*` 系と `--ink/--lime/...` 系が同一ページに別hexで同居）を作らない。
+> **このリブートはトークンを「新規追加」しない方針。** 既存 `src/app/globals.css` の `@theme`（L19/L36–42 ほか）に**等価ロールが既にある**ため、本書 `:root` の `--ink`/`--deep-green`/`--sign-red`/`--lime`/`--line-green` 等は**既存 `--color-*` の値をそのまま正本として参照**し、**`--color-*` のエイリアスにする**（第8論点A: 緑=`--color-main #486B00`・lime=`--color-lime #A2C523` の実働値を正本化）。二重トークン層（`--color-*` 系と `--ink/--lime/...` 系が同一ページに別hexで同居）を作らない。
 
 ```css
 :root {
-  /* ── 色: ニュートラル面（--ink は --color-ink を正本値へ寄せて使う）── */
+  /* ── 色: ニュートラル面（--ink は --color-ink のエイリアス）── */
   --ink:#1D1D18; --ink-soft:#2A2823; --base:#F7F4EC; --ivory:#FBF8EE; --paper:#FFFFFF; --border:#DED8C8;
   /* ── 色: テキスト ── */
   --text:#1D1D18; --text-muted:#5E5A50; --text-inv:#FBF8EE;
   /* ── 色: シグナル（役割二分・確定。既存 --color-* と同値へ統合）── */
-  --lime:#A9D159; --deep-green:#2F4A2C; --sign-red:#E84336; --sign-red-dark:#8F211B; --sign-red-soft:#FFF0EE;
+  --lime:#A2C523; --deep-green:#486B00; --sign-red:#E84336; --sign-red-dark:#8F211B; --sign-red-soft:#FFF0EE;
   --gold:#9A7A3F; --line-green:#06C755;
   /* ── 派生（新色を増やさず混色で生成） ── */
   --base-tint:       color-mix(in srgb, var(--lime) 8%, var(--base));        /* 旧セージ#e0eedd翻訳 */
@@ -309,14 +310,14 @@ xmobile実機は固定px2段だが、やまとは**clamp流体を採用**（実�
 |---|---|---|---|---|
 | `--ink` | `#1D1D18` | **L36 `--color-ink`** | `#1D1D18` | **既存ありで正本一致。`--ink` を `--color-ink` のエイリアスにする**（`--ink: var(--color-ink)`）。追加不要 |
 | `--text-muted` | `#5E5A50` | **L37 `--color-ink-muted`** | `#5E5A50` | 既存あり一致。`--text-muted: var(--color-ink-muted)` |
-| `--deep-green` | `#2F4A2C` | `--color-green`/`--brand-green` 系 | 確認要（一致か否か実測） | 一致なら エイリアス。不一致なら**正本 `#2F4A2C` へ寄せて更新** |
+| `--deep-green` | **`#486B00`（実働正本・第8論点A）** | **L16 `--color-main`** | `#486B00`（105箇所・WCAG AAA） | **既存を正本化＝`--deep-green: var(--color-main)` エイリアス。暗面fillは `--color-main-dark #2E4600`。コード変更なし** |
 | `--sign-red` | `#E84336` | **L38 `--color-risk`** | `#E84336` | **既存ありで一致。`--sign-red: var(--color-risk)`**。追加不要 |
 | `--sign-red-dark` | `#8F211B` | **L39 `--color-risk-dark`** | `#8F211B` | **既存あり一致・追加不要**。`--sign-red-dark: var(--color-risk-dark)` |
 | `--sign-red-soft` | `#FFF0EE` | **L40 `--color-risk-soft`** | `#FFF0EE` | **既存あり一致・追加不要**。`--sign-red-soft: var(--color-risk-soft)` |
 | `--line-green` | `#06C755` | **L42 `--color-line`** | `#06C755` | **既存あり一致・追加不要**。`--line-green: var(--color-line)` |
-| `--lime` | `#A9D159`（正本） | **L19 `--color-lime`（scale一式）** | **`#A2C523`（別緑・ドリフト中）** | **既存ありだが hexドリフト。正本 `#A9D159` へ統一**（§3.6・P0-2 参照）。新規追加でなく**値の是正** |
+| `--lime` | **`#A2C523`（実働正本・第8論点A）** | **L19 `--color-lime`（scale一式）** | `#A2C523` | **既存を正本化＝`--lime: var(--color-lime)` エイリアス。scale温存・再実測不要。BRAND-TRUTH §1 を #A2C523 へ更新** |
 
-> 「新規追加」だった `sign-red-dark` / `sign-red-soft` / `line-green` / `lime` は**いずれも既存 `--color-*` に等価ロールが存在＝追加不要・統合へ訂正**。実装は新系統を新設せず、既存 `--color-*` を正本値に寄せ、本書 `--ink/--lime/...` 名はその**エイリアス**として定義する。
+> 「新規追加」だった `sign-red-dark` / `sign-red-soft` / `line-green` / `lime` は**いずれも既存 `--color-*` に等価ロールが存在＝追加不要・統合へ訂正**。実装は新系統を新設せず、既存 `--color-*` をそのまま正本として参照し、本書 `--ink/--lime/...` 名はその**エイリアス**として定義する。
 
 **既存 b-plan-v2 `P` パレット／`--bp-*` からの差分表（置換実値・正本=BRAND-TRUTH §1）** — 対象: `const P`（L45-55）/ `--bp-*`（L6570-6578）/ footer `#11110f`（L961）。
 
@@ -325,8 +326,8 @@ xmobile実機は固定px2段だが、やまとは**clamp流体を採用**（実�
 | `P.ink` | `#181714` | **`#1D1D18`** | `--ink`（=`--color-ink`） | 論点1: 温黒へ統一 |
 | `--bp-bg-ink` | `#181714` | **`#1D1D18`** | `--ink` | 黒面の単一値化 |
 | footer `bg-[#11110f]` | `#11110f` | **`#1D1D18`** | `--ink` | 黒面を ink 一本化 |
-| `P.green` | `#195842` | **`#2F4A2C`** | `--deep-green` | §1と不一致→正本へ |
-| `--bp-green` | `#195842` | **`#2F4A2C`** | `--deep-green` | 同上 |
+| `P.green` | `#195842` | **`#486B00`** | `--deep-green`（=`--color-main`） | 実働正本へ（第8論点A） |
+| `--bp-green` | `#195842` | **`#486B00`** | `--deep-green` | 同上 |
 | `--bp-green-deep` | `#123d2e` | **`color-mix(deep-green 78%,#000)`** | `--deep-green-deep` | 暗段差を派生で生成 |
 | **`--bp-green-mid`** | **`#3f7d63`** | **`color-mix(deep-green 55%,base)`** | **`--deep-green-mid`** | **中間トーンも派生化（page.tsx内1箇所使用・残置せず畳む）** |
 | `--bp-green-soft` | `#cfe0d4` | **`color-mix(deep-green 14%,base)`** | `--deep-green-soft` | 諸費用チップ面・派生化 |
@@ -337,9 +338,9 @@ xmobile実機は固定px2段だが、やまとは**clamp流体を採用**（実�
 | `P.line` | `rgba(24,23,20,0.16)` | **`rgba(29,29,24,0.16)`** | （ink基準の罫） | ink 値に追従 |
 | `P.mute` | `#716b61` | **`#5E5A50`** | `--text-muted`（=`--color-ink-muted`） | サブテキスト正本へ |
 | `P.rust` | `#8a5232` | **`#9A7A3F`** | `--gold` | 装飾アクセントを gold へ（rust退場） |
-| lime 利用箇所（`bg-lime`/`text-lime-*`） | `--color-lime=#A2C523` | **`#A9D159`** | `--lime`（`--color-lime`更新） | **既存あり・ドリフト是正**（§3.6）。追加でなく統一 |
+| lime 利用箇所（`bg-lime`/`text-lime-*`） | `--color-lime=#A2C523` | **`#A2C523`（維持）** | `--lime`（=`--color-lime`） | **実働正本・変更なし**（第8論点A） |
 
-実装時は `const P` を確定トークン参照へ置換（例 `ink:"var(--ink)"`）し、`--bp-*` は `--ink`/`--deep-green` 等のエイリアスにする。**本リブートでは新トークン追加は原則なし**（既存 `--color-*` への統合）。lime の hex 更新（`#A2C523→#A9D159`）と scale 再算出はコミットメッセージに明記（BRAND-TRUTH §8 チェックリスト準拠）。
+実装時は `const P` を確定トークン参照へ置換（例 `ink:"var(--ink)"`）し、`--bp-*` は `--ink`/`--deep-green` 等のエイリアスにする。**本リブートでは新トークン追加は原則なし**（既存 `--color-*` への統合）。緑・limeは実働値（`--color-main #486B00` / `--color-lime #A2C523`）の正本化＝コード変更なし。色差分は BRAND-TRUTH §1 更新側（§10）にコミットメッセージで明記。
 
 ### 3.6 Tailwind ユーティリティ対応表（フォント命名一意化・lime hex統一）
 
@@ -360,11 +361,11 @@ Tailwind v4 `@theme`（`src/app/globals.css` L3-）が `--font-*`/`--color-*` �
   --font-zen-kaku-new: var(--font-zen-kaku-new-var), "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
 ```
 
-**lime の hex 二重化是正（blocker・確定）**: globals.css **L19 `--color-lime` の実働値は `#A2C523`**（別の緑）で、Tailwind の `bg-lime`/`text-lime-*` を生成し **`FloatingCta`（`bg-lime text-lime-darker`）・`PriceSection` 等が実際にこれで描画**している。BRAND-TRUTH §1 `--brand-lime` は **`#A9D159`**。両者が同一ページに同居している＝**ドリフト中**。
+**lime の hex 二重化是正（blocker・確定）**: globals.css **L19 `--color-lime` の実働値は `#A2C523`**（別の緑）で、Tailwind の `bg-lime`/`text-lime-*` を生成し **`FloatingCta`（`bg-lime text-lime-darker`）・`PriceSection` 等が実際にこれで描画**している。BRAND-TRUTH §1 `--brand-lime` は **`#A9D159`**（宣言）。第8論点A（AD確定）で**実働 `#A2C523` を正本化**する（BRAND-TRUTH §1 を #A2C523 へ更新）。
 
-- 正本は **`#A9D159`**。**`--color-lime` を `#A9D159` へ更新**し、依存する lime scale（`hover`/`deep`/`darker`/`light` 等）を**再算出**する。
-- `bg-lime`/`text-lime-darker` を使う**全箇所（FloatingCta・PriceSection ほか）のコントラストを再実測**（特に lime面上の暗文字・`text-lime-darker`）。
-- 「現実装に lime 不在→追加」は**事実誤認のため削除**。lime は**既にあり、値がドリフトしている**のが実態。
+- 正本は **`#A2C523`（実働）**。`--color-lime` は**変更しない**。依存する lime scale（`hover`/`deep`/`darker`/`light` 等）も**温存**（再算出不要）。
+- `bg-lime`/`text-lime-darker` 利用箇所（FloatingCta・PriceSection ほか）は hex 不変ゆえ**既存の実測済みコントラストを維持**（再実測不要）。
+- 「現実装に lime 不在→追加」は**事実誤認のため削除**。lime は**既にあり、実働 `#A2C523` を正本化**する（第8論点A）。
 
 **layout.tsx 既ロード確認（実測済み 2026-06-25）**
 
@@ -377,7 +378,7 @@ Tailwind v4 `@theme`（`src/app/globals.css` L3-）が `--font-*`/`--color-*` �
 
 > 結論: 4書体すべてロード済・`<html className>`に variable 連結済（L155）。**`--font-money` は在るが `--font-zen-kaku-new` は不在**（実測どおり）。**追加が要るのは (1) Zen Kaku Gothic New の weight 800、(2) `@theme` への `--font-zen-kaku-new` 1行新設のみ**。
 
-**既存実装との整合**: 現実装 P の `green:#195842 / red:#ea4b2a` は **BRAND-TRUTH §1（#2F4A2C/#E84336）と不一致。正本は §1。** リブートで §1 へ統一し、統一後hexでコントラスト実測。既存 `--brand-*` はエイリアス残置（`--brand-text: var(--ink)` 等）。
+**既存実装との整合**: 現実装 P の `green:#195842 / red:#ea4b2a` は **実働正本（緑=`--color-main #486B00` / sign-red=`--color-risk #E84336`）へ統一**（第8論点A）。緑hex は実働値ゆえ再実測不要、red は #ea4b2a→#E84336 のみ実測。BRAND-TRUTH §1 は実値へ更新（§10）。既存 `--brand-*` はエイリアス残置（`--brand-text: var(--ink)` 等）。
 
 ---
 
@@ -535,7 +536,7 @@ CTA階層（不変）: **Primary LINE > Secondary 見学 > Tertiary 資料 > 電
 | 階層 | 色 | canonical default | 強化案（要承認） |
 |---|---|---|---|
 | Primary | LINE-green #06C755 | **LINEで相談** | 土地込み総額を出す▲ |
-| Secondary | deep-green #2F4A2C | **モデルハウスを見学する** | 標準仕様を実物で見る▲ |
+| Secondary | deep-green #486B00 | **モデルハウスを見学する** | 標準仕様を実物で見る▲ |
 | Tertiary | quiet outlined | 資料請求 | — |
 | 電話 | deep-green | 電話で相談 | 9:00〜19:00 / 火・水定休 |
 
@@ -581,7 +582,7 @@ SP↔PC境界は **`768px`(`md`) を分解の正本**。各PC要素は構造ご�
 ```
 [ ] 色だけで意味を伝えない（比較表○×にアイコン+テキストラベル併記）
 [ ] 本文4.5:1/大文字3:1 実測: muted#5E5A50 on base / 白 on LINE-green#06C755 / lime面上は暗文字 は要実測
-[ ] lime hex統一後（#A9D159）に bg-lime/text-lime-darker 利用箇所（FloatingCta/PriceSection）のコントラスト再実測
+[ ] lime/緑は実働値を正本化（#A2C523/#486B00・変更なし）＝bg-lime/text-lime-darker（FloatingCta/PriceSection）の既存コントラストを維持
 [ ] sign-redは本文文字に使わず面/罫/見出し、赤文字はsign-red-dark#8F211B
 [ ] FAQ: <button> aria-expanded/aria-controls、回答role="region"、最大の不安は展開済み露出
 [ ] 全タップ44×44px以上（SP固定CTA h64適合）
@@ -627,7 +628,7 @@ SP↔PC境界は **`768px`(`md`) を分解の正本**。各PC要素は構造ご�
 
 各カード共通の確定トークンは §3（`.t-*`/`:root`）を参照。出典優先: BRAND-TRUTH ＞ DESIGN_GUARDRAILS ＞ docs/project-context/。SP=12本（S04→S05へ視覚統合）＋固定CTAバー3分割。**スクショ確定ディテール（旧§11.2）は各カード説明へ織り込み済み。**
 
-**P0で先に通す技術ゲート（全カードの前提）**: ①ゲートA（タイポ転換＋神野さんsign-off。承認前は主見出しZen Old Mincho継続）②ゲートB（Heroコピー出典）③C1 ink統一（`P.ink=#181714`/`--bp-bg-ink`/footer`#11110f`→`#1D1D18`＝`--color-ink`）④**weight 800 追加**（layout.tsx）＋**`--font-zen-kaku-new` 新設**＋**lime hex統一（`--color-lime`→`#A9D159`・scale再算出）**⑤C2 reveal安全網（`@media(scripting:none)`＋初期可視+IO方式・JS無効でcanonical本文が消えない／reduced-motionはL733-742で解除済）⑥SP固定CTA safe-area+body padding＋インライン版を`FloatingCta`へ抽出・import一本化。
+**P0で先に通す技術ゲート（全カードの前提）**: ①ゲートA（タイポ転換＋神野さんsign-off。承認前は主見出しZen Old Mincho継続）②ゲートB（Heroコピー出典）③C1 ink統一（`P.ink=#181714`/`--bp-bg-ink`/footer`#11110f`→`#1D1D18`＝`--color-ink`）④**weight 800 追加**（layout.tsx）＋**`--font-zen-kaku-new` 新設**＋**緑/limeは実働値を正本化（`--color-main #486B00`/`--color-lime #A2C523`・コード変更なし・第8論点A）**⑤C2 reveal安全網（`@media(scripting:none)`＋初期可視+IO方式・JS無効でcanonical本文が消えない／reduced-motionはL733-742で解除済）⑥SP固定CTA safe-area+body padding＋インライン版を`FloatingCta`へ抽出・import一本化。
 
 ### S01 — Hero｜状況提示＋中心概念
 - **役割/段**: 状況提示＋中心概念。段=1。心の段=①反射。主タイプ=全（特T4）。
@@ -765,7 +766,7 @@ SP↔PC境界は **`768px`(`md`) を分解の正本**。各PC要素は構造ご�
 - **P0-0b weight 800 追加（独立必須）**: `layout.tsx` の `Zen_Kaku_Gothic_New` weight 配列へ `"800"` を追加（追加しないと`.t-h2`の800が700/900へ丸められる）。
 - **P0-0c ゲートB**: §6 Hero採用方針確定（§6確定コピー継続か中心概念採用か）。中心概念採用なら§6更新（実測 L299–316）。
 - **P0-1**: 主要文字HTML化。`P.ink=#181714`/`--bp-bg-ink`/footer`#11110f`→`#1D1D18`（=`--color-ink`）の1行を必ず含める。
-- **P0-2 トークン統合＋lime hex是正＋font新設**: `globals.css` に §3.2/§3.5 の `:root`／`.t-*`を追加し、`--ink/--sign-red/--line-green` 等を**既存 `--color-ink/--color-risk/--color-line` のエイリアス**にする（新系統を新設しない）。色を §1（#2F4A2C/#E84336）へ統一。green-mid は `--deep-green-mid` へ畳む。**`--color-lime` を `#A9D159` へ更新し lime scale（hover/deep/darker/light）を再算出、`bg-lime`/`text-lime-darker` 利用箇所（FloatingCta/PriceSection）のコントラスト再実測**。`@theme` に `--font-zen-kaku-new` を1行新設（`--font-money` は流用しない）。
+- **P0-2 トークン統合＋lime hex是正＋font新設**: `globals.css` に §3.2/§3.5 の `:root`／`.t-*`を追加し、`--ink/--sign-red/--line-green` 等を**既存 `--color-ink/--color-risk/--color-line` のエイリアス**にする（新系統を新設しない）。緑=`--color-main #486B00`・lime=`--color-lime #A2C523`・sign-red=`--color-risk #E84336` を**実働正本として参照**（第8論点A・コード変更なし）。green-mid は `--deep-green-mid` へ畳む。**lime/緑は hex 不変ゆえ scale温存・コントラスト再実測不要**（red #ea4b2a→#E84336 のみ実測）。BRAND-TRUTH §1 を実値へ更新（§10）。`@theme` に `--font-zen-kaku-new` を1行新設（`--font-money` は流用しない）。
 - **P0-3**: 全実績数字に測定条件+時点付与。
 - **P0-4**: CTA階層統一・`LINE_ADD_FRIEND_URL` import。
 - **P0-5 SP固定CTA**: L968インライン3分割を`FloatingCta`へ抽出＋下層7ページimport＋**インライン版削除（import一本化）**＋safe-area+body padding+`viewport-fit=cover`。
@@ -873,7 +874,7 @@ Tailwind ユーティリティ対応表:
 
 実装着手時アクション:
 - layout.tsx の Zen Kaku Gothic New に **weight "800" を追加**（現状 ["400","500","700","900"]）。
-- `--color-lime` を **#A9D159（=--brand-lime 正本）** へ統一し lime scale を再算出（現状 #A2C523 とドリフト中）。
+- **色（第8論点A）**: BRAND-TRUTH §1 を実コード @theme の実働値へ更新する: `--brand-deep-green #2F4A2C → #486B00`（=`--color-main`）／`--brand-lime #A9D159 → #A2C523`（=`--color-lime`）。**コード側は変更なし**（実働値が正本）。
 ```
 
 ### 10.2 §6 Hero copy レンダリング注記更新（**L299–316 を置換／Track Record 撤去は L314**・文字列は1字も変えない）
@@ -951,7 +952,7 @@ b-plan-v2 L968 のインライン3分割を FloatingCta コンポーネントへ
   - C1 ink統一: P.ink=#181714 / --bp-bg-ink / footer#11110f → #1D1D18（=--color-ink）
   - weight 800 追加（layout.tsx）
   - --font-zen-kaku-new 新設（@theme・--font-money 流用しない）
-  - --color-lime を #A9D159 へ統一・lime scale 再算出・bg-lime/text-lime-darker 利用箇所のコントラスト再実測
+  - BRAND-TRUTH §1 の緑/lime を実働値へ更新（深緑 #486B00=--color-main・lime #A2C523=--color-lime）。コード変更なし・再実測不要
   - reveal安全網: @media(scripting:none) フォールバック追加（推奨は初期可視+IO方式。reduced-motion は L733-742 で解除済）
 ステップ1 §1 Typography（L45–73 置換・ゴシック転換）  — sign-off: 神野さん（AD）。承認まで主見出しは Zen Old Mincho 継続
 ステップ2 §6 Hero（L299–316 置換・Track Record撤去は L314）  — sign-off: 神野さん（AD）
@@ -971,7 +972,7 @@ b-plan-v2 L968 のインライン3分割を FloatingCta コンポーネントへ
 - **スタッフ平等**: タイポ/CTA/数値/Heroのみ。役職別サイズ差・特別扱いの導入なし。
 - **ロゴ再描画禁止**: 本文書体のみ。ロゴ（`logo.png`/`<Header />`）に触れず、巨大ワードマーク再レターも含めない。
 - **canonical 数値**: 600棟以上/常時150区画程度/50組以上/14年/1,000件以上/地盤20年・しろあり10年/京2,280・風2,480・花2,480・花→風→京順・花バッジ・KYO表記 を不変で踏襲。150／76は包含関係として明記。
-- **蛍光・青禁止 / 専務8原則**: lime（正本#A9D159へ統一）/deep-green/sign-red二分・バーン600初期・FV物件NG・声編集しない・代表同格・投資エッセンス温存を死守。蛍光#8DF701不採用・青#2bb9e1廃棄。
+- **蛍光・青禁止 / 専務8原則**: lime（正本#A2C523・実働）/deep-green（#486B00・実働）/sign-red二分・バーン600初期・FV物件NG・声編集しない・代表同格・投資エッセンス温存を死守。蛍光#8DF701不採用・青#2bb9e1廃棄。
 
 ---
 
@@ -980,7 +981,7 @@ b-plan-v2 L968 のインライン3分割を FloatingCta コンポーネントへ
 - 確定対象フレームワーク（本書の更新元）: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/docs/notes/2026-06-25-top-reboot-framework.md`
 - 単一正本（要更新・差分は §10／実測行番号）: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/BRAND-TRUTH.md`（§1 Typography **L45–73**＝ゲートA / §6 Hero **L299–316**・Track Record撤去 **L314**＝ゲートB / §5 CTA **L283–296** / §2 区画数 **L116**）
 - リブート対象実装: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/src/app/b-plan-v2/page.tsx`（`const P` L45-55 / `--bp-*` L6570-6578 / `--bp-green-mid` L6577 / footer`#11110f` L961 / SP固定CTA L968）
-- 技術是正/再利用資産: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/src/app/globals.css`（`@theme` L3- / `--color-lime`(scale) **L19**＝#A2C523ドリフト中→#A9D159へ / `--color-ink` **L36** / `--color-ink-muted` **L37** / `--color-risk` **L38** / `--color-risk-dark` **L39** / `--color-risk-soft` **L40** / `--color-line` **L42** / `--font-money`（=Zen Kaku Gothic New 別名・流用しない） / `.money-burn-display` L325-334＝weight600実証値 / `.scroll-in` L157 / reduced-motion 分散 L188/388/439/681/**733-742＝.scroll-in opacity/transform 解除済**）
+- 技術是正/再利用資産: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/src/app/globals.css`（`@theme` L3- / `--color-lime`(scale) **L19**＝#A2C523（実働正本・第8論点A）／`--color-main` **L16**＝#486B00（実働正本） / `--color-ink` **L36** / `--color-ink-muted` **L37** / `--color-risk` **L38** / `--color-risk-dark` **L39** / `--color-risk-soft` **L40** / `--color-line` **L42** / `--font-money`（=Zen Kaku Gothic New 別名・流用しない） / `.money-burn-display` L325-334＝weight600実証値 / `.scroll-in` L157 / reduced-motion 分散 L188/388/439/681/**733-742＝.scroll-in opacity/transform 解除済**）
 - 改修対象: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/src/components/FloatingCta.tsx`（2ボタン版・safe-area無し・`bg-lime text-lime-darker`使用→3分割へ統一・lime hex統一後コントラスト再測）
 - 書体ロード: `/Users/takahirokamino/Documents/Claude/Projects/やまと不動産HP V2/YAMATOFUDOUSANV2/src/app/layout.tsx`（4書体 L85-123・Zen Kaku Gothic New weight に "800" 追加）
 - 再利用フック/データ: `src/hooks/useCountUp.ts` / `src/hooks/useScrollIn.ts` / `src/components/bplan/AnimatedNumber.tsx` / `src/components/SmoothScrollProvider.tsx` / `src/data/line.ts`（`LINE_ADD_FRIEND_URL`）
@@ -991,7 +992,7 @@ b-plan-v2 L968 のインライン3分割を FloatingCta コンポーネントへ
 
 ## 12. 追補B（2026-06-25 コード実測）— トークン正本コンフリクトと第8論点
 
-> **§3.5/§3.6 の「正本=BRAND-TRUTH §1 へ寄せる（緑#2F4A2C / lime#A9D159）」という指示は、本章の第8論点が決まるまで暫定。** 実コード照合で、想定より深いドリフトが判明したため。
+> **第8論点は A で確定（2026-06-25 AD承認）= 実コード @theme の実働値を正本化。** 緑=`--color-main #486B00`・lime=`--color-lime #A2C523` をそのまま正本とし、**BRAND-TRUTH §1 をこの実値へ更新**する（コード変更なし・再チューニング不要）。本書の §3.3/§3.5/§3.6/§6/§8/§10 はこの確定で更新済み。
 
 ### 12.1 実測で判明した事実（確定）
 
@@ -1011,6 +1012,6 @@ b-plan-v2 L968 のインライン3分割を FloatingCta コンポーネントへ
 | B. BRAND-TRUTHを正本化 | §1宣言値（#2F4A2C / #A9D159）へ**サイト全体を寄せる** | 宣言値に忠実だが、105+箇所の緑とlime scaleを**再算出＋WCAG再実測**。サイトの緑のhue（forest寄り）が変わる大改修 |
 | C. 緑とlimeで別判断 | 例: 緑は実値#486B00維持／limeのみ#A9D159へ等 | 色ごとに最適化できるが整合管理が複雑 |
 
-**推奨=A**。理由: (1) 実値はWCAG調整済みで全サイト稼働の de-facto 正本、(2) BRAND-TRUTH自身が「事実が変わったらBRAND-TRUTHを先に更新」と規定、(3) TOPリブートを既存ページと色整合させ、根幹色の大改修をリブートに巻き込まない。Aなら §3.5/§3.6 の「寄せる」指示を「**既存 `--color-main`/`--color-lime` をそのまま正本として参照・BRAND-TRUTH §1を実値へ更新**」に置換する。
+**確定=A（2026-06-25 AD承認）**。理由: (1) 実値はWCAG調整済みで全サイト稼働の de-facto 正本、(2) BRAND-TRUTH自身が「事実が変わったらBRAND-TRUTHを先に更新」と規定、(3) TOPリブートを既存ページと色整合させ、根幹色の大改修をリブートに巻き込まない。Aなら §3.5/§3.6 の「寄せる」指示を「**既存 `--color-main`/`--color-lime` をそのまま正本として参照・BRAND-TRUTH §1を実値へ更新**」に置換する。
 
-> **第8論点が決まり次第、§3.5/§3.6/§8/§10 の緑・lime指示を確定値へ一括更新する。** それ以外（ink/risk/line統一・font命名・weight800・SP固定CTA・モーション・IA・コピー）は第8論点に依存せず確定済み。
+> **第8論点A確定により、§3.3/§3.5/§3.6/§6/§8/§10 の緑・lime指示は確定値（緑#486B00・lime#A2C523）へ更新済み。** それ以外（ink/risk/line統一・font命名・weight800・SP固定CTA・モーション・IA・コピー）は第8論点に依存せず確定済み。
