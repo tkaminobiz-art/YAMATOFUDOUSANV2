@@ -293,27 +293,28 @@ LINE link: `LINE_ADD_FRIEND_URL` from `src/data/line.ts`. Never hardcode.
 
 ---
 
-## 6. Approved Hero copy (current — 2026-05-09 Step 4)
+## 6. Approved Hero copy (current — 2026-06-26 Phase 2・小林専務 sign-off 済)
 
-`HeroVideo` overlay (動画 FV 上の主役コピー):
+本番トップ `/`(=`/b-plan-v3`) の FV は **①ループ動画モンタージュ(脇役の地) → ②ステートメント** の
+2 部構成（`src/app/b-plan-v3/sections/S01.tsx`）。②の確定コピー（すべてゴシック・明朝禁止）:
 
-```
-[h1 — Mincho 26-56px]
-奈良・京都南部で、土地から考える家づくり。
+- **eyebrow**（Inter caps）: `standard, not optional`
+- **h1**（Zen Kaku Gothic New 900・主役）: **標準装備が、とにかくすごい。**（「すごい」に lime 下線・点）
+- **証拠リード**（Murecho・h1 直下に密着＝主観を即客観化）: 耐震等級3に対応する構造。制震ダンパーは全モデル標準。標準で、ここまで入っています。
+- **標準グレード帯**（全モデル共通項目のみ・実在ブランドは plain text）:
+  耐震＝**等級3に対応する構造**（「3」＝Oswald 600 巨大・FV 主役数字・S03 の 132px 未満）／外壁＝旭化成 ヘーベルパワーボード／制震＝ミライエ 全モデル標準／キッチン＝クリナップ／浴室・洗面・トイレ＝TOTO／窓・玄関＝YKK AP／保証＝地盤20年・しろあり10年
+- **橋**（Zen Kaku Gothic New）: 大手の高い水準を、はじめから標準に。
+- **価格バーン**（Oswald 600・降格＝「3」より小）: 京モデル **2,280** 万円〜。
+- **翻訳句**（Murecho）: この水準を、家そのものの値段で。
+- **sub**（Murecho）: 土地代も、建物代も、後からかかる費用も、はじめにわかりやすく。
+- **注記**: ※標準仕様は全モデル共通項目を掲載。花・風・京で一部仕様が異なります。価格は税込・建物本体＋付帯工事込み。登記費用などは別途発生します。
+- **CTA**: LINEで相談 ／ モデルハウスを見学する（「実物の質感は、モデルハウスで。」）
 
-[lead — Mincho + Fraunces italic '2,280']
-京モデル 2,280 万円〜。
+**禁則・整合**: 「低価格/安い/お得/コスパ」禁止（憲法4.1）→「現実の総額/家そのものの値段」。耐震は「**対応する構造**」（「取得」と断言しない＝景表）。実績4数字（600棟・150区画・50組・15年）は ② に置かず **S03 専管**（専務③二度打ち回避。FV 主役数字は「3」と「2,280」のみ）。標準仕様の固有名詞は事実摘示（他社ロゴ画像・AI 生成ロゴは不使用）。
 
-[sub — Murecho]
-土地代も、建物代も、後からかかる費用も、はじめにわかりやすく。
-```
-
-下部 overlay には Track Record 4 指標 (600棟・150区画・50組・15年) を継続表示。
-
-旧コピー (削除済): 「標準仕様まで、しっかり比べてください。」「家そのものに、しっかり費用をかけています。」
+**履歴**: 旧 h1（Phase1・2026-06-25〜26）「奈良・京都南部で、土地から考える家づくり。」→ Phase2 で ② h1 を標準装備訴求へ差替（2026-06-26 専務 sign-off）。さらに旧: HeroVideo overlay の Mincho 版（2026-05-09）。
 
 If the redesign changes this, the new copy goes here first, then to implementation.
-The /hero-review comps show placeholder copy — they are not the spec.
 
 ---
 
