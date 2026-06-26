@@ -882,4 +882,47 @@ p, blockquote, dd, li {
   outline: 2px solid var(--color-cream);
   outline-offset: 2px;
 }
+
+/* ----------------------------------------------------------------------------
+   FV② 専用・連続レスポンシブ型システム（追加のみ・既存 .t-* は不可侵）
+   xmobile の文字数/サイズ比率を移植し、320→1920 を 1 本 clamp で連続化。
+   タブレット中域（768–1023）が床値に潰れる "死の谷" を h1 の局所 override で回避。
+   正本: docs/notes/2026-06-26-fv-responsive-type-spec.md。
+   ------------------------------------------------------------------------- */
+.fv2-h1 {
+  font-family: var(--font-zen-kaku-new);
+  font-weight: 900;
+  font-size: clamp(30px, 5.3vw, 84px);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  text-wrap: initial;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* 中域の貧弱化を防ぐ唯一の override（タブレットで h1 が床に張り付くのを救う） */
+  .fv2-h1 {
+    font-size: clamp(50px, 6.6vw, 76px);
+  }
+}
+/* 「3」＝S03 実績600(t-burn = clamp(64px,13vw,132px)) の "影" として常時その下を走る。
+   係数 12vw < 13vw・下限 58<64 で全幅 3<600 を保証（専務③ 降順を全ブレークポイントで死守）。
+   PC 上限 124px は据置（S03 132 を超えない）。S03 は専管のため不可侵＝こちらを従わせる。 */
+.fv2-num3 {
+  font-family: var(--font-oswald);
+  font-weight: 600;
+  font-size: clamp(58px, 12vw, 124px);
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+/* 2,280＝「3」のさらに下（係数 10.4vw < 12vw・下限 50<58・上限 108<124）＝降順 600>3>2,280。 */
+.fv2-price {
+  font-family: var(--font-oswald);
+  font-weight: 600;
+  font-size: clamp(50px, 10.4vw, 108px);
+  line-height: 0.86;
+  letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
 /* === /TOP reboot v3 === */
