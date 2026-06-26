@@ -24,36 +24,22 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
  *   - 動画は実写真allowlist由来（外観は空/時間帯のみAIレタッチ・建物保持を1対1照合済）。
  *     出典トレーサビリティ: docs/notes/2026-06-26-fv-montage-assets.md。
  *
- * A/B 並走（FV案B計画）: 前景（ステートメント②）は完全同一で、背景①だけを入れ替える。
- *   variant="b"（既定 /b-plan-v3）= ループ動画モンタージュ。
- *   variant="a"（/b-plan-v3-a）   = 同一ポスターの静止背景（動きなし）。
- *   ＝「動画背景は静止背景よりFV効果が高いか」をクリーンに比較するための1変数化。
+ * 背景①＝FV案Bのループ動画モンタージュ。A/B比較（静止 vs 動画）の結果、
+ *   **動画を本採用**（2026-06-26 神野さん決定「絶対動画だ」）。比較用Aルートは撤去済み。
  *
  * サーバーコンポーネント。video の reduced-motion 出し分けのみ client 子。
  */
-export default function S01({ variant = "b" }: { variant?: "a" | "b" } = {}) {
+export default function S01() {
   return (
     <>
-      {/* ① ヒーロー背景（フルブリード・写真は脇役の地）。A=静止 / B=ループ動画 */}
+      {/* ① 動画ヒーロー（ループ・フルブリード・写真は脇役の地） */}
       <section
         id="hero"
         aria-label="やまと不動産が手がけた住まいの風景"
         className="relative h-[88vh] min-h-[520px] w-full overflow-hidden bg-ink"
       >
         <div aria-hidden className="absolute inset-0 z-0">
-          {variant === "a" ? (
-            // A案: 静止背景（B案の動画と同一ポスター=三山木 夕暮れ）。動きなし。
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src="/videos/fv/yamato-fv-montage-poster.webp"
-              alt=""
-              aria-hidden
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            // B案: ループ動画モンタージュ
-            <S01HeroMovie />
-          )}
+          <S01HeroMovie />
           {/* 上端: 固定ヘッダーの可読性確保 / 下端: ink へ溶かして②ステートメントへ継ぎ目なく接続 */}
           <div
             className="absolute inset-0"
