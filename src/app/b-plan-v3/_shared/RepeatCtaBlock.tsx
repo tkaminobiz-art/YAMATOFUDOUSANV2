@@ -19,15 +19,15 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
 type Variant = "cta1" | "cta2" | "final";
 
 const MICRO: Record<Variant, string> = {
-  cta1: "相談無料・しつこいご連絡はしません",
-  cta2: "予算が固まっていなくても、土地がなくても大丈夫です（目安はおよそ60分です）",
-  final: "お子様連れでもオンラインでもご相談いただけます",
+  cta1: "ご相談は無料です。こちらから何度もご連絡することはありません。",
+  cta2: "予算が固まっていなくても、土地がなくても大丈夫です。",
+  final: "ご相談はおよそ60分が目安です。お子様連れでも、オンラインでもどうぞ。",
 };
 
 export default function RepeatCtaBlock({
   variant = "cta1",
   tone = "ink",
-  lineLabel = "LINEで相談",
+  lineLabel = "LINEで相談する",
   visitLabel = "モデルハウスを見学する",
   microcopy,
   showVisit = true,

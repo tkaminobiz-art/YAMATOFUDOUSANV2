@@ -201,7 +201,7 @@ export default function S05() {
             <TrendingUp className="h-4 w-4" aria-hidden />
             essence
           </p>
-          <h3 className="t-h3 text-cream">家は、住みながら手元に残っていく。</h3>
+          <h3 className="t-h3 text-cream">家賃は、払うほど消えていく。家は、住みながら残っていく。</h3>
         </div>
         <p className="t-lead text-cream/85">
           家賃は支払うほど手元には残りませんが、住宅ローンの返済は、暮らしながらご自身の資産を少しずつ整えていく形になります。低金利と長期の借入れを賢く使い、月々の負担を抑えながら、住み続けられる総額に収めることを、ご一緒に考えます。

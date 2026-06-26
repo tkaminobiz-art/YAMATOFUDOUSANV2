@@ -185,8 +185,8 @@ function AsymmetricCompare({
       </div>
 
       <p className="t-body mt-5 text-cream/50">
-        つなぎ融資は「原則発生しません」。土地を先に買う場合の30〜80万円ほどを、抱えずに済みます。
-        地盤改良費は「一切かかりません」。必要な場合も、お客様への追加請求にしません。
+        つなぎ融資は「原則、発生しません」。土地を先に買う場合の30〜80万円ほどを、抱えずに済みます。
+        地盤改良費は、自社分譲地なら地盤を整えてからお渡しするため、かかりません。
       </p>
     </div>
   );
@@ -196,14 +196,14 @@ function AsymmetricCompare({
 function ValueCircles() {
   const { ref, shown } = useReveal<HTMLDivElement>();
   const values: { head: string; sub: string }[] = [
-    { head: "大手と同品質の\n素材・装備", sub: "標準仕様を実物で確かめてから選べます。" },
-    { head: "土地込み総額が\n見える", sub: "土地・建物・諸費用まで一枚の表で示します。" },
-    { head: "建てた後も\n近くで支える", sub: "引渡しのあとも、地域で長くお付き合いします。" },
+    { head: "モデルハウスが、\nそのまま標準仕様", sub: "「見学した家と、建てられる家が違う」を、なくしました。外壁は旭化成「ヘーベルパワーボード」。耐震等級3に対応する構造に、制震ダンパー「ミライエ」を全モデル標準で採用しています。" },
+    { head: "土地込みの総額が、\n見える", sub: "土地・建物・諸費用まで、一枚の表でお示しします。" },
+    { head: "建てたあとも、\n近くで支える", sub: "引渡しのあとも、地域で長くお付き合いします。" },
   ];
 
   return (
     <div ref={ref} className="mt-20 border-t border-cream/12 pt-14">
-      <p className="t-eyebrow text-cream/55 mb-3">What You Keep</p>
+      <p className="t-eyebrow text-cream/55 mb-3">やまとが選ばれる理由</p>
       <p className="t-h3 text-cream max-w-2xl">
         総額を整えても、手放さないもの。
       </p>
@@ -242,7 +242,7 @@ export default function S06() {
           他社が無駄を乗せていない。
         </h2>
         <p className="t-body mt-6 text-cream/80">
-          同じ大手品質の素材・装備で総額が変わるのは、品質を削るからではありません。
+          同じ品質の素材・装備で総額が変わるのは、品質を削るからではありません。
           土地から販売まで自社でつなぎ、価格に乗りやすい費用そのものを持たない。
           だから家にかける予算を、そのまま家に回せます。
         </p>

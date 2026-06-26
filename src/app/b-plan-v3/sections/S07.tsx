@@ -47,7 +47,7 @@ const AREA_PINS: { label: string; x: number; y: number; main?: boolean }[] = [
   { label: "奈良市", x: 52, y: 46, main: true },
   { label: "大和郡山市", x: 46, y: 58, main: true },
   { label: "生駒・近隣", x: 30, y: 50 },
-  { label: "近隣府県", x: 72, y: 64 },
+  { label: "周辺府県", x: 72, y: 64 },
 ];
 
 function AreaMap() {
@@ -63,7 +63,7 @@ function AreaMap() {
       <div
         className="relative aspect-[4/3] w-full"
         role="img"
-        aria-label="やまと不動産が土地をお探しする対応エリア：奈良市・大和郡山市を中心に、京都南部や近隣府県まで。"
+        aria-label="やまと不動産が土地をお探しする対応エリア：奈良市・大和郡山市を中心に、生駒・近隣、京都南部、周辺府県まで。"
       >
         {/* 背景の柔らかな等高線風グリッド（混色のみ・新hexなし） */}
         <div
@@ -114,7 +114,7 @@ function AreaMap() {
       </div>
 
       <p className="t-body border-t border-main/12 px-5 py-4 text-[13px] text-ink-muted">
-        奈良市・大和郡山市を中心に、京都南部や近隣府県まで。
+        奈良市・大和郡山市を中心に、生駒・近隣、京都南部、周辺府県まで。
         ご希望の通学区・予算・広さに合う土地から、ご一緒にお探しします。
       </p>
     </div>

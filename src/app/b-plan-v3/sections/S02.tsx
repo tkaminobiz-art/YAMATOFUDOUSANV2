@@ -45,20 +45,16 @@ export default function S02() {
         <div className="max-w-3xl">
           <Eyebrow>The opaque total</Eyebrow>
           <h2 className="t-h2 text-ink">
-            家づくりでいちばん見えにくいのは、
-            <br className="hidden sm:block" />
-            建物価格の先にある「総額」です。
+            家づくりでは、こんな迷いが重なっていきます。
           </h2>
           <p className="t-body mt-6 text-ink-muted">
-            多くの見積もりは、建物の本体価格だけが大きく出ます。
-            けれど実際に払うのは、土地・諸費用・外構まで合わせた総額です。
-            ここがあいまいなまま話が進むと、契約のあとで金額が動きます。
+            いちばん見えにくいのは、土地・建物・諸費用を合わせた「ほんとうの総額」。そして、あとから効いてくる費用です。
           </p>
         </div>
 
         {/* 敵の正体＝後出し費用の3列（EnemyList・sign-red点のみ） */}
         <div className="mt-14 border-t border-[color:var(--color-border)] pt-10">
-          <p className="t-eyebrow text-ink-muted">後から効いてくる費用の正体</p>
+          <p className="t-eyebrow text-ink-muted">あとから効いてくる費用</p>
           <p className="t-body mt-4 max-w-2xl text-ink">
             総額をふくらませているのは、家そのものの原価ではありません。
             家の原価に含まれない、販売運営のための費用です。

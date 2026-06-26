@@ -65,7 +65,7 @@ export default function S04ReversalBridge() {
           <ProofPair left="総額" right="月々" emphasize />
         </div>
         <p className="t-body mt-4 max-w-[46ch] text-ink-muted">
-          土地と建物がそろって総額になり、その総額が毎月の支払いに変わる。次のセクションで、その月々をお見せします。
+          土地と建物を合わせて、はじめて「総額」になります。だから、別々ではなく一緒にお見せします。
         </p>
       </div>
     </div>

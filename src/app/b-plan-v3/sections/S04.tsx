@@ -20,9 +20,9 @@ import ReversalBridge from "./S04.client";
  */
 export default function S04() {
   return (
-    <SectionShell surface="base" aria-label="やまとの逆転｜土地込み総額を先に">
+    <SectionShell surface="base" aria-label="やまとの順番｜土地込みの総額を、先に。">
       <div className="mx-auto max-w-[920px]">
-        <Eyebrow>The Reversal</Eyebrow>
+        <Eyebrow>The Order</Eyebrow>
 
         <h2 className="t-h2 text-ink">
           家づくりは、

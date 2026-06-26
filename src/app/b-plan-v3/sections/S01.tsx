@@ -85,7 +85,7 @@ export default function S01() {
 
           {/* 注記（t-small 相当・small は v3 未定義のため text-cream/60 の最小本文で表現） */}
           <p className="mt-3 text-[12px] leading-[1.7] tracking-[0.02em] text-cream/55">
-            ※一部登記費用などは別途発生します
+            ※一部、登記費用などは別途発生します。
           </p>
 
           {/* CTA — 最大2。P=LINEで相談（bg-line）/ S=モデルハウスを見学する（deep-green outline） */}
@@ -97,7 +97,7 @@ export default function S01() {
               className="group inline-flex min-h-[56px] flex-1 items-center justify-center gap-3 bg-line px-7 text-[15px] font-bold text-ink"
             >
               <MessageCircle className="h-5 w-5" aria-hidden />
-              LINEで相談
+              LINEで相談する
               <ArrowRight
                 className="h-4 w-4 transition group-hover:translate-x-1"
                 aria-hidden

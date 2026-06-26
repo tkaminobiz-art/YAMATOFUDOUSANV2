@@ -117,17 +117,17 @@ function CostDisclosureRow({
 
 export default function S10() {
   return (
-    <SectionShell id="costs" surface="base" aria-label="後から増えない要確認費用">
+    <SectionShell id="costs" surface="base" aria-label="あとから増えない費用">
       <header className="max-w-3xl">
         <Eyebrow>Costs to Check</Eyebrow>
         <h2 className="t-h2 text-ink">
-          後から増えない。
+          あとから増えない費用。
           <br className="hidden sm:block" />
-          契約の前に、同じ表で確認します。
+          やまとはこうしています。
         </h2>
         <p className="t-body mt-6 text-ink-muted">
           家づくりで不安になりやすいのは、契約のあとに見えてくる費用です。
-          後から出やすい項目を先にすべて表に出し、含まれるものと別途必要なものを、
+          あとから出やすい項目を先にすべて表に出し、含まれるものと別途必要なものを、
           契約の前にお見せします。注記ではなく、主役として確認していただく一覧です。
         </p>
       </header>
@@ -140,7 +140,7 @@ export default function S10() {
 
       <div className="mt-10 flex flex-col gap-4 border-t border-[color:var(--color-border)] pt-8 sm:flex-row sm:items-start sm:justify-between">
         <p className="t-body max-w-2xl text-ink-muted">
-          地盤改良費は「一切かかりません」。つなぎ融資は「原則発生しません」。
+          地盤改良費は、自社分譲地なら地盤を整えてからお渡しするためかかりません。つなぎ融資も原則、発生しません。
           そのほかの項目も、ご一緒に一枚の表で整えてからご契約に進みます。
         </p>
         <a

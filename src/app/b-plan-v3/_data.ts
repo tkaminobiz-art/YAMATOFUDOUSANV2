@@ -262,19 +262,19 @@ export const costCompareRows: CostCompareRow[] = [
   {
     label: "地盤改良費",
     general: "追加で見積もりに入ることがあります。",
-    answer: "一切かかりません",
-    reason: "必要な場合も、お客様への追加請求にしません。",
+    answer: "かかりません",
+    reason: "自社分譲地は、地盤を整えてからお渡しするためです。",
   },
   {
     label: "つなぎ融資",
     general: "土地を先に買う場合、必要になることがあります。",
-    answer: "原則発生しません",
+    answer: "原則、発生しません",
     reason: "自社分譲地と建物を一体で進めます。",
   },
   {
     label: "土地の仲介手数料",
     general: "土地と建物を別々に進めると、手数料も別でかかることがあります。",
-    answer: "自社分譲地なら不要",
+    answer: "自社分譲地なら不要です",
     reason: "土地を直接扱えるため、余計な手間も減らせます。",
   },
   {
@@ -292,7 +292,7 @@ export const costCompareRows: CostCompareRow[] = [
   {
     label: "見えにくい追加",
     general: "契約後に仕様や工事条件が見え、総額も変わることがあります。",
-    answer: "契約前に確認",
+    answer: "契約前に、ひとつずつ確認します",
     reason: "含まれるものと別途必要なものを、契約前に見せます。",
   },
 ];

@@ -51,7 +51,7 @@ export default function S12() {
       <div className="mt-12">
         {/* 摩擦除去マイクロコピー（CTA直上） */}
         <p className="t-body text-[13px] text-cream/70">
-          お子様連れでも、オンラインでもご相談いただけます。ご予約なしでも見学できます。
+          お子様連れでも、オンラインでもご相談いただけます。ご予約なしでもご見学いただけます。
         </p>
 
         {/* 第1・第2段: LINE（primary）/ 見学（secondary） */}
@@ -63,7 +63,7 @@ export default function S12() {
             className="group inline-flex min-h-[60px] flex-1 items-center justify-center gap-3 bg-line px-7 text-[15px] font-bold text-white"
           >
             <MessageCircle className="h-5 w-5" aria-hidden />
-            LINEで相談
+            LINEで相談する
             <ArrowRight
               className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden
