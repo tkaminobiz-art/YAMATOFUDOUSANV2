@@ -63,7 +63,7 @@ export default function S12() {
             className="group inline-flex min-h-[60px] flex-1 items-center justify-center gap-3 bg-line px-7 text-[15px] font-bold text-white"
           >
             <MessageCircle className="h-5 w-5" aria-hidden />
-            LINEで相談する
+            LINEで相談
             <ArrowRight
               className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden

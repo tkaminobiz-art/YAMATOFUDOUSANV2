@@ -6,6 +6,7 @@ import SectionShell from "../_shared/SectionShell";
 import BurnNumber from "../_shared/BurnNumber";
 import {
   DELIVERED_HOMES,
+  BUSINESS_YEARS,
   FUNDING_PLANS,
   CUSTOMER_VOICES,
   GROUND_WARRANTY_YEARS,
@@ -34,8 +35,7 @@ import { REPRESENTATIVES } from "@/data/staff";
  */
 
 const SUB_STATS: { value: number; suffix: string; label: string }[] = [
-  // 業歴15年（2011年創立・AD確定2026-06-26）。正本 brand-facts.ts BUSINESS_YEARS=14 とドリフト中＝v3ローカル上書き。
-  { value: 15, suffix: "年", label: "業歴" },
+  { value: BUSINESS_YEARS, suffix: "年", label: "業歴" },
   { value: FUNDING_PLANS, suffix: "件以上", label: "資金計画の作成" },
   { value: CUSTOMER_VOICES, suffix: "組以上", label: "お客様の声" },
 ];

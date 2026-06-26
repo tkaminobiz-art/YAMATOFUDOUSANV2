@@ -140,7 +140,7 @@ export default function S10() {
 
       <div className="mt-10 flex flex-col gap-4 border-t border-[color:var(--color-border)] pt-8 sm:flex-row sm:items-start sm:justify-between">
         <p className="t-body max-w-2xl text-ink-muted">
-          地盤改良費は、自社分譲地なら地盤を整えてからお渡しするためかかりません。つなぎ融資も原則、発生しません。
+          地盤改良費はかかりません（自社分譲地が対象です）。つなぎ融資も原則、発生しません。
           そのほかの項目も、ご一緒に一枚の表で整えてからご契約に進みます。
         </p>
         <a

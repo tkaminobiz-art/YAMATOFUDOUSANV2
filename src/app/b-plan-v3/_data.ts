@@ -263,7 +263,7 @@ export const costCompareRows: CostCompareRow[] = [
     label: "地盤改良費",
     general: "追加で見積もりに入ることがあります。",
     answer: "かかりません",
-    reason: "自社分譲地は、地盤を整えてからお渡しするためです。",
+    reason: "自社分譲地が対象です。",
   },
   {
     label: "つなぎ融資",

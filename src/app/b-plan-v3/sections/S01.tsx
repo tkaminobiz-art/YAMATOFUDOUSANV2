@@ -97,7 +97,7 @@ export default function S01() {
               className="group inline-flex min-h-[56px] flex-1 items-center justify-center gap-3 bg-line px-7 text-[15px] font-bold text-ink"
             >
               <MessageCircle className="h-5 w-5" aria-hidden />
-              LINEで相談する
+              LINEで相談
               <ArrowRight
                 className="h-4 w-4 transition group-hover:translate-x-1"
                 aria-hidden

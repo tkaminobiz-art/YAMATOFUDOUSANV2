@@ -27,7 +27,7 @@ const MICRO: Record<Variant, string> = {
 export default function RepeatCtaBlock({
   variant = "cta1",
   tone = "ink",
-  lineLabel = "LINEで相談する",
+  lineLabel = "LINEで相談",
   visitLabel = "モデルハウスを見学する",
   microcopy,
   showVisit = true,

@@ -22,8 +22,8 @@ export const DELIVERED_HOMES = 600;
 export const PARCELS_HELD = 150;
 /** お客様の声 50組以上 — customer detail HTML */
 export const CUSTOMER_VOICES = 50;
-/** 業歴 14年（2011年11月30日創立）— 公式 */
-export const BUSINESS_YEARS = 14;
+/** 業歴 15年（2011年11月30日創立）— 公式（2026-06-26 神野さん確定で旧14→15） */
+export const BUSINESS_YEARS = 15;
 /** 創立年（2011年11月30日）— 公式 / §3 */
 export const FOUNDED_YEAR = 2011;
 /** 資金計画作成実績 1,000件以上 — 2026-05-03 専務確認 */
