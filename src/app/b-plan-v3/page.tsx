@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 
-import LabDisclaimer from "./_shared/LabDisclaimer";
 import V3Header from "./_shared/V3Header";
 import V3Footer from "./_shared/V3Footer";
 import BottomCtaBar from "./_shared/BottomCtaBar";
@@ -20,10 +19,9 @@ import S11 from "./sections/S11";
 import S12 from "./sections/S12";
 
 export const metadata: Metadata = {
-  title: "やまと不動産 | TOPリブート候補プレビュー（v3）",
+  title: "やまと不動産｜奈良・京都南部で、土地から考える家づくり",
   description:
-    "TOPリブート確定版v2.1の比較用プレビュー（差し替え未決）。奈良・京都南部で、土地から考える注文住宅を現実の総額で。",
-  robots: { index: false, follow: false },
+    "奈良・京都南部で土地から考える注文住宅。土地・建物・諸費用まで含めた現実の総額を、はじめにわかりやすく。やまと不動産。",
 };
 
 // safe-area を効かせるため viewport-fit=cover（§7.3 SP固定CTA）
@@ -44,7 +42,6 @@ export const viewport: Viewport = {
 export default function BPlanV3Page() {
   return (
     <div className="v3-scope surface-base min-h-screen overflow-x-hidden">
-      <LabDisclaimer />
       <V3Header />
 
       <main>

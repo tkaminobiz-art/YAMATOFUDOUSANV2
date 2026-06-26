@@ -29,8 +29,8 @@ action. Green remains the solution / proof color.
 
 | Token | Hex | Use |
 |-------|-----|-----|
-| `--brand-lime` | `#A9D159` | Brand accent (logo leaf, key highlights). Use sparingly. |
-| `--brand-deep-green` | `#2F4A2C` | Primary CTA, main brand voice |
+| `--brand-lime` | `#A2C523` | Brand accent / ボタン下地（=live `--color-lime`）。旧 `#A9D159` から実働値へ統一（2026-06-26 決定A）。Use sparingly. |
+| `--brand-deep-green` | `#486B00` | 深緑（テキスト/罫線・解決/証明・=live `--color-main`）。旧 `#2F4A2C` から実働値へ統一（2026-06-26 決定A）。暗面fillは `--color-main-dark #2E4600`。 |
 | `--brand-base` | `#F7F4EC` | Warm off-white background |
 | `--brand-ivory` | `#FBF8EE` | Surface (slightly lighter than base) |
 | `--brand-text` | `#1D1D18` | Body text |
@@ -42,34 +42,29 @@ action. Green remains the solution / proof color.
 | `--brand-sign-red-dark` | `#8F211B` | Red text / dark contrast variant. |
 | `--brand-sign-red-soft` | `#FFF0EE` | Light red surface for warning and comparison areas. |
 
-### Typography (2026-05-08 — B 案 Editorial Mincho 採用)
+### Typography (2026-06-26 — Gothic Catalog 確定／TOP ゴシック転換)
 
-`/font-lab` の 5 案比較を経て **B. Editorial Mincho** を確定。階層は次の通り。
+2026-06-25〜26 のリブートで **TOP は明朝（旧 B 案 Editorial Mincho）からゴシックへ正式転換**。
+専務承認文法（ゴシック・カタログ・数字バーン・選ばせる）。`/b-plan-v3` を `/` へ昇格（2026-06-26）。
+明朝への回帰は「迷子の核心」として禁止（`docs/notes/2026-06-10-bplan-diagnosis.md`）。階層は次の通り。
 
 | 役割 | フォント | ウェイト | 用途 |
 |---|---|---|---|
-| 主要見出し (h1/h2) | **Zen Old Mincho** | 600-700 | 編集誌の太明朝として目を引く |
-| 小見出し (h3) / リード本文 | **Murecho** | 500 | 温度感のある現代ゴシック |
-| 本文 | **Murecho** | 400 | 〃 |
-| 欧文 utility caps | **Inter** | 500-600 | FIG ラベル、eyebrow、注記、数字補助 |
-| 大型数字 | **Oswald** | 300-500 | 価格、実績数字 |
-| 欧文 italic アクセント | **Fraunces** (variable opsz 144) | 400 italic | 「Difference」など editorial キャプション |
+| 主要見出し (h1/h2) | **Zen Kaku Gothic New** (`font-zen-kaku-new`) | 900 | 太角ゴシック。カタログの潔さで目を引く（`.t-display`/`.t-h1`/`.t-h2`）※Zen Kaku に 800 は無く 900 が確定 |
+| 小見出し (h3) / リード | **Zen Kaku Gothic New** 700 / **Murecho** 500 | — | 階層は太さ＋サイズで作る |
+| 本文 | **Murecho** | 400 | line-height 1.85 / ls 0.025em |
+| 大型数字バーン | **Oswald** | 600 | 価格・実績の巨大数字（`.t-burn`/`.t-burn-sub`・`.money-burn-display`）。tabular |
+| 欧文 eyebrow / ラベル | **Inter** | 600 caps + tracking | eyebrow・注記・数字補助 |
 
-旧構成(2026-05-08 以前): Shippori Mincho + Noto Sans JP + Inter + Oswald。
-2026-05-08 に Phase 1〜6 で TOP 全セクション + Header / Footer / FloatingCta を
-新構成に統一。詳細は git log の `feat(typography/phase-N)` コミットを参照。
+**TOP で撤去（下層・`/money` 互換のためフォントのロードは残置）**: Zen Old Mincho・
+Shippori Mincho・Noto Serif（明朝全般）・Fraunces italic・縦書き長文。
 
-**`/money` ページは引き続き例外**(`project_money_font_lock.md`):
-和文ゴシック (`font-sans` = Noto Sans JP) + Inter + Oswald、**Mincho 禁止**。
-`/money` の `<main>` にハードコードされた `font-sans` が継続して効くため、
-B 案展開後も影響は受けない。
+**`/money` ページは元からゴシック**で本転換の影響を受けない（`project_money_font_lock.md`）。
 
 **Tailwind ユーティリティ対応表**:
-- `font-zen-old` ← `var(--font-zen-old-var)`
-- `font-murecho` ← `var(--font-murecho-var)`
-- `font-fraunces` ← `var(--font-fraunces-var)` (italic は `font-fraunces italic`)
-- `font-inter`, `font-oswald` は既存のまま
-- `font-shippori`, `font-sans` は既存のまま残置(/money・後方互換用)
+- `font-zen-kaku-new` ← `var(--font-zen-kaku-new-var)`（TOP 主見出し・2026-06-25 新設。`--font-money` は同フォント別名だが流用しない＝命名分離）
+- `font-murecho` ← `var(--font-murecho-var)` / `font-inter`・`font-oswald` は既存
+- 旧 `font-zen-old`・`font-shippori`・`font-fraunces`・`font-sans` は下層／後方互換用に残置
 
 ### Photo allowlist
 Only these directories contain real, approved photography. **Do not use AI-generated
@@ -137,7 +132,7 @@ Implement the canonical values above.
 
 **重要 (2026-05-09 確定):**
 - 京の display は **`KYO`** (`MIYAKO` 表記禁止)。内部 `id` と画像ファイル名 (`plan-miyako.webp`) は歴史的経緯で `miyako` のまま保持
-- **「いちばん選ばれています」バッジは 花** に付く (専務一押し)。花の価格は Lime `#A9D159` で強調
+- **「いちばん選ばれています」バッジは 花** に付く (専務一押し)。花の価格は Lime `#A2C523`(=`--brand-lime`) で強調
 - 京は entry 役割で white、Lime tint なし
 - 並び順は **花 → 風 → 京** で固定 (PriceSection の PLANS 配列順)
 - 「京/奈良/プレミアム」のような generic tier 名は誤り。「廉価版」表現も禁止
@@ -376,6 +371,11 @@ The reusable Hero prompts live in `project_image_gen_prompts.md` (memory).
 ---
 
 ## 9. Lab pages (deletable before delivery)
+
+> **2026-06-26 昇格**: `/b-plan-v3`（ゴシック・動画FV＋直下ステートメント）を **`/` の本命トップへ昇格**
+> （`src/app/page.tsx` が `./b-plan-v3/page` を再エクスポート）。LabDisclaimer は撤去・robots index 済。
+> 旧 `/b-plan-v2`（明朝）は superseded として残置（必要なら後日削除可）。よって `/b-plan-v3` は
+> 下記の「削除すべき lab」では**ない**（=本番）。FV案B比較用の `/b-plan-v3-a`(静止背景) は撤去済。
 
 Routes under the following are scratch / review-only and must be removed before
 production:
