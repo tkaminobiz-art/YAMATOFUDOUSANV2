@@ -104,10 +104,11 @@ export default function S01() {
         {/* ── Beat2｜価格の打点：橋 ＋ 巨大「2,280」1発 ＋ 翻訳句（黒余白で Beat1 と分離） ── */}
         <div className="flex min-h-[66vh] flex-col justify-center px-5 py-20 md:px-10 md:py-28 xl:px-14">
           <div className="mx-auto w-full max-w-[1380px]">
-            {/* 橋（性能→現実総額の受け渡し・本文位置で句読点保持） */}
+            {/* 橋（性能→現実総額の受け渡し・本文位置で句読点保持）
+                フル幅化: max-w 解除＋拡大で1行寄りに。text-wrap:balance で2行時も整える。 */}
             <p
-              className="max-w-[22ch] text-cream"
-              style={{ fontFamily: "var(--font-zen-kaku-new)", fontWeight: 700, fontSize: "clamp(19px, 2.3vw, 32px)", lineHeight: 1.46, letterSpacing: "-0.01em" }}
+              className="text-cream"
+              style={{ fontFamily: "var(--font-zen-kaku-new)", fontWeight: 700, fontSize: "clamp(20px, 3.2vw, 46px)", lineHeight: 1.4, letterSpacing: "-0.015em", textWrap: "balance" }}
             >
               大手の高い水準を、はじめから標準に。
             </p>
@@ -127,7 +128,7 @@ export default function S01() {
             {/* 翻訳句（憲法4.1脱出形・本文位置で句読点保持） */}
             <p
               className="mt-5 text-cream/80 md:mt-6"
-              style={{ fontFamily: "var(--font-murecho)", fontSize: "clamp(15px, 1.25vw, 19px)", lineHeight: 1.75, letterSpacing: "0.02em" }}
+              style={{ fontFamily: "var(--font-murecho)", fontSize: "clamp(15px, 1.25vw, 19px)", lineHeight: 1.75, letterSpacing: "0.02em", textWrap: "pretty", wordBreak: "auto-phrase" }}
             >
               この水準を、家そのものの値段で。
             </p>
@@ -140,7 +141,7 @@ export default function S01() {
             {/* 証拠リード（仕様カードのイントロ・§6逐語・新規見出しは作らない） */}
             <p
               className="max-w-[620px] text-cream/75"
-              style={{ fontFamily: "var(--font-murecho)", fontSize: "clamp(15px, 1.25vw, 18px)", lineHeight: 1.82, letterSpacing: "0.02em" }}
+              style={{ fontFamily: "var(--font-murecho)", fontSize: "clamp(15px, 1.25vw, 18px)", lineHeight: 1.82, letterSpacing: "0.02em", textWrap: "pretty", wordBreak: "auto-phrase" }}
             >
               耐震等級3に対応する構造。制震ダンパーは全モデル標準。標準で、ここまで入っています。
             </p>
@@ -195,7 +196,7 @@ export default function S01() {
             {/* sub — §6 確定 */}
             <p
               className="mt-6 max-w-[560px] text-cream/70"
-              style={{ fontFamily: "var(--font-murecho)", fontSize: "clamp(15px, 1.1vw, 17px)", lineHeight: 1.85, letterSpacing: "0.025em" }}
+              style={{ fontFamily: "var(--font-murecho)", fontSize: "clamp(15px, 1.1vw, 17px)", lineHeight: 1.85, letterSpacing: "0.025em", textWrap: "pretty", wordBreak: "auto-phrase" }}
             >
               土地代も、建物代も、後からかかる費用も、はじめにわかりやすく。
             </p>

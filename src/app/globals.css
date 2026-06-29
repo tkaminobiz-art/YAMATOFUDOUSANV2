@@ -892,16 +892,13 @@ p, blockquote, dd, li {
 .fv2-h1 {
   font-family: var(--font-zen-kaku-new);
   font-weight: 900;
-  font-size: clamp(30px, 5.3vw, 84px);
-  line-height: 1.18;
-  letter-spacing: -0.01em;
+  /* 神野さん指示「フル幅で埋める」(2026-06-26): PC/タブレットで横幅いっぱいの1行に。
+     8.2vw で 768px 以上は概ね container 幅を埋める1行・~760px 未満で自然に2行(SP)。
+     上限 118px は「3」124px 未満＝burn数字の最大性は維持。中域も 8.2vw で埋まるため override 不要。 */
+  font-size: clamp(32px, 8.2vw, 118px);
+  line-height: 1.16;
+  letter-spacing: -0.015em;
   text-wrap: initial;
-}
-@media (min-width: 768px) and (max-width: 1023px) {
-  /* 中域の貧弱化を防ぐ唯一の override（タブレットで h1 が床に張り付くのを救う） */
-  .fv2-h1 {
-    font-size: clamp(50px, 6.6vw, 76px);
-  }
 }
 /* 「3」＝S03 実績600(t-burn = clamp(64px,13vw,132px)) の "影" として常時その下を走る。
    係数 12vw < 13vw・下限 58<64 で全幅 3<600 を保証（専務③ 降順を全ブレークポイントで死守）。
