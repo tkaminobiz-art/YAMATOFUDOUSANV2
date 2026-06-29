@@ -119,7 +119,7 @@ export default function S02CostDiagram() {
       </dl>
 
       {/* 層①（降格）＝ 仕組みの説明: 総額をふくらませる販売運営費。立面＋関係式＋連番（赤）。 */}
-      <div className="mt-16 border-t border-[color:var(--color-border)] pt-12">
+      <div className="mt-10 border-t border-[color:var(--color-border)] pt-8">
         <div className="scroll-in max-w-2xl">
           <p className="t-eyebrow text-[color:var(--color-ink-muted)]">
             家の原価に上乗せされる費用
