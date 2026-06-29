@@ -56,5 +56,8 @@ screenshots/comparison-*.png
 # UI自動スナップショット出力
 artifacts/
 
+# FV モンタージュ再エンコードの2パスログ等の一時出力（build-fv-montage.mjs）
+.fv-build-tmp/
+
 # OS
 Thumbs.db
