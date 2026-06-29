@@ -24,17 +24,14 @@ const enemyParts = [
   {
     label: "広告費",
     note: "テレビCM・住宅情報誌・モデルハウスへの集客にかかる費用。",
-    img: "/images/bplan/s02-cost-ad.webp",
   },
   {
     label: "展示場の維持費",
     note: "総合展示場に常設する大型モデルハウスの建設・運営にかかる費用。",
-    img: "/images/bplan/s02-cost-showroom.webp",
   },
   {
     label: "仲介マージン",
     note: "土地や工事を外部に任せたときに、間に入る分だけ積み上がる費用。",
-    img: "/images/bplan/s02-cost-margin.webp",
   },
 ] as const;
 
@@ -56,48 +53,45 @@ export default function S02() {
           </p>
         </div>
 
-        {/* 構造図: 広告費・展示場の維持費・仲介マージンが家の価格に積み上がる（方向①B 説明イラスト） */}
-        <figure className="scroll-in mx-auto mt-12 max-w-3xl overflow-hidden rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-cream)]">
+        {/* 構造図: 販売運営費が家の価格に上乗せされる関係を1枚で（枠なし・角丸なし＝図版が地に溶ける） */}
+        <figure className="scroll-in mt-12 sm:mt-16">
           <Image
             src="/images/bplan/s02-cost-structure.webp"
             alt="広告費・展示場の維持費・仲介マージンという販売運営費が、家そのものの価格に上乗せされていく構造を示した図"
             width={1600}
             height={1194}
-            sizes="(max-width: 768px) 100vw, 768px"
-            className="h-auto w-full"
+            sizes="(max-width: 768px) 100vw, 720px"
+            className="mx-auto h-auto w-full max-w-[720px]"
           />
         </figure>
 
-        {/* 敵の正体＝後出し費用の3列（各費用を説明イラストで可視化） */}
-        <div className="mt-14 border-t border-[color:var(--color-border)] pt-10">
+        {/* 敵の正体＝後出し費用（Open Spec・箱に入れない／上下罫線のみ／均等カード禁止） */}
+        <div className="mt-16 max-w-4xl sm:mt-20">
           <p className="t-eyebrow text-ink-muted">あとから効いてくる費用</p>
           <p className="t-body mt-4 max-w-2xl text-ink">
             総額をふくらませているのは、家そのものの原価ではありません。
             家の原価に含まれない、販売運営のための費用です。
           </p>
 
-          <ul className="mt-8 grid gap-px overflow-hidden rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-border)] sm:grid-cols-3">
-            {enemyParts.map((part) => (
-              <li
+          <dl className="mt-10 divide-y divide-[color:var(--color-border)] border-y border-[color:var(--color-border)]">
+            {enemyParts.map((part, i) => (
+              <div
                 key={part.label}
-                className="scroll-in flex flex-col bg-paper"
+                className="scroll-in grid grid-cols-[2.25rem_1fr] items-baseline gap-x-5 gap-y-1.5 py-6 sm:grid-cols-[2.75rem_max-content_1fr] sm:gap-x-10 sm:py-7"
               >
-                <div className="relative aspect-[4/3] w-full bg-[color:var(--color-cream)]">
-                  <Image
-                    src={part.img}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col gap-2 p-6 sm:p-7">
-                  <h3 className="t-h3 text-ink">{part.label}</h3>
-                  <p className="t-body text-ink-muted">{part.note}</p>
-                </div>
-              </li>
+                <span
+                  className="t-eyebrow tabular-nums text-risk"
+                  aria-hidden="true"
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <dt className="t-h3 whitespace-nowrap text-ink">{part.label}</dt>
+                <dd className="col-span-2 t-body text-ink-muted sm:col-span-1">
+                  {part.note}
+                </dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </div>
 
         {/* 5タイプの状況語（共感を2番手へ前出し・honestFeelings 原文不変） */}
