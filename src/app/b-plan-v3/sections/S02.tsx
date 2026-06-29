@@ -10,7 +10,7 @@ import S02Reveal from "./S02.client";
  * 役割: 敵の名指し（競合でなく「後出し費用・建物価格だけの判断」）。段=1・心の段=②関連性。
  *        主タイプ=T1見積落差 / T3ローン不安 / T4土地迷子（共感を2番手へ前出し）。
  * 構成（2026-06-29 リデザイン・方向C／安心先出しへ再構成）:
- *   1. 導入: Eyebrow「No late add-ons」＋ h2「あとから、足しません。」＋ サブ（約束のみ）
+ *   1. 導入: Eyebrow「No late add-ons」＋ h2「明瞭見積もり」＋ サブ（約束のみ）
  *      ＝ 見出しで“安心”を約束。具体3費目は層②へ一本化し重複を排除。
  *   2. S02CostDiagram: 安心→仕組みの順で2層を1枚に
  *      - 層②（昇格）やまとが別途いただかない実費（地盤改良費〔自社分譲地〕／運搬費／工事中の駐車場代）
@@ -34,7 +34,7 @@ export default function S02() {
         <div className="max-w-3xl">
           <Eyebrow>No late add-ons</Eyebrow>
           <h2 className="t-h2 text-ink">
-            あとから、足しません。
+            明瞭見積もり
           </h2>
           <p className="t-body mt-6 text-ink">
             見積りのあとから、別途請求することはありません。
