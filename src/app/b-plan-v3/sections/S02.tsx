@@ -9,12 +9,15 @@ import S02Reveal from "./S02.client";
  *
  * 役割: 敵の名指し（競合でなく「後出し費用・建物価格だけの判断」）。段=1・心の段=②関連性。
  *        主タイプ=T1見積落差 / T3ローン不安 / T4土地迷子（共感を2番手へ前出し）。
- * 構成（2026-06-29 リデザイン・方向C＋2層化）:
- *   1. 導入: Eyebrow「The opaque total」＋ h2「本体価格」以外の費用 ＋ リード文
- *   2. S02CostDiagram: 建築立面＋引出し線注釈で「2層の費用」を1枚に
- *      - 層① 価格に内包された販売運営費（広告費／展示場の維持費／仲介マージン）
- *      - 層② やまとが別途いただかない実費（地盤改良費〔自社分譲地〕／運搬費／工事中の駐車場代）
+ * 構成（2026-06-29 リデザイン・方向C／安心先出しへ再構成）:
+ *   1. 導入: Eyebrow「No late add-ons」＋ h2「あとから、足しません。」＋ サブ（3費目を絞り込み）
+ *      ＝ 見出しで“安心”を約束。長さはサブ行に費目を逃がして解決。
+ *   2. S02CostDiagram: 安心→仕組みの順で2層を1枚に
+ *      - 層②（昇格）やまとが別途いただかない実費（地盤改良費〔自社分譲地〕／運搬費／工事中の駐車場代）
+ *      - 層①（降格）なぜ総額はふくらむか＝販売運営費（立面＋関係式＋連番）
  *   3. 状況グリッド: honestFeelings 5件（共感を2番手へ前出し・原文不変）
+ * 文言: 「発生しない／ゼロ」は使わない。運搬費・駐車場代は総額に含む実費のため
+ *   「別途いただかない／総額に含む」で訴求（BRAND-TRUTH §4.4b・景表法対応）。
  * モーション: row順次 reveal（Y+→0/ease-burn/IO once/stagger）。叫ばない。
  * CTA: なし（直後に page 側 [CTA-1]）。
  *
@@ -26,19 +29,19 @@ const situations = honestFeelings;
 
 export default function S02() {
   return (
-    <SectionShell surface="base" aria-label="不透明な総額という、家づくりでいちばん見えにくいもの">
+    <SectionShell surface="base" aria-label="あとから別途請求しない費用と、総額がふくらむ理由">
       <S02Reveal>
         <div className="max-w-3xl">
-          <Eyebrow>The opaque total</Eyebrow>
+          <Eyebrow>No late add-ons</Eyebrow>
           <h2 className="t-h2 text-ink">
-            「本体価格」以外の費用
+            あとから、足しません。
           </h2>
-          <p className="t-body mt-6 text-ink-muted">
-            いちばん見えにくいのは、土地・建物・諸費用を合わせた「ほんとうの総額」。そして、あとから効いてくる費用です。
+          <p className="t-body mt-6 text-ink">
+            地盤改良費（自社分譲地）・運搬費・工事中の駐車場代は、別途いただかず総額に含みます。
           </p>
         </div>
 
-        {/* 2層の費用を1枚で（層①販売運営費＝家の原価に上乗せ／層②やまとが別途いただかない実費） */}
+        {/* 2層の費用を1枚で（層②やまとが別途いただかない実費を先に／層①総額がふくらむ仕組みを後に） */}
         <S02CostDiagram />
 
         {/* 5タイプの状況語（共感を2番手へ前出し・honestFeelings 原文不変） */}
