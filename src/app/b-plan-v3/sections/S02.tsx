@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Eyebrow from "../_shared/Eyebrow";
 import SectionShell from "../_shared/SectionShell";
 import { honestFeelings } from "../_data";
@@ -23,14 +24,17 @@ const enemyParts = [
   {
     label: "広告費",
     note: "テレビCM・住宅情報誌・モデルハウスへの集客にかかる費用。",
+    img: "/images/bplan/s02-cost-ad.webp",
   },
   {
     label: "展示場の維持費",
     note: "総合展示場に常設する大型モデルハウスの建設・運営にかかる費用。",
+    img: "/images/bplan/s02-cost-showroom.webp",
   },
   {
     label: "仲介マージン",
     note: "土地や工事を外部に任せたときに、間に入る分だけ積み上がる費用。",
+    img: "/images/bplan/s02-cost-margin.webp",
   },
 ] as const;
 
@@ -52,7 +56,19 @@ export default function S02() {
           </p>
         </div>
 
-        {/* 敵の正体＝後出し費用の3列（EnemyList・sign-red点のみ） */}
+        {/* 構造図: 広告費・展示場の維持費・仲介マージンが家の価格に積み上がる（方向①B 説明イラスト） */}
+        <figure className="scroll-in mx-auto mt-12 max-w-3xl overflow-hidden rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-cream)]">
+          <Image
+            src="/images/bplan/s02-cost-structure.webp"
+            alt="広告費・展示場の維持費・仲介マージンという販売運営費が、家そのものの価格に上乗せされていく構造を示した図"
+            width={1600}
+            height={1194}
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="h-auto w-full"
+          />
+        </figure>
+
+        {/* 敵の正体＝後出し費用の3列（各費用を説明イラストで可視化） */}
         <div className="mt-14 border-t border-[color:var(--color-border)] pt-10">
           <p className="t-eyebrow text-ink-muted">あとから効いてくる費用</p>
           <p className="t-body mt-4 max-w-2xl text-ink">
@@ -64,14 +80,21 @@ export default function S02() {
             {enemyParts.map((part) => (
               <li
                 key={part.label}
-                className="scroll-in flex flex-col gap-3 bg-paper p-6 sm:p-7"
+                className="scroll-in flex flex-col bg-paper"
               >
-                <span
-                  className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-risk"
-                  aria-hidden="true"
-                />
-                <h3 className="t-h3 text-ink">{part.label}</h3>
-                <p className="t-body text-ink-muted">{part.note}</p>
+                <div className="relative aspect-[4/3] w-full bg-[color:var(--color-cream)]">
+                  <Image
+                    src={part.img}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 p-6 sm:p-7">
+                  <h3 className="t-h3 text-ink">{part.label}</h3>
+                  <p className="t-body text-ink-muted">{part.note}</p>
+                </div>
               </li>
             ))}
           </ul>
