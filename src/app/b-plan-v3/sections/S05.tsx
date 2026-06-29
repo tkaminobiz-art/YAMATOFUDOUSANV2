@@ -166,9 +166,7 @@ export default function S05() {
       <div className="max-w-[980px]">
         <Eyebrow light>total &amp; monthly payment</Eyebrow>
         <h2 className="t-h2 text-cream">
-          建物の価格だけでなく、
-          <br className="hidden sm:block" />
-          土地込みの総額と月々まで、はじめにお見せします。
+          予算について
         </h2>
         <p className="t-lead mt-6 max-w-[820px] text-cream/85">
           土地代も建物も諸費用も合わせて見ると、毎月の金額の印象は変わります。建てられたご家族の実例を見ながら、ご自身に近い金額をご一緒に確かめます。

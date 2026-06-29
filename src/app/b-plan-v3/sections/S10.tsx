@@ -121,9 +121,7 @@ export default function S10() {
       <header className="max-w-3xl">
         <Eyebrow>Costs to Check</Eyebrow>
         <h2 className="t-h2 text-ink">
-          あとから増えない費用。
-          <br className="hidden sm:block" />
-          やまとはこうしています。
+          誠意ある明瞭な見積もり
         </h2>
         <p className="t-body mt-6 text-ink-muted">
           家づくりで不安になりやすいのは、契約のあとに見えてくる費用です。

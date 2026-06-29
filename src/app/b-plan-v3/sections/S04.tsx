@@ -25,16 +25,16 @@ export default function S04() {
         <Eyebrow>The Order</Eyebrow>
 
         <h2 className="t-h2 text-ink">
-          家づくりは、
+          建物価格と
           <span className="relative mx-0.5 inline-block">
-            <span className="relative z-10">建物の価格だけ</span>
-            {/* 取り消しの点線ではなく、視線を引き渡す deep-green の下線（点） */}
+            <span className="relative z-10">総額</span>
+            {/* 視線を「総額」へ引き渡す deep-green の下線（点） */}
             <span
               aria-hidden
               className="absolute inset-x-0 bottom-1 z-0 h-[0.18em] bg-main/25"
             />
           </span>
-          では決まりません。
+          は違います
         </h2>
 
         <p className="t-body mt-6 max-w-[44ch] text-ink-muted">

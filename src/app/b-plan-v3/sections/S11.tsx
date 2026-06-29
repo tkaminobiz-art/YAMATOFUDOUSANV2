@@ -75,9 +75,7 @@ export default function S11() {
         <header className="lg:col-span-4">
           <Eyebrow>FAQ</Eyebrow>
           <h2 className="t-h2 text-ink">
-            気になることは、
-            <br className="hidden sm:block" />
-            先にお答えします。
+            よくあるご質問
           </h2>
           <p className="t-body mt-5 max-w-prose text-ink-muted">
             総額のこと、追加費用のこと、問い合わせのあとの流れまで。

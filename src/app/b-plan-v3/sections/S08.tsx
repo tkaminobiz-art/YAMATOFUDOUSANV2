@@ -27,7 +27,7 @@ export default function S08() {
         <Eyebrow>Product Line</Eyebrow>
 
         <h2 className="t-h2 text-ink">
-          暮らしに合わせて、3つのモデルから。
+          選べる3つのモデル
         </h2>
 
         <p className="t-body mt-6 text-ink-muted">

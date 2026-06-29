@@ -15,7 +15,7 @@ import LandMarquee from "./S07.client";
  * 役割=③土地側＝常時150区画程度。段=4。心の段=②→④（T4 欠落補填＝最優先実装・12-rate 動線3の核）。
  *
  * フレームワーク §S S07 ビルドカード:
- *  - 主役: t-h2「土地探しで家づくりを止めない」＋ 150 を主役級バーン
+ *  - 主役: t-h2「土地のご相談も」（入口の軽さ・句読点なし1行）＋ 150 を主役級バーン
  *    （S03 の 600 とは別軸＝二度打ちでない。叫ぶ M4/M16 制約のため countUp はしない＝静止表示）。
  *  - 写真マーキー（分譲地の規模感・FV主役NG・S07 の帯はOK・純CSS PC36s/SP44s・
  *    hover/focus-within 停止・reduced-motion 静止＋overflow-x:auto）→ S07.client の LandMarquee。
@@ -144,9 +144,7 @@ export default function S07() {
         <header className="max-w-3xl">
           <Eyebrow>Land First</Eyebrow>
           <h2 className="t-h2">
-            土地探しで、
-            <br className="hidden sm:block" />
-            家づくりを止めない。
+            土地のご相談も
           </h2>
           <p className="t-body mt-6 max-w-2xl text-ink/85">
             「いい土地が見つからない」で家づくりが止まってしまう——

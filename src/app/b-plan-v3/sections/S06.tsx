@@ -237,9 +237,7 @@ export default function S06() {
       <header className="max-w-3xl">
         <Eyebrow light>Cost Logic</Eyebrow>
         <h2 className="t-h2">
-          「安い」のではなく、
-          <br className="hidden sm:block" />
-          他社が無駄を乗せていない。
+          「安い」わけではありません
         </h2>
         <p className="t-body mt-6 text-cream/80">
           同じ品質の素材・装備で総額が変わるのは、品質を削るからではありません。

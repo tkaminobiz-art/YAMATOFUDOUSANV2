@@ -56,8 +56,8 @@ export default function S03() {
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:items-end lg:gap-16">
         <div>
           <Eyebrow>Track Record</Eyebrow>
-          <h2 className="t-h2 max-w-[18ch] text-ink">
-            15年で、600棟以上の家づくりに立ち会ってきました。
+          <h2 className="t-h2 text-ink">
+            {BUSINESS_YEARS}年 {DELIVERED_HOMES}棟以上の実績
           </h2>
 
           {/* 巨大数字 600 ＝ M4 カウントアップ（lime 下線を視線停止点に） */}

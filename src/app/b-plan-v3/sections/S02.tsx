@@ -45,7 +45,7 @@ export default function S02() {
         <div className="max-w-3xl">
           <Eyebrow>The opaque total</Eyebrow>
           <h2 className="t-h2 text-ink">
-            家づくりでは、こんな迷いが重なっていきます。
+            「本体価格」以外の費用
           </h2>
           <p className="t-body mt-6 text-ink-muted">
             いちばん見えにくいのは、土地・建物・諸費用を合わせた「ほんとうの総額」。そして、あとから効いてくる費用です。

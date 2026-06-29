@@ -11,7 +11,7 @@ import { LINE_ADD_FRIEND_URL } from "@/data/line";
  * surface=ink（暗面4回限定 S01/S05/S06/S12 の最後の1つ＝決断マスター）。
  *
  * 主役: 再起動装置＝決断モチーフの巨大ゴシック組み（.t-display）を ink面＋paper白抜きで。
- *       xmobile の「巨大『今』黒塗り＋白抜き」を煽りでなく「家を、見にいく。」/「まず、総額を見る。」へ。
+ *       xmobile の「巨大『今』黒塗り＋白抜き」を煽りでなく 2色2行「モデルハウス」/「ご相談」へ（句読点なし・下のCTA2本に対応）。
  *       蛍光なし・動き控えめ・残数/カウントダウンなし・数字ゼロ（1,000件等を置かない）。
  *
  * CTA階段（2段が現実解）: P=LINEで相談（line-green）＞ S=モデルハウスを見学する（deep-green）
@@ -36,9 +36,9 @@ export default function S12() {
 
       {/* 再起動装置: 決断モチーフ巨大組み（paper白抜き）。煽りなし・蛍光なし・静止。 */}
       <h2 className="t-display text-cream">
-        家を、見にいく。
+        モデルハウス
         <br />
-        <span className="text-paper">まず、総額を見る。</span>
+        <span className="text-paper">ご相談</span>
       </h2>
 
       <p className="mt-7 max-w-[560px] t-body text-cream/80">
