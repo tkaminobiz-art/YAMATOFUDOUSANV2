@@ -53,37 +53,44 @@ const notBilledParts = [
   },
 ] as const;
 
-// 連番アノテーション 1 行（技法A）。num は Oswald・色で層①/層②を分ける。
+// 連番アノテーション 1 行（技法A）。色で層①/層②を分け、強調の段で大きさを変える。
+//   secondary=false（層②＝安心の主役）: display サイズ（t-h3 / t-burn-sub）。
+//   secondary=true （層①＝仕組みの脇役）: 一段小さく＝主役（安心）を食わせない。
 function AnnotationRow({
   num,
   label,
   note,
   caveat,
   tone,
+  secondary = false,
 }: {
   num: string;
   label: string;
   note: string;
   caveat?: string | null;
   tone: "risk" | "main";
+  secondary?: boolean;
 }) {
   const accent =
     tone === "risk"
       ? "text-[color:var(--color-risk-dark)]"
       : "text-[color:var(--color-main)]";
+  const numClass = secondary
+    ? "font-[family-name:var(--font-oswald)] font-semibold tabular-nums tracking-[0.01em] leading-none text-[length:clamp(16px,1.5vw,22px)]"
+    : "t-burn-sub tabular-nums";
+  const labelClass = secondary
+    ? "font-[family-name:var(--font-zen-kaku-new)] font-bold tracking-[0.02em] leading-[1.5] [word-break:keep-all] text-[length:clamp(18px,1.5vw,22px)]"
+    : "t-h3 [word-break:keep-all]";
   return (
     <div className="scroll-in grid grid-cols-[2.25rem_1fr] items-baseline gap-x-4 gap-y-1 border-b border-[color:var(--color-rule-faint)] py-5 sm:grid-cols-[2.5rem_12rem_1fr] sm:gap-x-7 sm:py-6">
-      <span
-        aria-hidden="true"
-        className={`t-burn-sub tabular-nums ${accent}`}
-      >
+      <span aria-hidden="true" className={`${numClass} ${accent}`}>
         {num}
       </span>
-      <dt className={`t-h3 [word-break:keep-all] ${accent}`}>{label}</dt>
+      <dt className={`${labelClass} ${accent}`}>{label}</dt>
       <dd className="col-span-2 t-body text-[color:var(--color-ink-muted)] sm:col-span-1">
         {note}
         {caveat ? (
-          <span className="mt-1 block text-[0.8em] text-[color:var(--color-ink-muted)]/85">
+          <span className="mt-1 block text-[0.8em] text-[color:var(--color-ink-muted)]">
             {caveat}
           </span>
         ) : null}
@@ -172,15 +179,18 @@ export default function S02CostDiagram() {
                   label={part.label}
                   note={part.note}
                   tone="risk"
+                  secondary
                 />
               ))}
             </dl>
           </div>
         </div>
 
-        {/* 締め＝ 安心の結論（仕組み説明のあとに置く） */}
-        <p className="scroll-in t-body mt-12 max-w-2xl text-[color:var(--color-ink)]">
-          契約前に見た総額のまま、家が建ちます。
+        {/* 締め＝ 安心の結論（優先#3）。本文格上げ＋鍵句を解決色（緑）で。 */}
+        <p className="scroll-in t-h3 mt-12 max-w-2xl text-[color:var(--color-ink)]">
+          契約前に見た
+          <span className="text-[color:var(--color-main)]">総額のまま</span>
+          、家が建ちます。
         </p>
       </div>
     </div>
