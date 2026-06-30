@@ -1,5 +1,6 @@
 import Eyebrow from "../_shared/Eyebrow";
 import SectionShell from "../_shared/SectionShell";
+import KineticHeading from "../_shared/KineticHeading";
 import { honestFeelings } from "../_data";
 import S02CostDiagram from "./S02CostDiagram";
 import S02Reveal from "./S02.client";
@@ -33,9 +34,7 @@ export default function S02() {
       <S02Reveal>
         <div className="max-w-3xl">
           <Eyebrow>No late add-ons</Eyebrow>
-          <h2 className="t-h2 text-ink">
-            明瞭見積もり
-          </h2>
+          <KineticHeading lines={["明瞭見積もり"]} className="t-h2-display text-ink" />
           <p className="t-body mt-6 text-ink">
             見積りのあとから、別途請求することはありません。
           </p>
