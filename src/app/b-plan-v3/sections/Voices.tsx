@@ -6,7 +6,7 @@ import Eyebrow from "../_shared/Eyebrow";
 import { paymentCases, featuredVoiceProofs } from "../_data";
 
 /**
- * S09 — 物語事例（Before→葛藤→決め手→After・新設・物語化）
+ * Voices — 新12「お客様の声」（現S09ベース・14セクション新構成）
  *
  * 役割: tension付き事例。surface=ivory（白・物語）。心の段=④余韻。信頼の実名性。
  * - 1〜2組を物語として深く（数より質＝専務⑧）。顔と名前・市名・家族構成・プラン付き。
@@ -14,6 +14,7 @@ import { paymentCases, featuredVoiceProofs } from "../_data";
  * - 「声」の巨大組みはゴシック（t-display / t-h2、明朝NG）＋実写真。声面=deep-green。
  * - M12 写真マーキー（純CSS・PC36s/SP44s・hover/focus停止・reduced-motion静止）。
  * - CTA なし。末にGBP口コミ動線（達成まで凍結＝枠だけ）・OB紹介 控えめ入口・/voice /works。
+ * - 見出しは「最初から自信があったご家族ばかりではありません。」＋§10-12逐語リード。
  *
  * props 無しのサーバーコンポーネント（マーキーは純CSSで client 不要）。
  */
@@ -151,7 +152,7 @@ function StoryCase({
           </div>
         </dl>
 
-        {/* After ＝ 総額・月々（事実核） */}
+        {/* After ＝ 総額・月々（事実核・小さく添える扱い） */}
         <div className="mt-7 flex flex-wrap items-end gap-x-8 gap-y-2 border-t border-[color:var(--color-border)] pt-5">
           <p>
             <span className="t-eyebrow block text-ink-muted">総額</span>
@@ -173,7 +174,7 @@ function StoryCase({
   );
 }
 
-export default function S09() {
+export default function Voices() {
   return (
     <SectionShell id="voice" surface="ivory" aria-label="お客様の声">
       {/* 純CSS マーキー（依存削減・60fps）。speed PC36s/SP44s 一意確定。
@@ -226,10 +227,13 @@ export default function S09() {
 
       <header className="max-w-3xl">
         <Eyebrow>Voice</Eyebrow>
-        <h2 className="t-h2 text-ink">お客様の声</h2>
+        <h2 className="t-h2 text-ink">
+          最初から自信があったご家族ばかりではありません。
+        </h2>
         <p className="t-body mt-5 text-ink-muted">
-          数ではなく、一組ずつの道のりを。最初の不安から、決め手、住んでからの今まで。
-          いただいた言葉は、そのまま載せています。
+          年収で不安だった方。土地探しで止まっていた方。広さをあきらめかけていた方。
+          それぞれの不安を、土地込み総額と月々の支払いに置き換えながら、
+          納得できる形を一緒に探してきました。
         </p>
       </header>
 

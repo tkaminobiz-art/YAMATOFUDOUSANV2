@@ -8,16 +8,16 @@ import { PARCELS_HELD } from "@/data/brand-facts";
 import LandMarquee from "./S07.client";
 
 /**
- * S07 — ★土地から始める｜土地迷子専用（新設）。
+ * Land — 新9「土地の相談」｜土地迷子専用。現 S07 を新構成へ移設。
  *
- * 契約: `export default function S07(): JSX.Element`（props 無し・サーバーコンポーネント既定）。
- * surface=base（§3.3 中・柔証明）＋ lime 8% ティント overlay（旧セージ翻訳）。
- * 役割=③土地側＝常時150区画程度。段=4。心の段=②→④（T4 欠落補填＝最優先実装・12-rate 動線3の核）。
+ * 契約: `export default function Land(): JSX.Element`（props 無し・サーバーコンポーネント既定）。
+ * surface=base（§3.3 中・柔証明）＋ lime 8% ティント overlay（旧セージ翻訳）。id="land"。
+ * 役割=③土地側＝常時150区画程度。心の段=②→④（T4 欠落補填＝最優先実装・12-rate 動線3の核）。
  *
- * フレームワーク §S S07 ビルドカード:
- *  - 主役: t-h2「土地のご相談も」（入口の軽さ・句読点なし1行）＋ 150 を主役級バーン
+ * フレームワーク 新14構成 新9「土地の相談」ビルドカード:
+ *  - 主役: t-h2「土地がまだなくても、家づくりは始められます。」（入口の軽さ）＋ 150 を主役級バーン
  *    （S03 の 600 とは別軸＝二度打ちでない。叫ぶ M4/M16 制約のため countUp はしない＝静止表示）。
- *  - 写真マーキー（分譲地の規模感・FV主役NG・S07 の帯はOK・純CSS PC36s/SP44s・
+ *  - 写真マーキー（分譲地の規模感・FV主役NG・帯はOK・純CSS PC36s/SP44s・
  *    hover/focus-within 停止・reduced-motion 静止＋overflow-x:auto）→ S07.client の LandMarquee。
  *  - 運用事実 deep-green 帯＝「未公開土地 ◯区画 動きあり」事実スロット（虚偽煽り禁止）。
  *  - 地図UI（専務② 他府県も含む）。
@@ -121,7 +121,7 @@ function AreaMap() {
   );
 }
 
-export default function S07() {
+export default function Land() {
   return (
     <SectionShell
       id="land"
@@ -144,7 +144,7 @@ export default function S07() {
         <header className="max-w-3xl">
           <Eyebrow>Land First</Eyebrow>
           <h2 className="t-h2">
-            土地のご相談も
+            土地がまだなくても、家づくりは始められます。
           </h2>
           <p className="t-body mt-6 max-w-2xl text-ink/85">
             「いい土地が見つからない」で家づくりが止まってしまう——

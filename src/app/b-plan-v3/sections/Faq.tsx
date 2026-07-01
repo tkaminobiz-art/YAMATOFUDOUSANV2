@@ -5,9 +5,9 @@ import SectionShell from "../_shared/SectionShell";
 import FaqAccordion, { type FaqItem } from "./S11.client";
 
 /**
- * S11 — FAQ｜営業の戦場（§S build card / surface-base 明・機能）。
+ * Faq — 新13「FAQ」｜営業の戦場（surface-base 明・機能）。現 S11 を新構成へ移設。
  *
- * 役割: 残存疑念の除去（心の段 ③→⑤）。5問・最重要1問は初期 open。
+ * 役割: 残存疑念の除去（心の段 ③→⑤）。5問・最重要1問は初期 open。id="faq"。
  * 「送信後の流れ」「営業の頻度」を表で開示する（FAQ をアコーディオンに埋めない＝
  * conversion-sales-rulebook「最大の恐怖を表に」）。CTA なし → 10問以上は /faq へ。
  *
@@ -67,7 +67,7 @@ const faqItems: FaqItem[] = [
   },
 ];
 
-export default function S11() {
+export default function Faq() {
   return (
     <SectionShell id="faq" surface="base" aria-label="よくある質問">
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
@@ -75,7 +75,7 @@ export default function S11() {
         <header className="lg:col-span-4">
           <Eyebrow>FAQ</Eyebrow>
           <h2 className="t-h2 text-ink">
-            よくあるご質問
+            相談前の不安に、先にお答えします。
           </h2>
           <p className="t-body mt-5 max-w-prose text-ink-muted">
             総額のこと、追加費用のこと、問い合わせのあとの流れまで。

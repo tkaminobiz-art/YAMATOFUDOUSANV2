@@ -3,28 +3,33 @@
 import { useEffect, useRef, useState } from "react";
 import Eyebrow from "../_shared/Eyebrow";
 import SectionShell from "../_shared/SectionShell";
-import { costMechanisms, costCompareRows } from "../_data";
+import { costMechanisms } from "../_data";
 import { FUNDING_PLANS } from "@/data/brand-facts";
 
 /**
- * S06 — 価格メカニズム3事実｜なぜこの総額か。
+ * Mechanism — 新10「安さの理由」｜価格メカニズム（現S06ベース）。
  *
- * 契約: `export default function S06(): JSX.Element`（props 無し）。
- * surface=ink（§3.3 暗面4回限定の1つ）。役割=②なぜできるか（抽象化禁止）。
+ * 契約: `export default function Mechanism(): JSX.Element`（props 無し）。
+ * surface=ink（暗面4回限定の1つ）。役割=②なぜできるか（抽象化禁止）。
  *
- * このファイルは reveal / 比較バー scaleX のために 'use client'。
- * default export は props 無しのまま。bespoke 図（ピラミッド・非対称比較・価値3円）は
+ * このファイルは reveal のために 'use client'。bespoke 図（ピラミッド・価値3円）は
  * すべてこのファイル内に自己完結で実装する（共有ファイルは触らない）。
  *
- * 主役（フレームワーク §S S06）:
- *  - 3事実（costMechanisms）= ①自社分譲地モデルハウス二重利用（最大の差別化）
- *    ②自社一貫体制・中間マージンなし ③広告費必要最小限。
- *  - 非対称比較= 他社=sign-red面 / やまと=deep-green面・scaleX0→1。内訳%は出さない。
- *  - 3根拠ピラミッド図= 土台に①二重利用・上に②自社一貫 ③広告費最小限。
- *  - 価値3円図（deep-green）= S06末に確定配置（S08前には置かない）。
+ * 見出しは「安く見せるのではなく、余計な費用を重ねない。」（新10）。
+ * 導入本文は §10-10 逐語に寄せる（品質を削らず、土地〜販売を自社でつなぎ、価格に乗りやすい
+ * 費用を抑える。その分を構造・外壁・設備・保証など標準仕様に回す）。
  *
- * 断定OKはこの2つだけ（憲法例外）: つなぎ融資「原則発生しません」/ 地盤改良費「一切かかりません」。
- * 叫ばない（巨大バーンは出さない・1,000件のみ言及）。
+ * 主役:
+ *  - 3事実（costMechanisms）= ①自社分譲地モデルハウス二重利用（最大の差別化）
+ *    ②自社一貫体制・中間マージンなし ③広告費必要最小限（3根拠ピラミッド）。
+ *  - 価値3円図（deep-green）= 末尾に確定配置。
+ *
+ * 非対称比較（costCompareRows の費用開示表）はこのセクションから撤去済み。
+ *   費用開示は 新5 Estimate に一本化（二度出し回避）。他社=sign-red/やまと=deep-green の
+ *   色役割は3根拠側で残す。
+ *
+ * 断定OKはこの2つだけ（憲法例外）: つなぎ融資「原則発生しません」/ 地盤改良費「かかりません（自社分譲地対象）」。
+ * 叫ばない（巨大バーンは出さない・countUp は使わない・1,000件のみ言及）。
  */
 
 /* ── reveal: IntersectionObserver で一度だけ可視化（reduced-motion は即時） ── */
@@ -108,83 +113,8 @@ function SupportPyramid({ items }: { items: string[] }) {
           </p>
         </div>
       </div>
-    </div>
-  );
-}
 
-/* ── ② 非対称比較 ──
-   他社=sign-red面 / やまと=deep-green面・scaleX 0→1（width 直アニメ禁止・980ms）。
-   両者とも大手を貶めない。内訳%は出さない。answer 列を太く（結論＝視線停止点）。 */
-function AsymmetricCompare({
-  rows,
-}: {
-  rows: { label: string; general: string; answer: string; reason: string }[];
-}) {
-  const { ref, shown } = useReveal<HTMLDivElement>();
-
-  return (
-    <div ref={ref} className="mt-16">
-      <p className="t-eyebrow text-cream/55 mb-6">General vs Yamato</p>
-      <div className="flex flex-col gap-px overflow-hidden rounded-sm border border-cream/12">
-        {rows.map((row, i) => (
-          <div
-            key={row.label}
-            className="grid grid-cols-1 gap-px bg-cream/12 md:grid-cols-[180px_1fr_1fr]"
-            style={{
-              opacity: shown ? 1 : 0,
-              transform: shown ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 700ms ease-out, transform 700ms ease-out",
-              transitionDelay: `${i * 120}ms`,
-            }}
-          >
-            {/* 項目名 */}
-            <div className="flex items-center bg-ink px-5 py-5">
-              <span className="t-h3 text-cream text-[1.05rem] md:text-[1.1rem]">
-                {row.label}
-              </span>
-            </div>
-
-            {/* 一般的には（sign-red 面・後出し費用） */}
-            <div className="bg-ink px-5 py-5">
-              <span className="t-eyebrow text-risk mb-3 block">一般的には</span>
-              <div className="relative h-2 w-full overflow-hidden rounded-full bg-cream/8">
-                <span
-                  aria-hidden
-                  className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-risk"
-                  style={{
-                    transform: shown ? "scaleX(1)" : "scaleX(0)",
-                    transition: "transform 980ms cubic-bezier(0.16,1,0.3,1)",
-                    transitionDelay: `${i * 120 + 120}ms`,
-                  }}
-                />
-              </div>
-              <p className="t-body mt-3 text-cream/65">{row.general}</p>
-            </div>
-
-            {/* やまと（deep-green 面・結論を太く） */}
-            <div className="bg-main-dark px-5 py-5">
-              <span className="t-eyebrow text-lime mb-3 block">やまと</span>
-              <div className="relative h-2 w-full overflow-hidden rounded-full bg-cream/8">
-                <span
-                  aria-hidden
-                  className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-lime"
-                  style={{
-                    transform: shown ? "scaleX(0.4)" : "scaleX(0)",
-                    transition: "transform 980ms cubic-bezier(0.16,1,0.3,1)",
-                    transitionDelay: `${i * 120 + 200}ms`,
-                  }}
-                />
-              </div>
-              <p className="t-h3 mt-3 text-cream text-[1.15rem] md:text-[1.25rem]">
-                {row.answer}
-              </p>
-              <p className="t-body mt-1 text-cream/70">{row.reason}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <p className="t-body mt-5 text-cream/50">
+      <p className="t-body mt-8 text-cream/50">
         つなぎ融資は「原則、発生しません」。土地を先に買う場合の30〜80万円ほどを、抱えずに済みます。
         地盤改良費はかかりません（自社分譲地が対象です）。
       </p>
@@ -192,7 +122,7 @@ function AsymmetricCompare({
   );
 }
 
-/* ── ③ 価値3円図 ── deep-green の円。S06末に確定配置（S08前には置かない）。 */
+/* ── ② 価値3円図 ── deep-green の円。セクション末尾に確定配置。 */
 function ValueCircles() {
   const { ref, shown } = useReveal<HTMLDivElement>();
   const values: { head: string; sub: string }[] = [
@@ -231,18 +161,21 @@ function ValueCircles() {
   );
 }
 
-export default function S06() {
+export default function Mechanism() {
   return (
-    <SectionShell id="mechanism" surface="ink" aria-label="価格メカニズム">
+    <SectionShell id="mechanism" surface="ink" aria-label="安さの理由">
       <header className="max-w-3xl">
         <Eyebrow light>Cost Logic</Eyebrow>
         <h2 className="t-h2">
-          「安い」わけではありません
+          安く見せるのではなく、余計な費用を重ねない。
         </h2>
         <p className="t-body mt-6 text-cream/80">
-          同じ品質の素材・装備で総額が変わるのは、品質を削るからではありません。
-          土地から販売まで自社でつなぎ、価格に乗りやすい費用そのものを持たない。
-          だから家にかける予算を、そのまま家に回せます。
+          総額を抑えられる理由は、家の品質を削るからではありません。
+          土地、設計、施工、販売をばらばらにせず、自社でつなぐ。
+          大型展示場や中間マージンに頼りすぎず、価格に乗りやすい費用を抑える。
+        </p>
+        <p className="t-body mt-4 text-cream/80">
+          その分、構造、外壁、設備、保証など、家そのものに必要な部分を標準仕様として整えています。
         </p>
         <p className="t-body mt-4 text-cream/55">
           資金計画は
@@ -254,7 +187,6 @@ export default function S06() {
       </header>
 
       <SupportPyramid items={costMechanisms} />
-      <AsymmetricCompare rows={costCompareRows} />
       <ValueCircles />
     </SectionShell>
   );

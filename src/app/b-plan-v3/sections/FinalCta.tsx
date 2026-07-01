@@ -5,26 +5,25 @@ import Eyebrow from "../_shared/Eyebrow";
 import { LINE_ADD_FRIEND_URL } from "@/data/line";
 
 /**
- * S12 — CTA階段｜最終（§S ビルドカード準拠）
+ * FinalCta — 新14「最終CTA」（現S12ベース・14セクション新構成）
  *
  * 役割: 最低摩擦の次の一歩。段=7（決断）。心の段=⑤決断。主タイプ=全。
- * surface=ink（暗面4回限定 S01/S05/S06/S12 の最後の1つ＝決断マスター）。
+ * surface=ink（暗面の最後の1つ＝決断マスター）。
  *
- * 主役: 再起動装置＝決断モチーフの巨大ゴシック組み（.t-display）を ink面＋paper白抜きで。
- *       xmobile の「巨大『今』黒塗り＋白抜き」を煽りでなく 2色2行「モデルハウス」/「ご相談」へ（句読点なし・下のCTA2本に対応）。
+ * 主役: 再起動装置＝「まずは、土地込み総額を見てみませんか。」の巨大ゴシック組み（.t-display）を
+ *       ink面＋paper白抜きで。煽りでなく総額提示への招待へ。
  *       蛍光なし・動き控えめ・残数/カウントダウンなし・数字ゼロ（1,000件等を置かない）。
  *
- * CTA階段（2段が現実解）: P=LINEで相談（line-green）＞ S=モデルハウスを見学する（deep-green）
+ * CTA階段（2段が現実解）: P=LINEで総額を相談する（line-green）＞ S=モデルハウスを見学する（deep-green）
  *       ＞ T=資料請求（tertiary text-link）＞ 電話（footer格・控えめ）。
  * 摩擦除去マイクロコピー（子連れOK・オンライン可・予約なしでも見学可）＋送信後の流れ開示
  *       （「ご希望のペースでご連絡します」＝運用で守れる表現）。
  *
- * モーション: S12 はカウントアップしない（叫ぶ2箇所は S03/S05）。M17 CTA hover（矢印 X+4px）のみ。
+ * モーション: カウントアップしない。M17 CTA hover（矢印 X+4px）のみ。
  *
- * 契約: `export default function S12(): JSX.Element`（props 無し・サーバーコンポーネント既定）。
- * [final CTA] は page.tsx 側で挟済み（このセクション内のCTAは S12 固有の最終階段）。
+ * 契約: `export default function FinalCta(): JSX.Element`（props 無し・サーバーコンポーネント既定）。
  */
-export default function S12() {
+export default function FinalCta() {
   return (
     <SectionShell
       id="final-cta"
@@ -34,17 +33,17 @@ export default function S12() {
     >
       <Eyebrow light>next step</Eyebrow>
 
-      {/* 再起動装置: 決断モチーフ巨大組み（paper白抜き）。煽りなし・蛍光なし・静止。 */}
+      {/* 再起動装置: 総額提示への招待の巨大組み（paper白抜き）。煽りなし・蛍光なし・静止。 */}
       <h2 className="t-display text-cream">
-        モデルハウス
+        まずは、
         <br />
-        <span className="text-paper">ご相談</span>
+        <span className="text-paper">土地込み総額を見てみませんか。</span>
       </h2>
 
       <p className="mt-7 max-w-[560px] t-body text-cream/80">
-        間取りの理想も、土地の場所も、毎月の支払いも。
-        ばらばらに悩む前に、ひとつの「総額」としてお見せします。
-        ご一緒に、無理のない形へ整えていきましょう。
+        間取り、土地、毎月の支払いを、ばらばらに悩む前に。
+        ご希望のエリアと予算から、土地・建物・諸費用をまとめた総額の目安をお見せします。
+        土地がまだなくても、予算がまだ固まっていなくても大丈夫です。
       </p>
 
       {/* CTA階段（LINE ＞ 見学 ＞ 資料 ＞ 電話） */}
@@ -63,7 +62,7 @@ export default function S12() {
             className="group inline-flex min-h-[60px] flex-1 items-center justify-center gap-3 bg-line px-7 text-[15px] font-bold text-white"
           >
             <MessageCircle className="h-5 w-5" aria-hidden />
-            LINEで相談
+            LINEで総額を相談する
             <ArrowRight
               className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden

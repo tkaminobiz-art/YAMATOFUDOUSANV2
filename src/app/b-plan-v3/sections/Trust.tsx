@@ -17,21 +17,22 @@ import {
 import { REPRESENTATIVES } from "@/data/staff";
 
 /**
- * S03 — 権威バーン｜数字1発主役級（TrustLedger）。
+ * Trust — 新11「実績・代表・信頼」｜権威バーン（現S03ベース・TrustLedger）。
  *
- * 役割（§S S03 ビルドカード / §3.4 / 専務②③）:
+ * 役割（新構成 §10-11）:
  * - 引渡し600棟以上を `t-burn` 主役級バーンで「1発」。M4＝カウントアップ＝叫ぶ①
- *   （叫ぶのは S03(600) と S05(月々) の2箇所のみ・二度打ち禁止）。
- * - 14年 / 1,000件 / 50組 / 保証20・10年は `t-burn-sub`/`t-h3` で「明確に小さく」従える。
- *   ここで列挙した補助数字は以後再カウントアップしない（受け入れ基準①②）。
+ *   （このセクションの 600 countUp のみ許可・二度打ち禁止。Mechanism では countUp を使わない）。
+ * - 15年 / 1,000件 / 50組 / 保証20・10年は `t-burn-sub`/`t-h3` で「明確に小さく」従える。
+ *   ここで列挙した補助数字は以後再カウントアップしない。
  * - 代表2名（REPRESENTATIVES）を完全同格で信頼アンカーとして配置 → /staff（A1）。
  *   公式メッセージは原文厳守・宅建免許番号併記。
  *
- * surface=ivory: 明面（§3.3 の暗面4回限定＝S01/S05/S06/S12 を守るため ink を選ばない）。
- *   ビルドカードは「ivory or ink」を許可。中盤に黒面が密集して黒地が『句読点』から
- *   『デフォルト』に転落するのを避け、専務文法の核である黒白リズムを保つ（明度レビュー対応）。
- *   →「数字バーンが画面を支配」は ivory 上でも ink 文字＋lime 下線で主役級に成立。
- *     600を ink・lime を視線停止点（点/下線）に限定し面塗りしない。
+ * 見出しは「600棟以上の家づくりと、1,000件以上の資金計画。」（新11）。
+ * 導入本文は §10-11 逐語に寄せる（総額・月々・契約前の費用を家族ごとに整えてきた実績）。
+ *
+ * surface=ivory: 明面（暗面4回限定＝S01/S05/mechanism/S12 を守るため ink を選ばない）。
+ *   数字バーンは ivory 上でも ink 文字＋lime 下線で主役級に成立。
+ *   600を ink・lime を視線停止点（点/下線）に限定し面塗りしない。id=trust は維持。
  */
 
 const SUB_STATS: { value: number; suffix: string; label: string }[] = [
@@ -45,7 +46,7 @@ const WARRANTIES: { value: number; suffix: string; label: string }[] = [
   { value: TERMITE_WARRANTY_YEARS, suffix: "年", label: "しろあり保証" },
 ];
 
-export default function S03() {
+export default function Trust() {
   return (
     <SectionShell
       id="trust"
@@ -57,8 +58,12 @@ export default function S03() {
         <div>
           <Eyebrow>Track Record</Eyebrow>
           <h2 className="t-h2 text-ink">
-            {BUSINESS_YEARS}年 {DELIVERED_HOMES}棟以上の実績
+            {DELIVERED_HOMES}棟以上の家づくりと、{FUNDING_PLANS.toLocaleString("ja-JP")}件以上の資金計画。
           </h2>
+
+          <p className="t-body mt-6 max-w-[38ch] whitespace-pre-line text-ink-muted">
+            {"土地と建物を合わせた総額。\n月々の支払い。\n契約前に確認すべき費用。\nその一つひとつを、ご家族ごとに整えてきました。数字だけではなく、納得して進める家づくりを、地域で積み重ねています。"}
+          </p>
 
           {/* 巨大数字 600 ＝ M4 カウントアップ（lime 下線を視線停止点に） */}
           <div className="mt-8 inline-block">
@@ -135,6 +140,10 @@ export default function S03() {
             <ArrowUpRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
+
+        <p className="t-body mt-6 max-w-[46ch] text-ink-muted">
+          私たちが大切にしているのは、契約前に納得できる総額をお見せすることです。
+        </p>
 
         <ul className="mt-8 grid gap-8 md:grid-cols-2 md:gap-10">
           {REPRESENTATIVES.map((rep) => (

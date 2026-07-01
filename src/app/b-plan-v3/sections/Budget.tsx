@@ -2,26 +2,29 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowLeftRight, TrendingUp } from "lucide-react";
+import { ArrowRight, ArrowLeftRight } from "lucide-react";
 import SectionShell from "../_shared/SectionShell";
 import Eyebrow from "../_shared/Eyebrow";
 import BurnNumber from "../_shared/BurnNumber";
 import { paymentCases, type PaymentCase } from "../_data";
 
 /**
- * S05 — ★総額・月々｜クライマックス（§S ビルドカード準拠）
+ * Budget — 新6「予算・月々」｜クライマックス（14セクション新構成）。
  *
- * 役割: ③数字→月々の意味へ翻訳。段=頂点。心の最深部④欲求ピーク。T3(主)/T1/T5。
- * surface=ink（暗面4回限定 S01/S05/S06/S12 の1つ）。paymentCases 3事例。
- * 主役: Case月々を t-burn 巨大カウントアップ（叫ぶ②・§4.2 M16）＋ deep-green(main) 結論帯で
- *       「月々◯円」を視線停止点に。価格2,480/2,280はカウントしない（静止で正確に）。
- * 常設: 投資哲学エッセンス枠（専務④・NISA直接比喩回避）／試算前提注記（必須）／
- *       運用事実 deep-green帯（虚偽煽り禁止・事実スロット）／概算入力ツールは枠（データスロット）のみ。
- * 相互証明矢印（S04→S05接合の導入図・蛍光なし・ink/deep-green/lime点）。
+ * 現S05の分割の前半。相互証明矢印バー＋見出し＋paymentCasesカード（月々バーン）＋
+ * 試算前提注記＋運用事実 deep-green帯を移植。投資哲学エッセンス（家賃 vs ローン）は
+ * 分割の後半 RentVsLoan.tsx に譲るため本ファイルには持ち込まない。
  *
- * 契約: `export default function S05(): JSX.Element`（props 無し）。
- * カウントアップが要るためファイル全体を 'use client' 化（page.tsx は props 無しで import 済）。
- * [CTA-2] は page.tsx 側で S05 直後に挟済み（セクション内に重ねない）。
+ * surface=ink（暗面）／id="payment"。役割=③数字→月々の意味へ翻訳・段=頂点。
+ * 主役: Case月々を BurnNumber countUp で巨大表示（叫ぶ②）。総額/内訳/返済比率は静止（countUpなし）。
+ *
+ * 二度打ち規律: countUp を使うのは本ファイルの「月々」だけ。RentVsLoan.tsx では countUp を使わない。
+ * countUp が要るためファイル全体を 'use client' 化（page.tsx は props 無しで import 済）。
+ * 反復CTAは page.tsx 側で本セクション直後に RepeatCtaBlock を挟むため、内部には置かない。
+ * 詳細導線は /money#payment-examples の text-link のみ。
+ *
+ * 契約: `export default function Budget(): JSX.Element`（props 無し）。
+ * 実データ（顧客名・年収・総額・月々・内訳・返済比率）は改変禁止。
  */
 
 // 内訳セグメント（深緑濃淡の段積みバー）。色は @theme トークンのみ。
@@ -35,7 +38,7 @@ function PaymentCard({ item }: { item: PaymentCase }) {
   const total = item.parts.building + item.parts.land + item.parts.fee;
 
   return (
-    <article className="overflow-hidden rounded-[10px] border border-cream/15 bg-white/[0.03]">
+    <article className="overflow-hidden rounded-[6px] border border-cream/15 bg-white/[0.03]">
       <div className="grid lg:grid-cols-[1.16fr_0.84fr]">
         <div className="p-6 md:p-9 lg:p-10">
           <div className="flex flex-wrap items-center gap-3">
@@ -52,7 +55,7 @@ function PaymentCard({ item }: { item: PaymentCase }) {
           </p>
 
           {/* 月々＝クライマックスの主役（カウントアップ＝叫ぶ②）。deep-green結論帯で視線停止点に */}
-          <div className="mt-7 flex flex-col gap-4 rounded-[8px] bg-main px-6 py-6 sm:flex-row sm:items-end">
+          <div className="mt-7 flex flex-col gap-4 rounded-[6px] bg-main px-6 py-6 sm:flex-row sm:items-end">
             <div>
               <p className="t-eyebrow text-cream/80">monthly payment</p>
               <p className="mt-2 flex items-baseline gap-2 text-cream">
@@ -136,10 +139,10 @@ function PaymentCard({ item }: { item: PaymentCase }) {
   );
 }
 
-export default function S05() {
+export default function Budget() {
   return (
-    <SectionShell id="payment" surface="ink" aria-label="土地と建物を合わせた総額と、月々の目安">
-      {/* 相互証明矢印（S04→S05接合の導入図・蛍光なし・deep-green/lime点） */}
+    <SectionShell id="payment" surface="ink" aria-label="年収ではなく月々の無理なさで考える予算と月々の目安">
+      {/* 相互証明矢印（土地→建物→総額→月々の導入図・蛍光なし・deep-green/lime点） */}
       <div
         className="mb-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-cream/75"
         aria-hidden
@@ -166,10 +169,10 @@ export default function S05() {
       <div className="max-w-[980px]">
         <Eyebrow light>total &amp; monthly payment</Eyebrow>
         <h2 className="t-h2 text-cream">
-          予算について
+          年収ではなく、月々の無理なさで考える。
         </h2>
-        <p className="t-lead mt-6 max-w-[820px] text-cream/85">
-          土地代も建物も諸費用も合わせて見ると、毎月の金額の印象は変わります。建てられたご家族の実例を見ながら、ご自身に近い金額をご一緒に確かめます。
+        <p className="t-body mt-6 max-w-[820px] text-[16px] leading-[1.95] text-cream/85">
+          家を建てられるかどうかは、建物価格だけでは判断できません。大切なのは、土地込み総額で見たときに、毎月の支払いが無理なく続けられるかどうか。ご家族の年収、暮らし方、希望エリアに合わせて、現実的な資金計画をご一緒に確認します。
         </p>
         <Link
           href="/money#payment-examples"
@@ -187,27 +190,13 @@ export default function S05() {
         ))}
       </div>
 
-      {/* 試算前提注記（必須・常設・煽り無し） */}
+      {/* 試算前提注記（必須・常設・煽り無し・景表） */}
       <p className="t-body mt-8 max-w-[920px] text-[11px] leading-[1.85] tracking-[0.06em] text-cream/60">
         ※表示は試算用に金利1.0%・35年・元利均等・ボーナス払いなしで計算した一例です。実際の適用金利・審査条件・土地条件によって変わります。
       </p>
 
-      {/* 投資哲学エッセンス常設枠（専務④・NISA直接比喩は避ける） */}
-      <div className="mt-12 grid gap-6 border-t border-cream/15 pt-12 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
-          <p className="t-eyebrow mb-4 flex items-center gap-2 text-cream/70">
-            <TrendingUp className="h-4 w-4" aria-hidden />
-            essence
-          </p>
-          <h3 className="t-h3 text-cream">家賃は、払うほど消えていく。家は、住みながら残っていく。</h3>
-        </div>
-        <p className="t-lead text-cream/85">
-          家賃は支払うほど手元には残りませんが、住宅ローンの返済は、暮らしながらご自身の資産を少しずつ整えていく形になります。低金利と長期の借入れを賢く使い、月々の負担を抑えながら、住み続けられる総額に収めることを、ご一緒に考えます。
-        </p>
-      </div>
-
       {/* 運用事実 deep-green帯（虚偽煽り禁止・事実スロット）。概算入力ツールは枠のみ＝後日承認後に中身を追加 */}
-      <div className="mt-10 flex flex-col gap-4 rounded-[10px] bg-main px-6 py-6 text-cream md:flex-row md:items-center md:justify-between">
+      <div className="mt-10 flex flex-col gap-4 rounded-[6px] bg-main px-6 py-6 text-cream md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <span className="t-eyebrow text-cream/80">今ご確認いただけること</span>
           <span className="t-body text-[13px] font-bold text-cream">

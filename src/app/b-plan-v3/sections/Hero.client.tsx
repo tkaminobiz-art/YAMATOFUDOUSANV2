@@ -3,17 +3,16 @@
 import { useEffect, useState } from "react";
 
 /**
- * S01HeroMovie — FV 背景のループ再生モンタージュ動画（client 子・v3 配下に閉じる）。
+ * HeroMovie — 新1 FV（Hero）背景のループ再生モンタージュ動画（client 子・v3 配下に閉じる）。
  *
  * FV案B（B-2）の成果物 public/videos/fv/yamato-fv-montage.* をフルブリードで再生。
  * 外観(空・時間帯レタッチ)＋内観/暮らし(実写)の 30 枚モンタージュ＝写真は脇役の"地"。
  *
- * a11y（FV案B計画 §3 準拠）:
+ * a11y:
  *   - prefers-reduced-motion: reduce / Save-Data 時は動画を出さず poster 静止のみ。
  *     globals.css の CSS 無効化は HTML video の autoPlay に効かないため JS(matchMedia)で出し分け。
  *   - background かつ aria-hidden（代替テキストは前景の見出しが担う）。
  *   - SSR フォールバックは poster 静止画なので JS 無効でも背景は表示される。
- *   ※ ループは神野さん指示。reduced-motion 時は静止のため動き過敏には影響しない。
  */
 const POSTER = "/videos/fv/yamato-fv-montage-poster.webp";
 const WEBM = "/videos/fv/yamato-fv-montage.webm";
@@ -21,7 +20,7 @@ const MP4 = "/videos/fv/yamato-fv-montage.mp4";
 
 type NetworkInfo = { saveData?: boolean };
 
-export default function S01HeroMovie() {
+export default function HeroMovie() {
   // 初期値は「動かさない（poster のみ）」。mount 後に条件を満たせば動画へ昇格。
   const [still, setStill] = useState(true);
 
