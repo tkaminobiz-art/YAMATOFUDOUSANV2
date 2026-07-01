@@ -31,18 +31,16 @@ export default function Anxiety() {
             lines={["家づくりが不安なのは、", "総額が見えないから。"]}
             className="t-h2-display text-ink"
           />
-          <p
-            className="t-body mt-6 text-ink-muted"
+          {/* 4つの不安を独立段落で（直書き<br>を廃止＝意味の区切りを構造で。各段落は measure(40em)で自然折返し）。 */}
+          <div
+            className="t-body mt-6 max-w-[40em] space-y-2.5 text-ink-muted"
             style={{ fontFamily: "var(--font-murecho)" }}
           >
-            展示場で聞いた建物価格に、あとから土地代や諸費用が加わる。
-            <br />
-            標準だと思っていたものが、実はオプションだった。
-            <br />
-            土地が決まらないまま、間取りや予算の話だけが進んでいく。
-            <br />
-            そんな不安を残したまま、契約へ進んでほしくありません。
-          </p>
+            <p>展示場で聞いた建物価格に、あとから土地代や諸費用が加わる。</p>
+            <p>標準だと思っていたものが、実はオプションだった。</p>
+            <p>土地が決まらないまま、間取りや予算の話だけが進んでいく。</p>
+            <p>そんな不安を残したまま、契約へ進んでほしくありません。</p>
+          </div>
         </div>
 
         {/* 5タイプの状況語（共感を主役化・honestFeelings 原文不変・左罫線グリッド） */}

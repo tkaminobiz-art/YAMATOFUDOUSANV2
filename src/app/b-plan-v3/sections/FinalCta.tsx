@@ -34,10 +34,9 @@ export default function FinalCta() {
       <Eyebrow light>next step</Eyebrow>
 
       {/* 再起動装置: 総額提示への招待の巨大組み（paper白抜き）。煽りなし・蛍光なし・静止。 */}
+      {/* 直書き<br>は廃止。.t-display の measure＋balance＋auto-phrase で「まずは、」の後を自然改行。 */}
       <h2 className="t-display text-cream">
-        まずは、
-        <br />
-        <span className="text-paper">土地込み総額を見てみませんか。</span>
+        まずは、<span className="text-paper">土地込み総額を見てみませんか。</span>
       </h2>
 
       <p className="mt-7 max-w-[560px] t-body text-cream/80">

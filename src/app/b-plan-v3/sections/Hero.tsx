@@ -55,6 +55,8 @@ export default function Hero() {
           <Eyebrow light>total cost, first</Eyebrow>
 
           {/* 主役ステートメント（Zen Kaku 900・2行・「見えてから決める」に lime 下線） */}
+          {/* 直書き<br>は廃止。maxWidth(14em≒全角14字)＋text-wrap:balance＋nowrap下線句で、
+              「土地も、建物も、月々も。」／「見えてから決める家づくり。」を全幅で自然に2行分割。 */}
           <h1
             className="mt-7 text-cream md:mt-9"
             style={{
@@ -64,10 +66,10 @@ export default function Hero() {
               lineHeight: 1.16,
               letterSpacing: "-0.01em",
               textWrap: "balance",
+              maxWidth: "14em",
             }}
           >
             土地も、建物も、月々も。
-            <br />
             <span className="relative whitespace-nowrap">
               見えてから決める
               <span aria-hidden className="absolute -bottom-1 left-0 h-[4px] w-full bg-lime" />

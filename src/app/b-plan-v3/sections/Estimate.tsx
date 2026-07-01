@@ -30,20 +30,19 @@ export default function Estimate() {
           lines={["契約前に、", "増えやすい費用まで見せます。"]}
           className="t-h2-display text-ink"
         />
-        <p
-          className="t-body mt-6 text-ink-muted"
+        {/* 直書き<br>を廃止。ナレーション／3語／締めを構造で分離（3語は横並び・Phase2で図解チップへ移す）。 */}
+        <div
+          className="t-body mt-6 max-w-[40em] text-ink-muted"
           style={{ fontFamily: "var(--font-murecho)" }}
         >
-          家づくりで怖いのは、契約したあとに費用が増えていくこと。だからやまと不動産では、あとから出やすい項目を小さな注記にせず、契約前に一つずつ確認します。
-          <br />
-          含まれるもの。
-          <br />
-          別途必要なもの。
-          <br />
-          発生しないもの。
-          <br />
-          すべてを見たうえで、納得して進めていただきます。
-        </p>
+          <p>家づくりで怖いのは、契約したあとに費用が増えていくこと。だからやまと不動産では、あとから出やすい項目を小さな注記にせず、契約前に一つずつ確認します。</p>
+          <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-bold text-ink">
+            <span>含まれるもの。</span>
+            <span>別途必要なもの。</span>
+            <span>発生しないもの。</span>
+          </p>
+          <p className="mt-4">すべてを見たうえで、納得して進めていただきます。</p>
+        </div>
       </header>
 
       {/* 2層の費用を1枚で（S02CostDiagram 無改変・層②別途いただかない実費／層①総額がふくらむ仕組み）

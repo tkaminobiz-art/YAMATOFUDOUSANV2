@@ -71,9 +71,8 @@ function PaymentCard({ item }: { item: PaymentCase }) {
               </p>
             </div>
             <p className="t-body ml-auto pb-1 text-left text-[12px] leading-[1.7] text-cream/80 sm:text-right">
-              土地込み総額 {item.total}万円
-              <br />
-              返済比率 {item.ratio}
+              <span className="block">土地込み総額 {item.total}万円</span>
+              <span className="block">返済比率 {item.ratio}</span>
             </p>
           </div>
 

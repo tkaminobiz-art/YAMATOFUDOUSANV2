@@ -784,6 +784,9 @@ p, blockquote, dd, li {
    ========================================================================= */
 
 /* 主見出し系: 太角ゴシック Zen Kaku Gothic New（明朝は使わない） */
+/* 見出しの measure（行長上限）= 全角字数で管理。em は大見出しでも「font-size≒全角1字」で字数に比例、
+   ic 対応ブラウザはより精密。JLReq/WCAG「横組は本文40字」に対し見出しは短く（20〜32字）。
+   直書き <br> を廃し、この measure + text-wrap:balance + 継承 auto-phrase で改行を安定させる。 */
 .t-display {
   font-family: var(--font-zen-kaku-new);
   font-weight: 900;
@@ -791,6 +794,8 @@ p, blockquote, dd, li {
   line-height: 1.18;
   letter-spacing: 0.01em;
   text-wrap: balance;
+  max-width: 20em;
+  max-width: 20ic;
 }
 .t-h1 {
   font-family: var(--font-zen-kaku-new);
@@ -799,6 +804,8 @@ p, blockquote, dd, li {
   line-height: 1.22;
   letter-spacing: 0.01em;
   text-wrap: balance;
+  max-width: 20em;
+  max-width: 20ic;
 }
 .t-h2 {
   font-family: var(--font-zen-kaku-new);
@@ -807,6 +814,8 @@ p, blockquote, dd, li {
   line-height: 1.28;
   letter-spacing: 0.015em;
   text-wrap: balance;
+  max-width: 24em;
+  max-width: 24ic;
 }
 .t-h3 {
   font-family: var(--font-zen-kaku-new);
@@ -814,6 +823,8 @@ p, blockquote, dd, li {
   font-size: clamp(20px, 1.9vw, 30px);
   line-height: 1.42;
   letter-spacing: 0.02em;
+  max-width: 32em;
+  max-width: 32ic;
 }
 /* 特大セクション見出し（技法C 規格 / t-h2 の上位スケール・TOP 共通見出し用） */
 .t-h2-display {
@@ -823,6 +834,8 @@ p, blockquote, dd, li {
   line-height: 1.16;
   letter-spacing: 0.012em;
   text-wrap: balance;
+  max-width: 20em;
+  max-width: 20ic;
 }
 
 /* 巨大数字バーン: Oswald 600・tabular（§3.2 実証値で確定） */
