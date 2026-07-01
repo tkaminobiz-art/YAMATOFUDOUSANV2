@@ -30,11 +30,21 @@ export default function Hero() {
       {/* 背景＝ループ動画モンタージュ（写真は脇役の地）。厚い ink overlay で沈めて可読性を確保 */}
       <div aria-hidden className="absolute inset-0 z-0">
         <HeroMovie />
+        {/* SP: テキストが全幅に載るため縦グラデで可読性優先（写真は上下で覗かせる） */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
           style={{
             background:
-              "linear-gradient(105deg, rgba(29,29,24,0.96) 0%, rgba(29,29,24,0.90) 40%, rgba(29,29,24,0.78) 68%, rgba(29,29,24,0.64) 100%)",
+              "linear-gradient(180deg, rgba(29,29,24,0.66) 0%, rgba(29,29,24,0.82) 22%, rgba(29,29,24,0.82) 66%, rgba(29,29,24,0.5) 100%)",
+          }}
+        />
+        {/* PC: 左（文字帯）は濃く可読性を守り、右は写真を明るく抜く非対称グラデ（AD方針=FVを明るく軽く）。
+            左48%まで ≥0.80 で cream 見出しの AA を確保、右へ 0.12 まで開いて写真を主役級に見せる。 */}
+        <div
+          className="absolute inset-0 hidden md:block"
+          style={{
+            background:
+              "linear-gradient(100deg, rgba(29,29,24,0.90) 0%, rgba(29,29,24,0.82) 48%, rgba(29,29,24,0.44) 72%, rgba(29,29,24,0.12) 100%)",
           }}
         />
       </div>

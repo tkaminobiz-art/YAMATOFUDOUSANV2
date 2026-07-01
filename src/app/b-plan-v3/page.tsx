@@ -38,8 +38,9 @@ export const viewport: Viewport = {
  * 主軸（2026-07-01 神野さん確定）: 「土地も、建物も、月々も。見えてから決める家づくり。」
  * 読者が家づくりで不安になる順に14セクションを並べ、重複を減らし、各セクションの役割を1つに絞る。
  *
- * 明度ウェーブ: 黒地(ink)は 1 Hero / 6 Budget / 10 Mechanism / 14 FinalCta の4回（反復CTA帯はink差し色）。
- * 反復CTA（低摩擦の早期出口→クライマックス直後の最強発火点→最終）を新順の等価点に挟む。
+ * 明度ウェーブ: 黒地(ink)は 1 Hero / 6 Budget / 10 Mechanism / 14 FinalCta の4回のみ（2026-07-01 AD確定）。
+ * 反復CTA帯3本は明地(surface-base+上下罫)で黒面に数えない＝緑のLINEボタンで発火点を作る。
+ * 反復CTA（低摩擦の早期出口→クライマックス直後の最強発火点→最終）を等価点に挟む。
  * 二度打ち: countUp は 6 Budget（月々）と 11 Trust（600棟）の2箇所のみ。
  */
 export default function BPlanV3Page() {
@@ -52,10 +53,10 @@ export default function BPlanV3Page() {
         <Anxiety />
         <Promise />
 
-        {/* 反復CTA① — 約束の直後・低摩擦の早期出口（ink地） */}
-        <section aria-label="LINEで総額を相談する" className="surface-ink px-5 py-12 md:px-10 lg:py-16 xl:px-14">
+        {/* 反復CTA① — 約束の直後・低摩擦の早期出口（明地・上下罫で区切る＝黒面を増やさない） */}
+        <section aria-label="LINEで総額を相談する" className="surface-base border-y border-[color:var(--color-border)] px-5 py-12 md:px-10 lg:py-16 xl:px-14">
           <div className="mx-auto max-w-[1380px]">
-            <RepeatCtaBlock variant="cta1" tone="ink" lineLabel="LINEで総額を相談する" />
+            <RepeatCtaBlock variant="cta1" tone="light" lineLabel="LINEで総額を相談する" />
           </div>
         </section>
 
@@ -63,10 +64,10 @@ export default function BPlanV3Page() {
         <Estimate />
         <Budget />
 
-        {/* 反復CTA② — 予算クライマックス直後の最強発火点（ink地） */}
-        <section aria-label="LINEで総額を相談する" className="surface-ink px-5 py-12 md:px-10 lg:py-16 xl:px-14">
+        {/* 反復CTA② — 予算クライマックス直後の最強発火点（明地・上下罫） */}
+        <section aria-label="LINEで総額を相談する" className="surface-base border-y border-[color:var(--color-border)] px-5 py-12 md:px-10 lg:py-16 xl:px-14">
           <div className="mx-auto max-w-[1380px]">
-            <RepeatCtaBlock variant="cta2" tone="ink" lineLabel="LINEで総額を相談する" />
+            <RepeatCtaBlock variant="cta2" tone="light" lineLabel="LINEで総額を相談する" />
           </div>
         </section>
 
@@ -79,10 +80,10 @@ export default function BPlanV3Page() {
         <Faq />
         <FinalCta />
 
-        {/* 反復CTA最終 — FinalCta の決断階段に添える（ink地） */}
-        <section aria-label="LINEで総額を相談する" className="surface-ink px-5 pb-16 pt-4 md:px-10 xl:px-14">
+        {/* 反復CTA最終 — FinalCta の決断階段に添える（明地・上罫） */}
+        <section aria-label="LINEで総額を相談する" className="surface-base border-t border-[color:var(--color-border)] px-5 pb-16 pt-12 md:px-10 xl:px-14">
           <div className="mx-auto max-w-[1380px]">
-            <RepeatCtaBlock variant="final" tone="ink" lineLabel="LINEで総額を相談する" />
+            <RepeatCtaBlock variant="final" tone="light" lineLabel="LINEで総額を相談する" />
           </div>
         </section>
       </main>
