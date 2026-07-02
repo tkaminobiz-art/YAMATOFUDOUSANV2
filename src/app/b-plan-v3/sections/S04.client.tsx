@@ -21,12 +21,12 @@ export default function S04ReversalBridge() {
   return (
     <div
       ref={ref}
-      className="scroll-in mt-12 rounded-2xl border border-[color:var(--color-border)] bg-cream/40 p-6 md:mt-14 md:p-9"
+      className="scroll-in mt-12 rounded-[4px] border border-[color:var(--color-border)] bg-cream/40 p-6 md:mt-14 md:p-9"
     >
       {/* 対比1枚: 建物価格だけ（やせた見方）→ 土地込み総額（やまとの見方） */}
       <div className="grid items-stretch gap-4 md:grid-cols-[1fr_auto_1fr] md:gap-6">
         {/* before: 建物価格だけ思考 */}
-        <div className="scroll-in flex flex-col justify-center rounded-xl bg-paper px-5 py-6 ring-1 ring-[color:var(--color-border)]">
+        <div className="scroll-in flex flex-col justify-center rounded-[4px] bg-paper px-5 py-6 ring-1 ring-[color:var(--color-border)]">
           <p className="t-eyebrow text-ink-muted">一般的な見方</p>
           <p className="t-h3 mt-2 text-ink-muted">建物の価格だけ</p>
           <p className="t-body mt-2 text-ink-muted">
@@ -45,7 +45,7 @@ export default function S04ReversalBridge() {
         </div>
 
         {/* after: 土地込み総額（やまとの見方） */}
-        <div className="scroll-in flex flex-col justify-center rounded-xl bg-paper px-5 py-6 ring-1 ring-main/30">
+        <div className="scroll-in flex flex-col justify-center rounded-[4px] bg-paper px-5 py-6 ring-1 ring-main/30">
           <p className="t-eyebrow text-main">やまとの見方</p>
           <p className="t-h3 mt-2 text-ink">土地込みの総額</p>
           <p className="t-body mt-2 text-ink">

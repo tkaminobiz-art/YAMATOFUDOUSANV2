@@ -101,7 +101,7 @@ function PlanCard({ plan, delay }: { plan: Plan; delay: number }) {
 
   return (
     <article
-      className={`scroll-in flex flex-col overflow-hidden rounded-2xl border ${
+      className={`scroll-in flex flex-col overflow-hidden rounded-[4px] border ${
         featured
           ? "border-main/30 bg-lime-light"
           : "border-[color:var(--color-border)] bg-paper"
